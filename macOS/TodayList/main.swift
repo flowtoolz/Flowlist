@@ -8,14 +8,6 @@
 
 import Cocoa
 
-class MainVC: NSViewController
-{
-    override func loadView()
-    {
-        view = NSView()
-    }
-}
-
 class AppDelegate: NSObject, NSApplicationDelegate
 {
     func applicationDidFinishLaunching(_ aNotification: Notification)

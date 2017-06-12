@@ -1,0 +1,57 @@
+{
+  "name": "Flowtoolz",
+  "version": "0.2.0",
+  "summary": "A short summary of FTPortfolio",
+  "description": "A short description of FTPortfolio",
+  "homepage": "https://flowtoolz.com",
+  "license": "commercial",
+  "authors": {
+    "Flowtoolz": "contact@flowtoolz.com"
+  },
+  "source": {
+    "git": "https://bitbucket.org/flowtoolz/flowtoolz.git",
+    "tag": "0.2.0"
+  },
+  "requires_arc": true,
+  "platforms": {
+    "ios": "8.0",
+    "tvos": "9.0",
+    "osx": "10.11"
+  },
+  "subspecs": [
+    {
+      "name": "Swift",
+      "source_files": "Pod/swift/**/*"
+    },
+    {
+      "name": "Foundation",
+      "source_files": "Pod/foundation/**/*",
+      "dependencies": {
+        "ReachabilitySwift": [
+          "3"
+        ]
+      }
+    },
+    {
+      "name": "UI",
+      "ios": {
+        "source_files": "Pod/uikit/**/*"
+      },
+      "tvos": {
+        "source_files": "Pod/uikit/**/*"
+      },
+      "osx": {
+        "source_files": "Pod/appkit/**/*"
+      },
+      "dependencies": {
+        "PureLayout": [
+          "3.0.2"
+        ]
+      }
+    },
+    {
+      "name": "CoreData",
+      "source_files": "Pod/coredata/**/*"
+    }
+  ]
+}
