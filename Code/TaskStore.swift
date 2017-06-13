@@ -12,11 +12,21 @@ class TaskStore
 {
     fileprivate init() {}
     
+    func removeTasks(at indexes: [Int])
+    {
+        var sorted = indexes.sorted { return $0 < $1 }
+        
+        while let lastIndex = sorted.popLast()
+        {
+            tasks.remove(at: lastIndex)
+        }
+    }
+    
     lazy var tasks: [Task] =
     {
         var tasks = [Task]()
         
-        for i in 0 ... 50
+        for i in 0 ... 20
         {
             let task = Task()
             

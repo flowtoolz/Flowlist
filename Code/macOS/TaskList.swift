@@ -54,6 +54,109 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         return view
     }()
     
+    // MARK: - Keyboard Short Cuts
+    
+    override func keyDown(with event: NSEvent)
+    {
+        // Swift.print(event.keyCode.description)
+        
+        let cmd = event.modifierFlags.contains(.command)
+     
+        switch event.keyCode
+        {
+        case 36, 45:
+            if cmd
+            {
+                createNewTask()
+            }
+        case 51:
+            deleteSelectedTasks()
+        default:
+            break
+        }
+    }
+    
+    override func flagsChanged(with event: NSEvent)
+    {
+        guard event.modifierFlags.contains(.command),
+            tableView.selectedRowIndexes.count == 1
+        else
+        {
+            disabledCell?.isTitleEditingEnabled = true
+            
+            disabledCell = nil
+            
+            return
+        }
+        
+        if let index = tableView.selectedRowIndexes.max(),
+            let cell = tableView.view(atColumn: 0,
+                                      row: index,
+                                      makeIfNecessary: false) as? TaskListCell
+        {
+            cell.isTitleEditingEnabled = false
+            
+            disabledCell = cell
+        }
+    }
+    
+    private var disabledCell: TaskListCell?
+
+    // MARK: - Editing the List
+    
+    private func deleteSelectedTasks()
+    {
+        let selectedIndexSet = tableView.selectedRowIndexes
+        
+        guard let indexOfFirstDeletion = selectedIndexSet.min() else
+        {
+            return
+        }
+        
+        tableView.beginUpdates()
+        
+        taskStore.removeTasks(at: Array(selectedIndexSet))
+        
+        tableView.removeRows(at: selectedIndexSet,
+                             withAnimation: NSTableViewAnimationOptions.slideUp)
+        
+        tableView.endUpdates()
+        
+        let indexToSelect = max(indexOfFirstDeletion - 1, 0)
+        
+        tableView.selectRowIndexes([indexToSelect], byExtendingSelection: false)
+    }
+    
+    private func createNewTask()
+    {
+        var indexOfNewTask = 0
+        
+        if let lastSelectedIndex = tableView.selectedRowIndexes.max()
+        {
+            indexOfNewTask = lastSelectedIndex + 1
+        }
+        
+        tableView.beginUpdates()
+        
+        taskStore.tasks.insert(Task(),
+                               at: indexOfNewTask)
+        
+        tableView.insertRows(at: [indexOfNewTask],
+                             withAnimation: NSTableViewAnimationOptions.slideDown)
+        
+        tableView.endUpdates()
+        
+        tableView.scrollRowToVisible(indexOfNewTask)
+        tableView.selectRowIndexes([indexOfNewTask], byExtendingSelection: false)
+        
+        if let cell = tableView.view(atColumn: 0,
+                                     row: indexOfNewTask,
+                                     makeIfNecessary: false) as? TaskListCell
+        {
+            cell.startEditingTitle()
+        }
+    }
+    
     // MARK: - Table View Delegate
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat

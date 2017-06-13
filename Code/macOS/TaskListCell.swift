@@ -38,15 +38,33 @@ class TaskListCell: NSView, NSTextFieldDelegate
     {
         self.task = task
         
-        titleField.stringValue = task.title ?? "Untitled Task"
+        titleField.stringValue = task.title ?? ""
         updateCheckBox()
     }
     
     // MARK: - Title Field
     
+    func startEditingTitle()
+    {
+        titleField.selectText(self)
+    }
+    
+    var isTitleEditingEnabled: Bool
+    {
+        set
+        {
+            titleField.isEditable = newValue
+        }
+        
+        get
+        {
+            return titleField.isEditable
+        }
+    }
+    
     func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool
     {
-        guard let text = fieldEditor.string, text != "" else
+        guard let text = fieldEditor.string else
         {
             return false
         }
@@ -68,9 +86,12 @@ class TaskListCell: NSView, NSTextFieldDelegate
         let textField = NSTextField()
         textField.isBordered = false
         textField.drawsBackground = false
+        textField.isBezeled = false
         textField.isEditable = true
         textField.font = NSFont.systemFont(ofSize: 13)
         textField.delegate = self
+        textField.placeholderString = "Untitled"
+        textField.lineBreakMode = .byTruncatingTail
         
         self.addSubview(textField)
         
