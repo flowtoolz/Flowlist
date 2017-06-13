@@ -28,7 +28,7 @@ class TaskListCell: NSView
     {
         self.identifier = TaskListCell.reuseIdentifier
         
-        titleField.autoPinEdgesToSuperviewEdges()
+        layoutTitleField()
     }
     
     static let reuseIdentifier = "TaskListCellIdentifier"
@@ -38,13 +38,22 @@ class TaskListCell: NSView
         titleField.stringValue = task.title ?? "Untitled Task"
     }
     
+    // MARK: - Title Field
+    
+    private func layoutTitleField()
+    {
+        titleField.autoAlignAxis(.horizontal, toSameAxisOf: self)
+        titleField.autoPinEdge(toSuperviewEdge: .left, withInset: 36)
+        titleField.autoPinEdge(toSuperviewEdge: .right, withInset: 20)
+    }
+    
     private lazy var titleField: NSTextField =
     {
         let textField = NSTextField()
         textField.isBordered = false
         textField.drawsBackground = false
         textField.isEditable = false
-        textField.font = NSFont.systemFont(ofSize: 12)
+        textField.font = NSFont.systemFont(ofSize: 13)
         
         self.addSubview(textField)
         

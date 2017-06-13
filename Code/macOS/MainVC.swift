@@ -27,7 +27,10 @@ class MainVC: NSViewController
     
     func layoutTaskList()
     {
-        taskList.autoPinEdgesToSuperviewEdges()
+        taskList.autoPinEdge(toSuperviewEdge: .top)
+        taskList.autoPinEdge(toSuperviewEdge: .bottom)
+        taskList.autoConstrainAttribute(.left, to: .right, of: view, withMultiplier: 0.33)
+        taskList.autoConstrainAttribute(.right, to: .right, of: view, withMultiplier: 0.66)
     }
     
     lazy var taskList: TaskList =

@@ -29,7 +29,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
     
     private func initialize()
     {
-        hasVerticalScroller = true
+        backgroundColor = NSColor.lightGray
         
         documentView = tableView
     }
@@ -43,12 +43,26 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         view.addTableColumn(column)
         
         view.allowsMultipleSelection = true
+        view.backgroundColor = NSColor.clear
+        view.headerView = nil
   
         view.dataSource = self
         view.delegate = self
         
         return view
     }()
+    
+    // MARK: - Table View Delegate
+    
+    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat
+    {
+        return 36
+    }
+    
+    func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView?
+    {
+        return TaskListRow()
+    }
     
     // MARK: - Table View Data Source
     
