@@ -9,4 +9,12 @@
 class Task
 {
     var title: String?
+    
+    var state: State = .active
+    
+    enum State: Int
+    {
+        case active, done
+    }
 }
+

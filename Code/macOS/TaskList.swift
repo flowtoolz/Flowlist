@@ -29,7 +29,9 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
     
     private func initialize()
     {
-        backgroundColor = NSColor.lightGray
+        drawsBackground = false
+        
+        hasVerticalScroller = true
         
         documentView = tableView
     }
@@ -45,7 +47,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         view.allowsMultipleSelection = true
         view.backgroundColor = NSColor.clear
         view.headerView = nil
-  
+    
         view.dataSource = self
         view.delegate = self
         

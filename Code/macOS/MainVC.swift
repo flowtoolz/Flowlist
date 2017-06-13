@@ -20,6 +20,9 @@ class MainVC: NSViewController
     {
         super.viewDidLoad()
         
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.gray.cgColor
+        
         layoutTaskList()
     }
     
