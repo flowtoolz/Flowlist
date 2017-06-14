@@ -154,8 +154,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         
         tableView.beginUpdates()
         
-        taskStore.tasks.insert(Task(),
-                               at: indexOfNewTask)
+        taskStore.tasks.insert(Task(), at: indexOfNewTask)
         
         tableView.insertRows(at: [indexOfNewTask],
                              withAnimation: NSTableViewAnimationOptions.slideDown)

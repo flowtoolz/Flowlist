@@ -14,19 +14,18 @@ class MainVC: NSViewController
     override func loadView()
     {
         view = NSView()
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.gray.cgColor
     }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.gray.cgColor
-        
         layoutTaskList()
     }
     
-    // MARK: - Tadsk List
+    // MARK: - Task List
     
     func layoutTaskList()
     {
