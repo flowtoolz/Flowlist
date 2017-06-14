@@ -12,22 +12,19 @@ class TaskListRow: NSTableRowView
 {
     override func drawSelection(in dirtyRect: NSRect)
     {
-        let selectionRect = NSInsetRect(bounds, 2, 1)
-        
-        selectionColor.setFill()
-        
-        let selectionPath = NSBezierPath(roundedRect: selectionRect,
-                                         xRadius: 3,
-                                         yRadius: 3)
-        
-        selectionPath.fill()
+        drawBackground(with: selectionColor)
     }
     
     override func drawBackground(in dirtyRect: NSRect)
     {
+        drawBackground(with: NSColor.white)
+    }
+    
+    private func drawBackground(with color: NSColor)
+    {
         let selectionRect = NSInsetRect(bounds, 2, 1)
         
-        NSColor.white.setFill()
+        color.setFill()
         
         let selectionPath = NSBezierPath(roundedRect: selectionRect,
                                          xRadius: 3,

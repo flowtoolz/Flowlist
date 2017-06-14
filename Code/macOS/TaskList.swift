@@ -67,12 +67,12 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         case 1:
             if cmd
             {
-                taskPersister.save()
+                taskStore.save()
             }
         case 37:
             if cmd
             {
-                taskPersister.load()
+                taskStore.load()
                 tableView.reloadData()
             }
         case 36, 45:
@@ -88,6 +88,11 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
     }
     
     override func flagsChanged(with event: NSEvent)
+    {
+        ensureCmdPlusReturnWorks(modifiersChangedWith: event)
+    }
+    
+    private func ensureCmdPlusReturnWorks(modifiersChangedWith event: NSEvent)
     {
         guard event.modifierFlags.contains(.command),
             tableView.selectedRowIndexes.count == 1

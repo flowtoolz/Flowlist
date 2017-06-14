@@ -12,14 +12,14 @@ class AppDelegate: NSObject, NSApplicationDelegate
 {
     func applicationDidFinishLaunching(_ aNotification: Notification)
     {
-        taskPersister.load()
+        taskStore.load()
         
         setupWindow()
     }
     
     func applicationWillTerminate(_ notification: Notification)
     {
-        taskPersister.save()
+        taskStore.save()
     }
     
     // MARK: - Window

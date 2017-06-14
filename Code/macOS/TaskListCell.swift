@@ -116,7 +116,7 @@ class TaskListCell: NSView, NSTextFieldDelegate
         button.action = #selector(checkBoxClicked)
         button.target = self
         button.imageScaling = .scaleNone
-        button.image = NSImage(named: "checkbox_unchecked")
+        button.image = TaskListCell.checkBoxImageEmpty
         button.isBordered = false
         button.layer?.backgroundColor = NSColor.clear.cgColor
         
@@ -134,12 +134,20 @@ class TaskListCell: NSView, NSTextFieldDelegate
     
     private func updateCheckBox()
     {
-        let imageName = task?.state == .done ? "checkbox_checked" : "checkbox_unchecked"
+        let isChecked = task?.state == .done
         
-        checkBox.image = NSImage(named: imageName)
+        checkBox.image = checkBoxImage(isChecked)
     }
     
     private var boxIsChecked = false
+    
+    private func checkBoxImage(_ checked: Bool) -> NSImage?
+    {
+        return checked ? TaskListCell.checkBoxImageChecked : TaskListCell.checkBoxImageEmpty
+    }
+    
+    private static let checkBoxImageEmpty = NSImage(named: "checkbox_unchecked")
+    private static let checkBoxImageChecked = NSImage(named: "checkbox_checked")
     
     // MARK: - Task
     

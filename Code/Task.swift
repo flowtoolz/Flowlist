@@ -8,6 +8,15 @@
 
 class Task
 {
+    convenience init(with title: String?, state: State?)
+    {
+        self.init()
+        
+        self.title = title
+        
+        self.state = state
+    }
+    
     var title: String?
     
     var state: State?

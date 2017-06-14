@@ -10,6 +10,7 @@
 		1EAE5C54F685E96E2AC59245 /* Pods_TodayList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92F02549003B1143E1330A1 /* Pods_TodayList.framework */; };
 		9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185B1EEEE8CE00B35AD5 /* Task.swift */; };
 		9E15185E1EEEE97700B35AD5 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185D1EEEE97700B35AD5 /* MainVC.swift */; };
+		9E4DE65E1EF148C100506B48 /* TaskArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4DE65D1EF148C100506B48 /* TaskArchive.swift */; };
 		9E542E951EEEE41C00534981 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E542E941EEEE41C00534981 /* main.swift */; };
 		9E542E981EEEE41C00534981 /* TodayList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9E542E961EEEE41C00534981 /* TodayList.xcdatamodeld */; };
 		9E542E9A1EEEE41C00534981 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E542E991EEEE41C00534981 /* Assets.xcassets */; };
@@ -18,7 +19,7 @@
 		9E7651941EEF428100DE2B07 /* TaskListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651931EEF428100DE2B07 /* TaskListCell.swift */; };
 		9E7651961EEF4DA200DE2B07 /* TaskStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* TaskStore.swift */; };
 		9EA2B9691EF035D900F05F20 /* TaskListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B9681EF035D900F05F20 /* TaskListRow.swift */; };
-		9EA2B96B1EF0A80A00F05F20 /* TaskStorePersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B96A1EF0A80A00F05F20 /* TaskStorePersister.swift */; };
+		9EA2B96B1EF0A80A00F05F20 /* TaskStore+Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */; };
 		D72867BFC0CBB55FF878CD7A /* Pods_TodayListTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCFD3E12471EE5C3B17C7DE0 /* Pods_TodayListTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		3A9A2532CA6FC107DA4F45FB /* Pods-TodayListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayListTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TodayListTests/Pods-TodayListTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9E15185B1EEEE8CE00B35AD5 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../../Code/Task.swift; sourceTree = "<group>"; };
 		9E15185D1EEEE97700B35AD5 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainVC.swift; path = ../../Code/macOS/MainVC.swift; sourceTree = "<group>"; };
+		9E4DE65D1EF148C100506B48 /* TaskArchive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskArchive.swift; path = ../../Code/TaskArchive.swift; sourceTree = "<group>"; };
 		9E542E911EEEE41C00534981 /* TodayList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodayList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E542E941EEEE41C00534981 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		9E542E971EEEE41C00534981 /* TodayList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TodayList.xcdatamodel; sourceTree = "<group>"; };
@@ -50,7 +52,7 @@
 		9E7651931EEF428100DE2B07 /* TaskListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListCell.swift; path = ../../Code/macOS/TaskListCell.swift; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* TaskStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskStore.swift; path = ../../Code/TaskStore.swift; sourceTree = "<group>"; };
 		9EA2B9681EF035D900F05F20 /* TaskListRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListRow.swift; path = ../../Code/macOS/TaskListRow.swift; sourceTree = "<group>"; };
-		9EA2B96A1EF0A80A00F05F20 /* TaskStorePersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskStorePersister.swift; path = ../../Code/macOS/TaskStorePersister.swift; sourceTree = "<group>"; };
+		9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TaskStore+Persistence.swift"; path = "../../Code/macOS/TaskStore+Persistence.swift"; sourceTree = "<group>"; };
 		BCFD3E12471EE5C3B17C7DE0 /* Pods_TodayListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodayListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C499DBA6E96C7098BCE851AA /* Pods-TodayList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TodayList/Pods-TodayList.debug.xcconfig"; sourceTree = "<group>"; };
 		C92F02549003B1143E1330A1 /* Pods_TodayList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodayList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,7 +126,8 @@
 				9E72881A1EEF3095003A2F46 /* TaskList.swift */,
 				9E7651931EEF428100DE2B07 /* TaskListCell.swift */,
 				9EA2B9681EF035D900F05F20 /* TaskListRow.swift */,
-				9EA2B96A1EF0A80A00F05F20 /* TaskStorePersister.swift */,
+				9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */,
+				9E4DE65D1EF148C100506B48 /* TaskArchive.swift */,
 				9E7651951EEF4DA200DE2B07 /* TaskStore.swift */,
 				9E15185B1EEEE8CE00B35AD5 /* Task.swift */,
 				9E542E991EEEE41C00534981 /* Assets.xcassets */,
@@ -346,11 +349,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
+				9E4DE65E1EF148C100506B48 /* TaskArchive.swift in Sources */,
 				9E72881B1EEF3095003A2F46 /* TaskList.swift in Sources */,
 				9E15185E1EEEE97700B35AD5 /* MainVC.swift in Sources */,
 				9EA2B9691EF035D900F05F20 /* TaskListRow.swift in Sources */,
 				9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */,
-				9EA2B96B1EF0A80A00F05F20 /* TaskStorePersister.swift in Sources */,
+				9EA2B96B1EF0A80A00F05F20 /* TaskStore+Persistence.swift in Sources */,
 				9E7651941EEF428100DE2B07 /* TaskListCell.swift in Sources */,
 				9E542E981EEEE41C00534981 /* TodayList.xcdatamodeld in Sources */,
 				9E7651961EEF4DA200DE2B07 /* TaskStore.swift in Sources */,
