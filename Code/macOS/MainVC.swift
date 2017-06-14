@@ -22,23 +22,46 @@ class MainVC: NSViewController
     {
         super.viewDidLoad()
         
-        layoutTaskList()
+        layoutMainList()
+        layoutDetailList()
     }
     
-    // MARK: - Task List
+    // MARK: - Task Lists
     
-    func layoutTaskList()
+    func layoutMainList()
     {
-        taskList.autoPinEdge(toSuperviewEdge: .top)
-        taskList.autoPinEdge(toSuperviewEdge: .bottom)
-        taskList.autoConstrainAttribute(.left, to: .right, of: view, withMultiplier: 0.33)
-        taskList.autoConstrainAttribute(.right, to: .right, of: view, withMultiplier: 0.66)
+        mainList.autoPinEdge(toSuperviewEdge: .top)
+        mainList.autoPinEdge(toSuperviewEdge: .bottom)
+        mainList.autoPinEdge(toSuperviewEdge: .left)
+        mainList.autoConstrainAttribute(.right,
+                                        to: .right,
+                                        of: view,
+                                        withMultiplier: 0.66)
     }
     
-    lazy var taskList: TaskList =
+    lazy var mainList: TaskList =
     {
         let view = TaskList.newAutoLayout()
         self.view.addSubview(view)
+        
+        return view
+    }()
+    
+    func layoutDetailList()
+    {
+        detailList.autoPinEdge(toSuperviewEdge: .top)
+        detailList.autoPinEdge(toSuperviewEdge: .bottom)
+        detailList.autoPinEdge(toSuperviewEdge: .right)
+        detailList.autoPinEdge(.left, to: .right, of: mainList)
+    }
+    
+    lazy var detailList: TaskList =
+    {
+        let view = TaskList.newAutoLayout()
+        self.view.addSubview(view)
+        
+        view.tableView.isEnabled = false
+        view.hasVerticalScroller = false
         
         return view
     }()

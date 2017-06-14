@@ -36,7 +36,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         documentView = tableView
     }
     
-    private lazy var tableView: NSTableView =
+    lazy var tableView: NSTableView =
     {
         let view = NSTableView()
         
