@@ -12,15 +12,41 @@ class TaskStore
 {
     fileprivate init() {}
     
-    func removeTasks(at indexes: [Int])
+    func deleteTasksFromList(at indexes: [Int])
     {
         var sorted = indexes.sorted { return $0 < $1 }
         
         while let lastIndex = sorted.popLast()
         {
-            tasks.remove(at: lastIndex)
+            listedContainer.elements?.remove(at: lastIndex)
         }
     }
     
-    var tasks = [Task]()
+    func add(_ task: Task, toListAt index: Int)
+    {
+        listedContainer.insert(task, at: index)
+        
+        task.container = listedContainer
+    }
+    
+    var list: [Task]
+    {
+        return listedContainer.elements ?? []
+    }
+    
+    func reset(with root: Task)
+    {
+        rootTask = root
+        
+        listedContainer = root
+    }
+    
+    var root: Task
+    {
+        return rootTask
+    }
+    
+    private lazy var listedContainer: Task = self.rootTask
+    
+    private var rootTask = Task()
 }

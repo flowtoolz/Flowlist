@@ -13,9 +13,11 @@ extension TaskStore
 {
     func save()
     {
+        let allTasks = root.allTasksRecursively()
+        
         var archive = [TaskArchive]()
         
-        for task in tasks
+        for task in allTasks
         {
             archive.append(TaskArchive(with: task))
         }
@@ -68,16 +70,49 @@ extension TaskStore
             }
         }
         
-        // store tasks
-        tasks.removeAll()
+        // find root and reset
+        var unarchivedRoot: Task?
         
-        for archiveTask in archive
+        for task in tasksByUuid.values
         {
-            tasks.append(archiveTask.task)
+            if task.container == nil
+            {
+                if unarchivedRoot != nil
+                {
+                    print("Error: found multiple root containers in unarchived tasks")
+                    return
+                }
+                
+                unarchivedRoot = task
+            }
         }
+        
+        guard let root = unarchivedRoot else
+        {
+            print("Error: found no root container in unarchived tasks")
+            return
+        }
+        
+        reset(with: root)
     }
     
     private static let filePath = Bundle.main.bundlePath + "/UserData.plist"
 }
 
-
+extension Task
+{
+    func allTasksRecursively() -> [Task]
+    {
+        var tasks = [self]
+        
+        if let elements = elements
+        {
+            for task in elements
+            {
+                tasks.append(contentsOf: task.allTasksRecursively())
+            }
+        }
+        
+        return tasks
+    }
+}

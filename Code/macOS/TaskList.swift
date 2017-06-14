@@ -131,7 +131,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         
         tableView.beginUpdates()
         
-        taskStore.removeTasks(at: Array(selectedIndexSet))
+        taskStore.deleteTasksFromList(at: Array(selectedIndexSet))
         
         tableView.removeRows(at: selectedIndexSet,
                              withAnimation: NSTableViewAnimationOptions.slideUp)
@@ -154,7 +154,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         
         tableView.beginUpdates()
         
-        taskStore.tasks.insert(Task(), at: indexOfNewTask)
+        taskStore.add(Task(), toListAt: indexOfNewTask)
         
         tableView.insertRows(at: [indexOfNewTask],
                              withAnimation: NSTableViewAnimationOptions.slideDown)
@@ -188,7 +188,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
     
     func numberOfRows(in tableView: NSTableView) -> Int
     {
-        return taskStore.tasks.count
+        return taskStore.list.count
     }
     
     func tableView(_ tableView: NSTableView,
@@ -204,7 +204,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         let cell = tableView.make(withIdentifier: TaskListCell.reuseIdentifier,
                                   owner: self) as? TaskListCell ?? TaskListCell()
         
-        cell.configure(with: taskStore.tasks[row])
+        cell.configure(with: taskStore.list[row])
         
         return cell
     }
