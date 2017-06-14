@@ -12,6 +12,18 @@ class TaskStore
 {
     fileprivate init() {}
     
+    // MARK: - Selection in List
+    
+    var selectedIndexes = [Int]()
+    {
+        didSet
+        {
+            print("selection did change to: \(selectedIndexes.description)")
+        }
+    }
+    
+    // MARK: - Edit List
+    
     func groupListedTasks(at indexes: [Int], in newTask: Task)
     {
         var sorted = indexes.sorted { return $0 < $1 }
@@ -55,6 +67,8 @@ class TaskStore
             listedContainer.elements?.remove(at: lastIndex)
         }
     }
+    
+    // MARK: - Filter List
     
     var list: [Task]
     {

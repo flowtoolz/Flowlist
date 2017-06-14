@@ -143,7 +143,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         if taskStore.filterByContainerOfListedContainer()
         {
             tableView.reloadData()
-            tableView.selectRowIndexes([index], byExtendingSelection: false)
+            select(row: index)
         }
     }
     
@@ -160,7 +160,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         if taskStore.filterByTask(at: selectedIndex)
         {
             tableView.reloadData()
-            tableView.selectRowIndexes([0], byExtendingSelection: false)
+            select(row: 0)
         }
     }
     
@@ -182,9 +182,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         
         tableView.endUpdates()
         
-        let indexToSelect = max(indexOfFirstDeletion - 1, 0)
-        
-        tableView.selectRowIndexes([indexToSelect], byExtendingSelection: false)
+        select(row: max(indexOfFirstDeletion - 1, 0))
     }
     
     private func createNewTask(createContainer: Bool = false)
@@ -224,7 +222,8 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         tableView.endUpdates()
         
         tableView.scrollRowToVisible(indexOfNewTask)
-        tableView.selectRowIndexes([indexOfNewTask], byExtendingSelection: false)
+        
+        select(row: indexOfNewTask)
         
         if let cell = tableView.view(atColumn: 0,
                                      row: indexOfNewTask,
@@ -232,6 +231,14 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         {
             cell.startEditingTitle()
         }
+    }
+    
+    // MARK: - Selecting Rows
+    
+    private func select(row: Int)
+    {
+        tableView.selectRowIndexes([row], byExtendingSelection: false)
+        taskStore.selectedIndexes = [row]
     }
     
     // MARK: - Table View Delegate
@@ -244,6 +251,14 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView?
     {
         return TaskListRow()
+    }
+    
+    func tableView(_ tableView: NSTableView,
+                   selectionIndexesForProposedSelection proposedSelectionIndexes: IndexSet) -> IndexSet
+    {
+        taskStore.selectedIndexes = Array(proposedSelectionIndexes)
+        
+        return proposedSelectionIndexes
     }
     
     // MARK: - Table View Data Source
