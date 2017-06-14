@@ -8,13 +8,18 @@
 
 class Task
 {
-    convenience init(with title: String?, state: State?)
+    convenience init(with uuid: String, title: String?, state: State?)
     {
-        self.init()
+        self.init(with: uuid)
         
         self.title = title
         
         self.state = state
+    }
+    
+    init(with uuid: String)
+    {
+        self.uuid = uuid
     }
     
     var title: String?
@@ -26,5 +31,10 @@ class Task
         // state == nil is default and kind of a backlog or "no specific state" 
         case inProgress, onHold, done, deleted
     }
+    
+    var container: Task?
+    var elements: [Task]?
+    
+    let uuid: String
 }
 

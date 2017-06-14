@@ -12,14 +12,22 @@ class TaskArchive: NSObject, NSCoding
 {
     required convenience init?(coder aDecoder: NSCoder)
     {
+        guard let uuid = aDecoder.decodeObject(forKey: "uuid") as? String else
+        {
+            Swift.print("Error decoding Task: could not decode UUID string")
+            return nil
+        }
+        
         let title = aDecoder.decodeObject(forKey: "title") as? String
         let state = Task.State(rawValue: aDecoder.decodeInteger(forKey: "state"))
         
-        self.init(with: Task(with: title, state: state))
+        self.init(with: Task(with: uuid, title: title, state: state))
     }
     
     func encode(with aCoder: NSCoder)
     {
+        aCoder.encode(task.uuid, forKey: "uuid")
+        
         if let title = task.title
         {
             aCoder.encode(title, forKey: "title")
