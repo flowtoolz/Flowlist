@@ -46,6 +46,8 @@ class Task
         }
         
         elements?.insert(task, at: index)
+        
+        task.container = self
     }
     
     func task(at index: Int) -> Task?
@@ -73,5 +75,10 @@ class Task
     var elements: [Task]?
     
     let uuid: String
+    
+    var description: String
+    {
+        return "\(uuid) \(title ?? "Untitled")"
+    }
 }
 

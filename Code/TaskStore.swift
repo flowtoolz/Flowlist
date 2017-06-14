@@ -44,8 +44,6 @@ class TaskStore
     func add(_ task: Task, toListAt index: Int)
     {
         listedContainer.insert(task, at: index)
-        
-        task.container = listedContainer
     }
     
     func deleteTasksFromList(at indexes: [Int])
