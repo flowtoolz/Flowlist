@@ -25,12 +25,50 @@ extension TaskStore
     
     func load()
     {
+        // read task archives
         guard let archive = NSKeyedUnarchiver.unarchiveObject(withFile: TaskStore.filePath) as? [TaskArchive]
         else
         {
             return
         }
         
+        // create task hash map
+        var tasksByUuid = [String: Task]()
+        
+        for archiveTask in archive
+        {
+            let task = archiveTask.task
+            
+            tasksByUuid[task.uuid] = task
+        }
+        
+        // connect task hierarchy
+        for archiveTask in archive
+        {
+            let task = archiveTask.task
+            
+            if let containerUuid = archiveTask.containerUuidForDecoding
+            {
+                task.container = tasksByUuid[containerUuid]
+            }
+            
+            if let elementUuids = archiveTask.elementUuidsForDecoding
+            {
+                var elements = [Task]()
+                
+                for elementUuid in elementUuids
+                {
+                    if let element = tasksByUuid[elementUuid]
+                    {
+                        elements.append(element)
+                    }
+                }
+                
+                task.elements = elements
+            }
+        }
+        
+        // store tasks
         tasks.removeAll()
         
         for archiveTask in archive

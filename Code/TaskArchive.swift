@@ -22,7 +22,13 @@ class TaskArchive: NSObject, NSCoding
         let state = Task.State(rawValue: aDecoder.decodeInteger(forKey: "state"))
         
         self.init(with: Task(with: uuid, title: title, state: state))
+        
+        containerUuidForDecoding = aDecoder.decodeObject(forKey: "containerUuid") as? String
+        elementUuidsForDecoding = aDecoder.decodeObject(forKey: "elementUuids") as? [String]
     }
+    
+    var containerUuidForDecoding: String?
+    var elementUuidsForDecoding: [String]?
     
     func encode(with aCoder: NSCoder)
     {
@@ -37,6 +43,23 @@ class TaskArchive: NSObject, NSCoding
         {
             aCoder.encode(stateInteger, forKey: "state")
         }
+        
+        if let containerUuid = task.container?.uuid
+        {
+            aCoder.encode(containerUuid, forKey: "containerUuid")
+        }
+        
+        if let elements = task.elements, elements.count > 0
+        {
+            var elementUuids = [String]()
+            
+            for element in elements
+            {
+                elementUuids.append(element.uuid)
+            }
+            
+            aCoder.encode(elementUuids, forKey: "elementUuids")
+        }
     }
     
     init(with task: Task)
@@ -44,5 +67,5 @@ class TaskArchive: NSObject, NSCoding
         self.task = task
     }
     
-    var task: Task
+    let task: Task
 }
