@@ -87,7 +87,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         case 45:
             if cmd
             {
-                createNewTask()
+                createNewTask(createContainer: true)
             }
         case 51:
             deleteSelectedTasks()
