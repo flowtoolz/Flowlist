@@ -28,8 +28,9 @@ class TaskListCell: NSView, NSTextFieldDelegate
     {
         self.identifier = TaskListCell.reuseIdentifier
         
-        layoutTitleField()
         layoutCheckBox()
+        layoutContainerIndicator()
+        layoutTitleField()
     }
     
     static let reuseIdentifier = "TaskListCellIdentifier"
@@ -40,6 +41,7 @@ class TaskListCell: NSView, NSTextFieldDelegate
         
         updateTitleField()
         updateCheckBox()
+        updateContainerIndicator()
     }
     
     // MARK: - Title Field
@@ -77,8 +79,8 @@ class TaskListCell: NSView, NSTextFieldDelegate
     private func layoutTitleField()
     {
         titleField.autoAlignAxis(.horizontal, toSameAxisOf: self)
-        titleField.autoPinEdge(toSuperviewEdge: .left, withInset: 36)
-        titleField.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+        titleField.autoPinEdge(.left, to: .right, of: checkBox)
+        titleField.autoPinEdge(.right, to: .left, of: containerIndicator)
     }
     
     private lazy var titleField: NSTextField =
@@ -148,6 +150,33 @@ class TaskListCell: NSView, NSTextFieldDelegate
     
     private static let checkBoxImageEmpty = NSImage(named: "checkbox_unchecked")
     private static let checkBoxImageChecked = NSImage(named: "checkbox_checked")
+    
+    // MARK: - Container Indicator
+    
+    private func updateContainerIndicator()
+    {
+        containerIndicator.isHidden = !(task?.isContainer ?? false)
+    }
+    
+    private func layoutContainerIndicator()
+    {
+        containerIndicator.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                                        excludingEdge: .left)
+        containerIndicator.autoSetDimension(.width, toSize: 22)
+    }
+    
+    private lazy var containerIndicator: NSImageView =
+    {
+        let view = NSImageView.newAutoLayout()
+        self.addSubview(view)
+        
+        view.image = NSImage(named: "container_indicator")
+        view.imageScaling = .scaleNone
+        view.imageAlignment = .alignCenter
+        view.isHidden = true
+        
+        return view
+    }()
     
     // MARK: - Task
     

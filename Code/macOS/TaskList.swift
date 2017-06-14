@@ -75,13 +75,26 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
                 taskStore.load()
                 tableView.reloadData()
             }
-        case 36, 45:
+        case 36:
+            if cmd
+            {
+                createNewTask()
+            }
+            else
+            {
+                createNewTask(createContainer: true)
+            }
+        case 45:
             if cmd
             {
                 createNewTask()
             }
         case 51:
             deleteSelectedTasks()
+        case 123:
+            filterByContainerOfListedContainer()
+        case 124:
+            filterBySelectedTask()
         default:
             break
         }
@@ -120,6 +133,37 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
 
     // MARK: - Editing the List
     
+    private func filterByContainerOfListedContainer()
+    {
+        guard let index = taskStore.indexOfListedContainerInItsContainer() else
+        {
+            return
+        }
+        
+        if taskStore.filterByContainerOfListedContainer()
+        {
+            tableView.reloadData()
+            tableView.selectRowIndexes([index], byExtendingSelection: false)
+        }
+    }
+    
+    private func filterBySelectedTask()
+    {
+        let selectedIndexSet = tableView.selectedRowIndexes
+        
+        guard selectedIndexSet.count == 1,
+            let selectedIndex = selectedIndexSet.min() else
+        {
+            return
+        }
+
+        if taskStore.filterByTask(at: selectedIndex)
+        {
+            tableView.reloadData()
+            tableView.selectRowIndexes([0], byExtendingSelection: false)
+        }
+    }
+    
     private func deleteSelectedTasks()
     {
         let selectedIndexSet = tableView.selectedRowIndexes
@@ -143,22 +187,40 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
         tableView.selectRowIndexes([indexToSelect], byExtendingSelection: false)
     }
     
-    private func createNewTask()
+    private func createNewTask(createContainer: Bool = false)
     {
         var indexOfNewTask = 0
+        var reallyCreateContainer = false
         
-        if let lastSelectedIndex = tableView.selectedRowIndexes.max()
+        let selectedIndexes = tableView.selectedRowIndexes
+        
+        if let lastSelectedIndex = selectedIndexes.max(),
+            let firstSelectedIndex = selectedIndexes.min()
         {
-            indexOfNewTask = lastSelectedIndex + 1
+            reallyCreateContainer = selectedIndexes.count > 1 && createContainer
+            indexOfNewTask = reallyCreateContainer ? firstSelectedIndex : lastSelectedIndex + 1
         }
         
         tableView.beginUpdates()
         
-        taskStore.add(Task(), toListAt: indexOfNewTask)
-        
-        tableView.insertRows(at: [indexOfNewTask],
-                             withAnimation: NSTableViewAnimationOptions.slideDown)
-        
+        if reallyCreateContainer
+        {
+            taskStore.groupListedTasks(at: Array(selectedIndexes), in: Task())
+            
+            tableView.removeRows(at: selectedIndexes,
+                                 withAnimation: NSTableViewAnimationOptions.slideUp)
+            
+            tableView.insertRows(at: [indexOfNewTask],
+                                 withAnimation: NSTableViewAnimationOptions.slideDown)
+        }
+        else
+        {
+            taskStore.add(Task(), toListAt: indexOfNewTask)
+            
+            tableView.insertRows(at: [indexOfNewTask],
+                                 withAnimation: NSTableViewAnimationOptions.slideDown)
+        }
+
         tableView.endUpdates()
         
         tableView.scrollRowToVisible(indexOfNewTask)

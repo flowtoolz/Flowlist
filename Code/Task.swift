@@ -34,7 +34,7 @@ class Task
     
     func insert(_ task: Task, at index: Int)
     {
-        guard index >= 0, index <= (elements?.count ?? 0) else
+        guard index >= 0, index <= numberOfElements else
         {
             print("Warning: tried to insert Task at an out of bound index into another task")
             return
@@ -46,6 +46,27 @@ class Task
         }
         
         elements?.insert(task, at: index)
+    }
+    
+    func task(at index: Int) -> Task?
+    {
+        guard index >= 0, index < numberOfElements else
+        {
+            print("Warning: tried to access Task at an out of bound index")
+            return nil
+        }
+        
+        return elements?[index]
+    }
+    
+    var isContainer: Bool
+    {
+        return numberOfElements > 0
+    }
+    
+    var numberOfElements: Int
+    {
+        return elements?.count ?? 0
     }
     
     weak var container: Task?
