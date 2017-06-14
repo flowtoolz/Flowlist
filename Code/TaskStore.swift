@@ -22,19 +22,5 @@ class TaskStore
         }
     }
     
-    lazy var tasks: [Task] =
-    {
-        var tasks = [Task]()
-        
-        for i in 0 ... 20
-        {
-            let task = Task()
-            
-            task.title = "Task Title \(i)"
-            
-            tasks.append(task)
-        }
-        
-        return tasks
-    }()
+    var tasks = [Task]()
 }

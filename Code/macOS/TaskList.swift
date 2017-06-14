@@ -58,12 +58,23 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
     
     override func keyDown(with event: NSEvent)
     {
-        // Swift.print(event.keyCode.description)
+        //Swift.print(event.keyCode.description)
         
         let cmd = event.modifierFlags.contains(.command)
      
         switch event.keyCode
         {
+        case 1:
+            if cmd
+            {
+                taskPersister.save()
+            }
+        case 37:
+            if cmd
+            {
+                taskPersister.load()
+                tableView.reloadData()
+            }
         case 36, 45:
             if cmd
             {

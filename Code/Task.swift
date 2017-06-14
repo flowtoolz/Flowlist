@@ -10,7 +10,7 @@ class Task
 {
     var title: String?
     
-    var state: State = .active
+    var state: State? = .active
     
     enum State: Int
     {
