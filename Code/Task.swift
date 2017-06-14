@@ -10,11 +10,12 @@ class Task
 {
     var title: String?
     
-    var state: State? = .active
+    var state: State?
     
     enum State: Int
     {
-        case active, done
+        // state == nil is default and kind of a backlog or "no specific state" 
+        case inProgress, onHold, done, deleted
     }
 }
 

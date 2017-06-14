@@ -60,7 +60,10 @@ class ArchiveTask: NSObject, NSCoding
     
     func encode(with aCoder: NSCoder)
     {
-        aCoder.encode(task.title, forKey: "title")
+        if let title = task.title
+        {
+            aCoder.encode(title, forKey: "title")
+        }
         
         if let stateInteger = task.state?.rawValue
         {

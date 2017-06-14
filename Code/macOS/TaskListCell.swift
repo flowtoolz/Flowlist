@@ -38,11 +38,16 @@ class TaskListCell: NSView, NSTextFieldDelegate
     {
         self.task = task
         
-        titleField.stringValue = task.title ?? ""
+        updateTitleField()
         updateCheckBox()
     }
     
     // MARK: - Title Field
+    
+    func updateTitleField()
+    {
+        titleField.stringValue = self.task?.title ?? ""
+    }
     
     func startEditingTitle()
     {
@@ -64,12 +69,7 @@ class TaskListCell: NSView, NSTextFieldDelegate
     
     func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool
     {
-        guard let text = fieldEditor.string else
-        {
-            return false
-        }
-        
-        task?.title = text
+        task?.title = String(withNonEmpty: fieldEditor.string)
         
         return true
     }
@@ -127,7 +127,7 @@ class TaskListCell: NSView, NSTextFieldDelegate
     {
         boxIsChecked = !boxIsChecked
         
-        task?.state = boxIsChecked ? .done : .active
+        task?.state = boxIsChecked ? .done : nil
         
         updateCheckBox()
     }
