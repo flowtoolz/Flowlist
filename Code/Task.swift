@@ -110,7 +110,7 @@ class Task
         }
     }
     
-    weak var container: Task?
+    private(set) weak var container: Task?
     
     private var elements: [Task]?
     

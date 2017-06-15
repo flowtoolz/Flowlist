@@ -70,7 +70,7 @@ class TaskList: Sender, Subscriber
     
     func deleteSelectedTasks() -> Bool
     {
-        var sorted = selectedIndexes.sorted { return $0 < $1 }
+        var sorted = selectedIndexes.sorted()
         
         guard let firstIndex = sorted.first else
         {
