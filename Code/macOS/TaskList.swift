@@ -31,12 +31,10 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
     {
         drawsBackground = false
         
-        verticalScroller?.scrollerStyle = .overlay
-        hasVerticalScroller = true
-        self.autohidesScrollers = true
-        lineScroll = 36
-        
         documentView = tableView
+        
+        automaticallyAdjustsContentInsets = false
+        contentInsets = NSEdgeInsetsMake(10, 0, 10, 0)
     }
     
     lazy var tableView: NSTableView =
@@ -224,11 +222,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
     {
         if index == 0
         {
-            var newOrigin = contentView.bounds.origin
-            
-            newOrigin.y = 0
-            
-            contentView.setBoundsOrigin(newOrigin)
+            jumpToTop()
         }
         else
         {
@@ -248,6 +242,15 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
         {
             cell.startEditingTitle()
         }
+    }
+    
+    func jumpToTop()
+    {
+        var newOrigin = contentView.bounds.origin
+        
+        newOrigin.y = -10
+        
+        contentView.setBoundsOrigin(newOrigin)
     }
     
     private func updateTableSelection()
@@ -296,7 +299,11 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
         let cell = tableView.make(withIdentifier: TaskListCell.reuseIdentifier,
                                   owner: self) as? TaskListCell ?? TaskListCell()
         
-        cell.configure(with: taskStore.list[row])
+        if let task = taskStore.task(at: row)
+        {
+            cell.configure(with: task)
+        }
+        
         cell.delegate = self
         
         return cell

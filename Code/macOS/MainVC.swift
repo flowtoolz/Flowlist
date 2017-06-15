@@ -23,7 +23,13 @@ class MainVC: NSViewController
         super.viewDidLoad()
         
         layoutMainList()
-        layoutDetailList()
+        layoutDetailList()   
+    }
+    
+    override func viewDidAppear()
+    {
+        mainList.jumpToTop()
+        detailList.jumpToTop()
     }
     
     // MARK: - Task Lists
@@ -32,7 +38,7 @@ class MainVC: NSViewController
     {
         mainList.autoPinEdge(toSuperviewEdge: .top)
         mainList.autoPinEdge(toSuperviewEdge: .bottom)
-        mainList.autoPinEdge(toSuperviewEdge: .left)
+        mainList.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
         mainList.autoConstrainAttribute(.right,
                                         to: .right,
                                         of: view,
@@ -51,7 +57,7 @@ class MainVC: NSViewController
     {
         detailList.autoPinEdge(toSuperviewEdge: .top)
         detailList.autoPinEdge(toSuperviewEdge: .bottom)
-        detailList.autoPinEdge(toSuperviewEdge: .right)
+        detailList.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
         detailList.autoPinEdge(.left, to: .right, of: mainList)
     }
     
