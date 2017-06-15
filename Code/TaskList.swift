@@ -82,7 +82,7 @@ class TaskList: Sender, Subscriber
             container.deleteTask(at: lastIndex)
         }
         
-        selectedIndexes = [max(firstIndex - 1, 0)]
+        selectedIndexes = numberOfTasks > 0 ? [max(firstIndex - 1, 0)] : []
         
         return true
     }
@@ -128,12 +128,35 @@ class TaskList: Sender, Subscriber
         {
             if oldValue != selectedIndexes
             {
+                validateSelection()
                 send(TaskList.didChangeSelection)
             }
         }
     }
     
     static let didChangeSelection = "TaskListDidChangeSelection"
+    
+    private func validateSelection()
+    {
+        if numberOfTasks == 0
+        {
+            if selectedIndexes.count > 0
+            {
+                print("warning: no subtasks in list. selections will be deleted: \(selectedIndexes)")
+                selectedIndexes.removeAll()
+            }
+        }
+        else
+        {
+            selectedIndexes.sort()
+            
+            while let lastIndex = selectedIndexes.last, lastIndex >= numberOfTasks
+            {
+                print("warning: subtask selection index \(lastIndex) is out of bounds and will be removed")
+                selectedIndexes.popLast()
+            }
+        }
+    }
     
     // MARK: - Read
     
