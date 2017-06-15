@@ -14,7 +14,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
 {
     // MARK: - Table View
     
-    convenience init(with list: TaskList)
+    convenience init()
     {
         self.init(frame: NSRect.zero)
         
@@ -85,9 +85,9 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         case 51:
             deleteSelectedTasks()
         case 123:
-            filterBySuperContainer()
+            goToSuperContainer()
         case 124:
-            filterBySelectedTask()
+            goToSelectedTask()
         default:
             break
         }
@@ -130,11 +130,28 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     {
         //Swift.print(notification)
         
+        if sender as AnyObject === taskList
+        {
+            receivedNotificationFromTaskList(notification)
+            return
+        }
+        
         switch notification
         {
-        case TaskStore.selectionDidChange:
+        case TaskList.selectionDidChange:
             break
-        case TaskStore.listContainerDidChange:
+        default:
+            break
+        }
+    }
+    
+    private func receivedNotificationFromTaskList(_ notification: String)
+    {
+        switch notification
+        {
+        case TaskList.didUpdateContainer:
+            Swift.print("container did update to \(taskList.title)")
+            tableView.reloadData()
             break
         default:
             break
@@ -143,9 +160,9 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     // MARK: - Editing and Filtering the List
     
-    private func filterBySuperContainer()
+    private func goToSuperContainer()
     {
-        if taskStore.filterBySuperContainer()
+        if taskList.goToSuperContainer()
         {
             tableView.reloadData()
             
@@ -153,9 +170,9 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         }
     }
     
-    private func filterBySelectedTask()
+    private func goToSelectedTask()
     {
-        if taskStore.filterBySelectedTask()
+        if taskList.goToSelectedTask()
         {
             tableView.reloadData()
             
@@ -165,11 +182,11 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func deleteSelectedTasks()
     {
-        let selectedIndexSet = IndexSet(taskStore.selectedIndexes)
+        let selectedIndexSet = IndexSet(taskList.selectedIndexes)
         
         tableView.beginUpdates()
        
-        guard taskStore.deleteSelectedTasks() else
+        guard taskList.deleteSelectedTasks() else
         {
             tableView.endUpdates()
             return
@@ -185,7 +202,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func createNewTask(at index: Int? = nil, createContainer: Bool = false)
     {
-        if createContainer && taskStore.selectedIndexes.count > 1
+        if createContainer && taskList.selectedIndexes.count > 1
         {
             groupSelectedTasks()
         }
@@ -197,11 +214,11 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func groupSelectedTasks()
     {
-        let selectedIndexes = taskStore.selectedIndexes
+        let selectedIndexes = taskList.selectedIndexes
         
         tableView.beginUpdates()
         
-        guard let groupIndex = taskStore.groupSelectedTasks(as: Task()) else
+        guard let groupIndex = taskList.groupSelectedTasks(as: Task()) else
         {
             tableView.endUpdates()
             return
@@ -222,7 +239,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     {
         tableView.beginUpdates()
         
-        let index = taskStore.add(Task(), at: index)
+        let index = taskList.add(Task(), at: index)
         
         tableView.insertRows(at: [index],
                              withAnimation: NSTableViewAnimationOptions.slideDown)
@@ -243,9 +260,9 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
             tableView.scrollRowToVisible(index)
         }
         
-        if taskStore.selectedIndexes != [index]
+        if taskList.selectedIndexes != [index]
         {
-            taskStore.selectedIndexes = [index]
+            taskList.selectedIndexes = [index]
         }
         
         updateTableSelection()
@@ -269,7 +286,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func updateTableSelection()
     {
-        tableView.selectRowIndexes(IndexSet(taskStore.selectedIndexes),
+        tableView.selectRowIndexes(IndexSet(taskList.selectedIndexes),
                                    byExtendingSelection: false)
     }
     
@@ -282,13 +299,13 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView?
     {
-        return TaskListRow(with: taskStore.task(at: row))
+        return TaskListRow(with: taskList.task(at: row))
     }
     
     func tableView(_ tableView: NSTableView,
                    selectionIndexesForProposedSelection proposedSelectionIndexes: IndexSet) -> IndexSet
     {
-        taskStore.selectedIndexes = Array(proposedSelectionIndexes)
+        taskList.selectedIndexes = Array(proposedSelectionIndexes)
         
         return proposedSelectionIndexes
     }
@@ -297,7 +314,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     func numberOfRows(in tableView: NSTableView) -> Int
     {
-        return taskStore.list.count
+        return taskList.numberOfTasks
     }
     
     func tableView(_ tableView: NSTableView,
@@ -313,7 +330,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         let cell = tableView.make(withIdentifier: TaskView.reuseIdentifier,
                                   owner: self) as? TaskView ?? TaskView()
         
-        if let task = taskStore.task(at: row)
+        if let task = taskList.task(at: row)
         {
             cell.configure(with: task)
         }
@@ -341,4 +358,8 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         
         tableView.endUpdates()
     }
+    
+    // MARK: - Task List
+    
+    private var taskList = TaskList()
 }

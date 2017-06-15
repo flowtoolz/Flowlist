@@ -47,7 +47,7 @@ class MainVC: NSViewController
     
     lazy var mainList: TaskListView =
     {
-        let view = TaskListView(with: TaskList(with: taskStore.root))
+        let view = TaskListView()
         self.view.addSubview(view)
         
         return view
@@ -63,7 +63,7 @@ class MainVC: NSViewController
     
     lazy var detailList: TaskListView =
     {
-        let view = TaskListView(with: TaskList(with: taskStore.root))
+        let view = TaskListView()
         self.view.addSubview(view)
         
         view.tableView.isEnabled = false
