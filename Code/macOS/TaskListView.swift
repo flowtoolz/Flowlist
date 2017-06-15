@@ -138,7 +138,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         
         switch notification
         {
-        case TaskList.selectionDidChange:
+        case TaskList.didChangeSelection:
             break
         default:
             break

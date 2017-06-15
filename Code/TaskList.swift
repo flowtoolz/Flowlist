@@ -126,12 +126,12 @@ class TaskList: Sender, Subscriber
         {
             if oldValue != selectedIndexes
             {
-                send(TaskList.selectionDidChange)
+                send(TaskList.didChangeSelection)
             }
         }
     }
     
-    static let selectionDidChange = "selectionDidChange"
+    static let didChangeSelection = "TaskListDidChangeSelection"
     
     // MARK: - Read
     
