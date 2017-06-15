@@ -49,11 +49,6 @@ extension TaskStore
         {
             let task = archiveTask.task
             
-            if let containerUuid = archiveTask.containerUuidForDecoding
-            {
-                task.container = tasksByUuid[containerUuid]
-            }
-            
             if let elementUuids = archiveTask.elementUuidsForDecoding
             {
                 for elementUuid in elementUuids
