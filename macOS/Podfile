@@ -3,13 +3,13 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 use_frameworks!
 
-target 'TodayList' do
+target 'Flowlist' do
 
     pod 'PureLayout', '3.0.2'
   
     pod 'Flowtoolz', :path=> '../../Flowtoolz-Cocoapod'
 
-    target 'TodayListTests' do
+    target 'FlowlistTests' do
 
         inherit! :search_paths
 

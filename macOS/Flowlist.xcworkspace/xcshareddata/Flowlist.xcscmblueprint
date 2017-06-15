@@ -7,14 +7,14 @@
     "B6D68CA7F4730EA17103D5BEFBF163F5658A0394" : 9223372036854775807,
     "452312DC4C931AC98EBDCD2A567E61A4ECB36377" : 9223372036854775807
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C2928332-86EF-41FB-9A0E-D72E330E9C12",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7E515F8D-2471-4CD7-BBD1-48A813A4DC63",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "B6D68CA7F4730EA17103D5BEFBF163F5658A0394" : "TodayList\/",
+    "B6D68CA7F4730EA17103D5BEFBF163F5658A0394" : "Flowlist\/",
     "452312DC4C931AC98EBDCD2A567E61A4ECB36377" : "Flowtoolz-Cocoapod\/"
   },
-  "DVTSourceControlWorkspaceBlueprintNameKey" : "TodayList",
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Flowlist",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
-  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "macOS\/TodayList.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "macOS\/Flowlist.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/bitbucket.org\/flowtoolz\/flowtoolz.git",

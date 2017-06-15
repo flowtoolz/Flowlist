@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1EAE5C54F685E96E2AC59245 /* Pods_TodayList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92F02549003B1143E1330A1 /* Pods_TodayList.framework */; };
 		9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185B1EEEE8CE00B35AD5 /* Task.swift */; };
 		9E15185E1EEEE97700B35AD5 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185D1EEEE97700B35AD5 /* MainVC.swift */; };
 		9E4DE65E1EF148C100506B48 /* TaskArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4DE65D1EF148C100506B48 /* TaskArchive.swift */; };
@@ -22,6 +21,8 @@
 		9E82A7A91EF2A558006AEF02 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* TaskList.swift */; };
 		9EA2B9691EF035D900F05F20 /* TaskListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B9681EF035D900F05F20 /* TaskListRow.swift */; };
 		9EA2B96B1EF0A80A00F05F20 /* TaskStore+Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */; };
+		AD3FE64BCA6939AA98353C40 /* Pods_FlowlistTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6347ACAE78132863C2FF94 /* Pods_FlowlistTests.framework */; };
+		C932DAFCC628909A261C9DC7 /* Pods_Flowlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D591083E3159C05E29673835 /* Pods_Flowlist.framework */; };
 		D72867BFC0CBB55FF878CD7A /* Pods_TodayListTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCFD3E12471EE5C3B17C7DE0 /* Pods_TodayListTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,17 +39,21 @@
 /* Begin PBXFileReference section */
 		0E71D227E7E9FF41201C5A85 /* Pods-TodayList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayList.release.xcconfig"; path = "Pods/Target Support Files/Pods-TodayList/Pods-TodayList.release.xcconfig"; sourceTree = "<group>"; };
 		2EE1ED41836AD451F4F7E318 /* Pods-TodayListTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayListTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TodayListTests/Pods-TodayListTests.release.xcconfig"; sourceTree = "<group>"; };
+		31D7BF377971DCFFFFB9F309 /* Pods-Flowlist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flowlist.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist.release.xcconfig"; sourceTree = "<group>"; };
 		3A9A2532CA6FC107DA4F45FB /* Pods-TodayListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayListTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TodayListTests/Pods-TodayListTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6F31C4A5AA59FD1BF6AFBF3A /* Pods-FlowlistTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowlistTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests.release.xcconfig"; sourceTree = "<group>"; };
+		73F5B44C9211479F59673188 /* Pods-FlowlistTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowlistTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests.debug.xcconfig"; sourceTree = "<group>"; };
+		78B3E83C8B5F1E96FF074B6D /* Pods-Flowlist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flowlist.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist.debug.xcconfig"; sourceTree = "<group>"; };
 		9E15185B1EEEE8CE00B35AD5 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../../Code/Task.swift; sourceTree = "<group>"; };
 		9E15185D1EEEE97700B35AD5 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainVC.swift; path = ../../Code/macOS/MainVC.swift; sourceTree = "<group>"; };
 		9E4DE65D1EF148C100506B48 /* TaskArchive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskArchive.swift; path = ../../Code/TaskArchive.swift; sourceTree = "<group>"; };
 		9E4DE65F1EF159D700506B48 /* Task+UUID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Task+UUID.swift"; path = "../../Code/Task+UUID.swift"; sourceTree = "<group>"; };
-		9E542E911EEEE41C00534981 /* TodayList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodayList.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E542E911EEEE41C00534981 /* Flowlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flowlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E542E941EEEE41C00534981 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		9E542E971EEEE41C00534981 /* TodayList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TodayList.xcdatamodel; sourceTree = "<group>"; };
 		9E542E991EEEE41C00534981 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9E542E9E1EEEE41C00534981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9E542EA31EEEE41C00534981 /* TodayListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodayListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E542EA31EEEE41C00534981 /* FlowlistTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowlistTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E542EA71EEEE41C00534981 /* TodayListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayListTests.swift; sourceTree = "<group>"; };
 		9E542EA91EEEE41C00534981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E72881A1EEF3095003A2F46 /* TaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListView.swift; path = ../../Code/macOS/TaskListView.swift; sourceTree = "<group>"; };
@@ -57,9 +62,11 @@
 		9E82A7A81EF2A558006AEF02 /* TaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskList.swift; path = ../../Code/TaskList.swift; sourceTree = "<group>"; };
 		9EA2B9681EF035D900F05F20 /* TaskListRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListRow.swift; path = ../../Code/macOS/TaskListRow.swift; sourceTree = "<group>"; };
 		9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TaskStore+Persistence.swift"; path = "../../Code/macOS/TaskStore+Persistence.swift"; sourceTree = "<group>"; };
+		BA6347ACAE78132863C2FF94 /* Pods_FlowlistTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlowlistTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCFD3E12471EE5C3B17C7DE0 /* Pods_TodayListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodayListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C499DBA6E96C7098BCE851AA /* Pods-TodayList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TodayList/Pods-TodayList.debug.xcconfig"; sourceTree = "<group>"; };
 		C92F02549003B1143E1330A1 /* Pods_TodayList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodayList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D591083E3159C05E29673835 /* Pods_Flowlist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flowlist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1EAE5C54F685E96E2AC59245 /* Pods_TodayList.framework in Frameworks */,
+				C932DAFCC628909A261C9DC7 /* Pods_Flowlist.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +83,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D72867BFC0CBB55FF878CD7A /* Pods_TodayListTests.framework in Frameworks */,
+				AD3FE64BCA6939AA98353C40 /* Pods_FlowlistTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +95,8 @@
 			children = (
 				C92F02549003B1143E1330A1 /* Pods_TodayList.framework */,
 				BCFD3E12471EE5C3B17C7DE0 /* Pods_TodayListTests.framework */,
+				D591083E3159C05E29673835 /* Pods_Flowlist.framework */,
+				BA6347ACAE78132863C2FF94 /* Pods_FlowlistTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -98,6 +108,10 @@
 				0E71D227E7E9FF41201C5A85 /* Pods-TodayList.release.xcconfig */,
 				3A9A2532CA6FC107DA4F45FB /* Pods-TodayListTests.debug.xcconfig */,
 				2EE1ED41836AD451F4F7E318 /* Pods-TodayListTests.release.xcconfig */,
+				78B3E83C8B5F1E96FF074B6D /* Pods-Flowlist.debug.xcconfig */,
+				31D7BF377971DCFFFFB9F309 /* Pods-Flowlist.release.xcconfig */,
+				73F5B44C9211479F59673188 /* Pods-FlowlistTests.debug.xcconfig */,
+				6F31C4A5AA59FD1BF6AFBF3A /* Pods-FlowlistTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -105,8 +119,8 @@
 		9E542E881EEEE41C00534981 = {
 			isa = PBXGroup;
 			children = (
-				9E542E931EEEE41C00534981 /* TodayList */,
-				9E542EA61EEEE41C00534981 /* TodayListTests */,
+				9E542E931EEEE41C00534981 /* Flowlist */,
+				9E542EA61EEEE41C00534981 /* FlowlistTests */,
 				9E542E921EEEE41C00534981 /* Products */,
 				355124306BC9502BB1F4B052 /* Pods */,
 				214596B4A8859C616CE520C0 /* Frameworks */,
@@ -116,13 +130,13 @@
 		9E542E921EEEE41C00534981 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9E542E911EEEE41C00534981 /* TodayList.app */,
-				9E542EA31EEEE41C00534981 /* TodayListTests.xctest */,
+				9E542E911EEEE41C00534981 /* Flowlist.app */,
+				9E542EA31EEEE41C00534981 /* FlowlistTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9E542E931EEEE41C00534981 /* TodayList */ = {
+		9E542E931EEEE41C00534981 /* Flowlist */ = {
 			isa = PBXGroup;
 			children = (
 				9E542E941EEEE41C00534981 /* main.swift */,
@@ -134,16 +148,16 @@
 				9E542E9E1EEEE41C00534981 /* Info.plist */,
 				9E542E961EEEE41C00534981 /* TodayList.xcdatamodeld */,
 			);
-			path = TodayList;
+			path = Flowlist;
 			sourceTree = "<group>";
 		};
-		9E542EA61EEEE41C00534981 /* TodayListTests */ = {
+		9E542EA61EEEE41C00534981 /* FlowlistTests */ = {
 			isa = PBXGroup;
 			children = (
 				9E542EA71EEEE41C00534981 /* TodayListTests.swift */,
 				9E542EA91EEEE41C00534981 /* Info.plist */,
 			);
-			path = TodayListTests;
+			path = FlowlistTests;
 			sourceTree = "<group>";
 		};
 		9E82A7A51EF2A46F006AEF02 /* Task */ = {
@@ -179,9 +193,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9E542E901EEEE41C00534981 /* TodayList */ = {
+		9E542E901EEEE41C00534981 /* Flowlist */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9E542EAC1EEEE41C00534981 /* Build configuration list for PBXNativeTarget "TodayList" */;
+			buildConfigurationList = 9E542EAC1EEEE41C00534981 /* Build configuration list for PBXNativeTarget "Flowlist" */;
 			buildPhases = (
 				1ED3B3152A5343BE5D01F4E9 /* [CP] Check Pods Manifest.lock */,
 				9E542E8D1EEEE41C00534981 /* Sources */,
@@ -194,14 +208,14 @@
 			);
 			dependencies = (
 			);
-			name = TodayList;
+			name = Flowlist;
 			productName = TodayList;
-			productReference = 9E542E911EEEE41C00534981 /* TodayList.app */;
+			productReference = 9E542E911EEEE41C00534981 /* Flowlist.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9E542EA21EEEE41C00534981 /* TodayListTests */ = {
+		9E542EA21EEEE41C00534981 /* FlowlistTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9E542EAF1EEEE41C00534981 /* Build configuration list for PBXNativeTarget "TodayListTests" */;
+			buildConfigurationList = 9E542EAF1EEEE41C00534981 /* Build configuration list for PBXNativeTarget "FlowlistTests" */;
 			buildPhases = (
 				F431F3A980530CFD1DD1CBD9 /* [CP] Check Pods Manifest.lock */,
 				9E542E9F1EEEE41C00534981 /* Sources */,
@@ -215,9 +229,9 @@
 			dependencies = (
 				9E542EA51EEEE41C00534981 /* PBXTargetDependency */,
 			);
-			name = TodayListTests;
+			name = FlowlistTests;
 			productName = TodayListTests;
-			productReference = 9E542EA31EEEE41C00534981 /* TodayListTests.xctest */;
+			productReference = 9E542EA31EEEE41C00534981 /* FlowlistTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -243,7 +257,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9E542E8C1EEEE41C00534981 /* Build configuration list for PBXProject "TodayList" */;
+			buildConfigurationList = 9E542E8C1EEEE41C00534981 /* Build configuration list for PBXProject "Flowlist" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -256,8 +270,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9E542E901EEEE41C00534981 /* TodayList */,
-				9E542EA21EEEE41C00534981 /* TodayListTests */,
+				9E542E901EEEE41C00534981 /* Flowlist */,
+				9E542EA21EEEE41C00534981 /* FlowlistTests */,
 			);
 		};
 /* End PBXProject section */
@@ -308,7 +322,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TodayListTests/Pods-TodayListTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6FA58A59C0E21E5935331BF1 /* [CP] Copy Pods Resources */ = {
@@ -323,7 +337,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TodayList/Pods-TodayList-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9229376CC8A9414230AE32A3 /* [CP] Embed Pods Frameworks */ = {
@@ -338,7 +352,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TodayList/Pods-TodayList-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9E9B22F2BCFF85FFA1C5BD30 /* [CP] Embed Pods Frameworks */ = {
@@ -353,7 +367,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TodayListTests/Pods-TodayListTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F431F3A980530CFD1DD1CBD9 /* [CP] Check Pods Manifest.lock */ = {
@@ -406,7 +420,7 @@
 /* Begin PBXTargetDependency section */
 		9E542EA51EEEE41C00534981 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9E542E901EEEE41C00534981 /* TodayList */;
+			target = 9E542E901EEEE41C00534981 /* Flowlist */;
 			targetProxy = 9E542EA41EEEE41C00534981 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -504,15 +518,15 @@
 		};
 		9E542EAD1EEEE41C00534981 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C499DBA6E96C7098BCE851AA /* Pods-TodayList.debug.xcconfig */;
+			baseConfigurationReference = 78B3E83C8B5F1E96FF074B6D /* Pods-Flowlist.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
-				INFOPLIST_FILE = TodayList/Info.plist;
+				INFOPLIST_FILE = Flowlist/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.TodayList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.Flowlist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -520,15 +534,15 @@
 		};
 		9E542EAE1EEEE41C00534981 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0E71D227E7E9FF41201C5A85 /* Pods-TodayList.release.xcconfig */;
+			baseConfigurationReference = 31D7BF377971DCFFFFB9F309 /* Pods-Flowlist.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
-				INFOPLIST_FILE = TodayList/Info.plist;
+				INFOPLIST_FILE = Flowlist/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.TodayList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.Flowlist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -536,7 +550,7 @@
 		};
 		9E542EB01EEEE41C00534981 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3A9A2532CA6FC107DA4F45FB /* Pods-TodayListTests.debug.xcconfig */;
+			baseConfigurationReference = 73F5B44C9211479F59673188 /* Pods-FlowlistTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -547,13 +561,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.TodayListTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TodayList.app/Contents/MacOS/TodayList";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flowlist.app/Contents/MacOS/Flowlist";
 			};
 			name = Debug;
 		};
 		9E542EB11EEEE41C00534981 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EE1ED41836AD451F4F7E318 /* Pods-TodayListTests.release.xcconfig */;
+			baseConfigurationReference = 6F31C4A5AA59FD1BF6AFBF3A /* Pods-FlowlistTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -564,14 +578,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.TodayListTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TodayList.app/Contents/MacOS/TodayList";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flowlist.app/Contents/MacOS/Flowlist";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9E542E8C1EEEE41C00534981 /* Build configuration list for PBXProject "TodayList" */ = {
+		9E542E8C1EEEE41C00534981 /* Build configuration list for PBXProject "Flowlist" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9E542EAA1EEEE41C00534981 /* Debug */,
@@ -580,7 +594,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9E542EAC1EEEE41C00534981 /* Build configuration list for PBXNativeTarget "TodayList" */ = {
+		9E542EAC1EEEE41C00534981 /* Build configuration list for PBXNativeTarget "Flowlist" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9E542EAD1EEEE41C00534981 /* Debug */,
@@ -589,7 +603,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9E542EAF1EEEE41C00534981 /* Build configuration list for PBXNativeTarget "TodayListTests" */ = {
+		9E542EAF1EEEE41C00534981 /* Build configuration list for PBXNativeTarget "FlowlistTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9E542EB01EEEE41C00534981 /* Debug */,

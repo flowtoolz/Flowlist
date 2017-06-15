@@ -31,7 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
         window.setFrame(CGRect(x: 200, y: 100, width: 800, height: 600),
                         display: true)
         window.isReleasedWhenClosed = false
-        window.title = "TodayList"
+        window.title = "Flowlist"
         window.toolbar = toolbar
         window.makeKeyAndOrderFront(self)
     }
