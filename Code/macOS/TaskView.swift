@@ -8,7 +8,7 @@
 
 import AppKit
 
-class TaskListCell: NSView, NSTextFieldDelegate
+class TaskView: NSView, NSTextFieldDelegate
 {
     override init(frame frameRect: NSRect)
     {
@@ -26,7 +26,7 @@ class TaskListCell: NSView, NSTextFieldDelegate
     
     private func initialize()
     {
-        self.identifier = TaskListCell.reuseIdentifier
+        self.identifier = TaskView.reuseIdentifier
         
         layoutCheckBox()
         layoutContainerIndicator()
@@ -118,7 +118,7 @@ class TaskListCell: NSView, NSTextFieldDelegate
         button.action = #selector(checkBoxClicked)
         button.target = self
         button.imageScaling = .scaleNone
-        button.image = TaskListCell.checkBoxImageEmpty
+        button.image = TaskView.checkBoxImageEmpty
         button.isBordered = false
         button.layer?.backgroundColor = NSColor.clear.cgColor
         
@@ -149,7 +149,7 @@ class TaskListCell: NSView, NSTextFieldDelegate
     
     private func checkBoxImage(_ checked: Bool) -> NSImage?
     {
-        return checked ? TaskListCell.checkBoxImageChecked : TaskListCell.checkBoxImageEmpty
+        return checked ? TaskView.checkBoxImageChecked : TaskView.checkBoxImageEmpty
     }
     
     private static let checkBoxImageEmpty = NSImage(named: "checkbox_unchecked")

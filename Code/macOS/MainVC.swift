@@ -45,9 +45,9 @@ class MainVC: NSViewController
                                         withMultiplier: 0.66)
     }
     
-    lazy var mainList: TaskList =
+    lazy var mainList: TaskListView =
     {
-        let view = TaskList.newAutoLayout()
+        let view = TaskListView(with: TaskList(with: taskStore.root))
         self.view.addSubview(view)
         
         return view
@@ -61,13 +61,12 @@ class MainVC: NSViewController
         detailList.autoPinEdge(.left, to: .right, of: mainList)
     }
     
-    lazy var detailList: TaskList =
+    lazy var detailList: TaskListView =
     {
-        let view = TaskList.newAutoLayout()
+        let view = TaskListView(with: TaskList(with: taskStore.root))
         self.view.addSubview(view)
         
         view.tableView.isEnabled = false
-        view.hasVerticalScroller = false
         
         return view
     }()

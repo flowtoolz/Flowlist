@@ -10,31 +10,25 @@ import AppKit
 import PureLayout
 import Flowtoolz
 
-class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskListCellDelegate, Subscriber
+class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskListCellDelegate, Subscriber
 {
     // MARK: - Table View
     
-    override init(frame frameRect: NSRect)
+    convenience init(with list: TaskList)
     {
-        super.init(frame: frameRect)
-        
-        initialize()
-    }
-    
-    required init?(coder: NSCoder)
-    {
-        super.init(coder: coder)
+        self.init(frame: NSRect.zero)
         
         initialize()
     }
     
     private func initialize()
     {
+        translatesAutoresizingMaskIntoConstraints = false
         drawsBackground = false
+        automaticallyAdjustsContentInsets = false
         
         documentView = tableView
         
-        automaticallyAdjustsContentInsets = false
         contentInsets = NSEdgeInsetsMake(10, 0, 10, 0)
         
         subscribe(received)
@@ -44,7 +38,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
     {
         let view = NSTableView()
         
-        let column = NSTableColumn(identifier: TaskListCell.reuseIdentifier)
+        let column = NSTableColumn(identifier: TaskView.reuseIdentifier)
         column.title = "Task List Title"
         view.addTableColumn(column)
         
@@ -120,7 +114,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
         if let index = tableView.selectedRowIndexes.max(),
             let cell = tableView.view(atColumn: 0,
                                       row: index,
-                                      makeIfNecessary: false) as? TaskListCell
+                                      makeIfNecessary: false) as? TaskView
         {
             cell.isTitleEditingEnabled = false
             
@@ -128,13 +122,13 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
         }
     }
     
-    private var disabledCell: TaskListCell?
+    private var disabledCell: TaskView?
     
     // MARK: - Reacting to Notifications
     
     func received(notification: String, from sender: Any)
     {
-        Swift.print(notification)
+        //Swift.print(notification)
         
         switch notification
         {
@@ -258,7 +252,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
         
         if let cell = tableView.view(atColumn: 0,
                                      row: index,
-                                     makeIfNecessary: false) as? TaskListCell
+                                     makeIfNecessary: false) as? TaskView
         {
             cell.startEditingTitle()
         }
@@ -310,14 +304,14 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
                    viewFor tableColumn: NSTableColumn?,
                    row: Int) -> NSView?
     {
-        guard tableColumn?.identifier == TaskListCell.reuseIdentifier else
+        guard tableColumn?.identifier == TaskView.reuseIdentifier else
         {
             Swift.print("warning: tableColumn has weird or nil identifier: \(tableColumn?.identifier ?? "nil")")
             return nil
         }
 
-        let cell = tableView.make(withIdentifier: TaskListCell.reuseIdentifier,
-                                  owner: self) as? TaskListCell ?? TaskListCell()
+        let cell = tableView.make(withIdentifier: TaskView.reuseIdentifier,
+                                  owner: self) as? TaskView ?? TaskView()
         
         if let task = taskStore.task(at: row)
         {
