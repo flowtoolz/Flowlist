@@ -34,9 +34,11 @@ class TaskList: Sender, Subscriber
         
         while let lastIndex = sortedIndexes.popLast()
         {
-            if let removedTask = container.elements?.remove(at: lastIndex)
+            if let removedTask = container.task(at: lastIndex)
             {
                 removedTasks.insert(removedTask, at: 0)
+            
+                container.deleteTask(at: lastIndex)
             }
         }
         
@@ -77,7 +79,7 @@ class TaskList: Sender, Subscriber
         
         while let lastIndex = sorted.popLast()
         {
-            container.elements?.remove(at: lastIndex)
+            container.deleteTask(at: lastIndex)
         }
         
         selectedIndexes = [max(firstIndex - 1, 0)]
@@ -91,7 +93,7 @@ class TaskList: Sender, Subscriber
     {
         guard let superContainer = container.container,
             let index = container.indexInContainer
-            else
+        else
         {
             return false
         }
@@ -142,7 +144,7 @@ class TaskList: Sender, Subscriber
     
     var numberOfTasks: Int
     {
-        return container.numberOfElements
+        return container.subTasks.count
     }
 
     var title: String

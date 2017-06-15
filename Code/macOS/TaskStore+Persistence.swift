@@ -56,17 +56,13 @@ extension TaskStore
             
             if let elementUuids = archiveTask.elementUuidsForDecoding
             {
-                var elements = [Task]()
-                
                 for elementUuid in elementUuids
                 {
                     if let element = tasksByUuid[elementUuid]
                     {
-                        elements.append(element)
+                        task.insert(element, at: task.subTasks.count)
                     }
                 }
-                
-                task.elements = elements
             }
         }
         

@@ -49,8 +49,10 @@ class TaskArchive: NSObject, NSCoding
             aCoder.encode(containerUuid, forKey: "containerUuid")
         }
         
-        if let elements = task.elements, elements.count > 0
+        if task.subTasks.count > 0
         {
+            let elements = task.subTasks
+            
             var elementUuids = [String]()
             
             for element in elements

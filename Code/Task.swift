@@ -24,11 +24,11 @@ class Task
         self.uuid = uuid
     }
     
-    // MARK: - Hierarchy
+    // MARK: - Edit Hierarchy
     
     func insert(_ task: Task, at index: Int)
     {
-        guard index >= 0, index <= numberOfElements else
+        guard index >= 0, index <= subTasks.count else
         {
             print("Warning: tried to insert Task at an out of bound index into another task")
             return
@@ -44,9 +44,29 @@ class Task
         task.container = self
     }
     
+    func deleteTask(at index: Int) -> Bool
+    {
+        guard index >= 0, index < subTasks.count else
+        {
+            print("Warning: tried to delete task at an out of bound index")
+            return false
+        }
+        
+        elements?.remove(at: index)
+        
+        return true
+    }
+    
+    // MARK: - Read Hierarchy
+    
+    var isContainer: Bool
+    {
+        return subTasks.count > 0
+    }
+    
     func task(at index: Int) -> Task?
     {
-        guard index >= 0, index < numberOfElements else
+        guard index >= 0, index < subTasks.count else
         {
             print("Warning: tried to access Task at an out of bound index")
             return nil
@@ -55,9 +75,9 @@ class Task
         return elements?[index]
     }
     
-    var numberOfElements: Int
+    var subTasks: [Task]
     {
-        return elements?.count ?? 0
+        return elements ?? []
     }
     
     func allTasksRecursively() -> [Task]
@@ -74,12 +94,7 @@ class Task
         
         return tasks
     }
-    
-    var isContainer: Bool
-    {
-        return numberOfElements > 0
-    }
-    
+
     var indexInContainer: Int?
     {
         guard let container = container else
@@ -88,15 +103,16 @@ class Task
         }
         
         return container.elements?.index
-            {
-                element in
-                
-                return element.uuid == self.uuid
+        {
+            element in
+            
+            return element.uuid == self.uuid
         }
     }
     
     weak var container: Task?
-    var elements: [Task]?
+    
+    private var elements: [Task]?
     
     // MARK: - Data
     
