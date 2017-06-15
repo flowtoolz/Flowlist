@@ -292,18 +292,13 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
     {
         let row = tableView.row(for: view)
         
-        guard let task = taskStore.task(at: row) else
-        {
-            return
-        }
+        guard row >= 0 else { return }
 
         tableView.beginUpdates()
-        
-        let animationOptions: NSTableViewAnimationOptions = task.state != .done ? [] : NSTableViewAnimationOptions.slideDown
-        
+
         tableView.hideRows(at: [row], withAnimation: [])
         
-        tableView.unhideRows(at: [row], withAnimation: animationOptions)
+        tableView.unhideRows(at: [row], withAnimation: [])
         
         updateTableSelection()
         
