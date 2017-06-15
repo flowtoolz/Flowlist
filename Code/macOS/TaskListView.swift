@@ -10,7 +10,7 @@ import AppKit
 import PureLayout
 import Flowtoolz
 
-class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskListCellDelegate, Subscriber
+class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskViewDelegate, Subscriber
 {
     // MARK: - Table View
     
@@ -342,7 +342,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     // MARK: - TaskListCellDelegate
     
-    func viewNeedsUpdate(_ view: NSView)
+    func taskViewNeedsUpdate(_ view: NSView)
     {
         let row = tableView.row(for: view)
         

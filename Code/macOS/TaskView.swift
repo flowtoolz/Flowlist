@@ -133,7 +133,7 @@ class TaskView: NSView, NSTextFieldDelegate
         
         updateCheckBox()
         
-        delegate?.viewNeedsUpdate(self)
+        delegate?.taskViewNeedsUpdate(self)
     }
     
     private func updateCheckBox()
@@ -186,10 +186,10 @@ class TaskView: NSView, NSTextFieldDelegate
     
     private var task: Task?
     
-    var delegate: TaskListCellDelegate?
+    var delegate: TaskViewDelegate?
 }
 
-protocol TaskListCellDelegate
+protocol TaskViewDelegate
 {
-    func viewNeedsUpdate(_ view: NSView)
+    func taskViewNeedsUpdate(_ view: NSView)
 }
