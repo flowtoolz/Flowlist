@@ -98,21 +98,3 @@ extension TaskStore
     
     private static let filePath = Bundle.main.bundlePath + "/UserData.plist"
 }
-
-extension Task
-{
-    func allTasksRecursively() -> [Task]
-    {
-        var tasks = [self]
-        
-        if let elements = elements
-        {
-            for task in elements
-            {
-                tasks.append(contentsOf: task.allTasksRecursively())
-            }
-        }
-        
-        return tasks
-    }
-}

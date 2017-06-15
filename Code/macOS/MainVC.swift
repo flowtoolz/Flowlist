@@ -66,8 +66,6 @@ class MainVC: NSViewController
         let view = TaskListView()
         self.view.addSubview(view)
         
-        //view.tableView.isEnabled = false
-        
         return view
     }()
 }

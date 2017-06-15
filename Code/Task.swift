@@ -8,6 +8,8 @@
 
 class Task
 {
+    // MARK: - Initialization
+    
     convenience init(with uuid: String, title: String?, state: State?)
     {
         self.init(with: uuid)
@@ -22,15 +24,7 @@ class Task
         self.uuid = uuid
     }
     
-    var title: String?
-    
-    var state: State?
-    
-    enum State: Int
-    {
-        // state == nil is default and kind of a backlog or "no specific state" 
-        case inProgress, onHold, done, archived
-    }
+    // MARK: - Hierarchy
     
     func insert(_ task: Task, at index: Int)
     {
@@ -61,6 +55,26 @@ class Task
         return elements?[index]
     }
     
+    var numberOfElements: Int
+    {
+        return elements?.count ?? 0
+    }
+    
+    func allTasksRecursively() -> [Task]
+    {
+        var tasks = [self]
+        
+        if let elements = elements
+        {
+            for task in elements
+            {
+                tasks.append(contentsOf: task.allTasksRecursively())
+            }
+        }
+        
+        return tasks
+    }
+    
     var isContainer: Bool
     {
         return numberOfElements > 0
@@ -74,26 +88,33 @@ class Task
         }
         
         return container.elements?.index
-        {
-            element in
-            
-            return element.uuid == self.uuid
+            {
+                element in
+                
+                return element.uuid == self.uuid
         }
-    }
-    
-    var numberOfElements: Int
-    {
-        return elements?.count ?? 0
     }
     
     weak var container: Task?
     var elements: [Task]?
+    
+    // MARK: - Data
     
     let uuid: String
     
     var description: String
     {
         return "\(uuid) \(title ?? "Untitled")"
+    }
+    
+    var title: String?
+    
+    var state: State?
+    
+    enum State: Int
+    {
+        // state == nil is default and kind of a backlog or "no specific state"
+        case inProgress, onHold, done, archived
     }
 }
 
