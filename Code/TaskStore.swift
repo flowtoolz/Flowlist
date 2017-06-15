@@ -116,7 +116,7 @@ class TaskStore
     {
         didSet
         {
-            print("selection did change to: \(selectedIndexes.description)")
+            //print("selection did change to: \(selectedIndexes.description)")
         }
     }
     

@@ -44,13 +44,13 @@ class TaskListRow: NSTableRowView
     
     private var task: Task?
     
-    private let selectionColor = NSColor(calibratedRed: 218.0/255.0,
-                                         green: 238.0 / 255.0,
-                                         blue: 1,
+    private let selectionColor = NSColor(calibratedRed: 163.0/255.0,
+                                         green: 205.0 / 255.0,
+                                         blue: 254.0 / 255.0,
                                          alpha: 1)
     
-    private let doneColor = NSColor(calibratedRed: 238.0 / 255.0,
-                                         green: 1,
-                                         blue: 218.0/255.0,
+    private let doneColor = NSColor(calibratedRed: 224.0 / 255.0,
+                                         green: 224.0 / 255.0,
+                                         blue: 224.0 / 255.0,
                                          alpha: 1)
 }

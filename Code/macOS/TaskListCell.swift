@@ -80,7 +80,7 @@ class TaskListCell: NSView, NSTextFieldDelegate
     {
         titleField.autoAlignAxis(.horizontal, toSameAxisOf: self)
         titleField.autoPinEdge(.left, to: .right, of: checkBox)
-        titleField.autoPinEdge(.right, to: .left, of: containerIndicator)
+        titleField.autoPinEdge(.right, to: .left, of: containerIndicator, withOffset: -5)
     }
     
     private lazy var titleField: NSTextField =
@@ -141,6 +141,8 @@ class TaskListCell: NSView, NSTextFieldDelegate
         let isChecked = task?.state == .done
         
         checkBox.image = checkBoxImage(isChecked)
+        
+        titleField.textColor = isChecked ? NSColor(white: 0.5, alpha: 1) : NSColor.black
     }
     
     private var boxIsChecked = false
