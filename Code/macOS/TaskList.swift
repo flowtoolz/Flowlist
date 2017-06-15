@@ -9,7 +9,7 @@
 import AppKit
 import PureLayout
 
-class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
+class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskListCellDelegate
 {
     // MARK: - Table View
     
@@ -76,23 +76,16 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
                 tableView.reloadData()
             }
         case 36:
+                createNewTask(createContainer: !cmd)
+        case 45:
             if cmd
             {
                 createNewTask()
             }
-            else
-            {
-                createNewTask(createContainer: true)
-            }
-        case 45:
-            if cmd
-            {
-                createNewTask(createContainer: true)
-            }
         case 51:
             deleteSelectedTasks()
         case 123:
-            filterByContainerOfListedContainer()
+            filterBySuperContainer()
         case 124:
             filterBySelectedTask()
         default:
@@ -131,114 +124,120 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
     
     private var disabledCell: TaskListCell?
 
-    // MARK: - Editing the List
+    // MARK: - Editing and Filtering the List
     
-    private func filterByContainerOfListedContainer()
+    private func filterBySuperContainer()
     {
-        guard let index = taskStore.indexOfListedContainerInItsContainer() else
-        {
-            return
-        }
-        
-        if taskStore.filterByContainerOfListedContainer()
+        if taskStore.filterBySuperContainer()
         {
             tableView.reloadData()
-            select(row: index)
+            
+            updateTableSelection()
         }
     }
     
     private func filterBySelectedTask()
     {
-        let selectedIndexSet = tableView.selectedRowIndexes
-        
-        guard selectedIndexSet.count == 1,
-            let selectedIndex = selectedIndexSet.min() else
-        {
-            return
-        }
-
-        if taskStore.filterByTask(at: selectedIndex)
+        if taskStore.filterBySelectedTask()
         {
             tableView.reloadData()
-            select(row: 0)
+            
+            updateTableSelection()
         }
     }
     
     private func deleteSelectedTasks()
     {
-        let selectedIndexSet = tableView.selectedRowIndexes
-        
-        guard let indexOfFirstDeletion = selectedIndexSet.min() else
-        {
-            return
-        }
+        let selectedIndexSet = IndexSet(taskStore.selectedIndexes)
         
         tableView.beginUpdates()
-        
-        taskStore.deleteTasksFromList(at: Array(selectedIndexSet))
+       
+        guard taskStore.deleteSelectedTasks() else
+        {
+            tableView.endUpdates()
+            return
+        }
         
         tableView.removeRows(at: selectedIndexSet,
                              withAnimation: NSTableViewAnimationOptions.slideUp)
         
         tableView.endUpdates()
         
-        select(row: max(indexOfFirstDeletion - 1, 0))
+        updateTableSelection()
     }
     
     private func createNewTask(createContainer: Bool = false)
     {
-        var indexOfNewTask = 0
-        var reallyCreateContainer = false
-        
-        let selectedIndexes = tableView.selectedRowIndexes
-        
-        if let lastSelectedIndex = selectedIndexes.max(),
-            let firstSelectedIndex = selectedIndexes.min()
+        if createContainer && taskStore.selectedIndexes.count > 1
         {
-            reallyCreateContainer = selectedIndexes.count > 1 && createContainer
-            indexOfNewTask = reallyCreateContainer ? firstSelectedIndex : lastSelectedIndex + 1
-        }
-        
-        tableView.beginUpdates()
-        
-        if reallyCreateContainer
-        {
-            taskStore.groupListedTasks(at: Array(selectedIndexes), in: Task())
-            
-            tableView.removeRows(at: selectedIndexes,
-                                 withAnimation: NSTableViewAnimationOptions.slideUp)
-            
-            tableView.insertRows(at: [indexOfNewTask],
-                                 withAnimation: NSTableViewAnimationOptions.slideDown)
+            groupSelectedTasks()
         }
         else
         {
-            taskStore.add(Task(), toListAt: indexOfNewTask)
-            
-            tableView.insertRows(at: [indexOfNewTask],
-                                 withAnimation: NSTableViewAnimationOptions.slideDown)
+            createTask()
         }
-
+    }
+    
+    private func groupSelectedTasks()
+    {
+        let selectedIndexes = taskStore.selectedIndexes
+        
+        tableView.beginUpdates()
+        
+        guard let groupIndex = taskStore.groupSelectedTasks(as: Task()) else
+        {
+            tableView.endUpdates()
+            return
+        }
+        
+        tableView.removeRows(at: IndexSet(selectedIndexes),
+                             withAnimation: NSTableViewAnimationOptions.slideUp)
+        
+        tableView.insertRows(at: [groupIndex],
+                             withAnimation: NSTableViewAnimationOptions.slideDown)
+        
         tableView.endUpdates()
         
-        tableView.scrollRowToVisible(indexOfNewTask)
+        startEditing(at: groupIndex)
+    }
+    
+    private func createTask()
+    {
+        tableView.beginUpdates()
         
-        select(row: indexOfNewTask)
+        let index = taskStore.add(Task())
+        
+        tableView.insertRows(at: [index],
+                             withAnimation: NSTableViewAnimationOptions.slideDown)
+        
+        tableView.endUpdates()
+        
+        startEditing(at: index)
+    }
+    
+    private func startEditing(at index: Int)
+    {
+        tableView.scrollRowToVisible(index)
+        
+        if taskStore.selectedIndexes != [index]
+        {
+            taskStore.selectedIndexes = [index]
+        }
+        
+        updateTableSelection()
         
         if let cell = tableView.view(atColumn: 0,
-                                     row: indexOfNewTask,
+                                     row: index,
                                      makeIfNecessary: false) as? TaskListCell
         {
             cell.startEditingTitle()
         }
     }
     
-    // MARK: - Selecting Rows
-    
-    private func select(row: Int)
+    private func updateTableSelection()
     {
-        tableView.selectRowIndexes([row], byExtendingSelection: false)
-        taskStore.selectedIndexes = [row]
+        tableView.selectRowIndexes(IndexSet(taskStore.selectedIndexes),
+                                   byExtendingSelection: false)
     }
     
     // MARK: - Table View Delegate
@@ -250,7 +249,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
     
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView?
     {
-        return TaskListRow()
+        return TaskListRow(with: taskStore.task(at: row))
     }
     
     func tableView(_ tableView: NSTableView,
@@ -282,7 +281,32 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource
                                   owner: self) as? TaskListCell ?? TaskListCell()
         
         cell.configure(with: taskStore.list[row])
+        cell.delegate = self
         
         return cell
+    }
+    
+    // MARK: - TaskListCellDelegate
+    
+    func viewNeedsUpdate(_ view: NSView)
+    {
+        let row = tableView.row(for: view)
+        
+        guard let task = taskStore.task(at: row) else
+        {
+            return
+        }
+
+        tableView.beginUpdates()
+        
+        let animationOptions: NSTableViewAnimationOptions = task.state != .done ? [] : NSTableViewAnimationOptions.slideDown
+        
+        tableView.hideRows(at: [row], withAnimation: [])
+        
+        tableView.unhideRows(at: [row], withAnimation: animationOptions)
+        
+        updateTableSelection()
+        
+        tableView.endUpdates()
     }
 }

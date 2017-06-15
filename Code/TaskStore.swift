@@ -12,7 +12,105 @@ class TaskStore
 {
     fileprivate init() {}
     
-    // MARK: - Selection in List
+    // MARK: - Edit the List
+    
+    func groupSelectedTasks(as container: Task) -> Int?
+    {
+        guard let containerIndex = selectedIndexes.min() else
+        {
+            return nil
+        }
+        
+        var removedTasks = [Task]()
+        var sortedIndexes = selectedIndexes.sorted { return $0 < $1 }
+        
+        while let lastIndex = sortedIndexes.popLast()
+        {
+            if let removedTask = listContainer.elements?.remove(at: lastIndex)
+            {
+                removedTasks.insert(removedTask, at: 0)
+            }
+        }
+        
+        listContainer.insert(container, at: containerIndex)
+        
+        while let element = removedTasks.popLast()
+        {
+            container.insert(element, at: 0)
+        }
+        
+        selectedIndexes = [containerIndex]
+        
+        return containerIndex
+    }
+    
+    func add(_ task: Task) -> Int
+    {
+        var indexToInsert = 0
+        
+        if let lastSelectedIndex = selectedIndexes.max()
+        {
+            indexToInsert = lastSelectedIndex + 1
+        }
+        
+        listContainer.insert(task, at: indexToInsert)
+        
+        return indexToInsert
+    }
+    
+    func deleteSelectedTasks() -> Bool
+    {
+        var sorted = selectedIndexes.sorted { return $0 < $1 }
+        
+        guard let firstIndex = sorted.first else
+        {
+            return false
+        }
+    
+        while let lastIndex = sorted.popLast()
+        {
+            listContainer.elements?.remove(at: lastIndex)
+        }
+        
+        selectedIndexes = [max(firstIndex - 1, 0)]
+        
+        return true
+    }
+    
+    // MARK: - Filter the List
+    
+    func filterBySuperContainer() -> Bool
+    {
+        guard let superContainer = listContainer.container,
+            let index = listContainer.indexInContainer
+        else
+        {
+            return false
+        }
+        
+        listContainer = superContainer
+        
+        selectedIndexes = [index]
+        
+        return true
+    }
+    
+    func filterBySelectedTask() -> Bool
+    {
+        guard selectedIndexes.count == 1,
+            let task = task(at: selectedIndexes[0]),
+            task.isContainer
+        else
+        {
+            return false
+        }
+        
+        listContainer = task
+        
+        return true
+    }
+    
+    // MARK: - Task List and Selection
     
     var selectedIndexes = [Int]()
     {
@@ -22,106 +120,29 @@ class TaskStore
         }
     }
     
-    // MARK: - Edit List
-    
-    func groupListedTasks(at indexes: [Int], in newTask: Task)
+    func task(at index: Int) -> Task?
     {
-        var sorted = indexes.sorted { return $0 < $1 }
-        
-        guard let minIndex = sorted.first else
-        {
-            return
-        }
-        
-        // remove tasks
-        var removedTasks = [Task]()
-        
-        while let lastIndex = sorted.popLast()
-        {
-            if let removed = listedContainer.elements?.remove(at: lastIndex)
-            {
-                removedTasks.insert(removed, at: 0)
-            }
-        }
-        
-        // add container
-        add(newTask, toListAt: minIndex)
-        
-        while let element = removedTasks.popLast()
-        {
-            newTask.insert(element, at: 0)
-        }
+        return listContainer.task(at: index)
     }
-    
-    func add(_ task: Task, toListAt index: Int)
-    {
-        listedContainer.insert(task, at: index)
-    }
-    
-    func deleteTasksFromList(at indexes: [Int])
-    {
-        var sorted = indexes.sorted { return $0 < $1 }
-        
-        while let lastIndex = sorted.popLast()
-        {
-            listedContainer.elements?.remove(at: lastIndex)
-        }
-    }
-    
-    // MARK: - Filter List
     
     var list: [Task]
     {
-        return listedContainer.elements ?? []
+        return listContainer.elements ?? []
     }
-    
-    func filterByTask(at index: Int) -> Bool
-    {
-        guard let task = listedContainer.task(at: index), task.isContainer else
-        {
-            return false
-        }
-        
-        listedContainer = task
-        
-        return true
-    }
-    
-    func indexOfListedContainerInItsContainer() -> Int?
-    {
-        return listedContainer.container?.elements?.index
-        {
-            element in
-            
-            return element.uuid == self.listedContainer.uuid
-        }
-    }
-    
-    func filterByContainerOfListedContainer() -> Bool
-    {
-        guard let superContainer = listedContainer.container else
-        {
-            return false
-        }
-        
-        listedContainer = superContainer
-        
-        return true
-    }
-    
+
     func reset(with root: Task)
     {
         rootTask = root
         
-        listedContainer = root
+        listContainer = root
     }
+    
+    private lazy var listContainer: Task = self.rootTask
     
     var root: Task
     {
         return rootTask
     }
-    
-    private lazy var listedContainer: Task = self.rootTask
     
     private var rootTask = Task()
 }

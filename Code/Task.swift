@@ -66,6 +66,21 @@ class Task
         return numberOfElements > 0
     }
     
+    var indexInContainer: Int?
+    {
+        guard let container = container else
+        {
+            return nil
+        }
+        
+        return container.elements?.index
+        {
+            element in
+            
+            return element.uuid == self.uuid
+        }
+    }
+    
     var numberOfElements: Int
     {
         return elements?.count ?? 0

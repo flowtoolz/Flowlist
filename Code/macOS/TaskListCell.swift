@@ -132,6 +132,8 @@ class TaskListCell: NSView, NSTextFieldDelegate
         task?.state = boxIsChecked ? .done : nil
         
         updateCheckBox()
+        
+        delegate?.viewNeedsUpdate(self)
     }
     
     private func updateCheckBox()
@@ -181,4 +183,11 @@ class TaskListCell: NSView, NSTextFieldDelegate
     // MARK: - Task
     
     private var task: Task?
+    
+    var delegate: TaskListCellDelegate?
+}
+
+protocol TaskListCellDelegate
+{
+    func viewNeedsUpdate(_ view: NSView)
 }
