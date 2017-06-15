@@ -6,11 +6,16 @@
 //  Copyright © 2017 Flowtoolz. All rights reserved.
 //
 
+import Flowtoolz
+
 let taskStore = TaskStore()
 
-class TaskStore
+class TaskStore: Sender
 {
-    fileprivate init() {}
+    fileprivate init()
+    {
+        listContainer = self.rootTask
+    }
     
     // MARK: - Edit the List
     
@@ -116,9 +121,14 @@ class TaskStore
     {
         didSet
         {
-            //print("selection did change to: \(selectedIndexes.description)")
+            if oldValue != selectedIndexes
+            {
+                send(TaskStore.selectionDidChange)
+            }
         }
     }
+    
+    static let selectionDidChange = "selectionDidChange"
     
     func task(at index: Int) -> Task?
     {
@@ -137,7 +147,18 @@ class TaskStore
         listContainer = root
     }
     
-    private lazy var listContainer: Task = self.rootTask
+    private var listContainer: Task
+    {
+        didSet
+        {
+            if oldValue.uuid != listContainer.uuid
+            {
+                send(TaskStore.listContainerDidChange)
+            }
+        }
+    }
+
+    static let listContainerDidChange = "listContainerDidChange"
     
     var root: Task
     {

@@ -8,8 +8,9 @@
 
 import AppKit
 import PureLayout
+import Flowtoolz
 
-class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskListCellDelegate
+class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskListCellDelegate, Subscriber
 {
     // MARK: - Table View
     
@@ -35,6 +36,8 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
         
         automaticallyAdjustsContentInsets = false
         contentInsets = NSEdgeInsetsMake(10, 0, 10, 0)
+        
+        subscribe(received)
     }
     
     lazy var tableView: NSTableView =
@@ -59,7 +62,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
     
     override func keyDown(with event: NSEvent)
     {
-        Swift.print(event.keyCode.description)
+        //Swift.print(event.keyCode.description)
         
         let cmd = event.modifierFlags.contains(.command)
      
@@ -126,7 +129,24 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
     }
     
     private var disabledCell: TaskListCell?
-
+    
+    // MARK: - Reacting to Notifications
+    
+    func received(notification: String, from sender: Any)
+    {
+        Swift.print(notification)
+        
+        switch notification
+        {
+        case TaskStore.selectionDidChange:
+            break
+        case TaskStore.listContainerDidChange:
+            break
+        default:
+            break
+        }
+    }
+    
     // MARK: - Editing and Filtering the List
     
     private func filterBySuperContainer()
