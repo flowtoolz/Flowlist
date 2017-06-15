@@ -44,11 +44,11 @@ class TaskStore
         return containerIndex
     }
     
-    func add(_ task: Task) -> Int
+    func add(_ task: Task, at index: Int?) -> Int
     {
-        var indexToInsert = 0
+        var indexToInsert = index ?? 0
         
-        if let lastSelectedIndex = selectedIndexes.max()
+        if index == nil, let lastSelectedIndex = selectedIndexes.max()
         {
             indexToInsert = lastSelectedIndex + 1
         }

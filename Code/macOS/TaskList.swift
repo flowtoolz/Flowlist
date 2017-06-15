@@ -31,7 +31,10 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
     {
         drawsBackground = false
         
+        verticalScroller?.scrollerStyle = .overlay
         hasVerticalScroller = true
+        self.autohidesScrollers = true
+        lineScroll = 36
         
         documentView = tableView
     }
@@ -58,7 +61,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
     
     override func keyDown(with event: NSEvent)
     {
-        //Swift.print(event.keyCode.description)
+        Swift.print(event.keyCode.description)
         
         let cmd = event.modifierFlags.contains(.command)
      
@@ -82,6 +85,8 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
             {
                 createNewTask()
             }
+        case 49:
+            createNewTask(at: 0)
         case 51:
             deleteSelectedTasks()
         case 123:
@@ -166,7 +171,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
         updateTableSelection()
     }
     
-    private func createNewTask(createContainer: Bool = false)
+    private func createNewTask(at index: Int? = nil, createContainer: Bool = false)
     {
         if createContainer && taskStore.selectedIndexes.count > 1
         {
@@ -174,7 +179,7 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
         }
         else
         {
-            createTask()
+            createTask(at: index)
         }
     }
     
@@ -201,11 +206,11 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
         startEditing(at: groupIndex)
     }
     
-    private func createTask()
+    private func createTask(at index: Int?)
     {
         tableView.beginUpdates()
         
-        let index = taskStore.add(Task())
+        let index = taskStore.add(Task(), at: index)
         
         tableView.insertRows(at: [index],
                              withAnimation: NSTableViewAnimationOptions.slideDown)
@@ -217,7 +222,18 @@ class TaskList: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskLi
     
     private func startEditing(at index: Int)
     {
-        tableView.scrollRowToVisible(index)
+        if index == 0
+        {
+            var newOrigin = contentView.bounds.origin
+            
+            newOrigin.y = 0
+            
+            contentView.setBoundsOrigin(newOrigin)
+        }
+        else
+        {
+            tableView.scrollRowToVisible(index)
+        }
         
         if taskStore.selectedIndexes != [index]
         {
