@@ -42,18 +42,16 @@ class TaskArchive: NSObject, NSCoding
             aCoder.encode(stateInteger, forKey: "state")
         }
         
-        if task.subTasks.count > 0
+        if task.subtasks.count > 0
         {
-            let elements = task.subTasks
+            var subtaskUuids = [String]()
             
-            var elementUuids = [String]()
-            
-            for element in elements
+            for subtask in task.subtasks
             {
-                elementUuids.append(element.uuid)
+                subtaskUuids.append(subtask.uuid)
             }
             
-            aCoder.encode(elementUuids, forKey: "elementUuids")
+            aCoder.encode(subtaskUuids, forKey: "elementUuids")
         }
     }
     

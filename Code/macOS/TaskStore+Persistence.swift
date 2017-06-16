@@ -13,7 +13,7 @@ extension TaskStore
 {
     func save()
     {
-        let allTasks = root.allTasksRecursively()
+        let allTasks = root.allSubtasksRecursively()
         
         var archive = [TaskArchive]()
         
@@ -55,7 +55,7 @@ extension TaskStore
                 {
                     if let element = tasksByUuid[elementUuid]
                     {
-                        task.insert(element, at: task.subTasks.count)
+                        _ = task.insert(element, at: task.subtasks.count)
                     }
                 }
             }

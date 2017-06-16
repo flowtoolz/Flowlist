@@ -6,7 +6,9 @@
 //  Copyright © 2017 Flowtoolz. All rights reserved.
 //
 
-class Task
+import Flowtoolz
+
+class Task: Sender
 {
     // MARK: - Initialization
     
@@ -26,12 +28,12 @@ class Task
     
     // MARK: - Edit Hierarchy
     
-    func insert(_ task: Task, at index: Int)
+    func insert(_ task: Task, at index: Int) -> Bool
     {
-        guard index >= 0, index <= subTasks.count else
+        guard index >= 0, index <= subtasks.count else
         {
             print("Warning: tried to insert Task at an out of bound index into another task")
-            return
+            return false
         }
         
         if elements == nil
@@ -42,45 +44,66 @@ class Task
         elements?.insert(task, at: index)
         
         task.container = self
-    }
-    
-    func deleteTask(at index: Int) -> Bool
-    {
-        guard index >= 0, index < subTasks.count else
-        {
-            print("Warning: tried to delete task at an out of bound index")
-            return false
-        }
         
-        elements?.remove(at: index)
+        send(Task.didChangeSubtasks, parameters: ["method": "insert",
+                                                 "indexes": [index]])
         
         return true
     }
+    
+    func deleteSubtasks(at indexes: [Int]) -> Bool
+    {
+        var sorted = indexes.sorted()
+        
+        guard let maxIndex = sorted.last,
+            let minIndex = sorted.first,
+            minIndex >= 0, maxIndex < subtasks.count
+        else
+        {
+            print("Warning: tried to delete tasks with at least one out of bound index")
+            return false
+        }
+    
+        while let indexToRemove = sorted.popLast()
+        {
+            if let removedSubtask = elements?.remove(at: indexToRemove)
+            {
+                removedSubtask.container = nil
+            }
+        }
+        
+        send(Task.didChangeSubtasks, parameters: ["method": "delete",
+                                                  "indexes": indexes])
+        
+        return true
+    }
+    
+    static let didChangeSubtasks = "TaskDidChangeSubtasks"
     
     // MARK: - Read Hierarchy
     
     var isContainer: Bool
     {
-        return subTasks.count > 0
+        return subtasks.count > 0
     }
     
-    func task(at index: Int) -> Task?
+    func subtask(at index: Int) -> Task?
     {
-        guard index >= 0, index < subTasks.count else
+        guard index >= 0, index < subtasks.count else
         {
             print("Warning: tried to access Task at an out of bound index")
             return nil
         }
         
-        return elements?[index]
+        return subtasks[index]
     }
     
-    var subTasks: [Task]
+    var subtasks: [Task]
     {
         return elements ?? []
     }
     
-    func allTasksRecursively() -> [Task]
+    func allSubtasksRecursively() -> [Task]
     {
         var tasks = [self]
         
@@ -88,7 +111,7 @@ class Task
         {
             for task in elements
             {
-                tasks.append(contentsOf: task.allTasksRecursively())
+                tasks.append(contentsOf: task.allSubtasksRecursively())
             }
         }
         

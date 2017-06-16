@@ -18,10 +18,50 @@ class TaskList: Sender, Subscriber
         {
             self.container = taskStore.root
         }
+
+        subscribe(to: Task.didChangeSubtasks, action: taskDidChangeSubtasks)
     }
+    
+    // MARK: - Forward Task Updates
+    
+    func taskDidChangeSubtasks(sender: Any, parameters: [String : Any]?)
+    {
+        guard let sendingTask = sender as? Task,
+            container === sendingTask
+        else
+        {
+            return
+        }
+
+        guard let indexes = parameters?["indexes"] as? [Int],
+            let method = parameters?["method"] as? String
+        else
+        {
+            return
+        }
+        
+        print("TaskList \"\(container.title ?? "Untitled")\" did \(method) subtask at indexes \(indexes.description)")
+        
+        if method == "delete"
+        {
+            delegate?.didDeleteSubtasks(at: indexes)
+        }
+        else if method == "insert"
+        {
+            delegate?.didInsertSubtasks(at: indexes)
+        }
+        else
+        {
+            print("Warning: TaskList received notification \(Task.didChangeSubtasks) with unknown change method \(method)")
+        }
+    }
+    
+    var delegate: TaskListDelegate?
     
     // MARK: - Edit
     
+    
+    // FIXME: do most of this in Task class
     func groupSelectedTasks(as group: Task) -> Int?
     {
         guard let groupIndex = selectedIndexes.min() else
@@ -29,26 +69,18 @@ class TaskList: Sender, Subscriber
             return nil
         }
         
-        var removedTasks = [Task]()
-        var sortedIndexes = selectedIndexes.sorted { return $0 < $1 }
-        
-        while let lastIndex = sortedIndexes.popLast()
+        for deletionIndex in selectedIndexes
         {
-            if let removedTask = container.task(at: lastIndex)
+            if let removedTask = container.subtask(at: deletionIndex)
             {
-                removedTasks.insert(removedTask, at: 0)
-            
-                container.deleteTask(at: lastIndex)
+                _ = group.insert(removedTask, at: group.subtasks.count)
             }
         }
         
-        container.insert(group, at: groupIndex)
+        _ = container.deleteSubtasks(at: selectedIndexes)
         
-        while let element = removedTasks.popLast()
-        {
-            group.insert(element, at: 0)
-        }
-        
+        _ = container.insert(group, at: groupIndex)
+
         selectedIndexes = [groupIndex]
         
         return groupIndex
@@ -63,24 +95,19 @@ class TaskList: Sender, Subscriber
             indexToInsert = lastSelectedIndex + 1
         }
         
-        container.insert(task, at: indexToInsert)
+        _ = container.insert(task, at: indexToInsert)
         
         return indexToInsert
     }
     
     func deleteSelectedTasks() -> Bool
     {
-        var sorted = selectedIndexes.sorted()
-        
-        guard let firstIndex = sorted.first else
+        guard container.deleteSubtasks(at: selectedIndexes) else
         {
             return false
         }
         
-        while let lastIndex = sorted.popLast()
-        {
-            container.deleteTask(at: lastIndex)
-        }
+        let firstIndex = selectedIndexes.min() ?? 0
         
         selectedIndexes = numberOfTasks > 0 ? [max(firstIndex - 1, 0)] : []
         
@@ -153,7 +180,7 @@ class TaskList: Sender, Subscriber
             while let lastIndex = selectedIndexes.last, lastIndex >= numberOfTasks
             {
                 print("warning: subtask selection index \(lastIndex) is out of bounds and will be removed")
-                selectedIndexes.popLast()
+                _ = selectedIndexes.popLast()
             }
         }
     }
@@ -162,12 +189,12 @@ class TaskList: Sender, Subscriber
     
     func task(at index: Int) -> Task?
     {
-        return container.task(at: index)
+        return container.subtask(at: index)
     }
     
     var numberOfTasks: Int
     {
-        return container.subTasks.count
+        return container.subtasks.count
     }
 
     var title: String
@@ -178,15 +205,10 @@ class TaskList: Sender, Subscriber
     // MARK: - Container
     
     private var container: Task
-    {
-        didSet
-        {
-            if oldValue !== container
-            {
-                send(TaskList.didUpdateContainer)
-            }
-        }
-    }
-    
-    static let didUpdateContainer = "TaskListDidUpdateContainer"
+}
+
+protocol TaskListDelegate
+{
+    func didInsertSubtasks(at indexes: [Int])
+    func didDeleteSubtasks(at indexes: [Int])
 }

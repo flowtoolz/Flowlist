@@ -92,7 +92,7 @@ class TaskView: NSView, NSTextFieldDelegate
         textField.isEditable = true
         textField.font = NSFont.systemFont(ofSize: 13)
         textField.delegate = self
-        textField.placeholderString = "Untitled"
+        textField.placeholderString = "untitled"
         textField.lineBreakMode = .byTruncatingTail
         
         self.addSubview(textField)

@@ -10,7 +10,7 @@ import AppKit
 import PureLayout
 import Flowtoolz
 
-class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskViewDelegate, Subscriber
+class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskViewDelegate, TaskListDelegate, Subscriber
 {
     // MARK: - Table View
     
@@ -23,6 +23,8 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func initialize()
     {
+        taskList.delegate = self
+        
         translatesAutoresizingMaskIntoConstraints = false
         drawsBackground = false
         automaticallyAdjustsContentInsets = false
@@ -30,8 +32,6 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         documentView = tableView
         
         contentInsets = NSEdgeInsetsMake(10, 0, 10, 0)
-        
-        subscribe(received)
     }
     
     lazy var tableView: NSTableView =
@@ -124,38 +124,20 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private var disabledCell: TaskView?
     
-    // MARK: - Reacting to Notifications
+    // MARK: - Reacting to Updates
     
-    func received(notification: String, from sender: Any)
+    func didDeleteSubtasks(at indexes: [Int])
     {
-        //Swift.print(notification)
-        
-        if sender as AnyObject === taskList
-        {
-            receivedNotificationFromTaskList(notification)
-            return
-        }
-        
-        switch notification
-        {
-        case TaskList.didChangeSelection:
-            break
-        default:
-            break
-        }
+        tableView.beginUpdates()
+        tableView.removeRows(at: IndexSet(indexes), withAnimation: .slideUp)
+        tableView.endUpdates()
     }
     
-    private func receivedNotificationFromTaskList(_ notification: String)
+    func didInsertSubtasks(at indexes: [Int])
     {
-        switch notification
-        {
-        case TaskList.didUpdateContainer:
-            Swift.print("container did update to \(taskList.title)")
-            tableView.reloadData()
-            break
-        default:
-            break
-        }
+        tableView.beginUpdates()
+        tableView.insertRows(at: IndexSet(indexes), withAnimation: .slideDown)
+        tableView.endUpdates()
     }
     
     // MARK: - Editing and Filtering the List
@@ -182,20 +164,10 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func deleteSelectedTasks()
     {
-        let selectedIndexSet = IndexSet(taskList.selectedIndexes)
-        
-        tableView.beginUpdates()
-       
         guard taskList.deleteSelectedTasks() else
         {
-            tableView.endUpdates()
             return
         }
-        
-        tableView.removeRows(at: selectedIndexSet,
-                             withAnimation: NSTableViewAnimationOptions.slideUp)
-        
-        tableView.endUpdates()
         
         updateTableSelection()
     }
@@ -214,37 +186,17 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func groupSelectedTasks()
     {
-        let selectedIndexes = taskList.selectedIndexes
-        
-        tableView.beginUpdates()
-        
         guard let groupIndex = taskList.groupSelectedTasks(as: Task()) else
         {
-            tableView.endUpdates()
             return
         }
-        
-        tableView.removeRows(at: IndexSet(selectedIndexes),
-                             withAnimation: NSTableViewAnimationOptions.slideUp)
-        
-        tableView.insertRows(at: [groupIndex],
-                             withAnimation: NSTableViewAnimationOptions.slideDown)
-        
-        tableView.endUpdates()
         
         startEditing(at: groupIndex)
     }
     
     private func createTask(at index: Int?)
     {
-        tableView.beginUpdates()
-        
         let index = taskList.add(Task(), at: index)
-        
-        tableView.insertRows(at: [index],
-                             withAnimation: NSTableViewAnimationOptions.slideDown)
-        
-        tableView.endUpdates()
         
         startEditing(at: index)
     }
