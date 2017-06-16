@@ -40,7 +40,7 @@ class TaskList: Sender, Subscriber
             return
         }
         
-        print("TaskList \"\(container.title ?? "Untitled")\" did \(method) subtask at indexes \(indexes.description)")
+        print("TaskList \"\(container?.title ?? "Untitled")\" did \(method) subtask at indexes \(indexes.description)")
         
         if method == "delete"
         {
@@ -71,15 +71,15 @@ class TaskList: Sender, Subscriber
         
         for deletionIndex in selectedIndexes
         {
-            if let removedTask = container.subtask(at: deletionIndex)
+            if let removedTask = container?.subtask(at: deletionIndex)
             {
                 _ = group.insert(removedTask, at: group.subtasks.count)
             }
         }
         
-        _ = container.deleteSubtasks(at: selectedIndexes)
+        _ = container?.deleteSubtasks(at: selectedIndexes)
         
-        _ = container.insert(group, at: groupIndex)
+        _ = container?.insert(group, at: groupIndex)
 
         selectedIndexes = [groupIndex]
         
@@ -95,14 +95,14 @@ class TaskList: Sender, Subscriber
             indexToInsert = lastSelectedIndex + 1
         }
         
-        _ = container.insert(task, at: indexToInsert)
+        _ = container?.insert(task, at: indexToInsert)
         
         return indexToInsert
     }
     
     func deleteSelectedTasks() -> Bool
     {
-        guard container.deleteSubtasks(at: selectedIndexes) else
+        guard container?.deleteSubtasks(at: selectedIndexes) ?? false else
         {
             return false
         }
@@ -118,8 +118,8 @@ class TaskList: Sender, Subscriber
     
     func goToSuperContainer() -> Bool
     {
-        guard let superContainer = container.container,
-            let index = container.indexInContainer
+        guard let superContainer = container?.container,
+            let index = container?.indexInContainer
         else
         {
             return false
@@ -189,22 +189,22 @@ class TaskList: Sender, Subscriber
     
     func task(at index: Int) -> Task?
     {
-        return container.subtask(at: index)
+        return container?.subtask(at: index)
     }
     
     var numberOfTasks: Int
     {
-        return container.subtasks.count
+        return container?.subtasks.count ?? 0
     }
 
     var title: String
     {
-        return container.title ?? "Untitled"
+        return container?.title ?? "untitled"
     }
     
     // MARK: - Container
     
-    private var container: Task
+    private weak var container: Task?
 }
 
 protocol TaskListDelegate
