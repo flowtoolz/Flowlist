@@ -46,7 +46,7 @@ class Task: Sender
         task.container = self
         
         send(Task.didChangeSubtasks, parameters: ["method": "insert",
-                                                 "indexes": [index]])
+                                                 "index": index])
         
         return true
     }
@@ -139,21 +139,43 @@ class Task: Sender
     
     // MARK: - Data
     
-    let uuid: String
-    
-    var description: String
+    var title: String?
     {
-        return "\(uuid) \(title ?? "Untitled")"
+        didSet
+        {
+            if title != oldValue
+            {
+                send(Task.didChangeTitle)
+            }
+        }
     }
     
-    var title: String?
+    static let didChangeTitle = "TaskDidChangeTitle"
     
     var state: State?
+    {
+        didSet
+        {
+            if state != oldValue
+            {
+                send(Task.didChangeState)
+            }
+        }
+    }
+    
+    static let didChangeState = "TaskDidChangeState"
     
     enum State: Int
     {
         // state == nil is default and kind of a backlog or "no specific state"
         case inProgress, onHold, done, archived
     }
+    
+    var description: String
+    {
+        return "\(uuid) \(title ?? "Untitled")"
+    }
+    
+    let uuid: String
 }
 

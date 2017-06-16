@@ -86,16 +86,27 @@ class TaskView: NSView, NSTextFieldDelegate
     private lazy var titleField: NSTextField =
     {
         let textField = NSTextField()
+        self.addSubview(textField)
+        
         textField.isBordered = false
         textField.drawsBackground = false
         textField.isBezeled = false
         textField.isEditable = true
         textField.font = NSFont.systemFont(ofSize: 13)
         textField.delegate = self
-        textField.placeholderString = "untitled"
         textField.lineBreakMode = .byTruncatingTail
         
-        self.addSubview(textField)
+        
+        let attributes: [String : Any] =
+        [
+            NSForegroundColorAttributeName: self.greyedOutColor,
+            NSFontAttributeName: NSFont.systemFont(ofSize: 13)
+        ]
+        
+        let attributedString = NSAttributedString(string: "untitled",
+                                                  attributes: attributes)
+        
+        textField.placeholderAttributedString = attributedString
         
         return textField
     }()
@@ -105,7 +116,7 @@ class TaskView: NSView, NSTextFieldDelegate
     private func layoutCheckBox()
     {
         checkBox.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero, excludingEdge: .right)
-        checkBox.autoConstrainAttribute(.width, to: .height, of: checkBox)
+        checkBox.autoSetDimension(.width, toSize: 36)
     }
     
     private lazy var checkBox: NSButton =
@@ -127,25 +138,26 @@ class TaskView: NSView, NSTextFieldDelegate
     
     func checkBoxClicked()
     {
-        boxIsChecked = !boxIsChecked
-        
-        task?.state = boxIsChecked ? .done : nil
+        task?.state = task?.state == .done ? nil : .done
         
         updateCheckBox()
-        
-        delegate?.taskViewNeedsUpdate(self)
     }
     
     private func updateCheckBox()
     {
         let isChecked = task?.state == .done
         
-        checkBox.image = checkBoxImage(isChecked)
+        let correctImage = checkBoxImage(isChecked)
         
-        titleField.textColor = isChecked ? NSColor(white: 0.5, alpha: 1) : NSColor.black
+        if checkBox.image !== correctImage
+        {
+            checkBox.image = correctImage
+            
+            titleField.textColor = isChecked ? greyedOutColor : NSColor.black
+        }
     }
     
-    private var boxIsChecked = false
+    private lazy var greyedOutColor = NSColor(white: 0, alpha: 0.33)
     
     private func checkBoxImage(_ checked: Bool) -> NSImage?
     {
@@ -185,11 +197,4 @@ class TaskView: NSView, NSTextFieldDelegate
     // MARK: - Task
     
     private weak var task: Task?
-    
-    var delegate: TaskViewDelegate?
-}
-
-protocol TaskViewDelegate
-{
-    func taskViewNeedsUpdate(_ view: NSView)
 }

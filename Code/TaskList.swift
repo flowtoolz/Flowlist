@@ -19,10 +19,40 @@ class TaskList: Sender, Subscriber
             self.container = taskStore.root
         }
 
+        subscribe(to: Task.didChangeTitle, action: taskDidChangeTitle)
+        subscribe(to: Task.didChangeState, action: taskDidChangeState)
         subscribe(to: Task.didChangeSubtasks, action: taskDidChangeSubtasks)
     }
     
-    // MARK: - Forward Task Updates
+    // MARK: - Listen to Changes (manage selection and notify delegate)
+    
+    func taskDidChangeTitle(sender: Any)
+    {
+        guard container != nil,
+            let updatedTask = sender as? Task,
+            updatedTask.container === container,
+            let indexOfUpdatedTask = updatedTask.indexInContainer
+        else
+        {
+            return
+        }
+        
+        delegate?.didChangeTitleOfSubtask(at: indexOfUpdatedTask)
+    }
+    
+    func taskDidChangeState(sender: Any)
+    {
+        guard container != nil,
+            let updatedTask = sender as? Task,
+            updatedTask.container === container,
+            let indexOfUpdatedTask = updatedTask.indexInContainer
+            else
+        {
+            return
+        }
+        
+        delegate?.didChangeStateOfSubtask(at: indexOfUpdatedTask)
+    }
     
     func taskDidChangeSubtasks(sender: Any, parameters: [String : Any]?)
     {
@@ -33,32 +63,28 @@ class TaskList: Sender, Subscriber
         }
         
         guard let sendingTask = sender as? Task,
-            container === sendingTask
-        else
-        {
-            return
-        }
-
-        guard let indexes = parameters?["indexes"] as? [Int],
+            container === sendingTask,
             let method = parameters?["method"] as? String
         else
         {
             return
         }
         
-        print("TaskList \"\(container?.title ?? "Untitled")\" did \(method) subtask at indexes \(indexes.description)")
-        
-        if method == "delete"
+        if method == "delete", let indexes = parameters?["indexes"] as? [Int]
         {
+            updateSelectionAfterDeletingTasks(at: indexes)
+            
             delegate?.didDeleteSubtasks(at: indexes)
         }
-        else if method == "insert"
+        else if method == "insert", let index = parameters?["index"] as? Int
         {
-            delegate?.didInsertSubtasks(at: indexes)
+            updateSelectionAfterInsertingTask(at: index)
+            
+            delegate?.didInsertSubtask(at: index)
         }
         else
         {
-            print("Warning: TaskList received notification \(Task.didChangeSubtasks) with unknown change method \(method)")
+            print("Warning: TaskList received notification \(Task.didChangeSubtasks) with unknown change method \(method) or parameters \(parameters.debugDescription)")
         }
     }
     
@@ -108,14 +134,14 @@ class TaskList: Sender, Subscriber
     
     func deleteSelectedTasks() -> Bool
     {
+        let firstSelectedIndex = selectedIndexes.min() ?? 0
+        
         guard container?.deleteSubtasks(at: selectedIndexes) ?? false else
         {
             return false
         }
         
-        let firstIndex = selectedIndexes.min() ?? 0
-        
-        selectedIndexes = numberOfTasks > 0 ? [max(firstIndex - 1, 0)] : []
+        selectedIndexes = numberOfTasks > 0 ? [max(firstSelectedIndex - 1, 0)] : []
         
         return true
     }
@@ -154,6 +180,43 @@ class TaskList: Sender, Subscriber
     }
     
     // MARK: - Select
+    
+    private func updateSelectionAfterDeletingTasks(at indexes: [Int])
+    {
+        for deletedIndex in indexes.sorted(by: >)
+        {
+            updateSelectionAfterDeletingTask(at: deletedIndex)
+        }
+    }
+    
+    private func updateSelectionAfterDeletingTask(at indexOfDeletion: Int)
+    {
+        // remove deleted task from selections
+        if let indexOfDeletionInSelections = selectedIndexes.index(of: indexOfDeletion)
+        {
+            selectedIndexes.remove(at: indexOfDeletionInSelections)
+        }
+        
+        // move selections below deleted task up 1 position
+        for i in 0 ..< selectedIndexes.count
+        {
+            if selectedIndexes[i] > indexOfDeletion
+            {
+                selectedIndexes[i] -= 1
+            }
+        }
+    }
+    
+    private func updateSelectionAfterInsertingTask(at indexOfInsertion: Int)
+    {
+        for i in 0 ..< selectedIndexes.count
+        {
+            if selectedIndexes[i] >= indexOfInsertion
+            {
+                selectedIndexes[i] += 1
+            }
+        }
+    }
     
     var selectedIndexes = [Int]()
     {
@@ -210,7 +273,9 @@ class TaskList: Sender, Subscriber
 
 protocol TaskListDelegate
 {
+    func didChangeStateOfSubtask(at index: Int)
+    func didChangeTitleOfSubtask(at index: Int)
     func didDeleteListContainer()
-    func didInsertSubtasks(at indexes: [Int])
+    func didInsertSubtask(at index: Int)
     func didDeleteSubtasks(at indexes: [Int])
 }

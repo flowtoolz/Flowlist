@@ -10,7 +10,7 @@ import AppKit
 import PureLayout
 import Flowtoolz
 
-class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskViewDelegate, TaskListDelegate, Subscriber
+class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskListDelegate, Subscriber
 {
     // MARK: - Table View
     
@@ -133,10 +133,10 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         tableView.endUpdates()
     }
     
-    func didInsertSubtasks(at indexes: [Int])
+    func didInsertSubtask(at index: Int)
     {
         tableView.beginUpdates()
-        tableView.insertRows(at: IndexSet(indexes), withAnimation: .slideDown)
+        tableView.insertRows(at: [index], withAnimation: .slideDown)
         tableView.endUpdates()
     }
     
@@ -145,6 +145,32 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         tableView.beginUpdates()
         tableView.removeRows(at: IndexSet(integersIn: 0 ..< tableView.numberOfRows),
                              withAnimation: .slideUp)
+        tableView.endUpdates()
+    }
+    
+    func didChangeTitleOfSubtask(at index: Int)
+    {
+        tableView.beginUpdates()
+        
+        tableView.hideRows(at: [index], withAnimation: [])
+        
+        tableView.unhideRows(at: [index], withAnimation: [])
+        
+        updateTableSelection()
+        
+        tableView.endUpdates()
+    }
+    
+    func didChangeStateOfSubtask(at index: Int)
+    {
+        tableView.beginUpdates()
+        
+        tableView.hideRows(at: [index], withAnimation: [])
+        
+        tableView.unhideRows(at: [index], withAnimation: [])
+        
+        updateTableSelection()
+        
         tableView.endUpdates()
     }
     
@@ -295,28 +321,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
             cell.configure(with: task)
         }
         
-        cell.delegate = self
-        
         return cell
-    }
-    
-    // MARK: - TaskListCellDelegate
-    
-    func taskViewNeedsUpdate(_ view: NSView)
-    {
-        let row = tableView.row(for: view)
-        
-        guard row >= 0 else { return }
-
-        tableView.beginUpdates()
-
-        tableView.hideRows(at: [row], withAnimation: [])
-        
-        tableView.unhideRows(at: [row], withAnimation: [])
-        
-        updateTableSelection()
-        
-        tableView.endUpdates()
     }
     
     // MARK: - Task List

@@ -28,7 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
     {
         window.contentViewController = MainVC()
         window.styleMask = NSWindowStyleMask([.resizable, .titled, .miniaturizable, .closable, .unifiedTitleAndToolbar])
-        window.setFrame(CGRect(x: 200, y: 100, width: 800, height: 600),
+        window.setFrame(CGRect(x: 400, y: 350, width: 800, height: 400),
                         display: true)
         window.isReleasedWhenClosed = false
         window.title = "Flowlist"
