@@ -84,7 +84,7 @@ extension TaskStore
             return
         }
         
-        taskStore.root = root
+        store.root = root
     }
     
     private static let filePath = Bundle.main.bundlePath + "/UserData.plist"

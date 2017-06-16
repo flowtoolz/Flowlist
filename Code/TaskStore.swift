@@ -8,7 +8,7 @@
 
 import Flowtoolz
 
-let taskStore = TaskStore()
+let store = TaskStore()
 
 class TaskStore: Sender
 {

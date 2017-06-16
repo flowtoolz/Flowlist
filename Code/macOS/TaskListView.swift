@@ -14,16 +14,20 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
 {
     // MARK: - Table View
     
-    convenience init()
+    convenience init(with list: TaskList)
     {
         self.init(frame: NSRect.zero)
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        taskList = list
         
         initialize()
     }
     
     private func initialize()
     {
-        taskList.delegate = self
+        taskList?.delegate = self
         
         translatesAutoresizingMaskIntoConstraints = false
         drawsBackground = false
@@ -38,7 +42,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         let view = NSTableView()
         
         let column = NSTableColumn(identifier: TaskView.reuseIdentifier)
-        column.title = "Task List Title"
+        
         view.addTableColumn(column)
         
         view.allowsMultipleSelection = true
@@ -64,12 +68,12 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         case 1:
             if cmd
             {
-                taskStore.save()
+                store.save()
             }
         case 37:
             if cmd
             {
-                taskStore.load()
+                store.load()
                 tableView.reloadData()
             }
         case 36:
@@ -173,7 +177,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func goToSuperContainer()
     {
-        if taskList.goToSuperContainer()
+        if taskList?.goToSuperContainer() ?? false
         {
             tableView.reloadData()
             
@@ -183,7 +187,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func goToSelectedTask()
     {
-        if taskList.goToSelectedTask()
+        if taskList?.goToSelectedTask() ?? false
         {
             tableView.reloadData()
             
@@ -193,7 +197,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func deleteSelectedTasks()
     {
-        guard taskList.deleteSelectedTasks() else
+        guard taskList?.deleteSelectedTasks() ?? false else
         {
             return
         }
@@ -203,7 +207,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func createNewTask(at index: Int? = nil, createContainer: Bool = false)
     {
-        if createContainer && taskList.selectedIndexes.count > 1
+        if createContainer && taskList?.selectedIndexes.count ?? 0 > 1
         {
             groupSelectedTasks()
         }
@@ -215,7 +219,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func groupSelectedTasks()
     {
-        guard let groupIndex = taskList.groupSelectedTasks(as: Task()) else
+        guard let groupIndex = taskList?.groupSelectedTasks(as: Task()) else
         {
             return
         }
@@ -225,9 +229,10 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func createTask(at index: Int?)
     {
-        let index = taskList.add(Task(), at: index)
-        
-        startEditing(at: index)
+        if let index = taskList?.add(Task(), at: index)
+        {
+            startEditing(at: index)
+        }
     }
     
     private func startEditing(at index: Int)
@@ -241,7 +246,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
             tableView.scrollRowToVisible(index)
         }
         
-        if taskList.selectedIndexes != [index]
+        if let taskList = taskList, taskList.selectedIndexes != [index]
         {
             taskList.selectedIndexes = [index]
         }
@@ -267,7 +272,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private func updateTableSelection()
     {
-        tableView.selectRowIndexes(IndexSet(taskList.selectedIndexes),
+        tableView.selectRowIndexes(IndexSet(taskList?.selectedIndexes ?? []),
                                    byExtendingSelection: false)
     }
     
@@ -280,13 +285,13 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView?
     {
-        return TaskListRow(with: taskList.task(at: row))
+        return TaskListRow(with: taskList?.task(at: row))
     }
     
     func tableView(_ tableView: NSTableView,
                    selectionIndexesForProposedSelection proposedSelectionIndexes: IndexSet) -> IndexSet
-    {   
-        taskList.selectedIndexes = Array(proposedSelectionIndexes)
+    {
+        taskList?.selectedIndexes = Array(proposedSelectionIndexes)
         
         return proposedSelectionIndexes
     }
@@ -295,7 +300,9 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     func numberOfRows(in tableView: NSTableView) -> Int
     {
-        return taskList.numberOfTasks
+        Swift.print("num tasks \(taskList?.numberOfTasks ?? 0)")
+        
+        return taskList?.numberOfTasks ?? 0
     }
     
     func tableView(_ tableView: NSTableView,
@@ -311,7 +318,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         let cell = tableView.make(withIdentifier: TaskView.reuseIdentifier,
                                   owner: self) as? TaskView ?? TaskView()
         
-        if let task = taskList.task(at: row)
+        if let task = taskList?.task(at: row)
         {
             cell.configure(with: task)
         }
@@ -321,7 +328,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     // MARK: - Task List
     
-    private var taskList = TaskList()
+    private weak var taskList: TaskList?
 }
 
 func logFirstResponder()

@@ -12,11 +12,11 @@ class TaskList: Sender, Subscriber
 {
     init()
     {
-        self.container = taskStore.root
+        self.container = store.root
         
         subscribe(to: TaskStore.didUpdateRoot)
         {
-            self.container = taskStore.root
+            self.container = store.root
         }
 
         subscribe(to: Task.didChangeTitle, action: taskDidChangeTitle)

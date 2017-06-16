@@ -12,14 +12,14 @@ class AppDelegate: NSObject, NSApplicationDelegate
 {
     func applicationDidFinishLaunching(_ aNotification: Notification)
     {
-        taskStore.load()
+        store.load()
         
         setupWindow()
     }
     
     func applicationWillTerminate(_ notification: Notification)
     {
-        taskStore.save()
+        store.save()
     }
     
     // MARK: - Window
@@ -28,7 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
     {
         window.contentViewController = MainVC()
         window.styleMask = NSWindowStyleMask([.resizable, .titled, .miniaturizable, .closable, .unifiedTitleAndToolbar])
-        window.setFrame(CGRect(x: 400, y: 350, width: 800, height: 400),
+        window.setFrame(CGRect(x: 20, y: 420, width: 1200, height: 350),
                         display: true)
         window.isReleasedWhenClosed = false
         window.title = "Flowlist"

@@ -22,50 +22,57 @@ class MainVC: NSViewController
     {
         super.viewDidLoad()
         
-        layoutMainList()
-        layoutDetailList()
+        layoutListViews()
     }
     
     override func viewDidAppear()
     {
-        mainList.jumpToTop()
-        detailList.jumpToTop()
+        for listView in listViews
+        {
+            listView.jumpToTop()
+        }
     }
     
     // MARK: - Task Lists
     
-    func layoutMainList()
+    func layoutListViews()
     {
-        mainList.autoPinEdge(toSuperviewEdge: .top)
-        mainList.autoPinEdge(toSuperviewEdge: .bottom)
-        mainList.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
-        mainList.autoConstrainAttribute(.right,
-                                        to: .right,
-                                        of: view,
-                                        withMultiplier: 0.66)
+        for i in 0 ..< listViews.count
+        {
+            let listView = listViews[i]
+            
+            if i == 0
+            {
+                listView.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
+            }
+            else
+            {
+                listView.autoPinEdge(.left, to: .right, of: listViews[i - 1])
+                listView.autoConstrainAttribute(.width, to: .width, of: listViews[i - 1])
+            }
+            
+            if i == listViews.count - 1
+            {
+                listView.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+            }
+            
+            listView.autoPinEdge(toSuperviewEdge: .top)
+            listView.autoPinEdge(toSuperviewEdge: .bottom)
+        }
     }
     
-    lazy var mainList: TaskListView =
+    lazy var listViews: [TaskListView] =
     {
-        let view = TaskListView()
-        self.view.addSubview(view)
+        var listViews = [TaskListView]()
         
-        return view
-    }()
-    
-    func layoutDetailList()
-    {
-        detailList.autoPinEdge(toSuperviewEdge: .top)
-        detailList.autoPinEdge(toSuperviewEdge: .bottom)
-        detailList.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
-        detailList.autoPinEdge(.left, to: .right, of: mainList)
-    }
-    
-    lazy var detailList: TaskListView =
-    {
-        let view = TaskListView()
-        self.view.addSubview(view)
+        for list in listCoordinator.lists
+        {
+            let listView = TaskListView(with: list)
+            self.view.addSubview(listView)
+            
+            listViews.append(listView)
+        }
         
-        return view
+        return listViews
     }()
 }

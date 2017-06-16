@@ -31,9 +31,9 @@ class TaskListRow: NSTableRowView
     
     private func drawBackground(with color: NSColor)
     {
-        let selectionRect = NSInsetRect(bounds, 2, 1)
-        
         color.setFill()
+        
+        let selectionRect = NSInsetRect(bounds, 2, 1)
         
         let selectionPath = NSBezierPath(roundedRect: selectionRect,
                                          xRadius: 3,
