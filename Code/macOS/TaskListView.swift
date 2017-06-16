@@ -140,6 +140,14 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         tableView.endUpdates()
     }
     
+    func didDeleteListContainer()
+    {
+        tableView.beginUpdates()
+        tableView.removeRows(at: IndexSet(integersIn: 0 ..< tableView.numberOfRows),
+                             withAnimation: .slideUp)
+        tableView.endUpdates()
+    }
+    
     // MARK: - Editing and Filtering the List
     
     private func goToSuperContainer()

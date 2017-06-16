@@ -26,6 +26,12 @@ class TaskList: Sender, Subscriber
     
     func taskDidChangeSubtasks(sender: Any, parameters: [String : Any]?)
     {
+        guard container != nil else
+        {
+            delegate?.didDeleteListContainer()
+            return
+        }
+        
         guard let sendingTask = sender as? Task,
             container === sendingTask
         else
@@ -196,11 +202,6 @@ class TaskList: Sender, Subscriber
     {
         return container?.subtasks.count ?? 0
     }
-
-    var title: String
-    {
-        return container?.title ?? "untitled"
-    }
     
     // MARK: - Container
     
@@ -209,6 +210,7 @@ class TaskList: Sender, Subscriber
 
 protocol TaskListDelegate
 {
+    func didDeleteListContainer()
     func didInsertSubtasks(at indexes: [Int])
     func didDeleteSubtasks(at indexes: [Int])
 }

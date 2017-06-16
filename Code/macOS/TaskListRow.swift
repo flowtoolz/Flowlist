@@ -42,7 +42,7 @@ class TaskListRow: NSTableRowView
         selectionPath.fill()
     }
     
-    private var task: Task?
+    private weak var task: Task?
     
     private let selectionColor = NSColor(calibratedRed: 163.0/255.0,
                                          green: 205.0 / 255.0,

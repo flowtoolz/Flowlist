@@ -184,7 +184,7 @@ class TaskView: NSView, NSTextFieldDelegate
     
     // MARK: - Task
     
-    private var task: Task?
+    private weak var task: Task?
     
     var delegate: TaskViewDelegate?
 }
