@@ -150,10 +150,23 @@ class TaskList: Sender, Subscriber
     
     func goToSuperContainer() -> Bool
     {
-        guard let superContainer = container?.container,
-            let index = container?.indexInContainer
-        else
+        //print("list of container \(container?.title ?? "untitled") wants to go to super container")
+        
+        guard let myContainer = container else
         {
+            print("cannot go to super container because my container is nil")
+            return false
+        }
+        
+        guard let superContainer = myContainer.container else
+        {
+            //print("cannot go to super container because it is nil")
+            return false
+        }
+        
+        guard let index = myContainer.indexInContainer else
+        {
+            print("cannot go to super container because index of my container in super container returned nil")
             return false
         }
         
@@ -167,14 +180,17 @@ class TaskList: Sender, Subscriber
     func goToSelectedTask() -> Bool
     {
         guard selectedIndexes.count == 1,
-            let task = task(at: selectedIndexes[0]),
+            let selectedIndex = selectedIndexes.first,
+            let task = task(at: selectedIndex),
             task.isContainer
-            else
+        else
         {
             return false
         }
         
         container = task
+        
+        selectedIndexes = [0]
         
         return true
     }
@@ -268,7 +284,7 @@ class TaskList: Sender, Subscriber
     
     // MARK: - Container
     
-    private weak var container: Task?
+    private(set) weak var container: Task?
 }
 
 protocol TaskListDelegate

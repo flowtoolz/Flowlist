@@ -30,7 +30,6 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         automaticallyAdjustsContentInsets = false
         
         documentView = tableView
-        
         contentInsets = NSEdgeInsetsMake(10, 0, 10, 0)
     }
     
@@ -150,28 +149,24 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     func didChangeTitleOfSubtask(at index: Int)
     {
-        tableView.beginUpdates()
-        
-        tableView.hideRows(at: [index], withAnimation: [])
-        
-        tableView.unhideRows(at: [index], withAnimation: [])
-        
-        updateTableSelection()
-        
-        tableView.endUpdates()
+        if let taskView = tableView.view(atColumn: 0,
+                                         row: index,
+                                         makeIfNecessary: false) as? TaskView
+        {
+            taskView.updateTitleField()
+        }
     }
     
     func didChangeStateOfSubtask(at index: Int)
     {
-        tableView.beginUpdates()
+        if let taskView = tableView.view(atColumn: 0,
+                                         row: index,
+                                         makeIfNecessary: false) as? TaskView
+        {
+            taskView.updateCheckBox()
+        }
         
-        tableView.hideRows(at: [index], withAnimation: [])
-        
-        tableView.unhideRows(at: [index], withAnimation: [])
-        
-        updateTableSelection()
-        
-        tableView.endUpdates()
+        tableView.rowView(atRow: index, makeIfNecessary: false)?.display()
     }
     
     // MARK: - Editing and Filtering the List
@@ -290,7 +285,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     func tableView(_ tableView: NSTableView,
                    selectionIndexesForProposedSelection proposedSelectionIndexes: IndexSet) -> IndexSet
-    {
+    {   
         taskList.selectedIndexes = Array(proposedSelectionIndexes)
         
         return proposedSelectionIndexes
@@ -327,4 +322,14 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     // MARK: - Task List
     
     private var taskList = TaskList()
+}
+
+func logFirstResponder()
+{
+    guard let firstResponder = NSApp.mainWindow?.firstResponder else
+    {
+        return
+    }
+    
+    Swift.print("first responder: \(firstResponder.className) (\(ObjectIdentifier(firstResponder).debugDescription))")
 }

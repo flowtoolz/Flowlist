@@ -113,6 +113,27 @@ class TaskView: NSView, NSTextFieldDelegate
     
     // MARK: - Check Button
     
+    func checkBoxClicked()
+    {
+        task?.state = task?.state == .done ? nil : .done
+        
+        updateCheckBox()
+    }
+    
+    func updateCheckBox()
+    {
+        let isChecked = task?.state == .done
+        
+        let correctImage = checkBoxImage(isChecked)
+        
+        if checkBox.image !== correctImage
+        {
+            checkBox.image = correctImage
+            
+            titleField.textColor = isChecked ? greyedOutColor : NSColor.black
+        }
+    }
+
     private func layoutCheckBox()
     {
         checkBox.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero, excludingEdge: .right)
@@ -135,27 +156,6 @@ class TaskView: NSView, NSTextFieldDelegate
         
         return button
     }()
-    
-    func checkBoxClicked()
-    {
-        task?.state = task?.state == .done ? nil : .done
-        
-        updateCheckBox()
-    }
-    
-    private func updateCheckBox()
-    {
-        let isChecked = task?.state == .done
-        
-        let correctImage = checkBoxImage(isChecked)
-        
-        if checkBox.image !== correctImage
-        {
-            checkBox.image = correctImage
-            
-            titleField.textColor = isChecked ? greyedOutColor : NSColor.black
-        }
-    }
     
     private lazy var greyedOutColor = NSColor(white: 0, alpha: 0.33)
     

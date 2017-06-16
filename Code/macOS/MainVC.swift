@@ -23,7 +23,7 @@ class MainVC: NSViewController
         super.viewDidLoad()
         
         layoutMainList()
-        layoutDetailList()   
+        layoutDetailList()
     }
     
     override func viewDidAppear()
