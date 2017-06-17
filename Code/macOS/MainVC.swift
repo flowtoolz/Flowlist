@@ -55,7 +55,8 @@ class MainVC: NSViewController, Subscriber
             
             if rightListView.taskList?.numberOfTasks ?? 0 > 0
             {
-                rightListView.taskList?.selectedIndexes = [0]
+                let selectionIndex = rightListView.taskList?.selectedIndexes.min() ?? 0
+                rightListView.taskList?.selectedIndexes = [selectionIndex]
                 rightListView.updateTableSelection()
                 rightListView.scrollView.becomeFirstResponder()
             }
