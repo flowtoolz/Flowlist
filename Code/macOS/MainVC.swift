@@ -29,6 +29,7 @@ class MainVC: NSViewController, Subscriber
     {
         super.viewDidLoad()
         
+        layoutBackroundImage()
         layoutListViews()
     }
     
@@ -39,6 +40,24 @@ class MainVC: NSViewController, Subscriber
             listView.jumpToTop()
         }
     }
+    
+    // MARK: - Background Image
+    
+    private func layoutBackroundImage()
+    {
+        backgroundImage.autoPinEdgesToSuperviewEdges()
+    }
+    
+    private lazy var backgroundImage: NSImageView =
+    {
+        let imageName = Int(arc4random_uniform(2)) == 0 ? "flower" : "zen"
+        let image = NSImage(named: imageName) ?? NSImage()
+        
+        let view = NSImageView(withAspectFillImage: image)
+        self.view.addSubview(view)
+        
+        return view
+    }()
     
     // MARK: - Navigation
     
