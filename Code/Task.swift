@@ -120,17 +120,7 @@ class Task: Sender
 
     var indexInContainer: Int?
     {
-        guard let container = container else
-        {
-            return nil
-        }
-        
-        return container.elements?.index
-        {
-            element in
-            
-            return element.uuid == self.uuid
-        }
+        return container?.elements?.index { $0 === self }
     }
     
     private(set) weak var container: Task?

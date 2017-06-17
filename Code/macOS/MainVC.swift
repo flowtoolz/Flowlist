@@ -8,14 +8,21 @@
 
 import AppKit
 import PureLayout
+import Flowtoolz
 
-class MainVC: NSViewController
+class MainVC: NSViewController, Subscriber
 {
     override func loadView()
     {
         view = NSView()
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.gray.cgColor
+        
+        subscribe(to: TaskListView.wantsToGiveUpFocusToTheRight,
+                  action: listViewWantsToGiveFocusToTheRight)
+        
+        subscribe(to: TaskListView.wantsToGiveUpFocusToTheLeft,
+                  action: listViewWantsToGiveFocusToTheLeft)
     }
     
     override func viewDidLoad()
@@ -34,6 +41,41 @@ class MainVC: NSViewController
     }
     
     // MARK: - Task Lists
+    
+    func listViewWantsToGiveFocusToTheRight(sender: Any)
+    {
+        guard let index = listViews.index(where: { $0 === sender as AnyObject }) else
+        {
+            return
+        }
+        
+        if index >= 0 && index + 1 < listViews.count
+        {
+            let rightListView = listViews[index + 1]
+            
+            if rightListView.taskList?.numberOfTasks ?? 0 > 0
+            {
+                rightListView.taskList?.selectedIndexes = [0]
+                rightListView.updateTableSelection()
+                rightListView.becomeFirstResponder()
+            }
+        }
+    }
+    
+    func listViewWantsToGiveFocusToTheLeft(sender: Any)
+    {
+        guard let index = listViews.index(where: { $0 === sender as AnyObject }) else
+        {
+            return
+        }
+        
+        if index > 0 && index < listViews.count
+        {
+            let leftListView = listViews[index - 1]
+            
+            leftListView.becomeFirstResponder()
+        }
+    }
     
     func layoutListViews()
     {

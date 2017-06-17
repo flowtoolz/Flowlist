@@ -10,7 +10,7 @@ import AppKit
 import PureLayout
 import Flowtoolz
 
-class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskListDelegate, Subscriber
+class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskListDelegate, Subscriber, Sender
 {
     // MARK: - Table View
     
@@ -88,13 +88,19 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         case 51:
             deleteSelectedTasks()
         case 123:
-            goToSuperContainer()
+            send(TaskListView.wantsToGiveUpFocusToTheLeft)
+            //goToSuperContainer()
         case 124:
-            goToSelectedTask()
+            send(TaskListView.wantsToGiveUpFocusToTheRight)
+            //goToSelectedTask()
         default:
             break
         }
     }
+    
+    static let wantsToGiveUpFocusToTheRight = "TaskListViewWantsToGiveUpFocusToTheRight"
+    
+    static let wantsToGiveUpFocusToTheLeft = "TaskListViewWantsToGiveUpFocusToTheLeft"
     
     override func flagsChanged(with event: NSEvent)
     {
@@ -143,12 +149,22 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         tableView.endUpdates()
     }
     
-    func didDeleteListContainer()
+    func didChangeListContainer()
     {
         tableView.beginUpdates()
         tableView.removeRows(at: IndexSet(integersIn: 0 ..< tableView.numberOfRows),
                              withAnimation: .slideUp)
         tableView.endUpdates()
+        
+        let numberOfTasks = taskList?.numberOfTasks ?? 0
+        
+        if numberOfTasks > 0
+        {
+            tableView.beginUpdates()
+            tableView.insertRows(at: IndexSet(integersIn: 0 ..< numberOfTasks),
+                                 withAnimation: .slideUp)
+            tableView.endUpdates()
+        }
     }
     
     func didChangeTitleOfSubtask(at index: Int)
@@ -270,7 +286,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         contentView.setBoundsOrigin(newOrigin)
     }
     
-    private func updateTableSelection()
+    func updateTableSelection()
     {
         tableView.selectRowIndexes(IndexSet(taskList?.selectedIndexes ?? []),
                                    byExtendingSelection: false)
@@ -288,20 +304,20 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         return TaskListRow(with: taskList?.task(at: row))
     }
     
-    func tableView(_ tableView: NSTableView,
-                   selectionIndexesForProposedSelection proposedSelectionIndexes: IndexSet) -> IndexSet
+    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool
     {
-        taskList?.selectedIndexes = Array(proposedSelectionIndexes)
-        
-        return proposedSelectionIndexes
+        return false
+    }
+    
+    func tableViewSelectionDidChange(_ notification: Notification)
+    {
+        taskList?.selectedIndexes = Array(tableView.selectedRowIndexes)
     }
     
     // MARK: - Table View Data Source
     
     func numberOfRows(in tableView: NSTableView) -> Int
     {
-        Swift.print("num tasks \(taskList?.numberOfTasks ?? 0)")
-        
         return taskList?.numberOfTasks ?? 0
     }
     
@@ -328,7 +344,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     // MARK: - Task List
     
-    private weak var taskList: TaskList?
+    private(set) weak var taskList: TaskList?
 }
 
 func logFirstResponder()

@@ -12,13 +12,6 @@ class TaskList: Sender, Subscriber
 {
     init()
     {
-        self.container = store.root
-        
-        subscribe(to: TaskStore.didUpdateRoot)
-        {
-            self.container = store.root
-        }
-
         subscribe(to: Task.didChangeTitle, action: taskDidChangeTitle)
         subscribe(to: Task.didChangeState, action: taskDidChangeState)
         subscribe(to: Task.didChangeSubtasks, action: taskDidChangeSubtasks)
@@ -58,7 +51,8 @@ class TaskList: Sender, Subscriber
     {
         guard container != nil else
         {
-            delegate?.didDeleteListContainer()
+            selectedIndexes = []
+            delegate?.didChangeListContainer()
             return
         }
         
@@ -284,14 +278,28 @@ class TaskList: Sender, Subscriber
     
     // MARK: - Container
     
-    private(set) weak var container: Task?
+    weak var container: Task?
+    {
+        didSet
+        {
+            if oldValue !== container
+            {
+                if container == nil
+                {
+                    selectedIndexes = []
+                }
+                
+                delegate?.didChangeListContainer()
+            }
+        }
+    }
 }
 
 protocol TaskListDelegate
 {
     func didChangeStateOfSubtask(at index: Int)
     func didChangeTitleOfSubtask(at index: Int)
-    func didDeleteListContainer()
+    func didChangeListContainer()
     func didInsertSubtask(at index: Int)
     func didDeleteSubtasks(at indexes: [Int])
 }

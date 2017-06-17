@@ -19,7 +19,9 @@ class TaskListRow: NSTableRowView
     
     override func drawSelection(in dirtyRect: NSRect)
     {
-        drawBackground(with: selectionColor)
+        let color = selectionColor.withAlphaComponent(isEmphasized ? 1 : 0.5)
+        
+        drawBackground(with: color)
     }
     
     override func drawBackground(in dirtyRect: NSRect)
