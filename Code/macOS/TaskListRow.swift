@@ -51,8 +51,8 @@ class TaskListRow: NSTableRowView
                                          blue: 254.0 / 255.0,
                                          alpha: 1)
     
-    private let doneColor = NSColor(calibratedRed: 224.0 / 255.0,
-                                         green: 224.0 / 255.0,
-                                         blue: 224.0 / 255.0,
-                                         alpha: 1)
+    private let doneColor = NSColor(calibratedRed: 255.0 / 255.0,
+                                         green: 255.0 / 255.0,
+                                         blue: 255.0 / 255.0,
+                                         alpha: 0.75)
 }
