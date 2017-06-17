@@ -18,8 +18,6 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     {
         self.init(frame: NSRect.zero)
         
-        translatesAutoresizingMaskIntoConstraints = false
-        
         taskList = list
         
         initialize()
@@ -34,7 +32,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         automaticallyAdjustsContentInsets = false
         
         documentView = tableView
-        contentInsets = NSEdgeInsetsMake(10, 0, 10, 0)
+        contentInsets = NSEdgeInsetsMake(tableViewTopInset, 0, 10, 0)
     }
     
     lazy var tableView: NSTableView =
@@ -281,7 +279,7 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     {
         var newOrigin = contentView.bounds.origin
         
-        newOrigin.y = -10
+        newOrigin.y = -tableViewTopInset
         
         contentView.setBoundsOrigin(newOrigin)
     }
@@ -345,6 +343,8 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     // MARK: - Task List
     
     private(set) weak var taskList: TaskList?
+    
+    private let tableViewTopInset: CGFloat = 10
 }
 
 func logFirstResponder()

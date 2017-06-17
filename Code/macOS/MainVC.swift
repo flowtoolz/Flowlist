@@ -40,7 +40,7 @@ class MainVC: NSViewController, Subscriber
         }
     }
     
-    // MARK: - Task Lists
+    // MARK: - Navigation
     
     func listViewWantsToGiveFocusToTheRight(sender: Any)
     {
@@ -76,6 +76,8 @@ class MainVC: NSViewController, Subscriber
             leftListView.becomeFirstResponder()
         }
     }
+    
+    // MARK: - Task Lists
     
     func layoutListViews()
     {
