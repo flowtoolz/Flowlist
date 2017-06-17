@@ -68,7 +68,10 @@ class Task: Sender
         {
             if let removedSubtask = elements?.remove(at: indexToRemove)
             {
-                removedSubtask.container = nil
+                if removedSubtask.container === self
+                {
+                    removedSubtask.container = nil
+                }
             }
         }
         
@@ -161,9 +164,43 @@ class Task: Sender
         case inProgress, onHold, done, archived
     }
     
+    func logRecursively(_ numberIndents: Int = 0)
+    {
+        for _ in 0 ..< numberIndents
+        {
+            print("\t", separator: "", terminator: "")
+        }
+        
+        print(description)
+        
+        if (elements ?? []).count > 0
+        {
+            for _ in 0 ..< numberIndents
+            {
+                print("\t", separator: "", terminator: "")
+            }
+            
+            print("{")
+            
+            for element in elements ?? []
+            {
+                element.logRecursively(numberIndents + 1)
+            }
+            
+            for _ in 0 ..< numberIndents
+            {
+                print("\t", separator: "", terminator: "")
+            }
+            
+            print("}")
+        }
+    }
+    
     var description: String
     {
-        return "\(uuid) \(title ?? "Untitled")"
+        let containerTitle = container == nil ? "none" : (container?.title ?? "untitled")
+        let stateString = state == .done ? "done" : "backlog"
+        return "\(title ?? "untitled") (container: \(containerTitle), state: \(stateString))"
     }
     
     let uuid: String

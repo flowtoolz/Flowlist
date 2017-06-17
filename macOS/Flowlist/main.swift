@@ -35,7 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
         
         NSApp.mainMenu = NSMenu(title: "Menu")
         
-        quitOption.menu = NSApp.mainMenu
+        //quitOption.menu = NSApp.mainMenu
         
         NSApp.mainMenu?.addItem(quitOption)
 
