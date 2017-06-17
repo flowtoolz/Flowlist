@@ -68,18 +68,7 @@ class MainVC: NSViewController, Subscriber
             return
         }
         
-        if index >= 0 && index + 1 < listViews.count
-        {
-            let rightListView = listViews[index + 1]
-            
-            if rightListView.taskList?.numberOfTasks ?? 0 > 0
-            {
-                let selectionIndex = rightListView.taskList?.selectedIndexes.min() ?? 0
-                rightListView.taskList?.selectedIndexes = [selectionIndex]
-                rightListView.updateTableSelection()
-                rightListView.scrollView.becomeFirstResponder()
-            }
-        }
+        _ = moveFocus(to: index + 1, resetSelection: true)
     }
     
     func listViewWantsToGiveFocusToTheLeft(sender: Any)
@@ -89,12 +78,27 @@ class MainVC: NSViewController, Subscriber
             return
         }
         
-        if index > 0 && index < listViews.count
+        _ = moveFocus(to: index - 1)
+    }
+    
+    private func moveFocus(to index: Int, resetSelection: Bool = false) -> Bool
+    {
+        guard index >= 0, index < listViews.count else { return false }
+        
+        let listView = listViews[index]
+        
+        guard listView.taskList?.numberOfTasks ?? 0 > 0 else { return false }
+        
+        if resetSelection
         {
-            let leftListView = listViews[index - 1]
-            
-            leftListView.scrollView.becomeFirstResponder()
+            let selectionIndex = listView.taskList?.selectedIndexes.min() ?? 0
+            listView.taskList?.selectedIndexes = [selectionIndex]
+            listView.updateTableSelection()
         }
+        
+        listView.scrollView.becomeFirstResponder()
+        
+        return false
     }
     
     // MARK: - Task Lists
@@ -107,7 +111,7 @@ class MainVC: NSViewController, Subscriber
             
             if i == 0
             {
-                listView.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
+                listView.autoPinEdge(toSuperviewEdge: .left, withInset: 150)
             }
             else
             {
@@ -117,7 +121,7 @@ class MainVC: NSViewController, Subscriber
             
             if i == listViews.count - 1
             {
-                listView.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+                listView.autoPinEdge(toSuperviewEdge: .right, withInset: 150)
             }
             
             listView.autoPinEdge(toSuperviewEdge: .top)

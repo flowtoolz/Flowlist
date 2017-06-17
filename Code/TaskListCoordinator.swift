@@ -54,5 +54,5 @@ class TaskListCoordinator: Subscriber
         slave.container = container
     }
     
-    var lists = [TaskList(), TaskList(), TaskList(), TaskList()]
+    var lists = [TaskList(), TaskList(), TaskList()]
 }
