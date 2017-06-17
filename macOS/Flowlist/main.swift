@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Flowtoolz
 
 class AppDelegate: NSObject, NSApplicationDelegate
 {
@@ -15,11 +16,29 @@ class AppDelegate: NSObject, NSApplicationDelegate
         store.load()
         
         setupWindow()
+        
+        setupMenuOptions()
     }
     
     func applicationWillTerminate(_ notification: Notification)
     {
         store.save()
+    }
+    
+    // MARK: - Menu
+    
+    func setupMenuOptions()
+    {
+        let quitOption = NSMenuItem(title: "Quit",
+                                    action: #selector(quit),
+                                    keyEquivalent: "")
+        
+        NSApp.mainMenu = NSMenu(title: "Menu")
+        
+        quitOption.menu = NSApp.mainMenu
+        
+        NSApp.mainMenu?.addItem(quitOption)
+
     }
     
     // MARK: - Window
@@ -28,22 +47,34 @@ class AppDelegate: NSObject, NSApplicationDelegate
     {
         window.contentViewController = MainVC()
         window.styleMask = NSWindowStyleMask([.resizable, .titled, .miniaturizable, .closable, .unifiedTitleAndToolbar])
-        window.setFrame(CGRect(x: 20, y: 420, width: 1200, height: 350),
+        
+        let frame = NSScreen.main()?.frame ?? CGRect(x: 0, y: 0, width: 1280, height: 960)
+        
+        window.setFrame(CGRect(x: frame.size.width / 5,
+                               y: frame.size.height / 5,
+                               width: frame.size.width * 0.6,
+                               height: frame.size.height * 0.6),
                         display: true)
+        
         window.isReleasedWhenClosed = false
         window.title = "Flowlist"
-        window.toolbar = toolbar
+        //window.toolbar = toolbar
         window.makeKeyAndOrderFront(self)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(windowWillClose),
+            name: NSNotification.Name.NSWindowWillClose,
+            object: nil)
     }
     
-    private lazy var toolbar: NSToolbar =
-    {
-        let bar = NSToolbar(identifier: "ToolbarIdentifier")
-        
-        bar.sizeMode = .small
-        
-        return bar
-    }()
+//    private lazy var toolbar: NSToolbar =
+//    {
+//        let bar = NSToolbar(identifier: "ToolbarIdentifier")
+//        
+//        bar.sizeMode = .small
+//        
+//        return bar
+//    }()
     
     func toggleWindow()
     {
@@ -69,9 +100,14 @@ class AppDelegate: NSObject, NSApplicationDelegate
         window.orderOut(self)
     }
     
+    func windowWillClose()
+    {
+        quit()
+    }
+    
     let window = NSWindow()
     
-    private func quit()
+    func quit()
     {
         NSApp.terminate(nil)
     }

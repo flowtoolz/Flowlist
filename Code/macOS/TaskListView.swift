@@ -51,7 +51,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         self.headerView.addSubview(field)
         
         field.textColor = NSColor.black
-        field.font = NSFont.systemFont(ofSize: 16)
+        field.font = NSFont.systemFont(ofSize: 13)
         
         field.setContentCompressionResistancePriority(0.1, for: .horizontal)
         field.lineBreakMode = .byTruncatingTail
@@ -86,7 +86,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         view.drawsBackground = false
         
         view.automaticallyAdjustsContentInsets = false
-        view.contentInsets = NSEdgeInsetsMake(0, 0, 0, 0)
+        view.contentInsets = NSEdgeInsetsMake(0, 0, 10, 0)
         
         view.documentView = self.tableView
         

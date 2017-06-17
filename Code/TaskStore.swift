@@ -18,7 +18,7 @@ class TaskStore: Sender
     {
         didSet
         {
-            root.title = "Inbox + Projects"
+            root.title = "All Items"
             
             send(TaskStore.didUpdateRoot)
         }

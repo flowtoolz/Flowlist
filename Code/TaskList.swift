@@ -45,7 +45,7 @@ class TaskList: Sender, Subscriber
             let updatedTask = sender as? Task,
             updatedTask.container === container,
             let indexOfUpdatedTask = updatedTask.indexInContainer
-            else
+        else
         {
             return
         }

@@ -28,7 +28,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2017-06-14 15:03:28 +0000</string>
+	<string>2017-06-17 09:25:26 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian</string>
 	<key>MovementHandleVisible</key>
@@ -89,7 +89,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{0, 0}, {1236.5384615384614, 1363.4615384615381}}</string>
+				<string>{{0, 0}, {1519.178082191781, 1609.5890410958909}}</string>
 				<key>Class</key>
 				<string>ShapedGraphic</string>
 				<key>ID</key>
@@ -152,7 +152,7 @@
 							<key>TailArrow</key>
 							<string>0</string>
 							<key>Width</key>
-							<real>5</real>
+							<real>4</real>
 						</dict>
 					</dict>
 				</dict>
@@ -814,7 +814,7 @@
 							<key>CornerRadius</key>
 							<real>12</real>
 							<key>Width</key>
-							<real>5</real>
+							<real>4</real>
 						</dict>
 					</dict>
 				</dict>
@@ -827,11 +827,6 @@
 					<integer>22</integer>
 					<key>Style</key>
 					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
 						<key>shadow</key>
 						<dict>
 							<key>Draws</key>
@@ -842,7 +837,7 @@
 							<key>CornerRadius</key>
 							<real>12</real>
 							<key>Width</key>
-							<real>5</real>
+							<real>4</real>
 						</dict>
 					</dict>
 				</dict>
@@ -917,7 +912,7 @@
 	<key>WindowInfo</key>
 	<dict>
 		<key>Frame</key>
-		<string>{{0, 0}, {1238, 777}}</string>
+		<string>{{3, 0}, {1234, 777}}</string>
 		<key>ShowInfo</key>
 		<true/>
 		<key>ShowRuler</key>
@@ -929,12 +924,12 @@
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{-64.423076923076977, -48.076923076923279}, {677.88461538461536, 580.76923076923072}}</string>
+		<string>{{-223.97260273972597, -89.041095890411157}, {960.27397260273983, 827.39726027397273}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Arbeitsfläche 1</string>
-				<real>1.04</real>
+				<real>0.72999999999999998</real>
 				<real>1</real>
 			</array>
 		</array>
@@ -979,7 +974,7 @@
 	<key>resolutionForJPGKey</key>
 	<real>1</real>
 	<key>resolutionForPNGKey</key>
-	<real>4.4444446563720703</real>
+	<real>8.8888893127441406</real>
 	<key>resolutionForTIFFKey</key>
 	<real>1</real>
 	<key>resolutionUnitsKey</key>
