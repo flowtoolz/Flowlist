@@ -38,8 +38,9 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         
         headerView.autoSetDimension(.height, toSize: 36)
         
-        titleField.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero, excludingEdge: .top)
-        titleField.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        titleField.autoAlignAxis(.horizontal, toSameAxisOf: headerView)
+        titleField.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
+        titleField.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
         
         updateTitle()
     }
@@ -50,8 +51,10 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         self.headerView.addSubview(field)
         
         field.textColor = NSColor.black
-        field.font = NSFont.systemFont(ofSize: 13)
+        field.font = NSFont.systemFont(ofSize: 16)
         
+        field.setContentCompressionResistancePriority(0.1, for: .horizontal)
+        field.lineBreakMode = .byTruncatingTail
         field.drawsBackground = false
         field.alignment = .center
         field.isEditable = false
