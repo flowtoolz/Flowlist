@@ -10,7 +10,7 @@ import AppKit
 import PureLayout
 import Flowtoolz
 
-class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, TaskListDelegate, Subscriber, Sender
+class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListDelegate, Subscriber, Sender
 {
     // MARK: - Table View
     
@@ -28,12 +28,67 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
         taskList?.delegate = self
         
         translatesAutoresizingMaskIntoConstraints = false
-        drawsBackground = false
-        automaticallyAdjustsContentInsets = false
         
-        documentView = tableView
-        contentInsets = NSEdgeInsetsMake(tableViewTopInset, 0, 10, 0)
+        scrollView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero, excludingEdge: .top)
+        scrollView.autoPinEdge(.top, to: .bottom, of: headerView, withOffset: 10)
+        
+        headerView.autoPinEdge(toSuperviewEdge: .left)
+        headerView.autoPinEdge(toSuperviewEdge: .right)
+        headerView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        
+        headerView.autoSetDimension(.height, toSize: 36)
+        
+        titleField.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero, excludingEdge: .top)
+        titleField.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        
+        updateTitle()
     }
+    
+    private lazy var titleField: NSTextField =
+    {
+        let field = NSTextField.newAutoLayout()
+        self.headerView.addSubview(field)
+        
+        field.textColor = NSColor.black
+        field.font = NSFont.systemFont(ofSize: 13)
+        
+        field.drawsBackground = false
+        field.alignment = .center
+        field.isEditable = false
+        field.isBezeled = false
+        field.isBordered = false
+        field.isSelectable = false
+        
+        return field
+    }()
+    
+    func updateTitle()
+    {
+        titleField.stringValue = taskList?.container?.title ?? ""
+    }
+    
+    private lazy var headerView: ListHeaderView =
+    {
+        let view = ListHeaderView()
+        self.addSubview(view)
+        
+        return view
+    }()
+    
+    lazy var scrollView: NSScrollView =
+    {
+        let view = NSScrollView.newAutoLayout()
+        self.addSubview(view)
+        
+        view.drawsBackground = false
+        
+        view.automaticallyAdjustsContentInsets = false
+        view.contentInsets = NSEdgeInsetsMake(0, 0, 0, 0)
+        
+        view.documentView = self.tableView
+        
+        return view
+    }()
     
     lazy var tableView: NSTableView =
     {
@@ -149,6 +204,8 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     func didChangeListContainer()
     {
+        updateTitle()
+        
         tableView.beginUpdates()
         tableView.removeRows(at: IndexSet(integersIn: 0 ..< tableView.numberOfRows),
                              withAnimation: .slideUp)
@@ -163,6 +220,11 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
                                  withAnimation: .slideUp)
             tableView.endUpdates()
         }
+    }
+    
+    func didChangeListContainerTitle()
+    {
+        updateTitle()
     }
     
     func didChangeTitleOfSubtask(at index: Int)
@@ -277,11 +339,11 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     func jumpToTop()
     {
-        var newOrigin = contentView.bounds.origin
+        var newOrigin = scrollView.contentView.bounds.origin
         
-        newOrigin.y = -tableViewTopInset
+        newOrigin.y = 0
         
-        contentView.setBoundsOrigin(newOrigin)
+        scrollView.contentView.setBoundsOrigin(newOrigin)
     }
     
     func updateTableSelection()
@@ -343,8 +405,6 @@ class TaskListView: NSScrollView, NSTableViewDelegate, NSTableViewDataSource, Ta
     // MARK: - Task List
     
     private(set) weak var taskList: TaskList?
-    
-    private let tableViewTopInset: CGFloat = 10
 }
 
 func logFirstResponder()

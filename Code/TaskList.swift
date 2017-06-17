@@ -23,14 +23,20 @@ class TaskList: Sender, Subscriber
     {
         guard container != nil,
             let updatedTask = sender as? Task,
-            updatedTask.container === container,
             let indexOfUpdatedTask = updatedTask.indexInContainer
         else
         {
             return
         }
         
-        delegate?.didChangeTitleOfSubtask(at: indexOfUpdatedTask)
+        if updatedTask.container === container
+        {
+            delegate?.didChangeTitleOfSubtask(at: indexOfUpdatedTask)
+        }
+        else if updatedTask === container
+        {
+            delegate?.didChangeListContainerTitle()
+        }
     }
     
     func taskDidChangeState(sender: Any)
@@ -266,6 +272,11 @@ class TaskList: Sender, Subscriber
     
     // MARK: - Read
     
+    var title: String
+    {
+        return container?.title ?? "untitled"
+    }
+    
     func task(at index: Int) -> Task?
     {
         return container?.subtask(at: index)
@@ -300,6 +311,7 @@ protocol TaskListDelegate
     func didChangeStateOfSubtask(at index: Int)
     func didChangeTitleOfSubtask(at index: Int)
     func didChangeListContainer()
+    func didChangeListContainerTitle()
     func didInsertSubtask(at index: Int)
     func didDeleteSubtasks(at indexes: [Int])
 }

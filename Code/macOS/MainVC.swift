@@ -57,7 +57,7 @@ class MainVC: NSViewController, Subscriber
             {
                 rightListView.taskList?.selectedIndexes = [0]
                 rightListView.updateTableSelection()
-                rightListView.becomeFirstResponder()
+                rightListView.scrollView.becomeFirstResponder()
             }
         }
     }
@@ -73,7 +73,7 @@ class MainVC: NSViewController, Subscriber
         {
             let leftListView = listViews[index - 1]
             
-            leftListView.becomeFirstResponder()
+            leftListView.scrollView.becomeFirstResponder()
         }
     }
     

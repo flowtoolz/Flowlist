@@ -16,6 +16,7 @@
 		9E542E9A1EEEE41C00534981 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E542E991EEEE41C00534981 /* Assets.xcassets */; };
 		9E542EA81EEEE41C00534981 /* TodayListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E542EA71EEEE41C00534981 /* TodayListTests.swift */; };
 		9E696E611EF4842F0046BCB8 /* TaskListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E696E601EF4842F0046BCB8 /* TaskListCoordinator.swift */; };
+		9E696E651EF507270046BCB8 /* ListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E696E641EF507270046BCB8 /* ListHeaderView.swift */; };
 		9E72881B1EEF3095003A2F46 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E72881A1EEF3095003A2F46 /* TaskListView.swift */; };
 		9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651931EEF428100DE2B07 /* TaskView.swift */; };
 		9E7651961EEF4DA200DE2B07 /* TaskStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* TaskStore.swift */; };
@@ -58,6 +59,7 @@
 		9E542EA71EEEE41C00534981 /* TodayListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayListTests.swift; sourceTree = "<group>"; };
 		9E542EA91EEEE41C00534981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E696E601EF4842F0046BCB8 /* TaskListCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListCoordinator.swift; path = ../../Code/TaskListCoordinator.swift; sourceTree = "<group>"; };
+		9E696E641EF507270046BCB8 /* ListHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListHeaderView.swift; path = ../../Code/macOS/ListHeaderView.swift; sourceTree = "<group>"; };
 		9E72881A1EEF3095003A2F46 /* TaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListView.swift; path = ../../Code/macOS/TaskListView.swift; sourceTree = "<group>"; };
 		9E7651931EEF428100DE2B07 /* TaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = ../../Code/macOS/TaskView.swift; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* TaskStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskStore.swift; path = ../../Code/TaskStore.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			children = (
 				9E72881A1EEF3095003A2F46 /* TaskListView.swift */,
 				9EA2B9681EF035D900F05F20 /* TaskListRow.swift */,
+				9E696E641EF507270046BCB8 /* ListHeaderView.swift */,
 				9E82A7A81EF2A558006AEF02 /* TaskList.swift */,
 			);
 			name = List;
@@ -402,6 +405,7 @@
 				9E4DE65E1EF148C100506B48 /* TaskArchive.swift in Sources */,
 				9E72881B1EEF3095003A2F46 /* TaskListView.swift in Sources */,
 				9E15185E1EEEE97700B35AD5 /* MainVC.swift in Sources */,
+				9E696E651EF507270046BCB8 /* ListHeaderView.swift in Sources */,
 				9EA2B9691EF035D900F05F20 /* TaskListRow.swift in Sources */,
 				9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */,
 				9EA2B96B1EF0A80A00F05F20 /* TaskStore+Persistence.swift in Sources */,

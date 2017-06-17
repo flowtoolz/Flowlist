@@ -30,6 +30,7 @@
 		875C398C2272C5AE8AE0C478F4AD793C /* String+Flowtoolz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5607CF3DBCC41ED6E994AAFB517F2370 /* String+Flowtoolz.swift */; };
 		89012435658FAF20BC16B3F82895DBD0 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2658348C48C6B84C2D4BCA92E2B0CF /* Message.swift */; };
 		97A698FF0FD7FF7D76312F78955CEE63 /* MessageLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9F9B53A30C188C0F71439330AFE72 /* MessageLog.swift */; };
+		9E696E631EF4FD020046BCB8 /* NSView+Flowtoolz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E696E621EF4FD020046BCB8 /* NSView+Flowtoolz.swift */; };
 		9FBCA65AF4D82BED513D891793C6DCC5 /* PureLayoutDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 0DFD1A730706810562447109C3E79DE1 /* PureLayoutDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3CCC099B188DD3726D0692F3C9041D5 /* PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C47F0233B43342A7A77E4961104C884 /* PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A5368033C647C708D5D7D6E7EBDFCD6F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D8CFA435488DEDB02A4927B4EF3C6AF /* Cocoa.framework */; };
@@ -135,6 +136,7 @@
 		9A38B7DE6BAB741FC1FA469EFC11DA0C /* Reachability.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = Reachability/Reachability.swift; sourceTree = "<group>"; };
 		9AAF8E51E04F7892CCA4F91D3AA10C53 /* ReachabilitySwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = ReachabilitySwift.modulemap; sourceTree = "<group>"; };
 		9D1D5010A848B5A072289C461F5FC45F /* ReachabilitySwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ReachabilitySwift-dummy.m"; sourceTree = "<group>"; };
+		9E696E621EF4FD020046BCB8 /* NSView+Flowtoolz.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSView+Flowtoolz.swift"; sourceTree = "<group>"; };
 		A0100F5FCB23FFBD5E9D56DF3E7146A0 /* MessageLogDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageLogDelegate.swift; sourceTree = "<group>"; };
 		A58077FEE5458A52AFBE369AF8612651 /* NSLayoutConstraint+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+PureLayout.m"; path = "PureLayout/PureLayout/NSLayoutConstraint+PureLayout.m"; sourceTree = "<group>"; };
 		A6745C05427D3B1F6194383A6BAFEBEE /* Pods-Flowlist-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Flowlist-frameworks.sh"; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				F2CF6BFA80EB93E1D290223F68758DC3 /* MessagePresenter.swift */,
+				9E696E621EF4FD020046BCB8 /* NSView+Flowtoolz.swift */,
 			);
 			path = appkit;
 			sourceTree = "<group>";
@@ -723,6 +726,7 @@
 				B7CF5A7EE22791D732B73BC8892919AC /* NetworkReachability.swift in Sources */,
 				5E49569AD9BAB10F6A94210DC44F7D7C /* NotificationService.swift in Sources */,
 				875C398C2272C5AE8AE0C478F4AD793C /* String+Flowtoolz.swift in Sources */,
+				9E696E631EF4FD020046BCB8 /* NSView+Flowtoolz.swift in Sources */,
 				07BC09DB9A5FEBC91AAF040BC069561C /* URL+Flowtoolz.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
