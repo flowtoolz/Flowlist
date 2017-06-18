@@ -394,11 +394,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         return TaskListRow(with: taskList?.task(at: row))
     }
     
-    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool
-    {
-        return false
-    }
-    
     func tableViewSelectionDidChange(_ notification: Notification)
     {
         //Swift.print("selection did change: \(Array(tableView.selectedRowIndexes).description)")

@@ -16,7 +16,10 @@ class MainVC: NSViewController, Subscriber
     {
         view = NSView()
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.gray.cgColor
+        view.layer?.backgroundColor = NSColor(calibratedRed: 0.2,
+                                              green: 0.3,
+                                              blue: 0.1,
+                                              alpha: 1.0).cgColor
         
         subscribe(to: TaskListView.wantsToGiveUpFocusToTheRight,
                   action: listViewWantsToGiveFocusToTheRight)
@@ -54,11 +57,23 @@ class MainVC: NSViewController, Subscriber
     private func layoutBackroundImage()
     {
         backgroundImage.autoPinEdgesToSuperviewEdges()
+        backgroundOverlay.autoPinEdgesToSuperviewEdges()
     }
+    
+    private lazy var backgroundOverlay: NSView =
+    {
+        let view = NSView.newAutoLayout()
+        self.view.addSubview(view)
+        
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.33).cgColor
+        
+        return view
+    }()
     
     private lazy var backgroundImage: NSImageView =
     {
-        let image = NSImage(named: "back") ?? NSImage()
+        let image = NSImage(named: "grass") ?? NSImage()
         
         let view = NSImageView(withAspectFillImage: image)
         self.view.addSubview(view)
