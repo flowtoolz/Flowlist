@@ -38,7 +38,6 @@ class AppDelegate: NSObject, NSApplicationDelegate
         //quitOption.menu = NSApp.mainMenu
         
         NSApp.mainMenu?.addItem(quitOption)
-
     }
     
     // MARK: - Window
@@ -58,13 +57,14 @@ class AppDelegate: NSObject, NSApplicationDelegate
         
         window.isReleasedWhenClosed = false
         window.title = "Flowlist"
+        
         //window.toolbar = toolbar
-        window.makeKeyAndOrderFront(self)
+        showWindow()
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(windowWillClose),
-            name: NSNotification.Name.NSWindowWillClose,
-            object: nil)
+                                               name: NSNotification.Name.NSWindowWillClose,
+                                               object: nil)
     }
     
 //    private lazy var toolbar: NSToolbar =

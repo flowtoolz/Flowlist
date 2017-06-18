@@ -10,7 +10,7 @@ import AppKit
 import PureLayout
 import Flowtoolz
 
-class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListDelegate, Subscriber, Sender
+class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListDelegate, Subscriber, Sender, TaskListTableViewDelegate, TaskViewTextFieldDelegate
 {
     // MARK: - Table View
     
@@ -70,6 +70,16 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         titleField.stringValue = taskList?.container?.title ?? ""
     }
     
+    private func hideHeader()
+    {
+        headerView.isHidden = true
+    }
+    
+    private func showHeader()
+    {
+        headerView.isHidden = false
+    }
+    
     private lazy var headerView: ListHeaderView =
     {
         let view = ListHeaderView()
@@ -93,9 +103,9 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         return view
     }()
     
-    lazy var tableView: NSTableView =
+    lazy var tableView: TaskListTableView =
     {
-        let view = NSTableView()
+        let view = TaskListTableView()
         
         let column = NSTableColumn(identifier: TaskView.reuseIdentifier)
         
@@ -107,6 +117,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
         view.dataSource = self
         view.delegate = self
+        view.taskListDelegate = self
         
         return view
     }()
@@ -252,6 +263,18 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         tableView.rowView(atRow: index, makeIfNecessary: false)?.display()
     }
     
+    func taskListTableViewWasClicked(_ view: TaskListTableView)
+    {
+        send(TaskListView.tableViewWasClicked)
+    }
+    
+    func taskViewTextFieldDidBecomeFirstResponder(_ textField: TaskViewTextField)
+    {
+        send(TaskListView.tableViewWasClicked)
+    }
+    
+    static let tableViewWasClicked = "TaskListTableViewWasClicked"
+    
     // MARK: - Editing and Filtering the List
     
     private func goToSuperContainer()
@@ -378,6 +401,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     func tableViewSelectionDidChange(_ notification: Notification)
     {
+        //Swift.print("selection did change: \(Array(tableView.selectedRowIndexes).description)")
         taskList?.selectedIndexes = Array(tableView.selectedRowIndexes)
     }
     
@@ -401,6 +425,8 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         let cell = tableView.make(withIdentifier: TaskView.reuseIdentifier,
                                   owner: self) as? TaskView ?? TaskView()
         
+        cell.titleField.taskViewTextFieldDelegate = self
+        
         if let task = taskList?.task(at: row)
         {
             cell.configure(with: task)
@@ -416,8 +442,15 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
 
 func logFirstResponder()
 {
+    guard NSApp.mainWindow != nil else
+    {
+        Swift.print("main window is nil")
+        return
+    }
+    
     guard let firstResponder = NSApp.mainWindow?.firstResponder else
     {
+        Swift.print("main window has no first responder")
         return
     }
     

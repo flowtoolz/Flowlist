@@ -83,9 +83,9 @@ class TaskView: NSView, NSTextFieldDelegate
         titleField.autoPinEdge(.right, to: .left, of: containerIndicator, withOffset: -5)
     }
     
-    private lazy var titleField: NSTextField =
+    lazy var titleField: TaskViewTextField =
     {
-        let textField = NSTextField()
+        let textField = TaskViewTextField()
         self.addSubview(textField)
         
         textField.isBordered = false
@@ -197,4 +197,26 @@ class TaskView: NSView, NSTextFieldDelegate
     // MARK: - Task
     
     private weak var task: Task?
+}
+
+class TaskViewTextField: NSTextField
+{
+    override func becomeFirstResponder() -> Bool
+    {
+        let didBecomeFirstResponder = super.becomeFirstResponder()
+        
+        if didBecomeFirstResponder
+        {
+            taskViewTextFieldDelegate?.taskViewTextFieldDidBecomeFirstResponder(self)
+        }
+        
+        return didBecomeFirstResponder
+    }
+    
+    var taskViewTextFieldDelegate: TaskViewTextFieldDelegate?
+}
+
+protocol TaskViewTextFieldDelegate
+{
+    func taskViewTextFieldDidBecomeFirstResponder(_ textField: TaskViewTextField)
 }

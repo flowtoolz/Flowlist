@@ -23,6 +23,9 @@ class MainVC: NSViewController, Subscriber
         
         subscribe(to: TaskListView.wantsToGiveUpFocusToTheLeft,
                   action: listViewWantsToGiveFocusToTheLeft)
+        
+        subscribe(to: TaskListView.tableViewWasClicked,
+                  action: tableViewWasClickedInTaskListView)
     }
     
     override func viewDidLoad()
@@ -39,6 +42,11 @@ class MainVC: NSViewController, Subscriber
         {
             listView.jumpToTop()
         }
+        
+        if listViews.count > 2
+        {
+            _ = moveInputFocus(to: 2)
+        }
     }
     
     // MARK: - Background Image
@@ -50,7 +58,7 @@ class MainVC: NSViewController, Subscriber
     
     private lazy var backgroundImage: NSImageView =
     {
-        let image = NSImage(named: "zen") ?? NSImage()
+        let image = NSImage(named: "back") ?? NSImage()
         
         let view = NSImageView(withAspectFillImage: image)
         self.view.addSubview(view)
@@ -62,7 +70,10 @@ class MainVC: NSViewController, Subscriber
     
     func listViewWantsToGiveFocusToTheRight(sender: Any)
     {
-        guard let index = listViews.index(where: { $0 === sender as AnyObject }) else
+        guard let index = listViews.index(where: { $0 === sender as AnyObject }),
+            index >= 0, index < listViews.count - 1,
+            (listViews[index].taskList?.numberOfTasks ?? 0) > 0
+        else
         {
             return
         }
@@ -76,7 +87,7 @@ class MainVC: NSViewController, Subscriber
         {
             return
         }
-        
+
         _ = moveInputFocus(to: index - 1)
     }
     
@@ -84,30 +95,53 @@ class MainVC: NSViewController, Subscriber
     {
         guard index >= 0, index < listViews.count else { return false }
         
-        // set focus
         let listView = listViews[index]
         
         guard listView.taskList?.numberOfTasks ?? 0 > 0 else { return false }
-        
+    
         let selectionIndex = listView.taskList?.selectedIndexes.min() ?? 0
         listView.taskList?.selectedIndexes = [selectionIndex]
         listView.updateTableSelection()
         
-        listView.scrollView.becomeFirstResponder()
+        if !(NSApp.mainWindow?.makeFirstResponder(listView.tableView) ?? false)
+        {
+            print("Warning: could not make table view first responder")
+        }
         
-        // navigate right if becessary
+        tableViewGainedFocus(at: index)
+
+        return true
+    }
+    
+    func tableViewWasClickedInTaskListView(sender: Any)
+    {
+        guard let index = listViews.index(where: { $0 === sender as AnyObject }) else
+        {
+            return
+        }
+        
+        tableViewGainedFocus(at: index)
+    }
+    
+    private func tableViewGainedFocus(at index: Int)
+    {
+        guard index >= 0, index < listViews.count,
+            listViews[index].taskList?.container != nil
+        else
+        {
+            return
+        }
+        
+        // navigate right if necessary
         if index >= listViews.count - 2
         {
             navigateRight()
         }
-        
-        // navigate left if becessary
+        // navigate left if necessary
         else if index <= 1
         {
             navigateLeft()
         }
-        
-        return true
     }
     
     private func navigateRight()
@@ -127,7 +161,7 @@ class MainVC: NSViewController, Subscriber
         
         // let coordinator update new list
         listCoordinator.setContainerOfLastList()
-
+        
         // animate the shit outa this
         NSAnimationContext.runAnimationGroup(
         {

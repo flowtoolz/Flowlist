@@ -104,8 +104,6 @@ class TaskListCoordinator: Subscriber
         let slave = lists[index + 1]
         
         master.container = slave.container?.container
-        
-        
     }
     
     var lists = [TaskList(), TaskList(), TaskList(), TaskList(), TaskList()]

@@ -240,6 +240,7 @@ class TaskList: Sender, Subscriber
         {
             if oldValue != selectedIndexes
             {
+                //print("selection changed: \(selectedIndexes.description)")
                 validateSelection()
                 send(TaskList.didChangeSelection)
             }
