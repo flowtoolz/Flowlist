@@ -66,7 +66,7 @@ class MainVC: NSViewController, Subscriber
         self.view.addSubview(view)
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.33).cgColor
+        view.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.4).cgColor
         
         return view
     }()

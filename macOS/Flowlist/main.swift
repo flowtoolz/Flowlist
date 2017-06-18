@@ -9,7 +9,7 @@
 import Cocoa
 import Flowtoolz
 
-class AppDelegate: NSObject, NSApplicationDelegate
+class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
 {
     func applicationDidFinishLaunching(_ aNotification: Notification)
     {
@@ -55,16 +55,12 @@ class AppDelegate: NSObject, NSApplicationDelegate
                                height: frame.size.height * 0.6),
                         display: true)
         
+        window.delegate = self
         window.isReleasedWhenClosed = false
         window.title = "Flowlist"
         
         //window.toolbar = toolbar
         showWindow()
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(windowWillClose),
-                                               name: NSNotification.Name.NSWindowWillClose,
-                                               object: nil)
     }
     
 //    private lazy var toolbar: NSToolbar =
@@ -75,6 +71,11 @@ class AppDelegate: NSObject, NSApplicationDelegate
 //        
 //        return bar
 //    }()
+    
+    func windowWillClose(_ notification: Notification)
+    {
+        quit()
+    }
     
     func toggleWindow()
     {
@@ -98,11 +99,6 @@ class AppDelegate: NSObject, NSApplicationDelegate
     func hideWindow()
     {
         window.orderOut(self)
-    }
-    
-    func windowWillClose()
-    {
-        quit()
     }
     
     let window = NSWindow()
