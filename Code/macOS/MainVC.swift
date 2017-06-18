@@ -50,8 +50,7 @@ class MainVC: NSViewController, Subscriber
     
     private lazy var backgroundImage: NSImageView =
     {
-        let imageName = Int(arc4random_uniform(2)) == 0 ? "flower" : "zen"
-        let image = NSImage(named: imageName) ?? NSImage()
+        let image = NSImage(named: "zen") ?? NSImage()
         
         let view = NSImageView(withAspectFillImage: image)
         self.view.addSubview(view)
@@ -68,7 +67,7 @@ class MainVC: NSViewController, Subscriber
             return
         }
         
-        _ = moveFocus(to: index + 1, resetSelection: true)
+        _ = moveInputFocus(to: index + 1)
     }
     
     func listViewWantsToGiveFocusToTheLeft(sender: Any)
@@ -78,56 +77,155 @@ class MainVC: NSViewController, Subscriber
             return
         }
         
-        _ = moveFocus(to: index - 1)
+        _ = moveInputFocus(to: index - 1)
     }
     
-    private func moveFocus(to index: Int, resetSelection: Bool = false) -> Bool
+    private func moveInputFocus(to index: Int) -> Bool
     {
         guard index >= 0, index < listViews.count else { return false }
         
+        // set focus
         let listView = listViews[index]
         
         guard listView.taskList?.numberOfTasks ?? 0 > 0 else { return false }
         
-        if resetSelection
-        {
-            let selectionIndex = listView.taskList?.selectedIndexes.min() ?? 0
-            listView.taskList?.selectedIndexes = [selectionIndex]
-            listView.updateTableSelection()
-        }
+        let selectionIndex = listView.taskList?.selectedIndexes.min() ?? 0
+        listView.taskList?.selectedIndexes = [selectionIndex]
+        listView.updateTableSelection()
         
         listView.scrollView.becomeFirstResponder()
         
-        return false
+        // navigate right if becessary
+        if index >= listViews.count - 2
+        {
+            navigateRight()
+        }
+        
+        // navigate left if becessary
+        else if index <= 1
+        {
+            navigateLeft()
+        }
+        
+        return true
     }
     
+    private func navigateRight()
+    {
+        // remove list view from front
+        let removedListView = listViews.remove(at: 0)
+        removedListView.removeFromSuperview()
+        
+        // let coordinator go right
+        let rightList = listCoordinator.moveRight()
+        
+        // append new list view to end
+        let addedListView = TaskListView(with: rightList)
+        addedListView.isHidden = true
+        self.view.addSubview(addedListView)
+        listViews.append(addedListView)
+        
+        // let coordinator update new list
+        listCoordinator.setContainerOfLastList()
+
+        // animate the shit outa this
+        NSAnimationContext.runAnimationGroup(
+        {
+            animationContext in
+            
+            animationContext.allowsImplicitAnimation = true
+            animationContext.duration = 0.3
+ 
+            // recreate layout contraints and re-layout all list views
+            layoutListViews()
+            
+            view.layoutSubtreeIfNeeded()
+        },
+        completionHandler:
+        {
+            addedListView.isHidden = false
+        })
+    }
+
+    private func navigateLeft()
+    {
+        // remove list view from end
+        guard let removedListView = listViews.popLast() else { return }
+        removedListView.removeFromSuperview()
+        
+        // let coordinator go left
+        let leftList = listCoordinator.moveLeft()
+        
+        // add new list view to front
+        let addedListView = TaskListView(with: leftList)
+        addedListView.isHidden = true
+        view.addSubview(addedListView)
+        listViews.insert(addedListView, at: 0)
+        
+        // let coordinator update new list
+        listCoordinator.setContainerOfMaster(at: 0)
+        
+        // load and show selection of added list view
+        listCoordinator.selectSlaveInMaster(at: 0)
+        addedListView.updateTableSelection()
+        
+        // animate the shit outa this
+        NSAnimationContext.runAnimationGroup(
+        {
+            animationContext in
+            
+            animationContext.allowsImplicitAnimation = true
+            animationContext.duration = 0.3
+            
+            // recreate layout contraints and re-layout all list views
+            layoutListViews()
+            
+            view.layoutSubtreeIfNeeded()
+        },
+        completionHandler:
+        {
+            addedListView.isHidden = false
+        })
+    }
+
     // MARK: - Task Lists
     
     func layoutListViews()
     {
+        view.removeConstraints(listViewContraints)
+        listViewContraints.removeAll()
+        
         for i in 0 ..< listViews.count
         {
             let listView = listViews[i]
             
             if i == 0
             {
-                listView.autoPinEdge(toSuperviewEdge: .left, withInset: 150)
+                listViewContraints.append(listView.autoPinEdge(.right, to: .left, of: view))
             }
             else
             {
-                listView.autoPinEdge(.left, to: .right, of: listViews[i - 1])
-                listView.autoConstrainAttribute(.width, to: .width, of: listViews[i - 1])
+                listViewContraints.append(listView.autoPinEdge(.left,
+                                                               to: .right,
+                                                               of: listViews[i - 1],
+                                                               withOffset: 10))
+                
+                listViewContraints.append(listView.autoConstrainAttribute(.width,
+                                                                          to: .width,
+                                                                          of: listViews[i - 1]))
             }
             
             if i == listViews.count - 1
             {
-                listView.autoPinEdge(toSuperviewEdge: .right, withInset: 150)
+                listViewContraints.append(listView.autoPinEdge(.left, to: .right, of: view))
             }
             
-            listView.autoPinEdge(toSuperviewEdge: .top)
-            listView.autoPinEdge(toSuperviewEdge: .bottom)
+            listViewContraints.append(listView.autoPinEdge(toSuperviewEdge: .top))
+            listViewContraints.append(listView.autoPinEdge(toSuperviewEdge: .bottom))
         }
     }
+    
+    private var listViewContraints = [NSLayoutConstraint]()
     
     lazy var listViews: [TaskListView] =
     {

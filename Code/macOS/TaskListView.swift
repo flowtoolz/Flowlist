@@ -351,7 +351,11 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     func updateTableSelection()
     {
-        tableView.selectRowIndexes(IndexSet(taskList?.selectedIndexes ?? []),
+        let selection = taskList?.selectedIndexes ?? []
+        
+        guard selection.max() ?? 0 < tableView.numberOfRows else { return }
+        
+        tableView.selectRowIndexes(IndexSet(selection),
                                    byExtendingSelection: false)
     }
     

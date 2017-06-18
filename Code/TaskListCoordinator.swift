@@ -14,9 +14,43 @@ class TaskListCoordinator: Subscriber
 {
     fileprivate init()
     {
-        lists[0].container = store.root
+        lists[2].container = store.root
         
         subscribe(to: TaskList.didChangeSelection, action: listChangedSelection)
+    }
+    
+    func moveRight() -> TaskList
+    {
+        lists.remove(at: 0)
+        
+        let newList = TaskList()
+        lists.append(newList)
+        
+        return newList
+    }
+    
+    func moveLeft() -> TaskList
+    {
+        _ = lists.popLast()
+        
+        let newList = TaskList()
+        
+        lists.insert(newList, at: 0)
+        
+        return newList
+    }
+    
+    func selectSlaveInMaster(at index: Int)
+    {
+        guard index >= 0, index + 1 < lists.count else { return }
+        
+        let master = lists[index]
+        let slave = lists[index + 1]
+        
+        if let indexOfSlaveInMaster = slave.container?.indexInContainer
+        {
+            master.selectedIndexes = [indexOfSlaveInMaster]
+        }
     }
     
     private func listChangedSelection(sender: Any)
@@ -27,12 +61,17 @@ class TaskListCoordinator: Subscriber
             return
         }
         
-        //print("selection changed in list \(index): \(lists[index].selectedIndexes.description)")
-        
-        updateTaskList(at: index + 1)
+        setContainerOfSlave(at: index + 1)
     }
     
-    private func updateTaskList(at index: Int)
+    func setContainerOfLastList()
+    {
+        guard lists.count > 0 else { return }
+        
+        setContainerOfSlave(at: lists.count - 1)
+    }
+    
+    func setContainerOfSlave(at index: Int)
     {
         guard index > 0, index < lists.count else
         {
@@ -54,5 +93,20 @@ class TaskListCoordinator: Subscriber
         slave.container = container
     }
     
-    var lists = [TaskList(), TaskList(), TaskList()]
+    func setContainerOfMaster(at index: Int)
+    {
+        guard index >= 0, index < lists.count - 1 else
+        {
+            return
+        }
+        
+        let master = lists[index]
+        let slave = lists[index + 1]
+        
+        master.container = slave.container?.container
+        
+        
+    }
+    
+    var lists = [TaskList(), TaskList(), TaskList(), TaskList(), TaskList()]
 }
