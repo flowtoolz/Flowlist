@@ -258,10 +258,23 @@ class MainVC: NSViewController, Subscriber
                                                                to: .right,
                                                                of: listViews[i - 1],
                                                                withOffset: 10))
-                
+
                 listViewContraints.append(listView.autoConstrainAttribute(.width,
                                                                           to: .width,
                                                                           of: listViews[i - 1]))
+//                if i == 2
+//                {
+//                    listViewContraints.append(listView.autoConstrainAttribute(.width,
+//                                                                              to: .width,
+//                                                                              of: view,
+//                                                                              withMultiplier: 0.33))
+//                }
+//                else
+//                {
+//                    listViewContraints.append(listView.autoConstrainAttribute(.width,
+//                                                                              to: .width,
+//                                                                              of: listViews[1]))
+//                }
             }
             
             if i == listViews.count - 1
