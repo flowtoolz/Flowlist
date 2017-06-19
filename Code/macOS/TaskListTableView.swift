@@ -10,6 +10,17 @@ import AppKit
 
 class TaskListTableView: NSTableView
 {
+    override func keyDown(with event: NSEvent)
+    {
+        if event.keyCode == 36
+        {
+            nextResponder?.keyDown(with: event)
+        }
+        else
+        {
+            super.keyDown(with: event)
+        }
+    }
     override func mouseDown(with event: NSEvent)
     {
         super.mouseDown(with: event)

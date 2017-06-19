@@ -144,22 +144,44 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
                 tableView.reloadData()
             }
         case 36:
-                createNewTask(createContainer: !cmd)
-        case 45:
-            if cmd
+            
+            let numSelections = taskList?.selectedIndexes.count ?? 0
+            
+            if numSelections == 0
             {
                 createNewTask()
             }
+            else if numSelections == 1
+            {
+                if cmd
+                {
+                    if let index = taskList?.selectedIndexes.first
+                    {
+                        startEditing(at: index)
+                    }
+                }
+                else
+                {
+                    createNewTask()
+                }
+            }
+            else
+            {
+                createNewTask(createContainer: true)
+            }
+        case 45:
+            if cmd
+            {
+                createNewTask(createContainer: true)
+            }
         case 49:
-            createNewTask(at: 0)
+            createTask(at: 0)
         case 51:
             deleteSelectedTasks()
         case 123:
             send(TaskListView.wantsToGiveUpFocusToTheLeft)
-            //goToSuperContainer()
         case 124:
             send(TaskListView.wantsToGiveUpFocusToTheRight)
-            //goToSelectedTask()
         default:
             break
         }
@@ -168,37 +190,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     static let wantsToGiveUpFocusToTheRight = "TaskListViewWantsToGiveUpFocusToTheRight"
     
     static let wantsToGiveUpFocusToTheLeft = "TaskListViewWantsToGiveUpFocusToTheLeft"
-    
-    override func flagsChanged(with event: NSEvent)
-    {
-        ensureCmdPlusReturnWorks(modifiersChangedWith: event)
-    }
-    
-    private func ensureCmdPlusReturnWorks(modifiersChangedWith event: NSEvent)
-    {
-        guard event.modifierFlags.contains(.command),
-            tableView.selectedRowIndexes.count == 1
-        else
-        {
-            disabledCell?.isTitleEditingEnabled = true
-            
-            disabledCell = nil
-            
-            return
-        }
-        
-        if let index = tableView.selectedRowIndexes.max(),
-            let cell = tableView.view(atColumn: 0,
-                                      row: index,
-                                      makeIfNecessary: false) as? TaskView
-        {
-            cell.isTitleEditingEnabled = false
-            
-            disabledCell = cell
-        }
-    }
-    
-    private var disabledCell: TaskView?
     
     // MARK: - Reacting to Updates
     
