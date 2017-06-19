@@ -71,9 +71,30 @@ class TaskView: NSView, NSTextFieldDelegate
     
     func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool
     {
-        task?.title = String(withNonEmpty: fieldEditor.string)
+        newTitle = String(withNonEmpty: fieldEditor.string)
+        
+        NotificationCenter.default.removeObserver(self)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didEndEditing),
+                                               name: NSNotification.Name.NSTextDidEndEditing,
+                                               object: fieldEditor)
         
         return true
+    }
+    
+    func didEndEditing()
+    {        
+        task?.title = newTitle
+        
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    private var newTitle: String?
+    
+    deinit
+    {
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func layoutTitleField()

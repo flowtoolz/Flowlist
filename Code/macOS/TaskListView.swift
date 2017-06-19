@@ -167,7 +167,17 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             }
             else
             {
-                createNewTask(createContainer: true)
+                if cmd
+                {
+                    if let index = taskList?.selectedIndexes.min()
+                    {
+                        startEditing(at: index)
+                    }
+                }
+                else
+                {
+                    createNewTask(createContainer: true)
+                }
             }
         case 45:
             if cmd
@@ -239,6 +249,17 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
                                          makeIfNecessary: false) as? TaskView
         {
             taskView.updateTitleField()
+            
+            if taskList?.selectedIndexes.count ?? 0 > 1
+            {
+                taskList?.selectedIndexes.sort()
+                taskList?.selectedIndexes.remove(at: 0)
+                
+                if let nextEditingIndex = taskList?.selectedIndexes.first
+                {
+                    startEditing(at: nextEditingIndex)
+                }
+            }
         }
     }
     
@@ -322,15 +343,19 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     private func createTask(at index: Int?)
     {
-        if let index = taskList?.add(Task(), at: index)
+        if let indexOfNewTask = taskList?.add(Task(), at: index)
         {
-            startEditing(at: index)
+            taskList?.selectedIndexes = [indexOfNewTask]
+            startEditing(at: indexOfNewTask)
         }
     }
     
     private func startEditing(at index: Int)
     {
-        guard index < taskList?.numberOfTasks ?? 0 else { return }
+        guard let taskList = taskList, index < taskList.numberOfTasks else
+        {
+            return
+        }
        
         if index == 0
         {
@@ -341,9 +366,9 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             tableView.scrollRowToVisible(index)
         }
         
-        if let taskList = taskList, taskList.selectedIndexes != [index]
+        if !taskList.selectedIndexes.contains(index)
         {
-            taskList.selectedIndexes = [index]
+            taskList.selectedIndexes.append(index)
         }
         
         updateTableSelection()
