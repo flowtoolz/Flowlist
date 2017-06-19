@@ -16,28 +16,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         store.load()
         
         setupWindow()
-        
-        setupMenuOptions()
     }
     
     func applicationWillTerminate(_ notification: Notification)
     {
         store.save()
-    }
-    
-    // MARK: - Menu
-    
-    func setupMenuOptions()
-    {
-        let quitOption = NSMenuItem(title: "Quit",
-                                    action: #selector(quit),
-                                    keyEquivalent: "")
-        
-        NSApp.mainMenu = NSMenu(title: "Menu")
-        
-        //quitOption.menu = NSApp.mainMenu
-        
-        NSApp.mainMenu?.addItem(quitOption)
     }
     
     // MARK: - Window
@@ -91,7 +74,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     func showWindow()
     {
-        window.makeKeyAndOrderFront(self)
+        window.makeKeyAndOrderFront(NSApp)
         
         NSApp.activate(ignoringOtherApps: true)
     }
@@ -101,11 +84,40 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         window.orderOut(self)
     }
     
+    func windowDidBecomeKey(_ notification: Notification)
+    {
+        print("did become key")
+        
+        logFirstResponder()
+        setupMenuOptions()
+    }
+    
+    func windowDidBecomeMain(_ notification: Notification)
+    {
+        print("did become main")
+    }
+    
     let window = NSWindow()
     
     func quit()
     {
         NSApp.terminate(nil)
+    }
+    
+    // MARK: - Menu
+    
+    func setupMenuOptions()
+    {
+        let quitOption = NSMenuItem(title: "Quit",
+                                    action: #selector(quit),
+                                    keyEquivalent: "")
+
+        if NSApp.mainMenu == nil
+        {
+            NSApp.mainMenu = NSMenu(title: "Menu")
+        }
+        
+        NSApp.mainMenu?.addItem(quitOption)
     }
 }
 
