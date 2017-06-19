@@ -96,30 +96,34 @@ class TaskList: Sender, Subscriber
     // FIXME: do most of this in Task class
     func groupSelectedTasks(as group: Task) -> Int?
     {
-        guard let groupIndex = selectedIndexes.min() else
+        guard let groupIndex = selectedIndexes.min(),
+            let container = container
+        else
         {
             return nil
         }
         
         for deletionIndex in selectedIndexes
         {
-            if let removedTask = container?.subtask(at: deletionIndex)
+            if let removedTask = container.subtask(at: deletionIndex)
             {
                 _ = group.insert(removedTask, at: group.subtasks.count)
             }
         }
         
-        _ = container?.deleteSubtasks(at: selectedIndexes)
+        _ = container.deleteSubtasks(at: selectedIndexes)
         
-        _ = container?.insert(group, at: groupIndex)
+        _ = container.insert(group, at: groupIndex)
 
         selectedIndexes = [groupIndex]
         
         return groupIndex
     }
     
-    func add(_ task: Task, at index: Int?) -> Int
+    func add(_ task: Task, at index: Int?) -> Int?
     {
+        guard let container = container else { return nil }
+        
         var indexToInsert = index ?? 0
         
         if index == nil, let lastSelectedIndex = selectedIndexes.max()
@@ -127,16 +131,16 @@ class TaskList: Sender, Subscriber
             indexToInsert = lastSelectedIndex + 1
         }
         
-        _ = container?.insert(task, at: indexToInsert)
+        _ = container.insert(task, at: indexToInsert)
         
         return indexToInsert
     }
     
     func deleteSelectedTasks() -> Bool
     {
-        let firstSelectedIndex = selectedIndexes.min() ?? 0
-        
-        guard container?.deleteSubtasks(at: selectedIndexes) ?? false else
+        guard let firstSelectedIndex = selectedIndexes.min(),
+            container?.deleteSubtasks(at: selectedIndexes) ?? false
+        else
         {
             return false
         }

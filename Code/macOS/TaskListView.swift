@@ -339,6 +339,8 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     private func startEditing(at index: Int)
     {
+        guard index < taskList?.numberOfTasks ?? 0 else { return }
+       
         if index == 0
         {
             jumpToTop()
