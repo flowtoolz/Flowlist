@@ -114,9 +114,14 @@ class MainVC: NSViewController, Subscriber
         
         guard listView.taskList?.numberOfTasks ?? 0 > 0 else { return false }
     
-        let selectionIndex = listView.taskList?.selectedIndexes.min() ?? 0
-        listView.taskList?.selectedIndexes = [selectionIndex]
-        listView.updateTableSelection()
+        let selectionIndex = listView.taskList?.selectedIndexesSorted.first ?? 0
+        
+        // TODO: do we need this? why reset selection to first selection when setting input focus???
+        if let selectedTask = listView.taskList?.task(at: selectionIndex)
+        {
+            listView.taskList?.selectedTasksByUuid = [selectedTask.uuid : selectedTask]
+            listView.updateTableSelection()
+        }
         
         if !(NSApp.mainWindow?.makeFirstResponder(listView.tableView) ?? false)
         {

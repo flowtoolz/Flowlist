@@ -47,9 +47,9 @@ class TaskListCoordinator: Subscriber
         let master = lists[index]
         let slave = lists[index + 1]
         
-        if let indexOfSlaveInMaster = slave.container?.indexInContainer
+        if let slaveContainer = slave.container
         {
-            master.selectedIndexes = [indexOfSlaveInMaster]
+            master.selectedTasksByUuid = [slaveContainer.uuid : slaveContainer]
         }
     }
     
@@ -81,8 +81,8 @@ class TaskListCoordinator: Subscriber
         let slave = lists[index]
         let master = lists[index - 1]
         
-        guard master.selectedIndexes.count == 1,
-            let container = master.task(at: master.selectedIndexes[0]),
+        guard master.selectedTasksByUuid.count == 1,
+            let container = master.selectedTasksByUuid.values.first,
             container.isContainer
         else
         {

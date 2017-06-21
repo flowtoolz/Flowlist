@@ -10,17 +10,37 @@ import AppKit
 
 class TaskListTableView: NSTableView
 {
+    override func flagsChanged(with event: NSEvent)
+    {
+        super.flagsChanged(with: event)
+        
+        cmd = event.modifierFlags.contains(.command)
+    }
+    
     override func keyDown(with event: NSEvent)
     {
-        if event.keyCode == 36
+        //Swift.print("\(event.keyCode)")
+        
+        switch event.keyCode
         {
+        case 36:
             nextResponder?.keyDown(with: event)
-        }
-        else
-        {
+        case 125, 126:
+            if event.modifierFlags.contains(.command)
+            {
+                nextResponder?.keyDown(with: event)
+            }
+            else
+            {
+                super.keyDown(with: event)
+            }
+        default:
             super.keyDown(with: event)
         }
     }
+    
+    private var cmd = false
+    
     override func mouseDown(with event: NSEvent)
     {
         super.mouseDown(with: event)

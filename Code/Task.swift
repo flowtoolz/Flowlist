@@ -83,6 +83,81 @@ class Task: Sender
     
     static let didChangeSubtasks = "TaskDidChangeSubtasks"
     
+    func moveSubtask(from: Int, to: Int) -> Bool
+    {
+        let didMove = elements?.moveElement(from: from, to: to) ?? false
+        
+        if didMove
+        {
+            send(Task.didMoveSubtask, parameters: ["from": from, "to": to])
+        }
+        
+        return didMove
+    }
+    
+    static let didMoveSubtask = "TaskDidMoveSubtask"
+    
+//    func moveTasks(at indexes: [Int], to index: Int) -> Bool
+//    {
+//        print("about to move tasks at \(indexes.description) to index \(index)")
+//        
+//        guard index >= 0, index < subtasks.count,
+//            let elements = elements,
+//            let minIndex = indexes.min(), minIndex >= 0,
+//            let maxIndex = indexes.max(), maxIndex < subtasks.count
+//        else
+//        {
+//            return false
+//        }
+//        
+//        var resultingArray = [Task]()
+//        
+//        // copy old tasks that are above target index
+//        for i in 0 ..< index
+//        {
+//            if !indexes.contains(i)
+//            {
+//                resultingArray.append(elements[i])
+//            }
+//        }
+//        
+//        let startIndexAfterMove = resultingArray.count
+//        
+//        // copy tasks to move
+//        for indexToMove in indexes.sorted()
+//        {
+//            resultingArray.append(elements[indexToMove])
+//        }
+//        
+//        // copy old tasks that are at or below target index
+//        for i in index ..< subtasks.count
+//        {
+//            if !indexes.contains(i)
+//            {
+//                resultingArray.append(elements[i])
+//            }
+//        }
+//        
+//        // replace task array with result
+//        self.elements = resultingArray
+//        
+//        // calculate new indexes
+//        var resultingIndexes = [Int]()
+//        
+//        for i in startIndexAfterMove ..< startIndexAfterMove + indexes.count
+//        {
+//            resultingIndexes.append(i)
+//        }
+//        
+//        // notify others of the move
+//        send(Task.didMoveSubtasks, parameters: ["fromIndexes": indexes,
+//                                                "toIndexes": resultingIndexes])
+//        
+//        return true
+//    }
+    
+    static let didMoveSubtasks = "TaskDidMoveSubtasks"
+    
     // MARK: - Read Hierarchy
     
     var isContainer: Bool
@@ -123,7 +198,12 @@ class Task: Sender
 
     var indexInContainer: Int?
     {
-        return container?.elements?.index { $0 === self }
+        return container?.index(of: self)
+    }
+    
+    func index(of subtask: Task) -> Int?
+    {
+        return elements?.index(where: { $0 === subtask })
     }
     
     private(set) weak var container: Task?
