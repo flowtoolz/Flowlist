@@ -207,6 +207,29 @@ class TaskList: Sender, Subscriber
         }
         
         delegate?.didChangeStateOfSubtask(at: indexOfUpdatedTask)
+        
+        if updatedTask.state == .done
+        {
+            taskAtIndexWasCheckedOff(indexOfUpdatedTask)
+        }
+    }
+    
+    private func taskAtIndexWasCheckedOff(_ index: Int)
+    {
+        guard let container = container else
+        {
+            return
+        }
+        
+        for i in (0 ..< container.subtasks.count).reversed()
+        {
+            if let subtask = container.subtask(at: i),
+                subtask.state != .done
+            {
+                _ = container.moveSubtask(from: index, to: i)
+                return
+            }
+        }
     }
     
     // MARK: - Selection

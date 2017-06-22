@@ -276,12 +276,15 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     func didChangeStateOfSubtask(at index: Int)
     {
-        if let taskView = tableView.view(atColumn: 0,
-                                         row: index,
-                                         makeIfNecessary: false) as? TaskView
+        guard let taskView = tableView.view(atColumn: 0,
+                                            row: index,
+                                            makeIfNecessary: false) as? TaskView
+        else
         {
-            taskView.updateCheckBox()
+            return
         }
+        
+        taskView.updateCheckBox()
         
         tableView.rowView(atRow: index, makeIfNecessary: false)?.display()
     }
