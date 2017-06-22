@@ -35,7 +35,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         headerView.autoPinEdge(toSuperviewEdge: .left)
         headerView.autoPinEdge(toSuperviewEdge: .right)
         headerView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
-        
         headerView.autoSetDimension(.height, toSize: 36)
         
         titleField.autoAlignAxis(.horizontal, toSameAxisOf: headerView)
@@ -187,7 +186,15 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         case 49:
             createTask(at: 0)
         case 51:
-            deleteSelectedTasks()
+            if cmd
+            {
+                taskList?.checkOffFirstSelectedUncheckedTask()
+                updateTableSelection()
+            }
+            else
+            {
+                deleteSelectedTasks()
+            }
         case 123:
             send(TaskListView.wantsToGiveUpFocusToTheLeft)
         case 124:

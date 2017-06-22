@@ -195,6 +195,63 @@ class TaskList: Sender, Subscriber
         }
     }
     
+    func checkOffFirstSelectedUncheckedTask()
+    {
+        // find first selected unchecked task
+        var potentialTaskToCheck: Task?
+        var potentialIndexToCheck: Int?
+        
+        for selectedIndex in selectedIndexesSorted
+        {
+            if let selectedTask = task(at: selectedIndex),
+                selectedTask.state != .done
+            {
+                potentialTaskToCheck = selectedTask
+                potentialIndexToCheck = selectedIndex
+                break
+            }
+        }
+        
+        guard let taskToCheck = potentialTaskToCheck,
+            let indexToCheck = potentialIndexToCheck
+        else
+        {
+            return
+        }
+        
+        // determine which task to select after the ckeck off
+        var taskToSelect: Task?
+        
+        if selectedTasksByUuid.count == 1
+        {
+            taskToSelect = firstUncheckedTask(from: indexToCheck + 1)
+        }
+        
+        taskToCheck.state = .done
+        
+        if let taskToSelect = taskToSelect, taskToSelect.state != .done
+        {
+            selectedTasksByUuid = [taskToSelect.uuid : taskToSelect]
+        }
+        else
+        {
+            selectedTasksByUuid[taskToCheck.uuid] = nil
+        }
+    }
+    
+    private func firstUncheckedTask(from: Int = 0) -> Task?
+    {
+        for i in from ..< tasks.count
+        {
+            if let uncheckedTask = task(at: i), uncheckedTask.state != .done
+            {
+                return uncheckedTask
+            }
+        }
+        
+        return nil
+    }
+    
     func taskDidChangeState(sender: Any)
     {
         guard container != nil,
@@ -226,7 +283,8 @@ class TaskList: Sender, Subscriber
             if let subtask = container.subtask(at: i),
                 subtask.state != .done
             {
-                _ = container.moveSubtask(from: index, to: i)
+                _ = container.moveSubtask(from: index, to: i + (i < index ? 1 : 0))
+                
                 return
             }
         }
