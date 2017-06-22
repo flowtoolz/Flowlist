@@ -86,7 +86,7 @@ class TaskList: Sender, Subscriber
     
     func taskDidChangeSubtasks(sender: Any, parameters: [String : Any]?)
     {
-        guard container != nil else
+        guard let container = container else
         {
             selectedTasksByUuid.removeAll()
             delegate?.didChangeListContainer()
@@ -94,26 +94,36 @@ class TaskList: Sender, Subscriber
         }
         
         guard let sendingTask = sender as? Task,
-            container === sendingTask,
             let method = parameters?["method"] as? String
         else
         {
             return
         }
         
-        if method == "delete", let indexes = parameters?["indexes"] as? [Int]
+        if container === sendingTask
         {
-            unselectSubtasks(at: indexes)
-            
-            delegate?.didDeleteSubtasks(at: indexes)
+            if method == "delete", let indexes = parameters?["indexes"] as? [Int]
+            {
+                unselectSubtasks(at: indexes)
+                
+                delegate?.didDeleteSubtasks(at: indexes)
+            }
+            else if method == "insert", let index = parameters?["index"] as? Int
+            {
+                delegate?.didInsertSubtask(at: index)
+            }
+            else
+            {
+                print("Warning: TaskList received notification \(Task.didChangeSubtasks) with unknown change method \(method) or parameters \(parameters.debugDescription)")
+            }
         }
-        else if method == "insert", let index = parameters?["index"] as? Int
+        else if container === sendingTask.container
         {
-            delegate?.didInsertSubtask(at: index)
-        }
-        else
-        {
-            print("Warning: TaskList received notification \(Task.didChangeSubtasks) with unknown change method \(method) or parameters \(parameters.debugDescription)")
+            if let index = container.index(of: sendingTask),
+                sendingTask.subtasks.count < 2
+            {
+                delegate?.didChangeSubtasksOfSubtask(at: index)
+            }
         }
     }
     
@@ -363,8 +373,10 @@ class TaskList: Sender, Subscriber
 
 protocol TaskListDelegate
 {
+    func didChangeSubtasksOfSubtask(at index: Int)
     func didChangeStateOfSubtask(at index: Int)
     func didChangeTitleOfSubtask(at index: Int)
+    
     func didChangeListContainer()
     func didChangeListContainerTitle()
     func didInsertSubtask(at index: Int)
