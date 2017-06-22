@@ -12,6 +12,8 @@ import Flowtoolz
 
 class MainVC: NSViewController, Subscriber
 {
+    // MARK: - View Life Cycle
+    
     override func loadView()
     {
         view = NSView()
@@ -112,20 +114,28 @@ class MainVC: NSViewController, Subscriber
         
         let listView = listViews[index]
         
-        guard listView.taskList?.tasks.count ?? 0 > 0 else { return false }
-    
-        let selectionIndex = listView.taskList?.selectedIndexesSorted.first ?? 0
+        guard listView.taskList?.container != nil else { return false }
         
-        // TODO: do we need this? why reset selection to first selection when setting input focus???
-        if let selectedTask = listView.taskList?.task(at: selectionIndex)
+        if listView.taskList?.tasks.count ?? 0 > 0
         {
-            listView.taskList?.selectedTasksByUuid = [selectedTask.uuid : selectedTask]
-            listView.updateTableSelection()
+            let selectionIndex = listView.taskList?.selectedIndexesSorted.first ?? 0
+            
+            // TODO: do we need this? why reset selection to first selection when setting input focus???
+            if let selectedTask = listView.taskList?.task(at: selectionIndex)
+            {
+                listView.taskList?.selectedTasksByUuid = [selectedTask.uuid : selectedTask]
+                listView.updateTableSelection()
+            }
+        }
+        else
+        {
+            listView.taskList?.selectedTasksByUuid = [:]
         }
         
         if !(NSApp.mainWindow?.makeFirstResponder(listView.tableView) ?? false)
         {
             print("Warning: could not make table view first responder")
+            return false
         }
         
         tableViewGainedFocus(at: index)
@@ -242,7 +252,7 @@ class MainVC: NSViewController, Subscriber
         })
     }
 
-    // MARK: - Task Lists
+    // MARK: - Task List Views
     
     func layoutListViews()
     {

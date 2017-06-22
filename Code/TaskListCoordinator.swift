@@ -91,8 +91,7 @@ class TaskListCoordinator: Subscriber
         let master = lists[index - 1]
         
         guard master.selectedTasksByUuid.count == 1,
-            let container = master.selectedTasksByUuid.values.first,
-            container.isContainer
+            let container = master.selectedTasksByUuid.values.first
         else
         {
             slave.container = nil
