@@ -28,6 +28,28 @@ class Task: Sender
     
     // MARK: - Edit Hierarchy
     
+    func groupTasks(at indexes: [Int], as group: Task) -> Int?
+    {
+        guard let groupIndex = indexes.min() else
+        {
+            return nil
+        }
+
+        for index in indexes
+        {
+            if let subtask = subtask(at: index)
+            {
+                _ = group.insert(subtask, at: group.subtasks.count)
+            }
+        }
+        
+        _ = deleteSubtasks(at: indexes)
+        
+        _ = insert(group, at: groupIndex)
+        
+        return groupIndex
+    }
+    
     func insert(_ task: Task, at index: Int) -> Bool
     {
         guard index >= 0, index <= subtasks.count else

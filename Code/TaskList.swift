@@ -30,30 +30,16 @@ class TaskList: Sender, Subscriber
         return container?.subtask(at: index)
     }
     
-    // FIXME: do most of this in Task class
     func groupSelectedTasks(as group: Task) -> Int?
     {
-        let selectedIndexes = selectedIndexesSorted
-        
         guard let container = container,
-            let groupIndex = selectedIndexes.first
+            let groupIndex = container.groupTasks(at: selectedIndexesSorted,
+                                                  as: group)
         else
         {
             return nil
         }
         
-        for deletionIndex in selectedIndexes
-        {
-            if let removedTask = container.subtask(at: deletionIndex)
-            {
-                _ = group.insert(removedTask, at: group.subtasks.count)
-            }
-        }
-        
-        _ = container.deleteSubtasks(at: selectedIndexes)
-        
-        _ = container.insert(group, at: groupIndex)
-
         selectedTasksByUuid = [group.uuid : group]
         
         return groupIndex
