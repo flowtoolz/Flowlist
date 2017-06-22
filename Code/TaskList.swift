@@ -229,11 +229,11 @@ class TaskList: Sender, Subscriber
         
         taskToCheck.state = .done
         
-        if let taskToSelect = taskToSelect, taskToSelect.state != .done
+        if let taskToSelect = taskToSelect
         {
             selectedTasksByUuid = [taskToSelect.uuid : taskToSelect]
         }
-        else
+        else if selectedTasksByUuid.count > 1
         {
             selectedTasksByUuid[taskToCheck.uuid] = nil
         }
