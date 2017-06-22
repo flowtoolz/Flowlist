@@ -87,7 +87,7 @@ class MainVC: NSViewController, Subscriber
     {
         guard let index = listViews.index(where: { $0 === sender as AnyObject }),
             index >= 0, index < listViews.count - 1,
-            (listViews[index].taskList?.numberOfTasks ?? 0) > 0
+            (listViews[index].taskList?.tasks.count ?? 0) > 0
         else
         {
             return
@@ -112,7 +112,7 @@ class MainVC: NSViewController, Subscriber
         
         let listView = listViews[index]
         
-        guard listView.taskList?.numberOfTasks ?? 0 > 0 else { return false }
+        guard listView.taskList?.tasks.count ?? 0 > 0 else { return false }
     
         let selectionIndex = listView.taskList?.selectedIndexesSorted.first ?? 0
         

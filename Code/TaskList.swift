@@ -18,124 +18,17 @@ class TaskList: Sender, Subscriber
         subscribe(to: Task.didMoveSubtask, action: taskDidMoveSubtask)
     }
     
-    // MARK: - Move Selected Tasks
-    
-    func moveSelectedTaskUp() -> Bool
-    {
-        guard let container = container,
-            selectedTasksByUuid.count == 1,
-            let selectedTask = selectedTasksByUuid.values.first,
-            let selectedIndex = container.index(of: selectedTask)
-        else
-        {
-            return false
-        }
+    // MARK: - List of Tasks
 
-        return container.moveSubtask(from: selectedIndex, to: selectedIndex - 1)
-    }
-    
-    func moveSelectedTaskDown() -> Bool
+    var tasks: [Task]
     {
-        guard let container = container,
-            selectedTasksByUuid.count == 1,
-            let selectedTask = selectedTasksByUuid.values.first,
-            let selectedIndex = container.index(of: selectedTask)
-            else
-        {
-            return false
-        }
-        
-        return container.moveSubtask(from: selectedIndex, to: selectedIndex + 1)
+        return container?.subtasks ?? []
     }
     
-    func taskDidMoveSubtask(sender: Any, parameters: [String : Any]?)
+    func task(at index: Int) -> Task?
     {
-        guard let sendingTask = sender as? Task,
-            container === sendingTask,
-            let from = parameters?["from"] as? Int,
-            let to = parameters?["to"] as? Int
-            else
-        {
-            return
-        }
-        
-        // print("task \(sendingTask.description) did move subtask: \(parameters.debugDescription)")
-        
-        delegate?.didMoveSubtask(from: from, to: to)
+        return container?.subtask(at: index)
     }
-    
-    // MARK: - Listen to Changes (manage selection and notify delegate)
-    
-    func taskDidChangeTitle(sender: Any)
-    {
-        guard container != nil,
-            let updatedTask = sender as? Task,
-            let indexOfUpdatedTask = updatedTask.indexInContainer
-        else
-        {
-            return
-        }
-        
-        if updatedTask.container === container
-        {
-            delegate?.didChangeTitleOfSubtask(at: indexOfUpdatedTask)
-        }
-        else if updatedTask === container
-        {
-            delegate?.didChangeListContainerTitle()
-        }
-    }
-    
-    func taskDidChangeState(sender: Any)
-    {
-        guard container != nil,
-            let updatedTask = sender as? Task,
-            updatedTask.container === container,
-            let indexOfUpdatedTask = updatedTask.indexInContainer
-        else
-        {
-            return
-        }
-        
-        delegate?.didChangeStateOfSubtask(at: indexOfUpdatedTask)
-    }
-    
-    func taskDidChangeSubtasks(sender: Any, parameters: [String : Any]?)
-    {
-        guard container != nil else
-        {
-            selectedTasksByUuid.removeAll()
-            delegate?.didChangeListContainer()
-            return
-        }
-        
-        guard let sendingTask = sender as? Task,
-            container === sendingTask,
-            let method = parameters?["method"] as? String
-        else
-        {
-            return
-        }
-        
-        if method == "delete", let indexes = parameters?["indexes"] as? [Int]
-        {
-            unselectSubtasks(at: indexes)
-            
-            delegate?.didDeleteSubtasks(at: indexes)
-        }
-        else if method == "insert", let index = parameters?["index"] as? Int
-        {
-            delegate?.didInsertSubtask(at: index)
-        }
-        else
-        {
-            print("Warning: TaskList received notification \(Task.didChangeSubtasks) with unknown change method \(method) or parameters \(parameters.debugDescription)")
-        }
-    }
-    
-    var delegate: TaskListDelegate?
-    
-    // MARK: - Edit
     
     // FIXME: do most of this in Task class
     func groupSelectedTasks(as group: Task) -> Int?
@@ -205,7 +98,214 @@ class TaskList: Sender, Subscriber
         return true
     }
     
-    // MARK: - Navigate
+    func taskDidChangeSubtasks(sender: Any, parameters: [String : Any]?)
+    {
+        guard container != nil else
+        {
+            selectedTasksByUuid.removeAll()
+            delegate?.didChangeListContainer()
+            return
+        }
+        
+        guard let sendingTask = sender as? Task,
+            container === sendingTask,
+            let method = parameters?["method"] as? String
+        else
+        {
+            return
+        }
+        
+        if method == "delete", let indexes = parameters?["indexes"] as? [Int]
+        {
+            unselectSubtasks(at: indexes)
+            
+            delegate?.didDeleteSubtasks(at: indexes)
+        }
+        else if method == "insert", let index = parameters?["index"] as? Int
+        {
+            delegate?.didInsertSubtask(at: index)
+        }
+        else
+        {
+            print("Warning: TaskList received notification \(Task.didChangeSubtasks) with unknown change method \(method) or parameters \(parameters.debugDescription)")
+        }
+    }
+    
+    // MARK: - Move Selected Task
+    
+    func moveSelectedTaskUp() -> Bool
+    {
+        guard let container = container,
+            selectedTasksByUuid.count == 1,
+            let selectedTask = selectedTasksByUuid.values.first,
+            let selectedIndex = container.index(of: selectedTask)
+        else
+        {
+            return false
+        }
+
+        return container.moveSubtask(from: selectedIndex, to: selectedIndex - 1)
+    }
+    
+    func moveSelectedTaskDown() -> Bool
+    {
+        guard let container = container,
+            selectedTasksByUuid.count == 1,
+            let selectedTask = selectedTasksByUuid.values.first,
+            let selectedIndex = container.index(of: selectedTask)
+        else
+        {
+            return false
+        }
+        
+        return container.moveSubtask(from: selectedIndex, to: selectedIndex + 1)
+    }
+    
+    func taskDidMoveSubtask(sender: Any, parameters: [String : Any]?)
+    {
+        guard let sendingTask = sender as? Task,
+            container === sendingTask,
+            let from = parameters?["from"] as? Int,
+            let to = parameters?["to"] as? Int
+        else
+        {
+            return
+        }
+        
+        // print("task \(sendingTask.description) did move subtask: \(parameters.debugDescription)")
+        
+        delegate?.didMoveSubtask(from: from, to: to)
+    }
+    
+    // MARK: - Task Data
+    
+    func taskDidChangeTitle(sender: Any)
+    {
+        guard container != nil,
+            let updatedTask = sender as? Task,
+            let indexOfUpdatedTask = updatedTask.indexInContainer
+        else
+        {
+            return
+        }
+        
+        if updatedTask.container === container
+        {
+            delegate?.didChangeTitleOfSubtask(at: indexOfUpdatedTask)
+        }
+        else if updatedTask === container
+        {
+            delegate?.didChangeListContainerTitle()
+        }
+    }
+    
+    func taskDidChangeState(sender: Any)
+    {
+        guard container != nil,
+            let updatedTask = sender as? Task,
+            updatedTask.container === container,
+            let indexOfUpdatedTask = updatedTask.indexInContainer
+        else
+        {
+            return
+        }
+        
+        delegate?.didChangeStateOfSubtask(at: indexOfUpdatedTask)
+    }
+    
+    // MARK: - Selection
+    
+    func unselectSubtasks(at indexes: [Int])
+    {
+        var newSelection = selectedTasksByUuid
+        
+        for index in indexes
+        {
+            if let task = task(at: index)
+            {
+                newSelection[task.uuid] = nil
+            }
+        }
+        
+        selectedTasksByUuid = newSelection
+    }
+    
+    func selectSubtasks(at indexes: [Int])
+    {
+        var newSelection = [String : Task]()
+        
+        for index in indexes
+        {
+            if let task = task(at: index)
+            {
+                newSelection[task.uuid] = task
+            }
+        }
+        
+        selectedTasksByUuid = newSelection
+    }
+    
+    private func validateSelection()
+    {
+        guard let container = container else
+        {
+            if selectedTasksByUuid.count > 0
+            {
+                print("warning: task list has no container but these selections: \(selectedTasksByUuid.description)")
+                
+                selectedTasksByUuid.removeAll()
+            }
+            
+            return
+        }
+        
+        for selectedTask in selectedTasksByUuid.values
+        {
+            if container.index(of: selectedTask) == nil
+            {
+                print("warning: subtask is selected but not in the container. will be unselected: \(selectedTask.description)")
+                selectedTasksByUuid[selectedTask.uuid] = nil
+            }
+        }
+    }
+    
+    var selectedIndexesSorted: [Int]
+    {
+        var result = [Int]()
+        
+        for index in 0 ..< tasks.count
+        {
+            if let task = task(at: index),
+                selectedTasksByUuid[task.uuid] != nil
+            {
+                result.append(index)
+            }
+        }
+        
+        return result
+    }
+    
+    var selectedTasksByUuid = [String : Task]()
+    {
+        didSet
+        {
+            if Set(oldValue.keys) != Set(selectedTasksByUuid.keys)
+            {
+                //print("selection changed: \(selectedIndexes.description)")
+                validateSelection()
+                send(TaskList.didChangeSelection)
+            }
+        }
+    }
+    
+    static let didChangeSelection = "TaskListDidChangeSelection"
+    
+    // MARK: - Container Task
+    
+    var title: String
+    {
+        return container?.title ?? "untitled"
+    }
     
     func goToSuperContainer() -> Bool
     {
@@ -254,112 +354,6 @@ class TaskList: Sender, Subscriber
         return true
     }
     
-    // MARK: - Select
-    
-    func unselectSubtasks(at indexes: [Int])
-    {
-        var newSelection = selectedTasksByUuid
-        
-        for index in indexes
-        {
-            if let task = task(at: index)
-            {
-                newSelection[task.uuid] = nil
-            }
-        }
-        
-        selectedTasksByUuid = newSelection
-    }
-    
-    func selectSubtasks(at indexes: [Int])
-    {
-        var newSelection = [String : Task]()
-        
-        for index in indexes
-        {
-            if let task = task(at: index)
-            {
-                newSelection[task.uuid] = task
-            }
-        }
-        
-        selectedTasksByUuid = newSelection
-    }
-    
-    var selectedIndexesSorted: [Int]
-    {
-        var result = [Int]()
-        
-        for index in 0 ..< numberOfTasks
-        {
-            if let task = task(at: index),
-                selectedTasksByUuid[task.uuid] != nil
-            {
-                result.append(index)
-            }
-        }
-        
-        return result
-    }
-    
-    var selectedTasksByUuid = [String : Task]()
-    {
-        didSet
-        {
-            if Set(oldValue.keys) != Set(selectedTasksByUuid.keys)
-            {
-                //print("selection changed: \(selectedIndexes.description)")
-                validateSelection()
-                send(TaskList.didChangeSelection)
-            }
-        }
-    }
-    
-    static let didChangeSelection = "TaskListDidChangeSelection"
-    
-    private func validateSelection()
-    {
-        guard let container = container else
-        {
-            if selectedTasksByUuid.count > 0
-            {
-                print("warning: task list has no container but selections. selections will be deleted: \(selectedTasksByUuid.description)")
-                
-                selectedTasksByUuid = [:]
-            }
-            
-            return
-        }
-        
-        for selectedTask in selectedTasksByUuid.values
-        {
-            if container.index(of: selectedTask) == nil
-            {
-                print("warning: subtask is selected but not in the container. will be unselected: \(selectedTask.description)")
-                selectedTasksByUuid[selectedTask.uuid] = nil
-            }
-        }
-    }
-    
-    // MARK: - Read
-    
-    var title: String
-    {
-        return container?.title ?? "untitled"
-    }
-    
-    func task(at index: Int) -> Task?
-    {
-        return container?.subtask(at: index)
-    }
-    
-    var numberOfTasks: Int
-    {
-        return container?.subtasks.count ?? 0
-    }
-    
-    // MARK: - Container
-    
     weak var container: Task?
     {
         didSet
@@ -375,7 +369,11 @@ class TaskList: Sender, Subscriber
             }
         }
     }
+    
+    var delegate: TaskListDelegate?
 }
+
+// MARK: - Task List Delegate
 
 protocol TaskListDelegate
 {

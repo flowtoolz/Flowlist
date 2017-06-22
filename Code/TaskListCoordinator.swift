@@ -42,9 +42,18 @@ class TaskListCoordinator: Subscriber
     
     func selectSlaveInMaster(at index: Int)
     {
-        guard index >= 0, index + 1 < lists.count else { return }
+        guard index >= 0, index + 1 < lists.count else
+        {
+            return
+        }
         
         let master = lists[index]
+        
+        guard master.container?.isContainer ?? false else
+        {
+            return
+        }
+        
         let slave = lists[index + 1]
         
         if let slaveContainer = slave.container

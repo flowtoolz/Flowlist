@@ -236,7 +236,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
                              withAnimation: .slideUp)
         tableView.endUpdates()
         
-        let numberOfTasks = taskList?.numberOfTasks ?? 0
+        let numberOfTasks = taskList?.tasks.count ?? 0
         
         if numberOfTasks > 0
         {
@@ -441,7 +441,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     func numberOfRows(in tableView: NSTableView) -> Int
     {
-        return taskList?.numberOfTasks ?? 0
+        return taskList?.tasks.count ?? 0
     }
     
     func tableView(_ tableView: NSTableView,
