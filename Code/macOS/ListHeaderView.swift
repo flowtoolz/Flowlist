@@ -14,11 +14,9 @@ class ListHeaderView: NSView
     {
         NSColor.white.setFill()
         
-        let selectionRect = NSInsetRect(bounds, 2, 1)
-        
-        let selectionPath = NSBezierPath(roundedRect: selectionRect,
-                                         xRadius: 3,
-                                         yRadius: 3)
+        let selectionPath = NSBezierPath(roundedRect: dirtyRect,
+                                         xRadius: 4,
+                                         yRadius: 4)
         
         selectionPath.fill()
     }

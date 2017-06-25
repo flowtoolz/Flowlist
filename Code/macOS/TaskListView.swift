@@ -30,7 +30,10 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         translatesAutoresizingMaskIntoConstraints = false
         
         scrollView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero, excludingEdge: .top)
-        scrollView.autoPinEdge(.top, to: .bottom, of: headerView, withOffset: 10)
+        scrollView.autoPinEdge(.top,
+                               to: .bottom,
+                               of: headerView,
+                               withOffset: 10 - (TaskView.verticalGap / 2))
         
         headerView.autoPinEdge(toSuperviewEdge: .left)
         headerView.autoPinEdge(toSuperviewEdge: .right)
@@ -84,6 +87,11 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         let view = ListHeaderView()
         self.addSubview(view)
         
+        view.wantsLayer = true
+        view.layer?.borderColor = TaskView.borderColor.cgColor
+        view.layer?.borderWidth = 1.0
+        view.layer?.cornerRadius = 4.0
+        
         return view
     }()
     
@@ -117,6 +125,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         view.dataSource = self
         view.delegate = self
         view.taskListDelegate = self
+        view.intercellSpacing = NSSize(width: 0, height: TaskView.verticalGap)
         
         return view
     }()

@@ -18,9 +18,9 @@ class MainVC: NSViewController, Subscriber
     {
         view = NSView()
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor(calibratedRed: 0.2,
-                                              green: 0.3,
-                                              blue: 0.1,
+        view.layer?.backgroundColor = NSColor(calibratedRed: 235.0 / 255.0,
+                                              green: 235.0 / 255.0,
+                                              blue: 235.0 / 255.0,
                                               alpha: 1.0).cgColor
         
         subscribe(to: TaskListView.wantsToGiveUpFocusToTheRight,
@@ -37,7 +37,7 @@ class MainVC: NSViewController, Subscriber
     {
         super.viewDidLoad()
         
-        layoutBackroundImage()
+        // layoutBackroundImage()
         layoutListViews()
     }
     

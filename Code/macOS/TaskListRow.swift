@@ -16,43 +16,36 @@ class TaskListRow: NSTableRowView
         
         self.task = task
     }
-    
+
     override func drawSelection(in dirtyRect: NSRect)
     {
-        let color = selectionColor.withAlphaComponent(isEmphasized ? 1 : 0.5)
+        let color = TaskView.selectionColor.withAlphaComponent(isEmphasized ? 1 : 0.5)
         
         drawBackground(with: color)
     }
     
     override func drawBackground(in dirtyRect: NSRect)
     {
-        let color = task?.state == .done ? doneColor : NSColor.white
+        let color = task?.state == .done ? TaskView.doneColor : NSColor.white
         
         drawBackground(with: color)
     }
-    
+ 
     private func drawBackground(with color: NSColor)
     {
+        var drawRect = bounds
+        
+        drawRect.origin.y = TaskView.verticalGap / 2
+        drawRect.size.height -= TaskView.verticalGap
+        
         color.setFill()
         
-        let selectionRect = NSInsetRect(bounds, 2, 1)
-        
-        let selectionPath = NSBezierPath(roundedRect: selectionRect,
-                                         xRadius: 3,
-                                         yRadius: 3)
+        let selectionPath = NSBezierPath(roundedRect: drawRect,
+                                         xRadius: 4,
+                                         yRadius: 4)
         
         selectionPath.fill()
     }
     
     private weak var task: Task?
-    
-    private let selectionColor = NSColor(calibratedRed: 163.0/255.0,
-                                         green: 205.0 / 255.0,
-                                         blue: 254.0 / 255.0,
-                                         alpha: 1)
-    
-    private let doneColor = NSColor(calibratedRed: 255.0 / 255.0,
-                                         green: 255.0 / 255.0,
-                                         blue: 255.0 / 255.0,
-                                         alpha: 0.85)
 }
