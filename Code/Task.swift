@@ -29,7 +29,7 @@ class Task: Sender, Codable
         
         print(description)
         
-        if (elements ?? []).count > 0
+        if elements.count > 0
         {
             for _ in 0 ..< numberIndents
             {
@@ -38,7 +38,7 @@ class Task: Sender, Codable
             
             print("{")
             
-            for element in elements ?? []
+            for element in elements
             {
                 element.logRecursively(numberIndents + 1)
             }
@@ -102,11 +102,6 @@ class Task: Sender, Codable
             return false
         }
         
-//        if elements == nil
-//        {
-//            elements = [Task]()
-//        }
-        
         elements.insert(task, at: index)
         
         task.container = self
@@ -150,7 +145,7 @@ class Task: Sender, Codable
     
     func moveSubtask(from: Int, to: Int) -> Bool
     {
-        let didMove = elements.moveElement(from: from, to: to) ?? false
+        let didMove = elements.moveElement(from: from, to: to)
         
         if didMove
         {
