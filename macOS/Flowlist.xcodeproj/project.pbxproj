@@ -10,7 +10,7 @@
 		9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185B1EEEE8CE00B35AD5 /* Task.swift */; };
 		9E15185E1EEEE97700B35AD5 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185D1EEEE97700B35AD5 /* MainVC.swift */; };
 		9E4DE65E1EF148C100506B48 /* TaskArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4DE65D1EF148C100506B48 /* TaskArchive.swift */; };
-		9E4DE6601EF159D700506B48 /* Task+UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4DE65F1EF159D700506B48 /* Task+UUID.swift */; };
+		9E4DE6601EF159D700506B48 /* Task+Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4DE65F1EF159D700506B48 /* Task+Foundation.swift */; };
 		9E542E951EEEE41C00534981 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E542E941EEEE41C00534981 /* main.swift */; };
 		9E696E611EF4842F0046BCB8 /* TaskListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E696E601EF4842F0046BCB8 /* TaskListCoordinator.swift */; };
 		9E696E651EF507270046BCB8 /* ListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E696E641EF507270046BCB8 /* ListHeaderView.swift */; };
@@ -36,7 +36,7 @@
 		9E15185B1EEEE8CE00B35AD5 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../Code/Task.swift; sourceTree = "<group>"; };
 		9E15185D1EEEE97700B35AD5 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainVC.swift; path = ../Code/macOS/MainVC.swift; sourceTree = "<group>"; };
 		9E4DE65D1EF148C100506B48 /* TaskArchive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskArchive.swift; path = ../Code/TaskArchive.swift; sourceTree = "<group>"; };
-		9E4DE65F1EF159D700506B48 /* Task+UUID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Task+UUID.swift"; path = "../Code/Task+UUID.swift"; sourceTree = "<group>"; };
+		9E4DE65F1EF159D700506B48 /* Task+Foundation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Task+Foundation.swift"; path = "../Code/Task+Foundation.swift"; sourceTree = "<group>"; };
 		9E542E911EEEE41C00534981 /* Flowlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flowlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E542E941EEEE41C00534981 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../Code/macOS/main.swift; sourceTree = "<group>"; };
 		9E696E601EF4842F0046BCB8 /* TaskListCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListCoordinator.swift; path = ../Code/macOS/TaskListCoordinator.swift; sourceTree = "<group>"; };
@@ -120,8 +120,8 @@
 				9E542E941EEEE41C00534981 /* main.swift */,
 				9E15185D1EEEE97700B35AD5 /* MainVC.swift */,
 				9E696E601EF4842F0046BCB8 /* TaskListCoordinator.swift */,
-				9E91650F20551C5C00A438FB /* Store */,
 				9E91650E20551C3B00A438FB /* List */,
+				9E91650F20551C5C00A438FB /* Store */,
 				9E91650D20551C1900A438FB /* Task */,
 			);
 			name = Code;
@@ -131,7 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				9E7651931EEF428100DE2B07 /* TaskView.swift */,
-				9E4DE65F1EF159D700506B48 /* Task+UUID.swift */,
+				9E4DE65F1EF159D700506B48 /* Task+Foundation.swift */,
 				9E15185B1EEEE8CE00B35AD5 /* Task.swift */,
 			);
 			name = Task;
@@ -304,7 +304,7 @@
 				9E82A7A91EF2A558006AEF02 /* TaskListViewModel.swift in Sources */,
 				9E696E611EF4842F0046BCB8 /* TaskListCoordinator.swift in Sources */,
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
-				9E4DE6601EF159D700506B48 /* Task+UUID.swift in Sources */,
+				9E4DE6601EF159D700506B48 /* Task+Foundation.swift in Sources */,
 				9E4DE65E1EF148C100506B48 /* TaskArchive.swift in Sources */,
 				9E72881B1EEF3095003A2F46 /* TaskListView.swift in Sources */,
 				9E15185E1EEEE97700B35AD5 /* MainVC.swift in Sources */,

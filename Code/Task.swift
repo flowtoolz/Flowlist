@@ -18,7 +18,58 @@ class Task: Sender, Codable
         self.uuid = uuid
     }
     
+    // MARK: - Logging
+    
+    func logRecursively(_ numberIndents: Int = 0)
+    {
+        for _ in 0 ..< numberIndents
+        {
+            print("\t", separator: "", terminator: "")
+        }
+        
+        print(description)
+        
+        if (elements ?? []).count > 0
+        {
+            for _ in 0 ..< numberIndents
+            {
+                print("\t", separator: "", terminator: "")
+            }
+            
+            print("{")
+            
+            for element in elements ?? []
+            {
+                element.logRecursively(numberIndents + 1)
+            }
+            
+            for _ in 0 ..< numberIndents
+            {
+                print("\t", separator: "", terminator: "")
+            }
+            
+            print("}")
+        }
+    }
+    
+    var description: String
+    {
+        let containerTitle = container == nil ? "none" : (container?.title ?? "untitled")
+        let stateString = state == .done ? "done" : "backlog"
+        return "\(title ?? "untitled") (container: \(containerTitle), state: \(stateString))"
+    }
+    
     // MARK: - Edit Hierarchy
+    
+    func setContainers()
+    {
+        for subtask in subtasks
+        {
+            subtask.container = self
+            
+            subtask.setContainers()
+        }
+    }
     
     func groupTasks(at indexes: [Int], as group: Task) -> Int?
     {
@@ -111,67 +162,6 @@ class Task: Sender, Codable
     
     static let didMoveSubtask = "TaskDidMoveSubtask"
     
-//    func moveTasks(at indexes: [Int], to index: Int) -> Bool
-//    {
-//        print("about to move tasks at \(indexes.description) to index \(index)")
-//        
-//        guard index >= 0, index < subtasks.count,
-//            let elements = elements,
-//            let minIndex = indexes.min(), minIndex >= 0,
-//            let maxIndex = indexes.max(), maxIndex < subtasks.count
-//        else
-//        {
-//            return false
-//        }
-//        
-//        var resultingArray = [Task]()
-//        
-//        // copy old tasks that are above target index
-//        for i in 0 ..< index
-//        {
-//            if !indexes.contains(i)
-//            {
-//                resultingArray.append(elements[i])
-//            }
-//        }
-//        
-//        let startIndexAfterMove = resultingArray.count
-//        
-//        // copy tasks to move
-//        for indexToMove in indexes.sorted()
-//        {
-//            resultingArray.append(elements[indexToMove])
-//        }
-//        
-//        // copy old tasks that are at or below target index
-//        for i in index ..< subtasks.count
-//        {
-//            if !indexes.contains(i)
-//            {
-//                resultingArray.append(elements[i])
-//            }
-//        }
-//        
-//        // replace task array with result
-//        self.elements = resultingArray
-//        
-//        // calculate new indexes
-//        var resultingIndexes = [Int]()
-//        
-//        for i in startIndexAfterMove ..< startIndexAfterMove + indexes.count
-//        {
-//            resultingIndexes.append(i)
-//        }
-//        
-//        // notify others of the move
-//        send(Task.didMoveSubtasks, parameters: ["fromIndexes": indexes,
-//                                                "toIndexes": resultingIndexes])
-//        
-//        return true
-//    }
-//    
-//    static let didMoveSubtasks = "TaskDidMoveSubtasks"
-    
     // MARK: - Read Hierarchy
     
     var isContainer: Bool
@@ -220,11 +210,9 @@ class Task: Sender, Codable
         return elements?.index(where: { $0 === subtask })
     }
     
-    private(set) weak var container: Task?
-    
-    private var elements: [Task]?
-    
     // MARK: - Data
+    
+    let uuid: String
     
     var title: String?
     {
@@ -258,45 +246,7 @@ class Task: Sender, Codable
         case inProgress, onHold, done, archived
     }
     
-    func logRecursively(_ numberIndents: Int = 0)
-    {
-        for _ in 0 ..< numberIndents
-        {
-            print("\t", separator: "", terminator: "")
-        }
-        
-        print(description)
-        
-        if (elements ?? []).count > 0
-        {
-            for _ in 0 ..< numberIndents
-            {
-                print("\t", separator: "", terminator: "")
-            }
-            
-            print("{")
-            
-            for element in elements ?? []
-            {
-                element.logRecursively(numberIndents + 1)
-            }
-            
-            for _ in 0 ..< numberIndents
-            {
-                print("\t", separator: "", terminator: "")
-            }
-            
-            print("}")
-        }
-    }
+    private(set) weak var container: Task?
     
-    var description: String
-    {
-        let containerTitle = container == nil ? "none" : (container?.title ?? "untitled")
-        let stateString = state == .done ? "done" : "backlog"
-        return "\(title ?? "untitled") (container: \(containerTitle), state: \(stateString))"
-    }
-    
-    let uuid: String
+    private var elements: [Task]?
 }
-

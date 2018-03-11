@@ -1,11 +1,3 @@
-//
-//  TaskListCell.swift
-//  TodayList
-//
-//  Created by Sebastian on 12/06/17.
-//  Copyright © 2017 Flowtoolz. All rights reserved.
-//
-
 import AppKit
 
 class TaskView: NSView, NSTextFieldDelegate
@@ -26,7 +18,7 @@ class TaskView: NSView, NSTextFieldDelegate
     
     private func initialize()
     {
-        self.identifier = NSUserInterfaceItemIdentifier(rawValue: TaskView.reuseIdentifier)
+        identifier = NSUserInterfaceItemIdentifier(rawValue: TaskView.reuseIdentifier)
         
         layoutCheckBox()
         layoutContainerIndicator()

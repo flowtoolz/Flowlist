@@ -1,27 +1,39 @@
-//
-//  TaskStorePersister.swift
-//  TodayList
-//
-//  Created by Sebastian on 14/06/17.
-//  Copyright © 2017 Flowtoolz. All rights reserved.
-//
-
 import Foundation
 import Flowtoolz
 
 extension TaskStore
 {
+    // MARK: - Future Persistence Code
+    
+    func saveToFile()
+    {
+        // FIXME: encoding causes EXC_BAD_ACCESS
+        root.save(to: "flowlist.json")
+    }
+    
+    func loadFromFile()
+    {
+        if let loadedRoot = Task(from: "flowlist.json")
+        {
+            loadedRoot.setContainers()
+            
+            root = loadedRoot
+        }
+    }
+    
+    // MARK: - Old Persistence Code
+    
     func save()
     {
         let allTasks = root.allSubtasksRecursively()
-        
+
         var archive = [TaskArchive]()
-        
+
         for task in allTasks
         {
             archive.append(TaskArchive(with: task))
         }
-        
+
         NSKeyedArchiver.archiveRootObject(archive, toFile: TaskStore.filePath)
     }
     
@@ -33,22 +45,22 @@ extension TaskStore
         {
             return
         }
-        
+
         // create task hash map
         var tasksByUuid = [String: Task]()
-        
+
         for archiveTask in archive
         {
             let task = archiveTask.task
-            
+
             tasksByUuid[task.uuid] = task
         }
-        
+
         // connect task hierarchy
         for archiveTask in archive
         {
             let task = archiveTask.task
-            
+
             if let elementUuids = archiveTask.elementUuidsForDecoding
             {
                 for elementUuid in elementUuids
@@ -60,10 +72,10 @@ extension TaskStore
                 }
             }
         }
-        
+
         // find root and reset
         var unarchivedRoot: Task?
-        
+
         for task in tasksByUuid.values
         {
             if task.container == nil
@@ -73,17 +85,17 @@ extension TaskStore
                     print("Error: found multiple root containers in unarchived tasks")
                     return
                 }
-                
+
                 unarchivedRoot = task
             }
         }
-        
+
         guard let root = unarchivedRoot else
         {
             print("Error: found no root container in unarchived tasks")
             return
         }
-        
+
         store.root = root
     }
     

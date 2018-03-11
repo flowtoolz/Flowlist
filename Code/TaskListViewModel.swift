@@ -149,7 +149,7 @@ class TaskListViewModel: Sender, Subscriber
         return container.moveSubtask(from: selectedIndex, to: selectedIndex + 1)
     }
     
-    func taskDidMoveSubtask(sender: Any, parameters: [String : Any]?)
+    func taskDidMoveSubtask(sender: Any, parameters: JSON?)
     {
         guard let sendingTask = sender as? Task,
             container === sendingTask,
@@ -159,8 +159,6 @@ class TaskListViewModel: Sender, Subscriber
         {
             return
         }
-        
-        // print("task \(sendingTask.description) did move subtask: \(parameters.debugDescription)")
         
         delegate?.didMoveSubtask(from: from, to: to)
     }
