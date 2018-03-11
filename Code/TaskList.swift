@@ -447,12 +447,12 @@ class TaskList: Sender, Subscriber
         }
     }
     
-    var delegate: TaskListDelegate?
+    weak var delegate: TaskListDelegate?
 }
 
 // MARK: - Task List Delegate
 
-protocol TaskListDelegate
+protocol TaskListDelegate: AnyObject
 {
     func didChangeSubtasksOfSubtask(at index: Int)
     func didChangeStateOfSubtask(at index: Int)
