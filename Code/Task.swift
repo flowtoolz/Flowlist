@@ -101,12 +101,12 @@ class Task: Sender, Codable
             return false
         }
         
-        if elements == nil
-        {
-            elements = [Task]()
-        }
+//        if elements == nil
+//        {
+//            elements = [Task]()
+//        }
         
-        elements?.insert(task, at: index)
+        elements.insert(task, at: index)
         
         task.container = self
         
@@ -131,12 +131,11 @@ class Task: Sender, Codable
     
         while let indexToRemove = sorted.popLast()
         {
-            if let removedSubtask = elements?.remove(at: indexToRemove)
+            let removedSubtask = elements.remove(at: indexToRemove)
+            
+            if removedSubtask.container === self
             {
-                if removedSubtask.container === self
-                {
-                    removedSubtask.container = nil
-                }
+                removedSubtask.container = nil
             }
         }
         
@@ -150,7 +149,7 @@ class Task: Sender, Codable
     
     func moveSubtask(from: Int, to: Int) -> Bool
     {
-        let didMove = elements?.moveElement(from: from, to: to) ?? false
+        let didMove = elements.moveElement(from: from, to: to) ?? false
         
         if didMove
         {
@@ -182,19 +181,16 @@ class Task: Sender, Codable
     
     var subtasks: [Task]
     {
-        return elements ?? []
+        return elements
     }
     
     func allSubtasksRecursively() -> [Task]
     {
         var tasks = [self]
-        
-        if let elements = elements
+
+        for task in elements
         {
-            for task in elements
-            {
-                tasks.append(contentsOf: task.allSubtasksRecursively())
-            }
+            tasks.append(contentsOf: task.allSubtasksRecursively())
         }
         
         return tasks
@@ -207,7 +203,7 @@ class Task: Sender, Codable
     
     func index(of subtask: Task) -> Int?
     {
-        return elements?.index(where: { $0 === subtask })
+        return elements.index(where: { $0 === subtask })
     }
     
     // MARK: - Data
@@ -246,9 +242,7 @@ class Task: Sender, Codable
         case inProgress, onHold, done, archived
     }
     
-    private(set) weak var container: Task?
+    /* private(set) */ weak var container: Task?
     
-    private var elements: [Task]?
-    
-    var testArray = [Task]()
+    private var elements = [Task]()
 }

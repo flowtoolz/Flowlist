@@ -10,9 +10,15 @@ extension TaskStore
         let task = Task()
         task.title = "test title"
         task.state = .inProgress
-        task.testArray.append(Task())
-        task.testArray.append(Task())
-        print(task.encode()?.utf8String ?? "error")
+        
+        let subtask = Task()
+        task.insert(subtask, at: 0)
+        // with a non nil container, encoding crashes...
+        //subtask.container = nil
+        if let taskData = try? JSONEncoder().encode(task)
+        {
+            print(taskData.utf8String ?? "error")
+        }
         
         // FIXME: encoding causes EXC_BAD_ACCESS
         //root.save(to: "flowlist.json")
