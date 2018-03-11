@@ -93,6 +93,7 @@ class Task: Sender, Codable
         return groupIndex
     }
     
+    @discardableResult
     func insert(_ task: Task, at index: Int) -> Bool
     {
         guard index >= 0, index <= subtasks.count else
@@ -242,7 +243,7 @@ class Task: Sender, Codable
         case inProgress, onHold, done, archived
     }
     
-    /* private(set) */ weak var container: Task?
+    private(set) weak var container: Task? = nil
     
     private var elements = [Task]()
 }
