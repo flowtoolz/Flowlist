@@ -1,11 +1,3 @@
-//
-//  TaskListCoordinator.swift
-//  Flowlist
-//
-//  Created by Sebastian on 16/06/17.
-//  Copyright © 2017 Flowtoolz. All rights reserved.
-//
-
 import Flowtoolz
 
 let listCoordinator = TaskListCoordinator()
@@ -16,24 +8,25 @@ class TaskListCoordinator: Subscriber
     {
         lists[2].container = store.root
         
-        subscribe(to: TaskList.didChangeSelection, action: listChangedSelection)
+        subscribe(to: TaskListViewModel.didChangeSelection,
+                  action: listChangedSelection)
     }
     
-    func moveRight() -> TaskList
+    func moveRight() -> TaskListViewModel
     {
         lists.remove(at: 0)
         
-        let newList = TaskList()
+        let newList = TaskListViewModel()
         lists.append(newList)
         
         return newList
     }
     
-    func moveLeft() -> TaskList
+    func moveLeft() -> TaskListViewModel
     {
         _ = lists.popLast()
         
-        let newList = TaskList()
+        let newList = TaskListViewModel()
         
         lists.insert(newList, at: 0)
         
@@ -114,5 +107,9 @@ class TaskListCoordinator: Subscriber
         master.container = slave.container?.container
     }
     
-    var lists = [TaskList(), TaskList(), TaskList(), TaskList(), TaskList()]
+    var lists = [TaskListViewModel(),
+                 TaskListViewModel(),
+                 TaskListViewModel(),
+                 TaskListViewModel(),
+                 TaskListViewModel()]
 }

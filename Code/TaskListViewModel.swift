@@ -1,14 +1,6 @@
-//
-//  TaskList.swift
-//  TodayList
-//
-//  Created by Sebastian on 15/06/17.
-//  Copyright © 2017 Flowtoolz. All rights reserved.
-//
-
 import Flowtoolz
 
-class TaskList: Sender, Subscriber
+class TaskListViewModel: Sender, Subscriber
 {
     init()
     {
@@ -370,7 +362,7 @@ class TaskList: Sender, Subscriber
             {
                 //print("selection changed: \(selectedIndexes.description)")
                 validateSelection()
-                send(TaskList.didChangeSelection)
+                send(TaskListViewModel.didChangeSelection)
             }
         }
     }

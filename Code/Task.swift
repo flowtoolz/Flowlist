@@ -1,14 +1,6 @@
-//
-//  Task.swift
-//  TodayList
-//
-//  Created by Sebastian on 12/06/17.
-//  Copyright © 2017 Flowtoolz. All rights reserved.
-//
-
 import Flowtoolz
 
-class Task: Sender
+class Task: Sender, Codable
 {
     // MARK: - Initialization
     
@@ -260,7 +252,7 @@ class Task: Sender
     
     static let didChangeState = "TaskDidChangeState"
     
-    enum State: Int
+    enum State: Int, Codable
     {
         // state == nil is default and kind of a backlog or "no specific state"
         case inProgress, onHold, done, archived

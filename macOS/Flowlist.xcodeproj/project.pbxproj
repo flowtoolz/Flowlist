@@ -17,7 +17,7 @@
 		9E72881B1EEF3095003A2F46 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E72881A1EEF3095003A2F46 /* TaskListView.swift */; };
 		9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651931EEF428100DE2B07 /* TaskView.swift */; };
 		9E7651961EEF4DA200DE2B07 /* TaskStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* TaskStore.swift */; };
-		9E82A7A91EF2A558006AEF02 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* TaskList.swift */; };
+		9E82A7A91EF2A558006AEF02 /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* TaskListViewModel.swift */; };
 		9E91651520551E5600A438FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E91651320551E5500A438FB /* Assets.xcassets */; };
 		9EA2B9691EF035D900F05F20 /* TaskListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B9681EF035D900F05F20 /* TaskListRow.swift */; };
 		9EA2B96B1EF0A80A00F05F20 /* TaskStore+Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */; };
@@ -44,7 +44,7 @@
 		9E72881A1EEF3095003A2F46 /* TaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListView.swift; path = ../Code/macOS/TaskListView.swift; sourceTree = "<group>"; };
 		9E7651931EEF428100DE2B07 /* TaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = ../Code/macOS/TaskView.swift; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* TaskStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskStore.swift; path = ../Code/TaskStore.swift; sourceTree = "<group>"; };
-		9E82A7A81EF2A558006AEF02 /* TaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskList.swift; path = ../Code/TaskList.swift; sourceTree = "<group>"; };
+		9E82A7A81EF2A558006AEF02 /* TaskListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListViewModel.swift; path = ../Code/TaskListViewModel.swift; sourceTree = "<group>"; };
 		9E91651320551E5500A438FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		9E916518205520B800A438FB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		9EA2B9681EF035D900F05F20 /* TaskListRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListRow.swift; path = ../Code/macOS/TaskListRow.swift; sourceTree = "<group>"; };
@@ -144,7 +144,7 @@
 				9EAD75401EF6502000DC46FD /* TaskListTableView.swift */,
 				9EA2B9681EF035D900F05F20 /* TaskListRow.swift */,
 				9E696E641EF507270046BCB8 /* ListHeaderView.swift */,
-				9E82A7A81EF2A558006AEF02 /* TaskList.swift */,
+				9E82A7A81EF2A558006AEF02 /* TaskListViewModel.swift */,
 			);
 			name = List;
 			sourceTree = "<group>";
@@ -301,7 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E82A7A91EF2A558006AEF02 /* TaskList.swift in Sources */,
+				9E82A7A91EF2A558006AEF02 /* TaskListViewModel.swift in Sources */,
 				9E696E611EF4842F0046BCB8 /* TaskListCoordinator.swift in Sources */,
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
 				9E4DE6601EF159D700506B48 /* Task+UUID.swift in Sources */,
