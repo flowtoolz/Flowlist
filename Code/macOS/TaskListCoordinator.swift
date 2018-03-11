@@ -8,25 +8,25 @@ class TaskListCoordinator: Subscriber
     {
         lists[2].container = store.root
         
-        subscribe(to: TaskListViewModel.didChangeSelection,
+        subscribe(to: TaskList.didChangeSelection,
                   action: listChangedSelection)
     }
     
-    func moveRight() -> TaskListViewModel
+    func moveRight() -> TaskList
     {
         lists.remove(at: 0)
         
-        let newList = TaskListViewModel()
+        let newList = TaskList()
         lists.append(newList)
         
         return newList
     }
     
-    func moveLeft() -> TaskListViewModel
+    func moveLeft() -> TaskList
     {
         _ = lists.popLast()
         
-        let newList = TaskListViewModel()
+        let newList = TaskList()
         
         lists.insert(newList, at: 0)
         
@@ -107,9 +107,9 @@ class TaskListCoordinator: Subscriber
         master.container = slave.container?.container
     }
     
-    var lists = [TaskListViewModel(),
-                 TaskListViewModel(),
-                 TaskListViewModel(),
-                 TaskListViewModel(),
-                 TaskListViewModel()]
+    var lists = [TaskList(),
+                 TaskList(),
+                 TaskList(),
+                 TaskList(),
+                 TaskList()]
 }

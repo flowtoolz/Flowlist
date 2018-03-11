@@ -101,9 +101,9 @@ class TaskView: NSView, NSTextFieldDelegate
         titleField.autoPinEdge(.right, to: .left, of: containerIndicator, withOffset: -5)
     }
     
-    lazy var titleField: TaskViewTextField =
+    lazy var titleField: TextField =
     {
-        let textField = TaskViewTextField()
+        let textField = TextField()
         self.addSubview(textField)
         
         textField.isBordered = false
@@ -229,26 +229,26 @@ class TaskView: NSView, NSTextFieldDelegate
                                     alpha: 1)
     
     static let borderColor = NSColor.black.withAlphaComponent(0.15)
-}
-
-class TaskViewTextField: NSTextField
-{
-    override func becomeFirstResponder() -> Bool
+    
+    class TextField: NSTextField
     {
-        let didBecomeFirstResponder = super.becomeFirstResponder()
-        
-        if didBecomeFirstResponder
+        override func becomeFirstResponder() -> Bool
         {
-            taskViewTextFieldDelegate?.taskViewTextFieldDidBecomeFirstResponder(self)
+            let didBecomeFirstResponder = super.becomeFirstResponder()
+            
+            if didBecomeFirstResponder
+            {
+                taskViewTextFieldDelegate?.taskViewTextFieldDidBecomeFirstResponder(self)
+            }
+            
+            return didBecomeFirstResponder
         }
         
-        return didBecomeFirstResponder
+        weak var taskViewTextFieldDelegate: TaskViewTextFieldDelegate?
     }
-    
-    var taskViewTextFieldDelegate: TaskViewTextFieldDelegate?
 }
 
-protocol TaskViewTextFieldDelegate
+protocol TaskViewTextFieldDelegate: AnyObject
 {
-    func taskViewTextFieldDidBecomeFirstResponder(_ textField: TaskViewTextField)
+    func taskViewTextFieldDidBecomeFirstResponder(_ textField: TaskView.TextField)
 }

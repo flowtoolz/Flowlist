@@ -1,6 +1,6 @@
 import Flowtoolz
 
-class TaskListViewModel: Sender, Subscriber
+class TaskList: Sender, Subscriber
 {
     init()
     {
@@ -360,7 +360,7 @@ class TaskListViewModel: Sender, Subscriber
             {
                 //print("selection changed: \(selectedIndexes.description)")
                 validateSelection()
-                send(TaskListViewModel.didChangeSelection)
+                send(TaskList.didChangeSelection)
             }
         }
     }

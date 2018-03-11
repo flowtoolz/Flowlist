@@ -14,7 +14,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
 {
     // MARK: - Table View
     
-    convenience init(with list: TaskListViewModel)
+    convenience init(with list: TaskList)
     {
         self.init(frame: NSRect.zero)
         
@@ -327,7 +327,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         send(TaskListView.tableViewWasClicked)
     }
     
-    func taskViewTextFieldDidBecomeFirstResponder(_ textField: TaskViewTextField)
+    func taskViewTextFieldDidBecomeFirstResponder(_ textField: TaskView.TextField)
     {
         send(TaskListView.tableViewWasClicked)
     }
@@ -500,7 +500,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     // MARK: - Task List
     
-    private(set) weak var taskList: TaskListViewModel?
+    private(set) weak var taskList: TaskList?
 }
 
 func logFirstResponder()

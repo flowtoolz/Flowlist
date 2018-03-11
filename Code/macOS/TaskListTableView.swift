@@ -48,10 +48,10 @@ class TaskListTableView: NSTableView
         taskListDelegate?.taskListTableViewWasClicked(self)
     }
     
-    var taskListDelegate: TaskListTableViewDelegate?
+    weak var taskListDelegate: TaskListTableViewDelegate?
 }
 
-protocol TaskListTableViewDelegate
+protocol TaskListTableViewDelegate: AnyObject
 {
     func taskListTableViewWasClicked(_ view: TaskListTableView)
 }
