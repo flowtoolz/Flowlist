@@ -105,14 +105,14 @@
 		276C232F6BEDD2796484CF7BD211D9B5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BAE35BA5D339A391EAB48B0F5C9F3E7 /* Flowtoolz-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Flowtoolz-umbrella.h"; sourceTree = "<group>"; };
 		2CE09D027F79D9682538E01EF8D079D2 /* ReachabilitySwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ReachabilitySwift.modulemap; sourceTree = "<group>"; };
-		2DCD2B782675F46349CC3BF68F268095 /* Flowtoolz.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = Flowtoolz.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		2DCD2B782675F46349CC3BF68F268095 /* Flowtoolz.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = Flowtoolz.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		2E9D11EE36C7E2DD71A7789C4A6F9155 /* Pods-Flowlist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Flowlist.release.xcconfig"; sourceTree = "<group>"; };
 		30297C4099C2BBFED95DA0E32D2E2F0E /* ALView+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "ALView+PureLayout.h"; path = "PureLayout/PureLayout/ALView+PureLayout.h"; sourceTree = "<group>"; };
 		336484472B1DD0B10F435D8860E8BEAF /* PureLayout-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PureLayout-prefix.pch"; sourceTree = "<group>"; };
 		33713D642CA9517A6778B4A445DD0DF2 /* Pods-Flowlist-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Flowlist-frameworks.sh"; sourceTree = "<group>"; };
 		3EADD9F438FE338C75FD642389A91648 /* NSLayoutConstraint+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+PureLayout.h"; path = "PureLayout/PureLayout/NSLayoutConstraint+PureLayout.h"; sourceTree = "<group>"; };
 		3EB91008736813B54FE49C81BA612739 /* Flowtoolz-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Flowtoolz-dummy.m"; sourceTree = "<group>"; };
-		3EEC44EC654F683B0C4D4BACAB4FAA58 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		3EEC44EC654F683B0C4D4BACAB4FAA58 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3F8A077D673813D8C62882CB00E569A8 /* ALView+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "ALView+PureLayout.m"; path = "PureLayout/PureLayout/ALView+PureLayout.m"; sourceTree = "<group>"; };
 		4540B40409EE75F6F8C922845B15B19A /* BuildConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BuildConfiguration.swift; path = Pod/swift/BuildConfiguration.swift; sourceTree = "<group>"; };
 		47EF5C58473D1160E575A8F06E772D57 /* Int+Foundation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Int+Foundation.swift"; path = "Pod/foundation/Int+Foundation.swift"; sourceTree = "<group>"; };
@@ -121,7 +121,7 @@
 		4CD43C77228FC23123B3BB35E8D7A446 /* Flowtoolz-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Flowtoolz-prefix.pch"; sourceTree = "<group>"; };
 		4FD5DE33169E34D2C175F5FD62210409 /* Flowtoolz.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Flowtoolz.xcconfig; sourceTree = "<group>"; };
 		5723C034DE43BEE86972B547B491C034 /* PureLayout+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PureLayout+Internal.h"; path = "PureLayout/PureLayout/PureLayout+Internal.h"; sourceTree = "<group>"; };
-		57A60C9011098C6EEEA9DFC90F79F7DB /* Flowtoolz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Flowtoolz.framework; path = Flowtoolz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		57A60C9011098C6EEEA9DFC90F79F7DB /* Flowtoolz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Flowtoolz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C94AD9E909D47E3409A26BE5E5761EB /* Array+Flowtoolz.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Array+Flowtoolz.swift"; path = "Pod/swift/Array+Flowtoolz.swift"; sourceTree = "<group>"; };
 		61711F24D81E8746371C58BD5C52B482 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69F28F0D8EC5908D5C07A00BB4D2A5D9 /* CoreDataStack.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = Pod/coredata/CoreDataStack.swift; sourceTree = "<group>"; };
@@ -131,16 +131,16 @@
 		6F82B0D3BB0F2B7F66B8040492037DC9 /* SwiftHelpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftHelpers.swift; path = Pod/swift/SwiftHelpers.swift; sourceTree = "<group>"; };
 		72354EEC12A600D798C0F0F277E9E4C3 /* Pods-Flowlist-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Flowlist-acknowledgements.markdown"; sourceTree = "<group>"; };
 		79C55BF152C639E3819E18F10A9BC9CB /* String+Foundation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+Foundation.swift"; path = "Pod/foundation/String+Foundation.swift"; sourceTree = "<group>"; };
-		7BF6E50262BD526F72D732A86B4AA9F3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		7BF6E50262BD526F72D732A86B4AA9F3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		820F220766045EBDA1829641EE203810 /* String+Flowtoolz.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+Flowtoolz.swift"; path = "Pod/swift/String+Flowtoolz.swift"; sourceTree = "<group>"; };
 		84D9D089610EBDF1CF4A75DFA9D6615F /* ReachabilitySwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ReachabilitySwift-dummy.m"; sourceTree = "<group>"; };
-		8D67B1CE4DF412AF3ACDE5522E69F170 /* PureLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PureLayout.framework; path = PureLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D67B1CE4DF412AF3ACDE5522E69F170 /* PureLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PureLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F9FEFB0DE10AF7EAF361B68F78735B6 /* URL+Flowtoolz.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "URL+Flowtoolz.swift"; path = "Pod/foundation/URL+Flowtoolz.swift"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9A38B7DE6BAB741FC1FA469EFC11DA0C /* Reachability.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = Reachability/Reachability.swift; sourceTree = "<group>"; };
 		9D967C375E6185E12B5516A38C0B113E /* Pods-Flowlist-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Flowlist-dummy.m"; sourceTree = "<group>"; };
 		A58077FEE5458A52AFBE369AF8612651 /* NSLayoutConstraint+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+PureLayout.m"; path = "PureLayout/PureLayout/NSLayoutConstraint+PureLayout.m"; sourceTree = "<group>"; };
-		AA02D52C35C4C9CA8C5528F91223731F /* Pods_Flowlist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Flowlist.framework; path = "Pods-Flowlist.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA02D52C35C4C9CA8C5528F91223731F /* Pods_Flowlist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flowlist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABBAC35A39718131E0EBF065CC89A67D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ACC604ACADE789EC89E7DD23F25A5D92 /* NSArray+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+PureLayout.m"; path = "PureLayout/PureLayout/NSArray+PureLayout.m"; sourceTree = "<group>"; };
 		B0F44E23F7F185AAEAFA1F57D3E38323 /* Data+Flowtoolz.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Data+Flowtoolz.swift"; path = "Pod/foundation/Data+Flowtoolz.swift"; sourceTree = "<group>"; };
@@ -157,7 +157,7 @@
 		E60C605BB053ED29CD9B192C3277E541 /* Dictionary+Flowtoolz.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Dictionary+Flowtoolz.swift"; path = "Pod/swift/Dictionary+Flowtoolz.swift"; sourceTree = "<group>"; };
 		E6A91C2F48BCD1F03256A4EBBFC1000F /* ReachabilitySwift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ReachabilitySwift.xcconfig; sourceTree = "<group>"; };
 		F91D578411F248CE8D6CD1D15C07B4B7 /* PureLayout.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PureLayout.xcconfig; sourceTree = "<group>"; };
-		F9A30288767309C369DFF77BBCFD2622 /* ReachabilitySwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ReachabilitySwift.framework; path = ReachabilitySwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9A30288767309C369DFF77BBCFD2622 /* ReachabilitySwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReachabilitySwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDC2DB596F3BB7D0C35DF37CAFF9182D /* PureLayout-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PureLayout-dummy.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -283,7 +283,6 @@
 				0DFD1A730706810562447109C3E79DE1 /* PureLayoutDefines.h */,
 				D950B15A728E0BEF7F9202915D972687 /* Support Files */,
 			);
-			name = PureLayout;
 			path = PureLayout;
 			sourceTree = "<group>";
 		};
@@ -333,7 +332,6 @@
 				9A38B7DE6BAB741FC1FA469EFC11DA0C /* Reachability.swift */,
 				757D553483E361785C8957504735609A /* Support Files */,
 			);
-			name = ReachabilitySwift;
 			path = ReachabilitySwift;
 			sourceTree = "<group>";
 		};
@@ -662,40 +660,9 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		20C286689DCE8F9CFEC481E149965F0C /* Release */ = {
+		42B435C72A00D14F6A6740C76A9E85E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F91D578411F248CE8D6CD1D15C07B4B7 /* PureLayout.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				GCC_PREFIX_HEADER = "Target Support Files/PureLayout/PureLayout-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/PureLayout/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				MODULEMAP_FILE = "Target Support Files/PureLayout/PureLayout.modulemap";
-				PRODUCT_NAME = PureLayout;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		52DF71CC9500395BA66B277011915B22 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2E9D11EE36C7E2DD71A7789C4A6F9155 /* Pods-Flowlist.release.xcconfig */;
+			baseConfigurationReference = 4FD5DE33169E34D2C175F5FD62210409 /* Flowtoolz.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -705,30 +672,63 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEPLOYMENT_TARGET = 10.10;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "Target Support Files/Pods-Flowlist/Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/Flowtoolz/Flowtoolz-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Flowtoolz/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MODULEMAP_FILE = "Target Support Files/Pods-Flowlist/Pods-Flowlist.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_Flowlist;
+				MODULEMAP_FILE = "Target Support Files/Flowtoolz/Flowtoolz.modulemap";
+				PRODUCT_NAME = Flowtoolz;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		625C8FCB358849B4DD57388129C8B643 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4FD5DE33169E34D2C175F5FD62210409 /* Flowtoolz.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEPLOYMENT_TARGET = 10.10;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = "Target Support Files/Flowtoolz/Flowtoolz-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Flowtoolz/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MODULEMAP_FILE = "Target Support Files/Flowtoolz/Flowtoolz.modulemap";
+				PRODUCT_NAME = Flowtoolz;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		54D309DAB434A6B87255A2FCA5B02653 /* Debug */ = {
+		6EC70728B17CA29EB4FBA2040F6A2C13 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6D1141981AD7EEAA3FB0259A9E91A866 /* Pods-Flowlist.debug.xcconfig */;
 			buildSettings = {
@@ -740,6 +740,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEPLOYMENT_TARGET = 10.10;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -759,39 +760,6 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		656ABD9BCCB9081E5C681D897D6B569C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4FD5DE33169E34D2C175F5FD62210409 /* Flowtoolz.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				GCC_PREFIX_HEADER = "Target Support Files/Flowtoolz/Flowtoolz-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Flowtoolz/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MODULEMAP_FILE = "Target Support Files/Flowtoolz/Flowtoolz.modulemap";
-				PRODUCT_NAME = Flowtoolz;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -918,9 +886,73 @@
 			};
 			name = Debug;
 		};
-		AB27F8197E3D138A74B539BF415FA663 /* Release */ = {
+		97D07F3F312293941618C28692B99879 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4FD5DE33169E34D2C175F5FD62210409 /* Flowtoolz.xcconfig */;
+			baseConfigurationReference = F91D578411F248CE8D6CD1D15C07B4B7 /* PureLayout.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEPLOYMENT_TARGET = 10.10;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = "Target Support Files/PureLayout/PureLayout-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/PureLayout/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MODULEMAP_FILE = "Target Support Files/PureLayout/PureLayout.modulemap";
+				PRODUCT_NAME = PureLayout;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E595C754AEA9417A7AB61CF37EC4BABF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F91D578411F248CE8D6CD1D15C07B4B7 /* PureLayout.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEPLOYMENT_TARGET = 10.10;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = "Target Support Files/PureLayout/PureLayout-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/PureLayout/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MODULEMAP_FILE = "Target Support Files/PureLayout/PureLayout.modulemap";
+				PRODUCT_NAME = PureLayout;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E87736AE5563A09AFF045398F44197A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2E9D11EE36C7E2DD71A7789C4A6F9155 /* Pods-Flowlist.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -930,28 +962,31 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEPLOYMENT_TARGET = 10.10;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				GCC_PREFIX_HEADER = "Target Support Files/Flowtoolz/Flowtoolz-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Flowtoolz/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-Flowlist/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MODULEMAP_FILE = "Target Support Files/Flowtoolz/Flowtoolz.modulemap";
-				PRODUCT_NAME = Flowtoolz;
+				MODULEMAP_FILE = "Target Support Files/Pods-Flowlist/Pods-Flowlist.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Flowlist;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		B97F4C2A45A3D7FB5BF81951F987C907 /* Release */ = {
+		F65BABEE0B9245D74B3B26FB72CAB920 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E6A91C2F48BCD1F03256A4EBBFC1000F /* ReachabilitySwift.xcconfig */;
 			buildSettings = {
@@ -962,38 +997,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				GCC_PREFIX_HEADER = "Target Support Files/ReachabilitySwift/ReachabilitySwift-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ReachabilitySwift/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MODULEMAP_FILE = "Target Support Files/ReachabilitySwift/ReachabilitySwift.modulemap";
-				PRODUCT_NAME = ReachabilitySwift;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		BB03BC38D2A5975A9D4120C02403DE1A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E6A91C2F48BCD1F03256A4EBBFC1000F /* ReachabilitySwift.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
+				DEPLOYMENT_TARGET = 10.10;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1015,9 +1019,9 @@
 			};
 			name = Debug;
 		};
-		D15630C9C590E95F06FA9CDE06791C9A /* Debug */ = {
+		FF648B8400DCD0BDE517D548987F1C84 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F91D578411F248CE8D6CD1D15C07B4B7 /* PureLayout.xcconfig */;
+			baseConfigurationReference = E6A91C2F48BCD1F03256A4EBBFC1000F /* ReachabilitySwift.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1026,25 +1030,27 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEPLOYMENT_TARGET = 10.10;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				GCC_PREFIX_HEADER = "Target Support Files/PureLayout/PureLayout-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/PureLayout/Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/ReachabilitySwift/ReachabilitySwift-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ReachabilitySwift/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				MODULEMAP_FILE = "Target Support Files/PureLayout/PureLayout.modulemap";
-				PRODUCT_NAME = PureLayout;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MODULEMAP_FILE = "Target Support Files/ReachabilitySwift/ReachabilitySwift.modulemap";
+				PRODUCT_NAME = ReachabilitySwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1061,8 +1067,8 @@
 		354E18B092549D12E9C591D1A80304C9 /* Build configuration list for PBXNativeTarget "Pods-Flowlist" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				54D309DAB434A6B87255A2FCA5B02653 /* Debug */,
-				52DF71CC9500395BA66B277011915B22 /* Release */,
+				6EC70728B17CA29EB4FBA2040F6A2C13 /* Debug */,
+				E87736AE5563A09AFF045398F44197A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1070,8 +1076,8 @@
 		39FD0979684A819B968FAE9579094776 /* Build configuration list for PBXNativeTarget "PureLayout" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D15630C9C590E95F06FA9CDE06791C9A /* Debug */,
-				20C286689DCE8F9CFEC481E149965F0C /* Release */,
+				E595C754AEA9417A7AB61CF37EC4BABF /* Debug */,
+				97D07F3F312293941618C28692B99879 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1079,8 +1085,8 @@
 		3D72F0F6C0B8A8C07EF94C58861EE487 /* Build configuration list for PBXNativeTarget "ReachabilitySwift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BB03BC38D2A5975A9D4120C02403DE1A /* Debug */,
-				B97F4C2A45A3D7FB5BF81951F987C907 /* Release */,
+				F65BABEE0B9245D74B3B26FB72CAB920 /* Debug */,
+				FF648B8400DCD0BDE517D548987F1C84 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1088,8 +1094,8 @@
 		54B3DD63AB787137692A241B8CFA843F /* Build configuration list for PBXNativeTarget "Flowtoolz" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				656ABD9BCCB9081E5C681D897D6B569C /* Debug */,
-				AB27F8197E3D138A74B539BF415FA663 /* Release */,
+				42B435C72A00D14F6A6740C76A9E85E6 /* Debug */,
+				625C8FCB358849B4DD57388129C8B643 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
