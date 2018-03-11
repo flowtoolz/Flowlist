@@ -1,11 +1,3 @@
-//
-//  TaskStore.swift
-//  TodayList
-//
-//  Created by Sebastian on 13/06/17.
-//  Copyright © 2017 Flowtoolz. All rights reserved.
-//
-
 import Flowtoolz
 
 let store = TaskStore()
@@ -14,12 +6,10 @@ class TaskStore: Sender
 {
     fileprivate init() {}
     
-    var root = Task()
+    var root = Task(with: "Root Task ID", title: "All Items")
     {
         didSet
         {
-            root.title = "All Items"
-            
             send(TaskStore.didUpdateRoot)
         }
     }

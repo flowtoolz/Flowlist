@@ -4,7 +4,9 @@ class Task: Sender, Codable
 {
     // MARK: - Initialization
     
-    convenience init(with uuid: String, title: String?, state: State?)
+    convenience init(with uuid: String,
+                     title: String? = nil,
+                     state: State? = nil)
     {
         self.init(with: uuid)
         

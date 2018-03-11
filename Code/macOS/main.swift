@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  TodayList
-//
-//  Created by Sebastian on 12/06/17.
-//  Copyright © 2017 Flowtoolz. All rights reserved.
-//
-
 import Cocoa
 import Flowtoolz
 

@@ -40,6 +40,11 @@ extension TaskStore
 
 extension Task
 {
+    convenience init()
+    {
+        self.init(with: UUID().uuidString)
+    }
+    
     // exclude container property from being encoded to avoid crash due to cyclic object relationships
     enum CodingKeys: String, CodingKey
     {
