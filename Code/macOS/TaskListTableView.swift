@@ -14,7 +14,7 @@ class TaskListTableView: NSTableView
     {
         super.flagsChanged(with: event)
         
-        cmd = event.modifierFlags.contains(.command)
+        cmd = event.modifierFlags.contains(NSEvent.ModifierFlags.command)
     }
     
     override func keyDown(with event: NSEvent)
@@ -26,7 +26,7 @@ class TaskListTableView: NSTableView
         case 36:
             nextResponder?.keyDown(with: event)
         case 125, 126:
-            if event.modifierFlags.contains(.command)
+            if event.modifierFlags.contains(NSEvent.ModifierFlags.command)
             {
                 nextResponder?.keyDown(with: event)
             }

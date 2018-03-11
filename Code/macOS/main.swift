@@ -28,9 +28,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     private func setupWindow()
     {
         window.contentViewController = MainVC()
-        window.styleMask = NSWindowStyleMask([.resizable, .titled, .miniaturizable, .closable, .unifiedTitleAndToolbar])
+        window.styleMask = NSWindow.StyleMask([NSWindow.StyleMask.resizable, NSWindow.StyleMask.titled, NSWindow.StyleMask.miniaturizable, NSWindow.StyleMask.closable, NSWindow.StyleMask.unifiedTitleAndToolbar])
         
-        let frame = NSScreen.main()?.frame ?? CGRect(x: 0, y: 0, width: 1280, height: 960)
+        let frame = NSScreen.main?.frame ?? CGRect(x: 0, y: 0, width: 1280, height: 960)
         
         window.setFrame(CGRect(x: frame.size.width / 5,
                                y: frame.size.height / 5,
@@ -99,7 +99,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     let window = NSWindow()
     
-    func quit()
+    @objc func quit()
     {
         NSApp.terminate(nil)
     }
@@ -123,7 +123,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
 
 autoreleasepool
 {
-    let app = NSApplication.shared()
+    let app = NSApplication.shared
     let appDelegate = AppDelegate()
     
     app.delegate = appDelegate

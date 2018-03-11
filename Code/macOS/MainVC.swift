@@ -75,7 +75,7 @@ class MainVC: NSViewController, Subscriber
     
     private lazy var backgroundImage: NSImageView =
     {
-        let image = NSImage(named: "grass") ?? NSImage()
+        let image = NSImage(named: NSImage.Name(rawValue: "grass")) ?? NSImage()
         
         let view = NSImageView(withAspectFillImage: image)
         self.view.addSubview(view)

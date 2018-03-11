@@ -55,7 +55,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         field.textColor = NSColor.black
         field.font = NSFont.systemFont(ofSize: 13)
         
-        field.setContentCompressionResistancePriority(0.1, for: .horizontal)
+        field.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 0.1), for: .horizontal)
         field.lineBreakMode = .byTruncatingTail
         field.drawsBackground = false
         field.alignment = .center
@@ -114,7 +114,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     {
         let view = TaskListTableView()
         
-        let column = NSTableColumn(identifier: TaskView.reuseIdentifier)
+        let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(rawValue: TaskView.reuseIdentifier))
         
         view.addTableColumn(column)
         
@@ -136,7 +136,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     {
         //Swift.print(event.keyCode.description)
         
-        let cmd = event.modifierFlags.contains(.command)
+        let cmd = event.modifierFlags.contains(NSEvent.ModifierFlags.command)
      
         switch event.keyCode
         {
@@ -232,14 +232,14 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     func didDeleteSubtasks(at indexes: [Int])
     {
         tableView.beginUpdates()
-        tableView.removeRows(at: IndexSet(indexes), withAnimation: .slideUp)
+        tableView.removeRows(at: IndexSet(indexes), withAnimation: NSTableView.AnimationOptions.slideUp)
         tableView.endUpdates()
     }
     
     func didInsertSubtask(at index: Int)
     {
         tableView.beginUpdates()
-        tableView.insertRows(at: [index], withAnimation: .slideDown)
+        tableView.insertRows(at: [index], withAnimation: NSTableView.AnimationOptions.slideDown)
         tableView.endUpdates()
     }
     
@@ -249,7 +249,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         
         tableView.beginUpdates()
         tableView.removeRows(at: IndexSet(integersIn: 0 ..< tableView.numberOfRows),
-                             withAnimation: .slideUp)
+                             withAnimation: NSTableView.AnimationOptions.slideUp)
         tableView.endUpdates()
         
         let numberOfTasks = taskList?.tasks.count ?? 0
@@ -258,7 +258,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         {
             tableView.beginUpdates()
             tableView.insertRows(at: IndexSet(integersIn: 0 ..< numberOfTasks),
-                                 withAnimation: .slideUp)
+                                 withAnimation: NSTableView.AnimationOptions.slideUp)
             tableView.endUpdates()
         }
     }
@@ -477,13 +477,15 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
                    viewFor tableColumn: NSTableColumn?,
                    row: Int) -> NSView?
     {
-        guard tableColumn?.identifier == TaskView.reuseIdentifier else
+        let taskViewReuseIdentifier = NSUserInterfaceItemIdentifier(TaskView.reuseIdentifier)
+        
+        guard tableColumn?.identifier == taskViewReuseIdentifier else
         {
-            Swift.print("warning: tableColumn has weird or nil identifier: \(tableColumn?.identifier ?? "nil")")
+            Swift.print("warning: tableColumn has weird or nil identifier: \(tableColumn?.identifier ?? NSUserInterfaceItemIdentifier(rawValue: "nil"))")
             return nil
         }
 
-        let cell = tableView.make(withIdentifier: TaskView.reuseIdentifier,
+        let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: TaskView.reuseIdentifier),
                                   owner: self) as? TaskView ?? TaskView()
         
         cell.titleField.taskViewTextFieldDelegate = self

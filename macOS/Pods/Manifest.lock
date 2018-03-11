@@ -1,0 +1,31 @@
+PODS:
+  - Flowtoolz (0.2.0):
+    - Flowtoolz/CoreData (= 0.2.0)
+    - Flowtoolz/Foundation (= 0.2.0)
+    - Flowtoolz/Swift (= 0.2.0)
+    - Flowtoolz/UI (= 0.2.0)
+  - Flowtoolz/CoreData (0.2.0)
+  - Flowtoolz/Foundation (0.2.0):
+    - ReachabilitySwift (= 3)
+  - Flowtoolz/Swift (0.2.0)
+  - Flowtoolz/UI (0.2.0):
+    - PureLayout (= 3.0.2)
+  - PureLayout (3.0.2)
+  - ReachabilitySwift (3)
+
+DEPENDENCIES:
+  - Flowtoolz (from `../../Flowtoolz-Cocoapod`)
+  - PureLayout (= 3.0.2)
+
+EXTERNAL SOURCES:
+  Flowtoolz:
+    :path: ../../Flowtoolz-Cocoapod
+
+SPEC CHECKSUMS:
+  Flowtoolz: 7c09990a1f1b9ce0285c90f42a08ac8258e862c7
+  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+  ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
+
+PODFILE CHECKSUM: 46bad84102f02db82ad55e67777b51cb76622ec3
+
+COCOAPODS: 1.4.0

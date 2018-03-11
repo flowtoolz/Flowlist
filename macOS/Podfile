@@ -3,6 +3,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 use_frameworks!
 
+platform :osx, '10.10'
+
 target 'Flowlist' do
 
     pod 'PureLayout', '3.0.2'

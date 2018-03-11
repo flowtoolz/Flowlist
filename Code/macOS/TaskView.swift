@@ -26,7 +26,7 @@ class TaskView: NSView, NSTextFieldDelegate
     
     private func initialize()
     {
-        self.identifier = TaskView.reuseIdentifier
+        self.identifier = NSUserInterfaceItemIdentifier(rawValue: TaskView.reuseIdentifier)
         
         layoutCheckBox()
         layoutContainerIndicator()
@@ -82,13 +82,13 @@ class TaskView: NSView, NSTextFieldDelegate
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(didEndEditing),
-                                               name: NSNotification.Name.NSTextDidEndEditing,
+                                               name: NSText.didEndEditingNotification,
                                                object: fieldEditor)
         
         return true
     }
     
-    func didEndEditing()
+    @objc func didEndEditing()
     {        
         task?.title = newTitle
         
@@ -123,10 +123,10 @@ class TaskView: NSView, NSTextFieldDelegate
         textField.lineBreakMode = .byTruncatingTail
         
         
-        let attributes: [String : Any] =
+        let attributes: [NSAttributedStringKey : Any] =
         [
-            NSForegroundColorAttributeName: self.greyedOutColor,
-            NSFontAttributeName: NSFont.systemFont(ofSize: 13)
+            NSAttributedStringKey.foregroundColor: self.greyedOutColor,
+            NSAttributedStringKey.font: NSFont.systemFont(ofSize: 13)
         ]
         
         let attributedString = NSAttributedString(string: "untitled",
@@ -139,7 +139,7 @@ class TaskView: NSView, NSTextFieldDelegate
     
     // MARK: - Check Button
     
-    func checkBoxClicked()
+    @objc func checkBoxClicked()
     {
         task?.state = task?.state == .done ? nil : .done
         
@@ -171,7 +171,7 @@ class TaskView: NSView, NSTextFieldDelegate
         let button = NSButton.newAutoLayout()
         self.addSubview(button)
         
-        button.bezelStyle = NSBezelStyle.regularSquare
+        button.bezelStyle = NSButton.BezelStyle.regularSquare
         button.title = ""
         button.action = #selector(checkBoxClicked)
         button.target = self
@@ -190,8 +190,8 @@ class TaskView: NSView, NSTextFieldDelegate
         return checked ? TaskView.checkBoxImageChecked : TaskView.checkBoxImageEmpty
     }
     
-    private static let checkBoxImageEmpty = NSImage(named: "checkbox_unchecked")
-    private static let checkBoxImageChecked = NSImage(named: "checkbox_checked")
+    private static let checkBoxImageEmpty = NSImage(named: NSImage.Name(rawValue: "checkbox_unchecked"))
+    private static let checkBoxImageChecked = NSImage(named: NSImage.Name(rawValue: "checkbox_checked"))
     
     // MARK: - Container Indicator
     
@@ -212,7 +212,7 @@ class TaskView: NSView, NSTextFieldDelegate
         let view = NSImageView.newAutoLayout()
         self.addSubview(view)
         
-        view.image = NSImage(named: "container_indicator")
+        view.image = NSImage(named: NSImage.Name(rawValue: "container_indicator"))
         view.imageScaling = .scaleNone
         view.imageAlignment = .alignCenter
         view.isHidden = true

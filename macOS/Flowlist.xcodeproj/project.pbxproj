@@ -12,32 +12,18 @@
 		9E4DE65E1EF148C100506B48 /* TaskArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4DE65D1EF148C100506B48 /* TaskArchive.swift */; };
 		9E4DE6601EF159D700506B48 /* Task+UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4DE65F1EF159D700506B48 /* Task+UUID.swift */; };
 		9E542E951EEEE41C00534981 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E542E941EEEE41C00534981 /* main.swift */; };
-		9E542E981EEEE41C00534981 /* TodayList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9E542E961EEEE41C00534981 /* TodayList.xcdatamodeld */; };
-		9E542E9A1EEEE41C00534981 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E542E991EEEE41C00534981 /* Assets.xcassets */; };
-		9E542EA81EEEE41C00534981 /* TodayListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E542EA71EEEE41C00534981 /* TodayListTests.swift */; };
 		9E696E611EF4842F0046BCB8 /* TaskListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E696E601EF4842F0046BCB8 /* TaskListCoordinator.swift */; };
 		9E696E651EF507270046BCB8 /* ListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E696E641EF507270046BCB8 /* ListHeaderView.swift */; };
 		9E72881B1EEF3095003A2F46 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E72881A1EEF3095003A2F46 /* TaskListView.swift */; };
 		9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651931EEF428100DE2B07 /* TaskView.swift */; };
 		9E7651961EEF4DA200DE2B07 /* TaskStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* TaskStore.swift */; };
 		9E82A7A91EF2A558006AEF02 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* TaskList.swift */; };
+		9E91651520551E5600A438FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E91651320551E5500A438FB /* Assets.xcassets */; };
 		9EA2B9691EF035D900F05F20 /* TaskListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B9681EF035D900F05F20 /* TaskListRow.swift */; };
 		9EA2B96B1EF0A80A00F05F20 /* TaskStore+Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */; };
 		9EAD75411EF6502000DC46FD /* TaskListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD75401EF6502000DC46FD /* TaskListTableView.swift */; };
-		AD3FE64BCA6939AA98353C40 /* Pods_FlowlistTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6347ACAE78132863C2FF94 /* Pods_FlowlistTests.framework */; };
 		C932DAFCC628909A261C9DC7 /* Pods_Flowlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D591083E3159C05E29673835 /* Pods_Flowlist.framework */; };
-		D72867BFC0CBB55FF878CD7A /* Pods_TodayListTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCFD3E12471EE5C3B17C7DE0 /* Pods_TodayListTests.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		9E542EA41EEEE41C00534981 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9E542E891EEEE41C00534981 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9E542E901EEEE41C00534981;
-			remoteInfo = TodayList;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0E71D227E7E9FF41201C5A85 /* Pods-TodayList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayList.release.xcconfig"; path = "Pods/Target Support Files/Pods-TodayList/Pods-TodayList.release.xcconfig"; sourceTree = "<group>"; };
@@ -47,27 +33,23 @@
 		6F31C4A5AA59FD1BF6AFBF3A /* Pods-FlowlistTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowlistTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests.release.xcconfig"; sourceTree = "<group>"; };
 		73F5B44C9211479F59673188 /* Pods-FlowlistTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowlistTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests.debug.xcconfig"; sourceTree = "<group>"; };
 		78B3E83C8B5F1E96FF074B6D /* Pods-Flowlist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flowlist.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist.debug.xcconfig"; sourceTree = "<group>"; };
-		9E15185B1EEEE8CE00B35AD5 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../../Code/Task.swift; sourceTree = "<group>"; };
-		9E15185D1EEEE97700B35AD5 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainVC.swift; path = ../../Code/macOS/MainVC.swift; sourceTree = "<group>"; };
-		9E4DE65D1EF148C100506B48 /* TaskArchive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskArchive.swift; path = ../../Code/TaskArchive.swift; sourceTree = "<group>"; };
-		9E4DE65F1EF159D700506B48 /* Task+UUID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Task+UUID.swift"; path = "../../Code/Task+UUID.swift"; sourceTree = "<group>"; };
+		9E15185B1EEEE8CE00B35AD5 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../Code/Task.swift; sourceTree = "<group>"; };
+		9E15185D1EEEE97700B35AD5 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainVC.swift; path = ../Code/macOS/MainVC.swift; sourceTree = "<group>"; };
+		9E4DE65D1EF148C100506B48 /* TaskArchive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskArchive.swift; path = ../Code/TaskArchive.swift; sourceTree = "<group>"; };
+		9E4DE65F1EF159D700506B48 /* Task+UUID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Task+UUID.swift"; path = "../Code/Task+UUID.swift"; sourceTree = "<group>"; };
 		9E542E911EEEE41C00534981 /* Flowlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flowlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9E542E941EEEE41C00534981 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		9E542E971EEEE41C00534981 /* TodayList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TodayList.xcdatamodel; sourceTree = "<group>"; };
-		9E542E991EEEE41C00534981 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9E542E9E1EEEE41C00534981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9E542EA31EEEE41C00534981 /* FlowlistTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowlistTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9E542EA71EEEE41C00534981 /* TodayListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayListTests.swift; sourceTree = "<group>"; };
-		9E542EA91EEEE41C00534981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9E696E601EF4842F0046BCB8 /* TaskListCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListCoordinator.swift; path = ../../Code/TaskListCoordinator.swift; sourceTree = "<group>"; };
-		9E696E641EF507270046BCB8 /* ListHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListHeaderView.swift; path = ../../Code/macOS/ListHeaderView.swift; sourceTree = "<group>"; };
-		9E72881A1EEF3095003A2F46 /* TaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListView.swift; path = ../../Code/macOS/TaskListView.swift; sourceTree = "<group>"; };
-		9E7651931EEF428100DE2B07 /* TaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = ../../Code/macOS/TaskView.swift; sourceTree = "<group>"; };
-		9E7651951EEF4DA200DE2B07 /* TaskStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskStore.swift; path = ../../Code/TaskStore.swift; sourceTree = "<group>"; };
-		9E82A7A81EF2A558006AEF02 /* TaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskList.swift; path = ../../Code/TaskList.swift; sourceTree = "<group>"; };
-		9EA2B9681EF035D900F05F20 /* TaskListRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListRow.swift; path = ../../Code/macOS/TaskListRow.swift; sourceTree = "<group>"; };
-		9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TaskStore+Persistence.swift"; path = "../../Code/macOS/TaskStore+Persistence.swift"; sourceTree = "<group>"; };
-		9EAD75401EF6502000DC46FD /* TaskListTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListTableView.swift; path = ../../Code/macOS/TaskListTableView.swift; sourceTree = "<group>"; };
+		9E542E941EEEE41C00534981 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../Code/macOS/main.swift; sourceTree = "<group>"; };
+		9E696E601EF4842F0046BCB8 /* TaskListCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListCoordinator.swift; path = ../Code/macOS/TaskListCoordinator.swift; sourceTree = "<group>"; };
+		9E696E641EF507270046BCB8 /* ListHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListHeaderView.swift; path = ../Code/macOS/ListHeaderView.swift; sourceTree = "<group>"; };
+		9E72881A1EEF3095003A2F46 /* TaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListView.swift; path = ../Code/macOS/TaskListView.swift; sourceTree = "<group>"; };
+		9E7651931EEF428100DE2B07 /* TaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = ../Code/macOS/TaskView.swift; sourceTree = "<group>"; };
+		9E7651951EEF4DA200DE2B07 /* TaskStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskStore.swift; path = ../Code/TaskStore.swift; sourceTree = "<group>"; };
+		9E82A7A81EF2A558006AEF02 /* TaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskList.swift; path = ../Code/TaskList.swift; sourceTree = "<group>"; };
+		9E91651320551E5500A438FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
+		9E916518205520B800A438FB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
+		9EA2B9681EF035D900F05F20 /* TaskListRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListRow.swift; path = ../Code/macOS/TaskListRow.swift; sourceTree = "<group>"; };
+		9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TaskStore+Persistence.swift"; path = "../Code/macOS/TaskStore+Persistence.swift"; sourceTree = "<group>"; };
+		9EAD75401EF6502000DC46FD /* TaskListTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListTableView.swift; path = ../Code/macOS/TaskListTableView.swift; sourceTree = "<group>"; };
 		BA6347ACAE78132863C2FF94 /* Pods_FlowlistTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlowlistTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCFD3E12471EE5C3B17C7DE0 /* Pods_TodayListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodayListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C499DBA6E96C7098BCE851AA /* Pods-TodayList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TodayList/Pods-TodayList.debug.xcconfig"; sourceTree = "<group>"; };
@@ -81,15 +63,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C932DAFCC628909A261C9DC7 /* Pods_Flowlist.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9E542EA01EEEE41C00534981 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D72867BFC0CBB55FF878CD7A /* Pods_TodayListTests.framework in Frameworks */,
-				AD3FE64BCA6939AA98353C40 /* Pods_FlowlistTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,8 +98,8 @@
 		9E542E881EEEE41C00534981 = {
 			isa = PBXGroup;
 			children = (
-				9E542E931EEEE41C00534981 /* Flowlist */,
-				9E542EA61EEEE41C00534981 /* FlowlistTests */,
+				9E91650B20551B6B00A438FB /* Code */,
+				9E91651620551E6F00A438FB /* Resources */,
 				9E542E921EEEE41C00534981 /* Products */,
 				355124306BC9502BB1F4B052 /* Pods */,
 				214596B4A8859C616CE520C0 /* Frameworks */,
@@ -137,37 +110,24 @@
 			isa = PBXGroup;
 			children = (
 				9E542E911EEEE41C00534981 /* Flowlist.app */,
-				9E542EA31EEEE41C00534981 /* FlowlistTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9E542E931EEEE41C00534981 /* Flowlist */ = {
+		9E91650B20551B6B00A438FB /* Code */ = {
 			isa = PBXGroup;
 			children = (
 				9E542E941EEEE41C00534981 /* main.swift */,
 				9E15185D1EEEE97700B35AD5 /* MainVC.swift */,
 				9E696E601EF4842F0046BCB8 /* TaskListCoordinator.swift */,
-				9E82A7A71EF2A4CC006AEF02 /* List */,
-				9E82A7A61EF2A4AE006AEF02 /* Store */,
-				9E82A7A51EF2A46F006AEF02 /* Task */,
-				9E542E991EEEE41C00534981 /* Assets.xcassets */,
-				9E542E9E1EEEE41C00534981 /* Info.plist */,
-				9E542E961EEEE41C00534981 /* TodayList.xcdatamodeld */,
+				9E91650F20551C5C00A438FB /* Store */,
+				9E91650E20551C3B00A438FB /* List */,
+				9E91650D20551C1900A438FB /* Task */,
 			);
-			path = Flowlist;
+			name = Code;
 			sourceTree = "<group>";
 		};
-		9E542EA61EEEE41C00534981 /* FlowlistTests */ = {
-			isa = PBXGroup;
-			children = (
-				9E542EA71EEEE41C00534981 /* TodayListTests.swift */,
-				9E542EA91EEEE41C00534981 /* Info.plist */,
-			);
-			path = FlowlistTests;
-			sourceTree = "<group>";
-		};
-		9E82A7A51EF2A46F006AEF02 /* Task */ = {
+		9E91650D20551C1900A438FB /* Task */ = {
 			isa = PBXGroup;
 			children = (
 				9E7651931EEF428100DE2B07 /* TaskView.swift */,
@@ -177,17 +137,7 @@
 			name = Task;
 			sourceTree = "<group>";
 		};
-		9E82A7A61EF2A4AE006AEF02 /* Store */ = {
-			isa = PBXGroup;
-			children = (
-				9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */,
-				9E4DE65D1EF148C100506B48 /* TaskArchive.swift */,
-				9E7651951EEF4DA200DE2B07 /* TaskStore.swift */,
-			);
-			name = Store;
-			sourceTree = "<group>";
-		};
-		9E82A7A71EF2A4CC006AEF02 /* List */ = {
+		9E91650E20551C3B00A438FB /* List */ = {
 			isa = PBXGroup;
 			children = (
 				9E72881A1EEF3095003A2F46 /* TaskListView.swift */,
@@ -198,6 +148,25 @@
 			);
 			name = List;
 			sourceTree = "<group>";
+		};
+		9E91650F20551C5C00A438FB /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */,
+				9E4DE65D1EF148C100506B48 /* TaskArchive.swift */,
+				9E7651951EEF4DA200DE2B07 /* TaskStore.swift */,
+			);
+			name = Store;
+			sourceTree = "<group>";
+		};
+		9E91651620551E6F00A438FB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9E916518205520B800A438FB /* Info.plist */,
+				9E91651320551E5500A438FB /* Assets.xcassets */,
+			);
+			name = Resources;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -222,27 +191,6 @@
 			productReference = 9E542E911EEEE41C00534981 /* Flowlist.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9E542EA21EEEE41C00534981 /* FlowlistTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9E542EAF1EEEE41C00534981 /* Build configuration list for PBXNativeTarget "FlowlistTests" */;
-			buildPhases = (
-				F431F3A980530CFD1DD1CBD9 /* [CP] Check Pods Manifest.lock */,
-				9E542E9F1EEEE41C00534981 /* Sources */,
-				9E542EA01EEEE41C00534981 /* Frameworks */,
-				9E542EA11EEEE41C00534981 /* Resources */,
-				9E9B22F2BCFF85FFA1C5BD30 /* [CP] Embed Pods Frameworks */,
-				4782B824F756A371A209ED6E /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				9E542EA51EEEE41C00534981 /* PBXTargetDependency */,
-			);
-			name = FlowlistTests;
-			productName = TodayListTests;
-			productReference = 9E542EA31EEEE41C00534981 /* FlowlistTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -250,19 +198,14 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = Flowtoolz;
 				TargetAttributes = {
 					9E542E901EEEE41C00534981 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 8T3R57GCBV;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
-					};
-					9E542EA21EEEE41C00534981 = {
-						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 8T3R57GCBV;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 9E542E901EEEE41C00534981;
 					};
 				};
 			};
@@ -280,7 +223,6 @@
 			projectRoot = "";
 			targets = (
 				9E542E901EEEE41C00534981 /* Flowlist */,
-				9E542EA21EEEE41C00534981 /* FlowlistTests */,
 			);
 		};
 /* End PBXProject section */
@@ -290,14 +232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E542E9A1EEEE41C00534981 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9E542EA11EEEE41C00534981 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				9E91651520551E5600A438FB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,28 +245,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Flowlist-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		4782B824F756A371A209ED6E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6FA58A59C0E21E5935331BF1 /* [CP] Copy Pods Resources */ = {
@@ -355,43 +278,20 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Flowtoolz/Flowtoolz.framework",
+				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/ReachabilitySwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Flowtoolz.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReachabilitySwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9E9B22F2BCFF85FFA1C5BD30 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F431F3A980530CFD1DD1CBD9 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -413,29 +313,12 @@
 				9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */,
 				9EA2B96B1EF0A80A00F05F20 /* TaskStore+Persistence.swift in Sources */,
 				9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */,
-				9E542E981EEEE41C00534981 /* TodayList.xcdatamodeld in Sources */,
 				9E7651961EEF4DA200DE2B07 /* TaskStore.swift in Sources */,
 				9EAD75411EF6502000DC46FD /* TaskListTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9E542E9F1EEEE41C00534981 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9E542EA81EEEE41C00534981 /* TodayListTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9E542EA51EEEE41C00534981 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9E542E901EEEE41C00534981 /* Flowlist */;
-			targetProxy = 9E542EA41EEEE41C00534981 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		9E542EAA1EEEE41C00534981 /* Debug */ = {
@@ -447,7 +330,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -455,7 +340,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -478,7 +367,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -496,7 +385,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -504,7 +395,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -521,7 +416,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -536,12 +431,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
-				INFOPLIST_FILE = Flowlist/Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.Flowlist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -553,46 +449,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
-				INFOPLIST_FILE = Flowlist/Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.Flowlist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		9E542EB01EEEE41C00534981 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 73F5B44C9211479F59673188 /* Pods-FlowlistTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 8T3R57GCBV;
-				INFOPLIST_FILE = TodayListTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.TodayListTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flowlist.app/Contents/MacOS/Flowlist";
-			};
-			name = Debug;
-		};
-		9E542EB11EEEE41C00534981 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F31C4A5AA59FD1BF6AFBF3A /* Pods-FlowlistTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 8T3R57GCBV;
-				INFOPLIST_FILE = TodayListTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.TodayListTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flowlist.app/Contents/MacOS/Flowlist";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -617,29 +480,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9E542EAF1EEEE41C00534981 /* Build configuration list for PBXNativeTarget "FlowlistTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9E542EB01EEEE41C00534981 /* Debug */,
-				9E542EB11EEEE41C00534981 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		9E542E961EEEE41C00534981 /* TodayList.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				9E542E971EEEE41C00534981 /* TodayList.xcdatamodel */,
-			);
-			currentVersion = 9E542E971EEEE41C00534981 /* TodayList.xcdatamodel */;
-			path = TodayList.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 9E542E891EEEE41C00534981 /* Project object */;
 }
