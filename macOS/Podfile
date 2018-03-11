@@ -11,11 +11,4 @@ target 'Flowlist' do
   
     pod 'Flowtoolz', :path=> '../../Flowtoolz-Cocoapod'
 
-    target 'FlowlistTests' do
-
-        inherit! :search_paths
-
-
-    end
-
 end

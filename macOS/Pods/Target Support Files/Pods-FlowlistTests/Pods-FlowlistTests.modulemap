@@ -1,6 +1,0 @@
-framework module Pods_FlowlistTests {
-  umbrella header "Pods-FlowlistTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
