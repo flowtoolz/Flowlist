@@ -249,4 +249,6 @@ class Task: Sender, Codable
     private(set) weak var container: Task?
     
     private var elements: [Task]?
+    
+    var testArray = [Task]()
 }

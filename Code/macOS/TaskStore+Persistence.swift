@@ -7,8 +7,15 @@ extension TaskStore
     
     func saveToFile()
     {
+        let task = Task()
+        task.title = "test title"
+        task.state = .inProgress
+        task.testArray.append(Task())
+        task.testArray.append(Task())
+        print(task.encode()?.utf8String ?? "error")
+        
         // FIXME: encoding causes EXC_BAD_ACCESS
-        root.save(to: "flowlist.json")
+        //root.save(to: "flowlist.json")
     }
     
     func loadFromFile()
