@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "76D5D16202EF65544A3099B4C07D94D0"
+               BlueprintIdentifier = "1449117B7C77653F5466E9FC0C564179"
                BlueprintName = "Flowtoolz"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "Flowtoolz.framework">
