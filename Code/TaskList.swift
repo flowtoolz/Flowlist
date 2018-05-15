@@ -21,7 +21,7 @@ class TaskList: Observable, Observer
             return nil
         }
         
-        selectedTasksByUuid = [group.uuid : group]
+        selectedTasksById = [group.id : group]
         
         observe(task: group)
         
@@ -68,11 +68,11 @@ class TaskList: Observable, Observer
         // update selection
         if let newSelectedTask = task(at: max(firstSelectedIndex - 1, 0))
         {
-            selectedTasksByUuid = [newSelectedTask.uuid : newSelectedTask]
+            selectedTasksById = [newSelectedTask.id : newSelectedTask]
         }
         else
         {
-            selectedTasksByUuid.removeAll()
+            selectedTasksById.removeAll()
         }
         
         return true
@@ -84,7 +84,7 @@ class TaskList: Observable, Observer
     {
         guard let container = container else
         {
-            selectedTasksByUuid.removeAll()
+            selectedTasksById.removeAll()
             delegate?.didChangeListContainer()
             return
         }
@@ -116,8 +116,8 @@ class TaskList: Observable, Observer
     func moveSelectedTaskUp() -> Bool
     {
         guard let container = container,
-            selectedTasksByUuid.count == 1,
-            let selectedTask = selectedTasksByUuid.values.first,
+            selectedTasksById.count == 1,
+            let selectedTask = selectedTasksById.values.first,
             let selectedIndex = container.index(of: selectedTask)
         else
         {
@@ -130,8 +130,8 @@ class TaskList: Observable, Observer
     func moveSelectedTaskDown() -> Bool
     {
         guard let container = container,
-            selectedTasksByUuid.count == 1,
-            let selectedTask = selectedTasksByUuid.values.first,
+            selectedTasksById.count == 1,
+            let selectedTask = selectedTasksById.values.first,
             let selectedIndex = container.index(of: selectedTask)
         else
         {
@@ -202,7 +202,7 @@ class TaskList: Observable, Observer
         // determine which task to select after the ckeck off
         var taskToSelect: Task?
         
-        if selectedTasksByUuid.count == 1
+        if selectedTasksById.count == 1
         {
             taskToSelect = firstUncheckedTask(from: indexToCheck + 1)
         }
@@ -211,11 +211,11 @@ class TaskList: Observable, Observer
         
         if let taskToSelect = taskToSelect
         {
-            selectedTasksByUuid = [taskToSelect.uuid : taskToSelect]
+            selectedTasksById = [taskToSelect.id : taskToSelect]
         }
-        else if selectedTasksByUuid.count > 1
+        else if selectedTasksById.count > 1
         {
-            selectedTasksByUuid[taskToCheck.uuid] = nil
+            selectedTasksById[taskToCheck.id] = nil
         }
     }
     
@@ -274,17 +274,17 @@ class TaskList: Observable, Observer
     
     func unselectSubtasks(at indexes: [Int])
     {
-        var newSelection = selectedTasksByUuid
+        var newSelection = selectedTasksById
         
         for index in indexes
         {
             if let task = task(at: index)
             {
-                newSelection[task.uuid] = nil
+                newSelection[task.id] = nil
             }
         }
         
-        selectedTasksByUuid = newSelection
+        selectedTasksById = newSelection
     }
     
     func selectSubtasks(at indexes: [Int])
@@ -295,33 +295,33 @@ class TaskList: Observable, Observer
         {
             if let task = task(at: index)
             {
-                newSelection[task.uuid] = task
+                newSelection[task.id] = task
             }
         }
         
-        selectedTasksByUuid = newSelection
+        selectedTasksById = newSelection
     }
     
     private func validateSelection()
     {
         guard let container = container else
         {
-            if selectedTasksByUuid.count > 0
+            if selectedTasksById.count > 0
             {
-                print("warning: task list has no container but these selections: \(selectedTasksByUuid.description)")
+                print("warning: task list has no container but these selections: \(selectedTasksById.description)")
                 
-                selectedTasksByUuid.removeAll()
+                selectedTasksById.removeAll()
             }
             
             return
         }
         
-        for selectedTask in selectedTasksByUuid.values
+        for selectedTask in selectedTasksById.values
         {
             if container.index(of: selectedTask) == nil
             {
                 print("warning: subtask is selected but not in the container. will be unselected: \(selectedTask.description)")
-                selectedTasksByUuid[selectedTask.uuid] = nil
+                selectedTasksById[selectedTask.id] = nil
             }
         }
     }
@@ -333,7 +333,7 @@ class TaskList: Observable, Observer
         for index in 0 ..< numberOfTasks
         {
             if let task = task(at: index),
-                selectedTasksByUuid[task.uuid] != nil
+                selectedTasksById[task.id] != nil
             {
                 result.append(index)
             }
@@ -342,11 +342,11 @@ class TaskList: Observable, Observer
         return result
     }
     
-    var selectedTasksByUuid = [String : Task]()
+    var selectedTasksById = [String : Task]()
     {
         didSet
         {
-            if Set(oldValue.keys) != Set(selectedTasksByUuid.keys)
+            if Set(oldValue.keys) != Set(selectedTasksById.keys)
             {
                 //print("selection changed: \(selectedIndexes.description)")
                 validateSelection()
@@ -374,7 +374,7 @@ class TaskList: Observable, Observer
             }
             else
             {
-                selectedTasksByUuid = [:]
+                selectedTasksById = [:]
             }
             
             if let oldValue = oldValue

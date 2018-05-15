@@ -37,11 +37,3 @@ extension TaskStore
         return URL(fileURLWithPath: Bundle.main.bundlePath + "/flowlist.json")
     }
 }
-
-extension Task
-{
-    convenience init()
-    {
-        self.init(with: UUID().uuidString)
-    }
-}

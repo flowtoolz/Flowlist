@@ -65,7 +65,7 @@ class TaskListCoordinator: Observer
         
         if let slaveContainer = slave.container
         {
-            master.selectedTasksByUuid = [slaveContainer.uuid : slaveContainer]
+            master.selectedTasksById = [slaveContainer.id : slaveContainer]
         }
     }
     
@@ -97,8 +97,8 @@ class TaskListCoordinator: Observer
         let slave = lists[index]
         let master = lists[index - 1]
         
-        guard master.selectedTasksByUuid.count == 1,
-            let container = master.selectedTasksByUuid.values.first
+        guard master.selectedTasksById.count == 1,
+            let container = master.selectedTasksById.values.first
         else
         {
             slave.container = nil

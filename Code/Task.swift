@@ -9,15 +9,10 @@ class Task: Codable, Observable
                      title: String? = nil,
                      state: State? = nil)
     {
-        self.init(with: uuid)
-
+        self.init()
+        
         self.title = title
         self.state = state
-    }
-    
-    init(with uuid: String)
-    {
-        self.uuid = uuid
     }
     
     // MARK: - Edit Subtasks
@@ -125,7 +120,7 @@ class Task: Codable, Observable
     
     enum CodingKeys: String, CodingKey
     {
-        case uuid, title, state, subtasks
+        case title, state, subtasks
     }
     
     // MARK: - Title
@@ -202,7 +197,7 @@ class Task: Codable, Observable
     
     // MARK: - UUID
     
-    let uuid: String
+    var id: String { return String(hash(self)) }
     
     // MARK: - Event
     
