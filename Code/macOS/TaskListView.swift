@@ -61,7 +61,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     func updateTitle()
     {
-        titleField.stringValue = taskList?.container?.title ?? ""
+        titleField.stringValue = taskList?.supertask?.title ?? ""
     }
     
     private func hideHeader()

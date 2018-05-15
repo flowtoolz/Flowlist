@@ -1,12 +1,12 @@
 import SwiftObserver
 
-let listCoordinator = TaskListCoordinator()
+let listCoordinator = MainViewModel()
 
-class TaskListCoordinator: Observer
+class MainViewModel: Observer
 {
     fileprivate init()
     {
-        lists[2].container = store.root
+        lists[2].supertask = store.root
         
         for list in lists
         {
@@ -60,14 +60,14 @@ class TaskListCoordinator: Observer
         
         let master = lists[index]
         
-        guard master.container?.hasSubtasks ?? false else
+        guard master.supertask?.hasSubtasks ?? false else
         {
             return
         }
         
         let slave = lists[index + 1]
         
-        if let slaveContainer = slave.container
+        if let slaveContainer = slave.supertask
         {
             master.selectedTasks = [slaveContainer.hash : slaveContainer]
         }
@@ -105,11 +105,11 @@ class TaskListCoordinator: Observer
             let container = master.selectedTasks.values.first
         else
         {
-            slave.container = nil
+            slave.supertask = nil
             return
         }
         
-        slave.container = container
+        slave.supertask = container
     }
     
     func setContainerOfMaster(at index: Int)
@@ -122,7 +122,7 @@ class TaskListCoordinator: Observer
         let master = lists[index]
         let slave = lists[index + 1]
         
-        master.container = slave.container?.supertask
+        master.supertask = slave.supertask?.supertask
     }
     
     var lists = [TaskListViewModel(),

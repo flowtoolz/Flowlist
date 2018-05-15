@@ -4,7 +4,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class MainVC: NSViewController, Observer
+class MainViewController: NSViewController, Observer
 {
     // MARK: - View Life Cycle
     
@@ -202,7 +202,7 @@ class MainVC: NSViewController, Observer
         
         let listView = listViews[index]
         
-        guard listView.taskList?.container != nil else { return false }
+        guard listView.taskList?.supertask != nil else { return false }
         
         if listView.taskList?.numberOfTasks ?? 0 > 0
         {
@@ -244,7 +244,7 @@ class MainVC: NSViewController, Observer
     private func tableViewGainedFocus(at index: Int)
     {
         guard listViews.isValid(index: index),
-            listViews[index].taskList?.container != nil
+            listViews[index].taskList?.supertask != nil
             else
         {
             return
