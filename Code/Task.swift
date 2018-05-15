@@ -167,9 +167,7 @@ class Task: Codable, Observable, Observer
         return subtasks.index(where: { $0 === subtask })
     }
     
-    // MARK: - Data
-    
-    let uuid: String
+    // MARK: - Title
     
     var title: String?
     {
@@ -181,6 +179,8 @@ class Task: Codable, Observable, Observer
             }
         }
     }
+    
+    // MARK: - State
     
     var state: State?
     {
@@ -195,7 +195,6 @@ class Task: Codable, Observable, Observer
     
     enum State: Int, Codable
     {
-        // state == nil is default and kind of a backlog or "no specific state"
         case inProgress, onHold, done, archived
     }
     
@@ -224,4 +223,8 @@ class Task: Codable, Observable, Observer
             case delete, insert
         }
     }
+    
+    // MARK: - UUID
+    
+    let uuid: String
 }
