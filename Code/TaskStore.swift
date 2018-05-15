@@ -6,7 +6,7 @@ class TaskStore: Observable
 {
     fileprivate init() {}
     
-    var root = Task(with: "Root Task ID", title: "All Items")
+    var root = Task(title: "All Items")
     {
         didSet
         {

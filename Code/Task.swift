@@ -5,8 +5,7 @@ class Task: Codable, Observable
 {
     // MARK: - Initialization
     
-    convenience init(with uuid: String,
-                     title: String? = nil,
+    convenience init(title: String? = nil,
                      state: State? = nil)
     {
         self.init()
