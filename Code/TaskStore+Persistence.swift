@@ -5,34 +5,27 @@ extension TaskStore
 {
     func save()
     {
-        if let url = root.save(to: TaskStore.fileUrl)
+        guard let _ = root.save(to: fileUrl) else
         {
-            print("did save tasks to " + url.absoluteString)
-        }
-        else
-        {
-            print("saving to file failed")
+            print("error: saving to file failed")
+            return
         }
     }
     
     func load()
     {
-        let url = TaskStore.fileUrl
-        
-        guard let loadedRoot = Task(from: url) else
+        guard let loadedRoot = Task(from: fileUrl) else
         {
-            print("failed to load tasks from " + url.absoluteString)
+            print("failed to load tasks from " + fileUrl.absoluteString)
             return
         }
         
         loadedRoot.recoverSupertasks()
         
         root = loadedRoot
-        
-        print("did load tasks from " + url.absoluteString)
     }
     
-    private static var fileUrl: URL
+    private var fileUrl: URL
     {
         return URL(fileURLWithPath: Bundle.main.bundlePath + "/flowlist.json")
     }
