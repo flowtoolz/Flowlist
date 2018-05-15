@@ -158,11 +158,11 @@ class MainViewController: NSViewController, Observer
         {
         case .none: break
         case .wantToGiveUpFocusToTheRight:
-            listViewWantsToGiveFocusToTheRight(sender: listView)
+            listViewWantsToGiveFocusToTheRight(listView)
         case .wantToGiveUpFocusToTheLeft:
-            listViewWantsToGiveFocusToTheLeft(sender: listView)
+            listViewWantsToGiveFocusToTheLeft(listView)
         case .tableViewWasClicked:
-            tableViewWasClickedInTaskListView(sender: listView)
+            tableViewWasClickedInTaskListView(listView)
         }
     }
     
@@ -173,12 +173,12 @@ class MainViewController: NSViewController, Observer
     
     // MARK: - Navigation
     
-    func listViewWantsToGiveFocusToTheRight(sender: Any)
+    func listViewWantsToGiveFocusToTheRight(_ listView: TaskListView)
     {
-        guard let index = listViews.index(where: { $0 === sender as AnyObject }),
+        guard let index = listViews.index(where: { $0 === listView }),
             index >= 0, index < listViews.count - 1,
-            (listViews[index].taskList?.numberOfTasks ?? 0) > 0
-            else
+            (listView.taskList?.numberOfTasks ?? 0) > 0
+        else
         {
             return
         }
@@ -186,9 +186,9 @@ class MainViewController: NSViewController, Observer
         _ = moveInputFocus(to: index + 1)
     }
     
-    func listViewWantsToGiveFocusToTheLeft(sender: Any)
+    func listViewWantsToGiveFocusToTheLeft(_ listView: TaskListView)
     {
-        guard let index = listViews.index(where: { $0 === sender as AnyObject }) else
+        guard let index = listViews.index(where: { $0 === listView }) else
         {
             return
         }
@@ -231,9 +231,9 @@ class MainViewController: NSViewController, Observer
         return true
     }
     
-    func tableViewWasClickedInTaskListView(sender: Any)
+    func tableViewWasClickedInTaskListView(_ listView: TaskListView)
     {
-        guard let index = listViews.index(where: { $0 === sender as AnyObject }) else
+        guard let index = listViews.index(where: { $0 === listView }) else
         {
             return
         }
