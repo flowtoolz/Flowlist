@@ -346,7 +346,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     private func groupSelectedTasks()
     {
-        guard let groupIndex = taskList?.groupSelectedTasks(as: Task()) else
+        guard let groupIndex = taskList?.groupSelectedTasks() else
         {
             return
         }

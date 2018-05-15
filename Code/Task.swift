@@ -17,7 +17,7 @@ class Task: Codable, Observable
     // MARK: - Edit Subtasks
     
     @discardableResult
-    func groupTasks(at indexes: [Int], as group: Task) -> Int?
+    func groupSubtasks(at indexes: [Int]) -> Task?
     {
         let sortedIndexes = indexes.sorted()
         
@@ -29,6 +29,8 @@ class Task: Codable, Observable
         {
             return nil
         }
+        
+        let group = Task()
 
         for index in indexes
         {
@@ -42,11 +44,11 @@ class Task: Codable, Observable
         
         _ = insert(group, at: groupIndex)
         
-        return groupIndex
+        return group
     }
     
     @discardableResult
-    func insert(_ task: Task, at index: Int) -> Bool
+    func insert(_ subtask: Task, at index: Int) -> Bool
     {
         guard index >= 0, index <= subtasks.count else
         {
@@ -54,9 +56,9 @@ class Task: Codable, Observable
             return false
         }
         
-        subtasks.insert(task, at: index)
+        subtasks.insert(subtask, at: index)
         
-        task.supertask = self
+        subtask.supertask = self
         
         send(.didInsertSubtask(index: index))
         

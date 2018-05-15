@@ -11,11 +11,10 @@ class TaskList: Observable, Observer
         return container?.subtask(at: index)
     }
     
-    func groupSelectedTasks(as group: Task) -> Int?
+    func groupSelectedTasks() -> Int?
     {
         guard let container = container,
-            let groupIndex = container.groupTasks(at: selectedIndexesSorted,
-                                                  as: group)
+            let group = container.groupSubtasks(at: selectedIndexesSorted)
         else
         {
             return nil
@@ -25,7 +24,7 @@ class TaskList: Observable, Observer
         
         observe(task: group)
         
-        return groupIndex
+        return group.indexInSupertask
     }
     
     func add(_ task: Task, at index: Int?) -> Int?
