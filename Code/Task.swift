@@ -38,7 +38,7 @@ class Task: Codable, Observable, Observer
     {
         for subtask in subtasks
         {
-            subtask.container = self
+            subtask.supertask = self
             subtask.setContainers()
         }
     }
@@ -76,7 +76,7 @@ class Task: Codable, Observable, Observer
         
         subtasks.insert(task, at: index)
         
-        task.container = self
+        task.supertask = self
         
         send(.didChangeSubtasks(method: .insert, indexes: [index]))
         
@@ -104,9 +104,9 @@ class Task: Codable, Observable, Observer
             
             removedSubtasks.append(removedSubtask)
             
-            if removedSubtask.container === self
+            if removedSubtask.supertask === self
             {
-                removedSubtask.container = nil
+                removedSubtask.supertask = nil
             }
         }
         
@@ -159,7 +159,7 @@ class Task: Codable, Observable, Observer
 
     var indexInContainer: Int?
     {
-        return container?.index(of: self)
+        return supertask?.index(of: self)
     }
     
     func index(of subtask: Task) -> Int?
@@ -199,7 +199,9 @@ class Task: Codable, Observable, Observer
         case inProgress, onHold, done, archived
     }
     
-    private(set) weak var container: Task? = nil
+    // MARK: - Supertask
+    
+    private(set) weak var supertask: Task? = nil
     
     // MARK: - Subtasks
     

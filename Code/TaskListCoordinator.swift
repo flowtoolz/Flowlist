@@ -118,7 +118,7 @@ class TaskListCoordinator: Observer
         let master = lists[index]
         let slave = lists[index + 1]
         
-        master.container = slave.container?.container
+        master.container = slave.container?.supertask
     }
     
     var lists = [TaskList(),

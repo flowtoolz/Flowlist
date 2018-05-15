@@ -110,7 +110,7 @@ class TaskList: Observable, Observer
                 }
             }
         }
-        else if container === sendingTask.container
+        else if container === sendingTask.supertask
         {
             if let index = container.index(of: sendingTask),
                 sendingTask.subtasks.count < 2
@@ -174,7 +174,7 @@ class TaskList: Observable, Observer
             return
         }
         
-        if updatedTask.container === container
+        if updatedTask.supertask === container
         {
             delegate?.didChangeTitleOfSubtask(at: indexOfUpdatedTask)
         }
@@ -245,7 +245,7 @@ class TaskList: Observable, Observer
     {
         guard container != nil,
             let updatedTask = sender as? Task,
-            updatedTask.container === container,
+            updatedTask.supertask === container,
             let indexOfUpdatedTask = updatedTask.indexInContainer
         else
         {
@@ -381,7 +381,7 @@ class TaskList: Observable, Observer
             return false
         }
         
-        guard let superContainer = myContainer.container else
+        guard let superContainer = myContainer.supertask else
         {
             //print("cannot go to super container because it is nil")
             return false
