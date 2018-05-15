@@ -16,17 +16,13 @@ class MainViewModel: Observer
     
     private func observe(list: TaskListViewModel)
     {
-        observe(list)
+        observe(list, filter: { $0 == .didChangeSelection })
         {
             [weak self, weak list] event in
             
             guard let list = list else { return }
             
-            switch(event)
-            {
-            case .didNothing: break
-            case .didChangeSelection: self?.listChangedSelection(list)
-            }
+            self?.listChangedSelection(list)
         }
     }
     

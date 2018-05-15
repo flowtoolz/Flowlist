@@ -254,16 +254,6 @@ class TaskListViewModel: Observable, Observer
         }
     }
     
-    // MARK: - Being Observed
-    
-    var latestUpdate: Event { return .didNothing }
-    
-    enum Event
-    {
-        case didNothing
-        case didChangeSelection
-    }
-    
     // MARK: - Supertask
     
     var title: String { return supertask?.title ?? "untitled" }
@@ -280,7 +270,7 @@ class TaskListViewModel: Observable, Observer
     {
         resetObservations()
         selectedTasks = [:]
-        delegate?.didChangeListContainer()
+        send(.didChangeListContainer)
     }
     
     // MARK: - Observations
@@ -342,19 +332,18 @@ class TaskListViewModel: Observable, Observer
     
     private func taskDidChangeState(_ task: Task)
     {
-        guard supertask != nil,
-            task.supertask === supertask,
-            let indexOfUpdatedTask = task.indexInSupertask
+        guard task.supertask === supertask,
+            let taskIndex = task.indexInSupertask
         else
         {
             return
         }
         
-        delegate?.didChangeStateOfSubtask(at: indexOfUpdatedTask)
+        send(.didChangeStateOfTask(at: taskIndex))
         
         if task.state == .done
         {
-            taskAtIndexWasCheckedOff(indexOfUpdatedTask)
+            taskAtIndexWasCheckedOff(taskIndex)
         }
     }
     
@@ -386,11 +375,11 @@ class TaskListViewModel: Observable, Observer
         
         if task.supertask === supertask
         {
-            delegate?.didChangeTitleOfSubtask(at: taskIndex)
+            send(.didChangeTitleOfTask(at: taskIndex))
         }
         else if task === supertask
         {
-            delegate?.didChangeListContainerTitle()
+            send(.didChangeListContainerTitle)
         }
     }
     
@@ -400,7 +389,7 @@ class TaskListViewModel: Observable, Observer
     {
         guard supertask === task else { return }
         
-        delegate?.didMoveSubtask(from: from, to: to)
+        send(.didMoveTask(from: from, to: to))
     }
     
     // MARK: - React to Insertion
@@ -411,19 +400,19 @@ class TaskListViewModel: Observable, Observer
         guard let supertask = supertask else
         {
             selectedTasks.removeAll()
-            delegate?.didChangeListContainer()
+            send(.didChangeListContainer)
             return
         }
         
         if supertask === task
         {
-            delegate?.didInsertSubtask(at: index)
+            send(.didInsertTask(at: index))
         }
         else if supertask === task.supertask
         {
             if let index = supertask.index(of: task)
             {
-                delegate?.subtasksChangedInTask(at: index)
+                send(.didChangeSubtasksInTask(at: index))
             }
         }
     }
@@ -436,7 +425,7 @@ class TaskListViewModel: Observable, Observer
         guard let supertask = supertask else
         {
             selectedTasks.removeAll()
-            delegate?.didChangeListContainer()
+            send(.didChangeListContainer)
             return
         }
         
@@ -444,21 +433,38 @@ class TaskListViewModel: Observable, Observer
         if supertask === task
         {
             unselectSubtasks(at: indexes)
-            delegate?.didDeleteSubtasks(at: indexes)
+            send(.didDeleteTasks(at: indexes))
         }
         // update from regular task
         else if supertask === task.supertask
         {
             if let index = task.indexInSupertask
             {
-                delegate?.subtasksChangedInTask(at: index)
+                send(.didChangeSubtasksInTask(at: index))
             }
         }
     }
     
-    // MARK: - Delegate
+    // MARK: - Observability
     
-    weak var delegate: TaskListDelegate?
+    var latestUpdate: Event { return .didNothing }
+    
+    enum Event: Equatable
+    {
+        case didNothing
+        case didChangeSelection
+        
+        case didChangeSubtasksInTask(at: Int)
+        case didChangeStateOfTask(at: Int)
+        case didChangeTitleOfTask(at: Int)
+        
+        case didChangeListContainer
+        case didChangeListContainerTitle
+        
+        case didInsertTask(at: Int)
+        case didDeleteTasks(at: [Int])
+        case didMoveTask(from: Int, to: Int)
+    }
 }
 
 // MARK: -
@@ -466,20 +472,4 @@ class TaskListViewModel: Observable, Observer
 extension Task
 {
     var hash: HashValue { return SwiftyToolz.hash(self) }
-}
-
-// MARK: -
-
-protocol TaskListDelegate: AnyObject
-{
-    func subtasksChangedInTask(at index: Int)
-    func didChangeStateOfSubtask(at index: Int)
-    func didChangeTitleOfSubtask(at index: Int)
-    
-    func didChangeListContainer()
-    func didChangeListContainerTitle()
-    
-    func didInsertSubtask(at index: Int)
-    func didDeleteSubtasks(at indexes: [Int])
-    func didMoveSubtask(from: Int, to: Int)
 }

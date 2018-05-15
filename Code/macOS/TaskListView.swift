@@ -2,22 +2,22 @@ import AppKit
 import PureLayout
 import SwiftObserver
 
-class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListDelegate, TaskListTableViewDelegate, TaskViewTextFieldDelegate, Observer, Observable
+class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListTableViewDelegate, TaskViewTextFieldDelegate, Observer, Observable
 {
     // MARK: - Table View
     
-    convenience init(with list: TaskListViewModel)
+    init(with list: TaskListViewModel)
     {
-        self.init(frame: NSRect.zero)
+        super.init(frame: NSRect.zero)
         
         taskList = list
         
-        initialize()
-    }
-    
-    private func initialize()
-    {
-        taskList?.delegate = self
+        observe(list)
+        {
+            [weak self] in
+            
+            self?.didReceive($0)
+        }
         
         translatesAutoresizingMaskIntoConstraints = false
         
@@ -37,6 +37,52 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         titleField.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
         
         updateTitle()
+    }
+    
+    deinit
+    {
+        stopAllObserving()
+    }
+    
+    private func didReceive(_ event: TaskListViewModel.Event)
+    {
+        switch(event)
+        {
+        case .didNothing:
+            break
+            
+        case .didChangeSelection:
+            break
+            
+        case .didChangeSubtasksInTask(let index):
+            subtasksChangedInTask(at: index)
+            
+        case .didChangeStateOfTask(let index):
+            didChangeStateOfSubtask(at: index)
+            
+        case .didChangeTitleOfTask(let index):
+            didChangeTitleOfSubtask(at: index)
+            
+        case .didChangeListContainer:
+            didChangeListContainer()
+            
+        case .didChangeListContainerTitle:
+            didChangeListContainerTitle()
+            
+        case .didInsertTask(let index):
+            didInsertSubtask(at: index)
+            
+        case .didDeleteTasks(let indexes):
+            didDeleteSubtasks(at: indexes)
+            
+        case .didMoveTask(let from, let to):
+            didMoveSubtask(from: from, to: to)
+        }
+    }
+    
+    required init?(coder decoder: NSCoder)
+    {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private lazy var titleField: NSTextField =
