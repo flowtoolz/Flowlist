@@ -211,13 +211,13 @@ class MainVC: NSViewController, Observer
             // TODO: do we need this? why reset selection to first selection when setting input focus???
             if let selectedTask = listView.taskList?.task(at: selectionIndex)
             {
-                listView.taskList?.selectedTasksById = [selectedTask.id : selectedTask]
+                listView.taskList?.selectedTasks = [selectedTask.hash : selectedTask]
                 listView.updateTableSelection()
             }
         }
         else
         {
-            listView.taskList?.selectedTasksById = [:]
+            listView.taskList?.selectedTasks = [:]
         }
         
         if !(NSApp.mainWindow?.makeFirstResponder(listView.tableView) ?? false)

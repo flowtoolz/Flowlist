@@ -14,7 +14,7 @@ class Task: Codable, Observable
         self.state = state
     }
     
-    // MARK: - Edit Subtasks
+    // MARK: - Edit Subtask List
     
     @discardableResult
     func groupSubtasks(at indexes: [Int]) -> Task?
@@ -196,11 +196,7 @@ class Task: Codable, Observable
     
     private var subtasks = [Task]()
     
-    // MARK: - UUID
-    
-    var id: String { return String(hash(self)) }
-    
-    // MARK: - Event
+    // MARK: - Observability
     
     var latestUpdate: Event { return .didNothing }
     

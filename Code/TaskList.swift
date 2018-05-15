@@ -1,4 +1,5 @@
 import SwiftObserver
+import SwiftyToolz
 
 class TaskList: Observable, Observer
 {
@@ -20,7 +21,7 @@ class TaskList: Observable, Observer
             return nil
         }
         
-        selectedTasksById = [group.id : group]
+        selectedTasks = [group.hash : group]
         
         observe(task: group)
         
@@ -67,11 +68,11 @@ class TaskList: Observable, Observer
         // update selection
         if let newSelectedTask = task(at: max(firstSelectedIndex - 1, 0))
         {
-            selectedTasksById = [newSelectedTask.id : newSelectedTask]
+            selectedTasks = [newSelectedTask.hash : newSelectedTask]
         }
         else
         {
-            selectedTasksById.removeAll()
+            selectedTasks.removeAll()
         }
         
         return true
@@ -83,7 +84,7 @@ class TaskList: Observable, Observer
     {
         guard let container = container else
         {
-            selectedTasksById.removeAll()
+            selectedTasks.removeAll()
             delegate?.didChangeListContainer()
             return
         }
@@ -115,8 +116,8 @@ class TaskList: Observable, Observer
     func moveSelectedTaskUp() -> Bool
     {
         guard let container = container,
-            selectedTasksById.count == 1,
-            let selectedTask = selectedTasksById.values.first,
+            selectedTasks.count == 1,
+            let selectedTask = selectedTasks.values.first,
             let selectedIndex = container.index(of: selectedTask)
         else
         {
@@ -129,8 +130,8 @@ class TaskList: Observable, Observer
     func moveSelectedTaskDown() -> Bool
     {
         guard let container = container,
-            selectedTasksById.count == 1,
-            let selectedTask = selectedTasksById.values.first,
+            selectedTasks.count == 1,
+            let selectedTask = selectedTasks.values.first,
             let selectedIndex = container.index(of: selectedTask)
         else
         {
@@ -201,7 +202,7 @@ class TaskList: Observable, Observer
         // determine which task to select after the ckeck off
         var taskToSelect: Task?
         
-        if selectedTasksById.count == 1
+        if selectedTasks.count == 1
         {
             taskToSelect = firstUncheckedTask(from: indexToCheck + 1)
         }
@@ -210,11 +211,11 @@ class TaskList: Observable, Observer
         
         if let taskToSelect = taskToSelect
         {
-            selectedTasksById = [taskToSelect.id : taskToSelect]
+            selectedTasks = [taskToSelect.hash : taskToSelect]
         }
-        else if selectedTasksById.count > 1
+        else if selectedTasks.count > 1
         {
-            selectedTasksById[taskToCheck.id] = nil
+            selectedTasks[taskToCheck.hash] = nil
         }
     }
     
@@ -273,54 +274,54 @@ class TaskList: Observable, Observer
     
     func unselectSubtasks(at indexes: [Int])
     {
-        var newSelection = selectedTasksById
+        var newSelection = selectedTasks
         
         for index in indexes
         {
             if let task = task(at: index)
             {
-                newSelection[task.id] = nil
+                newSelection[task.hash] = nil
             }
         }
         
-        selectedTasksById = newSelection
+        selectedTasks = newSelection
     }
     
     func selectSubtasks(at indexes: [Int])
     {
-        var newSelection = [String : Task]()
+        var newSelection = [HashValue : Task]()
         
         for index in indexes
         {
             if let task = task(at: index)
             {
-                newSelection[task.id] = task
+                newSelection[task.hash] = task
             }
         }
         
-        selectedTasksById = newSelection
+        selectedTasks = newSelection
     }
     
     private func validateSelection()
     {
         guard let container = container else
         {
-            if selectedTasksById.count > 0
+            if selectedTasks.count > 0
             {
-                print("warning: task list has no container but these selections: \(selectedTasksById.description)")
+                print("warning: task list has no container but these selections: \(selectedTasks.description)")
                 
-                selectedTasksById.removeAll()
+                selectedTasks.removeAll()
             }
             
             return
         }
         
-        for selectedTask in selectedTasksById.values
+        for selectedTask in selectedTasks.values
         {
             if container.index(of: selectedTask) == nil
             {
                 print("warning: subtask is selected but not in the container. will be unselected: \(selectedTask.description)")
-                selectedTasksById[selectedTask.id] = nil
+                selectedTasks[selectedTask.hash] = nil
             }
         }
     }
@@ -332,7 +333,7 @@ class TaskList: Observable, Observer
         for index in 0 ..< numberOfTasks
         {
             if let task = task(at: index),
-                selectedTasksById[task.id] != nil
+                selectedTasks[task.hash] != nil
             {
                 result.append(index)
             }
@@ -341,11 +342,11 @@ class TaskList: Observable, Observer
         return result
     }
     
-    var selectedTasksById = [String : Task]()
+    var selectedTasks = [HashValue : Task]()
     {
         didSet
         {
-            if Set(oldValue.keys) != Set(selectedTasksById.keys)
+            if Set(oldValue.keys) != Set(selectedTasks.keys)
             {
                 //print("selection changed: \(selectedIndexes.description)")
                 validateSelection()
@@ -373,7 +374,7 @@ class TaskList: Observable, Observer
             }
             else
             {
-                selectedTasksById = [:]
+                selectedTasks = [:]
             }
             
             if let oldValue = oldValue
@@ -429,6 +430,11 @@ class TaskList: Observable, Observer
         case didNothing
         case didChangeSelection
     }
+}
+
+extension Task
+{
+    var hash: HashValue { return SwiftyToolz.hash(self) }
 }
 
 // MARK: - Task List Delegate

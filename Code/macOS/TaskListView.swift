@@ -145,7 +145,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             }
         case 36:
             
-            let numSelections = taskList?.selectedTasksById.count ?? 0
+            let numSelections = taskList?.selectedTasks.count ?? 0
             
             if numSelections == 0
             {
@@ -264,11 +264,11 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         {
             taskView.updateTitleField()
             
-            if taskList?.selectedTasksById.count ?? 0 > 1,
+            if taskList?.selectedTasks.count ?? 0 > 1,
                 let firstSelectedIndex = taskList?.selectedIndexesSorted.first,
                 let firstSelectedTask = taskList?.task(at: firstSelectedIndex)
             {
-                taskList?.selectedTasksById[firstSelectedTask.id] = nil
+                taskList?.selectedTasks[firstSelectedTask.hash] = nil
                 
                 if let nextEditingIndex = taskList?.selectedIndexesSorted.first
                 {
@@ -334,7 +334,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     private func createNewTask(at index: Int? = nil, createContainer: Bool = false)
     {
-        if createContainer && taskList?.selectedTasksById.count ?? 0 > 1
+        if createContainer && taskList?.selectedTasks.count ?? 0 > 1
         {
             groupSelectedTasks()
         }
@@ -360,7 +360,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         
         if let indexOfNewTask = taskList?.add(newTask, at: index)
         {
-            taskList?.selectedTasksById = [newTask.id : newTask]
+            taskList?.selectedTasks = [newTask.hash : newTask]
             
             startEditing(at: indexOfNewTask)
         }
@@ -382,7 +382,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             tableView.scrollRowToVisible(index)
         }
         
-        taskList.selectedTasksById[task.id] = task
+        taskList.selectedTasks[task.hash] = task
         
         updateTableSelection()
         
