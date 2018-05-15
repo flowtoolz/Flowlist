@@ -113,9 +113,7 @@
 		9E91650B20551B6B00A438FB /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				9E542E941EEEE41C00534981 /* main.swift */,
-				9E15185D1EEEE97700B35AD5 /* MainVC.swift */,
-				9EBC70282056FD02007A1EA8 /* TaskListCoordinator.swift */,
+				9ED0277E20AB2F78004289E6 /* MainWindow */,
 				9E91650E20551C3B00A438FB /* List */,
 				9E91650F20551C5C00A438FB /* Store */,
 				9E91650D20551C1900A438FB /* Task */,
@@ -126,7 +124,7 @@
 		9E91650D20551C1900A438FB /* Task */ = {
 			isa = PBXGroup;
 			children = (
-				9E7651931EEF428100DE2B07 /* TaskView.swift */,
+				9ED0277D20AB2F52004289E6 /* UI */,
 				9E15185B1EEEE8CE00B35AD5 /* Task.swift */,
 			);
 			name = Task;
@@ -135,10 +133,7 @@
 		9E91650E20551C3B00A438FB /* List */ = {
 			isa = PBXGroup;
 			children = (
-				9E72881A1EEF3095003A2F46 /* TaskListView.swift */,
-				9EAD75401EF6502000DC46FD /* TaskListTableView.swift */,
-				9EA2B9681EF035D900F05F20 /* TaskListRow.swift */,
-				9E696E641EF507270046BCB8 /* ListHeaderView.swift */,
+				9ED0277B20AB2F24004289E6 /* UI */,
 				9E82A7A81EF2A558006AEF02 /* TaskListViewModel.swift */,
 			);
 			name = List;
@@ -147,7 +142,7 @@
 		9E91650F20551C5C00A438FB /* Store */ = {
 			isa = PBXGroup;
 			children = (
-				9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */,
+				9ED0277C20AB2F43004289E6 /* Persistence */,
 				9E7651951EEF4DA200DE2B07 /* TaskStore.swift */,
 			);
 			name = Store;
@@ -161,6 +156,51 @@
 			);
 			name = Resources;
 			sourceTree = SOURCE_ROOT;
+		};
+		9ED0277B20AB2F24004289E6 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				9E72881A1EEF3095003A2F46 /* TaskListView.swift */,
+				9EAD75401EF6502000DC46FD /* TaskListTableView.swift */,
+				9EA2B9681EF035D900F05F20 /* TaskListRow.swift */,
+				9E696E641EF507270046BCB8 /* ListHeaderView.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		9ED0277C20AB2F43004289E6 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */,
+			);
+			name = Persistence;
+			sourceTree = "<group>";
+		};
+		9ED0277D20AB2F52004289E6 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				9E7651931EEF428100DE2B07 /* TaskView.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		9ED0277E20AB2F78004289E6 /* MainWindow */ = {
+			isa = PBXGroup;
+			children = (
+				9ED0277F20AB2F95004289E6 /* UI */,
+				9EBC70282056FD02007A1EA8 /* TaskListCoordinator.swift */,
+			);
+			name = MainWindow;
+			sourceTree = "<group>";
+		};
+		9ED0277F20AB2F95004289E6 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				9E542E941EEEE41C00534981 /* main.swift */,
+				9E15185D1EEEE97700B35AD5 /* MainVC.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
