@@ -1,14 +1,14 @@
-source 'https://bitbucket.org/flowtoolz/podspecs.git'
-source 'https://github.com/CocoaPods/Specs.git'
-
 use_frameworks!
 
 platform :osx, '10.10'
 
 target 'Flowlist' do
-
-    pod 'PureLayout', '3.0.2'
   
-    pod 'Flowtoolz', :path=> '../../Flowtoolz-Cocoapod'
+    pod 'PureLayout'
+    pod 'UIObserver', :path=> '../../Github Repos/UIObserver'
+    pod 'UIToolz', :path=> '../../Github Repos/UIToolz'
+    pod 'FoundationToolz', :path=> '../../Github Repos/FoundationToolz'
+    pod 'SwiftObserver', :path=> '../../Github Repos/SwiftObserver'
+    pod 'SwiftyToolz', :path=> '../../Github Repos/SwiftyToolz'
 
 end

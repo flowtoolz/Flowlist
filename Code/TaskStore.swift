@@ -1,8 +1,8 @@
-import Flowtoolz
+import SwiftObserver
 
 let store = TaskStore()
 
-class TaskStore: Sender
+class TaskStore: Observable
 {
     fileprivate init() {}
     
@@ -10,9 +10,11 @@ class TaskStore: Sender
     {
         didSet
         {
-            send(TaskStore.didUpdateRoot)
+            send(.didUpdateRoot)
         }
     }
     
-    static let didUpdateRoot = "TaskStoreDidUpdateRoot"
+    var latestUpdate: Event { return .didNothing }
+    
+    enum Event { case didNothing, didUpdateRoot }
 }

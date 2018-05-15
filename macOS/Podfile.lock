@@ -1,31 +1,47 @@
 PODS:
-  - Flowtoolz (0.2.0):
-    - Flowtoolz/CoreData (= 0.2.0)
-    - Flowtoolz/Foundation (= 0.2.0)
-    - Flowtoolz/Swift (= 0.2.0)
-    - Flowtoolz/UI (= 0.2.0)
-  - Flowtoolz/CoreData (0.2.0)
-  - Flowtoolz/Foundation (0.2.0):
-    - ReachabilitySwift (= 3)
-  - Flowtoolz/Swift (0.2.0)
-  - Flowtoolz/UI (0.2.0):
-    - PureLayout (= 3.0.2)
+  - FoundationToolz (1.0.0)
   - PureLayout (3.0.2)
-  - ReachabilitySwift (3)
+  - SwiftObserver (1.2.0):
+    - SwiftyToolz (= 1.0.0)
+  - SwiftyToolz (1.0.0)
+  - UIObserver (0.0.1):
+    - SwiftObserver (= 1.2.0)
+  - UIToolz (1.0.0):
+    - PureLayout (= 3.0.2)
+    - SwiftyToolz (= 1.0.0)
 
 DEPENDENCIES:
-  - Flowtoolz (from `../../Flowtoolz-Cocoapod`)
-  - PureLayout (= 3.0.2)
+  - FoundationToolz (from `../../Github Repos/FoundationToolz`)
+  - PureLayout
+  - SwiftObserver (from `../../Github Repos/SwiftObserver`)
+  - SwiftyToolz (from `../../Github Repos/SwiftyToolz`)
+  - UIObserver (from `../../Github Repos/UIObserver`)
+  - UIToolz (from `../../Github Repos/UIToolz`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - PureLayout
 
 EXTERNAL SOURCES:
-  Flowtoolz:
-    :path: ../../Flowtoolz-Cocoapod
+  FoundationToolz:
+    :path: "../../Github Repos/FoundationToolz"
+  SwiftObserver:
+    :path: "../../Github Repos/SwiftObserver"
+  SwiftyToolz:
+    :path: "../../Github Repos/SwiftyToolz"
+  UIObserver:
+    :path: "../../Github Repos/UIObserver"
+  UIToolz:
+    :path: "../../Github Repos/UIToolz"
 
 SPEC CHECKSUMS:
-  Flowtoolz: d746d4e7c008276723eacb213955682e0ee00975
+  FoundationToolz: e40cc7cc969480357a44eaafd9bab4b75a3f0c7a
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
-  ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
+  SwiftObserver: b5ae13d3a7d048342a740439f6a2a504114d8bb9
+  SwiftyToolz: c2946e4cb45066232f8434780a21e8a40bde0213
+  UIObserver: 3f1327a291529ed48802be621c31f71fafa95571
+  UIToolz: 248249aa2e4811e3b64b11e63e4c157a3caca7a0
 
-PODFILE CHECKSUM: b3faf2bb892d7562010df55e2e3e89fea2cf420f
+PODFILE CHECKSUM: a2505073d22a56683421c8e085abce292f2273f1
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.2

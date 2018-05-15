@@ -1,6 +1,6 @@
-import Flowtoolz
+import SwiftObserver
 
-class Task: Sender, Codable
+class Task: Codable, Observable, Observer
 {
     // MARK: - Initialization
     
@@ -68,7 +68,6 @@ class Task: Sender, Codable
         for subtask in subtasks
         {
             subtask.container = self
-            
             subtask.setContainers()
         }
     }
@@ -108,13 +107,12 @@ class Task: Sender, Codable
         
         task.container = self
         
-        send(Task.didChangeSubtasks, parameters: ["method": "insert",
-                                                 "index": index])
+        send(.didChangeSubtasks(method: .insert, indexes: [index]))
         
         return true
     }
     
-    func deleteSubtasks(at indexes: [Int]) -> Bool
+    func deleteSubtasks(at indexes: [Int]) -> [Task]
     {
         var sorted = indexes.sorted()
         
@@ -124,12 +122,16 @@ class Task: Sender, Codable
         else
         {
             print("Warning: tried to delete tasks with at least one out of bound index")
-            return false
+            return []
         }
     
+        var removedSubtasks = [Task]()
+        
         while let indexToRemove = sorted.popLast()
         {
             let removedSubtask = elements.remove(at: indexToRemove)
+            
+            removedSubtasks.append(removedSubtask)
             
             if removedSubtask.container === self
             {
@@ -137,13 +139,10 @@ class Task: Sender, Codable
             }
         }
         
-        send(Task.didChangeSubtasks, parameters: ["method": "delete",
-                                                  "indexes": indexes])
+        send(.didChangeSubtasks(method: .delete, indexes: indexes))
         
-        return true
+        return removedSubtasks
     }
-    
-    static let didChangeSubtasks = "TaskDidChangeSubtasks"
     
     func moveSubtask(from: Int, to: Int) -> Bool
     {
@@ -151,13 +150,11 @@ class Task: Sender, Codable
         
         if didMove
         {
-            send(Task.didMoveSubtask, parameters: ["from": from, "to": to])
+            send(.didMoveSubtask(from: from, to: to))
         }
         
         return didMove
     }
-    
-    static let didMoveSubtask = "TaskDidMoveSubtask"
     
     // MARK: - Read Hierarchy
     
@@ -214,12 +211,10 @@ class Task: Sender, Codable
         {
             if title != oldValue
             {
-                send(Task.didChangeTitle)
+                send(.didChangeTitle)
             }
         }
     }
-    
-    static let didChangeTitle = "TaskDidChangeTitle"
     
     var state: State?
     {
@@ -227,12 +222,10 @@ class Task: Sender, Codable
         {
             if state != oldValue
             {
-                send(Task.didChangeState)
+                send(.didChangeState)
             }
         }
     }
-    
-    static let didChangeState = "TaskDidChangeState"
     
     enum State: Int, Codable
     {
@@ -243,4 +236,22 @@ class Task: Sender, Codable
     private(set) weak var container: Task? = nil
     
     private var elements = [Task]()
+    
+    // MARK: - Event
+    
+    var latestUpdate: Event { return .didNothing }
+    
+    enum Event
+    {
+        case didNothing
+        case didChangeState
+        case didChangeTitle
+        case didMoveSubtask(from: Int, to: Int)
+        case didChangeSubtasks(method: Method, indexes: [Int])
+        
+        enum Method
+        {
+            case delete, insert
+        }
+    }
 }

@@ -1,15 +1,7 @@
-import Flowtoolz
+import SwiftObserver
 
-class TaskList: Sender, Subscriber
+class TaskList: Observable, Observer
 {
-    init()
-    {
-        subscribe(to: Task.didChangeTitle, action: taskDidChangeTitle)
-        subscribe(to: Task.didChangeState, action: taskDidChangeState)
-        subscribe(to: Task.didChangeSubtasks, action: taskDidChangeSubtasks)
-        subscribe(to: Task.didMoveSubtask, action: taskDidMoveSubtask)
-    }
-    
     // MARK: - List of Tasks
 
     var tasks: [Task]
@@ -34,6 +26,8 @@ class TaskList: Sender, Subscriber
         
         selectedTasksByUuid = [group.uuid : group]
         
+        observe(task: group)
+        
         return groupIndex
     }
     
@@ -50,20 +44,31 @@ class TaskList: Sender, Subscriber
         
         _ = container.insert(task, at: indexToInsert)
         
+        observe(task: task)
+        
         return indexToInsert
     }
     
     func deleteSelectedTasks() -> Bool
     {
+        // delete
         let selectedIndexes = selectedIndexesSorted
         
         guard let firstSelectedIndex = selectedIndexes.first,
-            container?.deleteSubtasks(at: selectedIndexes) ?? false
+            let removedTasks = container?.deleteSubtasks(at: selectedIndexes),
+            !removedTasks.isEmpty
         else
         {
             return false
         }
         
+        // stop observing
+        for removedTask in removedTasks
+        {
+            stopObserving(removedTask)
+        }
+        
+        // update selection
         if let newSelectedTask = task(at: max(firstSelectedIndex - 1, 0))
         {
             selectedTasksByUuid = [newSelectedTask.uuid : newSelectedTask]
@@ -76,7 +81,9 @@ class TaskList: Sender, Subscriber
         return true
     }
     
-    func taskDidChangeSubtasks(sender: Any, parameters: [String : Any]?)
+    func taskDidChangeSubtasks(sendingTask: Task,
+                               method: Task.Event.Method,
+                               indexes: [Int]?)
     {
         guard let container = container else
         {
@@ -85,28 +92,22 @@ class TaskList: Sender, Subscriber
             return
         }
         
-        guard let sendingTask = sender as? Task,
-            let method = parameters?["method"] as? String
-        else
-        {
-            return
-        }
-        
         if container === sendingTask
         {
-            if method == "delete", let indexes = parameters?["indexes"] as? [Int]
+            switch(method)
             {
-                unselectSubtasks(at: indexes)
-                
-                delegate?.didDeleteSubtasks(at: indexes)
-            }
-            else if method == "insert", let index = parameters?["index"] as? Int
-            {
-                delegate?.didInsertSubtask(at: index)
-            }
-            else
-            {
-                print("Warning: TaskList received notification \(Task.didChangeSubtasks) with unknown change method \(method) or parameters \(parameters.debugDescription)")
+            case .delete:
+                if let indexes = indexes
+                {
+                    unselectSubtasks(at: indexes)
+                    delegate?.didDeleteSubtasks(at: indexes)
+                }
+               
+            case .insert:
+                if let index = indexes?.first
+                {
+                    delegate?.didInsertSubtask(at: index)
+                }
             }
         }
         else if container === sendingTask.container
@@ -149,12 +150,10 @@ class TaskList: Sender, Subscriber
         return container.moveSubtask(from: selectedIndex, to: selectedIndex + 1)
     }
     
-    func taskDidMoveSubtask(sender: Any, parameters: JSON?)
+    func taskDidMoveSubtask(sender: Task?, from: Int, to: Int)
     {
-        guard let sendingTask = sender as? Task,
-            container === sendingTask,
-            let from = parameters?["from"] as? Int,
-            let to = parameters?["to"] as? Int
+        guard let sendingTask = sender,
+            container === sendingTask
         else
         {
             return
@@ -360,12 +359,10 @@ class TaskList: Sender, Subscriber
             {
                 //print("selection changed: \(selectedIndexes.description)")
                 validateSelection()
-                send(TaskList.didChangeSelection)
+                send(.didChangeSelection)
             }
         }
     }
-    
-    static let didChangeSelection = "TaskListDidChangeSelection"
     
     // MARK: - Container Task
     
@@ -425,19 +422,70 @@ class TaskList: Sender, Subscriber
     {
         didSet
         {
-            if oldValue !== container
+            guard oldValue !== container else { return }
+            
+            if let container = container
             {
-                if container == nil
-                {
-                    selectedTasksByUuid = [:]
-                }
-                
-                delegate?.didChangeListContainer()
+                observe(task: container)
             }
+            else
+            {
+                selectedTasksByUuid = [:]
+            }
+            
+            if let oldValue = oldValue
+            {
+                stopObserving(oldValue)
+            }
+            
+            delegate?.didChangeListContainer()
         }
     }
     
     weak var delegate: TaskListDelegate?
+    
+    // MARK: Observing a Task
+    
+    private func observe(task: Task)
+    {
+        observe(task)
+        {
+            [weak self, weak task] event in
+            
+            guard let task = task else { return }
+            
+            self?.didReceive(event: event, from: task)
+        }
+    }
+    
+    private func didReceive(event: Task.Event, from task: Task)
+    {
+        switch (event)
+        {
+        case .didNothing:
+            break
+        case .didChangeState:
+            taskDidChangeState(sender: task)
+        case .didChangeTitle:
+            taskDidChangeTitle(sender: task)
+        case .didMoveSubtask(let from, let to):
+            taskDidMoveSubtask(sender: task, from: from, to: to)
+        case .didChangeSubtasks(let method, let indexes):
+            taskDidChangeSubtasks(sendingTask: task,
+                                  method: method,
+                                  indexes: indexes)
+        }
+    }
+    
+    // MARK: Observable
+    
+    var latestUpdate: Event { return .didNothing }
+    
+    enum Event
+    {
+        case didNothing
+        case didChangeSelection
+    }
 }
 
 // MARK: - Task List Delegate

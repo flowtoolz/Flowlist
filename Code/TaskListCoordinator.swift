@@ -1,15 +1,29 @@
-import Flowtoolz
+import SwiftObserver
 
 let listCoordinator = TaskListCoordinator()
 
-class TaskListCoordinator: Subscriber
+class TaskListCoordinator: Observer
 {
     fileprivate init()
     {
         lists[2].container = store.root
         
-        subscribe(to: TaskList.didChangeSelection,
-                  action: listChangedSelection)
+        for list in lists
+        {
+            observe(list: list)
+        }
+    }
+    
+    private func observe(list: TaskList)
+    {
+        observe(list)
+        {
+            [weak self, weak list] event in
+            
+            guard let list = list else { return }
+            
+            self?.listChangedSelection(list)
+        }
     }
     
     func moveRight() -> TaskList
@@ -55,11 +69,11 @@ class TaskListCoordinator: Subscriber
         }
     }
     
-    private func listChangedSelection(sender: Any)
+    private func listChangedSelection(_ list: TaskList)
     {
-        guard let index = lists.index(where: { $0 === sender as AnyObject }) else
+        guard let index = lists.index(where: { $0 === list }) else
         {
-            print("Warning: TaskListCoordinator received notification from unknown TaskList.")
+            print("Warning: unknown TaskList changed selection.")
             return
         }
         

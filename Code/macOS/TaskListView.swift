@@ -1,16 +1,8 @@
-//
-//  TaskList.swift
-//  TodayList
-//
-//  Created by Sebastian on 12/06/17.
-//  Copyright © 2017 Flowtoolz. All rights reserved.
-//
-
 import AppKit
 import PureLayout
-import Flowtoolz
+import SwiftObserver
 
-class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListDelegate, Subscriber, Sender, TaskListTableViewDelegate, TaskViewTextFieldDelegate
+class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListDelegate, TaskListTableViewDelegate, TaskViewTextFieldDelegate, Observer, Observable
 {
     // MARK: - Table View
     
@@ -205,9 +197,9 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
                 deleteSelectedTasks()
             }
         case 123:
-            send(TaskListView.wantsToGiveUpFocusToTheLeft)
+            send(.wantToGiveUpFocusToTheLeft)
         case 124:
-            send(TaskListView.wantsToGiveUpFocusToTheRight)
+            send(.wantToGiveUpFocusToTheRight)
         case 125:
             if cmd
             {
@@ -222,10 +214,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             break
         }
     }
-    
-    static let wantsToGiveUpFocusToTheRight = "TaskListViewWantsToGiveUpFocusToTheRight"
-    
-    static let wantsToGiveUpFocusToTheLeft = "TaskListViewWantsToGiveUpFocusToTheLeft"
     
     // MARK: - Reacting to Updates
     
@@ -324,15 +312,13 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     func taskListTableViewWasClicked(_ view: TaskListTableView)
     {
-        send(TaskListView.tableViewWasClicked)
+        send(.tableViewWasClicked)
     }
     
     func taskViewTextFieldDidBecomeFirstResponder(_ textField: TaskView.TextField)
     {
-        send(TaskListView.tableViewWasClicked)
+        send(.tableViewWasClicked)
     }
-    
-    static let tableViewWasClicked = "TaskListTableViewWasClicked"
     
     // MARK: - Editing and Filtering the List
     
@@ -496,6 +482,18 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         }
         
         return cell
+    }
+    
+    // MARK: - Observability
+    
+    var latestUpdate: Event { return .none }
+    
+    enum Event
+    {
+        case none
+        case wantToGiveUpFocusToTheRight
+        case wantToGiveUpFocusToTheLeft
+        case tableViewWasClicked
     }
     
     // MARK: - Task List

@@ -1,5 +1,5 @@
 import Foundation
-import Flowtoolz
+import FoundationToolz
 
 extension TaskStore
 {

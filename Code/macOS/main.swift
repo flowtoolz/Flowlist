@@ -1,5 +1,4 @@
 import Cocoa
-import Flowtoolz
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
 {
