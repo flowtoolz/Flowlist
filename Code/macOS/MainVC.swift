@@ -2,6 +2,7 @@ import AppKit
 import PureLayout
 import UIToolz
 import SwiftObserver
+import SwiftyToolz
 
 class MainVC: NSViewController, Observer
 {
@@ -176,7 +177,7 @@ class MainVC: NSViewController, Observer
     {
         guard let index = listViews.index(where: { $0 === sender as AnyObject }),
             index >= 0, index < listViews.count - 1,
-            (listViews[index].taskList?.tasks.count ?? 0) > 0
+            (listViews[index].taskList?.numberOfTasks ?? 0) > 0
             else
         {
             return
@@ -197,13 +198,13 @@ class MainVC: NSViewController, Observer
     
     private func moveInputFocus(to index: Int) -> Bool
     {
-        guard index >= 0, index < listViews.count else { return false }
+        guard listViews.isValid(index: index) else { return false }
         
         let listView = listViews[index]
         
         guard listView.taskList?.container != nil else { return false }
         
-        if listView.taskList?.tasks.count ?? 0 > 0
+        if listView.taskList?.numberOfTasks ?? 0 > 0
         {
             let selectionIndex = listView.taskList?.selectedIndexesSorted.first ?? 0
             
@@ -242,7 +243,7 @@ class MainVC: NSViewController, Observer
     
     private func tableViewGainedFocus(at index: Int)
     {
-        guard index >= 0, index < listViews.count,
+        guard listViews.isValid(index: index),
             listViews[index].taskList?.container != nil
             else
         {

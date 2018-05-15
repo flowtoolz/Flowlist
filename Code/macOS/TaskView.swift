@@ -189,7 +189,7 @@ class TaskView: NSView, NSTextFieldDelegate
     
     func updateContainerIndicator()
     {
-        containerIndicator.isHidden = !(task?.isContainer ?? false)
+        containerIndicator.isHidden = !(task?.hasSubtasks ?? false)
     }
     
     private func layoutContainerIndicator()

@@ -56,7 +56,7 @@ class TaskListCoordinator: Observer
         
         let master = lists[index]
         
-        guard master.container?.isContainer ?? false else
+        guard master.container?.hasSubtasks ?? false else
         {
             return
         }

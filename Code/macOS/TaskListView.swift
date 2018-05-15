@@ -240,7 +240,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
                              withAnimation: NSTableView.AnimationOptions.slideUp)
         tableView.endUpdates()
         
-        let numberOfTasks = taskList?.tasks.count ?? 0
+        let numberOfTasks = taskList?.numberOfTasks ?? 0
         
         if numberOfTasks > 0
         {
@@ -321,26 +321,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     }
     
     // MARK: - Editing and Filtering the List
-    
-    private func goToSuperContainer()
-    {
-        if taskList?.goToSuperContainer() ?? false
-        {
-            tableView.reloadData()
-            
-            updateTableSelection()
-        }
-    }
-    
-    private func goToSelectedTask()
-    {
-        if taskList?.goToSelectedTask() ?? false
-        {
-            tableView.reloadData()
-            
-            updateTableSelection()
-        }
-    }
     
     private func deleteSelectedTasks()
     {
@@ -456,7 +436,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     func numberOfRows(in tableView: NSTableView) -> Int
     {
-        return taskList?.tasks.count ?? 0
+        return taskList?.numberOfTasks ?? 0
     }
     
     func tableView(_ tableView: NSTableView,

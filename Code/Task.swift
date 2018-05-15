@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-class Task: Codable, Observable, Observer
+class Task: Codable, Observable
 {
     // MARK: - Initialization
     
@@ -20,32 +20,18 @@ class Task: Codable, Observable, Observer
         self.uuid = uuid
     }
     
-    // MARK: - Logging
+    // MARK: - Edit Subtasks
     
-    func log()
-    {
-        print(description)
-    }
-    
-    var description: String
-    {
-        return encode()?.utf8String ?? typeName(of: self)
-    }
-    
-    // MARK: - Edit Hierarchy
-    
-    func setContainers()
-    {
-        for subtask in subtasks
-        {
-            subtask.supertask = self
-            subtask.setContainers()
-        }
-    }
-    
+    @discardableResult
     func groupTasks(at indexes: [Int], as group: Task) -> Int?
     {
-        guard let groupIndex = indexes.min() else
+        let sortedIndexes = indexes.sorted()
+        
+        guard
+            let groupIndex = sortedIndexes.first,
+            subtasks.isValid(index: groupIndex),
+            subtasks.isValid(index: sortedIndexes.last)
+        else
         {
             return nil
         }
@@ -58,7 +44,7 @@ class Task: Codable, Observable, Observer
             }
         }
         
-        _ = deleteSubtasks(at: indexes)
+        _ = removeSubtasks(at: indexes)
         
         _ = insert(group, at: groupIndex)
         
@@ -78,43 +64,46 @@ class Task: Codable, Observable, Observer
         
         task.supertask = self
         
-        send(.didChangeSubtasks(method: .insert, indexes: [index]))
+        send(.didInsertSubtask(index: index))
         
         return true
     }
     
-    func deleteSubtasks(at indexes: [Int]) -> [Task]
+    @discardableResult
+    func removeSubtasks(at indexes: [Int]) -> [Task]
     {
-        var sorted = indexes.sorted()
+        var sortedIndexes = indexes.sorted()
         
-        guard let maxIndex = sorted.last,
-            let minIndex = sorted.first,
-            minIndex >= 0, maxIndex < subtasks.count
+        guard
+            subtasks.isValid(index: sortedIndexes.first),
+            subtasks.isValid(index: sortedIndexes.last)
         else
         {
-            print("Warning: tried to delete tasks with at least one out of bound index")
+            print("Warning: tried to remove tasks with at least one out of bound index")
             return []
         }
     
         var removedSubtasks = [Task]()
         
-        while let indexToRemove = sorted.popLast()
+        while let indexToRemove = sortedIndexes.popLast()
         {
             let removedSubtask = subtasks.remove(at: indexToRemove)
             
-            removedSubtasks.append(removedSubtask)
-            
+            // FIXME: was this condition necessary for some side effect? avoid it!
             if removedSubtask.supertask === self
             {
                 removedSubtask.supertask = nil
             }
+            
+            removedSubtasks.append(removedSubtask)
         }
         
-        send(.didChangeSubtasks(method: .delete, indexes: indexes))
+        send(.didRemoveSubtasks(indexes: indexes))
         
         return removedSubtasks
     }
     
+    @discardableResult
     func moveSubtask(from: Int, to: Int) -> Bool
     {
         let didMove = subtasks.moveElement(from: from, to: to)
@@ -127,44 +116,16 @@ class Task: Codable, Observable, Observer
         return didMove
     }
     
-    // MARK: - Read Hierarchy
+    // MARK: - Description & Codability
     
-    var isContainer: Bool
+    var description: String
     {
-        return subtasks.count > 0
+        return encode()?.utf8String ?? typeName(of: self)
     }
     
-    func subtask(at index: Int) -> Task?
+    enum CodingKeys: String, CodingKey
     {
-        guard index >= 0, index < subtasks.count else
-        {
-            print("Warning: tried to access Task at an out of bound index")
-            return nil
-        }
-        
-        return subtasks[index]
-    }
-    
-    func allSubtasksRecursively() -> [Task]
-    {
-        var tasks = [self]
-
-        for task in subtasks
-        {
-            tasks.append(contentsOf: task.allSubtasksRecursively())
-        }
-        
-        return tasks
-    }
-
-    var indexInContainer: Int?
-    {
-        return supertask?.index(of: self)
-    }
-    
-    func index(of subtask: Task) -> Int?
-    {
-        return subtasks.index(where: { $0 === subtask })
+        case uuid, title, state, subtasks
     }
     
     // MARK: - Title
@@ -200,11 +161,48 @@ class Task: Codable, Observable, Observer
     
     // MARK: - Supertask
     
+    func recoverSupertasks()
+    {
+        for subtask in subtasks
+        {
+            subtask.supertask = self
+            subtask.recoverSupertasks()
+        }
+    }
+    
+    var indexInSupertask: Int?
+    {
+        return supertask?.index(of: self)
+    }
+    
     private(set) weak var supertask: Task? = nil
     
     // MARK: - Subtasks
     
-    private(set) var subtasks = [Task]()
+    func subtask(at index: Int) -> Task?
+    {
+        guard subtasks.isValid(index: index) else
+        {
+            print("Warning: tried to access Task at an out of bound index")
+            return nil
+        }
+        
+        return subtasks[index]
+    }
+    
+    func index(of subtask: Task) -> Int?
+    {
+        return subtasks.index(where: { $0 === subtask })
+    }
+    
+    var hasSubtasks: Bool { return subtasks.count > 0 }
+    var numberOfSubtasks: Int { return subtasks.count }
+    
+    private var subtasks = [Task]()
+    
+    // MARK: - UUID
+    
+    let uuid: String
     
     // MARK: - Event
     
@@ -213,18 +211,12 @@ class Task: Codable, Observable, Observer
     enum Event
     {
         case didNothing
+        
         case didChangeState
         case didChangeTitle
-        case didMoveSubtask(from: Int, to: Int)
-        case didChangeSubtasks(method: Method, indexes: [Int])
         
-        enum Method
-        {
-            case delete, insert
-        }
+        case didMoveSubtask(from: Int, to: Int)
+        case didInsertSubtask(index: Int)
+        case didRemoveSubtasks(indexes: [Int])
     }
-    
-    // MARK: - UUID
-    
-    let uuid: String
 }

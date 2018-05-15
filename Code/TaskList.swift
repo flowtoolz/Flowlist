@@ -4,10 +4,7 @@ class TaskList: Observable, Observer
 {
     // MARK: - List of Tasks
 
-    var tasks: [Task]
-    {
-        return container?.subtasks ?? []
-    }
+    var numberOfTasks: Int { return container?.numberOfSubtasks ?? 0 }
     
     func task(at index: Int) -> Task?
     {
@@ -55,7 +52,7 @@ class TaskList: Observable, Observer
         let selectedIndexes = selectedIndexesSorted
         
         guard let firstSelectedIndex = selectedIndexes.first,
-            let removedTasks = container?.deleteSubtasks(at: selectedIndexes),
+            let removedTasks = container?.removeSubtasks(at: selectedIndexes),
             !removedTasks.isEmpty
         else
         {
@@ -81,9 +78,9 @@ class TaskList: Observable, Observer
         return true
     }
     
+    // FIXME: split this for insertion and removal
     func taskDidChangeSubtasks(sendingTask: Task,
-                               method: Task.Event.Method,
-                               indexes: [Int]?)
+                               event: Task.Event)
     {
         guard let container = container else
         {
@@ -94,26 +91,20 @@ class TaskList: Observable, Observer
         
         if container === sendingTask
         {
-            switch(method)
+            switch(event)
             {
-            case .delete:
-                if let indexes = indexes
-                {
-                    unselectSubtasks(at: indexes)
-                    delegate?.didDeleteSubtasks(at: indexes)
-                }
-               
-            case .insert:
-                if let index = indexes?.first
-                {
-                    delegate?.didInsertSubtask(at: index)
-                }
+            case .didRemoveSubtasks(let indexes):
+                unselectSubtasks(at: indexes)
+                delegate?.didDeleteSubtasks(at: indexes)
+            case .didInsertSubtask(let index):
+                delegate?.didInsertSubtask(at: index)
+            default: break
             }
         }
         else if container === sendingTask.supertask
         {
             if let index = container.index(of: sendingTask),
-                sendingTask.subtasks.count < 2
+                sendingTask.numberOfSubtasks < 2
             {
                 delegate?.didChangeSubtasksOfSubtask(at: index)
             }
@@ -168,7 +159,7 @@ class TaskList: Observable, Observer
     {
         guard container != nil,
             let updatedTask = sender as? Task,
-            let indexOfUpdatedTask = updatedTask.indexInContainer
+            let indexOfUpdatedTask = updatedTask.indexInSupertask
         else
         {
             return
@@ -230,7 +221,7 @@ class TaskList: Observable, Observer
     
     private func firstUncheckedTask(from: Int = 0) -> Task?
     {
-        for i in from ..< tasks.count
+        for i in from ..< numberOfTasks
         {
             if let uncheckedTask = task(at: i), uncheckedTask.state != .done
             {
@@ -246,7 +237,7 @@ class TaskList: Observable, Observer
         guard container != nil,
             let updatedTask = sender as? Task,
             updatedTask.supertask === container,
-            let indexOfUpdatedTask = updatedTask.indexInContainer
+            let indexOfUpdatedTask = updatedTask.indexInSupertask
         else
         {
             return
@@ -267,7 +258,7 @@ class TaskList: Observable, Observer
             return
         }
         
-        for i in (0 ..< container.subtasks.count).reversed()
+        for i in (0 ..< container.numberOfSubtasks).reversed()
         {
             if let subtask = container.subtask(at: i),
                 subtask.state != .done
@@ -339,7 +330,7 @@ class TaskList: Observable, Observer
     {
         var result = [Int]()
         
-        for index in 0 ..< tasks.count
+        for index in 0 ..< numberOfTasks
         {
             if let task = task(at: index),
                 selectedTasksByUuid[task.uuid] != nil
@@ -369,53 +360,6 @@ class TaskList: Observable, Observer
     var title: String
     {
         return container?.title ?? "untitled"
-    }
-    
-    func goToSuperContainer() -> Bool
-    {
-        //print("list of container \(container?.title ?? "untitled") wants to go to super container")
-        
-        guard let myContainer = container else
-        {
-            print("cannot go to super container because my container is nil")
-            return false
-        }
-        
-        guard let superContainer = myContainer.supertask else
-        {
-            //print("cannot go to super container because it is nil")
-            return false
-        }
-        
-        container = superContainer
-        
-        selectedTasksByUuid = [myContainer.uuid : myContainer]
-        
-        return true
-    }
-    
-    func goToSelectedTask() -> Bool
-    {
-        guard selectedTasksByUuid.count == 1,
-            let selectedTask = selectedTasksByUuid.values.first,
-            selectedTask.isContainer
-        else
-        {
-            return false
-        }
-        
-        container = selectedTask
-        
-        if let firstTask = task(at: 0)
-        {
-            selectedTasksByUuid = [firstTask.uuid : firstTask]
-        }
-        else
-        {
-            selectedTasksByUuid = [:]
-        }
-        
-        return true
     }
     
     weak var container: Task?
@@ -470,10 +414,10 @@ class TaskList: Observable, Observer
             taskDidChangeTitle(sender: task)
         case .didMoveSubtask(let from, let to):
             taskDidMoveSubtask(sender: task, from: from, to: to)
-        case .didChangeSubtasks(let method, let indexes):
-            taskDidChangeSubtasks(sendingTask: task,
-                                  method: method,
-                                  indexes: indexes)
+        case .didInsertSubtask:
+            taskDidChangeSubtasks(sendingTask: task, event: event)
+        case .didRemoveSubtasks:
+            taskDidChangeSubtasks(sendingTask: task, event: event)
         }
     }
     

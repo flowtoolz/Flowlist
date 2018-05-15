@@ -25,7 +25,7 @@ extension TaskStore
             return
         }
         
-        loadedRoot.setContainers()
+        loadedRoot.recoverSupertasks()
         
         root = loadedRoot
         
@@ -43,11 +43,5 @@ extension Task
     convenience init()
     {
         self.init(with: UUID().uuidString)
-    }
-    
-    // exclude container property from being encoded to avoid crash due to cyclic object relationships
-    enum CodingKeys: String, CodingKey
-    {
-        case uuid, title, state, subtasks
     }
 }
