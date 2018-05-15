@@ -78,39 +78,6 @@ class TaskListViewModel: Observable, Observer
         return true
     }
     
-    // FIXME: split this for insertion and removal
-    func taskDidChangeSubtasks(sendingTask: Task,
-                               event: Task.Event)
-    {
-        guard let container = supertask else
-        {
-            selectedTasks.removeAll()
-            delegate?.didChangeListContainer()
-            return
-        }
-        
-        if container === sendingTask
-        {
-            switch(event)
-            {
-            case .didRemoveSubtasks(let indexes):
-                unselectSubtasks(at: indexes)
-                delegate?.didDeleteSubtasks(at: indexes)
-            case .didInsertSubtask(let index):
-                delegate?.didInsertSubtask(at: index)
-            default: break
-            }
-        }
-        else if container === sendingTask.supertask
-        {
-            if let index = container.index(of: sendingTask),
-                sendingTask.numberOfSubtasks < 2
-            {
-                delegate?.didChangeSubtasksOfSubtask(at: index)
-            }
-        }
-    }
-    
     // MARK: - Move Selected Task
     
     func moveSelectedTaskUp() -> Bool
@@ -141,39 +108,9 @@ class TaskListViewModel: Observable, Observer
         return container.moveSubtask(from: selectedIndex, to: selectedIndex + 1)
     }
     
-    func taskDidMoveSubtask(sender: Task?, from: Int, to: Int)
-    {
-        guard let sendingTask = sender,
-            supertask === sendingTask
-        else
-        {
-            return
-        }
-        
-        delegate?.didMoveSubtask(from: from, to: to)
-    }
+    
     
     // MARK: - Task Data
-    
-    func taskDidChangeTitle(sender: Any)
-    {
-        guard supertask != nil,
-            let updatedTask = sender as? Task,
-            let indexOfUpdatedTask = updatedTask.indexInSupertask
-        else
-        {
-            return
-        }
-        
-        if updatedTask.supertask === supertask
-        {
-            delegate?.didChangeTitleOfSubtask(at: indexOfUpdatedTask)
-        }
-        else if updatedTask === supertask
-        {
-            delegate?.didChangeListContainerTitle()
-        }
-    }
     
     func checkOffFirstSelectedUncheckedTask()
     {
@@ -230,44 +167,6 @@ class TaskListViewModel: Observable, Observer
         }
         
         return nil
-    }
-    
-    func taskDidChangeState(sender: Any)
-    {
-        guard supertask != nil,
-            let updatedTask = sender as? Task,
-            updatedTask.supertask === supertask,
-            let indexOfUpdatedTask = updatedTask.indexInSupertask
-        else
-        {
-            return
-        }
-        
-        delegate?.didChangeStateOfSubtask(at: indexOfUpdatedTask)
-        
-        if updatedTask.state == .done
-        {
-            taskAtIndexWasCheckedOff(indexOfUpdatedTask)
-        }
-    }
-    
-    private func taskAtIndexWasCheckedOff(_ index: Int)
-    {
-        guard let container = supertask else
-        {
-            return
-        }
-        
-        for i in (0 ..< container.numberOfSubtasks).reversed()
-        {
-            if let subtask = container.subtask(at: i),
-                subtask.state != .done
-            {
-                _ = container.moveSubtask(from: index, to: i + (i < index ? 1 : 0))
-                
-                return
-            }
-        }
     }
     
     // MARK: - Selection
@@ -355,39 +254,6 @@ class TaskListViewModel: Observable, Observer
         }
     }
     
-    // MARK: - Observing a Task
-    
-    private func observe(task: Task)
-    {
-        observe(task)
-        {
-            [weak self, weak task] event in
-            
-            guard let task = task else { return }
-            
-            self?.didReceive(event: event, from: task)
-        }
-    }
-    
-    private func didReceive(event: Task.Event, from task: Task)
-    {
-        switch (event)
-        {
-        case .didNothing:
-            break
-        case .didChangeState:
-            taskDidChangeState(sender: task)
-        case .didChangeTitle:
-            taskDidChangeTitle(sender: task)
-        case .didMoveSubtask(let from, let to):
-            taskDidMoveSubtask(sender: task, from: from, to: to)
-        case .didInsertSubtask:
-            taskDidChangeSubtasks(sendingTask: task, event: event)
-        case .didRemoveSubtasks:
-            taskDidChangeSubtasks(sendingTask: task, event: event)
-        }
-    }
-    
     // MARK: - Being Observed
     
     var latestUpdate: Event { return .didNothing }
@@ -400,40 +266,193 @@ class TaskListViewModel: Observable, Observer
     
     // MARK: - Supertask
     
-    var title: String
-    {
-        return supertask?.title ?? "untitled"
-    }
+    var title: String { return supertask?.title ?? "untitled" }
     
     weak var supertask: Task?
     {
         didSet
         {
-            guard oldValue !== supertask else { return }
-            
-            if let supertask = supertask
+            if oldValue !== supertask { supertaskDidChange() }
+        }
+    }
+    
+    private func supertaskDidChange()
+    {
+        resetObservations()
+        selectedTasks = [:]
+        delegate?.didChangeListContainer()
+    }
+    
+    // MARK: - Observations
+    
+    private func resetObservations()
+    {
+        stopAllObserving()
+        
+        guard let supertask = supertask else { return }
+        
+        observe(task: supertask)
+        
+        for index in 0 ..< supertask.numberOfSubtasks
+        {
+            if let subtask = supertask.subtask(at: index)
             {
-                observe(task: supertask)
+                observe(task: subtask)
+            }
+        }
+    }
+    
+    private func observe(task: Task)
+    {
+        observe(task)
+        {
+            [weak self, weak task] event in
+            
+            guard let task = task else { return }
+            
+            self?.didReceive(event, from: task)
+        }
+    }
+    
+    private func didReceive(_ event: Task.Event, from task: Task)
+    {
+        switch (event)
+        {
+        case .didNothing:
+            break
+            
+        case .didChangeState:
+            taskDidChangeState(task)
+            
+        case .didChangeTitle:
+            taskDidChangeTitle(task)
+            
+        case .didMoveSubtask(let from, let to):
+            self.task(task, didMoveSubtaskFrom: from, to: to)
+            
+        case .didInsertSubtask(let index):
+            self.task(task, didInsertSubtaskAt: index)
+            
+        case .didRemoveSubtasks(let indexes):
+            self.task(task, didRemoveSubtasksAt: indexes)
+        }
+    }
+    
+    // MARK: - React to State Change
+    
+    private func taskDidChangeState(_ task: Task)
+    {
+        guard supertask != nil,
+            task.supertask === supertask,
+            let indexOfUpdatedTask = task.indexInSupertask
+        else
+        {
+            return
+        }
+        
+        delegate?.didChangeStateOfSubtask(at: indexOfUpdatedTask)
+        
+        if task.state == .done
+        {
+            taskAtIndexWasCheckedOff(indexOfUpdatedTask)
+        }
+    }
+    
+    private func taskAtIndexWasCheckedOff(_ index: Int)
+    {
+        guard let supertask = supertask else { return }
+        
+        for i in (0 ..< supertask.numberOfSubtasks).reversed()
+        {
+            if let subtask = supertask.subtask(at: i),
+                subtask.state != .done
+            {
+                _ = supertask.moveSubtask(from: index,
+                                          to: i + (i < index ? 1 : 0))
                 
-                for index in 0 ..< supertask.numberOfSubtasks
-                {
-                    if let subtask = supertask.subtask(at: index)
-                    {
-                        observe(task: subtask)
-                    }
-                }
+                return
             }
-            else
-            {
-                selectedTasks = [:]
-            }
-            
-            if let oldValue = oldValue
-            {
-                stopObserving(oldValue)
-            }
-            
+        }
+    }
+    
+    // MARK: - React to Title Change
+    
+    private func taskDidChangeTitle(_ task: Task)
+    {
+        guard supertask != nil, let taskIndex = task.indexInSupertask else
+        {
+            return
+        }
+        
+        if task.supertask === supertask
+        {
+            delegate?.didChangeTitleOfSubtask(at: taskIndex)
+        }
+        else if task === supertask
+        {
+            delegate?.didChangeListContainerTitle()
+        }
+    }
+    
+    // MARK: - React to Subtask Move
+    
+    private func task(_ task: Task, didMoveSubtaskFrom from: Int, to: Int)
+    {
+        guard supertask === task else { return }
+        
+        delegate?.didMoveSubtask(from: from, to: to)
+    }
+    
+    // MARK: - React to Insertion
+    
+    private func task(_ task: Task, didInsertSubtaskAt index: Int)
+    {
+        // FIXME: what is this? an error edge case??
+        guard let supertask = supertask else
+        {
+            selectedTasks.removeAll()
             delegate?.didChangeListContainer()
+            return
+        }
+        
+        if supertask === task
+        {
+            delegate?.didInsertSubtask(at: index)
+        }
+        else if supertask === task.supertask
+        {
+            if let index = supertask.index(of: task)
+            {
+                delegate?.subtasksChangedInTask(at: index)
+            }
+        }
+    }
+    
+    // MARK: - React to Removal
+    
+    private func task(_ task: Task, didRemoveSubtasksAt indexes: [Int])
+    {
+        // FIXME: what is this? an error edge case??
+        guard let supertask = supertask else
+        {
+            selectedTasks.removeAll()
+            delegate?.didChangeListContainer()
+            return
+        }
+        
+        // update from supertask
+        if supertask === task
+        {
+            unselectSubtasks(at: indexes)
+            delegate?.didDeleteSubtasks(at: indexes)
+        }
+        // update from regular task
+        else if supertask === task.supertask
+        {
+            if let index = task.indexInSupertask
+            {
+                delegate?.subtasksChangedInTask(at: index)
+            }
         }
     }
     
@@ -453,7 +472,7 @@ extension Task
 
 protocol TaskListDelegate: AnyObject
 {
-    func didChangeSubtasksOfSubtask(at index: Int)
+    func subtasksChangedInTask(at index: Int)
     func didChangeStateOfSubtask(at index: Int)
     func didChangeTitleOfSubtask(at index: Int)
     

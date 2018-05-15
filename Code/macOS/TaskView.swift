@@ -38,7 +38,7 @@ class TaskView: NSView, NSTextFieldDelegate
         
         updateTitleField()
         updateCheckBox()
-        updateContainerIndicator()
+        updateGroupIndicator()
     }
     
     // MARK: - Title Field
@@ -98,7 +98,7 @@ class TaskView: NSView, NSTextFieldDelegate
     {
         titleField.autoAlignAxis(.horizontal, toSameAxisOf: self)
         titleField.autoPinEdge(.left, to: .right, of: checkBox)
-        titleField.autoPinEdge(.right, to: .left, of: containerIndicator, withOffset: -5)
+        titleField.autoPinEdge(.right, to: .left, of: groupIndicator, withOffset: -5)
     }
     
     lazy var titleField: TextField =
@@ -185,21 +185,21 @@ class TaskView: NSView, NSTextFieldDelegate
     private static let checkBoxImageEmpty = NSImage(named: NSImage.Name(rawValue: "checkbox_unchecked"))
     private static let checkBoxImageChecked = NSImage(named: NSImage.Name(rawValue: "checkbox_checked"))
     
-    // MARK: - Container Indicator
+    // MARK: - Group Indicator
     
-    func updateContainerIndicator()
+    func updateGroupIndicator()
     {
-        containerIndicator.isHidden = !(task?.hasSubtasks ?? false)
+        groupIndicator.isHidden = !(task?.hasSubtasks ?? false)
     }
     
     private func layoutContainerIndicator()
     {
-        containerIndicator.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+        groupIndicator.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                         excludingEdge: .left)
-        containerIndicator.autoSetDimension(.width, toSize: 22)
+        groupIndicator.autoSetDimension(.width, toSize: 22)
     }
     
-    private lazy var containerIndicator: NSImageView =
+    private lazy var groupIndicator: NSImageView =
     {
         let view = NSImageView.newAutoLayout()
         self.addSubview(view)

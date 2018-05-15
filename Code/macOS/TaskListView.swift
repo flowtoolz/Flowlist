@@ -293,13 +293,20 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         tableView.rowView(atRow: index, makeIfNecessary: false)?.display()
     }
     
-    func didChangeSubtasksOfSubtask(at index: Int)
+    func subtasksChangedInTask(at index: Int)
     {
-        if let taskView = tableView.view(atColumn: 0,
-                                         row: index,
-                                         makeIfNecessary: false) as? TaskView
+        updateGroupIndicator(at: index)
+    }
+    
+    private func updateGroupIndicator(at index: Int)
+    {
+        if let numberOfSubtasks = taskList?.task(at: index)?.numberOfSubtasks,
+            numberOfSubtasks < 2,
+            let taskView = tableView.view(atColumn: 0,
+                                          row: index,
+                                          makeIfNecessary: false) as? TaskView
         {
-            taskView.updateContainerIndicator()
+            taskView.updateGroupIndicator()
         }
     }
     
