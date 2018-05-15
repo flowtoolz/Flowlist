@@ -1,4 +1,5 @@
 import SwiftObserver
+import SwiftyToolz
 
 class Task: Codable, Observable, Observer
 {
@@ -9,9 +10,8 @@ class Task: Codable, Observable, Observer
                      state: State? = nil)
     {
         self.init(with: uuid)
-        
+
         self.title = title
-        
         self.state = state
     }
     
@@ -22,43 +22,14 @@ class Task: Codable, Observable, Observer
     
     // MARK: - Logging
     
-    func logRecursively(_ numberIndents: Int = 0)
+    func log()
     {
-        for _ in 0 ..< numberIndents
-        {
-            print("\t", separator: "", terminator: "")
-        }
-        
         print(description)
-        
-        if elements.count > 0
-        {
-            for _ in 0 ..< numberIndents
-            {
-                print("\t", separator: "", terminator: "")
-            }
-            
-            print("{")
-            
-            for element in elements
-            {
-                element.logRecursively(numberIndents + 1)
-            }
-            
-            for _ in 0 ..< numberIndents
-            {
-                print("\t", separator: "", terminator: "")
-            }
-            
-            print("}")
-        }
     }
     
     var description: String
     {
-        let containerTitle = container == nil ? "none" : (container?.title ?? "untitled")
-        let stateString = state == .done ? "done" : "backlog"
-        return "\(title ?? "untitled") (container: \(containerTitle), state: \(stateString))"
+        return encode()?.utf8String ?? typeName(of: self)
     }
     
     // MARK: - Edit Hierarchy
@@ -103,7 +74,7 @@ class Task: Codable, Observable, Observer
             return false
         }
         
-        elements.insert(task, at: index)
+        subtasks.insert(task, at: index)
         
         task.container = self
         
@@ -129,7 +100,7 @@ class Task: Codable, Observable, Observer
         
         while let indexToRemove = sorted.popLast()
         {
-            let removedSubtask = elements.remove(at: indexToRemove)
+            let removedSubtask = subtasks.remove(at: indexToRemove)
             
             removedSubtasks.append(removedSubtask)
             
@@ -146,7 +117,7 @@ class Task: Codable, Observable, Observer
     
     func moveSubtask(from: Int, to: Int) -> Bool
     {
-        let didMove = elements.moveElement(from: from, to: to)
+        let didMove = subtasks.moveElement(from: from, to: to)
         
         if didMove
         {
@@ -174,16 +145,11 @@ class Task: Codable, Observable, Observer
         return subtasks[index]
     }
     
-    var subtasks: [Task]
-    {
-        return elements
-    }
-    
     func allSubtasksRecursively() -> [Task]
     {
         var tasks = [self]
 
-        for task in elements
+        for task in subtasks
         {
             tasks.append(contentsOf: task.allSubtasksRecursively())
         }
@@ -198,7 +164,7 @@ class Task: Codable, Observable, Observer
     
     func index(of subtask: Task) -> Int?
     {
-        return elements.index(where: { $0 === subtask })
+        return subtasks.index(where: { $0 === subtask })
     }
     
     // MARK: - Data
@@ -235,7 +201,9 @@ class Task: Codable, Observable, Observer
     
     private(set) weak var container: Task? = nil
     
-    private var elements = [Task]()
+    // MARK: - Subtasks
+    
+    private(set) var subtasks = [Task]()
     
     // MARK: - Event
     

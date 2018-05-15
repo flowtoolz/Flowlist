@@ -48,6 +48,6 @@ extension Task
     // exclude container property from being encoded to avoid crash due to cyclic object relationships
     enum CodingKeys: String, CodingKey
     {
-        case uuid, title, state, elements
+        case uuid, title, state, subtasks
     }
 }
