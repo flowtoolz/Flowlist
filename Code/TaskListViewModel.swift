@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-class TaskList: Observable, Observer
+class TaskListViewModel: Observable, Observer
 {
     // MARK: - List of Tasks
 

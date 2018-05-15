@@ -14,7 +14,7 @@ class TaskListCoordinator: Observer
         }
     }
     
-    private func observe(list: TaskList)
+    private func observe(list: TaskListViewModel)
     {
         observe(list)
         {
@@ -22,25 +22,29 @@ class TaskListCoordinator: Observer
             
             guard let list = list else { return }
             
-            self?.listChangedSelection(list)
+            switch(event)
+            {
+            case .didNothing: break
+            case .didChangeSelection: self?.listChangedSelection(list)
+            }
         }
     }
     
-    func moveRight() -> TaskList
+    func moveRight() -> TaskListViewModel
     {
         lists.remove(at: 0)
         
-        let newList = TaskList()
+        let newList = TaskListViewModel()
         lists.append(newList)
         
         return newList
     }
     
-    func moveLeft() -> TaskList
+    func moveLeft() -> TaskListViewModel
     {
         _ = lists.popLast()
         
-        let newList = TaskList()
+        let newList = TaskListViewModel()
         
         lists.insert(newList, at: 0)
         
@@ -69,7 +73,7 @@ class TaskListCoordinator: Observer
         }
     }
     
-    private func listChangedSelection(_ list: TaskList)
+    private func listChangedSelection(_ list: TaskListViewModel)
     {
         guard let index = lists.index(where: { $0 === list }) else
         {
@@ -121,9 +125,9 @@ class TaskListCoordinator: Observer
         master.container = slave.container?.supertask
     }
     
-    var lists = [TaskList(),
-                 TaskList(),
-                 TaskList(),
-                 TaskList(),
-                 TaskList()]
+    var lists = [TaskListViewModel(),
+                 TaskListViewModel(),
+                 TaskListViewModel(),
+                 TaskListViewModel(),
+                 TaskListViewModel()]
 }

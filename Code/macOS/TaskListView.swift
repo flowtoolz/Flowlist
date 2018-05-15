@@ -6,7 +6,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
 {
     // MARK: - Table View
     
-    convenience init(with list: TaskList)
+    convenience init(with list: TaskListViewModel)
     {
         self.init(frame: NSRect.zero)
         
@@ -478,7 +478,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     // MARK: - Task List
     
-    private(set) weak var taskList: TaskList?
+    private(set) weak var taskList: TaskListViewModel?
 }
 
 func logFirstResponder()
