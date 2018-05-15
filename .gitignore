@@ -7,6 +7,7 @@ DerivedData/
 ### settings
 *.pbxuser
 xcuserdata/
+xcuserdata/**
 
 ### carthage
 Checkouts/
