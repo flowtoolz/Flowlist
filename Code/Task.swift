@@ -44,49 +44,27 @@ class Task: Codable, Observable
     @discardableResult
     func groupSubtasks(at indexes: [Int]) -> Task?
     {
-        let sortedIndexes = indexes.sorted()
-        
-        guard let groupIndex = sortedIndexes.first,
+        guard let groupIndex = indexes.min(),
             subtasks.isValid(index: groupIndex),
-            subtasks.isValid(index: sortedIndexes.last)
+            subtasks.isValid(index: indexes.max())
         else
         {
             return nil
         }
         
-        let group = Task()
+        let removedTasks = removeSubtasks(at: indexes)
         
-        for index in indexes
+        guard let group = insert(Task(), at: groupIndex) else
         {
-            if let subtask = subtask(at: index)
-            {
-                _ = group.insert(subtask, at: group.subtasks.count)
-            }
+            fatalError("Could not insert group at valid index \(groupIndex).")
         }
         
-        _ = removeSubtasks(at: indexes)
-        
-        _ = insert(group, at: groupIndex)
-        
+        for removedTask in removedTasks
+        {
+            group.insert(removedTask, at: group.numberOfSubtasks)
+        }
+       
         return group
-    }
-    
-    @discardableResult
-    func insert(_ subtask: Task, at index: Int) -> Bool
-    {
-        guard index >= 0, index <= subtasks.count else
-        {
-            print("Warning: tried to insert Task at an out of bound index into another task")
-            return false
-        }
-        
-        subtasks.insert(subtask, at: index)
-        
-        subtask.supertask = self
-        
-        send(.didInsertItem(index: index))
-        
-        return true
     }
     
     @discardableResult
@@ -94,8 +72,7 @@ class Task: Codable, Observable
     {
         var sortedIndexes = indexes.sorted()
         
-        guard
-            subtasks.isValid(index: sortedIndexes.first),
+        guard subtasks.isValid(index: sortedIndexes.first),
             subtasks.isValid(index: sortedIndexes.last)
             else
         {
@@ -108,19 +85,33 @@ class Task: Codable, Observable
         while let indexToRemove = sortedIndexes.popLast()
         {
             let removedSubtask = subtasks.remove(at: indexToRemove)
+        
+            removedSubtask.supertask = nil
             
-            // FIXME: was this condition necessary for some side effect? avoid it!
-            if removedSubtask.supertask === self
-            {
-                removedSubtask.supertask = nil
-            }
-            
-            removedSubtasks.append(removedSubtask)
+            removedSubtasks.insert(removedSubtask, at: 0)
         }
         
         send(.didRemoveItems(indexes: indexes))
         
         return removedSubtasks
+    }
+    
+    @discardableResult
+    func insert(_ subtask: Task, at index: Int) -> Task?
+    {
+        guard index >= 0, index <= subtasks.count else
+        {
+            print("Warning: tried to insert Task at an out of bound index into another task")
+            return nil
+        }
+        
+        subtasks.insert(subtask, at: index)
+        
+        subtask.supertask = self
+        
+        send(.didInsertItem(index: index))
+        
+        return subtask
     }
     
     @discardableResult
