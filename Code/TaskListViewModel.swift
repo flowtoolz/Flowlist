@@ -256,7 +256,7 @@ class TaskListViewModel: Observable, Observer
     
     // MARK: - Supertask
     
-    var title: String { return supertask?.title ?? "untitled" }
+    var title: String { return supertask?.title.value ?? "untitled" }
     
     weak var supertask: Task?
     {
@@ -281,13 +281,32 @@ class TaskListViewModel: Observable, Observer
         
         guard let supertask = supertask else { return }
         
+        // observe supertask
         observe(task: supertask)
         
+        observe(supertask.title)
+        {
+            [weak self] _ in
+            
+            self?.send(.didChangeListContainerTitle)
+        }
+        
+        // observe listed tasks
         for index in 0 ..< supertask.numberOfSubtasks
         {
-            if let subtask = supertask.subtask(at: index)
+            guard let task = supertask.subtask(at: index) else { continue }
+            
+            observe(task: task)
+            
+            observe(task.title)
             {
-                observe(task: subtask)
+                [weak self, weak task] titleUpdate in
+                
+                if let taskIndex = task?.indexInSupertask,
+                    titleUpdate.new != titleUpdate.old
+                {
+                    self?.send(.didChangeTitleOfTask(at: taskIndex))
+                }
             }
         }
     }
@@ -313,9 +332,6 @@ class TaskListViewModel: Observable, Observer
             
         case .didChangeState:
             taskDidChangeState(task)
-            
-        case .didChangeTitle:
-            taskDidChangeTitle(task)
             
         case .didMoveSubtask(let from, let to):
             self.task(task, didMoveSubtaskFrom: from, to: to)
@@ -361,25 +377,6 @@ class TaskListViewModel: Observable, Observer
                 
                 return
             }
-        }
-    }
-    
-    // MARK: - React to Title Change
-    
-    private func taskDidChangeTitle(_ task: Task)
-    {
-        guard supertask != nil, let taskIndex = task.indexInSupertask else
-        {
-            return
-        }
-        
-        if task.supertask === supertask
-        {
-            send(.didChangeTitleOfTask(at: taskIndex))
-        }
-        else if task === supertask
-        {
-            send(.didChangeListContainerTitle)
         }
     }
     

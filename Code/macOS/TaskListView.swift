@@ -4,7 +4,7 @@ import SwiftObserver
 
 class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListTableViewDelegate, TaskViewTextFieldDelegate, Observer, Observable
 {
-    // MARK: - Table View
+    // MARK: - Life Cycle
     
     init(with list: TaskListViewModel)
     {
@@ -39,51 +39,17 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         updateTitle()
     }
     
+    required init?(coder decoder: NSCoder)
+    {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     deinit
     {
         stopAllObserving()
     }
     
-    private func didReceive(_ event: TaskListViewModel.Event)
-    {
-        switch(event)
-        {
-        case .didNothing:
-            break
-            
-        case .didChangeSelection:
-            break
-            
-        case .didChangeSubtasksInTask(let index):
-            subtasksChangedInTask(at: index)
-            
-        case .didChangeStateOfTask(let index):
-            didChangeStateOfSubtask(at: index)
-            
-        case .didChangeTitleOfTask(let index):
-            didChangeTitleOfSubtask(at: index)
-            
-        case .didChangeListContainer:
-            didChangeListContainer()
-            
-        case .didChangeListContainerTitle:
-            didChangeListContainerTitle()
-            
-        case .didInsertTask(let index):
-            didInsertSubtask(at: index)
-            
-        case .didDeleteTasks(let indexes):
-            didDeleteSubtasks(at: indexes)
-            
-        case .didMoveTask(let from, let to):
-            didMoveSubtask(from: from, to: to)
-        }
-    }
-    
-    required init?(coder decoder: NSCoder)
-    {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - Header View
     
     private lazy var titleField: NSTextField =
     {
@@ -107,7 +73,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     func updateTitle()
     {
-        titleField.stringValue = taskList?.supertask?.title ?? ""
+        titleField.stringValue = taskList?.supertask?.title.value ?? ""
     }
     
     private func hideHeader()
@@ -132,6 +98,8 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         
         return view
     }()
+    
+    // MARK: - Scrolling Table View
     
     lazy var scrollView: NSScrollView =
     {
@@ -261,7 +229,43 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         }
     }
     
-    // MARK: - Reacting to Updates
+    // MARK: - Process List Events
+    
+    private func didReceive(_ event: TaskListViewModel.Event)
+    {
+        switch(event)
+        {
+        case .didNothing:
+            break
+            
+        case .didChangeSelection:
+            break
+            
+        case .didChangeSubtasksInTask(let index):
+            subtasksChangedInTask(at: index)
+            
+        case .didChangeStateOfTask(let index):
+            didChangeStateOfSubtask(at: index)
+            
+        case .didChangeTitleOfTask(let index):
+            didChangeTitleOfSubtask(at: index)
+            
+        case .didChangeListContainer:
+            didChangeListContainer()
+            
+        case .didChangeListContainerTitle:
+            updateTitle()
+            
+        case .didInsertTask(let index):
+            didInsertSubtask(at: index)
+            
+        case .didDeleteTasks(let indexes):
+            didDeleteSubtasks(at: indexes)
+            
+        case .didMoveTask(let from, let to):
+            didMoveSubtask(from: from, to: to)
+        }
+    }
     
     func didDeleteSubtasks(at indexes: [Int])
     {
@@ -297,38 +301,38 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         }
     }
     
-    func didChangeListContainerTitle()
-    {
-        updateTitle()
-    }
-    
     func didChangeTitleOfSubtask(at index: Int)
     {
-        if let taskView = tableView.view(atColumn: 0,
-                                         row: index,
-                                         makeIfNecessary: false) as? TaskView
+        guard index < tableView.numberOfRows,
+            let taskView = tableView.view(atColumn: 0,
+                                          row: index,
+                                          makeIfNecessary: false) as? TaskView
+        else
         {
-            taskView.updateTitleField()
+            return
+        }
+        
+        taskView.updateTitleField()
+        
+        if taskList?.selectedTasks.count ?? 0 > 1,
+            let firstSelectedIndex = taskList?.selectedIndexesSorted.first,
+            let firstSelectedTask = taskList?.task(at: firstSelectedIndex)
+        {
+            taskList?.selectedTasks[firstSelectedTask.hash] = nil
             
-            if taskList?.selectedTasks.count ?? 0 > 1,
-                let firstSelectedIndex = taskList?.selectedIndexesSorted.first,
-                let firstSelectedTask = taskList?.task(at: firstSelectedIndex)
+            if let nextEditingIndex = taskList?.selectedIndexesSorted.first
             {
-                taskList?.selectedTasks[firstSelectedTask.hash] = nil
-                
-                if let nextEditingIndex = taskList?.selectedIndexesSorted.first
-                {
-                    startEditing(at: nextEditingIndex)
-                }
+                startEditing(at: nextEditingIndex)
             }
         }
     }
     
     func didChangeStateOfSubtask(at index: Int)
     {
-        guard let taskView = tableView.view(atColumn: 0,
-                                            row: index,
-                                            makeIfNecessary: false) as? TaskView
+        guard index < tableView.numberOfRows,
+            let taskView = tableView.view(atColumn: 0,
+                                          row: index,
+                                          makeIfNecessary: false) as? TaskView
         else
         {
             return
@@ -348,6 +352,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     {
         if let numberOfSubtasks = taskList?.task(at: index)?.numberOfSubtasks,
             numberOfSubtasks < 2,
+            index < tableView.numberOfRows,
             let taskView = tableView.view(atColumn: 0,
                                           row: index,
                                           makeIfNecessary: false) as? TaskView
@@ -439,7 +444,8 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         
         updateTableSelection()
         
-        if let cell = tableView.view(atColumn: 0,
+        if index < tableView.numberOfRows,
+            let cell = tableView.view(atColumn: 0,
                                      row: index,
                                      makeIfNecessary: false) as? TaskView
         {

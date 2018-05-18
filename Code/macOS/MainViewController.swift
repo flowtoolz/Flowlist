@@ -6,7 +6,12 @@ import SwiftyToolz
 
 class MainViewController: NSViewController, Observer
 {
-    // MARK: - View Life Cycle
+    // MARK: - Life Cycle
+    
+    deinit
+    {
+        stopAllObserving()
+    }
     
     override func loadView()
     {
@@ -18,10 +23,13 @@ class MainViewController: NSViewController, Observer
                                               alpha: 1.0).cgColor
     }
     
+    // MARK: - View Delegate
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
+        createListViews()
         //layoutBackroundImage()
         layoutListViews()
     }
@@ -68,7 +76,7 @@ class MainViewController: NSViewController, Observer
         return view
     }()
 
-    // MARK: - Task List Views
+    // MARK: - Layout List Views
     
     func layoutListViews()
     {
@@ -120,25 +128,43 @@ class MainViewController: NSViewController, Observer
     
     private var listViewContraints = [NSLayoutConstraint]()
     
-    lazy var listViews: [TaskListView] =
+    // MARK: - List Views
+    
+    private func createListViews()
     {
-        var listViews = [TaskListView]()
+        listViews.removeAll()
         
         for list in listCoordinator.lists
         {
-            let listView = TaskListView(with: list)
-            view.addSubview(listView)
-            
-            observe(listView: listView)
-            
+            addListView(with: list)
+        }
+    }
+    
+    @discardableResult
+    private func addListView(with list: TaskListViewModel,
+                             prepend: Bool = false) -> TaskListView
+    {
+        let listView = TaskListView(with: list)
+        view.addSubview(listView)
+        
+        observe(listView: listView)
+        
+        if prepend
+        {
+            listViews.insert(listView, at: 0)
+        }
+        else
+        {
             listViews.append(listView)
         }
         
-        return listViews
-    }()
-
+        return listView
+    }
+    
+    var listViews = [TaskListView]()
+    
     // MARK: - Observing Task List Views
-
+    
     private func observe(listView: TaskListView)
     {
         observe(listView)
@@ -164,11 +190,6 @@ class MainViewController: NSViewController, Observer
         case .tableViewWasClicked:
             tableViewWasClickedInTaskListView(listView)
         }
-    }
-    
-    deinit
-    {
-        stopAllObserving()
     }
     
     // MARK: - Navigation
@@ -245,7 +266,7 @@ class MainViewController: NSViewController, Observer
     {
         guard listViews.isValid(index: index),
             listViews[index].taskList?.supertask != nil
-            else
+        else
         {
             return
         }
@@ -272,10 +293,8 @@ class MainViewController: NSViewController, Observer
         let rightList = listCoordinator.moveRight()
         
         // append new list view to end
-        let addedListView = TaskListView(with: rightList)
+        let addedListView = addListView(with: rightList)
         addedListView.isHidden = true
-        self.view.addSubview(addedListView)
-        listViews.append(addedListView)
         
         // let coordinator update new list
         listCoordinator.setContainerOfLastList()
@@ -292,11 +311,12 @@ class MainViewController: NSViewController, Observer
                 layoutListViews()
                 
                 view.layoutSubtreeIfNeeded()
-        },
+            },
             completionHandler:
             {
                 addedListView.isHidden = false
-        })
+            }
+        )
     }
     
     private func navigateLeft()
@@ -309,10 +329,8 @@ class MainViewController: NSViewController, Observer
         let leftList = listCoordinator.moveLeft()
         
         // add new list view to front
-        let addedListView = TaskListView(with: leftList)
+        let addedListView = addListView(with: leftList, prepend: true)
         addedListView.isHidden = true
-        view.addSubview(addedListView)
-        listViews.insert(addedListView, at: 0)
         
         // let coordinator update new list
         listCoordinator.setContainerOfMaster(at: 0)
@@ -333,10 +351,11 @@ class MainViewController: NSViewController, Observer
                 layoutListViews()
                 
                 view.layoutSubtreeIfNeeded()
-        },
+            },
             completionHandler:
             {
                 addedListView.isHidden = false
-        })
+            }
+        )
     }
 }

@@ -1,4 +1,5 @@
 import AppKit
+import SwiftObserver
 
 class TaskView: NSView, NSTextFieldDelegate
 {
@@ -45,7 +46,7 @@ class TaskView: NSView, NSTextFieldDelegate
     
     func updateTitleField()
     {
-        titleField.stringValue = self.task?.title ?? ""
+        titleField.stringValue = self.task?.title.value ?? ""
     }
     
     func startEditingTitle()
@@ -82,7 +83,7 @@ class TaskView: NSView, NSTextFieldDelegate
     
     @objc func didEndEditing()
     {        
-        task?.title = newTitle
+        task?.title <- newTitle
         
         NotificationCenter.default.removeObserver(self)
     }

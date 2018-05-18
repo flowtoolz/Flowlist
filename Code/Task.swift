@@ -10,7 +10,7 @@ class Task: Codable, Observable
     {
         self.init()
         
-        self.title = title
+        self.title <- title
         self.state = state
     }
     
@@ -126,16 +126,7 @@ class Task: Codable, Observable
     
     // MARK: - Title
     
-    var title: String?
-    {
-        didSet
-        {
-            if title != oldValue
-            {
-                send(.didChangeTitle)
-            }
-        }
-    }
+    private(set) var title = Var<String>()
     
     // MARK: - State
     
@@ -205,7 +196,6 @@ class Task: Codable, Observable
         case didNothing
         
         case didChangeState
-        case didChangeTitle
         
         case didMoveSubtask(from: Int, to: Int)
         case didInsertSubtask(index: Int)

@@ -6,8 +6,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     {
         store.load()
         
-        //store.root.log()
-        
         setupWindow()
     }
     
