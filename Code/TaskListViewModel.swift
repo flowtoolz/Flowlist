@@ -247,7 +247,6 @@ class TaskListViewModel: Observable, Observer
         {
             if Set(oldValue.keys) != Set(selectedTasks.keys)
             {
-                //print("selection changed: \(selectedIndexes.description)")
                 validateSelection()
                 send(.didChangeSelection)
             }

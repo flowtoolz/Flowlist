@@ -6,12 +6,7 @@ class MainViewModel: Observer
 {
     fileprivate init()
     {
-        lists[2].supertask = store.root
-        
-        for list in lists
-        {
-            observe(list: list)
-        }
+        createTaskLists()
     }
     
     private func observe(list: TaskListViewModel)
@@ -28,38 +23,25 @@ class MainViewModel: Observer
     
     func moveRight() -> TaskListViewModel
     {
-        lists.remove(at: 0)
-        
-        let newList = TaskListViewModel()
-        lists.append(newList)
-        
-        return newList
+        stopObserving(lists.remove(at: 0))
+
+        return addTaskList()
     }
     
     func moveLeft() -> TaskListViewModel
     {
-        _ = lists.popLast()
+        stopObserving(lists.popLast())
         
-        let newList = TaskListViewModel()
-        
-        lists.insert(newList, at: 0)
-        
-        return newList
+        return addTaskList(prepend: true)
     }
     
     func selectSlaveInMaster(at index: Int)
     {
-        guard index >= 0, index + 1 < lists.count else
-        {
-            return
-        }
+        guard index >= 0, index + 1 < lists.count else { return }
         
         let master = lists[index]
         
-        guard master.supertask?.hasSubtasks ?? false else
-        {
-            return
-        }
+        guard master.supertask?.hasSubtasks ?? false else { return }
         
         let slave = lists[index + 1]
         
@@ -89,10 +71,7 @@ class MainViewModel: Observer
     
     func setContainerOfSlave(at index: Int)
     {
-        guard index > 0, index < lists.count else
-        {
-            return
-        }
+        guard index > 0, index < lists.count else { return }
         
         let slave = lists[index]
         let master = lists[index - 1]
@@ -110,10 +89,7 @@ class MainViewModel: Observer
     
     func setContainerOfMaster(at index: Int)
     {
-        guard index >= 0, index < lists.count - 1 else
-        {
-            return
-        }
+        guard index >= 0, index < lists.count - 1 else { return }
         
         let master = lists[index]
         let slave = lists[index + 1]
@@ -121,9 +97,35 @@ class MainViewModel: Observer
         master.supertask = slave.supertask?.supertask
     }
     
-    var lists = [TaskListViewModel(),
-                 TaskListViewModel(),
-                 TaskListViewModel(),
-                 TaskListViewModel(),
-                 TaskListViewModel()]
+    // MARK: Task List View Models
+    
+    private func createTaskLists()
+    {
+        lists.removeAll()
+        
+        for _ in 0 ..< 5 { addTaskList() }
+        
+        lists[2].supertask = store.root
+    }
+    
+    @discardableResult
+    private func addTaskList(prepend: Bool = false) -> TaskListViewModel
+    {
+        let list = TaskListViewModel()
+        
+        observe(list: list)
+        
+        if prepend
+        {
+            lists.insert(list, at: 0)
+        }
+        else
+        {
+            lists.append(list)
+        }
+        
+        return list
+    }
+    
+    var lists = [TaskListViewModel]()
 }
