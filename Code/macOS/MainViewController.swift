@@ -30,7 +30,6 @@ class MainViewController: NSViewController, Observer
         super.viewDidLoad()
         
         createListViews()
-        //layoutBackroundImage()
         layoutListViews()
     }
     
@@ -46,35 +45,6 @@ class MainViewController: NSViewController, Observer
             _ = moveInputFocus(to: 2)
         }
     }
-    
-    // MARK: - Background Image
-    
-    private func layoutBackroundImage()
-    {
-        backgroundImage.autoPinEdgesToSuperviewEdges()
-        backgroundOverlay.autoPinEdgesToSuperviewEdges()
-    }
-    
-    private lazy var backgroundOverlay: NSView =
-    {
-        let view = NSView.newAutoLayout()
-        self.view.addSubview(view)
-        
-        view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.4).cgColor
-        
-        return view
-    }()
-    
-    private lazy var backgroundImage: NSImageView =
-    {
-        let image = NSImage(named: NSImage.Name(rawValue: "grass")) ?? NSImage()
-        
-        let view = NSImageView(withAspectFillImage: image)
-        self.view.addSubview(view)
-        
-        return view
-    }()
 
     // MARK: - Layout List Views
     
