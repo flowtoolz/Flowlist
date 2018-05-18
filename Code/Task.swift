@@ -11,7 +11,7 @@ class Task: Codable, Observable
         self.init()
         
         self.title <- title
-        self.state = state
+        self.state <- state
     }
     
     // MARK: - Edit Subtask List
@@ -130,16 +130,9 @@ class Task: Codable, Observable
     
     // MARK: - State
     
-    var state: State?
-    {
-        didSet
-        {
-            if state != oldValue
-            {
-                send(.didChangeState)
-            }
-        }
-    }
+    var isDone: Bool { return state.value == .done }
+    
+    private(set) var state = Var<State>()
     
     enum State: Int, Codable
     {
@@ -194,9 +187,6 @@ class Task: Codable, Observable
     enum Event
     {
         case didNothing
-        
-        case didChangeState
-        
         case didMoveSubtask(from: Int, to: Int)
         case didInsertSubtask(index: Int)
         case didRemoveSubtasks(indexes: [Int])

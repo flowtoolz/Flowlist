@@ -26,7 +26,7 @@ class TaskListRow: NSTableRowView
     
     override func drawBackground(in dirtyRect: NSRect)
     {
-        let color = task?.state == .done ? TaskView.doneColor : NSColor.white
+        let color = task?.isDone ?? false ? TaskView.doneColor : NSColor.white
         
         drawBackground(with: color)
     }

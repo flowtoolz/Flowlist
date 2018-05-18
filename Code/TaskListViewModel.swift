@@ -23,7 +23,7 @@ class TaskListViewModel: Observable, Observer
         
         selectedTasks = [group.hash : group]
         
-        observe(task: group)
+        observe(listed: group)
         
         return group.indexInSupertask
     }
@@ -41,7 +41,7 @@ class TaskListViewModel: Observable, Observer
         
         _ = container.insert(task, at: indexToInsert)
         
-        observe(task: task)
+        observe(listed: task)
         
         return indexToInsert
     }
@@ -108,8 +108,6 @@ class TaskListViewModel: Observable, Observer
         return container.moveSubtask(from: selectedIndex, to: selectedIndex + 1)
     }
     
-    
-    
     // MARK: - Task Data
     
     func checkOffFirstSelectedUncheckedTask()
@@ -120,8 +118,7 @@ class TaskListViewModel: Observable, Observer
         
         for selectedIndex in selectedIndexesSorted
         {
-            if let selectedTask = task(at: selectedIndex),
-                selectedTask.state != .done
+            if let selectedTask = task(at: selectedIndex), !selectedTask.isDone
             {
                 potentialTaskToCheck = selectedTask
                 potentialIndexToCheck = selectedIndex
@@ -144,7 +141,7 @@ class TaskListViewModel: Observable, Observer
             taskToSelect = firstUncheckedTask(from: indexToCheck + 1)
         }
         
-        taskToCheck.state = .done
+        taskToCheck.state <- .done
         
         if let taskToSelect = taskToSelect
         {
@@ -160,7 +157,7 @@ class TaskListViewModel: Observable, Observer
     {
         for i in from ..< numberOfTasks
         {
-            if let uncheckedTask = task(at: i), uncheckedTask.state != .done
+            if let uncheckedTask = task(at: i), !uncheckedTask.isDone
             {
                 return uncheckedTask
             }
@@ -295,17 +292,33 @@ class TaskListViewModel: Observable, Observer
         {
             guard let task = supertask.subtask(at: index) else { continue }
             
-            observe(task: task)
+            observe(listed: task)
+        }
+    }
+    
+    private func observe(listed task: Task)
+    {
+        observe(task: task)
+        
+        observe(task.title)
+        {
+            [weak self, weak task] titleUpdate in
             
-            observe(task.title)
+            if let taskIndex = task?.indexInSupertask,
+                titleUpdate.new != titleUpdate.old
             {
-                [weak self, weak task] titleUpdate in
-                
-                if let taskIndex = task?.indexInSupertask,
-                    titleUpdate.new != titleUpdate.old
-                {
-                    self?.send(.didChangeTitleOfTask(at: taskIndex))
-                }
+                self?.send(.didChangeTitleOfTask(at: taskIndex))
+            }
+        }
+        
+        observe(task.state)
+        {
+            [weak self, weak task] stateUpdate in
+            
+            if let task = task,
+                stateUpdate.new != stateUpdate.old
+            {
+                self?.taskDidChangeState(task)
             }
         }
     }
@@ -329,9 +342,6 @@ class TaskListViewModel: Observable, Observer
         case .didNothing:
             break
             
-        case .didChangeState:
-            taskDidChangeState(task)
-            
         case .didMoveSubtask(let from, let to):
             self.task(task, didMoveSubtaskFrom: from, to: to)
             
@@ -347,16 +357,11 @@ class TaskListViewModel: Observable, Observer
     
     private func taskDidChangeState(_ task: Task)
     {
-        guard task.supertask === supertask,
-            let taskIndex = task.indexInSupertask
-        else
-        {
-            return
-        }
+        guard let taskIndex = task.indexInSupertask else { return }
         
         send(.didChangeStateOfTask(at: taskIndex))
         
-        if task.state == .done
+        if task.isDone
         {
             taskAtIndexWasCheckedOff(taskIndex)
         }
@@ -368,8 +373,7 @@ class TaskListViewModel: Observable, Observer
         
         for i in (0 ..< supertask.numberOfSubtasks).reversed()
         {
-            if let subtask = supertask.subtask(at: i),
-                subtask.state != .done
+            if let subtask = supertask.subtask(at: i), !subtask.isDone
             {
                 _ = supertask.moveSubtask(from: index,
                                           to: i + (i < index ? 1 : 0))

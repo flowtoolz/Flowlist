@@ -67,7 +67,8 @@ class TaskView: NSView, NSTextFieldDelegate
         }
     }
     
-    func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool
+    func control(_ control: NSControl,
+                 textShouldEndEditing fieldEditor: NSText) -> Bool
     {
         newTitle = String(withNonEmpty: fieldEditor.string)
         
@@ -99,7 +100,10 @@ class TaskView: NSView, NSTextFieldDelegate
     {
         titleField.autoAlignAxis(.horizontal, toSameAxisOf: self)
         titleField.autoPinEdge(.left, to: .right, of: checkBox)
-        titleField.autoPinEdge(.right, to: .left, of: groupIndicator, withOffset: -5)
+        titleField.autoPinEdge(.right,
+                               to: .left,
+                               of: groupIndicator,
+                               withOffset: -5)
     }
     
     lazy var titleField: TextField =
@@ -134,14 +138,14 @@ class TaskView: NSView, NSTextFieldDelegate
     
     @objc func checkBoxClicked()
     {
-        task?.state = task?.state == .done ? nil : .done
+        _ = task?.state <- task?.isDone ?? false ? nil : .done
         
         updateCheckBox()
     }
     
     func updateCheckBox()
     {
-        let isChecked = task?.state == .done
+        let isChecked = task?.isDone ?? false
         
         let correctImage = checkBoxImage(isChecked)
         
