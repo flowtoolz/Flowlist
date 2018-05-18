@@ -466,10 +466,3 @@ class TaskListViewModel: Observable, Observer
         case didMoveTask(from: Int, to: Int)
     }
 }
-
-// MARK: -
-
-extension Task
-{
-    var hash: HashValue { return SwiftyToolz.hash(self) }
-}

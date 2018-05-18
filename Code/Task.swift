@@ -18,6 +18,8 @@ class Task: Codable, Observable
         case inProgress, onHold, done, archived
     }
     
+    var hash: HashValue { return SwiftyToolz.hash(self) }
+    
     // MARK: - Edit Subtask List
     
     @discardableResult
