@@ -70,7 +70,7 @@ class Task: Codable, Observable
             removedSubtasks.insert(removedSubtask, at: 0)
         }
         
-        send(.didRemoveItems(indexes: indexes))
+        send(.didRemoveItems(at: indexes))
         
         return removedSubtasks
     }
@@ -88,7 +88,7 @@ class Task: Codable, Observable
         
         subtask.supertask = self
         
-        send(.didInsertItem(index: index))
+        send(.didInsertItem(at: index))
         
         return subtask
     }
