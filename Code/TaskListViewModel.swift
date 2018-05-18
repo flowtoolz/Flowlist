@@ -216,7 +216,7 @@ class TaskListViewModel: Observable, Observer
         {
             if container.index(of: selectedTask) == nil
             {
-                print("warning: subtask is selected but not in the container. will be unselected: \(selectedTask.description)")
+                print("warning: subtask is selected but not in the container. will be unselected: \(selectedTask.title.value ?? "untitled")")
                 selectedTasks[selectedTask.hash] = nil
             }
         }

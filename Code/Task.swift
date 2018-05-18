@@ -3,30 +3,9 @@ import SwiftyToolz
 
 class Task: Codable, Observable
 {
-    // MARK: - Initialization
-    
-    convenience init(title: String? = nil,
-                     state: State? = nil)
-    {
-        self.init()
-        
-        self.title <- title
-        self.state <- state
-    }
-    
-    // MARK: - Description & Codability
-    
-    var description: String
-    {
-        return encode()?.utf8String ?? typeName(of: self)
-    }
-    
-    enum CodingKeys: String, CodingKey
-    {
-        case title, state, subtasks
-    }
-    
     // MARK: - Data
+    
+    enum CodingKeys: CodingKey { case title, state, subtasks }
     
     private(set) var title = Var<String>()
     
@@ -117,14 +96,11 @@ class Task: Codable, Observable
     @discardableResult
     func moveSubtask(from: Int, to: Int) -> Bool
     {
-        let didMove = subtasks.moveElement(from: from, to: to)
+        guard subtasks.moveElement(from: from, to: to) else { return false }
         
-        if didMove
-        {
-            send(.didMoveItem(from: from, to: to))
-        }
+        send(.didMoveItem(from: from, to: to))
         
-        return didMove
+        return true
     }
     
     var latestUpdate: ListEditingEvent { return .didNothing }
@@ -163,10 +139,7 @@ class Task: Codable, Observable
         }
     }
     
-    var indexInSupertask: Int?
-    {
-        return supertask?.index(of: self)
-    }
+    var indexInSupertask: Int? { return supertask?.index(of: self) }
     
     private(set) weak var supertask: Task? = nil
 }
