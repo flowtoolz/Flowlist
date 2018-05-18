@@ -14,6 +14,31 @@ class Task: Codable, Observable
         self.state <- state
     }
     
+    // MARK: - Description & Codability
+    
+    var description: String
+    {
+        return encode()?.utf8String ?? typeName(of: self)
+    }
+    
+    enum CodingKeys: String, CodingKey
+    {
+        case title, state, subtasks
+    }
+    
+    // MARK: - Data
+    
+    private(set) var title = Var<String>()
+    
+    var isDone: Bool { return state.value == .done }
+    
+    private(set) var state = Var<State>()
+    
+    enum State: Int, Codable
+    {
+        case inProgress, onHold, done, archived
+    }
+    
     // MARK: - Edit Subtask List
     
     @discardableResult
@@ -21,8 +46,7 @@ class Task: Codable, Observable
     {
         let sortedIndexes = indexes.sorted()
         
-        guard
-            let groupIndex = sortedIndexes.first,
+        guard let groupIndex = sortedIndexes.first,
             subtasks.isValid(index: groupIndex),
             subtasks.isValid(index: sortedIndexes.last)
         else
@@ -31,7 +55,7 @@ class Task: Codable, Observable
         }
         
         let group = Task()
-
+        
         for index in indexes
         {
             if let subtask = subtask(at: index)
@@ -60,7 +84,7 @@ class Task: Codable, Observable
         
         subtask.supertask = self
         
-        send(.didInsertSubtask(index: index))
+        send(.didInsertItem(index: index))
         
         return true
     }
@@ -73,12 +97,12 @@ class Task: Codable, Observable
         guard
             subtasks.isValid(index: sortedIndexes.first),
             subtasks.isValid(index: sortedIndexes.last)
-        else
+            else
         {
             print("Warning: tried to remove tasks with at least one out of bound index")
             return []
         }
-    
+        
         var removedSubtasks = [Task]()
         
         while let indexToRemove = sortedIndexes.popLast()
@@ -94,7 +118,7 @@ class Task: Codable, Observable
             removedSubtasks.append(removedSubtask)
         }
         
-        send(.didRemoveSubtasks(indexes: indexes))
+        send(.didRemoveItems(indexes: indexes))
         
         return removedSubtasks
     }
@@ -106,38 +130,36 @@ class Task: Codable, Observable
         
         if didMove
         {
-            send(.didMoveSubtask(from: from, to: to))
+            send(.didMoveItem(from: from, to: to))
         }
         
         return didMove
     }
     
-    // MARK: - Description & Codability
+    var latestUpdate: ListEditingEvent { return .didNothing }
     
-    var description: String
+    // MARK: - Subtasks
+    
+    func subtask(at index: Int) -> Task?
     {
-        return encode()?.utf8String ?? typeName(of: self)
+        guard subtasks.isValid(index: index) else
+        {
+            print("Warning: tried to access Task at an out of bound index")
+            return nil
+        }
+        
+        return subtasks[index]
     }
     
-    enum CodingKeys: String, CodingKey
+    func index(of subtask: Task) -> Int?
     {
-        case title, state, subtasks
+        return subtasks.index { $0 === subtask }
     }
     
-    // MARK: - Title
+    var hasSubtasks: Bool { return subtasks.count > 0 }
+    var numberOfSubtasks: Int { return subtasks.count }
     
-    private(set) var title = Var<String>()
-    
-    // MARK: - State
-    
-    var isDone: Bool { return state.value == .done }
-    
-    private(set) var state = Var<State>()
-    
-    enum State: Int, Codable
-    {
-        case inProgress, onHold, done, archived
-    }
+    private var subtasks = [Task]()
     
     // MARK: - Supertask
     
@@ -156,39 +178,4 @@ class Task: Codable, Observable
     }
     
     private(set) weak var supertask: Task? = nil
-    
-    // MARK: - Subtasks
-    
-    func subtask(at index: Int) -> Task?
-    {
-        guard subtasks.isValid(index: index) else
-        {
-            print("Warning: tried to access Task at an out of bound index")
-            return nil
-        }
-        
-        return subtasks[index]
-    }
-    
-    func index(of subtask: Task) -> Int?
-    {
-        return subtasks.index(where: { $0 === subtask })
-    }
-    
-    var hasSubtasks: Bool { return subtasks.count > 0 }
-    var numberOfSubtasks: Int { return subtasks.count }
-    
-    private var subtasks = [Task]()
-    
-    // MARK: - Observability
-    
-    var latestUpdate: Event { return .didNothing }
-    
-    enum Event
-    {
-        case didNothing
-        case didMoveSubtask(from: Int, to: Int)
-        case didInsertSubtask(index: Int)
-        case didRemoveSubtasks(indexes: [Int])
-    }
 }

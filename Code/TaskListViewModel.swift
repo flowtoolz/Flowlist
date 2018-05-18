@@ -335,20 +335,20 @@ class TaskListViewModel: Observable, Observer
         }
     }
     
-    private func didReceive(_ event: Task.Event, from task: Task)
+    private func didReceive(_ event: ListEditingEvent, from task: Task)
     {
         switch (event)
         {
         case .didNothing:
             break
             
-        case .didMoveSubtask(let from, let to):
+        case .didMoveItem(let from, let to):
             self.task(task, didMoveSubtaskFrom: from, to: to)
             
-        case .didInsertSubtask(let index):
+        case .didInsertItem(let index):
             self.task(task, didInsertSubtaskAt: index)
             
-        case .didRemoveSubtasks(let indexes):
+        case .didRemoveItems(let indexes):
             self.task(task, didRemoveSubtasksAt: indexes)
         }
     }
