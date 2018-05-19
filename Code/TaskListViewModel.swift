@@ -290,15 +290,10 @@ class TaskListViewModel: Observable, Observer
     {
         guard let taskIndex = task.indexInSupertask else { return }
         
-        send(.didChangeStateOfTask(at: taskIndex))
-        
-        if task.isDone
-        {
-            taskAtIndexWasCheckedOff(taskIndex)
-        }
+        if task.isDone { moveCheckedOffTask(at: taskIndex) }
     }
     
-    private func taskAtIndexWasCheckedOff(_ index: Int)
+    private func moveCheckedOffTask(at index: Int)
     {
         guard let supertask = supertask else { return }
         
@@ -349,8 +344,7 @@ class TaskListViewModel: Observable, Observer
     {
         case didNothing
         
-        // for task view
-        case didChangeStateOfTask(at: Int)
+        // for task view & subtask list
         case didChangeTitleOfTask(at: Int)
         
         // really necessary?

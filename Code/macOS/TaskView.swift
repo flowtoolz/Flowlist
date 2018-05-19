@@ -1,5 +1,6 @@
 import AppKit
 import SwiftObserver
+import SwiftyToolz
 
 class TaskView: NSView, NSTextFieldDelegate, Observer
 {
@@ -50,7 +51,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
         observe(task: task)
         
         titleField.stringValue = task.title.value ?? ""
-        updateCheckBox()
+        adjustTo(state: task.state.value)
         updateGroupIndicator()
     }
     
@@ -60,7 +61,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
         {
             [weak self] event in
             
-            switch (event)
+            switch event
             {
             case .didInsertItem, .didRemoveItems:
                 self?.updateGroupIndicator()
@@ -75,10 +76,18 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
             
             self?.titleField.stringValue = update.new ?? ""
         }
+        
+        observe(task.state)
+        {
+            [weak self] update in
+            
+            self?.adjustTo(state: update.new)
+        }
     }
     
     private func stopObserving(task: Task?)
     {
+        stopObserving(task?.state)
         stopObserving(task?.title)
         stopObserving(task)
     }
@@ -92,15 +101,9 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
     
     var isTitleEditingEnabled: Bool
     {
-        set
-        {
-            titleField.isEditable = newValue
-        }
+        set { titleField.isEditable = newValue }
         
-        get
-        {
-            return titleField.isEditable
-        }
+        get { return titleField.isEditable }
     }
     
     func control(_ control: NSControl,
@@ -170,13 +173,11 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
     @objc func checkBoxClicked()
     {
         _ = task?.state <- task?.isDone ?? false ? nil : .done
-        
-        updateCheckBox()
     }
     
-    func updateCheckBox()
+    func adjustTo(state: Task.State?)
     {
-        let isChecked = task?.isDone ?? false
+        let isChecked = state == .done
         
         let correctImage = checkBoxImage(isChecked)
         

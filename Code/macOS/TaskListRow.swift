@@ -1,22 +1,27 @@
-//
-//  TaskListRow.swift
-//  TodayList
-//
-//  Created by Sebastian on 13/06/17.
-//  Copyright © 2017 Flowtoolz. All rights reserved.
-//
-
 import AppKit
+import SwiftObserver
 
-class TaskListRow: NSTableRowView
+class TaskListRow: NSTableRowView, Observer
 {
-    convenience init(with task: Task?)
+    init(with task: Task?)
     {
-        self.init()
+        super.init(frame: .zero)
         
         self.task = task
+        
+        if let task = task
+        {
+            observe(task.state) { [weak self] _ in self?.display() }
+        }
     }
-
+    
+    required init?(coder decoder: NSCoder)
+    {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit { stopObserving(task) }
+    
     override func drawSelection(in dirtyRect: NSRect)
     {
         let color = TaskView.selectionColor.withAlphaComponent(isEmphasized ? 1 : 0.5)
