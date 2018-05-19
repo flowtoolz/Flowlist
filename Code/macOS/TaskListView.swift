@@ -232,16 +232,16 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     {
         switch(event)
         {
-        case .didChangeTitleOfTask(let index):
+        case .didChangeTaskTitle(let index):
             didChangeTitleOfSubtask(at: index)
             
-        case .didChangeListContainer:
+        case .didChangeSupertask:
             didChangeListContainer()
             
-        case .didChangeListContainerTitle:
+        case .didChangeSupertaskTitle:
             updateTitle()
         
-        case .didChangeList(let change):
+        case .didChangeTaskList(let change):
             switch change
             {
             case .didInsertItem(let index):

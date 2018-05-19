@@ -224,7 +224,7 @@ class TaskListViewModel: Observable, Observer
         {
             [weak self] _ in
             
-            self?.send(.didChangeListContainerTitle)
+            self?.send(.didChangeSupertaskTitle)
         }
     }
     
@@ -237,11 +237,11 @@ class TaskListViewModel: Observable, Observer
             self.task(supertask, didMoveSubtaskFrom: from, to: to)
             
         case .didInsertItem(let index):
-            send(.didChangeList(.didInsertItem(at: index)))
+            send(.didChangeTaskList(.didInsertItem(at: index)))
             
         case .didRemoveItems(let indexes):
             selection.removeTasks(at: indexes)
-            send(.didChangeList(.didRemoveItems(at: indexes)))
+            send(.didChangeTaskList(.didRemoveItems(at: indexes)))
             
         default: break
         }
@@ -268,7 +268,7 @@ class TaskListViewModel: Observable, Observer
             if let taskIndex = task?.indexInSupertask,
                 titleUpdate.new != titleUpdate.old
             {
-                self?.send(.didChangeTitleOfTask(at: taskIndex))
+                self?.send(.didChangeTaskTitle(at: taskIndex))
             }
         }
         
@@ -313,7 +313,7 @@ class TaskListViewModel: Observable, Observer
     {
         guard supertask === task else { return }
         
-        send(.didChangeList(.didMoveItem(from: from, to: to)))
+        send(.didChangeTaskList(.didMoveItem(from: from, to: to)))
     }
     
     // MARK: - Supertask
@@ -328,7 +328,7 @@ class TaskListViewModel: Observable, Observer
         didSet
         {
             selection.supertask = supertask
-            send(.didChangeListContainer)
+            send(.didChangeSupertask)
         }
     }
     
@@ -343,9 +343,9 @@ class TaskListViewModel: Observable, Observer
     enum Event: Equatable
     {
         case didNothing
-        case didChangeTitleOfTask(at: Int)
-        case didChangeListContainer
-        case didChangeListContainerTitle
-        case didChangeList(ListEditingEvent)
+        case didChangeTaskTitle(at: Int)
+        case didChangeTaskList(ListEditingEvent)
+        case didChangeSupertask
+        case didChangeSupertaskTitle
     }
 }
