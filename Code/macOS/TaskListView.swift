@@ -235,9 +235,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         case .didNothing:
             break
             
-        case .didChangeSubtasksInTask(let index):
-            subtasksChangedInTask(at: index)
-            
         case .didChangeStateOfTask(let index):
             didChangeStateOfSubtask(at: index)
             
@@ -337,22 +334,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         taskView.updateCheckBox()
         
         tableView.rowView(atRow: index, makeIfNecessary: false)?.display()
-    }
-    
-    func subtasksChangedInTask(at index: Int)
-    {
-        updateGroupIndicator(at: index)
-    }
-    
-    private func updateGroupIndicator(at index: Int)
-    {
-        if index < tableView.numberOfRows,
-            let taskView = tableView.view(atColumn: 0,
-                                          row: index,
-                                          makeIfNecessary: false) as? TaskView
-        {
-            taskView.updateGroupIndicator()
-        }
     }
     
     func didMoveSubtask(from: Int, to: Int)

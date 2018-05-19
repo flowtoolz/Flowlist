@@ -36,13 +36,29 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
     deinit
     {
         NotificationCenter.default.removeObserver(self)
+        stopAllObserving()
     }
     
     // MARK: - Configuration
     
     func configure(with task: Task)
     {
+        stopObserving(self.task)
+        
         self.task = task
+        
+        observe(task)
+        {
+            [weak self] event in
+            
+            switch (event)
+            {
+            case .didInsertItem, .didRemoveItems:
+                self?.updateGroupIndicator()
+                
+            default: break
+            }
+        }
         
         updateTitleField()
         updateCheckBox()

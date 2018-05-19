@@ -261,15 +261,6 @@ class TaskListViewModel: Observable, Observer
     
     private func observe(listedTask task: Task)
     {
-        observe(task)
-        {
-            [weak self, weak task] event in
-            
-            guard let task = task else { return }
-            
-            self?.didReceive(event, fromListedTask: task)
-        }
-        
         observe(task.title)
         {
             [weak self, weak task] titleUpdate in
@@ -290,21 +281,6 @@ class TaskListViewModel: Observable, Observer
             {
                 self?.taskDidChangeState(task)
             }
-        }
-    }
-    
-    private func didReceive(_ event: ListEditingEvent,
-                            fromListedTask task: Task)
-    {
-        switch (event)
-        {
-        case .didInsertItem, .didRemoveItems:
-            if let index = task.indexInSupertask
-            {
-                send(.didChangeSubtasksInTask(at: index))
-            }
-            
-        default: break
         }
     }
     
@@ -374,7 +350,6 @@ class TaskListViewModel: Observable, Observer
         case didNothing
         
         // for task view
-        case didChangeSubtasksInTask(at: Int)
         case didChangeStateOfTask(at: Int)
         case didChangeTitleOfTask(at: Int)
         
