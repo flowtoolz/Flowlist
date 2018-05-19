@@ -14,7 +14,7 @@ class TaskListViewModel: Observable, Observer
     func groupSelectedTasks() -> Int?
     {
         guard let container = supertask,
-            let group = container.groupSubtasks(at: selection.selectedIndexes)
+            let group = container.groupSubtasks(at: selection.indexes)
         else
         {
             return nil
@@ -33,7 +33,7 @@ class TaskListViewModel: Observable, Observer
         
         var indexToInsert = index ?? 0
         
-        if index == nil, let lastSelectedIndex = selection.selectedIndexes.last
+        if index == nil, let lastSelectedIndex = selection.indexes.last
         {
             indexToInsert = lastSelectedIndex + 1
         }
@@ -48,7 +48,7 @@ class TaskListViewModel: Observable, Observer
     func deleteSelectedTasks() -> Bool
     {
         // delete
-        let selectedIndexes = selection.selectedIndexes
+        let selectedIndexes = selection.indexes
         
         guard let firstSelectedIndex = selectedIndexes.first,
             let removedTasks = supertask?.removeSubtasks(at: selectedIndexes),
@@ -113,7 +113,7 @@ class TaskListViewModel: Observable, Observer
         var potentialTaskToCheck: Task?
         var potentialIndexToCheck: Int?
         
-        for selectedIndex in selection.selectedIndexes
+        for selectedIndex in selection.indexes
         {
             if let selectedTask = task(at: selectedIndex), !selectedTask.isDone
             {
@@ -356,7 +356,7 @@ class TaskListViewModel: Observable, Observer
         // update from supertask
         if supertask === task
         {
-            selection.unselectSubtasks(at: indexes)
+            selection.removeSubtasks(at: indexes)
             send(.didDeleteTasks(at: indexes))
         }
         // update from regular task

@@ -159,7 +159,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             {
                 if cmd
                 {
-                    if let index = taskList?.selection.selectedIndexes.first
+                    if let index = taskList?.selection.indexes.first
                     {
                         startEditing(at: index)
                     }
@@ -173,7 +173,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             {
                 if cmd
                 {
-                    if let index = taskList?.selection.selectedIndexes.first
+                    if let index = taskList?.selection.indexes.first
                     {
                         startEditing(at: index)
                     }
@@ -311,12 +311,12 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         taskView.updateTitleField()
         
         if taskList?.selection.count ?? 0 > 1,
-            let firstSelectedIndex = taskList?.selection.selectedIndexes.first,
+            let firstSelectedIndex = taskList?.selection.indexes.first,
             let firstSelectedTask = taskList?.task(at: firstSelectedIndex)
         {
             taskList?.selection.remove(firstSelectedTask)
             
-            if let nextEditingIndex = taskList?.selection.selectedIndexes.first
+            if let nextEditingIndex = taskList?.selection.indexes.first
             {
                 startEditing(at: nextEditingIndex)
             }
@@ -456,7 +456,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     func updateTableSelection()
     {
-        let selection = taskList?.selection.selectedIndexes ?? []
+        let selection = taskList?.selection.indexes ?? []
         
         guard selection.max() ?? 0 < tableView.numberOfRows else { return }
         

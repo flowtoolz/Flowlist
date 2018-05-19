@@ -5,7 +5,7 @@ class SubtaskSelection: Observable
 {
     // MARK: - Edit Selection
     
-    func unselectSubtasks(at indexes: [Int])
+    func removeSubtasks(at indexes: [Int])
     {
         var didChange = false
 
@@ -60,16 +60,6 @@ class SubtaskSelection: Observable
         send(.didChange)
     }
     
-    func isSelected(_ subtask: Task) -> Bool
-    {
-        return selectedSubtasks[subtask.hash] === subtask
-    }
-    
-    func isSubtask(_ subtask: Task) -> Bool
-    {
-        return task?.index(of: subtask) != nil
-    }
-    
     func removeAll()
     {
         guard count > 0 else { return }
@@ -81,7 +71,7 @@ class SubtaskSelection: Observable
     
     // MARK: - Root Task
     
-    var selectedIndexes: [Int]
+    var indexes: [Int]
     {
         var result = [Int]()
         
@@ -95,6 +85,11 @@ class SubtaskSelection: Observable
         }
         
         return result
+    }
+    
+    private func isSubtask(_ subtask: Task) -> Bool
+    {
+        return task?.index(of: subtask) != nil
     }
     
     weak var task: Task?
@@ -113,6 +108,11 @@ class SubtaskSelection: Observable
     
     var count: Int { return selectedSubtasks.count }
     var first: Task? { return selectedSubtasks.values.first }
+    
+    private func isSelected(_ subtask: Task) -> Bool
+    {
+        return selectedSubtasks[subtask.hash] === subtask
+    }
     
     private var selectedSubtasks = [HashValue : Task]()
     

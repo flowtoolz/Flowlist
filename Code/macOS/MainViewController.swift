@@ -186,7 +186,7 @@ class MainViewController: NSViewController, Observer
         
         if listView.taskList?.numberOfTasks ?? 0 > 0
         {
-            let selectionIndex = listView.taskList?.selection.selectedIndexes.first ?? 0
+            let selectionIndex = listView.taskList?.selection.indexes.first ?? 0
             
             // TODO: do we need this? why reset selection to first selection when setting input focus???
             if let selectedTask = listView.taskList?.task(at: selectionIndex)
