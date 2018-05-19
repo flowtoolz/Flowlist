@@ -59,7 +59,9 @@ class MainViewController: NSViewController, Observer
             
             if i == 0
             {
-                listViewContraints.append(listView.autoPinEdge(.right, to: .left, of: view))
+                listViewContraints.append(listView.autoPinEdge(.right,
+                                                               to: .left,
+                                                               of: view))
             }
             else
             {
@@ -91,7 +93,7 @@ class MainViewController: NSViewController, Observer
     {
         listViews.removeAll()
         
-        for list in listCoordinator.lists
+        for list in viewModel.lists
         {
             addListView(with: list)
         }
@@ -184,18 +186,19 @@ class MainViewController: NSViewController, Observer
         
         if listView.taskList?.numberOfTasks ?? 0 > 0
         {
-            let selectionIndex = listView.taskList?.selectedIndexesSorted.first ?? 0
+            let selectionIndex = listView.taskList?.selection.selectedIndexes.first ?? 0
             
             // TODO: do we need this? why reset selection to first selection when setting input focus???
             if let selectedTask = listView.taskList?.task(at: selectionIndex)
             {
-                listView.taskList?.selectedTasks = [selectedTask.hash : selectedTask]
+                listView.taskList?.selection.removeAll()
+                listView.taskList?.selection.add(selectedTask)
                 listView.updateTableSelection()
             }
         }
         else
         {
-            listView.taskList?.selectedTasks = [:]
+            listView.taskList?.selection.removeAll()
         }
         
         if !(NSApp.mainWindow?.makeFirstResponder(listView.tableView) ?? false)
@@ -247,14 +250,14 @@ class MainViewController: NSViewController, Observer
         removedListView.removeFromSuperview()
         
         // let coordinator go right
-        let rightList = listCoordinator.moveRight()
+        let rightList = viewModel.moveRight()
         
         // append new list view to end
         let addedListView = addListView(with: rightList)
         addedListView.isHidden = true
         
         // let coordinator update new list
-        listCoordinator.setContainerOfLastList()
+        viewModel.setContainerOfLastList()
         
         // animate the shit outa this
         NSAnimationContext.runAnimationGroup(
@@ -283,17 +286,17 @@ class MainViewController: NSViewController, Observer
         removedListView.removeFromSuperview()
         
         // let coordinator go left
-        let leftList = listCoordinator.moveLeft()
+        let leftList = viewModel.moveLeft()
         
         // add new list view to front
         let addedListView = addListView(with: leftList, prepend: true)
         addedListView.isHidden = true
         
         // let coordinator update new list
-        listCoordinator.setContainerOfMaster(at: 0)
+        viewModel.setContainerOfMaster(at: 0)
         
         // load and show selection of added list view
-        listCoordinator.selectSlaveInMaster(at: 0)
+        viewModel.selectSlaveInMaster(at: 0)
         addedListView.updateTableSelection()
         
         // animate the shit outa this
@@ -315,4 +318,6 @@ class MainViewController: NSViewController, Observer
             }
         )
     }
+    
+    private let viewModel = MainViewModel()
 }

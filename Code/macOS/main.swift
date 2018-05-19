@@ -77,15 +77,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     func windowDidBecomeKey(_ notification: Notification)
     {
-        print("did become key")
+        //print("did become key")
         
-        logFirstResponder()
+        //logFirstResponder()
         setupMenuOptions()
     }
     
     func windowDidBecomeMain(_ notification: Notification)
     {
-        print("did become main")
+        //print("did become main")
     }
     
     let window = NSWindow()

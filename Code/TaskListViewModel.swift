@@ -3,25 +3,24 @@ import SwiftyToolz
 
 class TaskListViewModel: Observable, Observer
 {
-    // MARK: - List of Tasks
-
-    var numberOfTasks: Int { return supertask?.numberOfSubtasks ?? 0 }
+    // MARK: - Life Cycle
     
-    func task(at index: Int) -> Task?
-    {
-        return supertask?.subtask(at: index)
-    }
+    init() { observeSelection() }
+    
+    deinit { stopAllObserving() }
+    
+    // MARK: - Edit Listing
     
     func groupSelectedTasks() -> Int?
     {
         guard let container = supertask,
-            let group = container.groupSubtasks(at: selectedIndexesSorted)
+            let group = container.groupSubtasks(at: selection.selectedIndexes)
         else
         {
             return nil
         }
         
-        selectedTasks = [group.hash : group]
+        selection.add(group)
         
         observe(listed: group)
         
@@ -34,7 +33,7 @@ class TaskListViewModel: Observable, Observer
         
         var indexToInsert = index ?? 0
         
-        if index == nil, let lastSelectedIndex = selectedIndexesSorted.last
+        if index == nil, let lastSelectedIndex = selection.selectedIndexes.last
         {
             indexToInsert = lastSelectedIndex + 1
         }
@@ -49,7 +48,7 @@ class TaskListViewModel: Observable, Observer
     func deleteSelectedTasks() -> Bool
     {
         // delete
-        let selectedIndexes = selectedIndexesSorted
+        let selectedIndexes = selection.selectedIndexes
         
         guard let firstSelectedIndex = selectedIndexes.first,
             let removedTasks = supertask?.removeSubtasks(at: selectedIndexes),
@@ -68,23 +67,21 @@ class TaskListViewModel: Observable, Observer
         // update selection
         if let newSelectedTask = task(at: max(firstSelectedIndex - 1, 0))
         {
-            selectedTasks = [newSelectedTask.hash : newSelectedTask]
+            selection.add(newSelectedTask)
         }
         else
         {
-            selectedTasks.removeAll()
+            selection.removeAll()
         }
         
         return true
     }
     
-    // MARK: - Move Selected Task
-    
     func moveSelectedTaskUp() -> Bool
     {
         guard let container = supertask,
-            selectedTasks.count == 1,
-            let selectedTask = selectedTasks.values.first,
+            selection.count == 1,
+            let selectedTask = selection.first,
             let selectedIndex = container.index(of: selectedTask)
         else
         {
@@ -97,8 +94,8 @@ class TaskListViewModel: Observable, Observer
     func moveSelectedTaskDown() -> Bool
     {
         guard let container = supertask,
-            selectedTasks.count == 1,
-            let selectedTask = selectedTasks.values.first,
+            selection.count == 1,
+            let selectedTask = selection.first,
             let selectedIndex = container.index(of: selectedTask)
         else
         {
@@ -108,7 +105,7 @@ class TaskListViewModel: Observable, Observer
         return container.moveSubtask(from: selectedIndex, to: selectedIndex + 1)
     }
     
-    // MARK: - Task Data
+    // MARK: - Edit State
     
     func checkOffFirstSelectedUncheckedTask()
     {
@@ -116,7 +113,7 @@ class TaskListViewModel: Observable, Observer
         var potentialTaskToCheck: Task?
         var potentialIndexToCheck: Int?
         
-        for selectedIndex in selectedIndexesSorted
+        for selectedIndex in selection.selectedIndexes
         {
             if let selectedTask = task(at: selectedIndex), !selectedTask.isDone
             {
@@ -136,7 +133,7 @@ class TaskListViewModel: Observable, Observer
         // determine which task to select after the ckeck off
         var taskToSelect: Task?
         
-        if selectedTasks.count == 1
+        if selection.count == 1
         {
             taskToSelect = firstUncheckedTask(from: indexToCheck + 1)
         }
@@ -145,11 +142,11 @@ class TaskListViewModel: Observable, Observer
         
         if let taskToSelect = taskToSelect
         {
-            selectedTasks = [taskToSelect.hash : taskToSelect]
+            selection.add(taskToSelect)
         }
-        else if selectedTasks.count > 1
+        else if selection.count > 1
         {
-            selectedTasks[taskToCheck.hash] = nil
+            selection.remove(taskToCheck)
         }
     }
     
@@ -166,93 +163,24 @@ class TaskListViewModel: Observable, Observer
         return nil
     }
     
-    // MARK: - Selection
+    // MARK: - Listed Tasks
     
-    func unselectSubtasks(at indexes: [Int])
+    var numberOfTasks: Int
     {
-        var newSelection = selectedTasks
-        
-        for index in indexes
-        {
-            if let task = task(at: index)
-            {
-                newSelection[task.hash] = nil
-            }
-        }
-        
-        selectedTasks = newSelection
+        return supertask?.numberOfSubtasks ?? 0
     }
     
-    func selectSubtasks(at indexes: [Int])
+    func task(at index: Int) -> Task?
     {
-        var newSelection = [HashValue : Task]()
-        
-        for index in indexes
-        {
-            if let task = task(at: index)
-            {
-                newSelection[task.hash] = task
-            }
-        }
-        
-        selectedTasks = newSelection
-    }
-    
-    private func validateSelection()
-    {
-        guard let container = supertask else
-        {
-            if selectedTasks.count > 0
-            {
-                print("warning: task list has no container but these selections: \(selectedTasks.description)")
-                
-                selectedTasks.removeAll()
-            }
-            
-            return
-        }
-        
-        for selectedTask in selectedTasks.values
-        {
-            if container.index(of: selectedTask) == nil
-            {
-                print("warning: subtask is selected but not in the container. will be unselected: \(selectedTask.title.value ?? "untitled")")
-                selectedTasks[selectedTask.hash] = nil
-            }
-        }
-    }
-    
-    var selectedIndexesSorted: [Int]
-    {
-        var result = [Int]()
-        
-        for index in 0 ..< numberOfTasks
-        {
-            if let task = task(at: index),
-                selectedTasks[task.hash] != nil
-            {
-                result.append(index)
-            }
-        }
-        
-        return result
-    }
-    
-    var selectedTasks = [HashValue : Task]()
-    {
-        didSet
-        {
-            if Set(oldValue.keys) != Set(selectedTasks.keys)
-            {
-                validateSelection()
-                send(.didChangeSelection)
-            }
-        }
+        return supertask?.subtask(at: index)
     }
     
     // MARK: - Supertask
     
-    var title: String { return supertask?.title.value ?? "untitled" }
+    var title: String
+    {
+        return supertask?.title.value ?? "untitled"
+    }
     
     weak var supertask: Task?
     {
@@ -264,8 +192,8 @@ class TaskListViewModel: Observable, Observer
     
     private func supertaskDidChange()
     {
+        selection.task = supertask
         resetObservations()
-        selectedTasks = [:]
         send(.didChangeListContainer)
     }
     
@@ -274,6 +202,8 @@ class TaskListViewModel: Observable, Observer
     private func resetObservations()
     {
         stopAllObserving()
+        
+        observeSelection()
         
         guard let supertask = supertask else { return }
         
@@ -353,7 +283,7 @@ class TaskListViewModel: Observable, Observer
         }
     }
     
-    // MARK: - React to State Change
+    // MARK: - React to Data Changes
     
     private func taskDidChangeState(_ task: Task)
     {
@@ -383,8 +313,6 @@ class TaskListViewModel: Observable, Observer
         }
     }
     
-    // MARK: - React to Subtask Move
-    
     private func task(_ task: Task, didMoveSubtaskFrom from: Int, to: Int)
     {
         guard supertask === task else { return }
@@ -392,14 +320,12 @@ class TaskListViewModel: Observable, Observer
         send(.didMoveTask(from: from, to: to))
     }
     
-    // MARK: - React to Insertion
-    
     private func task(_ task: Task, didInsertSubtaskAt index: Int)
     {
         // FIXME: what is this? an error edge case??
         guard let supertask = supertask else
         {
-            selectedTasks.removeAll()
+            selection.removeAll()
             send(.didChangeListContainer)
             return
         }
@@ -417,14 +343,12 @@ class TaskListViewModel: Observable, Observer
         }
     }
     
-    // MARK: - React to Removal
-    
     private func task(_ task: Task, didRemoveSubtasksAt indexes: [Int])
     {
         // FIXME: what is this? an error edge case??
         guard let supertask = supertask else
         {
-            selectedTasks.removeAll()
+            selection.removeAll()
             send(.didChangeListContainer)
             return
         }
@@ -432,7 +356,7 @@ class TaskListViewModel: Observable, Observer
         // update from supertask
         if supertask === task
         {
-            unselectSubtasks(at: indexes)
+            selection.unselectSubtasks(at: indexes)
             send(.didDeleteTasks(at: indexes))
         }
         // update from regular task
@@ -444,6 +368,23 @@ class TaskListViewModel: Observable, Observer
             }
         }
     }
+    
+    // MARK: - Selection
+    
+    private func observeSelection()
+    {
+        observe(selection)
+        {
+            [weak self] event in
+
+            if event == .didChange
+            {
+                self?.send(.didChangeSelection)
+            }
+        }
+    }
+    
+    let selection = SubtaskSelection()
     
     // MARK: - Observability
     

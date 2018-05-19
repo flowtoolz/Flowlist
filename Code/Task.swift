@@ -1,6 +1,13 @@
 import SwiftObserver
 import SwiftyToolz
 
+extension Task
+{
+    var description: String { return title.value ?? "untitled" }
+    
+    var hash: HashValue { return SwiftyToolz.hash(self) }
+}
+
 class Task: Codable, Observable
 {
     // MARK: - Data
@@ -17,8 +24,6 @@ class Task: Codable, Observable
     {
         case inProgress, onHold, done, archived
     }
-    
-    var hash: HashValue { return SwiftyToolz.hash(self) }
     
     // MARK: - Edit Subtask List
     
@@ -57,7 +62,7 @@ class Task: Codable, Observable
             subtasks.isValid(index: sortedIndexes.last)
             else
         {
-            print("Warning: tried to remove tasks with at least one out of bound index")
+            log(warning: "Tried to remove tasks from at least one out of bound index in \(indexes).")
             return []
         }
         
@@ -82,7 +87,7 @@ class Task: Codable, Observable
     {
         guard index >= 0, index <= subtasks.count else
         {
-            print("Warning: tried to insert Task at an out of bound index into another task")
+            log(warning: "Tried to insert Task at out of bound index \(index).")
             return nil
         }
         
@@ -113,7 +118,7 @@ class Task: Codable, Observable
     {
         guard subtasks.isValid(index: index) else
         {
-            print("Warning: tried to access Task at an out of bound index")
+            log(warning: "Tried to access Task at out of bound index \(index).")
             return nil
         }
         

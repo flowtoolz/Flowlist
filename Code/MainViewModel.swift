@@ -1,13 +1,9 @@
 import SwiftObserver
-
-let listCoordinator = MainViewModel()
+import SwiftyToolz
 
 class MainViewModel: Observer
 {
-    fileprivate init()
-    {
-        createTaskLists()
-    }
+    init() { createTaskLists() }
     
     private func observe(list: TaskListViewModel)
     {
@@ -47,7 +43,8 @@ class MainViewModel: Observer
         
         if let slaveContainer = slave.supertask
         {
-            master.selectedTasks = [slaveContainer.hash : slaveContainer]
+            master.selection.removeAll()
+            master.selection.add(slaveContainer)
         }
     }
     
@@ -55,7 +52,7 @@ class MainViewModel: Observer
     {
         guard let index = lists.index(where: { $0 === list }) else
         {
-            print("Warning: unknown TaskList changed selection.")
+            log(warning: "Unknown TaskList changed selection.")
             return
         }
         
@@ -76,8 +73,8 @@ class MainViewModel: Observer
         let slave = lists[index]
         let master = lists[index - 1]
         
-        guard master.selectedTasks.count == 1,
-            let container = master.selectedTasks.values.first
+        guard master.selection.count == 1,
+            let container = master.selection.first
         else
         {
             slave.supertask = nil
