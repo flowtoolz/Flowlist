@@ -1,4 +1,4 @@
-enum ListEditingEvent
+enum ListEditingEvent: Equatable
 {
     case didNothing
     case didMoveItem(from: Int, to: Int)

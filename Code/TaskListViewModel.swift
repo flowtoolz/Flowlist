@@ -237,11 +237,11 @@ class TaskListViewModel: Observable, Observer
             self.task(supertask, didMoveSubtaskFrom: from, to: to)
             
         case .didInsertItem(let index):
-            send(.didInsertTask(at: index))
+            send(.didChangeList(.didInsertItem(at: index)))
             
         case .didRemoveItems(let indexes):
             selection.removeTasks(at: indexes)
-            send(.didDeleteTasks(at: indexes))
+            send(.didChangeList(.didRemoveItems(at: indexes)))
             
         default: break
         }
@@ -313,7 +313,7 @@ class TaskListViewModel: Observable, Observer
     {
         guard supertask === task else { return }
         
-        send(.didMoveTask(from: from, to: to))
+        send(.didChangeList(.didMoveItem(from: from, to: to)))
     }
     
     // MARK: - Supertask
@@ -343,17 +343,9 @@ class TaskListViewModel: Observable, Observer
     enum Event: Equatable
     {
         case didNothing
-        
-        // for task view & subtask list
         case didChangeTitleOfTask(at: Int)
-        
-        // really necessary?
         case didChangeListContainer
         case didChangeListContainerTitle
-        
-        // for task list
-        case didInsertTask(at: Int)
-        case didDeleteTasks(at: [Int])
-        case didMoveTask(from: Int, to: Int)
+        case didChangeList(ListEditingEvent)
     }
 }
