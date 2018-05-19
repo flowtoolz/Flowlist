@@ -247,7 +247,7 @@ class TaskListViewModel: Observable, Observer
             send(.didChangeTaskList(event))
             
         case .didRemoveItems(let indexes):
-            selection.removeTasks(at: indexes)
+            selection.removeAll()
             send(.didChangeTaskList(.didRemoveItems(at: indexes)))
             
         default: break
