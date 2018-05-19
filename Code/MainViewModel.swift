@@ -7,7 +7,7 @@ class MainViewModel: Observer
     
     private func observe(list: TaskListViewModel)
     {
-        observe(list, filter: { $0 == .didChangeSelection })
+        observe(list.selection, filter: { $0 == .didChange })
         {
             [weak self, weak list] event in
             
@@ -77,11 +77,11 @@ class MainViewModel: Observer
             let container = master.selection.first
         else
         {
-            slave.supertask = nil
+            slave.set(supertask: nil)
             return
         }
         
-        slave.supertask = container
+        slave.set(supertask: container)
     }
     
     func setContainerOfMaster(at index: Int)
@@ -91,7 +91,7 @@ class MainViewModel: Observer
         let master = lists[index]
         let slave = lists[index + 1]
         
-        master.supertask = slave.supertask?.supertask
+        master.set(supertask: slave.supertask?.supertask)
     }
     
     // MARK: Task List View Models
@@ -102,7 +102,7 @@ class MainViewModel: Observer
         
         for _ in 0 ..< 5 { addTaskList() }
         
-        lists[2].supertask = store.root
+        lists[2].set(supertask: store.root)
     }
     
     @discardableResult

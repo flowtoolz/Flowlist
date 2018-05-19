@@ -62,7 +62,7 @@ class Task: Codable, Observable
             subtasks.isValid(index: sortedIndexes.last)
             else
         {
-            log(warning: "Tried to remove tasks from at least one out of bound index in \(indexes).")
+            log(warning: "Tried to remove subtasks from at least one out of bound index in \(indexes).")
             return []
         }
         
@@ -87,7 +87,7 @@ class Task: Codable, Observable
     {
         guard index >= 0, index <= subtasks.count else
         {
-            log(warning: "Tried to insert Task at out of bound index \(index).")
+            log(warning: "Tried to insert subask at out of bound index \(index).")
             return nil
         }
         
@@ -118,7 +118,7 @@ class Task: Codable, Observable
     {
         guard subtasks.isValid(index: index) else
         {
-            log(warning: "Tried to access Task at out of bound index \(index).")
+            log(warning: "Tried to access subask at out of bound index \(index).")
             return nil
         }
         

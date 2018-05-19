@@ -20,7 +20,7 @@
 		9EA2B9691EF035D900F05F20 /* TaskListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B9681EF035D900F05F20 /* TaskListRow.swift */; };
 		9EA2B96B1EF0A80A00F05F20 /* TaskStore+Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */; };
 		9EA5925920AF5EE000F70CBF /* ListEditingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5925820AF5EE000F70CBF /* ListEditingEvent.swift */; };
-		9EA5925B20AF7AD200F70CBF /* SubtaskSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5925A20AF7AD200F70CBF /* SubtaskSelection.swift */; };
+		9EA5925B20AF7AD200F70CBF /* TaskSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5925A20AF7AD200F70CBF /* TaskSelection.swift */; };
 		9EAD75411EF6502000DC46FD /* TaskListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD75401EF6502000DC46FD /* TaskListTableView.swift */; };
 		9EBC70292056FD02007A1EA8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* MainViewModel.swift */; };
 		C932DAFCC628909A261C9DC7 /* Pods_Flowlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D591083E3159C05E29673835 /* Pods_Flowlist.framework */; };
@@ -49,7 +49,7 @@
 		9EA2B9681EF035D900F05F20 /* TaskListRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListRow.swift; path = ../Code/macOS/TaskListRow.swift; sourceTree = "<group>"; };
 		9EA2B96A1EF0A80A00F05F20 /* TaskStore+Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TaskStore+Persistence.swift"; path = "../Code/TaskStore+Persistence.swift"; sourceTree = "<group>"; };
 		9EA5925820AF5EE000F70CBF /* ListEditingEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListEditingEvent.swift; path = ../Code/ListEditingEvent.swift; sourceTree = "<group>"; };
-		9EA5925A20AF7AD200F70CBF /* SubtaskSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SubtaskSelection.swift; path = ../Code/SubtaskSelection.swift; sourceTree = "<group>"; };
+		9EA5925A20AF7AD200F70CBF /* TaskSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskSelection.swift; path = ../Code/TaskSelection.swift; sourceTree = "<group>"; };
 		9EAD75401EF6502000DC46FD /* TaskListTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListTableView.swift; path = ../Code/macOS/TaskListTableView.swift; sourceTree = "<group>"; };
 		9EBC70282056FD02007A1EA8 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewModel.swift; path = ../Code/MainViewModel.swift; sourceTree = "<group>"; };
 		BA6347ACAE78132863C2FF94 /* Pods_FlowlistTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlowlistTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,7 +142,7 @@
 			children = (
 				9ED0277B20AB2F24004289E6 /* UI */,
 				9E82A7A81EF2A558006AEF02 /* TaskListViewModel.swift */,
-				9EA5925A20AF7AD200F70CBF /* SubtaskSelection.swift */,
+				9EA5925A20AF7AD200F70CBF /* TaskSelection.swift */,
 			);
 			name = List;
 			sourceTree = "<group>";
@@ -343,7 +343,7 @@
 				9EA2B9691EF035D900F05F20 /* TaskListRow.swift in Sources */,
 				9E98EC9420B0523B0014B7B7 /* NSEvent+Flowtoolz.swift in Sources */,
 				9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */,
-				9EA5925B20AF7AD200F70CBF /* SubtaskSelection.swift in Sources */,
+				9EA5925B20AF7AD200F70CBF /* TaskSelection.swift in Sources */,
 				9EA2B96B1EF0A80A00F05F20 /* TaskStore+Persistence.swift in Sources */,
 				9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */,
 				9E7651961EEF4DA200DE2B07 /* TaskStore.swift in Sources */,

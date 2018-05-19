@@ -1,6 +1,7 @@
 import AppKit
 import PureLayout
 import SwiftObserver
+import SwiftyToolz
 
 class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListTableViewDelegate, TaskViewTextFieldDelegate, Observer, Observable
 {
@@ -234,9 +235,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         case .didNothing:
             break
             
-        case .didChangeSelection:
-            break
-            
         case .didChangeSubtasksInTask(let index):
             subtasksChangedInTask(at: index)
             
@@ -266,14 +264,16 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     func didDeleteSubtasks(at indexes: [Int])
     {
         tableView.beginUpdates()
-        tableView.removeRows(at: IndexSet(indexes), withAnimation: NSTableView.AnimationOptions.slideUp)
+        tableView.removeRows(at: IndexSet(indexes),
+                             withAnimation: NSTableView.AnimationOptions.slideUp)
         tableView.endUpdates()
     }
     
     func didInsertSubtask(at index: Int)
     {
         tableView.beginUpdates()
-        tableView.insertRows(at: [index], withAnimation: NSTableView.AnimationOptions.slideDown)
+        tableView.insertRows(at: [index],
+                             withAnimation: NSTableView.AnimationOptions.slideDown)
         tableView.endUpdates()
     }
     
@@ -410,7 +410,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         
         if let indexOfNewTask = taskList?.add(newTask, at: index)
         {
-            taskList?.selection.setSubtasks(at: [indexOfNewTask])
+            taskList?.selection.setTasks(at: [indexOfNewTask])
             
             startEditing(at: indexOfNewTask)
         }
@@ -480,7 +480,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     {
         // Swift.print("selection did change: \(Array(tableView.selectedRowIndexes).description)")
         
-        taskList?.selection.setSubtasks(at: Array(tableView.selectedRowIndexes))
+        taskList?.selection.setTasks(at: Array(tableView.selectedRowIndexes))
     }
     
     // MARK: - Table View Data Source
@@ -498,7 +498,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         
         guard tableColumn?.identifier == taskViewReuseIdentifier else
         {
-            Swift.print("warning: tableColumn has weird or nil identifier: \(tableColumn?.identifier ?? NSUserInterfaceItemIdentifier(rawValue: "nil"))")
+            log(warning: "tableColumn has weird or nil identifier: \(tableColumn?.identifier ?? NSUserInterfaceItemIdentifier(rawValue: "nil"))")
             return nil
         }
 

@@ -203,7 +203,7 @@ class MainViewController: NSViewController, Observer
         
         if !(NSApp.mainWindow?.makeFirstResponder(listView.tableView) ?? false)
         {
-            print("Warning: could not make table view first responder")
+            log(warning: "Could not make table view first responder.")
             return false
         }
         

@@ -5,8 +5,6 @@ class TaskListViewModel: Observable, Observer
 {
     // MARK: - Life Cycle
     
-    init() { observeSelection() }
-    
     deinit { stopAllObserving() }
     
     // MARK: - Edit Listing
@@ -22,7 +20,7 @@ class TaskListViewModel: Observable, Observer
         
         selection.add(group)
         
-        observe(listed: group)
+        observe(listedTask: group)
         
         return group.indexInSupertask
     }
@@ -40,7 +38,7 @@ class TaskListViewModel: Observable, Observer
         
         _ = container.insert(task, at: indexToInsert)
         
-        observe(listed: task)
+        observe(listedTask: task)
         
         return indexToInsert
     }
@@ -175,40 +173,52 @@ class TaskListViewModel: Observable, Observer
         return supertask?.subtask(at: index)
     }
     
-    // MARK: - Supertask
+    // MARK: - Configuration
     
-    var title: String
+    func set(supertask newSupertask: Task?)
     {
-        return supertask?.title.value ?? "untitled"
+        guard newSupertask !== supertask else { return }
+        
+        stopObservingTasks()
+        
+        if let newSupertask = newSupertask
+        {
+            observe(supertask: newSupertask)
+            observeTasksListed(in: newSupertask)
+        }
+        
+        supertask = newSupertask
     }
     
-    weak var supertask: Task?
+    private func stopObservingTasks()
     {
-        didSet
+        guard let supertask = supertask else { return }
+        
+        stopObserving(supertask)
+        stopObserving(supertask.title)
+        
+        for taskIndex in 0 ..< supertask.numberOfSubtasks
         {
-            if oldValue !== supertask { supertaskDidChange() }
+            guard let task = supertask.subtask(at: taskIndex) else { continue }
+            
+            stopObserving(task)
+            stopObserving(task.title)
+            stopObserving(task.state)
         }
     }
     
-    private func supertaskDidChange()
+    // MARK: - Observe Supertask
+   
+    private func observe(supertask: Task)
     {
-        selection.task = supertask
-        resetObservations()
-        send(.didChangeListContainer)
-    }
-    
-    // MARK: - Observations
-    
-    private func resetObservations()
-    {
-        stopAllObserving()
-        
-        observeSelection()
-        
-        guard let supertask = supertask else { return }
-        
-        // observe supertask
-        observe(task: supertask)
+        observe(supertask)
+        {
+            [weak self, weak supertask] event in
+            
+            guard let supertask = supertask else { return }
+            
+            self?.didReceive(event, fromSupertask: supertask)
+        }
         
         observe(supertask.title)
         {
@@ -216,19 +226,49 @@ class TaskListViewModel: Observable, Observer
             
             self?.send(.didChangeListContainerTitle)
         }
-        
-        // observe listed tasks
-        for index in 0 ..< supertask.numberOfSubtasks
+    }
+    
+    private func didReceive(_ event: ListEditingEvent,
+                            fromSupertask supertask: Task)
+    {
+        switch (event)
         {
-            guard let task = supertask.subtask(at: index) else { continue }
+        case .didMoveItem(let from, let to):
+            self.task(supertask, didMoveSubtaskFrom: from, to: to)
             
-            observe(listed: task)
+        case .didInsertItem(let index):
+            send(.didInsertTask(at: index))
+            
+        case .didRemoveItems(let indexes):
+            selection.removeTasks(at: indexes)
+            send(.didDeleteTasks(at: indexes))
+            
+        default: break
         }
     }
     
-    private func observe(listed task: Task)
+    // MARK: - Observe Listed Tasks
+    
+    private func observeTasksListed(in supertask: Task)
     {
-        observe(task: task)
+        for taskIndex in 0 ..< supertask.numberOfSubtasks
+        {
+            guard let task = supertask.subtask(at: taskIndex) else { continue }
+            
+            observe(listedTask: task)
+        }
+    }
+    
+    private func observe(listedTask task: Task)
+    {
+        observe(task)
+        {
+            [weak self, weak task] event in
+            
+            guard let task = task else { return }
+            
+            self?.didReceive(event, fromListedTask: task)
+        }
         
         observe(task.title)
         {
@@ -253,33 +293,18 @@ class TaskListViewModel: Observable, Observer
         }
     }
     
-    private func observe(task: Task)
-    {
-        observe(task)
-        {
-            [weak self, weak task] event in
-            
-            guard let task = task else { return }
-            
-            self?.didReceive(event, from: task)
-        }
-    }
-    
-    private func didReceive(_ event: ListEditingEvent, from task: Task)
+    private func didReceive(_ event: ListEditingEvent,
+                            fromListedTask task: Task)
     {
         switch (event)
         {
-        case .didNothing:
-            break
+        case .didInsertItem, .didRemoveItems:
+            if let index = task.indexInSupertask
+            {
+                send(.didChangeSubtasksInTask(at: index))
+            }
             
-        case .didMoveItem(let from, let to):
-            self.task(task, didMoveSubtaskFrom: from, to: to)
-            
-        case .didInsertItem(let index):
-            self.task(task, didInsertSubtaskAt: index)
-            
-        case .didRemoveItems(let indexes):
-            self.task(task, didRemoveSubtasksAt: indexes)
+        default: break
         }
     }
     
@@ -320,71 +345,25 @@ class TaskListViewModel: Observable, Observer
         send(.didMoveTask(from: from, to: to))
     }
     
-    private func task(_ task: Task, didInsertSubtaskAt index: Int)
+    // MARK: - Supertask
+    
+    var title: String
     {
-        // FIXME: what is this? an error edge case??
-        guard let supertask = supertask else
-        {
-            selection.removeAll()
-            send(.didChangeListContainer)
-            return
-        }
-        
-        if supertask === task
-        {
-            send(.didInsertTask(at: index))
-        }
-        else if supertask === task.supertask
-        {
-            if let index = supertask.index(of: task)
-            {
-                send(.didChangeSubtasksInTask(at: index))
-            }
-        }
+        return supertask?.title.value ?? "untitled"
     }
     
-    private func task(_ task: Task, didRemoveSubtasksAt indexes: [Int])
+    private(set) weak var supertask: Task?
     {
-        // FIXME: what is this? an error edge case??
-        guard let supertask = supertask else
+        didSet
         {
-            selection.removeAll()
+            selection.supertask = supertask
             send(.didChangeListContainer)
-            return
-        }
-        
-        // update from supertask
-        if supertask === task
-        {
-            selection.removeSubtasks(at: indexes)
-            send(.didDeleteTasks(at: indexes))
-        }
-        // update from regular task
-        else if supertask === task.supertask
-        {
-            if let index = task.indexInSupertask
-            {
-                send(.didChangeSubtasksInTask(at: index))
-            }
         }
     }
     
     // MARK: - Selection
     
-    private func observeSelection()
-    {
-        observe(selection)
-        {
-            [weak self] event in
-
-            if event == .didChange
-            {
-                self?.send(.didChangeSelection)
-            }
-        }
-    }
-    
-    let selection = SubtaskSelection()
+    let selection = TaskSelection()
     
     // MARK: - Observability
     
@@ -393,15 +372,17 @@ class TaskListViewModel: Observable, Observer
     enum Event: Equatable
     {
         case didNothing
-        case didChangeSelection
         
+        // for task view
         case didChangeSubtasksInTask(at: Int)
         case didChangeStateOfTask(at: Int)
         case didChangeTitleOfTask(at: Int)
         
+        // really necessary?
         case didChangeListContainer
         case didChangeListContainerTitle
         
+        // for task list
         case didInsertTask(at: Int)
         case didDeleteTasks(at: [Int])
         case didMoveTask(from: Int, to: Int)

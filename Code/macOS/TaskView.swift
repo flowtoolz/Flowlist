@@ -1,8 +1,10 @@
 import AppKit
 import SwiftObserver
 
-class TaskView: NSView, NSTextFieldDelegate
+class TaskView: NSView, NSTextFieldDelegate, Observer
 {
+    // MARK: - Life Cycle
+    
     override init(frame frameRect: NSRect)
     {
         super.init(frame: frameRect)
@@ -31,7 +33,12 @@ class TaskView: NSView, NSTextFieldDelegate
         layer?.cornerRadius = 4.0
     }
     
-    static let reuseIdentifier = "TaskListCellIdentifier"
+    deinit
+    {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Configuration
     
     func configure(with task: Task)
     {
@@ -84,17 +91,12 @@ class TaskView: NSView, NSTextFieldDelegate
     
     @objc func didEndEditing()
     {        
-        task?.title <- newTitle
+        _ = task?.title <- newTitle
         
         NotificationCenter.default.removeObserver(self)
     }
     
     private var newTitle: String?
-    
-    deinit
-    {
-        NotificationCenter.default.removeObserver(self)
-    }
     
     private func layoutTitleField()
     {
@@ -134,7 +136,7 @@ class TaskView: NSView, NSTextFieldDelegate
         return textField
     }()
     
-    // MARK: - Check Button
+    // MARK: - Check Box
     
     @objc func checkBoxClicked()
     {
@@ -251,6 +253,10 @@ class TaskView: NSView, NSTextFieldDelegate
         
         weak var taskViewTextFieldDelegate: TaskViewTextFieldDelegate?
     }
+    
+    // MARK: - Table View Cell
+    
+    static let reuseIdentifier = "TaskListCellIdentifier"
 }
 
 protocol TaskViewTextFieldDelegate: AnyObject
