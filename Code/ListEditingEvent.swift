@@ -2,6 +2,6 @@ enum ListEditingEvent: Equatable
 {
     case didNothing
     case didMoveItem(from: Int, to: Int)
-    case didInsertItem(at: Int)
+    case didInsertItems(at: [Int])
     case didRemoveItems(at: [Int])
 }

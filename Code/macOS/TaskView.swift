@@ -63,7 +63,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
             
             switch event
             {
-            case .didInsertItem, .didRemoveItems:
+            case .didInsertItems, .didRemoveItems:
                 self?.updateGroupIndicator()
                 
             default: break

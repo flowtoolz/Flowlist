@@ -180,14 +180,21 @@ class TaskListViewModel: Observable, Observer
         guard newSupertask !== supertask else { return }
         
         stopObservingTasks()
-        
+       
         if let newSupertask = newSupertask
         {
             observe(supertask: newSupertask)
             observeTasksListed(in: newSupertask)
         }
         
+        let oldIndexes = Array(0 ..< (supertask?.numberOfSubtasks ?? 0))
+        send(.didChangeTaskList(.didRemoveItems(at: oldIndexes)))
+        
         supertask = newSupertask
+        send(.didChangeSupertaskTitle)
+        
+        let newIndexes = Array(0 ..< (newSupertask?.numberOfSubtasks ?? 0))
+        send(.didChangeTaskList(.didInsertItems(at: newIndexes)))
     }
     
     private func stopObservingTasks()
@@ -236,8 +243,8 @@ class TaskListViewModel: Observable, Observer
         case .didMoveItem(let from, let to):
             self.task(supertask, didMoveSubtaskFrom: from, to: to)
             
-        case .didInsertItem(let index):
-            send(.didChangeTaskList(.didInsertItem(at: index)))
+        case .didInsertItems:
+            send(.didChangeTaskList(event))
             
         case .didRemoveItems(let indexes):
             selection.removeTasks(at: indexes)
@@ -328,7 +335,6 @@ class TaskListViewModel: Observable, Observer
         didSet
         {
             selection.supertask = supertask
-            send(.didChangeSupertask)
         }
     }
     
@@ -345,7 +351,6 @@ class TaskListViewModel: Observable, Observer
         case didNothing
         case didChangeTaskTitle(at: Int)
         case didChangeTaskList(ListEditingEvent)
-        case didChangeSupertask
         case didChangeSupertaskTitle
     }
 }

@@ -235,17 +235,14 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         case .didChangeTaskTitle(let index):
             didChangeTitleOfSubtask(at: index)
             
-        case .didChangeSupertask:
-            didChangeListContainer()
-            
         case .didChangeSupertaskTitle:
             updateTitle()
         
         case .didChangeTaskList(let change):
             switch change
             {
-            case .didInsertItem(let index):
-                didInsertSubtask(at: index)
+            case .didInsertItems(let indexes):
+                didInsertSubtask(at: indexes)
                 
             case .didRemoveItems(let indexes):
                 didDeleteSubtasks(at: indexes)
@@ -268,32 +265,12 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         tableView.endUpdates()
     }
     
-    func didInsertSubtask(at index: Int)
+    func didInsertSubtask(at indexes: [Int])
     {
         tableView.beginUpdates()
-        tableView.insertRows(at: [index],
+        tableView.insertRows(at: IndexSet(indexes),
                              withAnimation: NSTableView.AnimationOptions.slideDown)
         tableView.endUpdates()
-    }
-    
-    func didChangeListContainer()
-    {
-        updateTitle()
-        
-        tableView.beginUpdates()
-        tableView.removeRows(at: IndexSet(integersIn: 0 ..< tableView.numberOfRows),
-                             withAnimation: NSTableView.AnimationOptions.slideUp)
-        tableView.endUpdates()
-        
-        let numberOfTasks = taskList?.numberOfTasks ?? 0
-        
-        if numberOfTasks > 0
-        {
-            tableView.beginUpdates()
-            tableView.insertRows(at: IndexSet(integersIn: 0 ..< numberOfTasks),
-                                 withAnimation: NSTableView.AnimationOptions.slideUp)
-            tableView.endUpdates()
-        }
     }
     
     func didChangeTitleOfSubtask(at index: Int)

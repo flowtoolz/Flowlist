@@ -95,7 +95,7 @@ class Task: Codable, Observable
         
         subtask.supertask = self
         
-        send(.didInsertItem(at: index))
+        send(.didInsertItems(at: [index]))
         
         return subtask
     }
