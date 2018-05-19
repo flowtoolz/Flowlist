@@ -1,5 +1,6 @@
 import Foundation
 import FoundationToolz
+import SwiftyToolz
 
 extension TaskStore
 {
@@ -7,7 +8,7 @@ extension TaskStore
     {
         guard let _ = root.save(to: fileUrl) else
         {
-            print("error: saving to file failed")
+            log(error: "Failed to save tasks to " + fileUrl.absoluteString)
             return
         }
     }
@@ -16,7 +17,7 @@ extension TaskStore
     {
         guard let loadedRoot = Task(from: fileUrl) else
         {
-            print("failed to load tasks from " + fileUrl.absoluteString)
+            log(error: "Failed to load tasks from " + fileUrl.absoluteString)
             return
         }
         
