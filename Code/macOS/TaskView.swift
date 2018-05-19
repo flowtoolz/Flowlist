@@ -43,10 +43,19 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
     
     func configure(with task: Task)
     {
-        stopObserving(self.task)
+        stopObserving(task: self.task)
         
         self.task = task
         
+        observe(task: task)
+        
+        titleField.stringValue = task.title.value ?? ""
+        updateCheckBox()
+        updateGroupIndicator()
+    }
+    
+    private func observe(task: Task)
+    {
         observe(task)
         {
             [weak self] event in
@@ -60,17 +69,21 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
             }
         }
         
-        updateTitleField()
-        updateCheckBox()
-        updateGroupIndicator()
+        observe(task.title)
+        {
+            [weak self] update in
+            
+            self?.titleField.stringValue = update.new ?? ""
+        }
+    }
+    
+    private func stopObserving(task: Task?)
+    {
+        stopObserving(task?.title)
+        stopObserving(task)
     }
     
     // MARK: - Title Field
-    
-    func updateTitleField()
-    {
-        titleField.stringValue = self.task?.title.value ?? ""
-    }
     
     func startEditingTitle()
     {

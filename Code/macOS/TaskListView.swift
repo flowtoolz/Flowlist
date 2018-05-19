@@ -296,17 +296,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     func didChangeTitleOfSubtask(at index: Int)
     {
-        guard index < tableView.numberOfRows,
-            let taskView = tableView.view(atColumn: 0,
-                                          row: index,
-                                          makeIfNecessary: false) as? TaskView
-        else
-        {
-            return
-        }
-        
-        taskView.updateTitleField()
-        
         if taskList?.selection.count ?? 0 > 1,
             let firstSelectedIndex = taskList?.selection.indexes.first,
             let firstSelectedTask = taskList?.task(at: firstSelectedIndex)
