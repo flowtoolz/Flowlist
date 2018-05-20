@@ -243,6 +243,8 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     private func didReceive(_ event: SelectableTaskList.Event)
     {
+        Swift.print("TaskListView \(titleField.stringValue) \(event)")
+        
         switch(event)
         {
         case .didChangeListedTaskTitle(let index):

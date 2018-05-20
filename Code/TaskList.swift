@@ -14,10 +14,6 @@ class TaskList: Observable, Observer
         supertask = newSupertask
     }
     
-    deinit { stopAllObserving() }
-    
-    // MARK: - Observe Tasks
-    
     private func observeTasks(with supertask: Task?, start: Bool = true)
     {
         guard let supertask = supertask else { return }
@@ -25,6 +21,10 @@ class TaskList: Observable, Observer
         observe(supertask: supertask, start: start)
         observeTasksListed(in: supertask, start: start)
     }
+    
+    deinit { stopAllObserving() }
+    
+    // MARK: - Observe Supertask
     
     private func observe(supertask: Task, start: Bool = true)
     {
@@ -44,6 +44,8 @@ class TaskList: Observable, Observer
     
     func received(_ change: Task.SubtaskChange, from supertask: Task)
     {
+        print("\(title.latestUpdate) \(change)")
+        
         switch change
         {
         case .didInsert(let indexes):
@@ -57,6 +59,8 @@ class TaskList: Observable, Observer
         
         send(.didChangeListedTasks(change))
     }
+    
+    // MARK: - Observe Listed Tasks
     
     private func observeTasksListedIn(_ supertask: Task,
                                       at indexes: [Int],

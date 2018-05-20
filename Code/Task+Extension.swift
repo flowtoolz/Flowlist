@@ -17,7 +17,7 @@ extension Task
             guard let subtask = subtask(at: i) else { continue }
             
             let isLastSubtask = i == numberOfSubtasks - 1
-            let subtaskPrefix = prefix + (isLast ? " " : "│") + "  "
+            let subtaskPrefix = prefix + (isLast ? " " : "│") + " "
 
             desc += "\n\(subtask.description(subtaskPrefix, isLastSubtask))"
         }
