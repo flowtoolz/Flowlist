@@ -3,10 +3,6 @@ import SwiftyToolz
 
 class TaskListViewModel: Observable, Observer
 {
-    // MARK: - Life Cycle
-    
-    deinit { stopAllObserving() }
-    
     // MARK: - Edit Listing
     
     func groupSelectedTasks() -> Int?
@@ -181,7 +177,9 @@ class TaskListViewModel: Observable, Observer
         observeTasksListed(in: supertask, start: start)
     }
     
-    // MARK: - Observe Listed Tasks
+    deinit { stopAllObserving() }
+    
+    // MARK: - Listed Tasks
     
     private func observeTasksListed(in supertask: Task, start: Bool = true)
     {
@@ -244,26 +242,6 @@ class TaskListViewModel: Observable, Observer
         }
     }
     
-    // MARK: - Observe Supertask
-   
-    private func observe(supertask: Task, start: Bool = true)
-    {
-        guard start else
-        {
-            stopObserving(supertask)
-            return
-        }
-        
-        observe(supertask)
-        {
-            [weak self] event in
-            
-            self?.send(.didChangeTaskList(event))
-        }
-    }
-    
-    // MARK: - Listed Tasks
-    
     var numberOfTasks: Int
     {
         return supertask?.numberOfSubtasks ?? 0
@@ -299,6 +277,22 @@ class TaskListViewModel: Observable, Observer
     }
     
     let title = Var<String>().new().unwrap("")
+    
+    private func observe(supertask: Task, start: Bool = true)
+    {
+        guard start else
+        {
+            stopObserving(supertask)
+            return
+        }
+        
+        observe(supertask)
+        {
+            [weak self] event in
+            
+            self?.send(.didChangeTaskList(event))
+        }
+    }
     
     // MARK: - Selection
     
