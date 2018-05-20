@@ -161,18 +161,6 @@ class TaskListViewModel: Observable, Observer
         return nil
     }
     
-    // MARK: - Listed Tasks
-    
-    var numberOfTasks: Int
-    {
-        return supertask?.numberOfSubtasks ?? 0
-    }
-    
-    func task(at index: Int) -> Task?
-    {
-        return supertask?.subtask(at: index)
-    }
-    
     // MARK: - Configuration
     
     func set(supertask newSupertask: Task?)
@@ -213,39 +201,6 @@ class TaskListViewModel: Observable, Observer
         }
     }
     
-    // MARK: - Observe Supertask
-   
-    private func observe(supertask: Task)
-    {
-        observe(supertask)
-        {
-            [weak self, weak supertask] event in
-            
-            guard let supertask = supertask else { return }
-            
-            self?.didReceive(event, fromSupertask: supertask)
-        }
-    }
-    
-    private func didReceive(_ event: ListEditingEvent,
-                            fromSupertask supertask: Task)
-    {
-        switch (event)
-        {
-        case .didMoveItem(let from, let to):
-            self.task(supertask, didMoveSubtaskFrom: from, to: to)
-            
-        case .didInsertItems:
-            send(.didChangeTaskList(event))
-            
-        case .didRemoveItems(let indexes):
-            selection.removeAll()
-            send(.didChangeTaskList(.didRemoveItems(at: indexes)))
-            
-        default: break
-        }
-    }
-    
     // MARK: - Observe Listed Tasks
     
     private func observeTasksListed(in supertask: Task)
@@ -276,20 +231,13 @@ class TaskListViewModel: Observable, Observer
             [weak self, weak task] stateUpdate in
             
             if let task = task,
-                stateUpdate.new != stateUpdate.old
+                stateUpdate.new != stateUpdate.old,
+                let taskIndex = task.indexInSupertask,
+                task.isDone
             {
-                self?.taskDidChangeState(task)
+                self?.moveCheckedOffTask(at: taskIndex)
             }
         }
-    }
-    
-    // MARK: - React to Data Changes
-    
-    private func taskDidChangeState(_ task: Task)
-    {
-        guard let taskIndex = task.indexInSupertask else { return }
-        
-        if task.isDone { moveCheckedOffTask(at: taskIndex) }
     }
     
     private func moveCheckedOffTask(at index: Int)
@@ -308,11 +256,46 @@ class TaskListViewModel: Observable, Observer
         }
     }
     
-    private func task(_ task: Task, didMoveSubtaskFrom from: Int, to: Int)
+    // MARK: - Observe Supertask
+   
+    private func observe(supertask: Task)
     {
-        guard supertask === task else { return }
-        
-        send(.didChangeTaskList(.didMoveItem(from: from, to: to)))
+        observe(supertask)
+        {
+            [weak self, weak supertask] event in
+            
+            guard let supertask = supertask else { return }
+            
+            self?.didReceive(event, fromSupertask: supertask)
+        }
+    }
+    
+    private func didReceive(_ event: ListEditingEvent,
+                            fromSupertask supertask: Task)
+    {
+        switch (event)
+        {
+        case .didMoveItem, .didInsertItems:
+            send(.didChangeTaskList(event))
+            
+        case .didRemoveItems:
+            selection.removeAll()
+            send(.didChangeTaskList(event))
+            
+        default: break
+        }
+    }
+    
+    // MARK: - Listed Tasks
+    
+    var numberOfTasks: Int
+    {
+        return supertask?.numberOfSubtasks ?? 0
+    }
+    
+    func task(at index: Int) -> Task?
+    {
+        return supertask?.subtask(at: index)
     }
     
     // MARK: - Supertask

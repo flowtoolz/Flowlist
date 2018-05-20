@@ -37,7 +37,7 @@ class MainViewModel: Observer
         
         let master = lists[index]
         
-        guard master.supertask?.hasSubtasks ?? false else { return }
+        guard master.numberOfTasks > 0 else { return }
         
         let slave = lists[index + 1]
         
