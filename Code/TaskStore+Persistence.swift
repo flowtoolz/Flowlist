@@ -31,33 +31,3 @@ extension TaskStore
         return URL(fileURLWithPath: Bundle.main.bundlePath + "/flowlist.json")
     }
 }
-
-extension Task
-{
-    func debug()
-    {
-        print(debugDescription())
-    }
-    
-    func debugDescription(_ prefix: String = "", last: Bool = true) -> String
-    {
-        let bullet = last ? "└╴" : "├╴"
-        
-        var description = "\(prefix)\(bullet)" + (title.value ?? "untitled")
-        
-        for i in 0 ..< numberOfSubtasks
-        {
-            if let st = subtask(at: i)
-            {
-                let stLast = i == numberOfSubtasks - 1
-                let stPrefix = prefix + (last ? " " : "│") + "  "
-                
-                let stDescription = st.debugDescription(stPrefix, last: stLast)
-                
-                description += "\n\(stDescription)"
-            }
-        }
-        
-        return description
-    }
-}

@@ -229,8 +229,12 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
                 store.load()
                 tableView.reloadData()
             }
+            else
+            {
+                taskList?.debug()
+            }
         case "n": if cmd { createNewTask(createContainer: true) }
-        case "d": store.root.debug()
+        case "t": store.root.debug()
         default: break
         }
     }
