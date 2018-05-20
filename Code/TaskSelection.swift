@@ -33,24 +33,6 @@ class TaskSelection: Observable
     
     // MARK: - Deselect Tasks
     
-    func removeTasksListed(at indexes: [Int])
-    {
-        var didChange = false
-        
-        for i in indexes
-        {
-            guard let task = supertask?.subtask(at: i), isSelected(task) else
-            {
-                continue
-            }
-            
-            selectedTasks[task.hash] = nil
-            didChange = true
-        }
-        
-        if didChange { send(.didChange) }
-    }
-    
     func remove(_ tasks: [Task])
     {
         var didChange = false
@@ -67,15 +49,6 @@ class TaskSelection: Observable
         if didChange { send(.didChange) }
     }
     
-    func remove(_ task: Task)
-    {
-        guard isSelected(task) else { return }
-        
-        selectedTasks[task.hash] = nil
-        
-        send(.didChange)
-    }
-    
     func removeAll()
     {
         guard count > 0 else { return }
@@ -83,11 +56,6 @@ class TaskSelection: Observable
         selectedTasks.removeAll()
         
         send(.didChange)
-    }
-    
-    func removeUnlistedTasks()
-    {
-        selectedTasks.remove { !isListed($0) }
     }
     
     // MARK: - Supertask
