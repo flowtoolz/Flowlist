@@ -113,5 +113,19 @@ class SelectableTaskList: TaskList
         }
     }
     
+    // MARK: - Managing the Selection
+    
+    override func received(_ change: Task.SubtaskChange, from supertask: Task)
+    {
+        switch change
+        {
+        case .didRemove(let subtasks, _): selection.remove(subtasks)
+            
+        default: return
+        }
+        
+        super.received(change, from: supertask)
+    }
+    
     let selection = TaskSelection()
 }

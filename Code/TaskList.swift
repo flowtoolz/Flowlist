@@ -42,8 +42,7 @@ class TaskList: Observable, Observer
         }
     }
     
-    private func received(_ change: Task.SubtaskChange,
-                          from supertask: Task)
+    func received(_ change: Task.SubtaskChange, from supertask: Task)
     {
         switch change
         {
