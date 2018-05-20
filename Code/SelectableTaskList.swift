@@ -65,34 +65,22 @@ class SelectableTaskList: TaskList
     
     func checkOffFirstSelectedUncheckedTask()
     {
-        // find first selected unchecked task
-        var potentialTaskToCheck: Task?
-        var potentialIndexToCheck: Int?
-        
-        for selectedIndex in selection.indexes
+        guard let (index, task) = firstSelectedUnchecked() else
         {
-            if let selectedTask = task(at: selectedIndex), !selectedTask.isDone
-            {
-                potentialTaskToCheck = selectedTask
-                potentialIndexToCheck = selectedIndex
-                break
-            }
+            return
         }
-        
-        guard let taskToCheck = potentialTaskToCheck,
-            let indexToCheck = potentialIndexToCheck else { return }
         
         // determine which task to select after the ckeck off
         var taskToSelect: Task?
         
         if selection.count == 1
         {
-            let unchecked = supertask?.indexOfFirstUncheckedSubtask(from: indexToCheck + 1)
+            let unchecked = supertask?.indexOfFirstUncheckedSubtask(from: index + 1)
             
             taskToSelect = supertask?.subtask(at: unchecked)
         }
         
-        taskToCheck.state <- .done
+        task.state <- .done
         
         if let taskToSelect = taskToSelect
         {
@@ -100,11 +88,24 @@ class SelectableTaskList: TaskList
         }
         else if selection.count > 1
         {
-            selection.remove(taskToCheck)
+            selection.remove(task)
         }
     }
     
-    // MARK: - Managing the Selection
+    private func firstSelectedUnchecked() -> (Int, Task)?
+    {
+        for selectedIndex in selection.indexes
+        {
+            if let task = task(at: selectedIndex), !task.isDone
+            {
+                return (selectedIndex, task)
+            }
+        }
+        
+        return nil
+    }
+    
+    // MARK: - Manage the Selection
     
     override func set(supertask newSupertask: Task?)
     {
