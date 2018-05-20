@@ -61,12 +61,9 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
         {
             [weak self] event in
             
-            switch event
+            if event.itemsDidChange
             {
-            case .didInsertItems, .didRemoveItems:
                 self?.updateGroupIndicator()
-                
-            default: break
             }
         }
         

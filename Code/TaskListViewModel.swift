@@ -267,17 +267,9 @@ class TaskListViewModel: Observable, Observer
     private func didReceive(_ event: ListEditingEvent,
                             fromSupertask supertask: Task)
     {
-        switch (event)
-        {
-        case .didMoveItem, .didInsertItems:
-            send(.didChangeTaskList(event))
-            
-        case .didRemoveItems:
-            selection.removeAll()
-            send(.didChangeTaskList(event))
-            
-        default: break
-        }
+        if event.itemsDidChange { selection.removeAll() }
+        
+        send(.didChangeTaskList(event))
     }
     
     // MARK: - Listed Tasks
