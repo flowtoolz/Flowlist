@@ -24,7 +24,9 @@ class TaskSelection: Observable
     
     func add(_ task: Task?)
     {
-        guard let task = task, isListed(task), !isSelected(task) else { return }
+        guard let task = task,
+            supertask?.index(of: task) != nil,
+            !isSelected(task) else { return }
         
         selectedTasks[task.hash] = task
         
@@ -66,19 +68,13 @@ class TaskSelection: Observable
         
         for index in 0 ..< (supertask?.numberOfSubtasks ?? 0)
         {
-            if let task = supertask?.subtask(at: index),
-                selectedTasks[task.hash] != nil
+            if let task = supertask?.subtask(at: index), isSelected(task)
             {
                 result.append(index)
             }
         }
         
         return result
-    }
-    
-    private func isListed(_ task: Task) -> Bool
-    {
-        return supertask?.index(of: task) != nil
     }
     
     weak var supertask: Task?
