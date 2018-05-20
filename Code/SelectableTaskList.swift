@@ -3,15 +3,6 @@ import SwiftyToolz
 
 class SelectableTaskList: TaskList
 {
-    // MARK: - Configuration
-    
-    override func set(supertask newSupertask: Task?)
-    {
-        super.set(supertask: newSupertask)
-        
-        selection.supertask = newSupertask
-    }
-    
     // MARK: - Selection Dependent Editing
     
     func groupSelectedTasks() -> Int?
@@ -114,6 +105,13 @@ class SelectableTaskList: TaskList
     }
     
     // MARK: - Managing the Selection
+    
+    override func set(supertask newSupertask: Task?)
+    {
+        selection.supertask = newSupertask
+        
+        super.set(supertask: newSupertask)
+    }
     
     override func received(_ change: Task.SubtaskChange, from supertask: Task)
     {
