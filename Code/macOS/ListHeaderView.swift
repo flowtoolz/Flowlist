@@ -1,11 +1,3 @@
-//
-//  ListHeaderView.swift
-//  Flowlist
-//
-//  Created by Sebastian on 17/06/17.
-//  Copyright © 2017 Flowtoolz. All rights reserved.
-//
-
 import AppKit
 
 class ListHeaderView: NSView

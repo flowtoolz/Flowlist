@@ -5,7 +5,7 @@ class MainViewModel: Observer
 {
     init() { createTaskLists() }
     
-    private func observe(list: TaskListViewModel)
+    private func observe(list: SelectableTaskList)
     {
         observe(list.selection, filter: { $0 == .didChange })
         {
@@ -17,14 +17,14 @@ class MainViewModel: Observer
         }
     }
     
-    func moveRight() -> TaskListViewModel
+    func moveRight() -> SelectableTaskList
     {
         stopObserving(lists.remove(at: 0))
 
         return addTaskList()
     }
     
-    func moveLeft() -> TaskListViewModel
+    func moveLeft() -> SelectableTaskList
     {
         stopObserving(lists.popLast())
         
@@ -48,7 +48,7 @@ class MainViewModel: Observer
         }
     }
     
-    private func listChangedSelection(_ list: TaskListViewModel)
+    private func listChangedSelection(_ list: SelectableTaskList)
     {
         guard let index = lists.index(where: { $0 === list }) else
         {
@@ -106,9 +106,9 @@ class MainViewModel: Observer
     }
     
     @discardableResult
-    private func addTaskList(prepend: Bool = false) -> TaskListViewModel
+    private func addTaskList(prepend: Bool = false) -> SelectableTaskList
     {
-        let list = TaskListViewModel()
+        let list = SelectableTaskList()
         
         observe(list: list)
         
@@ -124,5 +124,5 @@ class MainViewModel: Observer
         return list
     }
     
-    var lists = [TaskListViewModel]()
+    var lists = [SelectableTaskList]()
 }

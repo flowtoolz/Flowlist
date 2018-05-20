@@ -100,7 +100,7 @@ class MainViewController: NSViewController, Observer
     }
     
     @discardableResult
-    private func addListView(with list: TaskListViewModel,
+    private func addListView(with list: SelectableTaskList,
                              prepend: Bool = false) -> TaskListView
     {
         let listView = TaskListView(with: list)

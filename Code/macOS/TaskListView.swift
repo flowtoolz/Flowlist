@@ -7,7 +7,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
 {
     // MARK: - Life Cycle
     
-    init(with list: TaskListViewModel)
+    init(with list: SelectableTaskList)
     {
         super.init(frame: NSRect.zero)
         
@@ -236,23 +236,23 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     // MARK: - Process List Events
     
-    private func didReceive(_ event: TaskListViewModel.Event)
+    private func didReceive(_ event: SelectableTaskList.Event)
     {
         switch(event)
         {
-        case .didChangeTaskTitle(let index):
+        case .didChangeListedTaskTitle(let index):
             didChangeTitleOfSubtask(at: index)
         
-        case .didChangeTaskList(let change):
+        case .didChangeListedTasks(let change):
             switch change
             {
-            case .didInsertItems(let indexes):
+            case .didInsert(let indexes):
                 didInsertSubtask(at: indexes)
                 
-            case .didRemoveItems(let indexes):
+            case .didRemove(_, let indexes):
                 didDeleteSubtasks(at: indexes)
                 
-            case .didMoveItem(let from, let to):
+            case .didMove(let from, let to):
                 didMoveSubtask(from: from, to: to)
                 
             case .didNothing: break
@@ -314,7 +314,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     private func deleteSelectedTasks()
     {
-        guard taskList?.deleteSelectedTasks() ?? false else
+        guard taskList?.removeSelectedTasks() ?? false else
         {
             return
         }
@@ -346,9 +346,16 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     {
         let newTask = Task()
         
-        if let indexOfNewTask = taskList?.add(newTask, at: index)
+        if let index = index
         {
-            taskList?.selection.setTasks(at: [indexOfNewTask])
+            if taskList?.supertask?.insert(newTask, at: index) != nil
+            {
+                startEditing(at: index)
+            }
+        }
+        else if let indexOfNewTask = taskList?.insertBelowSelection(newTask)
+        {
+            taskList?.selection.setTasksListed(at: [indexOfNewTask])
             
             startEditing(at: indexOfNewTask)
         }
@@ -419,7 +426,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     {
         // Swift.print("selection did change: \(Array(tableView.selectedRowIndexes).description)")
         
-        taskList?.selection.setTasks(at: Array(tableView.selectedRowIndexes))
+        taskList?.selection.setTasksListed(at: Array(tableView.selectedRowIndexes))
     }
     
     // MARK: - Table View Data Source
@@ -468,7 +475,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     // MARK: - Task List
     
-    private(set) weak var taskList: TaskListViewModel?
+    private(set) weak var taskList: SelectableTaskList?
 }
 
 func logFirstResponder()

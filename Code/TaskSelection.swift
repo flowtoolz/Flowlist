@@ -3,29 +3,9 @@ import SwiftyToolz
 
 class TaskSelection: Observable
 {
-    // MARK: - Edit Selection
+    // MARK: - Select Tasks
     
-    func removeTasks(at indexes: [Int])
-    {
-        var didChange = false
-
-        for index in indexes
-        {
-            guard let task = supertask?.subtask(at: index),
-                isSelected(task)
-            else
-            {
-                continue
-            }
-            
-            selectedTasks[task.hash] = nil
-            didChange = true
-        }
-        
-        if didChange { send(.didChange) }
-    }
-    
-    func setTasks(at indexes: [Int])
+    func setTasksListed(at indexes: [Int])
     {
         if indexes.isEmpty && selectedTasks.isEmpty { return }
         
@@ -42,13 +22,49 @@ class TaskSelection: Observable
         send(.didChange)
     }
     
-    func add(_ task: Task)
+    func add(_ task: Task?)
     {
-        guard isTask(task), !isSelected(task) else { return }
+        guard let task = task, isListed(task), !isSelected(task) else { return }
         
         selectedTasks[task.hash] = task
         
         send(.didChange)
+    }
+    
+    // MARK: - Deselect Tasks
+    
+    func removeTasksListed(at indexes: [Int])
+    {
+        var didChange = false
+        
+        for i in indexes
+        {
+            guard let task = supertask?.subtask(at: i), isSelected(task) else
+            {
+                continue
+            }
+            
+            selectedTasks[task.hash] = nil
+            didChange = true
+        }
+        
+        if didChange { send(.didChange) }
+    }
+    
+    func remove(_ tasks: [Task])
+    {
+        var didChange = false
+        
+        for task in tasks
+        {
+            guard isSelected(task) else { continue }
+            
+            selectedTasks[task.hash] = nil
+            
+            didChange = true
+        }
+        
+        if didChange { send(.didChange) }
     }
     
     func remove(_ task: Task)
@@ -69,6 +85,11 @@ class TaskSelection: Observable
         send(.didChange)
     }
     
+    func removeUnlistedTasks()
+    {
+        selectedTasks.remove { !isListed($0) }
+    }
+    
     // MARK: - Supertask
     
     var indexes: [Int]
@@ -87,7 +108,7 @@ class TaskSelection: Observable
         return result
     }
     
-    private func isTask(_ task: Task) -> Bool
+    private func isListed(_ task: Task) -> Bool
     {
         return supertask?.index(of: task) != nil
     }

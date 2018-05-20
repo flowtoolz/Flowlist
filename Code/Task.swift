@@ -1,13 +1,6 @@
 import SwiftObserver
 import SwiftyToolz
 
-extension Task
-{
-    var description: String { return title.value ?? "untitled" }
-    
-    var hash: HashValue { return SwiftyToolz.hash(self) }
-}
-
 class Task: Codable, Observable
 {
     // MARK: - Data
@@ -15,8 +8,6 @@ class Task: Codable, Observable
     enum CodingKeys: CodingKey { case title, state, subtasks }
     
     private(set) var title = Var<String>()
-    
-    var isDone: Bool { return state.value == .done }
     
     private(set) var state = Var<State>()
     
@@ -77,7 +68,7 @@ class Task: Codable, Observable
             removedSubtasks.insert(removedSubtask, at: 0)
         }
         
-        send(.didRemoveItems(at: indexes))
+        send(.didRemove(subtasks: removedSubtasks, from: indexes))
         
         return removedSubtasks
     }
@@ -95,7 +86,7 @@ class Task: Codable, Observable
         
         subtask.supertask = self
         
-        send(.didInsertItems(at: [index]))
+        send(.didInsert(at: [index]))
         
         return subtask
     }
@@ -105,12 +96,10 @@ class Task: Codable, Observable
     {
         guard subtasks.moveElement(from: from, to: to) else { return false }
         
-        send(.didMoveItem(from: from, to: to))
+        send(.didMove(from: from, to: to))
         
         return true
     }
-    
-    var latestUpdate: ListEditingEvent { return .didNothing }
     
     // MARK: - Subtasks
     
@@ -148,7 +137,26 @@ class Task: Codable, Observable
         }
     }
     
-    var indexInSupertask: Int? { return supertask?.index(of: self) }
-    
     private(set) weak var supertask: Task? = nil
+    
+    // MARK: - Observability
+    
+    var latestUpdate: SubtaskChange { return .didNothing }
+    
+    enum SubtaskChange
+    {
+        case didNothing
+        case didMove(from: Int, to: Int)
+        case didInsert(at: [Int])
+        case didRemove(subtasks: [Task], from: [Int])
+        
+        var itemsDidChange: Bool
+        {
+            switch self
+            {
+            case .didRemove, .didInsert: return true
+            default: return false
+            }
+        }
+    }
 }
