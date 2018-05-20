@@ -114,8 +114,10 @@ class Task: Codable, Observable
     
     // MARK: - Subtasks
     
-    func subtask(at index: Int) -> Task?
+    func subtask(at index: Int?) -> Task?
     {
+        guard let index = index else { return nil }
+        
         guard subtasks.isValid(index: index) else
         {
             log(warning: "Tried to access subask at out of bound index \(index).")

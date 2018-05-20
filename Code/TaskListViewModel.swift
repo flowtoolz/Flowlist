@@ -118,18 +118,16 @@ class TaskListViewModel: Observable, Observer
         }
         
         guard let taskToCheck = potentialTaskToCheck,
-            let indexToCheck = potentialIndexToCheck
-        else
-        {
-            return
-        }
+            let indexToCheck = potentialIndexToCheck else { return }
         
         // determine which task to select after the ckeck off
         var taskToSelect: Task?
         
         if selection.count == 1
         {
-            taskToSelect = firstUncheckedTask(from: indexToCheck + 1)
+            let unchecked = supertask?.indexOfFirstUncheckedSubtask(from: indexToCheck + 1)
+            
+            taskToSelect = supertask?.subtask(at: unchecked)
         }
         
         taskToCheck.state <- .done
@@ -142,19 +140,6 @@ class TaskListViewModel: Observable, Observer
         {
             selection.remove(taskToCheck)
         }
-    }
-    
-    private func firstUncheckedTask(from: Int = 0) -> Task?
-    {
-        for i in from ..< numberOfTasks
-        {
-            if let uncheckedTask = task(at: i), !uncheckedTask.isDone
-            {
-                return uncheckedTask
-            }
-        }
-        
-        return nil
     }
     
     // MARK: - Configuration
@@ -221,35 +206,19 @@ class TaskListViewModel: Observable, Observer
                 let taskIndex = task.indexInSupertask,
                 task.isDone
             {
-                self?.moveCheckedOffTask(at: taskIndex)
+                self?.supertask?.moveSubtaskToTopOfDoneList(from: taskIndex)
             }
         }
-    }
-    
-    private func moveCheckedOffTask(at index: Int)
-    {
-        guard let supertask = supertask else { return }
-        
-        for i in (0 ..< supertask.numberOfSubtasks).reversed()
-        {
-            if let subtask = supertask.subtask(at: i), !subtask.isDone
-            {
-                _ = supertask.moveSubtask(from: index,
-                                          to: i + (i < index ? 1 : 0))
-                
-                return
-            }
-        }
-    }
-    
-    var numberOfTasks: Int
-    {
-        return supertask?.numberOfSubtasks ?? 0
     }
     
     func task(at index: Int) -> Task?
     {
         return supertask?.subtask(at: index)
+    }
+    
+    var numberOfTasks: Int
+    {
+        return supertask?.numberOfSubtasks ?? 0
     }
     
     // MARK: - Supertask
