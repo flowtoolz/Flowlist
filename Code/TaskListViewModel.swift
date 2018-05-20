@@ -167,54 +167,42 @@ class TaskListViewModel: Observable, Observer
     {
         guard newSupertask !== supertask else { return }
         
-        stopObservingTasks()
-       
-        if let newSupertask = newSupertask
-        {
-            observe(supertask: newSupertask)
-            observeTasksListed(in: newSupertask)
-        }
-        
-        let oldIndexes = Array(0 ..< (supertask?.numberOfSubtasks ?? 0))
-        send(.didChangeTaskList(.didRemoveItems(at: oldIndexes)))
+        observeTasks(with: supertask, start: false)
+        observeTasks(with: newSupertask)
         
         supertask = newSupertask
-        
-        let newIndexes = Array(0 ..< (newSupertask?.numberOfSubtasks ?? 0))
-        send(.didChangeTaskList(.didInsertItems(at: newIndexes)))
     }
     
-    private func stopObservingTasks()
+    private func observeTasks(with supertask: Task?, start: Bool = true)
     {
         guard let supertask = supertask else { return }
         
-        stopObserving(supertask)
-        stopObserving(supertask.title)
-        
-        for taskIndex in 0 ..< supertask.numberOfSubtasks
-        {
-            guard let task = supertask.subtask(at: taskIndex) else { continue }
-            
-            stopObserving(task)
-            stopObserving(task.title)
-            stopObserving(task.state)
-        }
+        observe(supertask: supertask, start: start)
+        observeTasksListed(in: supertask, start: start)
     }
     
     // MARK: - Observe Listed Tasks
     
-    private func observeTasksListed(in supertask: Task)
+    private func observeTasksListed(in supertask: Task, start: Bool = true)
     {
         for taskIndex in 0 ..< supertask.numberOfSubtasks
         {
             guard let task = supertask.subtask(at: taskIndex) else { continue }
             
-            observe(listedTask: task)
+            observe(listedTask: task, start: start)
         }
     }
     
-    private func observe(listedTask task: Task)
+    private func observe(listedTask task: Task, start: Bool = true)
     {
+        guard start else
+        {
+            stopObserving(task.title)
+            stopObserving(task.state)
+            
+            return
+        }
+        
         observe(task.title)
         {
             [weak self, weak task] titleUpdate in
@@ -258,8 +246,14 @@ class TaskListViewModel: Observable, Observer
     
     // MARK: - Observe Supertask
    
-    private func observe(supertask: Task)
+    private func observe(supertask: Task, start: Bool = true)
     {
+        guard start else
+        {
+            stopObserving(supertask)
+            return
+        }
+        
         observe(supertask)
         {
             [weak self, weak supertask] event in
@@ -304,9 +298,22 @@ class TaskListViewModel: Observable, Observer
     {
         didSet
         {
-            title.observable = supertask?.title
-            selection.supertask = supertask
+            guard oldValue !== supertask else { return }
+            
+            didSwitchSupertask(from: oldValue, to: supertask)
         }
+    }
+    
+    private func didSwitchSupertask(from old: Task?, to new: Task?)
+    {
+        title.observable = new?.title
+        selection.supertask = new
+        
+        let oldIndexes = Array(0 ..< (old?.numberOfSubtasks ?? 0))
+        send(.didChangeTaskList(.didRemoveItems(at: oldIndexes)))
+        
+        let newIndexes = Array(0 ..< (new?.numberOfSubtasks ?? 0))
+        send(.didChangeTaskList(.didInsertItems(at: newIndexes)))
     }
     
     let title = Var<String>().new().unwrap("")
