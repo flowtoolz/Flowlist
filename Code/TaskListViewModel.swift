@@ -3,7 +3,29 @@ import SwiftyToolz
 
 class TaskListViewModel: Observable, Observer
 {
-    // MARK: - Edit Listing
+    // MARK: - Configuration
+    
+    func set(supertask newSupertask: Task?)
+    {
+        guard newSupertask !== supertask else { return }
+        
+        observeTasks(with: supertask, start: false)
+        observeTasks(with: newSupertask)
+        
+        supertask = newSupertask
+    }
+    
+    private func observeTasks(with supertask: Task?, start: Bool = true)
+    {
+        guard let supertask = supertask else { return }
+        
+        observe(supertask: supertask, start: start)
+        observeTasksListed(in: supertask, start: start)
+    }
+    
+    deinit { stopAllObserving() }
+    
+    // MARK: - Selection Dependent Editing
     
     func groupSelectedTasks() -> Int?
     {
@@ -87,8 +109,6 @@ class TaskListViewModel: Observable, Observer
                                      to: selectedIndex + positions)
     }
     
-    // MARK: - Edit State
-    
     func checkOffFirstSelectedUncheckedTask()
     {
         // find first selected unchecked task
@@ -129,28 +149,6 @@ class TaskListViewModel: Observable, Observer
             selection.remove(taskToCheck)
         }
     }
-    
-    // MARK: - Configuration
-    
-    func set(supertask newSupertask: Task?)
-    {
-        guard newSupertask !== supertask else { return }
-        
-        observeTasks(with: supertask, start: false)
-        observeTasks(with: newSupertask)
-        
-        supertask = newSupertask
-    }
-    
-    private func observeTasks(with supertask: Task?, start: Bool = true)
-    {
-        guard let supertask = supertask else { return }
-        
-        observe(supertask: supertask, start: start)
-        observeTasksListed(in: supertask, start: start)
-    }
-    
-    deinit { stopAllObserving() }
     
     // MARK: - Listed Tasks
     
