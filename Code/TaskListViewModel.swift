@@ -71,32 +71,20 @@ class TaskListViewModel: Observable, Observer
         return true
     }
     
-    func moveSelectedTaskUp() -> Bool
+    func moveSelectedTask(_ positions: Int) -> Bool
     {
-        guard let container = supertask,
+        guard positions != 0,
+            let supertask = supertask,
             selection.count == 1,
             let selectedTask = selection.first,
-            let selectedIndex = container.index(of: selectedTask)
+            let selectedIndex = supertask.index(of: selectedTask)
         else
         {
             return false
         }
 
-        return container.moveSubtask(from: selectedIndex, to: selectedIndex - 1)
-    }
-    
-    func moveSelectedTaskDown() -> Bool
-    {
-        guard let container = supertask,
-            selection.count == 1,
-            let selectedTask = selection.first,
-            let selectedIndex = container.index(of: selectedTask)
-        else
-        {
-            return false
-        }
-        
-        return container.moveSubtask(from: selectedIndex, to: selectedIndex + 1)
+        return supertask.moveSubtask(from: selectedIndex,
+                                     to: selectedIndex + positions)
     }
     
     // MARK: - Edit State

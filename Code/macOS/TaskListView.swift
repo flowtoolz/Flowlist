@@ -207,9 +207,9 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             
         case .right: send(.wantToGiveUpFocusToTheRight)
             
-        case .down: if cmd { _ = taskList?.moveSelectedTaskDown() }
+        case .down: if cmd { _ = taskList?.moveSelectedTask(1) }
             
-        case .up: if cmd { _ = taskList?.moveSelectedTaskUp() }
+        case .up: if cmd { _ = taskList?.moveSelectedTask(-1) }
             
         case .unknown:
             didPress(characterKey: event.characters, withCommand: cmd)
