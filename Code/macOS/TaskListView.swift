@@ -11,6 +11,8 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     {
         super.init(frame: NSRect.zero)
         
+        // list
+        
         taskList = list
         
         observe(list)
@@ -19,6 +21,19 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             
             self?.didReceive($0)
         }
+        
+        // title
+        
+        titleField.stringValue = list.title.latestUpdate
+        
+        observe(list.title)
+        {
+            [weak self] newTitle in
+            
+            self?.titleField.stringValue = newTitle
+        }
+        
+        // auto layout
         
         translatesAutoresizingMaskIntoConstraints = false
         
@@ -36,8 +51,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         titleField.autoAlignAxis(.horizontal, toSameAxisOf: headerView)
         titleField.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
         titleField.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
-        
-        updateTitle()
     }
     
     required init?(coder decoder: NSCoder)
@@ -71,11 +84,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         
         return field
     }()
-    
-    func updateTitle()
-    {
-        titleField.stringValue = taskList?.supertask?.title.value ?? ""
-    }
     
     private func hideHeader()
     {
@@ -234,9 +242,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         {
         case .didChangeTaskTitle(let index):
             didChangeTitleOfSubtask(at: index)
-            
-        case .didChangeSupertaskTitle:
-            updateTitle()
         
         case .didChangeTaskList(let change):
             switch change

@@ -191,7 +191,6 @@ class TaskListViewModel: Observable, Observer
         send(.didChangeTaskList(.didRemoveItems(at: oldIndexes)))
         
         supertask = newSupertask
-        send(.didChangeSupertaskTitle)
         
         let newIndexes = Array(0 ..< (newSupertask?.numberOfSubtasks ?? 0))
         send(.didChangeTaskList(.didInsertItems(at: newIndexes)))
@@ -225,13 +224,6 @@ class TaskListViewModel: Observable, Observer
             guard let supertask = supertask else { return }
             
             self?.didReceive(event, fromSupertask: supertask)
-        }
-        
-        observe(supertask.title)
-        {
-            [weak self] _ in
-            
-            self?.send(.didChangeSupertaskTitle)
         }
     }
     
@@ -325,18 +317,16 @@ class TaskListViewModel: Observable, Observer
     
     // MARK: - Supertask
     
-    var title: String
-    {
-        return supertask?.title.value ?? "untitled"
-    }
-    
     private(set) weak var supertask: Task?
     {
         didSet
         {
+            title.observable = supertask?.title
             selection.supertask = supertask
         }
     }
+    
+    let title = Var<String>().new().unwrap("")
     
     // MARK: - Selection
     
@@ -351,6 +341,5 @@ class TaskListViewModel: Observable, Observer
         case didNothing
         case didChangeTaskTitle(at: Int)
         case didChangeTaskList(ListEditingEvent)
-        case didChangeSupertaskTitle
     }
 }
