@@ -256,20 +256,10 @@ class TaskListViewModel: Observable, Observer
         
         observe(supertask)
         {
-            [weak self, weak supertask] event in
+            [weak self] event in
             
-            guard let supertask = supertask else { return }
-            
-            self?.didReceive(event, fromSupertask: supertask)
+            self?.send(.didChangeTaskList(event))
         }
-    }
-    
-    private func didReceive(_ event: ListEditingEvent,
-                            fromSupertask supertask: Task)
-    {
-        if event.itemsDidChange { selection.removeAll() }
-        
-        send(.didChangeTaskList(event))
     }
     
     // MARK: - Listed Tasks
