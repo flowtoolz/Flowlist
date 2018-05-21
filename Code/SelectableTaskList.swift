@@ -109,11 +109,9 @@ class SelectableTaskList: TaskList
     {
         super.received(edit, from: supertask)
         
-        switch edit
+        if case .didRemove(let subtasks, _) = edit
         {
-        case .didRemove(let subtasks, _): selection.remove(tasks: subtasks)
-            
-        default: break
+            selection.remove(tasks: subtasks)
         }
     }
     

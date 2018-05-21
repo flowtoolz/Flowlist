@@ -139,7 +139,7 @@ class MainViewController: NSViewController, Observer
     private func didReceive(_ event: TaskListView.Event,
                             from listView: TaskListView)
     {
-        switch(event)
+        switch event
         {
         case .none: break
         case .wantToGiveUpFocusToTheRight:
