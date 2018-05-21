@@ -1,20 +1,18 @@
 import SwiftObserver
 import SwiftyToolz
 
-extension TaskSelection
-{
-    var description: String
-    {
-        return selectedTasks.description
-    }
-}
-
 class TaskSelection: Observable
 {
     // MARK: - Select Tasks
     
     func setWithTasksListed(at indexes: [Int])
     {
+        guard let supertask = supertask else
+        {
+            log(warning: "Tried to select tasks while selection has no supertask.")
+            return
+        }
+        
         if indexes.isEmpty && selectedTasks.isEmpty { return }
         
         var didChange = false
@@ -22,7 +20,7 @@ class TaskSelection: Observable
         
         for index in indexes
         {
-            if let task = supertask?.subtask(at: index)
+            if let task = supertask.subtask(at: index)
             {
                 if !didClear
                 {
@@ -34,6 +32,10 @@ class TaskSelection: Observable
     
                 didChange = true
             }
+            else
+            {
+                log(warning: "Tried to select unlisted task.")
+            }
         }
         
         if didChange { send(.didChange) }
@@ -41,9 +43,13 @@ class TaskSelection: Observable
     
     func add(task: Task?)
     {
-        guard let task = task,
-            supertask?.index(of: task) != nil,
-            !isSelected(task) else { return }
+        guard let task = task else { return }
+        
+        guard let _ = supertask?.index(of: task), !isSelected(task) else
+        {
+            log(warning: "Tried invalid selection.")
+            return
+        }
         
         selectedTasks[task.hash] = task
         
@@ -58,7 +64,11 @@ class TaskSelection: Observable
         
         for task in tasks
         {
-            guard isSelected(task) else { continue }
+            guard isSelected(task) else
+            {
+                log(warning: "Tried to deselect task that is not selected.")
+                continue
+            }
             
             selectedTasks[task.hash] = nil
             
@@ -70,7 +80,11 @@ class TaskSelection: Observable
     
     func removeAll()
     {
-        guard count > 0 else { return }
+        guard count > 0 else
+        {
+            log(warning: "Tried to deselect all selected tasks but none are selected.")
+            return
+        }
         
         selectedTasks.removeAll()
         
@@ -79,28 +93,19 @@ class TaskSelection: Observable
     
     // MARK: - Supertask
     
-    var indexes: [Int]
-    {
-        var result = [Int]()
-        
-        for index in 0 ..< (supertask?.numberOfSubtasks ?? 0)
-        {
-            if let task = supertask?.subtask(at: index), isSelected(task)
-            {
-                result.append(index)
-            }
-        }
-        
-        return result
-    }
-    
     weak var supertask: Task?
     {
         didSet
         {
             //print("selection gets new supertask \(supertask?.title.value ?? "untitled")")
             
-            guard oldValue !== supertask, count > 0 else { return }
+            guard oldValue !== supertask else
+            {
+                log(warning: "Tried to set identical supertask in selection.")
+                return
+            }
+                
+            guard count > 0 else { return }
             
             selectedTasks.removeAll()
             
@@ -110,13 +115,18 @@ class TaskSelection: Observable
     
     // MARK: - Selected Tasks
     
-    var count: Int { return selectedTasks.count }
-    var first: Task? { return selectedTasks.values.first }
-    
     func isSelected(_ task: Task) -> Bool
     {
         return selectedTasks[task.hash] === task
     }
+    
+    var description: String
+    {
+        return selectedTasks.description
+    }
+    
+    var count: Int { return selectedTasks.count }
+    var first: Task? { return selectedTasks.values.first }
     
     private var selectedTasks = [HashValue : Task]()
     

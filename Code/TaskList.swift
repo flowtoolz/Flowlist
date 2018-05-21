@@ -1,4 +1,5 @@
 import SwiftObserver
+import SwiftyToolz
 
 class TaskList: Observable, Observer
 {
@@ -6,7 +7,11 @@ class TaskList: Observable, Observer
     
     func set(supertask newSupertask: Task?)
     {
-        guard newSupertask !== supertask else { return }
+        guard newSupertask !== supertask else
+        {
+            log(warning: "Tried to set identical supertask in task list.")
+            return
+        }
         
         //print("setting list supertask \(newSupertask?.title.value ?? "untitled")")
         
@@ -121,12 +126,24 @@ class TaskList: Observable, Observer
     
     func task(at index: Int) -> Task?
     {
-        return supertask?.subtask(at: index)
+        guard let supertask = supertask else
+        {
+            log(warning: "Tried to get task at \(index) from list without supertask.")
+            return nil
+        }
+        
+        return supertask.subtask(at: index)
     }
     
     var numberOfTasks: Int
     {
-        return supertask?.numberOfSubtasks ?? 0
+        guard let supertask = supertask else
+        {
+            log(warning: "Tried to get task number from list without supertask.")
+            return 0
+        }
+        
+        return supertask.numberOfSubtasks
     }
     
     // MARK: - Supertask
