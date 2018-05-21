@@ -145,7 +145,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         return view
     }()
     
-    // MARK: - Keyboard Short Cuts
+    // MARK: - Keyboard Input
     
     override func keyDown(with event: NSEvent)
     {
@@ -321,7 +321,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         send(.tableViewWasClicked)
     }
     
-    // MARK: - Editing and Filtering the List
+    // MARK: - Editing the List
     
     private func deleteSelectedTasks()
     {
@@ -351,7 +351,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         guard let groupIndex = taskList?.groupSelectedTasks() else { return }
         
         loadSelectionFromTaskList()
-        
         startEditing(at: groupIndex)
     }
     
@@ -380,10 +379,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     private func startEditing(at index: Int)
     {
-        guard let taskList = taskList, let task = taskList.task(at: index) else
-        {
-            return
-        }
+        guard index < tableView.numberOfRows else { return }
        
         if index == 0
         {
@@ -394,8 +390,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             tableView.scrollRowToVisible(index)
         }
         
-        if index < tableView.numberOfRows,
-            let cell = tableView.view(atColumn: 0,
+        if let cell = tableView.view(atColumn: 0,
                                      row: index,
                                      makeIfNecessary: false) as? TaskView
         {
