@@ -13,7 +13,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         
         // list
         
-        taskList = list
+        self.list = list
         
         observe(list)
         {
@@ -158,7 +158,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         switch event.key
         {
         case .enter:
-            let numSelections = taskList?.selection.count ?? 0
+            let numSelections = list?.selection.count ?? 0
             
             if numSelections == 0
             {
@@ -168,7 +168,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             {
                 if cmd
                 {
-                    if let index = taskList?.selection.indexes.first
+                    if let index = list?.selection.indexes.first
                     {
                         startEditing(at: index)
                     }
@@ -182,7 +182,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             {
                 if cmd
                 {
-                    if let index = taskList?.selection.indexes.first
+                    if let index = list?.selection.indexes.first
                     {
                         startEditing(at: index)
                     }
@@ -198,7 +198,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         case .delete:
             if cmd
             {
-                taskList?.checkOffFirstSelectedUncheckedTask()
+                list?.checkOffFirstSelectedUncheckedTask()
                 loadSelectionFromTaskList()
             }
             else { deleteSelectedTasks() }
@@ -207,9 +207,9 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             
         case .right: send(.wantToGiveUpFocusToTheRight)
             
-        case .down: if cmd { _ = taskList?.moveSelectedTask(1) }
+        case .down: if cmd { _ = list?.moveSelectedTask(1) }
             
-        case .up: if cmd { _ = taskList?.moveSelectedTask(-1) }
+        case .up: if cmd { _ = list?.moveSelectedTask(-1) }
             
         case .unknown: didPress(key: event.characters, with: cmd)
         }
@@ -230,7 +230,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             }
             else
             {
-                taskList?.debug()
+                list?.debug()
             }
         case "n": if cmd { createNewTask(createContainer: true) }
         case "t": store.root.debug()
@@ -298,7 +298,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     private func deleteSelectedTasks()
     {
-        guard taskList?.removeSelectedTasks() ?? false else
+        guard list?.removeSelectedTasks() ?? false else
         {
             return
         }
@@ -309,7 +309,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     private func createNewTask(at index: Int? = nil,
                                createContainer: Bool = false)
     {
-        if createContainer && taskList?.selection.count ?? 0 > 1
+        if createContainer && list?.selection.count ?? 0 > 1
         {
             groupSelectedTasks()
         }
@@ -321,7 +321,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     private func groupSelectedTasks()
     {
-        guard let groupIndex = taskList?.groupSelectedTasks() else { return }
+        guard let groupIndex = list?.groupSelectedTasks() else { return }
         
         loadSelectionFromTaskList()
         startEditing(at: groupIndex)
@@ -335,11 +335,11 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         {
             if let index = index
             {
-                return taskList?.insert(newTask, at: index)
+                return list?.insert(newTask, at: index)
             }
             else
             {
-                return taskList?.insertBelowSelection(newTask)
+                return list?.insertBelowSelection(newTask)
             }
         }()
         
@@ -390,14 +390,14 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     func tableView(_ tableView: NSTableView,
                    rowViewForRow row: Int) -> NSTableRowView?
     {
-        return TaskListRow(with: taskList?.task(at: row))
+        return TaskListRow(with: list?.task(at: row))
     }
     
     // MARK: - Table View Data Source
     
     func numberOfRows(in tableView: NSTableView) -> Int
     {
-        return taskList?.numberOfTasks ?? 0
+        return list?.numberOfTasks ?? 0
     }
     
     func tableView(_ tableView: NSTableView,
@@ -418,7 +418,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         
         cell.titleField.taskViewTextFieldDelegate = self
         
-        if let task = taskList?.task(at: row)
+        if let task = list?.task(at: row)
         {
             cell.configure(with: task)
         }
@@ -439,16 +439,16 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     {
         guard let taskView = taskView else { return }
         
-        if taskList?.selection.count ?? 0 > 1,
-            let firstSelectedIndex = taskList?.selection.indexes.first,
+        if list?.selection.count ?? 0 > 1,
+            let firstSelectedIndex = list?.selection.indexes.first,
             tableView.row(for: taskView) == firstSelectedIndex,
             let firstSelectedTask = taskView.task
         {
-            taskList?.selection.remove(tasks: [firstSelectedTask])
+            list?.selection.remove(tasks: [firstSelectedTask])
             
             loadSelectionFromTaskList()
             
-            if let nextEditingIndex = taskList?.selection.indexes.first
+            if let nextEditingIndex = list?.selection.indexes.first
             {
                 startEditing(at: nextEditingIndex)
             }
@@ -459,7 +459,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     func loadSelectionFromTaskList()
     {
-        let selection = taskList?.selection.indexes ?? []
+        let selection = list?.selection.indexes ?? []
         
         guard selection.max() ?? 0 < tableView.numberOfRows else { return }
         
@@ -472,7 +472,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     {
         // Swift.print("selection did change: \(Array(tableView.selectedRowIndexes).description)")
         
-        taskList?.selection.setWithTasksListed(at: Array(tableView.selectedRowIndexes))
+        list?.selection.setWithTasksListed(at: Array(tableView.selectedRowIndexes))
     }
     
     // MARK: - Observability
@@ -489,7 +489,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     // MARK: - Task List
     
-    private(set) weak var taskList: SelectableTaskList?
+    private(set) weak var list: SelectableTaskList?
 }
 
 func logFirstResponder()

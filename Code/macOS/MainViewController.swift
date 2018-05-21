@@ -157,7 +157,7 @@ class MainViewController: NSViewController, Observer
     {
         guard let index = listViews.index(where: { $0 === listView }),
             index >= 0, index < listViews.count - 1,
-            (listView.taskList?.numberOfTasks ?? 0) > 0
+            (listView.list?.numberOfTasks ?? 0) > 0
         else
         {
             return
@@ -182,12 +182,12 @@ class MainViewController: NSViewController, Observer
         
         let listView = listViews[index]
         
-        guard listView.taskList?.root != nil else { return false }
+        guard listView.list?.root != nil else { return false }
         
-        if let firstTask = listView.taskList?.task(at: 0),
-            listView.taskList?.selection.count == 0
+        if let firstTask = listView.list?.task(at: 0),
+            listView.list?.selection.count == 0
         {
-            listView.taskList?.selection.add(task: firstTask)
+            listView.list?.selection.add(task: firstTask)
             listView.loadSelectionFromTaskList()
         }
         
@@ -215,7 +215,7 @@ class MainViewController: NSViewController, Observer
     private func tableViewGainedFocus(at index: Int)
     {
         guard listViews.isValid(index: index),
-            listViews[index].taskList?.root != nil
+            listViews[index].list?.root != nil
         else
         {
             return
