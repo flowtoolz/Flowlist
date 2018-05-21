@@ -2,7 +2,7 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class TaskView: NSView, NSTextFieldDelegate, Observer
+class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -116,9 +116,15 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
         _ = task?.title <- newTitle
         
         NotificationCenter.default.removeObserver(self)
+        
+        send(.didEndEditing)
     }
     
     private var newTitle: String?
+    
+    var latestUpdate: Event { return .didNothing }
+    
+    enum Event { case didNothing, didEndEditing }
     
     // MARK: - Title Field
     
@@ -260,7 +266,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
     
     // MARK: - Task
     
-    private weak var task: Task?
+    private(set) weak var task: Task?
     
     static let verticalGap: CGFloat = 2
     

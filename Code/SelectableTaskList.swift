@@ -123,11 +123,11 @@ class SelectableTaskList: TaskList
         selection.supertask = newSupertask
     }
     
-    override func received(_ change: Task.SubtaskChange, from supertask: Task)
+    override func received(_ edit: ListEdit, from supertask: Task)
     {
-        super.received(change, from: supertask)
+        super.received(edit, from: supertask)
         
-        switch change
+        switch edit
         {
         case .didRemove(let subtasks, _): selection.remove(tasks: subtasks)
             

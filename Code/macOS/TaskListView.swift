@@ -240,31 +240,21 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     // MARK: - Process List Events
     
-    private func didReceive(_ event: SelectableTaskList.Event)
+    private func didReceive(_ edit: ListEdit)
     {
-        switch(event)
+        //Swift.print("list view <\(titleField.stringValue)> \(change)")
+        
+        switch edit
         {
-        case .didChangeListedTaskTitle(let index):
-            didChangeTitleOfSubtask(at: index)
-        
-        case .didChangeListedTasks(let change):
+        case .didInsert(let indexes):
+            didInsertSubtask(at: indexes)
             
-            //Swift.print("list view <\(titleField.stringValue)> \(change)")
+        case .didRemove(_, let indexes):
+            didDeleteSubtasks(at: indexes)
             
-            switch change
-            {
-            case .didInsert(let indexes):
-                didInsertSubtask(at: indexes)
-                
-            case .didRemove(_, let indexes):
-                didDeleteSubtasks(at: indexes)
-                
-            case .didMove(let from, let to):
-                didMoveSubtask(from: from, to: to)
-                
-            case .didNothing: break
-            }
-        
+        case .didMove(let from, let to):
+            didMoveSubtask(from: from, to: to)
+            
         case .didNothing: break
         }
     }
@@ -283,23 +273,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         tableView.insertRows(at: IndexSet(indexes),
                              withAnimation: NSTableView.AnimationOptions.slideDown)
         tableView.endUpdates()
-    }
-    
-    func didChangeTitleOfSubtask(at index: Int)
-    {
-        if taskList?.selection.count ?? 0 > 1,
-            let firstSelectedIndex = taskList?.selection.indexes.first,
-            let firstSelectedTask = taskList?.task(at: firstSelectedIndex)
-        {
-            taskList?.selection.remove(tasks: [firstSelectedTask])
-            
-            loadSelectionFromTaskList()
-            
-            if let nextEditingIndex = taskList?.selection.indexes.first
-            {
-                startEditing(at: nextEditingIndex)
-            }
-        }
     }
     
     func didMoveSubtask(from: Int, to: Int)
@@ -438,7 +411,8 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             log(warning: "tableColumn has weird or nil identifier: \(tableColumn?.identifier ?? NSUserInterfaceItemIdentifier(rawValue: "nil"))")
             return nil
         }
-
+        
+        // FIXME: differentiate reusing and creating cells
         let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: TaskView.reuseIdentifier),
                                   owner: self) as? TaskView ?? TaskView()
         
@@ -449,7 +423,36 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             cell.configure(with: task)
         }
         
+        stopObserving(cell) // FIXME: not necessary when observing only newly created cells... but: stop observing when cells are being removed fro tableView (delegate method?)
+        
+        observe(cell, filter: { $0 == .didEndEditing })
+        {
+            [weak self, weak cell] _ in
+            
+            self?.taskViewDidEndEditing(cell)
+        }
+        
         return cell
+    }
+    
+    private func taskViewDidEndEditing(_ taskView: TaskView?)
+    {
+        guard let taskView = taskView else { return }
+        
+        if taskList?.selection.count ?? 0 > 1,
+            let firstSelectedIndex = taskList?.selection.indexes.first,
+            tableView.row(for: taskView) == firstSelectedIndex,
+            let firstSelectedTask = taskView.task
+        {
+            taskList?.selection.remove(tasks: [firstSelectedTask])
+            
+            loadSelectionFromTaskList()
+            
+            if let nextEditingIndex = taskList?.selection.indexes.first
+            {
+                startEditing(at: nextEditingIndex)
+            }
+        }
     }
     
     // MARK: - Selection

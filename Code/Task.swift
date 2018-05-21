@@ -143,22 +143,5 @@ class Task: Codable, Observable
     
     // MARK: - Observability
     
-    var latestUpdate: SubtaskChange { return .didNothing }
-    
-    enum SubtaskChange
-    {
-        case didNothing
-        case didMove(from: Int, to: Int)
-        case didInsert(at: [Int])
-        case didRemove(subtasks: [Task], from: [Int])
-        
-        var itemsDidChange: Bool
-        {
-            switch self
-            {
-            case .didRemove, .didInsert: return true
-            default: return false
-            }
-        }
-    }
+    var latestUpdate: ListEdit { return .didNothing }
 }

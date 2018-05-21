@@ -54,11 +54,11 @@ class TaskList: Observable, Observer
         }
     }
     
-    func received(_ change: Task.SubtaskChange, from supertask: Task)
+    func received(_ edit: ListEdit, from supertask: Task)
     {
         //print("list <\(supertask.title.value ?? "untitled")> \(change)")
         
-        switch change
+        switch edit
         {
         case .didInsert(let indexes):
             observeTasksListed(in: supertask, at: indexes)
@@ -69,7 +69,7 @@ class TaskList: Observable, Observer
         default: break
         }
         
-        send(.didChangeListedTasks(change))
+        send(edit)
     }
     
     // MARK: - Observe Listed Tasks
@@ -98,21 +98,9 @@ class TaskList: Observable, Observer
     {
         guard start else
         {
-            stopObserving(task.title)
             stopObserving(task.state)
             
             return
-        }
-        
-        observe(task.title)
-        {
-            [weak self, weak task] titleUpdate in
-            
-            if let taskIndex = task?.indexInSupertask,
-                titleUpdate.new != titleUpdate.old
-            {
-                self?.send(.didChangeListedTaskTitle(at: taskIndex))
-            }
         }
         
         observe(task.state)
@@ -179,7 +167,7 @@ class TaskList: Observable, Observer
             }
         }
         
-        send(.didChangeListedTasks(.didRemove(subtasks: subtasks, from: indexes)))
+        send(.didRemove(subtasks: subtasks, from: indexes))
     }
     
     private func sendDidInsertTasksOf(newSupertask new: Task?)
@@ -188,7 +176,7 @@ class TaskList: Observable, Observer
         
         let indexes = Array(0 ..< new.numberOfSubtasks)
 
-        send(.didChangeListedTasks(.didInsert(at: indexes)))
+        send(.didInsert(at: indexes))
     }
     
     // MARK: - Title
@@ -197,12 +185,5 @@ class TaskList: Observable, Observer
     
     // MARK: - Observability
     
-    var latestUpdate: Event { return .didNothing }
-    
-    enum Event
-    {
-        case didNothing
-        case didChangeListedTaskTitle(at: Int) // FIXME: is this really needed?
-        case didChangeListedTasks(Task.SubtaskChange)
-    }
+    var latestUpdate: ListEdit { return .didNothing }
 }
