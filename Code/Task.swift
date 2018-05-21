@@ -88,6 +88,8 @@ class Task: Codable, Observable
         
         send(.didInsert(at: [index]))
         
+        //print("task \(title.value ?? "unfiltered") inserted subtask at \(index)")
+        
         return subtask
     }
     

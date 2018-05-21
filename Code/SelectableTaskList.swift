@@ -142,7 +142,7 @@ class SelectableTaskList: TaskList
         {
         case .didRemove(let subtasks, _): selection.remove(subtasks)
             
-        default: return
+        default: break
         }
         
         super.received(change, from: supertask)

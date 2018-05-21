@@ -8,6 +8,8 @@ class TaskList: Observable, Observer
     {
         guard newSupertask !== supertask else { return }
         
+        //print("setting list supertask \(newSupertask?.title.value ?? "untitled")")
+        
         observeTasks(with: supertask, start: false)
         observeTasks(with: newSupertask)
         
@@ -16,7 +18,13 @@ class TaskList: Observable, Observer
     
     private func observeTasks(with supertask: Task?, start: Bool = true)
     {
-        guard let supertask = supertask else { return }
+        guard let supertask = supertask else
+        {
+            if !start  { stopObservingDeadObservables() }
+            return
+        }
+        
+        //print("observing tasks with supertask \(supertask.title.value ?? "untitled")")
         
         observe(supertask: supertask, start: start)
         observeTasksListed(in: supertask, start: start)
@@ -34,9 +42,13 @@ class TaskList: Observable, Observer
             return
         }
         
+        //print("start observing supertask \(supertask.title.value ?? "untitled")")
+        
         observe(supertask)
         {
-            [weak self] change in
+            [weak self, weak supertask] change in
+            
+            guard let supertask = supertask else { return }
             
             self?.received(change, from: supertask)
         }
@@ -44,12 +56,12 @@ class TaskList: Observable, Observer
     
     func received(_ change: Task.SubtaskChange, from supertask: Task)
     {
-        print("\(title.latestUpdate) \(change)")
+        //print("supertask \(supertask.title.value ?? "untitled") \(change)")
         
         switch change
         {
         case .didInsert(let indexes):
-            observeTasksListedIn(supertask, at: indexes)
+            observeTasksListed(in: supertask, at: indexes)
             
         case .didRemove(let tasks, _):
             for task in tasks { observe(listedTask: task, start: false) }
@@ -62,23 +74,21 @@ class TaskList: Observable, Observer
     
     // MARK: - Observe Listed Tasks
     
-    private func observeTasksListedIn(_ supertask: Task,
-                                      at indexes: [Int],
-                                      start: Bool = true)
+    private func observeTasksListed(in supertask: Task,
+                                    start: Bool = true)
+    {
+        let indexes = Array(0 ..< supertask.numberOfSubtasks)
+        
+        observeTasksListed(in: supertask, at: indexes, start: start)
+    }
+    
+    private func observeTasksListed(in supertask: Task,
+                                    at indexes: [Int],
+                                    start: Bool = true)
     {
         for index in indexes
         {
             guard let task = supertask.subtask(at: index) else { continue }
-            
-            observe(listedTask: task, start: start)
-        }
-    }
-    
-    private func observeTasksListed(in supertask: Task, start: Bool = true)
-    {
-        for taskIndex in 0 ..< supertask.numberOfSubtasks
-        {
-            guard let task = supertask.subtask(at: taskIndex) else { continue }
             
             observe(listedTask: task, start: start)
         }
