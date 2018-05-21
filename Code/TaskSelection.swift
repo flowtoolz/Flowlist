@@ -7,9 +7,9 @@ class TaskSelection: Observable
     
     func setWithTasksListed(at indexes: [Int])
     {
-        guard let supertask = supertask else
+        guard let root = root else
         {
-            log(warning: "Tried to select tasks while selection has no supertask.")
+            log(warning: "Tried to select tasks while selection has no root.")
             return
         }
         
@@ -20,7 +20,7 @@ class TaskSelection: Observable
         
         for index in indexes
         {
-            if let task = supertask.subtask(at: index)
+            if let task = root.subtask(at: index)
             {
                 if !didClear
                 {
@@ -45,7 +45,7 @@ class TaskSelection: Observable
     {
         guard let task = task else { return }
         
-        guard let _ = supertask?.index(of: task), !isSelected(task) else
+        guard let _ = root?.index(of: task), !isSelected(task) else
         {
             log(warning: "Tried invalid selection.")
             return
@@ -91,17 +91,17 @@ class TaskSelection: Observable
         send(.didChange)
     }
     
-    // MARK: - Supertask
+    // MARK: - Root
     
-    weak var supertask: Task?
+    weak var root: Task?
     {
         didSet
         {
-            //print("selection gets new supertask \(supertask?.title.value ?? "untitled")")
+            //print("selection gets new root \(root?.title.value ?? "untitled")")
             
-            guard oldValue !== supertask else
+            guard oldValue !== root else
             {
-                log(warning: "Tried to set identical supertask in selection.")
+                log(warning: "Tried to set identical root in selection.")
                 return
             }
                 

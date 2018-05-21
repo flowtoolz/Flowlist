@@ -7,7 +7,7 @@ class SelectableTaskList: TaskList
     
     func groupSelectedTasks() -> Int?
     {
-        let group = supertask?.groupSubtasks(at: selection.indexes)
+        let group = root?.groupSubtasks(at: selection.indexes)
         
         selection.add(task: group)
         
@@ -23,7 +23,7 @@ class SelectableTaskList: TaskList
     
     func insert(_ task: Task, at index: Int) -> Int?
     {
-        guard task === supertask?.insert(task, at: index) else { return nil }
+        guard task === root?.insert(task, at: index) else { return nil }
         
         selection.setWithTasksListed(at: [index])
         
@@ -34,9 +34,9 @@ class SelectableTaskList: TaskList
     {
         let selectedIndexes = selection.indexes
         
-        guard let supertask = supertask,
+        guard let root = root,
             let firstSelectedIndex = selectedIndexes.first,
-            supertask.removeSubtasks(at: selectedIndexes).count > 0
+            root.removeSubtasks(at: selectedIndexes).count > 0
         else
         {
             return false
@@ -52,16 +52,16 @@ class SelectableTaskList: TaskList
     func moveSelectedTask(_ positions: Int) -> Bool
     {
         guard positions != 0,
-            let supertask = supertask,
+            let root = root,
             selection.count == 1,
             let selectedTask = selection.first,
-            let selectedIndex = supertask.index(of: selectedTask)
+            let selectedIndex = root.index(of: selectedTask)
         else
         {
             return false
         }
 
-        return supertask.moveSubtask(from: selectedIndex,
+        return root.moveSubtask(from: selectedIndex,
                                      to: selectedIndex + positions)
     }
     
@@ -71,7 +71,7 @@ class SelectableTaskList: TaskList
         
         task.state <- .done
         
-        guard let nextIndex = supertask?.indexOfFirstUncheckedSubtask() else { return }
+        guard let nextIndex = root?.indexOfFirstUncheckedSubtask() else { return }
         
         if selection.count == 1
         {
@@ -98,16 +98,16 @@ class SelectableTaskList: TaskList
     
     // MARK: - Manage the Selection
     
-    override func set(supertask newSupertask: Task?)
+    override func set(root newRoot: Task?)
     {
-        super.set(supertask: newSupertask)
+        super.set(root: newRoot)
         
-        selection.supertask = newSupertask
+        selection.root = newRoot
     }
     
-    override func received(_ edit: ListEdit, from supertask: Task)
+    override func received(_ edit: ListEdit, from root: Task)
     {
-        super.received(edit, from: supertask)
+        super.received(edit, from: root)
         
         if case .didRemove(let subtasks, _) = edit
         {

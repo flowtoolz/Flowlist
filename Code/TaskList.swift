@@ -5,68 +5,68 @@ class TaskList: Observable, Observer
 {
     // MARK: - Configuration
     
-    func set(supertask newSupertask: Task?)
+    func set(root newRoot: Task?)
     {
-        guard newSupertask !== supertask else
+        guard newRoot !== root else
         {
-            log(warning: "Tried to set identical supertask in task list.")
+            log(warning: "Tried to set identical root in task list.")
             return
         }
         
-        //print("setting list supertask \(newSupertask?.title.value ?? "untitled")")
+        //print("setting list root \(newRoot?.title.value ?? "untitled")")
         
-        observeTasks(with: supertask, start: false)
-        observeTasks(with: newSupertask)
+        observeTasks(with: root, start: false)
+        observeTasks(with: newRoot)
         
-        supertask = newSupertask
+        root = newRoot
     }
     
-    private func observeTasks(with supertask: Task?, start: Bool = true)
+    private func observeTasks(with root: Task?, start: Bool = true)
     {
-        guard let supertask = supertask else
+        guard let root = root else
         {
             if !start  { stopObservingDeadObservables() }
             return
         }
         
-        //print("observing tasks with supertask \(supertask.title.value ?? "untitled")")
+        //print("observing tasks with root \(root.title.value ?? "untitled")")
         
-        observe(supertask: supertask, start: start)
-        observeTasksListed(in: supertask, start: start)
+        observe(root: root, start: start)
+        observeTasksListed(in: root, start: start)
     }
     
     deinit { stopAllObserving() }
     
-    // MARK: - Observe Supertask
+    // MARK: - Observe Root
     
-    private func observe(supertask: Task, start: Bool = true)
+    private func observe(root: Task, start: Bool = true)
     {
         guard start else
         {
-            stopObserving(supertask)
+            stopObserving(root)
             return
         }
         
-        //print("start observing supertask \(supertask.title.value ?? "untitled")")
+        //print("start observing root \(root.title.value ?? "untitled")")
         
-        observe(supertask)
+        observe(root)
         {
-            [weak self, weak supertask] change in
+            [weak self, weak root] change in
             
-            guard let supertask = supertask else { return }
+            guard let root = root else { return }
             
-            self?.received(change, from: supertask)
+            self?.received(change, from: root)
         }
     }
     
-    func received(_ edit: ListEdit, from supertask: Task)
+    func received(_ edit: ListEdit, from root: Task)
     {
-        //print("list <\(supertask.title.value ?? "untitled")> \(change)")
+        //print("list <\(root.title.value ?? "untitled")> \(change)")
         
         switch edit
         {
         case .didInsert(let indexes):
-            observeTasksListed(in: supertask, at: indexes)
+            observeTasksListed(in: root, at: indexes)
             
         case .didRemove(let tasks, _):
             for task in tasks { observe(listedTask: task, start: false) }
@@ -79,21 +79,21 @@ class TaskList: Observable, Observer
     
     // MARK: - Observe Listed Tasks
     
-    private func observeTasksListed(in supertask: Task,
+    private func observeTasksListed(in root: Task,
                                     start: Bool = true)
     {
-        let indexes = Array(0 ..< supertask.numberOfSubtasks)
+        let indexes = Array(0 ..< root.numberOfSubtasks)
         
-        observeTasksListed(in: supertask, at: indexes, start: start)
+        observeTasksListed(in: root, at: indexes, start: start)
     }
     
-    private func observeTasksListed(in supertask: Task,
+    private func observeTasksListed(in root: Task,
                                     at indexes: [Int],
                                     start: Bool = true)
     {
         for index in indexes
         {
-            guard let task = supertask.subtask(at: index) else { continue }
+            guard let task = root.subtask(at: index) else { continue }
             
             observe(listedTask: task, start: start)
         }
@@ -117,7 +117,7 @@ class TaskList: Observable, Observer
                 let taskIndex = task.indexInSupertask,
                 task.isDone
             {
-                self?.supertask?.moveSubtaskToTopOfDoneList(from: taskIndex)
+                self?.root?.moveSubtaskToTopOfDoneList(from: taskIndex)
             }
         }
     }
@@ -126,49 +126,49 @@ class TaskList: Observable, Observer
     
     func task(at index: Int) -> Task?
     {
-        guard let supertask = supertask else
+        guard let root = root else
         {
-            log(warning: "Tried to get task at \(index) from list without supertask.")
+            log(warning: "Tried to get task at \(index) from list without root.")
             return nil
         }
         
-        return supertask.subtask(at: index)
+        return root.subtask(at: index)
     }
     
     var numberOfTasks: Int
     {
-        guard let supertask = supertask else
+        guard let root = root else
         {
-            log(warning: "Tried to get task number from list without supertask.")
+            log(warning: "Tried to get task number from list without root.")
             return 0
         }
         
-        return supertask.numberOfSubtasks
+        return root.numberOfSubtasks
     }
     
-    // MARK: - Supertask
+    // MARK: - Root
     
-    private(set) weak var supertask: Task?
+    private(set) weak var root: Task?
     {
         didSet
         {
-            guard oldValue !== supertask else { return }
+            guard oldValue !== root else { return }
             
-            didSwitchSupertask(from: oldValue, to: supertask)
+            didSwitchRoot(from: oldValue, to: root)
         }
     }
     
-    private func didSwitchSupertask(from old: Task?, to new: Task?)
+    private func didSwitchRoot(from old: Task?, to new: Task?)
     {
-        //print("list changed supertask from \(old?.title.value ?? "untitled") to \(new?.title.value ?? "untitled")")
+        //print("list changed root from \(old?.title.value ?? "untitled") to \(new?.title.value ?? "untitled")")
         
         title.observable = new?.title
         
-        sendDidRemoveTasksOf(oldSupertask: old)
-        sendDidInsertTasksOf(newSupertask: new)
+        sendDidRemoveTasksOf(oldRoot: old)
+        sendDidInsertTasksOf(newRoot: new)
     }
     
-    private func sendDidRemoveTasksOf(oldSupertask old: Task?)
+    private func sendDidRemoveTasksOf(oldRoot old: Task?)
     {
         guard let old = old, old.hasSubtasks else { return }
 
@@ -187,7 +187,7 @@ class TaskList: Observable, Observer
         send(.didRemove(subtasks: subtasks, from: indexes))
     }
     
-    private func sendDidInsertTasksOf(newSupertask new: Task?)
+    private func sendDidInsertTasksOf(newRoot new: Task?)
     {
         guard let new = new, new.hasSubtasks else { return }
         

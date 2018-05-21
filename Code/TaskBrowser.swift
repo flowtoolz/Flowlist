@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-class MainViewModel: Observer
+class TaskBrowser: Observer
 {
     init() { createTaskLists() }
     
@@ -41,7 +41,7 @@ class MainViewModel: Observer
         
         let slave = lists[index + 1]
         
-        if let slaveContainer = slave.supertask
+        if let slaveContainer = slave.root
         {
             master.selection.removeAll()
             master.selection.add(task: slaveContainer)
@@ -77,11 +77,11 @@ class MainViewModel: Observer
             let container = master.selection.first
         else
         {
-            slave.set(supertask: nil)
+            slave.set(root: nil)
             return
         }
         
-        slave.set(supertask: container)
+        slave.set(root: container)
     }
     
     func setContainerOfMaster(at index: Int)
@@ -91,7 +91,7 @@ class MainViewModel: Observer
         let master = lists[index]
         let slave = lists[index + 1]
         
-        master.set(supertask: slave.supertask?.supertask)
+        master.set(root: slave.root?.supertask)
     }
     
     // MARK: Task List View Models
@@ -102,7 +102,7 @@ class MainViewModel: Observer
         
         for _ in 0 ..< 5 { addTaskList() }
         
-        lists[2].set(supertask: store.root)
+        lists[2].set(root: store.root)
     }
     
     @discardableResult

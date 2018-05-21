@@ -93,7 +93,7 @@ class MainViewController: NSViewController, Observer
     {
         listViews.removeAll()
         
-        for list in viewModel.lists
+        for list in browser.lists
         {
             addListView(with: list)
         }
@@ -182,7 +182,7 @@ class MainViewController: NSViewController, Observer
         
         let listView = listViews[index]
         
-        guard listView.taskList?.supertask != nil else { return false }
+        guard listView.taskList?.root != nil else { return false }
         
         if let firstTask = listView.taskList?.task(at: 0),
             listView.taskList?.selection.count == 0
@@ -215,7 +215,7 @@ class MainViewController: NSViewController, Observer
     private func tableViewGainedFocus(at index: Int)
     {
         guard listViews.isValid(index: index),
-            listViews[index].taskList?.supertask != nil
+            listViews[index].taskList?.root != nil
         else
         {
             return
@@ -240,14 +240,14 @@ class MainViewController: NSViewController, Observer
         removedListView.removeFromSuperview()
         
         // let coordinator go right
-        let rightList = viewModel.moveRight()
+        let rightList = browser.moveRight()
         
         // append new list view to end
         let addedListView = addListView(with: rightList)
         addedListView.isHidden = true
         
         // let coordinator update new list
-        viewModel.setContainerOfLastList()
+        browser.setContainerOfLastList()
         
         // animate the shit outa this
         NSAnimationContext.runAnimationGroup(
@@ -276,17 +276,17 @@ class MainViewController: NSViewController, Observer
         removedListView.removeFromSuperview()
         
         // let coordinator go left
-        let leftList = viewModel.moveLeft()
+        let leftList = browser.moveLeft()
         
         // add new list view to front
         let addedListView = addListView(with: leftList, prepend: true)
         addedListView.isHidden = true
         
         // let coordinator update new list
-        viewModel.setContainerOfMaster(at: 0)
+        browser.setContainerOfMaster(at: 0)
         
         // load and show selection of added list view
-        viewModel.selectSlaveInMaster(at: 0)
+        browser.selectSlaveInMaster(at: 0)
         addedListView.loadSelectionFromTaskList()
         
         // animate the shit outa this
@@ -309,5 +309,5 @@ class MainViewController: NSViewController, Observer
         )
     }
     
-    private let viewModel = MainViewModel()
+    private let browser = TaskBrowser()
 }

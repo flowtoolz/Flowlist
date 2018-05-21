@@ -4,17 +4,17 @@ extension TaskSelection
 {
     var indexes: [Int]
     {
-        guard let supertask = supertask else
+        guard let root = root else
         {
-            log(warning: "Tried to get indexes from selection without supertask.")
+            log(warning: "Tried to get indexes from selection without root.")
             return []
         }
         
         var result = [Int]()
         
-        for index in 0 ..< supertask.numberOfSubtasks
+        for index in 0 ..< root.numberOfSubtasks
         {
-            if let task = supertask.subtask(at: index), isSelected(task)
+            if let task = root.subtask(at: index), isSelected(task)
             {
                 result.append(index)
             }
