@@ -149,7 +149,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     override func keyDown(with event: NSEvent)
     {
-        //Swift.print("key own. code: \(event.keyCode) characters: \(event.characters ?? "nil")")
+        //Swift.print("key own. code: \(event.keyCode) characters: <\(event.characters ?? "nil")>")
      
         //interpretKeyEvents([event])
         
@@ -211,12 +211,11 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             
         case .up: if cmd { _ = taskList?.moveSelectedTask(-1) }
             
-        case .unknown:
-            didPress(characterKey: event.characters, withCommand: cmd)
+        case .unknown: didPress(key: event.characters, with: cmd)
         }
     }
     
-    private func didPress(characterKey key: String?, withCommand cmd: Bool)
+    private func didPress(key: String?, with cmd: Bool)
     {
         guard let key = key else { return }
         
@@ -243,14 +242,15 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     private func didReceive(_ event: SelectableTaskList.Event)
     {
-        //Swift.print("TaskListView \(titleField.stringValue) \(event)")
-        
         switch(event)
         {
         case .didChangeListedTaskTitle(let index):
             didChangeTitleOfSubtask(at: index)
         
         case .didChangeListedTasks(let change):
+            
+            //Swift.print("list view <\(titleField.stringValue)> \(change)")
+            
             switch change
             {
             case .didInsert(let indexes):
@@ -353,18 +353,21 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     {
         let newTask = Task()
         
-        if let index = index
+        let newIndex: Int? =
         {
-            if taskList?.supertask?.insert(newTask, at: index) != nil
+            if let index = index
             {
-                startEditing(at: index)
+                return taskList?.insert(newTask, at: index)
             }
-        }
-        else if let indexOfNewTask = taskList?.insertBelowSelection(newTask)
+            else
+            {
+                return taskList?.insertBelowSelection(newTask)
+            }
+        }()
+        
+        if let newIndex = newIndex
         {
-            taskList?.selection.setTasksListed(at: [indexOfNewTask])
-            
-            startEditing(at: indexOfNewTask)
+            startEditing(at: newIndex)
         }
     }
     

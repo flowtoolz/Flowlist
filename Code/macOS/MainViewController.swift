@@ -184,21 +184,11 @@ class MainViewController: NSViewController, Observer
         
         guard listView.taskList?.supertask != nil else { return false }
         
-        if listView.taskList?.numberOfTasks ?? 0 > 0
+        if let firstTask = listView.taskList?.task(at: 0),
+            listView.taskList?.selection.count == 0
         {
-            let selectionIndex = listView.taskList?.selection.indexes.first ?? 0
-            
-            // TODO: do we need this? why reset selection to first selection when setting input focus???
-            if let selectedTask = listView.taskList?.task(at: selectionIndex)
-            {
-                listView.taskList?.selection.removeAll()
-                listView.taskList?.selection.add(selectedTask)
-                listView.updateTableSelection()
-            }
-        }
-        else
-        {
-            listView.taskList?.selection.removeAll()
+            listView.taskList?.selection.add(firstTask)
+            listView.updateTableSelection()
         }
         
         if !(NSApp.mainWindow?.makeFirstResponder(listView.tableView) ?? false)

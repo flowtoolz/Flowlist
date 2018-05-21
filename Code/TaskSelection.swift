@@ -1,6 +1,14 @@
 import SwiftObserver
 import SwiftyToolz
 
+extension TaskSelection
+{
+    var description: String
+    {
+        return selectedTasks.description
+    }
+}
+
 class TaskSelection: Observable
 {
     // MARK: - Select Tasks
@@ -81,8 +89,10 @@ class TaskSelection: Observable
     {
         didSet
         {
+            //print("selection gets new supertask \(supertask?.title.value ?? "untitled")")
+            
             guard oldValue !== supertask, count > 0 else { return }
-
+            
             selectedTasks.removeAll()
             
             send(.didChange)

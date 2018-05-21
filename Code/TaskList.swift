@@ -56,7 +56,7 @@ class TaskList: Observable, Observer
     
     func received(_ change: Task.SubtaskChange, from supertask: Task)
     {
-        //print("supertask \(supertask.title.value ?? "untitled") \(change)")
+        //print("list <\(supertask.title.value ?? "untitled")> \(change)")
         
         switch change
         {
@@ -155,6 +155,8 @@ class TaskList: Observable, Observer
     
     private func didSwitchSupertask(from old: Task?, to new: Task?)
     {
+        //print("list changed supertask from \(old?.title.value ?? "untitled") to \(new?.title.value ?? "untitled")")
+        
         title.observable = new?.title
         
         var oldSubtasks = [Task]()
@@ -169,11 +171,18 @@ class TaskList: Observable, Observer
             }
         }
         
-        send(.didChangeListedTasks(.didRemove(subtasks: oldSubtasks,
-                                              from: oldIndexes)))
+        if !oldIndexes.isEmpty
+        {
+            send(.didChangeListedTasks(.didRemove(subtasks: oldSubtasks,
+                                                  from: oldIndexes)))
+        }
         
         let newIndexes = Array(0 ..< (new?.numberOfSubtasks ?? 0))
-        send(.didChangeListedTasks(.didInsert(at: newIndexes)))
+        
+        if !newIndexes.isEmpty
+        {
+            send(.didChangeListedTasks(.didInsert(at: newIndexes)))
+        }
     }
     
     let title = Var<String>().new().unwrap("")

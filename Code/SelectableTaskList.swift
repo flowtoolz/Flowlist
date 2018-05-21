@@ -19,6 +19,8 @@ extension SelectableTaskList
             desc += "\n- \(task.title.value ?? "untitled")"
         }
         
+        desc += "\n\nselection: \(selection.description)"
+        
         return desc
     }
 }
@@ -40,7 +42,16 @@ class SelectableTaskList: TaskList
     {
         let index = (selection.indexes.last ?? -1) + 1
         
-        return supertask?.insert(task, at: index) != nil ? index : nil
+        return insert(task, at: index)
+    }
+    
+    func insert(_ task: Task, at index: Int) -> Int?
+    {
+        guard task === supertask?.insert(task, at: index) else { return nil }
+        
+        selection.setTasksListed(at: [index])
+        
+        return index
     }
     
     func removeSelectedTasks() -> Bool
@@ -143,8 +154,6 @@ class SelectableTaskList: TaskList
         switch change
         {
         case .didRemove(let subtasks, _): selection.remove(subtasks)
-            
-        case.didInsert(let indexes): selection.setTasksListed(at: indexes)
             
         default: break
         }
