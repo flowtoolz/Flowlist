@@ -18,6 +18,7 @@
 		9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651931EEF428100DE2B07 /* TaskView.swift */; };
 		9E7651961EEF4DA200DE2B07 /* TaskStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* TaskStore.swift */; };
 		9E82A7A91EF2A558006AEF02 /* SelectableTaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* SelectableTaskList.swift */; };
+		9E8ABF0020B2F0F1001E862B /* SelectableTaskList+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABEFF20B2F0F1001E862B /* SelectableTaskList+Extensions.swift */; };
 		9E91651520551E5600A438FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E91651320551E5500A438FB /* Assets.xcassets */; };
 		9E98EC9420B0523B0014B7B7 /* NSEvent+Flowtoolz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E98EC9320B0523B0014B7B7 /* NSEvent+Flowtoolz.swift */; };
 		9EA2B9691EF035D900F05F20 /* TaskListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B9681EF035D900F05F20 /* TaskListRow.swift */; };
@@ -48,6 +49,7 @@
 		9E7651931EEF428100DE2B07 /* TaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = ../Code/macOS/TaskView.swift; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* TaskStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskStore.swift; path = ../Code/TaskStore.swift; sourceTree = "<group>"; };
 		9E82A7A81EF2A558006AEF02 /* SelectableTaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectableTaskList.swift; path = ../Code/SelectableTaskList.swift; sourceTree = "<group>"; };
+		9E8ABEFF20B2F0F1001E862B /* SelectableTaskList+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SelectableTaskList+Extensions.swift"; path = "../Code/SelectableTaskList+Extensions.swift"; sourceTree = "<group>"; };
 		9E91651320551E5500A438FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		9E916518205520B800A438FB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		9E98EC9320B0523B0014B7B7 /* NSEvent+Flowtoolz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSEvent+Flowtoolz.swift"; path = "../Code/macOS/NSEvent+Flowtoolz.swift"; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 		9E6C720E20B1E316001C3D2C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9E8ABEFF20B2F0F1001E862B /* SelectableTaskList+Extensions.swift */,
 				9E82A7A81EF2A558006AEF02 /* SelectableTaskList.swift */,
 				9EA5925A20AF7AD200F70CBF /* TaskSelection.swift */,
 				9E6C720C20B1DDE2001C3D2C /* TaskList.swift */,
@@ -382,6 +385,7 @@
 				9E98EC9420B0523B0014B7B7 /* NSEvent+Flowtoolz.swift in Sources */,
 				9E6C721020B1E66D001C3D2C /* Task+Extension.swift in Sources */,
 				9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */,
+				9E8ABF0020B2F0F1001E862B /* SelectableTaskList+Extensions.swift in Sources */,
 				9EA5925B20AF7AD200F70CBF /* TaskSelection.swift in Sources */,
 				9EA2B96B1EF0A80A00F05F20 /* TaskStore+Persistence.swift in Sources */,
 				9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */,
