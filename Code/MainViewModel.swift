@@ -44,7 +44,7 @@ class MainViewModel: Observer
         if let slaveContainer = slave.supertask
         {
             master.selection.removeAll()
-            master.selection.add(slaveContainer)
+            master.selection.add(task: slaveContainer)
         }
     }
     

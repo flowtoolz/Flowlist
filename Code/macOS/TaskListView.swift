@@ -199,7 +199,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             if cmd
             {
                 taskList?.checkOffFirstSelectedUncheckedTask()
-                updateTableSelection()
+                loadSelectionFromTaskList()
             }
             else { deleteSelectedTasks() }
             
@@ -291,7 +291,9 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             let firstSelectedIndex = taskList?.selection.indexes.first,
             let firstSelectedTask = taskList?.task(at: firstSelectedIndex)
         {
-            taskList?.selection.remove(firstSelectedTask)
+            taskList?.selection.remove(tasks: [firstSelectedTask])
+            
+            loadSelectionFromTaskList()
             
             if let nextEditingIndex = taskList?.selection.indexes.first
             {
@@ -312,6 +314,8 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         send(.tableViewWasClicked)
     }
     
+    // MARK: - Task View Textfield Delegate
+    
     func taskViewTextFieldDidBecomeFirstResponder(_ textField: TaskView.TextField)
     {
         send(.tableViewWasClicked)
@@ -326,7 +330,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             return
         }
         
-        updateTableSelection()
+        loadSelectionFromTaskList()
     }
     
     private func createNewTask(at index: Int? = nil,
@@ -345,6 +349,8 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     private func groupSelectedTasks()
     {
         guard let groupIndex = taskList?.groupSelectedTasks() else { return }
+        
+        loadSelectionFromTaskList()
         
         startEditing(at: groupIndex)
     }
@@ -367,6 +373,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         
         if let newIndex = newIndex
         {
+            loadSelectionFromTaskList()
             startEditing(at: newIndex)
         }
     }
@@ -387,10 +394,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             tableView.scrollRowToVisible(index)
         }
         
-        taskList.selection.add(task)
-        
-        updateTableSelection()
-        
         if index < tableView.numberOfRows,
             let cell = tableView.view(atColumn: 0,
                                      row: index,
@@ -409,16 +412,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         scrollView.contentView.setBoundsOrigin(newOrigin)
     }
     
-    func updateTableSelection()
-    {
-        let selection = taskList?.selection.indexes ?? []
-        
-        guard selection.max() ?? 0 < tableView.numberOfRows else { return }
-        
-        tableView.selectRowIndexes(IndexSet(selection),
-                                   byExtendingSelection: false)
-    }
-    
     // MARK: - Table View Delegate
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat
@@ -430,13 +423,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
                    rowViewForRow row: Int) -> NSTableRowView?
     {
         return TaskListRow(with: taskList?.task(at: row))
-    }
-    
-    func tableViewSelectionDidChange(_ notification: Notification)
-    {
-        // Swift.print("selection did change: \(Array(tableView.selectedRowIndexes).description)")
-        
-        taskList?.selection.setTasksListed(at: Array(tableView.selectedRowIndexes))
     }
     
     // MARK: - Table View Data Source
@@ -469,6 +455,26 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         }
         
         return cell
+    }
+    
+    // MARK: - Selection
+    
+    func loadSelectionFromTaskList()
+    {
+        let selection = taskList?.selection.indexes ?? []
+        
+        guard selection.max() ?? 0 < tableView.numberOfRows else { return }
+        
+        tableView.selectRowIndexes(IndexSet(selection),
+                                   byExtendingSelection: false)
+    }
+    
+        // table view delegate
+    func tableViewSelectionDidChange(_ notification: Notification)
+    {
+        // Swift.print("selection did change: \(Array(tableView.selectedRowIndexes).description)")
+        
+        taskList?.selection.setWithTasksListed(at: Array(tableView.selectedRowIndexes))
     }
     
     // MARK: - Observability

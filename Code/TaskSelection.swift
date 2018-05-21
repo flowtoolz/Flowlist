@@ -13,7 +13,7 @@ class TaskSelection: Observable
 {
     // MARK: - Select Tasks
     
-    func setTasksListed(at indexes: [Int])
+    func setWithTasksListed(at indexes: [Int])
     {
         if indexes.isEmpty && selectedTasks.isEmpty { return }
         
@@ -30,7 +30,7 @@ class TaskSelection: Observable
         send(.didChange)
     }
     
-    func add(_ task: Task?)
+    func add(task: Task?)
     {
         guard let task = task,
             supertask?.index(of: task) != nil,
@@ -43,7 +43,7 @@ class TaskSelection: Observable
     
     // MARK: - Deselect Tasks
     
-    func remove(_ tasks: [Task])
+    func remove(tasks: [Task])
     {
         var didChange = false
         
@@ -104,7 +104,7 @@ class TaskSelection: Observable
     var count: Int { return selectedTasks.count }
     var first: Task? { return selectedTasks.values.first }
     
-    private func isSelected(_ task: Task) -> Bool
+    func isSelected(_ task: Task) -> Bool
     {
         return selectedTasks[task.hash] === task
     }

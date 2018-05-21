@@ -187,8 +187,8 @@ class MainViewController: NSViewController, Observer
         if let firstTask = listView.taskList?.task(at: 0),
             listView.taskList?.selection.count == 0
         {
-            listView.taskList?.selection.add(firstTask)
-            listView.updateTableSelection()
+            listView.taskList?.selection.add(task: firstTask)
+            listView.loadSelectionFromTaskList()
         }
         
         if !(NSApp.mainWindow?.makeFirstResponder(listView.tableView) ?? false)
@@ -287,7 +287,7 @@ class MainViewController: NSViewController, Observer
         
         // load and show selection of added list view
         viewModel.selectSlaveInMaster(at: 0)
-        addedListView.updateTableSelection()
+        addedListView.loadSelectionFromTaskList()
         
         // animate the shit outa this
         NSAnimationContext.runAnimationGroup(

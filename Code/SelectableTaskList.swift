@@ -9,7 +9,7 @@ class SelectableTaskList: TaskList
     {
         let group = supertask?.groupSubtasks(at: selection.indexes)
         
-        selection.add(group)
+        selection.add(task: group)
         
         return group?.indexInSupertask
     }
@@ -25,7 +25,7 @@ class SelectableTaskList: TaskList
     {
         guard task === supertask?.insert(task, at: index) else { return nil }
         
-        selection.setTasksListed(at: [index])
+        selection.setWithTasksListed(at: [index])
         
         return index
     }
@@ -46,7 +46,7 @@ class SelectableTaskList: TaskList
         // update selection
         if let newSelectedTask = task(at: max(firstSelectedIndex - 1, 0))
         {
-            selection.add(newSelectedTask)
+            selection.add(task: newSelectedTask)
         }
         else
         {
@@ -93,11 +93,11 @@ class SelectableTaskList: TaskList
         
         if let taskToSelect = taskToSelect
         {
-            selection.add(taskToSelect)
+            selection.add(task: taskToSelect)
         }
         else if selection.count > 1
         {
-            selection.remove(task)
+            selection.remove(tasks: [task])
         }
     }
     
@@ -129,7 +129,7 @@ class SelectableTaskList: TaskList
         
         switch change
         {
-        case .didRemove(let subtasks, _): selection.remove(subtasks)
+        case .didRemove(let subtasks, _): selection.remove(tasks: subtasks)
             
         default: break
         }

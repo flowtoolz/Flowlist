@@ -10,18 +10,6 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
     {
         super.init(frame: frameRect)
         
-        initialize()
-    }
-    
-    required init?(coder: NSCoder)
-    {
-        super.init(coder: coder)
-        
-        initialize()
-    }
-    
-    private func initialize()
-    {
         identifier = NSUserInterfaceItemIdentifier(rawValue: TaskView.reuseIdentifier)
         
         layoutCheckBox()
@@ -32,6 +20,11 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
         layer?.borderColor = TaskView.borderColor.cgColor
         layer?.borderWidth = 1.0
         layer?.cornerRadius = 4.0
+    }
+    
+    required init?(coder: NSCoder)
+    {
+        fatalError("init?(coder: NSCoder) not implemented in TaskView")
     }
     
     deinit
@@ -89,7 +82,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
         stopObserving(task)
     }
     
-    // MARK: - Title Field
+    // MARK: - Title Editing
     
     func startEditingTitle()
     {
@@ -126,6 +119,8 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
     }
     
     private var newTitle: String?
+    
+    // MARK: - Title Field
     
     private func layoutTitleField()
     {
@@ -164,6 +159,23 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
         
         return textField
     }()
+    
+    class TextField: NSTextField
+    {
+        override func becomeFirstResponder() -> Bool
+        {
+            let didBecomeFirstResponder = super.becomeFirstResponder()
+            
+            if didBecomeFirstResponder
+            {
+                taskViewTextFieldDelegate?.taskViewTextFieldDidBecomeFirstResponder(self)
+            }
+            
+            return didBecomeFirstResponder
+        }
+        
+        weak var taskViewTextFieldDelegate: TaskViewTextFieldDelegate?
+    }
     
     // MARK: - Check Box
     
@@ -263,23 +275,6 @@ class TaskView: NSView, NSTextFieldDelegate, Observer
                                     alpha: 1)
     
     static let borderColor = NSColor.black.withAlphaComponent(0.15)
-    
-    class TextField: NSTextField
-    {
-        override func becomeFirstResponder() -> Bool
-        {
-            let didBecomeFirstResponder = super.becomeFirstResponder()
-            
-            if didBecomeFirstResponder
-            {
-                taskViewTextFieldDelegate?.taskViewTextFieldDidBecomeFirstResponder(self)
-            }
-            
-            return didBecomeFirstResponder
-        }
-        
-        weak var taskViewTextFieldDelegate: TaskViewTextFieldDelegate?
-    }
     
     // MARK: - Table View Cell
     
