@@ -3,6 +3,14 @@ import SwiftyToolz
 
 class Task: Codable, Observable
 {
+    // MARK: - Initialization
+    
+    convenience init(_ title: String)
+    {
+        self.init()
+        self.title <- title
+    }
+    
     // MARK: - Data
     
     enum CodingKeys: CodingKey { case title, state, subtasks }
