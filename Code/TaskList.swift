@@ -159,31 +159,39 @@ class TaskList: Observable, Observer
         
         title.observable = new?.title
         
-        var oldSubtasks = [Task]()
-        var oldIndexes = [Int]()
+        sendDidRemoveTasksOf(oldSupertask: old)
+        sendDidInsertTasksOf(newSupertask: new)
+    }
+    
+    private func sendDidRemoveTasksOf(oldSupertask old: Task?)
+    {
+        guard let old = old, old.hasSubtasks else { return }
+
+        var subtasks = [Task]()
+        var indexes = [Int]()
         
-        for i in 0 ..< (old?.numberOfSubtasks ?? 0)
+        for index in 0 ..< old.numberOfSubtasks
         {
-            if let oldSubtask = old?.subtask(at: i)
+            if let subtask = old.subtask(at: index)
             {
-                oldSubtasks.append(oldSubtask)
-                oldIndexes.append(i)
+                subtasks.append(subtask)
+                indexes.append(index)
             }
         }
         
-        if !oldIndexes.isEmpty
-        {
-            send(.didChangeListedTasks(.didRemove(subtasks: oldSubtasks,
-                                                  from: oldIndexes)))
-        }
-        
-        let newIndexes = Array(0 ..< (new?.numberOfSubtasks ?? 0))
-        
-        if !newIndexes.isEmpty
-        {
-            send(.didChangeListedTasks(.didInsert(at: newIndexes)))
-        }
+        send(.didChangeListedTasks(.didRemove(subtasks: subtasks, from: indexes)))
     }
+    
+    private func sendDidInsertTasksOf(newSupertask new: Task?)
+    {
+        guard let new = new, new.hasSubtasks else { return }
+        
+        let indexes = Array(0 ..< new.numberOfSubtasks)
+
+        send(.didChangeListedTasks(.didInsert(at: indexes)))
+    }
+    
+    // MARK: - Title
     
     let title = Var<String>().new().unwrap("")
     
@@ -194,7 +202,7 @@ class TaskList: Observable, Observer
     enum Event
     {
         case didNothing
-        case didChangeListedTaskTitle(at: Int)
+        case didChangeListedTaskTitle(at: Int) // FIXME: is this really needed?
         case didChangeListedTasks(Task.SubtaskChange)
     }
 }
