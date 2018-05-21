@@ -17,17 +17,26 @@ class TaskSelection: Observable
     {
         if indexes.isEmpty && selectedTasks.isEmpty { return }
         
-        selectedTasks.removeAll()
+        var didChange = false
+        var didClear = count == 0
         
         for index in indexes
         {
             if let task = supertask?.subtask(at: index)
             {
+                if !didClear
+                {
+                    selectedTasks.removeAll()
+                    didClear = true
+                }
+    
                 selectedTasks[task.hash] = task
+    
+                didChange = true
             }
         }
         
-        send(.didChange)
+        if didChange { send(.didChange) }
     }
     
     func add(task: Task?)

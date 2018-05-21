@@ -32,26 +32,19 @@ class SelectableTaskList: TaskList
     
     func removeSelectedTasks() -> Bool
     {
-        // delete
         let selectedIndexes = selection.indexes
         
-        guard let firstSelectedIndex = selectedIndexes.first,
-            let removedTasks = supertask?.removeSubtasks(at: selectedIndexes),
-            !removedTasks.isEmpty
+        guard let supertask = supertask,
+            let firstSelectedIndex = selectedIndexes.first,
+            supertask.removeSubtasks(at: selectedIndexes).count > 0
         else
         {
             return false
         }
+       
+        let newSelectedIndex = max(firstSelectedIndex - 1, 0)
         
-        // update selection
-        if let newSelectedTask = task(at: max(firstSelectedIndex - 1, 0))
-        {
-            selection.add(task: newSelectedTask)
-        }
-        else
-        {
-            selection.removeAll()
-        }
+        selection.setWithTasksListed(at: [newSelectedIndex])
         
         return true
     }
