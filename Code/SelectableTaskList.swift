@@ -74,26 +74,15 @@ class SelectableTaskList: TaskList
     
     func checkOffFirstSelectedUncheckedTask()
     {
-        guard let (index, task) = firstSelectedUnchecked() else
-        {
-            return
-        }
-        
-        // determine which task to select after the ckeck off
-        var taskToSelect: Task?
-        
-        if selection.count == 1
-        {
-            let unchecked = supertask?.indexOfFirstUncheckedSubtask(from: index + 1)
-            
-            taskToSelect = supertask?.subtask(at: unchecked)
-        }
+        guard let task = firstSelectedUnchecked() else { return }
         
         task.state <- .done
         
-        if let taskToSelect = taskToSelect
+        guard let nextIndex = supertask?.indexOfFirstUncheckedSubtask() else { return }
+        
+        if selection.count == 1
         {
-            selection.add(task: taskToSelect)
+            selection.setWithTasksListed(at: [nextIndex])
         }
         else if selection.count > 1
         {
@@ -101,13 +90,13 @@ class SelectableTaskList: TaskList
         }
     }
     
-    private func firstSelectedUnchecked() -> (Int, Task)?
+    private func firstSelectedUnchecked() -> Task?
     {
         for selectedIndex in selection.indexes
         {
             if let task = task(at: selectedIndex), !task.isDone
             {
-                return (selectedIndex, task)
+                return task
             }
         }
         
