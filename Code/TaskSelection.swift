@@ -41,11 +41,40 @@ class TaskSelection: Observable
         if didChange { send(.didChange) }
     }
     
+    func set(with task: Task)
+    {
+        guard let root = root else
+        {
+            log(warning: "Tried to select tasks while selection has no root.")
+            return
+        }
+        
+        guard let _ = root.index(of: task), !isSelected(task) else
+        {
+            log(warning: "Tried invalid selection.")
+            return
+        }
+        
+        selectedTasks = [task.hash : task]
+        
+        send(.didChange)
+    }
+    
     func add(task: Task?)
     {
-        guard let task = task else { return }
+        guard let task = task else
+        {
+            log(warning: "Tried to select nil task.")
+            return
+        }
         
-        guard let _ = root?.index(of: task), !isSelected(task) else
+        guard let root = root else
+        {
+            log(warning: "Tried to select task while selection has no root.")
+            return
+        }
+        
+        guard let _ = root.index(of: task), !isSelected(task) else
         {
             log(warning: "Tried invalid selection.")
             return
