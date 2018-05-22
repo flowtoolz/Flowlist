@@ -82,6 +82,20 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         stopObserving(task)
     }
     
+    func adjustTo(state: Task.State?)
+    {
+        let isChecked = state == .done
+        
+        let correctImage = checkBox.image(isChecked)
+        
+        if checkBox.image !== correctImage
+        {
+            checkBox.image = correctImage
+            
+            titleField.textColor = (isChecked ? Color.grayedOut : Color.black).nsColor
+        }
+    }
+    
     // MARK: - Title Editing
     
     func startEditingTitle()
@@ -151,10 +165,9 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         textField.delegate = self
         textField.lineBreakMode = .byTruncatingTail
         
-        
         let attributes: [NSAttributedStringKey : Any] =
         [
-            NSAttributedStringKey.foregroundColor: self.greyedOutColor,
+            NSAttributedStringKey.foregroundColor: Color.grayedOut.nsColor,
             NSAttributedStringKey.font: NSFont.systemFont(ofSize: 13)
         ]
         
@@ -165,22 +178,6 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         
         return textField
     }()
-    
-    func adjustTo(state: Task.State?)
-    {
-        let isChecked = state == .done
-        
-        let correctImage = checkBox.image(isChecked)
-        
-        if checkBox.image !== correctImage
-        {
-            checkBox.image = correctImage
-            
-            titleField.textColor = isChecked ? greyedOutColor : NSColor.black
-        }
-    }
-    
-    private lazy var greyedOutColor = NSColor(white: 0, alpha: 0.33)
     
     // MARK: - Check Box
 
