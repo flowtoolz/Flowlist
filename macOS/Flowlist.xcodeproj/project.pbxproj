@@ -28,6 +28,7 @@
 		9EA5925B20AF7AD200F70CBF /* TaskSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5925A20AF7AD200F70CBF /* TaskSelection.swift */; };
 		9EAD75411EF6502000DC46FD /* TaskListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD75401EF6502000DC46FD /* TaskListTableView.swift */; };
 		9EBC70292056FD02007A1EA8 /* TaskBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* TaskBrowser.swift */; };
+		9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextField.swift */; };
 		C932DAFCC628909A261C9DC7 /* Pods_Flowlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D591083E3159C05E29673835 /* Pods_Flowlist.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		9EA5925A20AF7AD200F70CBF /* TaskSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskSelection.swift; path = ../Code/TaskSelection.swift; sourceTree = "<group>"; };
 		9EAD75401EF6502000DC46FD /* TaskListTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListTableView.swift; path = ../Code/macOS/TaskListTableView.swift; sourceTree = "<group>"; };
 		9EBC70282056FD02007A1EA8 /* TaskBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskBrowser.swift; path = ../Code/TaskBrowser.swift; sourceTree = "<group>"; };
+		9EE2EE4A20B4A693007CDC2F /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = ../Code/macOS/TextField.swift; sourceTree = "<group>"; };
 		BA6347ACAE78132863C2FF94 /* Pods_FlowlistTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlowlistTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCFD3E12471EE5C3B17C7DE0 /* Pods_TodayListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodayListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C499DBA6E96C7098BCE851AA /* Pods-TodayList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TodayList/Pods-TodayList.debug.xcconfig"; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				9E7651931EEF428100DE2B07 /* TaskView.swift */,
+				9EE2EE4A20B4A693007CDC2F /* TextField.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				9E6C720B20B19C88001C3D2C /* Task+TaskList.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* SelectableTaskList.swift in Sources */,
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
+				9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */,
 				9E72881B1EEF3095003A2F46 /* TaskListView.swift in Sources */,
 				9E15185E1EEEE97700B35AD5 /* MainViewController.swift in Sources */,
 				9E696E651EF507270046BCB8 /* ListHeaderView.swift in Sources */,

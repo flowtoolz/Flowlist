@@ -166,23 +166,6 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         return textField
     }()
     
-    class TextField: NSTextField
-    {
-        override func becomeFirstResponder() -> Bool
-        {
-            let didBecomeFirstResponder = super.becomeFirstResponder()
-            
-            if didBecomeFirstResponder
-            {
-                taskViewTextFieldDelegate?.taskViewTextFieldDidBecomeFirstResponder(self)
-            }
-            
-            return didBecomeFirstResponder
-        }
-        
-        weak var taskViewTextFieldDelegate: TaskViewTextFieldDelegate?
-    }
-    
     // MARK: - Check Box
     
     @objc func checkBoxClicked()
@@ -285,9 +268,4 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     // MARK: - Table View Cell
     
     static let reuseIdentifier = "TaskListCellIdentifier"
-}
-
-protocol TaskViewTextFieldDelegate: AnyObject
-{
-    func taskViewTextFieldDidBecomeFirstResponder(_ textField: TaskView.TextField)
 }

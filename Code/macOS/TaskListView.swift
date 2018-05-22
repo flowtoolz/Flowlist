@@ -3,7 +3,7 @@ import PureLayout
 import SwiftObserver
 import SwiftyToolz
 
-class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListTableViewDelegate, TaskViewTextFieldDelegate, Observer, Observable
+class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListTableViewDelegate, TextFieldDelegate, Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -289,7 +289,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     // MARK: - Task View Textfield Delegate
     
-    func taskViewTextFieldDidBecomeFirstResponder(_ textField: TaskView.TextField)
+    func textFieldDidBecomeFirstResponder(_ textField: TextField)
     {
         send(.tableViewWasClicked)
     }
@@ -416,7 +416,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: TaskView.reuseIdentifier),
                                   owner: self) as? TaskView ?? TaskView()
         
-        cell.titleField.taskViewTextFieldDelegate = self
+        cell.titleField.textFieldDelegate = self
         
         if let task = list?.task(at: row)
         {
