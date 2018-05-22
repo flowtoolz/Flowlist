@@ -13,7 +13,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         identifier = NSUserInterfaceItemIdentifier(rawValue: TaskView.reuseIdentifier)
         
         layoutCheckBox()
-        layoutContainerIndicator()
+        contrainGroupIndicator()
         layoutTitleField()
         
         wantsLayer = true
@@ -222,16 +222,15 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     
     // MARK: - Group Indicator
     
-    func updateGroupIndicator()
+    private func updateGroupIndicator()
     {
         groupIndicator.isHidden = !(task?.hasSubtasks ?? false)
     }
     
-    private func layoutContainerIndicator()
+    private func contrainGroupIndicator()
     {
-        groupIndicator.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                        excludingEdge: .left)
-        groupIndicator.autoSetDimension(.width, toSize: 22)
+        groupIndicator.autoAlignAxis(toSuperviewAxis: .horizontal)
+        groupIndicator.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
     }
     
     private lazy var groupIndicator: NSImageView =
@@ -239,7 +238,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         let view = NSImageView.newAutoLayout()
         self.addSubview(view)
         
-        view.image = NSImage(named: NSImage.Name(rawValue: "container_indicator"))
+        view.image = NSImage(named: NSImage.Name(rawValue: "group_indicator"))
         view.imageScaling = .scaleNone
         view.imageAlignment = .alignCenter
         view.isHidden = true
@@ -247,11 +246,11 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         return view
     }()
     
-    // MARK: - Task
-    
-    private(set) weak var task: Task?
-    
     // MARK: - Table View Cell
     
     static let reuseIdentifier = "TaskListCellIdentifier"
+    
+    // MARK: - Task
+    
+    private(set) weak var task: Task?
 }
