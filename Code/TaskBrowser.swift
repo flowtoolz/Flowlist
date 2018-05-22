@@ -48,14 +48,7 @@ class TaskBrowser: Observer
         
         observeSelection(in: list)
         
-        if prepend
-        {
-            lists.insert(list, at: 0)
-        }
-        else
-        {
-            lists.append(list)
-        }
+        lists.insert(list, at: prepend ? 0 : lists.count)
         
         return list
     }
