@@ -2,12 +2,13 @@ import AppKit
 
 class CheckBox: NSButton
 {
+    // MARK: - Initialization
+    
     override init(frame frameRect: NSRect)
     {
         super.init(frame: frameRect)
         
         bezelStyle = .regularSquare
-        title = ""
         imageScaling = .scaleNone
         image = CheckBox.imageEmpty
         isBordered = false
@@ -19,7 +20,9 @@ class CheckBox: NSButton
         fatalError("init(coder:) has not been implemented")
     }
     
-    func image(_ checked: Bool) -> NSImage?
+    // MARK: - Image
+    
+    func image(_ checked: Bool) -> NSImage
     {
         return checked ? CheckBox.imageChecked : CheckBox.imageEmpty
     }
