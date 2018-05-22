@@ -14,7 +14,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         
         constrainCheckBox()
         contrainGroupIndicator()
-        layoutTitleField()
+        constrainTitleField()
         
         wantsLayer = true
         layer?.borderColor = Color.border.nsColor.cgColor
@@ -142,39 +142,22 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     
     // MARK: - Title Field
     
-    private func layoutTitleField()
+    private func constrainTitleField()
     {
         titleField.autoAlignAxis(.horizontal, toSameAxisOf: self)
         titleField.autoPinEdge(.left, to: .right, of: checkBox)
         titleField.autoPinEdge(.right,
                                to: .left,
                                of: groupIndicator,
-                               withOffset: -5)
+                               withOffset: -10)
     }
     
     lazy var titleField: TextField =
     {
-        let textField = TextField()
+        let textField = TextField("untitled")
         self.addSubview(textField)
-        
-        textField.isBordered = false
-        textField.drawsBackground = false
-        textField.isBezeled = false
-        textField.isEditable = true
-        textField.font = NSFont.systemFont(ofSize: 13)
+
         textField.delegate = self
-        textField.lineBreakMode = .byTruncatingTail
-        
-        let attributes: [NSAttributedStringKey : Any] =
-        [
-            NSAttributedStringKey.foregroundColor: Color.grayedOut.nsColor,
-            NSAttributedStringKey.font: NSFont.systemFont(ofSize: 13)
-        ]
-        
-        let attributedString = NSAttributedString(string: "untitled",
-                                                  attributes: attributes)
-        
-        textField.placeholderAttributedString = attributedString
         
         return textField
     }()
@@ -183,9 +166,9 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
 
     private func constrainCheckBox()
     {
+        checkBox.autoConstrainAttribute(.width, to: .height, of: checkBox)
         checkBox.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                               excludingEdge: .right)
-        checkBox.autoConstrainAttribute(.width, to: .height, of: checkBox)
     }
     
     private lazy var checkBox: CheckBox =
