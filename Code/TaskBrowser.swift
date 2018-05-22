@@ -3,103 +3,51 @@ import SwiftyToolz
 
 class TaskBrowser: Observer
 {
-    init() { createTaskLists() }
-    
-    private func observe(list: SelectableTaskList)
-    {
-        observe(list.selection, filter: { $0 == .didChange })
-        {
-            [weak self, weak list] event in
-            
-            guard let list = list else { return }
-            
-            self?.listChangedSelection(list)
-        }
-    }
+    // MARK: - Navigate
     
     func moveRight() -> SelectableTaskList
     {
-        stopObserving(lists.remove(at: 0))
-
-        return addTaskList()
+        observeSelection(in: lists.remove(at: 0), start: false)
+        
+        let newLastList = addTaskList()
+        
+        updateRootOfList(at: lists.count - 1)
+        
+        return newLastList
     }
     
     func moveLeft() -> SelectableTaskList
     {
-        stopObserving(lists.popLast())
+        observeSelection(in: lists.popLast(), start: false)
         
-        return addTaskList(prepend: true)
+        let newFirstList = addTaskList(prepend: true)
+
+        updateNewFirstList()
+        
+        return newFirstList
     }
     
-    func selectSlaveInMaster(at index: Int)
+    private func updateNewFirstList()
     {
-        guard index >= 0, index + 1 < lists.count else { return }
+        guard lists.count > 1 else { return }
         
-        let master = lists[index]
+        let list = lists[0]
+        let sublistRoot = lists[1].root
         
-        guard master.numberOfTasks > 0 else { return }
+        list.set(root: sublistRoot?.supertask)
         
-        let slave = lists[index + 1]
-        
-        if let slaveContainer = slave.root
+        if let sublistRoot = sublistRoot, list.numberOfTasks > 0
         {
-            master.selection.removeAll()
-            master.selection.add(task: slaveContainer)
+            // FIXME: add functo to selection that allows to set selection with task
+            list.selection.removeAll()
+            list.selection.add(task: sublistRoot)
         }
     }
     
-    private func listChangedSelection(_ list: SelectableTaskList)
-    {
-        guard let index = lists.index(where: { $0 === list }) else
-        {
-            log(warning: "Unknown TaskList changed selection.")
-            return
-        }
-        
-        setContainerOfSlave(at: index + 1)
-    }
+    // MARK: - Create Task Lists
     
-    func setContainerOfLastList()
+    init()
     {
-        guard lists.count > 0 else { return }
-        
-        setContainerOfSlave(at: lists.count - 1)
-    }
-    
-    func setContainerOfSlave(at index: Int)
-    {
-        guard index > 0, index < lists.count else { return }
-        
-        let slave = lists[index]
-        let master = lists[index - 1]
-        
-        guard master.selection.count == 1,
-            let container = master.selection.first
-        else
-        {
-            slave.set(root: nil)
-            return
-        }
-        
-        slave.set(root: container)
-    }
-    
-    func setContainerOfMaster(at index: Int)
-    {
-        guard index >= 0, index < lists.count - 1 else { return }
-        
-        let master = lists[index]
-        let slave = lists[index + 1]
-        
-        master.set(root: slave.root?.supertask)
-    }
-    
-    // MARK: Task List View Models
-    
-    private func createTaskLists()
-    {
-        lists.removeAll()
-        
         for _ in 0 ..< 5 { addTaskList() }
         
         lists[2].set(root: store.root)
@@ -110,7 +58,7 @@ class TaskBrowser: Observer
     {
         let list = SelectableTaskList()
         
-        observe(list: list)
+        observeSelection(in: list)
         
         if prepend
         {
@@ -124,5 +72,69 @@ class TaskBrowser: Observer
         return list
     }
     
-    var lists = [SelectableTaskList]()
+    // MARK: - Observe Selections in Lists
+    
+    private func observeSelection(in list: SelectableTaskList?,
+                                  start: Bool = true)
+    {
+        guard let list = list else
+        {
+            log(warning: "Tried to \(start ? "start" : "stop") observing selection of nil list.")
+            stopObservingDeadObservables()
+            return
+        }
+        
+        guard start else
+        {
+            stopObserving(list.selection)
+            return
+        }
+        
+        observe(list.selection, filter: { $0 == .didChange })
+        {
+            [weak self, weak list] event in
+            
+            guard let list = list else { return }
+            
+            self?.listChangedSelection(list)
+        }
+    }
+    
+    private func listChangedSelection(_ list: SelectableTaskList)
+    {
+        guard let index = lists.index(where: { $0 === list }) else
+        {
+            log(error: "Received update from unmanaged list.")
+            return
+        }
+        
+        updateRootOfList(at: index + 1)
+    }
+    
+    // MARK: - Lists
+    
+    private func updateRootOfList(at index: Int)
+    {
+        guard index > 0, index < lists.count else
+        {
+            log(warning: "Tried to update root of list at invaid index \(index).")
+            return
+        }
+        
+        let superSelection = lists[index - 1].selection
+        let newRoot = superSelection.count == 1 ? superSelection.first : nil
+        
+        lists[index].set(root: newRoot)
+    }
+    
+    func list(at index: Int) -> SelectableTaskList?
+    {
+        guard lists.isValid(index: index) else { return nil }
+        
+        return lists[index]
+    }
+    
+    var numberOfLists: Int { return lists.count }
+    
+    private var lists = [SelectableTaskList]()
 }

@@ -8,10 +8,7 @@ class MainViewController: NSViewController, Observer
 {
     // MARK: - Life Cycle
     
-    deinit
-    {
-        stopAllObserving()
-    }
+    deinit { stopAllObserving() }
     
     override func loadView()
     {
@@ -93,8 +90,14 @@ class MainViewController: NSViewController, Observer
     {
         listViews.removeAll()
         
-        for list in browser.lists
+        for i in 0 ..< browser.numberOfLists
         {
+            guard let list = browser.list(at: i) else
+            {
+                log(error: "Got nil list from browser at valid index \(i)")
+                break
+            }
+            
             addListView(with: list)
         }
     }
@@ -246,9 +249,6 @@ class MainViewController: NSViewController, Observer
         let addedListView = addListView(with: rightList)
         addedListView.isHidden = true
         
-        // let coordinator update new list
-        browser.setContainerOfLastList()
-        
         // animate the shit outa this
         NSAnimationContext.runAnimationGroup(
             {
@@ -281,12 +281,8 @@ class MainViewController: NSViewController, Observer
         // add new list view to front
         let addedListView = addListView(with: leftList, prepend: true)
         addedListView.isHidden = true
-        
-        // let coordinator update new list
-        browser.setContainerOfMaster(at: 0)
-        
+
         // load and show selection of added list view
-        browser.selectSlaveInMaster(at: 0)
         addedListView.loadSelectionFromTaskList()
         
         // animate the shit outa this
