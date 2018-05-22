@@ -129,7 +129,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     {
         let view = TaskListTableView()
         
-        let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier(rawValue: TaskView.reuseIdentifier))
+        let column = NSTableColumn(identifier:  TaskView.uiIdentifier)
         
         view.addTableColumn(column)
         
@@ -405,7 +405,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
                    viewFor tableColumn: NSTableColumn?,
                    row: Int) -> NSView?
     {
-        let taskViewReuseIdentifier = NSUserInterfaceItemIdentifier(TaskView.reuseIdentifier)
+        let taskViewReuseIdentifier = TaskView.uiIdentifier
         
         guard tableColumn?.identifier == taskViewReuseIdentifier else
         {
@@ -414,7 +414,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         }
         
         // FIXME: differentiate reusing and creating cells
-        let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: TaskView.reuseIdentifier),
+        let cell = tableView.makeView(withIdentifier: TaskView.uiIdentifier,
                                   owner: self) as? TaskView ?? TaskView()
         
         cell.titleField.textFieldDelegate = self

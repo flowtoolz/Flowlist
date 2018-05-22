@@ -10,7 +10,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     {
         super.init(frame: frameRect)
         
-        identifier = NSUserInterfaceItemIdentifier(rawValue: TaskView.reuseIdentifier)
+        identifier = TaskView.uiIdentifier
         
         layoutCheckBox()
         contrainGroupIndicator()
@@ -248,7 +248,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     
     // MARK: - Table View Cell
     
-    static let reuseIdentifier = "TaskListCellIdentifier"
+    static let uiIdentifier = NSUserInterfaceItemIdentifier(rawValue: "TaskViewID")
     
     // MARK: - Task
     
