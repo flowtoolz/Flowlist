@@ -12,7 +12,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         
         identifier = TaskView.uiIdentifier
         
-        layoutCheckBox()
+        constrainCheckBox()
         contrainGroupIndicator()
         layoutTitleField()
         
@@ -166,18 +166,11 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         return textField
     }()
     
-    // MARK: - Check Box
-    
-    @objc func checkBoxClicked()
-    {
-        _ = task?.state <- task?.isDone ?? false ? nil : .done
-    }
-    
     func adjustTo(state: Task.State?)
     {
         let isChecked = state == .done
         
-        let correctImage = checkBoxImage(isChecked)
+        let correctImage = checkBox.image(isChecked)
         
         if checkBox.image !== correctImage
         {
@@ -186,39 +179,33 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
             titleField.textColor = isChecked ? greyedOutColor : NSColor.black
         }
     }
+    
+    private lazy var greyedOutColor = NSColor(white: 0, alpha: 0.33)
+    
+    // MARK: - Check Box
 
-    private func layoutCheckBox()
+    private func constrainCheckBox()
     {
-        checkBox.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero, excludingEdge: .right)
-        checkBox.autoSetDimension(.width, toSize: 36)
+        checkBox.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                              excludingEdge: .right)
+        checkBox.autoConstrainAttribute(.width, to: .height, of: checkBox)
     }
     
-    private lazy var checkBox: NSButton =
+    private lazy var checkBox: CheckBox =
     {
-        let button = NSButton.newAutoLayout()
+        let button = CheckBox.newAutoLayout()
         self.addSubview(button)
-        
-        button.bezelStyle = NSButton.BezelStyle.regularSquare
-        button.title = ""
-        button.action = #selector(checkBoxClicked)
+
+        button.action = #selector(didClickCheckBox)
         button.target = self
-        button.imageScaling = .scaleNone
-        button.image = TaskView.checkBoxImageEmpty
-        button.isBordered = false
-        button.layer?.backgroundColor = NSColor.clear.cgColor
         
         return button
     }()
     
-    private lazy var greyedOutColor = NSColor(white: 0, alpha: 0.33)
-    
-    private func checkBoxImage(_ checked: Bool) -> NSImage?
+    @objc private func didClickCheckBox()
     {
-        return checked ? TaskView.checkBoxImageChecked : TaskView.checkBoxImageEmpty
+        _ = task?.state <- task?.isDone ?? false ? nil : .done
     }
-    
-    private static let checkBoxImageEmpty = NSImage(named: NSImage.Name(rawValue: "checkbox_unchecked"))
-    private static let checkBoxImageChecked = NSImage(named: NSImage.Name(rawValue: "checkbox_checked"))
     
     // MARK: - Group Indicator
     
@@ -246,7 +233,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         return view
     }()
     
-    // MARK: - Table View Cell
+    // MARK: - UI Identifier
     
     static let uiIdentifier = NSUserInterfaceItemIdentifier(rawValue: "TaskViewID")
     
