@@ -17,7 +17,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         layoutTitleField()
         
         wantsLayer = true
-        layer?.borderColor = TaskView.borderColor.cgColor
+        layer?.borderColor = Color.border.nsColor.cgColor
         layer?.borderWidth = 1.0
         layer?.cornerRadius = 4.0
     }
@@ -250,20 +250,6 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     // MARK: - Task
     
     private(set) weak var task: Task?
-    
-    static let verticalGap: CGFloat = 2
-    
-    static let selectionColor = NSColor(calibratedRed: 163.0/255.0,
-                                         green: 205.0 / 255.0,
-                                         blue: 254.0 / 255.0,
-                                         alpha: 1)
-    
-    static let doneColor = NSColor(calibratedRed: 225.0/255.0,
-                                    green: 225.0 / 255.0,
-                                    blue: 225.0 / 255.0,
-                                    alpha: 1)
-    
-    static let borderColor = NSColor.black.withAlphaComponent(0.15)
     
     // MARK: - Table View Cell
     

@@ -1,5 +1,6 @@
 import AppKit
 import SwiftObserver
+import SwiftyToolz
 
 class TaskListRow: NSTableRowView, Observer
 {
@@ -24,14 +25,14 @@ class TaskListRow: NSTableRowView, Observer
     
     override func drawSelection(in dirtyRect: NSRect)
     {
-        let color = TaskView.selectionColor.withAlphaComponent(isEmphasized ? 1 : 0.5)
+        let color = Color.selected.nsColor.withAlphaComponent(isEmphasized ? 1 : 0.5)
         
         drawBackground(with: color)
     }
     
     override func drawBackground(in dirtyRect: NSRect)
     {
-        let color = task?.isDone ?? false ? TaskView.doneColor : NSColor.white
+        let color = task?.isDone ?? false ? Color.done.nsColor : NSColor.white
         
         drawBackground(with: color)
     }
@@ -40,8 +41,9 @@ class TaskListRow: NSTableRowView, Observer
     {
         var drawRect = bounds
         
-        drawRect.origin.y = TaskView.verticalGap / 2
-        drawRect.size.height -= TaskView.verticalGap
+        let verticalGap = Float.verticalGap.cgFloat
+        drawRect.origin.y = verticalGap / 2
+        drawRect.size.height -= verticalGap
         
         color.setFill()
         
