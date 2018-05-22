@@ -20,28 +20,16 @@ class TaskBrowser: Observer
     {
         observeSelection(in: lists.popLast(), start: false)
         
-        let newFirstList = addTaskList(prepend: true)
+        let firstList = addTaskList(prepend: true)
 
-        updateNewFirstList()
+        guard lists.count > 1,
+            let sublistRoot = lists[1].root,
+            let firstRoot = sublistRoot.supertask else { return firstList }
+
+        firstList.set(root: firstRoot)
+        firstList.selection.set(with: sublistRoot)
         
-        return newFirstList
-    }
-    
-    private func updateNewFirstList()
-    {
-        guard lists.count > 1 else { return }
-        
-        let list = lists[0]
-        let sublistRoot = lists[1].root
-        
-        list.set(root: sublistRoot?.supertask)
-        
-        if let sublistRoot = sublistRoot, list.numberOfTasks > 0
-        {
-            // FIXME: add functo to selection that allows to set selection with task
-            list.selection.removeAll()
-            list.selection.add(task: sublistRoot)
-        }
+        return firstList
     }
     
     // MARK: - Create Task Lists
