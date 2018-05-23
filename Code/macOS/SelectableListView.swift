@@ -3,13 +3,15 @@ import PureLayout
 import SwiftObserver
 import SwiftyToolz
 
-class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Observer, Observable
+class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
 {
     // MARK: - Life Cycle
     
     init(with list: SelectableList)
     {
         super.init(frame: NSRect.zero)
+
+        dataSource.list = list
         
         // list
         
@@ -279,21 +281,26 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
     
     // MARK: - Table View Delegate
     
-    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat
+    func tableView(_ tableView: NSTableView,
+                   heightOfRow row: Int) -> CGFloat
     {
         return Float.itemHeight.cgFloat
     }
     
     func tableView(_ tableView: NSTableView,
+                   viewFor tableColumn: NSTableColumn?,
+                   row: Int) -> NSView?
+    {
+        return dataSource.tableView(tableView,
+                                    viewFor: tableColumn,
+                                    row: row)
+    }
+    
+    func tableView(_ tableView: NSTableView,
                    rowViewForRow row: Int) -> NSTableRowView?
     {
-        guard let task = list?.task(at: row) else
-        {
-            log(error: "No task exists for table row \(row).")
-            return nil
-        }
-        
-        return Row(with: task)
+        return dataSource.tableView(tableView,
+                                    rowViewForRow: row)
     }
     
     func tableViewSelectionDidChange(_ notification: Notification)
@@ -301,52 +308,24 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
         storeUISelectionInList()
     }
     
-    // MARK: - Table View Data Source
+    // MARK: - Creating Task Views
     
-    func numberOfRows(in tableView: NSTableView) -> Int
+    private lazy var dataSource: TableDataSource =
     {
-        return list?.numberOfTasks ?? 0
-    }
-    
-    func tableView(_ tableView: NSTableView,
-                   viewFor tableColumn: NSTableColumn?,
-                   row: Int) -> NSView?
-    {
-        return retrieveTaskView().configure(with: list?.task(at: row))
-    }
-    
-    private func retrieveTaskView() -> TaskView
-    {
-        guard let dequeuedView = dequeueView() else
+        let source = TableDataSource()
+        
+        observe(source)
         {
-            return createTaskView()
+            [unowned self] event in
+            
+            if case .didCreate(let taskView) = event
+            {
+                self.observe(taskView: taskView)
+            }
         }
         
-        guard let dequeuedTaskView = dequeuedView as? TaskView else
-        {
-            log(error: "Couldn't cast dequeued view to \(TaskView.self)")
-            return createTaskView()
-        }
-        
-        return dequeuedTaskView
-    }
-    
-    private func dequeueView() -> NSView?
-    {
-        return tableView.makeView(withIdentifier: TaskView.uiIdentifier,
-                                  owner: nil)
-    }
-    
-    private func createTaskView() -> TaskView
-    {
-        let taskView = TaskView()
-        
-        observe(taskView: taskView)
-        
-        return taskView
-    }
-    
-    // MARK: - Observe Task Views
+        return source
+    }()
     
     private func observe(taskView: TaskView)
     {
@@ -404,10 +383,6 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
         
         list?.selection.setWithTasksListed(at: selectedIndexes)
     }
-    
-    // MARK: - Selectable List
-    
-    private(set) weak var list: SelectableList?
     
     // MARK: - Header View
     
@@ -476,11 +451,15 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
         view.intercellSpacing = NSSize(width: 0,
                                        height: Float.verticalGap.cgFloat)
         
-        view.dataSource = self
+        view.dataSource = dataSource
         view.delegate = self
         
         return view
     }()
+    
+    // MARK: - List
+    
+    private(set) weak var list: SelectableList?
     
     // MARK: - Observability
     

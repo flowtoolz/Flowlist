@@ -6,8 +6,14 @@ class Row: NSTableRowView, Observer
 {
     // MARK: - Life Cycle
     
-    init(with task: Task)
+    init?(with task: Task?)
     {
+        guard let task = task else
+        {
+            log(error: "Cannot create row with nil task.")
+            return nil
+        }
+        
         super.init(frame: .zero)
         
         self.task = task
