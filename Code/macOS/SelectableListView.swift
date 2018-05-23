@@ -339,7 +339,13 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ta
     func tableView(_ tableView: NSTableView,
                    rowViewForRow row: Int) -> NSTableRowView?
     {
-        return Row(with: list?.task(at: row))
+        guard let task = list?.task(at: row) else
+        {
+            log(error: "No task exists for table row \(row).")
+            return nil
+        }
+        
+        return Row(with: task)
     }
     
     // MARK: - Table View Data Source
