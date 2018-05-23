@@ -36,6 +36,24 @@ class Table: NSTableView, Observer, Observable
         self.list = list
     }
     
+    // MARK: - Manage Selection
+    
+    func loadUISelectionFromList()
+    {
+        let selection = list?.selection.indexes ?? []
+        
+        guard selection.max() ?? 0 < numberOfRows else { return }
+        
+        selectRowIndexes(IndexSet(selection), byExtendingSelection: false)
+    }
+    
+    func storeUISelectionInList()
+    {
+        let selectedIndexes = Array(selectedRowIndexes)
+        
+        list?.selection.setWithTasksListed(at: selectedIndexes)
+    }
+    
     // MARK: - Process List Events
     
     private func didReceive(_ edit: ListEdit)
@@ -76,6 +94,13 @@ class Table: NSTableView, Observer, Observable
         beginUpdates()
         moveRow(at: from, to: to)
         endUpdates()
+    }
+    
+    // MARK: - First Responder
+    
+    func makeFirstResponder() -> Bool
+    {
+        return NSApp.mainWindow?.makeFirstResponder(self) ?? false
     }
     
     // MARK: - Keyboard Input

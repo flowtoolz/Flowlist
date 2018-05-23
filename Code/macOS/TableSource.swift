@@ -2,7 +2,7 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class TableDataSource: NSObject, Observable, NSTableViewDataSource
+class TableSource: NSObject, Observable, NSTableViewDataSource
 {
     // MARK: - Data Source
     

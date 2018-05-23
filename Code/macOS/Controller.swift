@@ -34,7 +34,7 @@ class Controller: NSViewController, Observer
     {
         for listView in listViews
         {
-            listView.jumpToTop()
+            listView.scrollView.jumpToTop()
         }
         
         if listViews.count > 2
@@ -189,10 +189,10 @@ class Controller: NSViewController, Observer
             listView.list?.selection.count == 0
         {
             listView.list?.selection.add(task: firstTask)
-            listView.loadUISelectionFromList()
+            listView.scrollView.tableView.loadUISelectionFromList()
         }
         
-        guard listView.makeTableFirstResponder() else
+        guard listView.scrollView.tableView.makeFirstResponder() else
         {
             log(warning: "Could not make table view first responder.")
             return false
@@ -281,7 +281,7 @@ class Controller: NSViewController, Observer
         addedListView.isHidden = true
 
         // load and show selection of added list view
-        addedListView.loadUISelectionFromList()
+        addedListView.scrollView.tableView.loadUISelectionFromList()
         
         // animate the shit outa this
         NSAnimationContext.runAnimationGroup(
