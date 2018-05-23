@@ -2,39 +2,35 @@ import AppKit
 
 class Table: NSTableView
 {
+    // MARK: - Keyboard Input
+    
     override func keyDown(with event: NSEvent)
     {
-        //Swift.print("\(event.keyCode)")
-        
-        switch event.keyCode
+        if forward(keyEvent: event)
         {
-        case 36:
             nextResponder?.keyDown(with: event)
-        case 125, 126:
-            if event.modifierFlags.contains(NSEvent.ModifierFlags.command)
-            {
-                nextResponder?.keyDown(with: event)
-            }
-            else
-            {
-                super.keyDown(with: event)
-            }
-        default:
+        }
+        else
+        {
             super.keyDown(with: event)
         }
     }
     
+    private func forward(keyEvent event: NSEvent) -> Bool
+    {
+        switch event.key
+        {
+        case .enter: return true
+        case .down, .up: return event.cmd
+        default: return false
+        }
+    }
+    
+    // MARK: - Mouse Input
+    
     override func mouseDown(with event: NSEvent)
     {
         super.mouseDown(with: event)
-        
-        taskListDelegate?.taskListTableViewWasClicked(self)
+        nextResponder?.mouseDown(with: event)
     }
-    
-    weak var taskListDelegate: TaskListTableViewDelegate?
-}
-
-protocol TaskListTableViewDelegate: AnyObject
-{
-    func taskListTableViewWasClicked(_ view: Table)
 }

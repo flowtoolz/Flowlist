@@ -3,7 +3,7 @@ import PureLayout
 import SwiftObserver
 import SwiftyToolz
 
-class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListTableViewDelegate, Observer, Observable
+class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -94,12 +94,18 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
         view.dataSource = self
         view.delegate = self
-        view.taskListDelegate = self
         view.intercellSpacing = NSSize(width: 0,
                                        height: Float.verticalGap.cgFloat)
         
         return view
     }()
+    
+    override func mouseDown(with event: NSEvent)
+    {
+        super.mouseDown(with: event)
+        
+        send(.tableViewWasClicked)
+    }
     
     // MARK: - Keyboard Input
     
@@ -109,7 +115,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ta
      
         //interpretKeyEvents([event])
         
-        let cmd = event.modifierFlags.contains(NSEvent.ModifierFlags.command)
+        let cmd = event.cmd
      
         switch event.key
         {
@@ -236,11 +242,6 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ta
         tableView.beginUpdates()
         tableView.moveRow(at: from, to: to)
         tableView.endUpdates()
-    }
-    
-    func taskListTableViewWasClicked(_ view: Table)
-    {
-        send(.tableViewWasClicked)
     }
     
     // MARK: - Editing the List
