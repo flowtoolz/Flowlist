@@ -104,7 +104,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
     {
         super.mouseDown(with: event)
         
-        send(.tableViewWasClicked)
+        send(.requiresFocus)
     }
     
     // MARK: - Keyboard Input
@@ -386,7 +386,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
             switch event
             {
             case .didEditTitle: self?.taskViewDidEndEditing(cell)
-            case .didGainFocus: self?.send(.tableViewWasClicked)
+            case .willContainFirstResponder: self?.send(.requiresFocus)
             case .didNothing: break
             }
         }
@@ -443,7 +443,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
         case none
         case wantToGiveUpFocusToTheRight
         case wantToGiveUpFocusToTheLeft
-        case tableViewWasClicked
+        case requiresFocus
     }
     
     // MARK: - Task List

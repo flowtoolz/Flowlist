@@ -124,7 +124,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         
         self.observe(textField, select: .willBecomeFirstResponder)
         {
-            [weak self] in self?.send(.didGainFocus)
+            [weak self] in self?.send(.willContainFirstResponder)
         }
         
         return textField
@@ -186,5 +186,5 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, didEditTitle, didGainFocus }
+    enum Event { case didNothing, didEditTitle, willContainFirstResponder }
 }

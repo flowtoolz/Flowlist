@@ -149,7 +149,7 @@ class Controller: NSViewController, Observer
             listViewWantsToGiveFocusToTheRight(listView)
         case .wantToGiveUpFocusToTheLeft:
             listViewWantsToGiveFocusToTheLeft(listView)
-        case .tableViewWasClicked:
+        case .requiresFocus:
             tableViewWasClickedInTaskListView(listView)
         }
     }
