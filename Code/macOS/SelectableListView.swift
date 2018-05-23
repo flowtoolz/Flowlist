@@ -81,7 +81,7 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
                 {
                     if let index = list?.selection.indexes.first
                     {
-                        startEditing(at: index)
+                        scrollView.startEditing(at: index)
                     }
                 }
                 else
@@ -95,7 +95,7 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
                 {
                     if let index = list?.selection.indexes.first
                     {
-                        startEditing(at: index)
+                        scrollView.startEditing(at: index)
                     }
                 }
                 else
@@ -223,7 +223,7 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
         guard let groupIndex = list?.groupSelectedTasks() else { return }
         
         loadUISelectionFromList()
-        startEditing(at: groupIndex)
+        scrollView.startEditing(at: groupIndex)
     }
     
     private func createTask(at index: Int?)
@@ -245,39 +245,11 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
         if let newIndex = newIndex
         {
             loadUISelectionFromList()
-            startEditing(at: newIndex)
+            scrollView.startEditing(at: newIndex)
         }
     }
     
-    private func startEditing(at index: Int)
-    {
-        guard index < scrollView.tableView.numberOfRows else { return }
-       
-        if index == 0
-        {
-            jumpToTop()
-        }
-        else
-        {
-            scrollView.tableView.scrollRowToVisible(index)
-        }
-        
-        if let cell = scrollView.tableView.view(atColumn: 0,
-                                     row: index,
-                                     makeIfNecessary: false) as? TaskView
-        {
-            cell.editTitle()
-        }
-    }
-    
-    func jumpToTop()
-    {
-        var newOrigin = scrollView.contentView.bounds.origin
-        
-        newOrigin.y = 0
-        
-        scrollView.contentView.setBoundsOrigin(newOrigin)
-    }
+    func jumpToTop() { scrollView.jumpToTop() }
     
     // MARK: - Table View Delegate
     
@@ -360,7 +332,7 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
             
             if let nextEditingIndex = list?.selection.indexes.first
             {
-                startEditing(at: nextEditingIndex)
+                scrollView.startEditing(at: nextEditingIndex)
             }
         }
     }

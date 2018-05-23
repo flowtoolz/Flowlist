@@ -15,6 +15,36 @@ class ScrollingTable: NSScrollView
     
     required init?(coder: NSCoder) { fatalError() }
     
+    func startEditing(at index: Int)
+    {
+        guard index < tableView.numberOfRows else { return }
+        
+        if index == 0
+        {
+            jumpToTop()
+        }
+        else
+        {
+            tableView.scrollRowToVisible(index)
+        }
+        
+        if let cell = tableView.view(atColumn: 0,
+                                     row: index,
+                                     makeIfNecessary: false) as? TaskView
+        {
+            cell.editTitle()
+        }
+    }
+    
+    func jumpToTop()
+    {
+        var newOrigin = contentView.bounds.origin
+        
+        newOrigin.y = 0
+        
+        contentView.setBoundsOrigin(newOrigin)
+    }
+    
     lazy var tableView: Table =
     {
         let view = Table.newAutoLayout()
