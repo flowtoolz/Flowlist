@@ -189,10 +189,10 @@ class Controller: NSViewController, Observer
             listView.list?.selection.count == 0
         {
             listView.list?.selection.add(task: firstTask)
-            listView.loadSelectionFromTaskList()
+            listView.loadUISelectionFromList()
         }
         
-        if !(NSApp.mainWindow?.makeFirstResponder(listView.tableView) ?? false)
+        guard listView.makeTableFirstResponder() else
         {
             log(warning: "Could not make table view first responder.")
             return false
@@ -281,7 +281,7 @@ class Controller: NSViewController, Observer
         addedListView.isHidden = true
 
         // load and show selection of added list view
-        addedListView.loadSelectionFromTaskList()
+        addedListView.loadUISelectionFromList()
         
         // animate the shit outa this
         NSAnimationContext.runAnimationGroup(

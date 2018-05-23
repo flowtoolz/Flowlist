@@ -37,12 +37,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
         
         translatesAutoresizingMaskIntoConstraints = false
         
-        scrollView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero, excludingEdge: .top)
-        scrollView.autoPinEdge(.top,
-                               to: .bottom,
-                               of: headerView,
-                               withOffset: 10 - (Float.verticalGap.cgFloat / 2))
-        
+        constrainScrollView()
         constrainHeaderView()
     }
     
@@ -50,42 +45,9 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
     
     deinit { stopAllObserving() }
     
-    // MARK: - Scrolling Table View
     
-    lazy var scrollView: NSScrollView =
-    {
-        let view = NSScrollView.newAutoLayout()
-        self.addSubview(view)
-        
-        view.drawsBackground = false
-        
-        view.automaticallyAdjustsContentInsets = false
-        view.contentInsets = NSEdgeInsetsMake(0, 0, 10, 0)
-        
-        view.documentView = self.tableView
-        
-        return view
-    }()
     
-    lazy var tableView: Table =
-    {
-        let view = Table()
-        
-        let column = NSTableColumn(identifier:  TaskView.uiIdentifier)
-        
-        view.addTableColumn(column)
-        
-        view.allowsMultipleSelection = true
-        view.backgroundColor = NSColor.clear
-        view.headerView = nil
-    
-        view.dataSource = self
-        view.delegate = self
-        view.intercellSpacing = NSSize(width: 0,
-                                       height: Float.verticalGap.cgFloat)
-        
-        return view
-    }()
+    // MARK: - Mouse Input
     
     override func mouseDown(with event: NSEvent)
     {
@@ -148,7 +110,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
             if cmd
             {
                 list?.checkOffFirstSelectedUncheckedTask()
-                loadSelectionFromTaskList()
+                loadUISelectionFromList()
             }
             else { deleteSelectedTasks() }
             
@@ -240,7 +202,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
             return
         }
         
-        loadSelectionFromTaskList()
+        loadUISelectionFromList()
     }
     
     private func createNewTask(at index: Int? = nil,
@@ -260,7 +222,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
     {
         guard let groupIndex = list?.groupSelectedTasks() else { return }
         
-        loadSelectionFromTaskList()
+        loadUISelectionFromList()
         startEditing(at: groupIndex)
     }
     
@@ -282,7 +244,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
         
         if let newIndex = newIndex
         {
-            loadSelectionFromTaskList()
+            loadUISelectionFromList()
             startEditing(at: newIndex)
         }
     }
@@ -336,6 +298,11 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
         return Row(with: task)
     }
     
+    func tableViewSelectionDidChange(_ notification: Notification)
+    {
+        storeUISelectionInList()
+    }
+    
     // MARK: - Table View Data Source
     
     func numberOfRows(in tableView: NSTableView) -> Int
@@ -357,7 +324,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
         
         // FIXME: differentiate reusing and creating cells
         let cell = tableView.makeView(withIdentifier: TaskView.uiIdentifier,
-                                  owner: self) as? TaskView ?? TaskView()
+                                      owner: self) as? TaskView ?? TaskView()
         
         if let task = list?.task(at: row)
         {
@@ -392,7 +359,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
         {
             list?.selection.remove(tasks: [firstSelectedTask])
             
-            loadSelectionFromTaskList()
+            loadUISelectionFromList()
             
             if let nextEditingIndex = list?.selection.indexes.first
             {
@@ -401,9 +368,9 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
         }
     }
     
-    // MARK: - Selection
+    // MARK: - Manage Selection
     
-    func loadSelectionFromTaskList()
+    func loadUISelectionFromList()
     {
         let selection = list?.selection.indexes ?? []
         
@@ -413,13 +380,16 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
                                    byExtendingSelection: false)
     }
     
-        // table view delegate
-    func tableViewSelectionDidChange(_ notification: Notification)
+    private func storeUISelectionInList()
     {
-        // Swift.print("selection did change: \(Array(tableView.selectedRowIndexes).description)")
+        let selectedIndexes = Array(tableView.selectedRowIndexes)
         
-        list?.selection.setWithTasksListed(at: Array(tableView.selectedRowIndexes))
+        list?.selection.setWithTasksListed(at: selectedIndexes)
     }
+    
+    // MARK: - Selectable List
+    
+    private(set) weak var list: SelectableList?
     
     // MARK: - Header View
     
@@ -440,9 +410,59 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
         return view
     }()
     
-    // MARK: - Task List
+    // MARK: - Scroll View
     
-    private(set) weak var list: SelectableList?
+    private func constrainScrollView()
+    {
+        scrollView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                                excludingEdge: .top)
+        
+        let halfVerticalGap = Float.verticalGap.cgFloat / 2
+        
+        scrollView.autoPinEdge(.top,
+                               to: .bottom,
+                               of: headerView,
+                               withOffset: 10 - halfVerticalGap)
+    }
+    
+    private lazy var scrollView: NSScrollView =
+    {
+        let view = NSScrollView.newAutoLayout()
+        self.addSubview(view)
+        
+        view.drawsBackground = false
+        view.automaticallyAdjustsContentInsets = false
+        view.contentInsets = NSEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+        view.documentView = self.tableView
+        
+        return view
+    }()
+    
+    // MARK: - Table View
+    
+    func makeTableFirstResponder() -> Bool
+    {
+        return NSApp.mainWindow?.makeFirstResponder(tableView) ?? false
+    }
+    
+    private lazy var tableView: Table =
+    {
+        let view = Table()
+        
+        let column = NSTableColumn(identifier: TaskView.uiIdentifier)
+        view.addTableColumn(column)
+
+        view.allowsMultipleSelection = true
+        view.backgroundColor = NSColor.clear
+        view.headerView = nil
+        view.intercellSpacing = NSSize(width: 0,
+                                       height: Float.verticalGap.cgFloat)
+        
+        view.dataSource = self
+        view.delegate = self
+        
+        return view
+    }()
     
     // MARK: - Observability
     
