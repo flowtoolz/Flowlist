@@ -39,6 +39,14 @@ class TextField: NSTextField, Observable
     {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Update
+    
+    func update(with state: Task.State?)
+    {
+        let color: Color = state == .done ? .grayedOut : .black
+        textColor = color.nsColor
+    }
 
     // MARK: - Observability
     

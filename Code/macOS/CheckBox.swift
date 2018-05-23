@@ -20,9 +20,16 @@ class CheckBox: NSButton
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Update
+    
+    func update(with state: Task.State?)
+    {
+        image = image(checked: state == .done)
+    }
+    
     // MARK: - Image
     
-    func image(_ checked: Bool) -> NSImage
+    private func image(checked: Bool) -> NSImage
     {
         return checked ? CheckBox.imageChecked : CheckBox.imageEmpty
     }

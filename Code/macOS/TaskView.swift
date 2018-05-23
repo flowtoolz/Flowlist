@@ -38,13 +38,12 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     func configure(with task: Task)
     {
         stopObserving(task: self.task)
+        observe(task: task)
         
         self.task = task
         
-        observe(task: task)
-        
-        titleField.stringValue = task.title.value ?? ""
-        adjustTo(state: task.state.value)
+        updateTitle()
+        updateState()
         updateGroupIndicator()
     }
     
@@ -54,25 +53,29 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         {
             [weak self] event in
             
-            if event.itemsDidChange
-            {
-                self?.updateGroupIndicator()
-            }
+            if event.itemsDidChange { self?.updateGroupIndicator() }
         }
         
         observe(task.title)
         {
-            [weak self] update in
+            [weak self] _ in
             
-            self?.titleField.stringValue = update.new ?? ""
+            self?.updateTitle()
         }
         
         observe(task.state)
         {
-            [weak self] update in
+            [weak self] _ in
             
-            self?.adjustTo(state: update.new)
+            self?.updateState()
         }
+    }
+    
+    private func updateState()
+    {
+        let state = self.task?.state.value
+        checkBox.update(with: state)
+        titleField.update(with: state)
     }
     
     private func stopObserving(task: Task?)
@@ -82,21 +85,12 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         stopObserving(task)
     }
     
-    func adjustTo(state: Task.State?)
-    {
-        let isChecked = state == .done
-        
-        let correctImage = checkBox.image(isChecked)
-        
-        if checkBox.image !== correctImage
-        {
-            checkBox.image = correctImage
-            
-            titleField.textColor = (isChecked ? Color.grayedOut : Color.black).nsColor
-        }
-    }
-    
     // MARK: - Title Field
+    
+    private func updateTitle()
+    {
+        titleField.stringValue = task?.title.value ?? ""
+    }
     
     func editTitle() { titleField.selectText(self) }
     
