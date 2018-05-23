@@ -23,6 +23,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     
     deinit
     {
+        send(.willDeinit)
         NotificationCenter.default.removeObserver(self)
         stopAllObserving()
     }
@@ -186,5 +187,11 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, didEditTitle, willContainFirstResponder }
+    enum Event
+    {
+        case didNothing
+        case didEditTitle
+        case willContainFirstResponder
+        case willDeinit
+    }
 }

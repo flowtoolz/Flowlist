@@ -37,15 +37,13 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
         
         translatesAutoresizingMaskIntoConstraints = false
         
-        constrainScrollView()
         constrainHeaderView()
+        constrainScrollView()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
     deinit { stopAllObserving() }
-    
-    
     
     // MARK: - Mouse Input
     
@@ -314,41 +312,71 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
                    viewFor tableColumn: NSTableColumn?,
                    row: Int) -> NSView?
     {
-        let taskViewReuseIdentifier = TaskView.uiIdentifier
-        
-        guard tableColumn?.identifier == taskViewReuseIdentifier else
+        guard let task = list?.task(at: row) else
         {
-            log(warning: "tableColumn has weird or nil identifier: \(tableColumn?.identifier ?? NSUserInterfaceItemIdentifier(rawValue: "nil"))")
+            log(error: "Couldn't find task to configure task view at row \(row)")
             return nil
         }
         
-        // FIXME: differentiate reusing and creating cells
-        let cell = tableView.makeView(withIdentifier: TaskView.uiIdentifier,
-                                      owner: self) as? TaskView ?? TaskView()
+        let taskView = dequeueOrCreateTaskView()
         
-        if let task = list?.task(at: row)
+        taskView.configure(with: task)
+        
+        return taskView
+    }
+    
+    private func dequeueOrCreateTaskView() -> TaskView
+    {
+        guard let dequeuedView = dequeueView() else
         {
-            cell.configure(with: task)
+            return createTaskView()
         }
         
-        stopObserving(cell) // FIXME: not necessary when observing only newly created cells... but: stop observing when cells are being removed fro tableView (delegate method?)
-        
-        observe(cell)
+        guard let dequeuedTaskView = dequeuedView as? TaskView else
         {
-            [weak self, weak cell] event in
+            log(error: "Couldn't cast dequeued view to \(TaskView.self)")
+            return createTaskView()
+        }
+        
+        return dequeuedTaskView
+    }
+    
+    private func dequeueView() -> NSView?
+    {
+        return tableView.makeView(withIdentifier: TaskView.uiIdentifier,
+                                  owner: nil)
+    }
+    
+    private func createTaskView() -> TaskView
+    {
+        let taskView = TaskView()
+        
+        observe(taskView: taskView)
+        
+        return taskView
+    }
+    
+    // MARK: - Observe Task Views
+    
+    private func observe(taskView: TaskView)
+    {
+        observe(taskView)
+        {
+            [weak self, weak taskView] event in
             
             switch event
             {
-            case .didEditTitle: self?.taskViewDidEndEditing(cell)
-            case .willContainFirstResponder: self?.send(.wantsFocus)
             case .didNothing: break
+            case .didEditTitle: self?.editTitleOfNextSelectedTask(in: taskView)
+            case .willContainFirstResponder: self?.send(.wantsFocus)
+            case .willDeinit: self?.stopObserving(taskView)
             }
         }
-        
-        return cell
     }
     
-    private func taskViewDidEndEditing(_ taskView: TaskView?)
+    // MARK: - Editing
+    
+    private func editTitleOfNextSelectedTask(in taskView: TaskView?)
     {
         guard let taskView = taskView else { return }
         
