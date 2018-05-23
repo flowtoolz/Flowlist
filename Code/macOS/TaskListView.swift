@@ -83,22 +83,10 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         return field
     }()
     
-    private func hideHeader()
-    {
-        headerView.isHidden = true
-    }
-    
-    private func showHeader()
-    {
-        headerView.isHidden = false
-    }
-    
     private lazy var headerView: ListHeaderView =
     {
         let view = ListHeaderView()
         self.addSubview(view)
-        
-        view.applyItemStyle()
         
         return view
     }()

@@ -245,9 +245,9 @@
 			isa = PBXGroup;
 			children = (
 				9E7651931EEF428100DE2B07 /* TaskView.swift */,
-				9E1AAD6920B57CA9001657A7 /* GroupIndicator.swift */,
-				9EE2EE4A20B4A693007CDC2F /* TextField.swift */,
 				9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */,
+				9EE2EE4A20B4A693007CDC2F /* TextField.swift */,
+				9E1AAD6920B57CA9001657A7 /* GroupIndicator.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
