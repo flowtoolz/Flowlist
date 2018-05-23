@@ -15,10 +15,7 @@ class CheckBox: NSButton
         layer?.backgroundColor = NSColor.clear.cgColor
     }
     
-    required init?(coder: NSCoder)
-    {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { fatalError() }
     
     // MARK: - Update
     

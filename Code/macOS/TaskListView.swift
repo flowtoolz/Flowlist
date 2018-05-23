@@ -53,10 +53,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         titleField.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
     }
     
-    required init?(coder decoder: NSCoder)
-    {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder decoder: NSCoder) { fatalError() }
     
     deinit
     {
@@ -101,10 +98,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         let view = ListHeaderView()
         self.addSubview(view)
         
-        view.wantsLayer = true
-        view.layer?.borderColor = Color.border.nsColor.cgColor
-        view.layer?.borderWidth = 1.0
-        view.layer?.cornerRadius = 4.0
+        view.applyItemStyle()
         
         return view
     }()

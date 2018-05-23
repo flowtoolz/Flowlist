@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185B1EEEE8CE00B35AD5 /* Task.swift */; };
 		9E15185E1EEEE97700B35AD5 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185D1EEEE97700B35AD5 /* MainViewController.swift */; };
+		9E1AAD6A20B57CA9001657A7 /* GroupIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1AAD6920B57CA9001657A7 /* GroupIndicator.swift */; };
 		9E542E951EEEE41C00534981 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E542E941EEEE41C00534981 /* main.swift */; };
 		9E696E651EF507270046BCB8 /* ListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E696E641EF507270046BCB8 /* ListHeaderView.swift */; };
 		9E6C720B20B19C88001C3D2C /* Task+TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Task+TaskList.swift */; };
@@ -44,6 +45,7 @@
 		78B3E83C8B5F1E96FF074B6D /* Pods-Flowlist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flowlist.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist.debug.xcconfig"; sourceTree = "<group>"; };
 		9E15185B1EEEE8CE00B35AD5 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../Code/Task.swift; sourceTree = "<group>"; };
 		9E15185D1EEEE97700B35AD5 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = ../Code/macOS/MainViewController.swift; sourceTree = "<group>"; };
+		9E1AAD6920B57CA9001657A7 /* GroupIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GroupIndicator.swift; path = ../Code/macOS/GroupIndicator.swift; sourceTree = "<group>"; };
 		9E542E911EEEE41C00534981 /* Flowlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flowlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E542E941EEEE41C00534981 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../Code/macOS/main.swift; sourceTree = "<group>"; };
 		9E696E641EF507270046BCB8 /* ListHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListHeaderView.swift; path = ../Code/macOS/ListHeaderView.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				9E7651931EEF428100DE2B07 /* TaskView.swift */,
+				9E1AAD6920B57CA9001657A7 /* GroupIndicator.swift */,
 				9EE2EE4A20B4A693007CDC2F /* TextField.swift */,
 				9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */,
 			);
@@ -407,6 +410,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E6C720B20B19C88001C3D2C /* Task+TaskList.swift in Sources */,
+				9E1AAD6A20B57CA9001657A7 /* GroupIndicator.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* SelectableTaskList.swift in Sources */,
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
 				9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */,

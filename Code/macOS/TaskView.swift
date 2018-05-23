@@ -16,16 +16,10 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         contrainGroupIndicator()
         constrainTitleField()
         
-        wantsLayer = true
-        layer?.borderColor = Color.border.nsColor.cgColor
-        layer?.borderWidth = 1.0
-        layer?.cornerRadius = 4.0
+        applyItemStyle()
     }
     
-    required init?(coder: NSCoder)
-    {
-        fatalError("init?(coder: NSCoder) not implemented in TaskView")
-    }
+    required init?(coder: NSCoder) { fatalError() }
     
     deinit
     {
@@ -58,16 +52,12 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         
         observe(task.title)
         {
-            [weak self] _ in
-            
-            self?.updateTitle()
+            [weak self] _ in self?.updateTitle()
         }
         
         observe(task.state)
         {
-            [weak self] _ in
-            
-            self?.updateState()
+            [weak self] _ in self?.updateState()
         }
     }
     
@@ -178,24 +168,17 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         groupIndicator.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
     }
     
-    private lazy var groupIndicator: NSImageView =
+    private lazy var groupIndicator: GroupIndicator =
     {
-        let view = NSImageView.newAutoLayout()
+        let view = GroupIndicator.newAutoLayout()
         self.addSubview(view)
-        
-        view.image = NSImage(named: NSImage.Name(rawValue: "group_indicator"))
-        view.imageScaling = .scaleNone
-        view.imageAlignment = .alignCenter
-        view.isHidden = true
         
         return view
     }()
     
-    // MARK: - UI Identifier
+    // MARK: - Data
     
     static let uiIdentifier = NSUserInterfaceItemIdentifier(rawValue: "TaskViewID")
-    
-    // MARK: - Task
     
     private(set) weak var task: Task?
     
