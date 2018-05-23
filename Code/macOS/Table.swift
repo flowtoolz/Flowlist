@@ -2,13 +2,6 @@ import AppKit
 
 class Table: NSTableView
 {
-    override func flagsChanged(with event: NSEvent)
-    {
-        super.flagsChanged(with: event)
-        
-        cmd = event.modifierFlags.contains(NSEvent.ModifierFlags.command)
-    }
-    
     override func keyDown(with event: NSEvent)
     {
         //Swift.print("\(event.keyCode)")
@@ -30,8 +23,6 @@ class Table: NSTableView
             super.keyDown(with: event)
         }
     }
-    
-    private var cmd = false
     
     override func mouseDown(with event: NSEvent)
     {
