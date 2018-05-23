@@ -2,9 +2,11 @@ import AppKit
 
 class ScrollingTable: NSScrollView
 {
+    // MARK: - Initialization
+    
     override init(frame frameRect: NSRect)
     {
-        super.init(frame: frameRect)
+        super.init(frame: NSZeroRect)
         
         documentView = tableView
         
@@ -14,6 +16,17 @@ class ScrollingTable: NSScrollView
     }
     
     required init?(coder: NSCoder) { fatalError() }
+    
+    // MARK: - Configuration
+    
+    func configure(with list: SelectableList)
+    {
+        self.list = list
+        
+        tableView.configure(with: list)
+    }
+    
+    // MARK: - Editing
     
     func startEditing(at index: Int)
     {
@@ -45,10 +58,16 @@ class ScrollingTable: NSScrollView
         contentView.setBoundsOrigin(newOrigin)
     }
     
+    // MARK: - Table View
+    
     lazy var tableView: Table =
     {
         let view = Table.newAutoLayout()
         
         return view
     }()
+    
+    // MARK: - List
+    
+    private weak var list: SelectableList?
 }

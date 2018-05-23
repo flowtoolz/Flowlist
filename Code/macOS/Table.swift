@@ -3,6 +3,8 @@ import SwiftObserver
 
 class Table: NSTableView, Observer, Observable
 {
+    // MARK: - Life Cycle
+    
     override init(frame frameRect: NSRect)
     {
         super.init(frame: frameRect)
@@ -17,6 +19,64 @@ class Table: NSTableView, Observer, Observable
     }
     
     required init?(coder: NSCoder) { fatalError() }
+    
+    // MARK: - Configuration
+    
+    func configure(with list: SelectableList)
+    {
+        stopObserving(self.list)
+        
+        observe(list)
+        {
+            [weak self] event in
+            
+            self?.didReceive(event)
+        }
+        
+        self.list = list
+    }
+    
+    // MARK: - Process List Events
+    
+    private func didReceive(_ edit: ListEdit)
+    {
+        //Swift.print("list view <\(titleField.stringValue)> \(change)")
+        
+        switch edit
+        {
+        case .didInsert(let indexes):
+            didInsertSubtask(at: indexes)
+            
+        case .didRemove(_, let indexes):
+            didDeleteSubtasks(at: indexes)
+            
+        case .didMove(let from, let to):
+            didMoveSubtask(from: from, to: to)
+            
+        case .didNothing: break
+        }
+    }
+    
+    private func didDeleteSubtasks(at indexes: [Int])
+    {
+        beginUpdates()
+        removeRows(at: IndexSet(indexes), withAnimation: .slideUp)
+        endUpdates()
+    }
+    
+    private func didInsertSubtask(at indexes: [Int])
+    {
+        beginUpdates()
+        insertRows(at: IndexSet(indexes), withAnimation: .slideDown)
+        endUpdates()
+    }
+    
+    private func didMoveSubtask(from: Int, to: Int)
+    {
+        beginUpdates()
+        moveRow(at: from, to: to)
+        endUpdates()
+    }
     
     // MARK: - Keyboard Input
     
@@ -49,7 +109,6 @@ class Table: NSTableView, Observer, Observable
         super.mouseDown(with: event)
         nextResponder?.mouseDown(with: event)
     }
-    
     
     // MARK: - List
     

@@ -11,18 +11,11 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
     {
         super.init(frame: NSRect.zero)
         
-        source.list = list
-        
-        // list
+        translatesAutoresizingMaskIntoConstraints = false
         
         self.list = list
-        
-        observe(list)
-        {
-            [weak self] in
-            
-            self?.didReceive($0)
-        }
+        scrollView.configure(with: list)
+        source.list = list
         
         // title
         
@@ -36,8 +29,6 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
         }
         
         // auto layout
-        
-        translatesAutoresizingMaskIntoConstraints = false
         
         constrainHeaderView()
         constrainScrollView()
@@ -147,50 +138,6 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
         case "t": store.root.debug()
         default: break
         }
-    }
-    
-    // MARK: - Process List Events
-    
-    private func didReceive(_ edit: ListEdit)
-    {
-        //Swift.print("list view <\(titleField.stringValue)> \(change)")
-        
-        switch edit
-        {
-        case .didInsert(let indexes):
-            didInsertSubtask(at: indexes)
-            
-        case .didRemove(_, let indexes):
-            didDeleteSubtasks(at: indexes)
-            
-        case .didMove(let from, let to):
-            didMoveSubtask(from: from, to: to)
-            
-        case .didNothing: break
-        }
-    }
-    
-    func didDeleteSubtasks(at indexes: [Int])
-    {
-        scrollView.tableView.beginUpdates()
-        scrollView.tableView.removeRows(at: IndexSet(indexes),
-                             withAnimation: NSTableView.AnimationOptions.slideUp)
-        scrollView.tableView.endUpdates()
-    }
-    
-    func didInsertSubtask(at indexes: [Int])
-    {
-        scrollView.tableView.beginUpdates()
-        scrollView.tableView.insertRows(at: IndexSet(indexes),
-                             withAnimation: NSTableView.AnimationOptions.slideDown)
-        scrollView.tableView.endUpdates()
-    }
-    
-    func didMoveSubtask(from: Int, to: Int)
-    {
-        scrollView.tableView.beginUpdates()
-        scrollView.tableView.moveRow(at: from, to: to)
-        scrollView.tableView.endUpdates()
     }
     
     // MARK: - Editing the List
