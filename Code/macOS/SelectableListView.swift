@@ -3,7 +3,7 @@ import PureLayout
 import SwiftObserver
 import SwiftyToolz
 
-class ListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListTableViewDelegate, Observer, Observable
+class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListTableViewDelegate, Observer, Observable
 {
     // MARK: - Life Cycle
     

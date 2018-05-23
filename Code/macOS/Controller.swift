@@ -104,9 +104,9 @@ class Controller: NSViewController, Observer
     
     @discardableResult
     private func addListView(with list: SelectableList,
-                             prepend: Bool = false) -> ListView
+                             prepend: Bool = false) -> SelectableListView
     {
-        let listView = ListView(with: list)
+        let listView = SelectableListView(with: list)
         view.addSubview(listView)
         
         observe(listView: listView)
@@ -123,11 +123,11 @@ class Controller: NSViewController, Observer
         return listView
     }
     
-    var listViews = [ListView]()
+    var listViews = [SelectableListView]()
     
     // MARK: - Observing Task List Views
     
-    private func observe(listView: ListView)
+    private func observe(listView: SelectableListView)
     {
         observe(listView)
         {
@@ -139,8 +139,8 @@ class Controller: NSViewController, Observer
         }
     }
     
-    private func didReceive(_ event: ListView.Event,
-                            from listView: ListView)
+    private func didReceive(_ event: SelectableListView.Event,
+                            from listView: SelectableListView)
     {
         switch event
         {
@@ -156,7 +156,7 @@ class Controller: NSViewController, Observer
     
     // MARK: - Navigation
     
-    func listViewWantsToGiveFocusToTheRight(_ listView: ListView)
+    func listViewWantsToGiveFocusToTheRight(_ listView: SelectableListView)
     {
         guard let index = listViews.index(where: { $0 === listView }),
             index >= 0, index < listViews.count - 1,
@@ -169,7 +169,7 @@ class Controller: NSViewController, Observer
         moveInputFocus(to: index + 1)
     }
     
-    func listViewWantsToGiveFocusToTheLeft(_ listView: ListView)
+    func listViewWantsToGiveFocusToTheLeft(_ listView: SelectableListView)
     {
         guard let index = listViews.index(where: { $0 === listView }) else
         {
@@ -206,7 +206,7 @@ class Controller: NSViewController, Observer
         return true
     }
     
-    func tableViewWasClickedInTaskListView(_ listView: ListView)
+    func tableViewWasClickedInTaskListView(_ listView: SelectableListView)
     {
         guard let index = listViews.index(where: { $0 === listView }) else
         {
