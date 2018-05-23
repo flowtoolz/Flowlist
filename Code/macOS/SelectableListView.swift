@@ -50,25 +50,6 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
     
     deinit { stopAllObserving() }
     
-    // MARK: - Header View
-    
-    private func constrainHeaderView()
-    {
-        headerView.autoPinEdge(toSuperviewEdge: .left)
-        headerView.autoPinEdge(toSuperviewEdge: .right)
-        headerView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
-        headerView.autoSetDimension(.height,
-                                    toSize: Float.itemHeight.cgFloat)
-    }
-    
-    private lazy var headerView: Header =
-    {
-        let view = Header()
-        self.addSubview(view)
-        
-        return view
-    }()
-    
     // MARK: - Scrolling Table View
     
     lazy var scrollView: NSScrollView =
@@ -110,7 +91,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
     {
         super.mouseDown(with: event)
         
-        send(.requiresFocus)
+        send(.wantsFocus)
     }
     
     // MARK: - Keyboard Input
@@ -171,9 +152,9 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
             }
             else { deleteSelectedTasks() }
             
-        case .left: send(.wantToGiveUpFocusToTheLeft)
+        case .left: send(.wantsToPassFocusLeft)
             
-        case .right: send(.wantToGiveUpFocusToTheRight)
+        case .right: send(.wantsToPassFocusRight)
             
         case .down: if cmd { list?.moveSelectedTask(1) }
             
@@ -392,7 +373,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
             switch event
             {
             case .didEditTitle: self?.taskViewDidEndEditing(cell)
-            case .willContainFirstResponder: self?.send(.requiresFocus)
+            case .willContainFirstResponder: self?.send(.wantsFocus)
             case .didNothing: break
             }
         }
@@ -440,19 +421,38 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
         list?.selection.setWithTasksListed(at: Array(tableView.selectedRowIndexes))
     }
     
-    // MARK: - Observability
+    // MARK: - Header View
     
-    var latestUpdate: Event { return .none }
-    
-    enum Event
+    private func constrainHeaderView()
     {
-        case none
-        case wantToGiveUpFocusToTheRight
-        case wantToGiveUpFocusToTheLeft
-        case requiresFocus
+        headerView.autoPinEdge(toSuperviewEdge: .left)
+        headerView.autoPinEdge(toSuperviewEdge: .right)
+        headerView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        headerView.autoSetDimension(.height,
+                                    toSize: Float.itemHeight.cgFloat)
     }
+    
+    private lazy var headerView: Header =
+    {
+        let view = Header()
+        self.addSubview(view)
+        
+        return view
+    }()
     
     // MARK: - Task List
     
     private(set) weak var list: SelectableList?
+    
+    // MARK: - Observability
+    
+    var latestUpdate: NavigationRequest { return .wantsNothing }
+    
+    enum NavigationRequest
+    {
+        case wantsNothing
+        case wantsToPassFocusRight
+        case wantsToPassFocusLeft
+        case wantsFocus
+    }
 }

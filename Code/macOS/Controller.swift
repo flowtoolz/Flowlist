@@ -131,32 +131,29 @@ class Controller: NSViewController, Observer
     {
         observe(listView)
         {
-            [weak listView, weak self] event in
+            [weak listView, weak self] request in
             
             guard let listView = listView else { return }
             
-            self?.didReceive(event, from: listView)
+            self?.didReceive(request, from: listView)
         }
     }
     
-    private func didReceive(_ event: SelectableListView.Event,
+    private func didReceive(_ request: SelectableListView.NavigationRequest,
                             from listView: SelectableListView)
     {
-        switch event
+        switch request
         {
-        case .none: break
-        case .wantToGiveUpFocusToTheRight:
-            listViewWantsToGiveFocusToTheRight(listView)
-        case .wantToGiveUpFocusToTheLeft:
-            listViewWantsToGiveFocusToTheLeft(listView)
-        case .requiresFocus:
-            tableViewWasClickedInTaskListView(listView)
+        case .wantsNothing: break
+        case .wantsToPassFocusRight: passFocusRight(from: listView)
+        case .wantsToPassFocusLeft: passFocusLeft(from: listView)
+        case .wantsFocus: focus(listView)
         }
     }
     
     // MARK: - Navigation
     
-    func listViewWantsToGiveFocusToTheRight(_ listView: SelectableListView)
+    func passFocusRight(from listView: SelectableListView)
     {
         guard let index = listViews.index(where: { $0 === listView }),
             index >= 0, index < listViews.count - 1,
@@ -169,7 +166,7 @@ class Controller: NSViewController, Observer
         moveInputFocus(to: index + 1)
     }
     
-    func listViewWantsToGiveFocusToTheLeft(_ listView: SelectableListView)
+    func passFocusLeft(from listView: SelectableListView)
     {
         guard let index = listViews.index(where: { $0 === listView }) else
         {
@@ -206,7 +203,7 @@ class Controller: NSViewController, Observer
         return true
     }
     
-    func tableViewWasClickedInTaskListView(_ listView: SelectableListView)
+    func focus(_ listView: SelectableListView)
     {
         guard let index = listViews.index(where: { $0 === listView }) else
         {
