@@ -1,7 +1,8 @@
 import AppKit
+import SwiftObserver
 import SwiftyToolz
 
-class TextField: NSTextField
+class TextField: NSTextField, Observable
 {
     // MARK: - Initialization
     
@@ -46,18 +47,14 @@ class TextField: NSTextField
     {
         let didBecomeFirstResponder = super.becomeFirstResponder()
         
-        if didBecomeFirstResponder
-        {
-            textFieldDelegate?.textFieldDidBecomeFirstResponder(self)
-        }
+        if didBecomeFirstResponder { send(.didGainFocus) }
         
         return didBecomeFirstResponder
     }
     
-    weak var textFieldDelegate: TextFieldDelegate?
-}
-
-protocol TextFieldDelegate: AnyObject
-{
-    func textFieldDidBecomeFirstResponder(_ textField: TextField)
+    // MARK: - Observability
+    
+    var latestUpdate: Event { return .didNothing }
+    
+    enum Event { case didNothing, didGainFocus }
 }

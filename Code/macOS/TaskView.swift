@@ -136,10 +136,6 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     
     private var newTitle: String?
     
-    var latestUpdate: Event { return .didNothing }
-    
-    enum Event { case didNothing, didEndEditing }
-    
     // MARK: - Title Field
     
     private func constrainTitleField()
@@ -152,12 +148,19 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
                                withOffset: -10)
     }
     
-    lazy var titleField: TextField =
+    private lazy var titleField: TextField =
     {
         let textField = TextField("untitled")
         self.addSubview(textField)
 
         textField.delegate = self
+        
+        self.observe(textField, filter: { $0 == .didGainFocus} )
+        {
+            [weak self] _ in
+            
+            self?.send(.didGainFocus)
+        }
         
         return textField
     }()
@@ -220,4 +223,10 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     // MARK: - Task
     
     private(set) weak var task: Task?
+    
+    // MARK: - Observability
+    
+    var latestUpdate: Event { return .didNothing }
+    
+    enum Event { case didNothing, didEndEditing, didGainFocus }
 }

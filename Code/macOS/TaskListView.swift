@@ -3,7 +3,7 @@ import PureLayout
 import SwiftObserver
 import SwiftyToolz
 
-class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListTableViewDelegate, TextFieldDelegate, Observer, Observable
+class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListTableViewDelegate, Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -288,13 +288,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         send(.tableViewWasClicked)
     }
     
-    // MARK: - Task View Textfield Delegate
-    
-    func textFieldDidBecomeFirstResponder(_ textField: TextField)
-    {
-        send(.tableViewWasClicked)
-    }
-    
     // MARK: - Editing the List
     
     private func deleteSelectedTasks()
@@ -417,8 +410,6 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         let cell = tableView.makeView(withIdentifier: TaskView.uiIdentifier,
                                   owner: self) as? TaskView ?? TaskView()
         
-        cell.titleField.textFieldDelegate = self
-        
         if let task = list?.task(at: row)
         {
             cell.configure(with: task)
@@ -426,11 +417,16 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         
         stopObserving(cell) // FIXME: not necessary when observing only newly created cells... but: stop observing when cells are being removed fro tableView (delegate method?)
         
-        observe(cell, filter: { $0 == .didEndEditing })
+        observe(cell)
         {
-            [weak self, weak cell] _ in
+            [weak self, weak cell] event in
             
-            self?.taskViewDidEndEditing(cell)
+            switch event
+            {
+            case .didEndEditing: self?.taskViewDidEndEditing(cell)
+            case .didGainFocus: self?.send(.tableViewWasClicked)
+            case .didNothing: break
+            }
         }
         
         return cell
