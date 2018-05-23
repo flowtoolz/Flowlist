@@ -155,7 +155,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
 
         textField.delegate = self
         
-        self.observe(textField, select: .didBecomeFirstResponder)
+        self.observe(textField, select: .willBecomeFirstResponder)
         {
             [weak self] in
             

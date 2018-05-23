@@ -44,14 +44,14 @@ class TextField: NSTextField, Observable
     
     override func becomeFirstResponder() -> Bool
     {
-        let isFirstResponder = super.becomeFirstResponder()
+        let willBeFirstResponder = super.becomeFirstResponder()
         
-        if isFirstResponder { send(.didBecomeFirstResponder) }
+        if willBeFirstResponder { send(.willBecomeFirstResponder) }
         
-        return isFirstResponder
+        return willBeFirstResponder
     }
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, didBecomeFirstResponder }
+    enum Event { case didNothing, willBecomeFirstResponder }
 }
