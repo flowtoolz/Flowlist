@@ -12,3 +12,8 @@ extension Color
     static let border = Color(0, 0, 0, 0.15)
     static let grayedOut = Color(0, 0, 0, 0.33)
 }
+
+extension Font
+{
+    static let text = Font.system(size: 13)
+}

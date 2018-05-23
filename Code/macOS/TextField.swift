@@ -15,7 +15,7 @@ class TextField: NSTextField, Observable
         let attributes: [NSAttributedStringKey : Any] =
         [
             NSAttributedStringKey.foregroundColor: Color.grayedOut.nsColor,
-            NSAttributedStringKey.font: NSFont.systemFont(ofSize: 13)
+            NSAttributedStringKey.font: Font.text.nsFont
         ]
         
         let attributedString = NSAttributedString(string: placeholder,
@@ -32,7 +32,7 @@ class TextField: NSTextField, Observable
         drawsBackground = false
         isBezeled = false
         isEditable = true
-        font = NSFont.systemFont(ofSize: 13)
+        font = Font.text.nsFont
         lineBreakMode = .byTruncatingTail
     }
     
@@ -40,8 +40,8 @@ class TextField: NSTextField, Observable
     {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - TextFieldDelegate
+
+    // MARK: - Observability
     
     override func becomeFirstResponder() -> Bool
     {
@@ -51,8 +51,6 @@ class TextField: NSTextField, Observable
         
         return didBecomeFirstResponder
     }
-    
-    // MARK: - Observability
     
     var latestUpdate: Event { return .didNothing }
     

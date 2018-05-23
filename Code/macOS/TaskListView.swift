@@ -71,9 +71,10 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         self.headerView.addSubview(field)
         
         field.textColor = NSColor.black
-        field.font = NSFont.systemFont(ofSize: 13)
-        
-        field.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 0.1), for: .horizontal)
+        field.font = Font.text.nsFont
+       
+        let priority = NSLayoutConstraint.Priority(rawValue: 0.1)
+        field.setContentCompressionResistancePriority(priority, for: .horizontal)
         field.lineBreakMode = .byTruncatingTail
         field.drawsBackground = false
         field.alignment = .center
