@@ -209,9 +209,9 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             
         case .right: send(.wantToGiveUpFocusToTheRight)
             
-        case .down: if cmd { _ = list?.moveSelectedTask(1) }
+        case .down: if cmd { list?.moveSelectedTask(1) }
             
-        case .up: if cmd { _ = list?.moveSelectedTask(-1) }
+        case .up: if cmd { list?.moveSelectedTask(-1) }
             
         case .unknown: didPress(key: event.characters, with: cmd)
         }
@@ -362,7 +362,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
                                      row: index,
                                      makeIfNecessary: false) as? TaskView
         {
-            cell.startEditingTitle()
+            cell.editTitle()
         }
     }
     
@@ -424,7 +424,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
             
             switch event
             {
-            case .didEndEditing: self?.taskViewDidEndEditing(cell)
+            case .didEditTitle: self?.taskViewDidEndEditing(cell)
             case .didGainFocus: self?.send(.tableViewWasClicked)
             case .didNothing: break
             }

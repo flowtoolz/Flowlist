@@ -96,47 +96,30 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         }
     }
     
-    // MARK: - Title Editing
+    // MARK: - Title Field
     
-    func startEditingTitle()
-    {
-        titleField.selectText(self)
-    }
-    
-    var isTitleEditingEnabled: Bool
-    {
-        set { titleField.isEditable = newValue }
-        
-        get { return titleField.isEditable }
-    }
+    func editTitle() { titleField.selectText(self) }
     
     func control(_ control: NSControl,
                  textShouldEndEditing fieldEditor: NSText) -> Bool
     {
-        newTitle = String(withNonEmpty: fieldEditor.string)
+        task?.title <- String(withNonEmpty: fieldEditor.string)
         
         NotificationCenter.default.removeObserver(self)
-        
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(didEndEditing),
+                                               selector: #selector(didEditTitle),
                                                name: NSText.didEndEditingNotification,
                                                object: fieldEditor)
         
         return true
     }
     
-    @objc func didEndEditing()
-    {        
-        _ = task?.title <- newTitle
-        
+    @objc private func didEditTitle()
+    {
         NotificationCenter.default.removeObserver(self)
         
-        send(.didEndEditing)
+        send(.didEditTitle)
     }
-    
-    private var newTitle: String?
-    
-    // MARK: - Title Field
     
     private func constrainTitleField()
     {
@@ -157,9 +140,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         
         self.observe(textField, select: .willBecomeFirstResponder)
         {
-            [weak self] in
-            
-            self?.send(.didGainFocus)
+            [weak self] in self?.send(.didGainFocus)
         }
         
         return textField
@@ -187,7 +168,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     
     @objc private func didClickCheckBox()
     {
-        _ = task?.state <- task?.isDone ?? false ? nil : .done
+        task?.state <- task?.isDone ?? false ? nil : .done
     }
     
     // MARK: - Group Indicator
@@ -228,5 +209,5 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, didEndEditing, didGainFocus }
+    enum Event { case didNothing, didEditTitle, didGainFocus }
 }

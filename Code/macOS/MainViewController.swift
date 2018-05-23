@@ -39,7 +39,7 @@ class MainViewController: NSViewController, Observer
         
         if listViews.count > 2
         {
-            _ = moveInputFocus(to: 2)
+            moveInputFocus(to: 2)
         }
     }
 
@@ -166,7 +166,7 @@ class MainViewController: NSViewController, Observer
             return
         }
         
-        _ = moveInputFocus(to: index + 1)
+        moveInputFocus(to: index + 1)
     }
     
     func listViewWantsToGiveFocusToTheLeft(_ listView: TaskListView)
@@ -176,9 +176,10 @@ class MainViewController: NSViewController, Observer
             return
         }
         
-        _ = moveInputFocus(to: index - 1)
+        moveInputFocus(to: index - 1)
     }
     
+    @discardableResult
     private func moveInputFocus(to index: Int) -> Bool
     {
         guard listViews.isValid(index: index) else { return false }

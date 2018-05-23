@@ -49,6 +49,7 @@ class SelectableTaskList: TaskList
         return true
     }
     
+    @discardableResult
     func moveSelectedTask(_ positions: Int) -> Bool
     {
         guard positions != 0,
