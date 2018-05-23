@@ -43,10 +43,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
                                of: headerView,
                                withOffset: 10 - (Float.verticalGap.cgFloat / 2))
         
-        headerView.autoPinEdge(toSuperviewEdge: .left)
-        headerView.autoPinEdge(toSuperviewEdge: .right)
-        headerView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
-        headerView.autoSetDimension(.height, toSize: 36)
+        constrainHeaderView()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -54,6 +51,15 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
     deinit { stopAllObserving() }
     
     // MARK: - Header View
+    
+    private func constrainHeaderView()
+    {
+        headerView.autoPinEdge(toSuperviewEdge: .left)
+        headerView.autoPinEdge(toSuperviewEdge: .right)
+        headerView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        headerView.autoSetDimension(.height,
+                                    toSize: Float.itemHeight.cgFloat)
+    }
     
     private lazy var headerView: Header =
     {
@@ -334,7 +340,7 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat
     {
-        return 36
+        return Float.itemHeight.cgFloat
     }
     
     func tableView(_ tableView: NSTableView,
