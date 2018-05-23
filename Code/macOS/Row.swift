@@ -42,13 +42,7 @@ class Row: NSTableRowView, Observer
         drawRect.origin.y = verticalGap / 2
         drawRect.size.height -= verticalGap
         
-        color.setFill()
-        
-        let selectionPath = NSBezierPath(roundedRect: drawRect,
-                                         xRadius: 4,
-                                         yRadius: 4)
-        
-        selectionPath.fill()
+        drawItemBackground(with: color, in: drawRect)
     }
     
     private weak var task: Task?

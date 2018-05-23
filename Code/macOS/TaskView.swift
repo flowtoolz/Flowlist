@@ -16,7 +16,7 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         contrainGroupIndicator()
         constrainTitleField()
         
-        applyItemStyle()
+        setItemBorder()
     }
     
     required init?(coder: NSCoder) { fatalError() }

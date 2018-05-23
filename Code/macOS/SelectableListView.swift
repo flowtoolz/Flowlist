@@ -24,13 +24,13 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ta
         
         // title
         
-        titleField.stringValue = list.title.latestUpdate
+        headerView.set(title: list.title.latestUpdate)
         
         observe(list.title)
         {
             [weak self] newTitle in
             
-            self?.titleField.stringValue = newTitle
+            self?.headerView.set(title: newTitle)
         }
         
         // auto layout
@@ -47,41 +47,13 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ta
         headerView.autoPinEdge(toSuperviewEdge: .right)
         headerView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         headerView.autoSetDimension(.height, toSize: 36)
-        
-        titleField.autoAlignAxis(.horizontal, toSameAxisOf: headerView)
-        titleField.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
-        titleField.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
-    deinit
-    {
-        stopAllObserving()
-    }
+    deinit { stopAllObserving() }
     
     // MARK: - Header View
-    
-    private lazy var titleField: NSTextField =
-    {
-        let field = NSTextField.newAutoLayout()
-        self.headerView.addSubview(field)
-        
-        field.textColor = NSColor.black
-        field.font = Font.text.nsFont
-       
-        let priority = NSLayoutConstraint.Priority(rawValue: 0.1)
-        field.setContentCompressionResistancePriority(priority, for: .horizontal)
-        field.lineBreakMode = .byTruncatingTail
-        field.drawsBackground = false
-        field.alignment = .center
-        field.isEditable = false
-        field.isBezeled = false
-        field.isBordered = false
-        field.isSelectable = false
-        
-        return field
-    }()
     
     private lazy var headerView: Header =
     {

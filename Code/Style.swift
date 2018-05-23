@@ -2,6 +2,7 @@ import SwiftyToolz
 
 extension Float
 {
+    static let cornerRadius: Float = 4
     static let verticalGap: Float = 2
 }
 
@@ -18,13 +19,3 @@ extension Font
     static let text = Font.system(size: 13)
 }
 
-extension NSView
-{
-    func applyItemStyle()
-    {
-        wantsLayer = true
-        layer?.borderColor = Color.border.nsColor.cgColor
-        layer?.borderWidth = 1.0
-        layer?.cornerRadius = 4.0
-    }
-}
