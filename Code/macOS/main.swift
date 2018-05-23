@@ -77,9 +77,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     func windowDidBecomeKey(_ notification: Notification)
     {
-        //print("did become key")
-        
-        //logFirstResponder()
         setupMenuOptions()
     }
     

@@ -443,20 +443,3 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ta
     
     private(set) weak var list: SelectableList?
 }
-
-func logFirstResponder()
-{
-    guard NSApp.mainWindow != nil else
-    {
-        Swift.print("main window is nil")
-        return
-    }
-    
-    guard let firstResponder = NSApp.mainWindow?.firstResponder else
-    {
-        Swift.print("main window has no first responder")
-        return
-    }
-    
-    Swift.print("first responder: \(firstResponder.className) (\(ObjectIdentifier(firstResponder).debugDescription))")
-}
