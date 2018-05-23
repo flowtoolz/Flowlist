@@ -1,6 +1,6 @@
 import AppKit
 
-class ListHeaderView: NSView
+class Header: NSView
 {
     override init(frame frameRect: NSRect)
     {

@@ -1,6 +1,6 @@
-let store = TaskStore()
+let store = Store()
 
-class TaskStore
+class Store
 {
     fileprivate init() {}
 

@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     private func setupWindow()
     {
-        window.contentViewController = MainViewController()
+        window.contentViewController = Controller()
         window.styleMask = NSWindow.StyleMask([NSWindow.StyleMask.resizable, NSWindow.StyleMask.titled, NSWindow.StyleMask.miniaturizable, NSWindow.StyleMask.closable, NSWindow.StyleMask.unifiedTitleAndToolbar])
         
         let frame = NSScreen.main?.frame ?? CGRect(x: 0, y: 0, width: 1280, height: 960)

@@ -2,7 +2,7 @@ import Foundation
 import FoundationToolz
 import SwiftyToolz
 
-extension TaskStore
+extension Store
 {
     func save()
     {

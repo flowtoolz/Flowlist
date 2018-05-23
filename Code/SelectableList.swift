@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-class SelectableTaskList: TaskList
+class SelectableList: List
 {
     // MARK: - Selection Dependent Editing
     
@@ -116,5 +116,5 @@ class SelectableTaskList: TaskList
         }
     }
     
-    let selection = TaskSelection()
+    let selection = Selection()
 }

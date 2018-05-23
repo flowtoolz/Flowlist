@@ -1,11 +1,11 @@
 import SwiftObserver
 import SwiftyToolz
 
-class TaskBrowser: Observer
+class Browser: Observer
 {
     // MARK: - Navigate
     
-    func moveRight() -> SelectableTaskList
+    func moveRight() -> SelectableList
     {
         observeSelection(in: lists.remove(at: 0), start: false)
         
@@ -16,7 +16,7 @@ class TaskBrowser: Observer
         return newLastList
     }
     
-    func moveLeft() -> SelectableTaskList
+    func moveLeft() -> SelectableList
     {
         observeSelection(in: lists.popLast(), start: false)
         
@@ -42,9 +42,9 @@ class TaskBrowser: Observer
     }
     
     @discardableResult
-    private func addTaskList(prepend: Bool = false) -> SelectableTaskList
+    private func addTaskList(prepend: Bool = false) -> SelectableList
     {
-        let list = SelectableTaskList()
+        let list = SelectableList()
         
         observeSelection(in: list)
         
@@ -55,7 +55,7 @@ class TaskBrowser: Observer
     
     // MARK: - Observe Selections in Lists
     
-    private func observeSelection(in list: SelectableTaskList?,
+    private func observeSelection(in list: SelectableList?,
                                   start: Bool = true)
     {
         guard let list = list else
@@ -81,7 +81,7 @@ class TaskBrowser: Observer
         }
     }
     
-    private func listChangedSelection(_ list: SelectableTaskList)
+    private func listChangedSelection(_ list: SelectableList)
     {
         guard let index = lists.index(where: { $0 === list }) else
         {
@@ -108,7 +108,7 @@ class TaskBrowser: Observer
         lists[index].set(root: newRoot)
     }
     
-    func list(at index: Int) -> SelectableTaskList?
+    func list(at index: Int) -> SelectableList?
     {
         guard lists.isValid(index: index) else { return nil }
         
@@ -117,5 +117,5 @@ class TaskBrowser: Observer
     
     var numberOfLists: Int { return lists.count }
     
-    private var lists = [SelectableTaskList]()
+    private var lists = [SelectableList]()
 }

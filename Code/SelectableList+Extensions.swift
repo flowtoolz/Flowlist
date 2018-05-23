@@ -1,4 +1,4 @@
-extension SelectableTaskList
+extension SelectableList
 {
     func debug()
     {

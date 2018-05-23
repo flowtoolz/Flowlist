@@ -1,6 +1,6 @@
 import SwiftyToolz
 
-extension TaskSelection
+extension Selection
 {
     var indexes: [Int]
     {

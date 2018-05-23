@@ -2,7 +2,7 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class TaskListRow: NSTableRowView, Observer
+class Row: NSTableRowView, Observer
 {
     init(with task: Task?)
     {

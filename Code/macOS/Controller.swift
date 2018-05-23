@@ -4,7 +4,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class MainViewController: NSViewController, Observer
+class Controller: NSViewController, Observer
 {
     // MARK: - Life Cycle
     
@@ -103,10 +103,10 @@ class MainViewController: NSViewController, Observer
     }
     
     @discardableResult
-    private func addListView(with list: SelectableTaskList,
-                             prepend: Bool = false) -> TaskListView
+    private func addListView(with list: SelectableList,
+                             prepend: Bool = false) -> ListView
     {
-        let listView = TaskListView(with: list)
+        let listView = ListView(with: list)
         view.addSubview(listView)
         
         observe(listView: listView)
@@ -123,11 +123,11 @@ class MainViewController: NSViewController, Observer
         return listView
     }
     
-    var listViews = [TaskListView]()
+    var listViews = [ListView]()
     
     // MARK: - Observing Task List Views
     
-    private func observe(listView: TaskListView)
+    private func observe(listView: ListView)
     {
         observe(listView)
         {
@@ -139,8 +139,8 @@ class MainViewController: NSViewController, Observer
         }
     }
     
-    private func didReceive(_ event: TaskListView.Event,
-                            from listView: TaskListView)
+    private func didReceive(_ event: ListView.Event,
+                            from listView: ListView)
     {
         switch event
         {
@@ -156,7 +156,7 @@ class MainViewController: NSViewController, Observer
     
     // MARK: - Navigation
     
-    func listViewWantsToGiveFocusToTheRight(_ listView: TaskListView)
+    func listViewWantsToGiveFocusToTheRight(_ listView: ListView)
     {
         guard let index = listViews.index(where: { $0 === listView }),
             index >= 0, index < listViews.count - 1,
@@ -169,7 +169,7 @@ class MainViewController: NSViewController, Observer
         moveInputFocus(to: index + 1)
     }
     
-    func listViewWantsToGiveFocusToTheLeft(_ listView: TaskListView)
+    func listViewWantsToGiveFocusToTheLeft(_ listView: ListView)
     {
         guard let index = listViews.index(where: { $0 === listView }) else
         {
@@ -206,7 +206,7 @@ class MainViewController: NSViewController, Observer
         return true
     }
     
-    func tableViewWasClickedInTaskListView(_ listView: TaskListView)
+    func tableViewWasClickedInTaskListView(_ listView: ListView)
     {
         guard let index = listViews.index(where: { $0 === listView }) else
         {
@@ -306,5 +306,5 @@ class MainViewController: NSViewController, Observer
         )
     }
     
-    private let browser = TaskBrowser()
+    private let browser = Browser()
 }

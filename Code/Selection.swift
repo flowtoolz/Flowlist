@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-class TaskSelection: Observable
+class Selection: Observable
 {
     // MARK: - Select Tasks
     

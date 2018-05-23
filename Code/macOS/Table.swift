@@ -1,14 +1,6 @@
-//
-//  TaskListScrollView.swift
-//  Flowlist
-//
-//  Created by Sebastian on 18/06/17.
-//  Copyright © 2017 Flowtoolz. All rights reserved.
-//
-
 import AppKit
 
-class TaskListTableView: NSTableView
+class Table: NSTableView
 {
     override func flagsChanged(with event: NSEvent)
     {
@@ -53,5 +45,5 @@ class TaskListTableView: NSTableView
 
 protocol TaskListTableViewDelegate: AnyObject
 {
-    func taskListTableViewWasClicked(_ view: TaskListTableView)
+    func taskListTableViewWasClicked(_ view: Table)
 }

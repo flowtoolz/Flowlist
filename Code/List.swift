@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-class TaskList: Observable, Observer
+class List: Observable, Observer
 {
     // MARK: - Configuration
     

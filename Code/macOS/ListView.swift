@@ -3,11 +3,11 @@ import PureLayout
 import SwiftObserver
 import SwiftyToolz
 
-class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListTableViewDelegate, Observer, Observable
+class ListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskListTableViewDelegate, Observer, Observable
 {
     // MARK: - Life Cycle
     
-    init(with list: SelectableTaskList)
+    init(with list: SelectableList)
     {
         super.init(frame: NSRect.zero)
         
@@ -83,9 +83,9 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         return field
     }()
     
-    private lazy var headerView: ListHeaderView =
+    private lazy var headerView: Header =
     {
-        let view = ListHeaderView()
+        let view = Header()
         self.addSubview(view)
         
         return view
@@ -108,9 +108,9 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         return view
     }()
     
-    lazy var tableView: TaskListTableView =
+    lazy var tableView: Table =
     {
-        let view = TaskListTableView()
+        let view = Table()
         
         let column = NSTableColumn(identifier:  TaskView.uiIdentifier)
         
@@ -266,7 +266,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
         tableView.endUpdates()
     }
     
-    func taskListTableViewWasClicked(_ view: TaskListTableView)
+    func taskListTableViewWasClicked(_ view: Table)
     {
         send(.tableViewWasClicked)
     }
@@ -367,7 +367,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     func tableView(_ tableView: NSTableView,
                    rowViewForRow row: Int) -> NSTableRowView?
     {
-        return TaskListRow(with: list?.task(at: row))
+        return Row(with: list?.task(at: row))
     }
     
     // MARK: - Table View Data Source
@@ -469,7 +469,7 @@ class TaskListView: NSView, NSTableViewDelegate, NSTableViewDataSource, TaskList
     
     // MARK: - Task List
     
-    private(set) weak var list: SelectableTaskList?
+    private(set) weak var list: SelectableList?
 }
 
 func logFirstResponder()
