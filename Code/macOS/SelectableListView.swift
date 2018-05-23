@@ -137,7 +137,7 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
             if cmd
             {
                 store.load()
-                tableView.reloadData()
+                scrollView.tableView.reloadData()
             }
             else
             {
@@ -172,25 +172,25 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
     
     func didDeleteSubtasks(at indexes: [Int])
     {
-        tableView.beginUpdates()
-        tableView.removeRows(at: IndexSet(indexes),
+        scrollView.tableView.beginUpdates()
+        scrollView.tableView.removeRows(at: IndexSet(indexes),
                              withAnimation: NSTableView.AnimationOptions.slideUp)
-        tableView.endUpdates()
+        scrollView.tableView.endUpdates()
     }
     
     func didInsertSubtask(at indexes: [Int])
     {
-        tableView.beginUpdates()
-        tableView.insertRows(at: IndexSet(indexes),
+        scrollView.tableView.beginUpdates()
+        scrollView.tableView.insertRows(at: IndexSet(indexes),
                              withAnimation: NSTableView.AnimationOptions.slideDown)
-        tableView.endUpdates()
+        scrollView.tableView.endUpdates()
     }
     
     func didMoveSubtask(from: Int, to: Int)
     {
-        tableView.beginUpdates()
-        tableView.moveRow(at: from, to: to)
-        tableView.endUpdates()
+        scrollView.tableView.beginUpdates()
+        scrollView.tableView.moveRow(at: from, to: to)
+        scrollView.tableView.endUpdates()
     }
     
     // MARK: - Editing the List
@@ -251,7 +251,7 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
     
     private func startEditing(at index: Int)
     {
-        guard index < tableView.numberOfRows else { return }
+        guard index < scrollView.tableView.numberOfRows else { return }
        
         if index == 0
         {
@@ -259,10 +259,10 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
         }
         else
         {
-            tableView.scrollRowToVisible(index)
+            scrollView.tableView.scrollRowToVisible(index)
         }
         
-        if let cell = tableView.view(atColumn: 0,
+        if let cell = scrollView.tableView.view(atColumn: 0,
                                      row: index,
                                      makeIfNecessary: false) as? TaskView
         {
@@ -351,7 +351,7 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
         
         if list?.selection.count ?? 0 > 1,
             let firstSelectedIndex = list?.selection.indexes.first,
-            tableView.row(for: taskView) == firstSelectedIndex,
+            scrollView.tableView.row(for: taskView) == firstSelectedIndex,
             let firstSelectedTask = taskView.task
         {
             list?.selection.remove(tasks: [firstSelectedTask])
@@ -371,15 +371,15 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
     {
         let selection = list?.selection.indexes ?? []
         
-        guard selection.max() ?? 0 < tableView.numberOfRows else { return }
+        guard selection.max() ?? 0 < scrollView.tableView.numberOfRows else { return }
         
-        tableView.selectRowIndexes(IndexSet(selection),
+        scrollView.tableView.selectRowIndexes(IndexSet(selection),
                                    byExtendingSelection: false)
     }
     
     private func storeUISelectionInList()
     {
-        let selectedIndexes = Array(tableView.selectedRowIndexes)
+        let selectedIndexes = Array(scrollView.tableView.selectedRowIndexes)
         
         list?.selection.setWithTasksListed(at: selectedIndexes)
     }
@@ -418,15 +418,13 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
                                withOffset: 10 - halfVerticalGap)
     }
     
-    private lazy var scrollView: NSScrollView =
+    private lazy var scrollView: ScrollingTable =
     {
-        let view = NSScrollView.newAutoLayout()
+        let view = ScrollingTable.newAutoLayout()
         self.addSubview(view)
-        
-        view.drawsBackground = false
-        view.automaticallyAdjustsContentInsets = false
-        view.contentInsets = NSEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
-        view.documentView = self.tableView
+
+        view.tableView.dataSource = source
+        view.tableView.delegate = self
         
         return view
     }()
@@ -435,18 +433,8 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
     
     func makeTableFirstResponder() -> Bool
     {
-        return NSApp.mainWindow?.makeFirstResponder(tableView) ?? false
+        return NSApp.mainWindow?.makeFirstResponder(scrollView.tableView) ?? false
     }
-    
-    private lazy var tableView: Table =
-    {
-        let view = Table.newAutoLayout()
-
-        view.dataSource = source
-        view.delegate = self
-        
-        return view
-    }()
     
     // MARK: - List
     
