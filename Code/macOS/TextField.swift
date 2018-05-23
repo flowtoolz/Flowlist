@@ -31,9 +31,8 @@ class TextField: NSTextField, Observable
         isBordered = false
         drawsBackground = false
         isBezeled = false
-        isEditable = true
-        font = Font.text.nsFont
         lineBreakMode = .byTruncatingTail
+        font = Font.text.nsFont
     }
     
     required init?(coder: NSCoder)
@@ -45,14 +44,14 @@ class TextField: NSTextField, Observable
     
     override func becomeFirstResponder() -> Bool
     {
-        let didBecomeFirstResponder = super.becomeFirstResponder()
+        let isFirstResponder = super.becomeFirstResponder()
         
-        if didBecomeFirstResponder { send(.didGainFocus) }
+        if isFirstResponder { send(.didBecomeFirstResponder) }
         
-        return didBecomeFirstResponder
+        return isFirstResponder
     }
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, didGainFocus }
+    enum Event { case didNothing, didBecomeFirstResponder }
 }
