@@ -139,7 +139,7 @@ class Controller: NSViewController, Observer
         }
     }
     
-    private func didReceive(_ request: SelectableListView.NavigationRequest,
+    private func didReceive(_ request: Table.NavigationRequest,
                             from listView: SelectableListView)
     {
         switch request

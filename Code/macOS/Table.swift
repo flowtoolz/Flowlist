@@ -1,7 +1,23 @@
 import AppKit
+import SwiftObserver
 
-class Table: NSTableView
+class Table: NSTableView, Observer, Observable
 {
+    override init(frame frameRect: NSRect)
+    {
+        super.init(frame: frameRect)
+        
+        addTableColumn(NSTableColumn(identifier: TaskView.uiIdentifier))
+    
+        allowsMultipleSelection = true
+        backgroundColor = NSColor.clear
+        headerView = nil
+        intercellSpacing = NSSize(width: 0,
+                                  height: Float.verticalGap.cgFloat)
+    }
+    
+    required init?(coder: NSCoder) { fatalError() }
+    
     // MARK: - Keyboard Input
     
     override func keyDown(with event: NSEvent)
@@ -32,5 +48,22 @@ class Table: NSTableView
     {
         super.mouseDown(with: event)
         nextResponder?.mouseDown(with: event)
+    }
+    
+    
+    // MARK: - List
+    
+    private(set) weak var list: SelectableList?
+    
+    // MARK: - Observability
+    
+    var latestUpdate: NavigationRequest { return .wantsNothing }
+    
+    enum NavigationRequest
+    {
+        case wantsNothing
+        case wantsToPassFocusRight
+        case wantsToPassFocusLeft
+        case wantsFocus
     }
 }

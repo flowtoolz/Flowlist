@@ -10,8 +10,8 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
     init(with list: SelectableList)
     {
         super.init(frame: NSRect.zero)
-
-        dataSource.list = list
+        
+        source.list = list
         
         // list
         
@@ -291,7 +291,7 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
                    viewFor tableColumn: NSTableColumn?,
                    row: Int) -> NSView?
     {
-        return dataSource.tableView(tableView,
+        return source.tableView(tableView,
                                     viewFor: tableColumn,
                                     row: row)
     }
@@ -299,8 +299,8 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
     func tableView(_ tableView: NSTableView,
                    rowViewForRow row: Int) -> NSTableRowView?
     {
-        return dataSource.tableView(tableView,
-                                    rowViewForRow: row)
+        return source.tableView(tableView,
+                                rowViewForRow: row)
     }
     
     func tableViewSelectionDidChange(_ notification: Notification)
@@ -310,11 +310,11 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
     
     // MARK: - Creating Task Views
     
-    private lazy var dataSource: TableDataSource =
+    lazy var source: TableDataSource =
     {
-        let source = TableDataSource()
+        let src = TableDataSource()
         
-        observe(source)
+        observe(src)
         {
             [unowned self] event in
             
@@ -324,7 +324,7 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
             }
         }
         
-        return source
+        return src
     }()
     
     private func observe(taskView: TaskView)
@@ -440,18 +440,9 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
     
     private lazy var tableView: Table =
     {
-        let view = Table()
-        
-        let column = NSTableColumn(identifier: TaskView.uiIdentifier)
-        view.addTableColumn(column)
+        let view = Table.newAutoLayout()
 
-        view.allowsMultipleSelection = true
-        view.backgroundColor = NSColor.clear
-        view.headerView = nil
-        view.intercellSpacing = NSSize(width: 0,
-                                       height: Float.verticalGap.cgFloat)
-        
-        view.dataSource = dataSource
+        view.dataSource = source
         view.delegate = self
         
         return view
@@ -463,13 +454,5 @@ class SelectableListView: NSView, NSTableViewDelegate, Observer, Observable
     
     // MARK: - Observability
     
-    var latestUpdate: NavigationRequest { return .wantsNothing }
-    
-    enum NavigationRequest
-    {
-        case wantsNothing
-        case wantsToPassFocusRight
-        case wantsToPassFocusLeft
-        case wantsFocus
-    }
+    var latestUpdate: Table.NavigationRequest { return .wantsNothing }
 }
