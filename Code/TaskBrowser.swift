@@ -71,9 +71,9 @@ class TaskBrowser: Observer
             return
         }
         
-        observe(list.selection, filter: { $0 == .didChange })
+        observe(list.selection, select: .didChange)
         {
-            [weak self, weak list] event in
+            [weak self, weak list] in
             
             guard let list = list else { return }
             
