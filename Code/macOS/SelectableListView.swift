@@ -312,20 +312,10 @@ class SelectableListView: NSView, NSTableViewDelegate, NSTableViewDataSource, Ob
                    viewFor tableColumn: NSTableColumn?,
                    row: Int) -> NSView?
     {
-        guard let task = list?.task(at: row) else
-        {
-            log(error: "Couldn't find task to configure task view at row \(row)")
-            return nil
-        }
-        
-        let taskView = dequeueOrCreateTaskView()
-        
-        taskView.configure(with: task)
-        
-        return taskView
+        return retrieveTaskView().configure(with: list?.task(at: row))
     }
     
-    private func dequeueOrCreateTaskView() -> TaskView
+    private func retrieveTaskView() -> TaskView
     {
         guard let dequeuedView = dequeueView() else
         {

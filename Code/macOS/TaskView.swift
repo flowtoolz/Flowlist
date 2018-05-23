@@ -30,8 +30,14 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
     
     // MARK: - Configuration
     
-    func configure(with task: Task)
+    func configure(with task: Task?) -> TaskView?
     {
+        guard let task = task else
+        {
+            log(error: "Cannot configure task view with nil task.")
+            return nil
+        }
+        
         stopObserving(task: self.task)
         observe(task: task)
         
@@ -40,6 +46,8 @@ class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
         updateTitle()
         updateState()
         updateGroupIndicator()
+        
+        return self
     }
     
     private func observe(task: Task)
