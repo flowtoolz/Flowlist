@@ -224,6 +224,7 @@ class ScrollingTable: NSScrollView, NSTableViewDelegate, Observer, Observable
     
     override func mouseDown(with event: NSEvent)
     {
+        super.mouseDown(with: event)
         nextResponder?.mouseDown(with: event)
     }
 }
