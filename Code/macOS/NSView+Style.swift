@@ -7,7 +7,7 @@ extension NSView
     func setItemBorder()
     {
         wantsLayer = true
-        layer?.borderColor = Color.border.nsColor.cgColor
+        layer?.borderColor = Color.border.cgColor
         layer?.borderWidth = 1.0
         layer?.cornerRadius = Float.cornerRadius.cgFloat
     }
