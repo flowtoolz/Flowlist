@@ -43,7 +43,7 @@ class SelectableListView: NSView, Observer, Observable
     {
         super.mouseDown(with: event)
         
-        send(.wantsFocus)
+        send(.wantsToBeRevealed)
     }
     
     // MARK: - Keyboard Input

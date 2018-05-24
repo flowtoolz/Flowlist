@@ -87,7 +87,7 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
             {
             case .didNothing: break
             case .didEditTitle: self?.editTitleOfNextSelectedTask(in: taskView)
-            case .willContainFirstResponder: self?.send(.wantsFocus)
+            case .willContainFirstResponder: self?.send(.wantsToBeRevealed)
             case .willDeinit: self?.stopObserving(taskView)
             }
         }
@@ -186,7 +186,7 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         }
     }
     
-    func jumpToTop()
+    private func jumpToTop()
     {
         // TODO: would this work? -> scrollToBeginningOfDocument(self)
         
@@ -212,7 +212,7 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         case wantsNothing
         case wantsToPassFocusRight
         case wantsToPassFocusLeft
-        case wantsFocus
+        case wantsToBeRevealed
     }
     
     // MARK: - Forward Input

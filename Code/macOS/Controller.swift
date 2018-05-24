@@ -8,8 +8,6 @@ class Controller: NSViewController, Observer
 {
     // MARK: - Life Cycle
     
-    deinit { stopAllObserving() }
-    
     override func loadView()
     {
         view = NSView()
@@ -19,6 +17,8 @@ class Controller: NSViewController, Observer
                                               blue: 235.0 / 255.0,
                                               alpha: 1.0).cgColor
     }
+    
+    deinit { stopAllObserving() }
     
     // MARK: - View Delegate
     
@@ -34,20 +34,12 @@ class Controller: NSViewController, Observer
     {
         configureListViews()
         
-        for listView in listViews
-        {
-            listView.scrollTable.jumpToTop()
-        }
-        
-        if listViews.count > 2
-        {
-            moveInputFocus(to: 2)
-        }
+        if listViews.count > 2 { focusList(at: 2) }
     }
 
     // MARK: - Layout List Views
     
-    func layoutListViews()
+    private func layoutListViews()
     {
         view.removeConstraints(listViewContraints)
         listViewContraints.removeAll()
@@ -58,80 +50,40 @@ class Controller: NSViewController, Observer
             
             if i == 0
             {
-                listViewContraints.append(listView.autoPinEdge(.right,
-                                                               to: .left,
-                                                               of: view))
+                constrain(listView.autoPinEdge(.right,
+                                               to: .left,
+                                               of: view))
             }
             else
             {
-                listViewContraints.append(listView.autoPinEdge(.left,
-                                                               to: .right,
-                                                               of: listViews[i - 1],
-                                                               withOffset: 10))
-
-                listViewContraints.append(listView.autoConstrainAttribute(.width,
-                                                                          to: .width,
-                                                                          of: listViews[i - 1]))
+                constrain(listView.autoPinEdge(.left,
+                                               to: .right,
+                                               of: listViews[i - 1],
+                                               withOffset: 10))
+                
+                constrain(listView.autoConstrainAttribute(.width,
+                                                          to: .width,
+                                                          of: listViews[i - 1]))
             }
             
             if i == listViews.count - 1
             {
-                listViewContraints.append(listView.autoPinEdge(.left, to: .right, of: view))
+                constrain(listView.autoPinEdge(.left, to: .right, of: view))
             }
             
-            listViewContraints.append(listView.autoPinEdge(toSuperviewEdge: .top))
-            listViewContraints.append(listView.autoPinEdge(toSuperviewEdge: .bottom))
+            constrain(listView.autoPinEdge(toSuperviewEdge: .top))
+            constrain(listView.autoPinEdge(toSuperviewEdge: .bottom))
         }
+    }
+    
+    private func constrain(_ constraint: NSLayoutConstraint)
+    {
+        listViewContraints.append(constraint)
     }
     
     private var listViewContraints = [NSLayoutConstraint]()
     
-    // MARK: - List Views
-    
-    private func configureListViews()
-    {
-        for i in 0 ..< browser.numberOfLists
-        {
-            guard let list = browser.list(at: i),
-                listViews.isValid(index: i) else { continue }
-            
-            listViews[i].configure(with: list)
-        }
-    }
-    
-    private func createListViews()
-    {
-        listViews.removeAll()
-        
-        for _ in 0 ..< browser.numberOfLists { addListView() }
-    }
-    
-    @discardableResult
-    private func addListView(prepend: Bool = false) -> SelectableListView
-    {
-        let listView = SelectableListView.newAutoLayout()
-        view.addSubview(listView)
-
-        observe(listView: listView)
-        
-        if prepend
-        {
-            listViews.insert(listView, at: 0)
-        }
-        else
-        {
-            listViews.append(listView)
-        }
-
-        //let addedIndex = prepend ? 0 : listViews.count - 1
-        //print("added view for list \(list.title.latestUpdate) at \(addedIndex)")
-        
-        return listView
-    }
-    
-    var listViews = [SelectableListView]()
-    
-    // MARK: - Observing Task List Views
+    // MARK: - Observe List Views
     
     private func observe(listView: SelectableListView)
     {
@@ -153,37 +105,33 @@ class Controller: NSViewController, Observer
         case .wantsNothing: break
         case .wantsToPassFocusRight: passFocusRight(from: listView)
         case .wantsToPassFocusLeft: passFocusLeft(from: listView)
-        case .wantsFocus: focus(listView)
+        case .wantsToBeRevealed: navigateTo(listView)
         }
     }
     
     // MARK: - Navigation
     
-    func passFocusRight(from listView: SelectableListView)
+    private func passFocusRight(from listView: SelectableListView)
     {
         guard let index = listViews.index(where: { $0 === listView }),
             index >= 0, index < listViews.count - 1,
-            (listView.list?.numberOfTasks ?? 0) > 0
-        else
-        {
-            return
-        }
+            (listView.list?.numberOfTasks ?? 0) > 0 else { return }
         
-        moveInputFocus(to: index + 1)
+        focusList(at: index + 1)
     }
     
-    func passFocusLeft(from listView: SelectableListView)
+    private func passFocusLeft(from listView: SelectableListView)
     {
         guard let index = listViews.index(where: { $0 === listView }) else
         {
             return
         }
         
-        moveInputFocus(to: index - 1)
+        focusList(at: index - 1)
     }
     
     @discardableResult
-    private func moveInputFocus(to index: Int) -> Bool
+    private func focusList(at index: Int) -> Bool
     {
         guard listViews.isValid(index: index) else { return false }
         
@@ -204,36 +152,30 @@ class Controller: NSViewController, Observer
             return false
         }
         
-        tableViewGainedFocus(at: index)
+        navigateToList(at: index)
         
         return true
     }
     
-    func focus(_ listView: SelectableListView)
+    private func navigateTo(_ listView: SelectableListView)
     {
         guard let index = listViews.index(where: { $0 === listView }) else
         {
             return
         }
         
-        tableViewGainedFocus(at: index)
+        navigateToList(at: index)
     }
     
-    private func tableViewGainedFocus(at index: Int)
+    private func navigateToList(at index: Int)
     {
         guard listViews.isValid(index: index),
-            listViews[index].list?.root != nil
-        else
-        {
-            return
-        }
+            listViews[index].list?.root != nil else { return }
         
-        // navigate right if necessary
         if index >= listViews.count - 2
         {
             navigateRight()
         }
-            // navigate left if necessary
         else if index <= 1
         {
             navigateLeft()
@@ -310,6 +252,48 @@ class Controller: NSViewController, Observer
             }
         )
     }
+    
+    // MARK: - List Views
+    
+    private func configureListViews()
+    {
+        for index in 0 ..< browser.numberOfLists
+        {
+            guard let list = browser.list(at: index),
+                listViews.isValid(index: index)
+            else
+            {
+                log(error: "Couldn't find list or list view at index \(index).")
+                continue
+            }
+            
+            listViews[index].configure(with: list)
+        }
+    }
+    
+    private func createListViews()
+    {
+        listViews.removeAll()
+        
+        for _ in 0 ..< browser.numberOfLists { addListView() }
+    }
+    
+    @discardableResult
+    private func addListView(prepend: Bool = false) -> SelectableListView
+    {
+        let listView = SelectableListView.newAutoLayout()
+        view.addSubview(listView)
+        
+        listViews.insert(listView, at: prepend ? 0 : listViews.count)
+        
+        observe(listView: listView)
+
+        return listView
+    }
+    
+    private var listViews = [SelectableListView]()
+    
+    // MARK: - Browser (View Model)
     
     private let browser = Browser()
 }
