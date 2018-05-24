@@ -11,16 +11,6 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
         window.show()
     }
     
-    func windowDidBecomeKey(_ notification: Notification)
-    {
-        log("window did become key")
-    }
-    
-    func windowDidBecomeMain(_ notification: Notification)
-    {
-        log("window did become main")
-    }
-    
     func windowWillClose(_ notification: Notification)
     {
         quit()
