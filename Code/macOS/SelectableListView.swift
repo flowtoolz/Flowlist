@@ -131,7 +131,6 @@ class SelectableListView: NSView, Observer, Observable
             {
                 list?.debug()
             }
-        case "n": if cmd { scrollTable.createTask(group: true) }
         case "t": store.root.debug()
         default: break
         }
