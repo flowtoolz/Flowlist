@@ -1,10 +1,6 @@
 import AppKit
-import PureLayout
-import UIToolz
-import SwiftObserver
-import SwiftyToolz
 
-class Controller: NSViewController, Observer
+class Controller: NSViewController
 {
     // MARK: - Life Cycle
     
