@@ -8,8 +8,6 @@ class TableSource: NSObject, Observable, NSTableViewDataSource
     
     func numberOfRows(in tableView: NSTableView) -> Int
     {
-        //print("providing number of rows \(list?.numberOfTasks ?? 0) for \(list?.title.latestUpdate)")
-        
         return list?.numberOfTasks ?? 0
     }
     
@@ -27,8 +25,6 @@ class TableSource: NSObject, Observable, NSTableViewDataSource
                    viewFor tableColumn: NSTableColumn?,
                    row: Int) -> NSView?
     {
-        //print("source providing cell \(row) for \(list?.title.latestUpdate)")
-        
         let task = list?.task(at: row)
         
         return retrieveTaskView(from: tableView).configure(with: task)
