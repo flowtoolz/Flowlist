@@ -8,15 +8,7 @@ class Controller: NSViewController, Observer
 {
     // MARK: - Life Cycle
     
-    override func loadView()
-    {
-        view = NSView()
-        view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor(calibratedRed: 235.0 / 255.0,
-                                              green: 235.0 / 255.0,
-                                              blue: 235.0 / 255.0,
-                                              alpha: 1.0).cgColor
-    }
+    override func loadView() { view = NSView() }
     
     deinit { stopAllObserving() }
     
@@ -26,6 +18,7 @@ class Controller: NSViewController, Observer
     {
         super.viewDidLoad()
         
+        //constrainBrowserView()
         createListViews()
         layoutListViews()
     }
@@ -292,6 +285,21 @@ class Controller: NSViewController, Observer
     }
     
     private var listViews = [SelectableListView]()
+    
+    // MARK: - Browser View
+    
+    private func constrainBrowserView()
+    {
+        browserView.autoPinEdgesToSuperviewEdges()
+    }
+    
+    private lazy var browserView: BrowserView =
+    {
+        let bv = BrowserView.newAutoLayout()
+        view.addSubview(bv)
+        
+        return bv
+    }()
     
     // MARK: - Browser (View Model)
     

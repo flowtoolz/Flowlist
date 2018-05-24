@@ -34,6 +34,7 @@
 		9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */; };
 		9EF0A78A20B5E26F00E1A23A /* TableSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0A78920B5E26F00E1A23A /* TableSource.swift */; };
 		9EF0A78C20B5F8B200E1A23A /* ScrollTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0A78B20B5F8B200E1A23A /* ScrollTable.swift */; };
+		9EF0A78E20B6E6CD00E1A23A /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0A78D20B6E6CD00E1A23A /* BrowserView.swift */; };
 		C932DAFCC628909A261C9DC7 /* Pods_Flowlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D591083E3159C05E29673835 /* Pods_Flowlist.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckBox.swift; path = ../Code/macOS/CheckBox.swift; sourceTree = "<group>"; };
 		9EF0A78920B5E26F00E1A23A /* TableSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TableSource.swift; path = ../Code/macOS/TableSource.swift; sourceTree = "<group>"; };
 		9EF0A78B20B5F8B200E1A23A /* ScrollTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScrollTable.swift; path = ../Code/macOS/ScrollTable.swift; sourceTree = "<group>"; };
+		9EF0A78D20B6E6CD00E1A23A /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BrowserView.swift; path = ../Code/macOS/BrowserView.swift; sourceTree = "<group>"; };
 		BA6347ACAE78132863C2FF94 /* Pods_FlowlistTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlowlistTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCFD3E12471EE5C3B17C7DE0 /* Pods_TodayListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodayListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C499DBA6E96C7098BCE851AA /* Pods-TodayList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TodayList/Pods-TodayList.debug.xcconfig"; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 			children = (
 				9E542E941EEEE41C00534981 /* main.swift */,
 				9E15185D1EEEE97700B35AD5 /* Controller.swift */,
+				9EF0A78D20B6E6CD00E1A23A /* BrowserView.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 			files = (
 				9E6C720B20B19C88001C3D2C /* Task+List.swift in Sources */,
 				9E1AAD6A20B57CA9001657A7 /* GroupIndicator.swift in Sources */,
+				9EF0A78E20B6E6CD00E1A23A /* BrowserView.swift in Sources */,
 				9EF0A78A20B5E26F00E1A23A /* TableSource.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* SelectableList.swift in Sources */,
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
