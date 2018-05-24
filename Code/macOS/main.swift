@@ -15,7 +15,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     func windowDidBecomeKey(_ notification: Notification)
     {
         log("window did become key")
-        setupMenuOptions()
     }
     
     func windowDidBecomeMain(_ notification: Notification)
@@ -82,25 +81,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     let window = NSWindow()
     
-    // MARK: - Menu
-    
-    func setupMenuOptions()
-    {
-        let quitOption = NSMenuItem(title: "Quit",
-                                    action: #selector(quit),
-                                    keyEquivalent: "")
-
-        if NSApp.mainMenu == nil
-        {
-            NSApp.mainMenu = NSMenu(title: "Menu")
-        }
-        
-        NSApp.mainMenu?.addItem(quitOption)
-    }
-    
     // MARK: - Quit
     
-    @objc func quit()
+    func quit()
     {
         NSApp.terminate(nil)
     }
