@@ -52,18 +52,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         window.isReleasedWhenClosed = false
         window.title = "Flowlist"
         
-        //window.toolbar = toolbar
         showWindow()
     }
-    
-//    private lazy var toolbar: NSToolbar =
-//    {
-//        let bar = NSToolbar(identifier: "ToolbarIdentifier")
-//        
-//        bar.sizeMode = .small
-//        
-//        return bar
-//    }()
     
     func toggleWindow()
     {
