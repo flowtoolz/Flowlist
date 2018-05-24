@@ -1,6 +1,6 @@
 import AppKit
 
-class Controller: NSViewController
+class ViewController: NSViewController
 {
     // MARK: - Life Cycle
     
