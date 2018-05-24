@@ -9,7 +9,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     {
         store.load()
         
-        setupWindow()
+        if setupWindow() { showWindow() }
     }
     
     func windowDidBecomeKey(_ notification: Notification)
@@ -35,48 +35,49 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     // MARK: - Window
     
-    private func setupWindow()
+    private func setupWindow() -> Bool
     {
+        guard let mainScreenFrame = NSScreen.main?.frame else
+        {
+            log(error: "Couldn't get main screen.")
+            return false
+        }
+        
         window.contentViewController = Controller()
-        window.styleMask = NSWindow.StyleMask([NSWindow.StyleMask.resizable, NSWindow.StyleMask.titled, NSWindow.StyleMask.miniaturizable, NSWindow.StyleMask.closable, NSWindow.StyleMask.unifiedTitleAndToolbar])
-        
-        let frame = NSScreen.main?.frame ?? CGRect(x: 0, y: 0, width: 1280, height: 960)
-        
-        window.setFrame(CGRect(x: frame.size.width / 5,
-                               y: frame.size.height / 5,
-                               width: frame.size.width * 0.6,
-                               height: frame.size.height * 0.6),
+        window.setFrame(CGRect(x: mainScreenFrame.size.width * 0.1,
+                               y: mainScreenFrame.size.height * 0.1,
+                               width: mainScreenFrame.size.width * 0.8,
+                               height: mainScreenFrame.size.height * 0.8),
                         display: true)
-        
+        window.styleMask = [.resizable,
+                            .titled,
+                            .miniaturizable,
+                            .closable,
+                            .unifiedTitleAndToolbar]
         window.delegate = self
         window.isReleasedWhenClosed = false
         window.title = "Flowlist"
         
-        showWindow()
+        return true
     }
     
     func toggleWindow()
     {
-        if window.isVisible
+        showWindow(!window.isVisible)
+    }
+    
+    func showWindow(_ show: Bool = true)
+    {
+        if show
         {
-            hideWindow()
+            window.makeKeyAndOrderFront(NSApp)
+            
+            NSApp.activate(ignoringOtherApps: true)
         }
         else
         {
-            showWindow()
+            window.orderOut(self)
         }
-    }
-    
-    func showWindow()
-    {
-        window.makeKeyAndOrderFront(NSApp)
-        
-        NSApp.activate(ignoringOtherApps: true)
-    }
-    
-    func hideWindow()
-    {
-        window.orderOut(self)
     }
     
     let window = NSWindow()
