@@ -7,6 +7,7 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     func applicationDidFinishLaunching(_ aNotification: Notification)
     {
+        NSApp.mainMenu = Menu()
         store.load()
         window.show()
     }
@@ -25,14 +26,5 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     private func quit() { NSApp.terminate(nil) }
     
-    private lazy var window: Window =
-    {
-        let w = Window()
-        
-        w.contentViewController = ViewController()
-        w.delegate = self
-        w.setupFrame()
-        
-        return w
-    }()
+    private lazy var window = Window(delegate: self)
 }

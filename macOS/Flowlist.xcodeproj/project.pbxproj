@@ -20,6 +20,7 @@
 		9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651931EEF428100DE2B07 /* TaskView.swift */; };
 		9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* Store.swift */; };
 		9E82A7A91EF2A558006AEF02 /* SelectableList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* SelectableList.swift */; };
+		9E88F54F20B7761F00A64F7B /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E88F54E20B7761F00A64F7B /* Menu.swift */; };
 		9E8ABF0020B2F0F1001E862B /* SelectableList+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABEFF20B2F0F1001E862B /* SelectableList+Extensions.swift */; };
 		9E8ABF0220B32A3B001E862B /* ListEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABF0120B32A3B001E862B /* ListEdit.swift */; };
 		9E8ABF0420B34E96001E862B /* Selection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABF0320B34E96001E862B /* Selection+Extensions.swift */; };
@@ -62,6 +63,7 @@
 		9E7651931EEF428100DE2B07 /* TaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = ../Code/macOS/TaskView.swift; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Store.swift; path = ../Code/Store.swift; sourceTree = "<group>"; };
 		9E82A7A81EF2A558006AEF02 /* SelectableList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectableList.swift; path = ../Code/SelectableList.swift; sourceTree = "<group>"; };
+		9E88F54E20B7761F00A64F7B /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Menu.swift; path = ../Code/macOS/Menu.swift; sourceTree = "<group>"; };
 		9E8ABEFF20B2F0F1001E862B /* SelectableList+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SelectableList+Extensions.swift"; path = "../Code/SelectableList+Extensions.swift"; sourceTree = "<group>"; };
 		9E8ABF0120B32A3B001E862B /* ListEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListEdit.swift; path = ../Code/ListEdit.swift; sourceTree = "<group>"; };
 		9E8ABF0320B34E96001E862B /* Selection+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Selection+Extensions.swift"; path = "../Code/Selection+Extensions.swift"; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 			children = (
 				9E542E941EEEE41C00534981 /* main.swift */,
 				9EF0A79220B72B5A00E1A23A /* AppController.swift */,
+				9E88F54E20B7761F00A64F7B /* Menu.swift */,
 				9EF0A79020B71DA100E1A23A /* Window.swift */,
 				9E15185D1EEEE97700B35AD5 /* ViewController.swift */,
 			);
@@ -464,6 +467,7 @@
 				9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */,
 				9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */,
 				9EAD75411EF6502000DC46FD /* Table.swift in Sources */,
+				9E88F54F20B7761F00A64F7B /* Menu.swift in Sources */,
 				9EF0A79120B71DA100E1A23A /* Window.swift in Sources */,
 				9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */,
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,

@@ -21,7 +21,7 @@ class BrowserView: LayerBackedView, Observer
     
     deinit { stopAllObserving() }
     
-    // MARK: - Creat and Configure List Views
+    // MARK: - Create and Configure List Views
     
     func configureListViews()
     {
