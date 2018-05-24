@@ -14,21 +14,21 @@ class SelectableListView: NSView, Observer, Observable
         
         // propagate list down
         self.list = list
-        scrollView.configure(with: list)
+        scrollTable.configure(with: list)
         
         // title
-        headerView.set(title: list.title.latestUpdate)
+        header.set(title: list.title.latestUpdate)
         
         observe(list.title)
         {
             [weak self] newTitle in
             
-            self?.headerView.set(title: newTitle)
+            self?.header.set(title: newTitle)
         }
         
         // auto layout
-        constrainHeaderView()
-        constrainScrollView()
+        constrainHeader()
+        constrainScrollTable()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -61,7 +61,7 @@ class SelectableListView: NSView, Observer, Observable
             
             if numSelections == 0
             {
-                scrollView.createTask()
+                scrollTable.createTask()
             }
             else if numSelections == 1
             {
@@ -69,12 +69,12 @@ class SelectableListView: NSView, Observer, Observable
                 {
                     if let index = list?.selection.indexes.first
                     {
-                        scrollView.editTitle(at: index)
+                        scrollTable.editTitle(at: index)
                     }
                 }
                 else
                 {
-                    scrollView.createTask()
+                    scrollTable.createTask()
                 }
             }
             else
@@ -83,24 +83,24 @@ class SelectableListView: NSView, Observer, Observable
                 {
                     if let index = list?.selection.indexes.first
                     {
-                        scrollView.editTitle(at: index)
+                        scrollTable.editTitle(at: index)
                     }
                 }
                 else
                 {
-                    scrollView.createTask(group: true)
+                    scrollTable.createTask(group: true)
                 }
             }
             
-        case .space: scrollView.createTask(at: 0)
+        case .space: scrollTable.createTask(at: 0)
             
         case .delete:
             if cmd
             {
                 list?.checkOffFirstSelectedUncheckedTask()
-                scrollView.tableView.loadSelectionFromList()
+                scrollTable.tableView.loadSelectionFromList()
             }
-            else { scrollView.removeSelectedTasks() }
+            else { scrollTable.removeSelectedTasks() }
             
         case .left: send(.wantsToPassFocusLeft)
             
@@ -125,30 +125,29 @@ class SelectableListView: NSView, Observer, Observable
             if cmd
             {
                 store.load()
-                scrollView.tableView.reloadData()
+                scrollTable.tableView.reloadData()
             }
             else
             {
                 list?.debug()
             }
-        case "n": if cmd { scrollView.createTask(group: true) }
+        case "n": if cmd { scrollTable.createTask(group: true) }
         case "t": store.root.debug()
         default: break
         }
     }
     
-    // MARK: - Header View
+    // MARK: - Header
     
-    private func constrainHeaderView()
+    private func constrainHeader()
     {
-        headerView.autoPinEdge(toSuperviewEdge: .left)
-        headerView.autoPinEdge(toSuperviewEdge: .right)
-        headerView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
-        headerView.autoSetDimension(.height,
-                                    toSize: Float.itemHeight.cgFloat)
+        header.autoPinEdge(toSuperviewEdge: .left)
+        header.autoPinEdge(toSuperviewEdge: .right)
+        header.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        header.autoSetDimension(.height, toSize: Float.itemHeight.cgFloat)
     }
     
-    private lazy var headerView: Header =
+    private lazy var header: Header =
     {
         let view = Header()
         self.addSubview(view)
@@ -156,24 +155,24 @@ class SelectableListView: NSView, Observer, Observable
         return view
     }()
     
-    // MARK: - Scroll View
+    // MARK: - Scroll Table
     
-    private func constrainScrollView()
+    private func constrainScrollTable()
     {
-        scrollView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+        scrollTable.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                 excludingEdge: .top)
         
         let halfVerticalGap = Float.verticalGap.cgFloat / 2
         
-        scrollView.autoPinEdge(.top,
+        scrollTable.autoPinEdge(.top,
                                to: .bottom,
-                               of: headerView,
+                               of: header,
                                withOffset: 10 - halfVerticalGap)
     }
     
-    lazy var scrollView: ScrollingTable =
+    lazy var scrollTable: ScrollTable =
     {
-        let view = ScrollingTable.newAutoLayout()
+        let view = ScrollTable.newAutoLayout()
         self.addSubview(view)
         
         observe(view) { [weak self] in self?.send($0) }
@@ -187,5 +186,5 @@ class SelectableListView: NSView, Observer, Observable
     
     // MARK: - Observability
     
-    var latestUpdate: ScrollingTable.NavigationRequest { return .wantsNothing }
+    var latestUpdate: ScrollTable.NavigationRequest { return .wantsNothing }
 }

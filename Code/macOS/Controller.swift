@@ -34,7 +34,7 @@ class Controller: NSViewController, Observer
     {
         for listView in listViews
         {
-            listView.scrollView.jumpToTop()
+            listView.scrollTable.jumpToTop()
         }
         
         if listViews.count > 2
@@ -139,7 +139,7 @@ class Controller: NSViewController, Observer
         }
     }
     
-    private func didReceive(_ request: ScrollingTable.NavigationRequest,
+    private func didReceive(_ request: ScrollTable.NavigationRequest,
                             from listView: SelectableListView)
     {
         switch request
@@ -189,10 +189,10 @@ class Controller: NSViewController, Observer
             listView.list?.selection.count == 0
         {
             listView.list?.selection.add(task: firstTask)
-            listView.scrollView.tableView.loadSelectionFromList()
+            listView.scrollTable.tableView.loadSelectionFromList()
         }
         
-        guard listView.scrollView.tableView.makeFirstResponder() else
+        guard listView.scrollTable.tableView.makeFirstResponder() else
         {
             log(warning: "Could not make table view first responder.")
             return false
@@ -281,7 +281,7 @@ class Controller: NSViewController, Observer
         addedListView.isHidden = true
 
         // load and show selection of added list view
-        addedListView.scrollView.tableView.loadSelectionFromList()
+        addedListView.scrollTable.tableView.loadSelectionFromList()
         
         // animate the shit outa this
         NSAnimationContext.runAnimationGroup(
