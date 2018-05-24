@@ -63,7 +63,12 @@ class TableSource: NSObject, Observable, NSTableViewDataSource
     
     // MARK: - List
     
-    weak var list: SelectableList?
+    func configure(with list: SelectableList)
+    {
+        self.list = list
+    }
+    
+    private weak var list: SelectableList?
     
     // MARK: - Observability
     

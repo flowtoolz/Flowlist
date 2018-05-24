@@ -98,7 +98,7 @@ class SelectableListView: NSView, Observer, Observable
             if cmd
             {
                 list?.checkOffFirstSelectedUncheckedTask()
-                scrollView.tableView.loadUISelectionFromList()
+                scrollView.tableView.loadSelectionFromList()
             }
             else { scrollView.deleteSelectedTasks() }
             
@@ -187,5 +187,5 @@ class SelectableListView: NSView, Observer, Observable
     
     // MARK: - Observability
     
-    var latestUpdate: Table.NavigationRequest { return .wantsNothing }
+    var latestUpdate: ScrollingTable.NavigationRequest { return .wantsNothing }
 }

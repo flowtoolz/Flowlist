@@ -1,7 +1,7 @@
 import AppKit
 import SwiftObserver
 
-class Table: NSTableView, Observer, Observable
+class Table: NSTableView, Observer
 {
     // MARK: - Life Cycle
     
@@ -10,35 +10,19 @@ class Table: NSTableView, Observer, Observable
         super.init(frame: frameRect)
         
         addTableColumn(NSTableColumn(identifier: TaskView.uiIdentifier))
-    
         allowsMultipleSelection = true
         backgroundColor = NSColor.clear
         headerView = nil
-        intercellSpacing = NSSize(width: 0,
-                                  height: Float.verticalGap.cgFloat)
+        intercellSpacing = NSSize(width: 0, height: Float.verticalGap.cgFloat)
     }
     
     required init?(coder: NSCoder) { fatalError() }
     
-    // MARK: - Configuration
+    deinit { stopAllObserving() }
     
-    func configure(with list: SelectableList)
-    {
-        stopObserving(self.list)
-        
-        observe(list)
-        {
-            [weak self] event in
-            
-            self?.didReceive(event)
-        }
-        
-        self.list = list
-    }
+    // MARK: - Selection
     
-    // MARK: - Manage Selection
-    
-    func loadUISelectionFromList()
+    func loadSelectionFromList()
     {
         let selection = list?.selection.indexes ?? []
         
@@ -47,63 +31,64 @@ class Table: NSTableView, Observer, Observable
         selectRowIndexes(IndexSet(selection), byExtendingSelection: false)
     }
     
-    func storeUISelectionInList()
+    func saveSelectionToList()
     {
         let selectedIndexes = Array(selectedRowIndexes)
         
         list?.selection.setWithTasksListed(at: selectedIndexes)
     }
     
-    // MARK: - Process List Events
+    // MARK: - Configuration
     
-    private func didReceive(_ edit: ListEdit)
+    func configure(with list: SelectableList)
+    {
+        stopObserving(self.list)
+        observe(list) { [weak self] edit in self?.did(edit) }
+        
+        self.list = list
+    }
+    
+    private weak var list: SelectableList?
+    
+    // MARK: - Animation
+    
+    private func did(_ edit: ListEdit)
     {
         //Swift.print("list view <\(titleField.stringValue)> \(change)")
         
         switch edit
         {
-        case .didInsert(let indexes):
-            didInsertSubtask(at: indexes)
-            
-        case .didRemove(_, let indexes):
-            didDeleteSubtasks(at: indexes)
-            
-        case .didMove(let from, let to):
-            didMoveSubtask(from: from, to: to)
-            
+        case .didInsert(let indexes): didInsert(at: indexes)
+        case .didRemove(_, let indexes): didRemove(from: indexes)
+        case .didMove(let from, let to): didMove(from: from, to: to)
         case .didNothing: break
         }
     }
     
-    private func didDeleteSubtasks(at indexes: [Int])
+    private func didRemove(from indexes: [Int])
     {
         beginUpdates()
         removeRows(at: IndexSet(indexes), withAnimation: .slideUp)
         endUpdates()
     }
     
-    private func didInsertSubtask(at indexes: [Int])
+    private func didInsert(at indexes: [Int])
     {
         beginUpdates()
         insertRows(at: IndexSet(indexes), withAnimation: .slideDown)
         endUpdates()
     }
     
-    private func didMoveSubtask(from: Int, to: Int)
+    private func didMove(from: Int, to: Int)
     {
         beginUpdates()
         moveRow(at: from, to: to)
         endUpdates()
     }
     
-    // MARK: - First Responder
+    // MARK: - Input
     
-    func makeFirstResponder() -> Bool
-    {
-        return NSApp.mainWindow?.makeFirstResponder(self) ?? false
-    }
-    
-    // MARK: - Keyboard Input
+    override var acceptsFirstResponder: Bool { return true }
     
     override func keyDown(with event: NSEvent)
     {
@@ -127,27 +112,9 @@ class Table: NSTableView, Observer, Observable
         }
     }
     
-    // MARK: - Mouse Input
-    
     override func mouseDown(with event: NSEvent)
     {
         super.mouseDown(with: event)
         nextResponder?.mouseDown(with: event)
-    }
-    
-    // MARK: - List
-    
-    private(set) weak var list: SelectableList?
-    
-    // MARK: - Observability
-    
-    var latestUpdate: NavigationRequest { return .wantsNothing }
-    
-    enum NavigationRequest
-    {
-        case wantsNothing
-        case wantsToPassFocusRight
-        case wantsToPassFocusLeft
-        case wantsFocus
     }
 }

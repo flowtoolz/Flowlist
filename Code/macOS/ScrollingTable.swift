@@ -22,7 +22,8 @@ class ScrollingTable: NSScrollView, NSTableViewDelegate, Observer, Observable
     func configure(with list: SelectableList)
     {
         self.list = list
-        source.list = list
+        
+        source.configure(with: list)
         tableView.configure(with: list)
     }
     
@@ -51,7 +52,7 @@ class ScrollingTable: NSScrollView, NSTableViewDelegate, Observer, Observable
     
     func tableViewSelectionDidChange(_ notification: Notification)
     {
-        tableView.storeUISelectionInList()
+        tableView.saveSelectionToList()
     }
     
     // MARK: - Editing
@@ -67,7 +68,7 @@ class ScrollingTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         {
             list?.selection.remove(tasks: [firstSelectedTask])
             
-            tableView.loadUISelectionFromList()
+            tableView.loadSelectionFromList()
             
             if let nextEditingIndex = list?.selection.indexes.first
             {
@@ -80,7 +81,7 @@ class ScrollingTable: NSScrollView, NSTableViewDelegate, Observer, Observable
     {
         guard list?.removeSelectedTasks() ?? false else { return }
         
-        tableView.loadUISelectionFromList()
+        tableView.loadSelectionFromList()
     }
     
     func createNewTask(at index: Int? = nil, createGroup: Bool = false)
@@ -99,7 +100,7 @@ class ScrollingTable: NSScrollView, NSTableViewDelegate, Observer, Observable
     {
         guard let groupIndex = list?.groupSelectedTasks() else { return }
         
-        tableView.loadUISelectionFromList()
+        tableView.loadSelectionFromList()
         startEditing(at: groupIndex)
     }
     
@@ -121,7 +122,7 @@ class ScrollingTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         
         if let newIndex = newIndex
         {
-            tableView.loadUISelectionFromList()
+            tableView.loadSelectionFromList()
             startEditing(at: newIndex)
         }
     }
@@ -209,5 +210,13 @@ class ScrollingTable: NSScrollView, NSTableViewDelegate, Observer, Observable
 
     // MARK: - Observability
     
-    var latestUpdate: Table.NavigationRequest { return .wantsNothing }
+    var latestUpdate: NavigationRequest { return .wantsNothing }
+    
+    enum NavigationRequest
+    {
+        case wantsNothing
+        case wantsToPassFocusRight
+        case wantsToPassFocusLeft
+        case wantsFocus
+    }
 }
