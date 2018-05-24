@@ -1,12 +1,31 @@
-import Cocoa
+import AppKit
+import SwiftyToolz
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
 {
+    // MARK: - App Life Cycle
+    
     func applicationDidFinishLaunching(_ aNotification: Notification)
     {
         store.load()
         
         setupWindow()
+    }
+    
+    func windowDidBecomeKey(_ notification: Notification)
+    {
+        log("window did become key")
+        setupMenuOptions()
+    }
+    
+    func windowDidBecomeMain(_ notification: Notification)
+    {
+        log("window did become main")
+    }
+    
+    func windowWillClose(_ notification: Notification)
+    {
+        quit()
     }
     
     func applicationWillTerminate(_ notification: Notification)
@@ -46,11 +65,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
 //        return bar
 //    }()
     
-    func windowWillClose(_ notification: Notification)
-    {
-        quit()
-    }
-    
     func toggleWindow()
     {
         if window.isVisible
@@ -75,22 +89,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         window.orderOut(self)
     }
     
-    func windowDidBecomeKey(_ notification: Notification)
-    {
-        setupMenuOptions()
-    }
-    
-    func windowDidBecomeMain(_ notification: Notification)
-    {
-        //print("did become main")
-    }
-    
     let window = NSWindow()
-    
-    @objc func quit()
-    {
-        NSApp.terminate(nil)
-    }
     
     // MARK: - Menu
     
@@ -106,6 +105,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate
         }
         
         NSApp.mainMenu?.addItem(quitOption)
+    }
+    
+    // MARK: - Quit
+    
+    @objc func quit()
+    {
+        NSApp.terminate(nil)
     }
 }
 
