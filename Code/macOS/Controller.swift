@@ -32,6 +32,8 @@ class Controller: NSViewController, Observer
     
     override func viewDidAppear()
     {
+        configureListViews()
+        
         for listView in listViews
         {
             listView.scrollTable.jumpToTop()
@@ -86,30 +88,29 @@ class Controller: NSViewController, Observer
     
     // MARK: - List Views
     
+    private func configureListViews()
+    {
+        for i in 0 ..< browser.numberOfLists
+        {
+            guard let list = browser.list(at: i),
+                listViews.isValid(index: i) else { continue }
+            
+            listViews[i].configure(with: list)
+        }
+    }
+    
     private func createListViews()
     {
         listViews.removeAll()
         
-        for i in 0 ..< browser.numberOfLists
-        {
-            guard let list = browser.list(at: i) else
-            {
-                log(error: "Got nil list from browser at valid index \(i)")
-                break
-            }
-            
-            addListView(with: list)
-        }
+        for _ in 0 ..< browser.numberOfLists { addListView() }
     }
     
     @discardableResult
-    private func addListView(with list: SelectableList,
-                             prepend: Bool = false) -> SelectableListView
+    private func addListView(prepend: Bool = false) -> SelectableListView
     {
         let listView = SelectableListView.newAutoLayout()
         view.addSubview(listView)
-        
-        listView.configure(with: list)
 
         observe(listView: listView)
         
@@ -121,6 +122,9 @@ class Controller: NSViewController, Observer
         {
             listViews.append(listView)
         }
+
+        //let addedIndex = prepend ? 0 : listViews.count - 1
+        //print("added view for list \(list.title.latestUpdate) at \(addedIndex)")
         
         return listView
     }
@@ -246,7 +250,8 @@ class Controller: NSViewController, Observer
         let rightList = browser.moveRight()
         
         // append new list view to end
-        let addedListView = addListView(with: rightList)
+        let addedListView = addListView()
+        addedListView.configure(with: rightList)
         addedListView.isHidden = true
         
         // animate the shit outa this
@@ -279,7 +284,8 @@ class Controller: NSViewController, Observer
         let leftList = browser.moveLeft()
         
         // add new list view to front
-        let addedListView = addListView(with: leftList, prepend: true)
+        let addedListView = addListView(prepend: true)
+        addedListView.configure(with: leftList)
         addedListView.isHidden = true
 
         // load and show selection of added list view

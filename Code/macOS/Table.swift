@@ -1,5 +1,6 @@
 import AppKit
 import SwiftObserver
+import SwiftyToolz
 
 class Table: NSTableView, Observer
 {
@@ -49,6 +50,26 @@ class Table: NSTableView, Observer
     }
     
     private weak var list: SelectableList?
+    {
+        didSet
+        {
+            guard oldValue !== list else
+            {
+                log(warning: "Tried to set identical list.")
+                return
+            }
+            
+            if let oldNumber = oldValue?.numberOfTasks, oldNumber > 0
+            {
+                didRemove(from: Array(0 ..< oldNumber))
+            }
+            
+            if let newNumber = list?.numberOfTasks, newNumber > 0
+            {
+                didInsert(at: Array(0 ..< newNumber))
+            }
+        }
+    }
     
     // MARK: - Animation
     
