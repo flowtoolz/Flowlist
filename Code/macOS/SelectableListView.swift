@@ -49,8 +49,6 @@ class SelectableListView: NSView, Observer, Observable
     override func keyDown(with event: NSEvent)
     {
         //Swift.print("key own. code: \(event.keyCode) characters: <\(event.characters ?? "nil")>")
-     
-        //interpretKeyEvents([event])
         
         let cmd = event.cmd
      
@@ -100,7 +98,10 @@ class SelectableListView: NSView, Observer, Observable
                 list?.checkOffFirstSelectedUncheckedTask()
                 scrollTable.tableView.loadSelectionFromList()
             }
-            else { scrollTable.removeSelectedTasks() }
+            else
+            {
+                scrollTable.removeSelectedTasks()
+            }
             
         case .left: send(.wantsToPassFocusLeft)
             
@@ -125,6 +126,7 @@ class SelectableListView: NSView, Observer, Observable
             if cmd
             {
                 store.load()
+                // TODO: the table view update should happen reactively
                 scrollTable.tableView.reloadData()
             }
             else
