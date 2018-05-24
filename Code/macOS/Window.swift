@@ -32,7 +32,7 @@ class Window: NSWindow
                         y: screenFrame.size.height  * 0.1,
                         width: screenFrame.size.width * 0.8,
                         height: screenFrame.size.height * 0.8),
-                 display: true)
+                 display: false)
     }
     
     func toggle() { show(!isVisible) }

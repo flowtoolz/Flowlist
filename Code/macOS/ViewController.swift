@@ -3,11 +3,9 @@ import UIToolz
 
 class ViewController: NSViewController
 {
-    // MARK: - Life Cycle
+    // MARK: - View Life Cycle
     
     override func loadView() { view = LayerBackedView() }
-    
-    // MARK: - View Delegate
     
     override func viewDidLoad()
     {
