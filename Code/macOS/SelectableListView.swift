@@ -7,26 +7,10 @@ class SelectableListView: NSView, Observer, Observable
 {
     // MARK: - Life Cycle
     
-    init(with list: SelectableList)
+    override init(frame frameRect: NSRect)
     {
-        super.init(frame: NSRect.zero)
-        translatesAutoresizingMaskIntoConstraints = false
+        super.init(frame: frameRect)
         
-        // propagate list down
-        self.list = list
-        scrollTable.configure(with: list)
-        
-        // title
-        header.set(title: list.title.latestUpdate)
-        
-        observe(list.title)
-        {
-            [weak self] newTitle in
-            
-            self?.header.set(title: newTitle)
-        }
-        
-        // auto layout
         constrainHeader()
         constrainScrollTable()
     }
@@ -34,6 +18,24 @@ class SelectableListView: NSView, Observer, Observable
     required init?(coder decoder: NSCoder) { fatalError() }
     
     deinit { stopAllObserving() }
+    
+    // MARK: - Configuration
+    
+    func configure(with list: SelectableList)
+    {
+        stopObserving(self.list?.title)
+        observe(list.title)
+        {
+            [weak self] newTitle in
+            
+            self?.header.set(title: newTitle)
+        }
+        
+        self.list = list
+        
+        header.set(title: list.title.latestUpdate)
+        scrollTable.configure(with: list)
+    }
     
     // MARK: - Mouse Input
     

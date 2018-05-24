@@ -106,9 +106,11 @@ class Controller: NSViewController, Observer
     private func addListView(with list: SelectableList,
                              prepend: Bool = false) -> SelectableListView
     {
-        let listView = SelectableListView(with: list)
+        let listView = SelectableListView.newAutoLayout()
         view.addSubview(listView)
         
+        listView.configure(with: list)
+
         observe(listView: listView)
         
         if prepend
