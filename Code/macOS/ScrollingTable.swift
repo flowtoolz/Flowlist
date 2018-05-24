@@ -9,7 +9,10 @@ class ScrollingTable: NSScrollView, NSTableViewDelegate, Observer, Observable
     {
         super.init(frame: NSZeroRect)
         
+        tableView.delegate = self
+        tableView.dataSource = source
         documentView = tableView
+        
         drawsBackground = false
         automaticallyAdjustsContentInsets = false
         contentInsets = NSEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
@@ -40,8 +43,8 @@ class ScrollingTable: NSScrollView, NSTableViewDelegate, Observer, Observable
                    row: Int) -> NSView?
     {
         return source.tableView(tableView,
-                                           viewFor: tableColumn,
-                                           row: row)
+                                viewFor: tableColumn,
+                                row: row)
     }
     
     func tableView(_ tableView: NSTableView,
@@ -55,111 +58,9 @@ class ScrollingTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         tableView.saveSelectionToList()
     }
     
-    // MARK: - Editing
-    
-    func editTitleOfNextSelectedTask(in taskView: TaskView?)
-    {
-        guard let taskView = taskView else { return }
-        
-        if list?.selection.count ?? 0 > 1,
-            let firstSelectedIndex = list?.selection.indexes.first,
-            tableView.row(for: taskView) == firstSelectedIndex,
-            let firstSelectedTask = taskView.task
-        {
-            list?.selection.remove(tasks: [firstSelectedTask])
-            
-            tableView.loadSelectionFromList()
-            
-            if let nextEditingIndex = list?.selection.indexes.first
-            {
-                startEditing(at: nextEditingIndex)
-            }
-        }
-    }
-    
-    func deleteSelectedTasks()
-    {
-        guard list?.removeSelectedTasks() ?? false else { return }
-        
-        tableView.loadSelectionFromList()
-    }
-    
-    func createNewTask(at index: Int? = nil, createGroup: Bool = false)
-    {
-        if createGroup && list?.selection.count ?? 0 > 1
-        {
-            groupSelectedTasks()
-        }
-        else
-        {
-            createTask(at: index)
-        }
-    }
-    
-    func groupSelectedTasks()
-    {
-        guard let groupIndex = list?.groupSelectedTasks() else { return }
-        
-        tableView.loadSelectionFromList()
-        startEditing(at: groupIndex)
-    }
-    
-    func createTask(at index: Int?)
-    {
-        let newTask = Task()
-        
-        let newIndex: Int? =
-        {
-            if let index = index
-            {
-                return list?.insert(newTask, at: index)
-            }
-            else
-            {
-                return list?.insertBelowSelection(newTask)
-            }
-        }()
-        
-        if let newIndex = newIndex
-        {
-            tableView.loadSelectionFromList()
-            startEditing(at: newIndex)
-        }
-    }
-    
-    func startEditing(at index: Int)
-    {
-        guard index < tableView.numberOfRows else { return }
-        
-        if index == 0
-        {
-            jumpToTop()
-        }
-        else
-        {
-            tableView.scrollRowToVisible(index)
-        }
-        
-        if let cell = tableView.view(atColumn: 0,
-                                     row: index,
-                                     makeIfNecessary: false) as? TaskView
-        {
-            cell.editTitle()
-        }
-    }
-    
-    func jumpToTop()
-    {
-        var newOrigin = contentView.bounds.origin
-        
-        newOrigin.y = 0
-        
-        contentView.setBoundsOrigin(newOrigin)
-    }
-    
     // MARK: - Creating Task Views
     
-    lazy var source: TableSource =
+    private lazy var source: TableSource =
     {
         let src = TableSource()
         
@@ -192,19 +93,113 @@ class ScrollingTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         }
     }
     
-    // MARK: - Table View
+    // MARK: - Editing
     
-    lazy var tableView: Table =
+    private func editTitleOfNextSelectedTask(in taskView: TaskView?)
     {
-        let view = Table.newAutoLayout()
+        guard let taskView = taskView else { return }
         
-        view.delegate = self
-        view.dataSource = source
-        
-        return view
-    }()
+        if list?.selection.count ?? 0 > 1,
+            let firstSelectedIndex = list?.selection.indexes.first,
+            tableView.row(for: taskView) == firstSelectedIndex,
+            let firstSelectedTask = taskView.task
+        {
+            list?.selection.remove(tasks: [firstSelectedTask])
+            
+            tableView.loadSelectionFromList()
+            
+            if let nextEditingIndex = list?.selection.indexes.first
+            {
+                editTitle(at: nextEditingIndex)
+            }
+        }
+    }
     
-    // MARK: - List
+    func removeSelectedTasks()
+    {
+        guard list?.removeSelectedTasks() ?? false else { return }
+        
+        tableView.loadSelectionFromList()
+    }
+    
+    func createTask(at index: Int? = nil, group: Bool = false)
+    {
+        if group && list?.selection.count ?? 0 > 1
+        {
+            groupSelectedTasks()
+        }
+        else
+        {
+            createTask(at: index)
+        }
+    }
+    
+    private func groupSelectedTasks()
+    {
+        guard let groupIndex = list?.groupSelectedTasks() else { return }
+        
+        tableView.loadSelectionFromList()
+        editTitle(at: groupIndex)
+    }
+    
+    private func createTask(at index: Int?)
+    {
+        let newTask = Task()
+        
+        let newIndex: Int? =
+        {
+            if let index = index
+            {
+                return list?.insert(newTask, at: index)
+            }
+            else
+            {
+                return list?.insertBelowSelection(newTask)
+            }
+        }()
+        
+        if let newIndex = newIndex
+        {
+            tableView.loadSelectionFromList()
+            editTitle(at: newIndex)
+        }
+    }
+    
+    func editTitle(at index: Int)
+    {
+        guard index < tableView.numberOfRows else { return }
+        
+        if index == 0
+        {
+            jumpToTop()
+        }
+        else
+        {
+            tableView.scrollRowToVisible(index) // TODO: why can a table view scroll?
+        }
+        
+        if let taskView = tableView.view(atColumn: 0,
+                                         row: index,
+                                         makeIfNecessary: false) as? TaskView
+        {
+            taskView.editTitle()
+        }
+    }
+    
+    func jumpToTop()
+    {
+        // TODO: would this work? -> scrollToBeginningOfDocument(self)
+        
+        var newOrigin = contentView.bounds.origin
+        
+        newOrigin.y = 0
+        
+        contentView.setBoundsOrigin(newOrigin)
+    }
+    
+    // MARK: - Basics
+    
+    let tableView = Table.newAutoLayout()
     
     private weak var list: SelectableList?
 
@@ -218,5 +213,17 @@ class ScrollingTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         case wantsToPassFocusRight
         case wantsToPassFocusLeft
         case wantsFocus
+    }
+    
+    // MARK: - Forward Input
+    
+    override func keyDown(with event: NSEvent)
+    {
+        nextResponder?.keyDown(with: event)
+    }
+    
+    override func mouseDown(with event: NSEvent)
+    {
+        nextResponder?.mouseDown(with: event)
     }
 }

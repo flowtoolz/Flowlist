@@ -61,7 +61,7 @@ class SelectableListView: NSView, Observer, Observable
             
             if numSelections == 0
             {
-                scrollView.createNewTask()
+                scrollView.createTask()
             }
             else if numSelections == 1
             {
@@ -69,12 +69,12 @@ class SelectableListView: NSView, Observer, Observable
                 {
                     if let index = list?.selection.indexes.first
                     {
-                        scrollView.startEditing(at: index)
+                        scrollView.editTitle(at: index)
                     }
                 }
                 else
                 {
-                    scrollView.createNewTask()
+                    scrollView.createTask()
                 }
             }
             else
@@ -83,12 +83,12 @@ class SelectableListView: NSView, Observer, Observable
                 {
                     if let index = list?.selection.indexes.first
                     {
-                        scrollView.startEditing(at: index)
+                        scrollView.editTitle(at: index)
                     }
                 }
                 else
                 {
-                    scrollView.createNewTask(createGroup: true)
+                    scrollView.createTask(group: true)
                 }
             }
             
@@ -100,7 +100,7 @@ class SelectableListView: NSView, Observer, Observable
                 list?.checkOffFirstSelectedUncheckedTask()
                 scrollView.tableView.loadSelectionFromList()
             }
-            else { scrollView.deleteSelectedTasks() }
+            else { scrollView.removeSelectedTasks() }
             
         case .left: send(.wantsToPassFocusLeft)
             
@@ -131,7 +131,7 @@ class SelectableListView: NSView, Observer, Observable
             {
                 list?.debug()
             }
-        case "n": if cmd { scrollView.createNewTask(createGroup: true) }
+        case "n": if cmd { scrollView.createTask(group: true) }
         case "t": store.root.debug()
         default: break
         }
