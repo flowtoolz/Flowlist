@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class BrowserView: NSView, Observer
+class BrowserView: LayerBackedView, Observer
 {
     // MARK: - Life Cycle
     
@@ -11,8 +11,7 @@ class BrowserView: NSView, Observer
     {
         super.init(frame: frameRect)
         
-        wantsLayer = true
-        layer?.backgroundColor = Color.background.cgColor
+        backgroundColor = Color.background
         
         createListViews()
         layoutListViews()

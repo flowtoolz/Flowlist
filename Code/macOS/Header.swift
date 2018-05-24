@@ -3,7 +3,7 @@ import PureLayout
 import UIToolz
 import SwiftyToolz
 
-class Header: NSView
+class Header: LayerBackedView
 {
     // MARK: - Initialization
     
@@ -12,7 +12,8 @@ class Header: NSView
         super.init(frame: frameRect)
         
         setItemBorder()
-        layer?.backgroundColor = NSColor.white.cgColor
+        
+        backgroundColor = Color.white
         
         constrainTitleField()
     }

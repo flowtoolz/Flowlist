@@ -1,8 +1,9 @@
 import AppKit
+import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class TaskView: NSView, NSTextFieldDelegate, Observer, Observable
+class TaskView: LayerBackedView, NSTextFieldDelegate, Observer, Observable
 {
     // MARK: - Life Cycle
     

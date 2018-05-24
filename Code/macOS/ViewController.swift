@@ -1,14 +1,11 @@
 import AppKit
+import UIToolz
 
 class ViewController: NSViewController
 {
     // MARK: - Life Cycle
     
-    override func loadView()
-    {
-        view = NSView()
-        view.wantsLayer = true
-    }
+    override func loadView() { view = LayerBackedView() }
     
     // MARK: - View Delegate
     
