@@ -23,16 +23,7 @@ class Table: NSTableView, Observer
     
     // MARK: - Selection
     
-    func loadSelectionFromList()
-    {
-        let selection = list?.selection.indexes ?? []
-        
-        guard selection.max() ?? 0 < numberOfRows else { return }
-        
-        selectRowIndexes(IndexSet(selection), byExtendingSelection: false)
-    }
-    
-    func saveSelectionToList()
+    func selectionDidChange()
     {
         let selectedIndexes = Array(selectedRowIndexes)
         
@@ -46,7 +37,30 @@ class Table: NSTableView, Observer
         stopObserving(self.list)
         observe(list) { [weak self] edit in self?.did(edit) }
         
+        stopObserving(self.list?.selection)
+        observe(list.selection, select: .didChange)
+        {
+            [weak self, weak list] in
+            
+            guard let list = list else { return }
+            
+            self?.selectionChanged(in: list)
+        }
+        
         self.list = list
+    }
+    
+    private func selectionChanged(in list: SelectableList)
+    {
+        let listSelection = list.selection.indexes
+        
+        guard listSelection.last ?? 0 < numberOfRows else { return }
+        
+        let tableSelection = Array(selectedRowIndexes).sorted()
+        
+        guard tableSelection != listSelection else { return }
+        
+        selectRowIndexes(IndexSet(listSelection), byExtendingSelection: false)
     }
     
     private weak var list: SelectableList?

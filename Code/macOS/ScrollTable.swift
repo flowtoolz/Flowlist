@@ -55,7 +55,7 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
     
     func tableViewSelectionDidChange(_ notification: Notification)
     {
-        tableView.saveSelectionToList()
+        tableView.selectionDidChange()
     }
     
     // MARK: - Creating Task Views
@@ -106,20 +106,11 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         {
             list?.selection.remove(tasks: [firstSelectedTask])
             
-            tableView.loadSelectionFromList()
-            
             if let nextEditingIndex = list?.selection.indexes.first
             {
                 editTitle(at: nextEditingIndex)
             }
         }
-    }
-    
-    func removeSelectedTasks()
-    {
-        guard list?.removeSelectedTasks() ?? false else { return }
-        
-        tableView.loadSelectionFromList()
     }
     
     func createTask(at index: Int? = nil, group: Bool = false)
@@ -138,7 +129,6 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
     {
         guard let groupIndex = list?.groupSelectedTasks() else { return }
         
-        tableView.loadSelectionFromList()
         editTitle(at: groupIndex)
     }
     
@@ -160,7 +150,6 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         
         if let newIndex = newIndex
         {
-            tableView.loadSelectionFromList()
             editTitle(at: newIndex)
         }
     }

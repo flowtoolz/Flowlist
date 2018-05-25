@@ -98,11 +98,10 @@ class SelectableListView: NSView, Observer, Observable
             if cmd
             {
                 list?.checkOffFirstSelectedUncheckedTask()
-                scrollTable.tableView.loadSelectionFromList()
             }
             else
             {
-                scrollTable.removeSelectedTasks()
+                _ = list?.removeSelectedTasks()
             }
             
         case .left: send(.wantsToPassFocusLeft)

@@ -121,7 +121,6 @@ class BrowserView: LayerBackedView, Observer
             listView.list?.selection.count == 0
         {
             listView.list?.selection.add(task: firstTask)
-            listView.scrollTable.tableView.loadSelectionFromList()
         }
         
         guard listView.scrollTable.tableView.makeFirstResponder() else
@@ -207,9 +206,6 @@ class BrowserView: LayerBackedView, Observer
         let addedListView = addListView(prepend: true)
         addedListView.configure(with: leftList)
         addedListView.isHidden = true
-        
-        // load and show selection of added list view
-        addedListView.scrollTable.tableView.loadSelectionFromList()
         
         // animate the shit outa this
         NSAnimationContext.runAnimationGroup(
