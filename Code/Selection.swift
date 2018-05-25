@@ -13,32 +13,27 @@ class Selection: Observable
             return
         }
         
-        if indexes.isEmpty && selectedTasks.isEmpty { return }
-        
-        var didChange = false
-        var didClear = count == 0
+        guard indexes.sorted() != self.indexes else
+        {
+            log(warning: "Tried to select the same tasks again: \(indexes)")
+            return
+        }
+    
+        selectedTasks.removeAll()
         
         for index in indexes
         {
             if let task = root.subtask(at: index)
             {
-                if !didClear
-                {
-                    selectedTasks.removeAll()
-                    didClear = true
-                }
-    
                 selectedTasks[task.hash] = task
-    
-                didChange = true
             }
             else
             {
-                log(warning: "Tried to select unlisted task.")
+                log(error: "Couldn't find task to select at index \(index).")
             }
         }
         
-        if didChange { send(.didChange) }
+        send(.didChange)
     }
     
     func set(with task: Task)
