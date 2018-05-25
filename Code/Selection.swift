@@ -149,10 +149,7 @@ class Selection: Observable
         return selectedTasks[task.hash] === task
     }
     
-    var description: String
-    {
-        return selectedTasks.description
-    }
+    var description: String { return selectedTasks.values.description }
     
     var count: Int { return selectedTasks.count }
     var first: Task? { return selectedTasks.values.first }
