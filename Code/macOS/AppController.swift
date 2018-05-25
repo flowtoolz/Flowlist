@@ -7,14 +7,25 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     func applicationDidFinishLaunching(_ aNotification: Notification)
     {
-        NSApp.mainMenu = Menu()
+        NSApp.enableRelaunchOnLogin()
+        NSApp.mainMenu = menu
         store.load()
         window.show()
     }
     
     func windowWillClose(_ notification: Notification)
     {
-        quit()
+        NSApp.terminate(self)
+    }
+    
+    func windowWillEnterFullScreen(_ notification: Notification)
+    {
+        menu.windowChangesFullscreen(to: true)
+    }
+    
+    func windowDidExitFullScreen(_ notification: Notification)
+    {
+        menu.windowChangesFullscreen(to: false)
     }
     
     func applicationWillTerminate(_ notification: Notification)
@@ -24,7 +35,6 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     // MARK: - Basics
     
-    private func quit() { NSApp.terminate(nil) }
-    
+    private let menu = Menu()
     private lazy var window = Window(delegate: self)
 }
