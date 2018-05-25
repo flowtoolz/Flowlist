@@ -6,7 +6,7 @@ class Menu: NSMenu
     
     init()
     {
-        super.init(title: "Flowlist")
+        super.init(title: appMenuTitle)
         
         addItem(applicationMenuItem())
     }
@@ -30,16 +30,15 @@ class Menu: NSMenu
     {
         let menu = NSMenu(title: appMenuTitle)
         
-        menu.addItem(withTitle: "Hide",
-                    action: #selector(NSApplication.hide(_:)),
-                    keyEquivalent: "h")
-        
-        menu.addItem(NSMenuItem.separator())
-        
-        menu.addItem(focusItem)
         menu.addItem(fullscreenItem)
         
+        menu.addItem(focusItem)
+        
         menu.addItem(NSMenuItem.separator())
+        
+        menu.addItem(withTitle: "Hide",
+                     action: #selector(NSApplication.hide(_:)),
+                     keyEquivalent: "h")
         
         menu.addItem(withTitle: "Quit",
                      action: #selector(NSApplication.terminate(_:)),
@@ -108,12 +107,13 @@ class Menu: NSMenu
         item.target = self
         item.title = focusItemTitle(isFocused: false)
         item.action = #selector(toggleFocus)
+        item.keyEquivalent = "m"
         return item
     }()
     
     private func focusItemTitle(isFocused: Bool) -> String
     {
-        return isFocused ? "Stop Focussing" : "Focus"
+        return isFocused ? "Multitasking" : "Monotasking"
     }
     
     // MARK: - Custom Item Enabeling
