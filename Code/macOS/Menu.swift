@@ -53,7 +53,7 @@ class Menu: NSMenu
     
     func windowChangesFullscreen(to fullscreen: Bool)
     {
-        focusItem.isEnabled = !fullscreen
+        focusItem.target = fullscreen ? nil : self
         fullscreenItem.title = fullscreenItemTitle(isFullscreen: fullscreen)
     }
     
@@ -86,7 +86,7 @@ class Menu: NSMenu
         
         let gonnaFocus = !NSApp.currentSystemPresentationOptions.contains(options)
         
-        fullscreenItem.isEnabled = !gonnaFocus
+        fullscreenItem.target = gonnaFocus ? nil : self
         focusItem.title = focusItemTitle(isFocused: gonnaFocus)
         
         if gonnaFocus
@@ -114,13 +114,6 @@ class Menu: NSMenu
     private func focusItemTitle(isFocused: Bool) -> String
     {
         return isFocused ? "Multitasking" : "Monotasking"
-    }
-    
-    // MARK: - Custom Item Enabeling
-    
-    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
-    {
-        return menuItem.isEnabled
     }
 }
 
