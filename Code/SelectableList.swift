@@ -5,29 +5,24 @@ class SelectableList: List
 {
     // MARK: - Selection Dependent Editing
     
-    func groupSelectedTasks() -> Int?
+    func groupSelectedTasks()
     {
-        let group = root?.groupSubtasks(at: selection.indexes)
-        
-        selection.add(task: group)
-        
-        return group?.indexInSupertask
+        if let group = root?.groupSubtasks(at: selection.indexes)
+        {
+            selection.set(with: group)
+        }
     }
     
-    func insertBelowSelection(_ task: Task) -> Int?
+    func createBelowSelection()
     {
-        let index = (selection.indexes.last ?? -1) + 1
-        
-        return insert(task, at: index)
+        create(at: (selection.indexes.last ?? -1) + 1)
     }
     
-    func insert(_ task: Task, at index: Int) -> Int?
+    func create(at index: Int)
     {
-        guard task === root?.insert(task, at: index) else { return nil }
+        guard let _ = root?.create(at: index) else { return }
         
         selection.setWithTasksListed(at: [index])
-        
-        return index
     }
     
     func removeSelectedTasks() -> Bool

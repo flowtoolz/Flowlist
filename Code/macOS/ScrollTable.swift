@@ -1,5 +1,6 @@
 import AppKit
 import SwiftObserver
+import SwiftyToolz
 
 class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable 
 {
@@ -108,7 +109,7 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
             
             if let nextEditingIndex = list?.selection.indexes.first
             {
-                editTitle(at: nextEditingIndex)
+                tableView.editTitle(at: nextEditingIndex)
             }
         }
     }
@@ -117,7 +118,7 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
     {
         if group && list?.selection.count ?? 0 > 1
         {
-            groupSelectedTasks()
+            list?.groupSelectedTasks()
         }
         else
         {
@@ -125,60 +126,20 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         }
     }
     
-    private func groupSelectedTasks()
-    {
-        guard let groupIndex = list?.groupSelectedTasks() else { return }
-        
-        editTitle(at: groupIndex)
-    }
-    
     private func createTask(at index: Int?)
     {
-        let newTask = Task()
-        
-        let newIndex: Int? =
+        if let index = index
         {
-            if let index = index
-            {
-                return list?.insert(newTask, at: index)
-            }
-            else
-            {
-                return list?.insertBelowSelection(newTask)
-            }
-        }()
-        
-        if let newIndex = newIndex
-        {
-            editTitle(at: newIndex)
-        }
-    }
-    
-    func editTitle(at index: Int)
-    {
-        guard index < tableView.numberOfRows else { return }
-        
-        if index == 0
-        {
-            jumpToTop()
+            list?.create(at: index)
         }
         else
         {
-            tableView.scrollRowToVisible(index) // TODO: why can a table view scroll?
-        }
-        
-        if let taskView = tableView.view(atColumn: 0,
-                                         row: index,
-                                         makeIfNecessary: false) as? TaskView
-        {
-            taskView.editTitle()
+            list?.createBelowSelection()
         }
     }
     
     private func jumpToTop()
     {
-        // TODO: would this work? -> scrollToBeginningOfDocument(self)
-        
         var newOrigin = contentView.bounds.origin
         
         newOrigin.y = 0

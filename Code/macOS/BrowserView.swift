@@ -176,14 +176,10 @@ class BrowserView: LayerBackedView, Observer
         // animate the shit outa this
         NSAnimationContext.runAnimationGroup(
             {
-                animationContext in
+                $0.allowsImplicitAnimation = true
+                $0.duration = 0.3
                 
-                animationContext.allowsImplicitAnimation = true
-                animationContext.duration = 0.3
-                
-                // recreate layout contraints and re-layout all list views
                 layoutListViews()
-                
                 layoutSubtreeIfNeeded()
             },
             completionHandler:
@@ -210,14 +206,10 @@ class BrowserView: LayerBackedView, Observer
         // animate the shit outa this
         NSAnimationContext.runAnimationGroup(
             {
-                animationContext in
+                $0.allowsImplicitAnimation = true
+                $0.duration = 0.3
                 
-                animationContext.allowsImplicitAnimation = true
-                animationContext.duration = 0.3
-                
-                // recreate layout contraints and re-layout all list views
                 layoutListViews()
-                
                 layoutSubtreeIfNeeded()
             },
             completionHandler:

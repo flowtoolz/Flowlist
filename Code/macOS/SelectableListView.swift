@@ -69,7 +69,7 @@ class SelectableListView: NSView, Observer, Observable
                 {
                     if let index = list?.selection.indexes.first
                     {
-                        scrollTable.editTitle(at: index)
+                        scrollTable.tableView.editTitle(at: index)
                     }
                 }
                 else
@@ -83,7 +83,7 @@ class SelectableListView: NSView, Observer, Observable
                 {
                     if let index = list?.selection.indexes.first
                     {
-                        scrollTable.editTitle(at: index)
+                        scrollTable.tableView.editTitle(at: index)
                     }
                 }
                 else

@@ -5,17 +5,26 @@ class AnimatedTableView: NSTableView
 {
     override func scrollRowToVisible(_ row: Int)
     {
+        if !scrollAnimatedTo(row: row)
+        {
+            super.scrollRowToVisible(row)
+        }
+    }
+    
+    @discardableResult
+    func scrollAnimatedTo(row: Int,
+                          completionHandler: (() -> Void)? = nil) -> Bool
+    {
         guard row >= 0, row < numberOfRows else
         {
             log(warning: "Tried to scroll to invalid row \(row).")
-            return
+            return false
         }
         
         guard let scrollView = enclosingScrollView else
         {
             log(warning: "Expected enclosing scroll view but found none.")
-            super.scrollRowToVisible(row)
-            return
+            return false
         }
         
         let clipView = scrollView.contentView
@@ -35,19 +44,23 @@ class AnimatedTableView: NSTableView
                 return (rowRect.origin.y + rowRect.size.height) - clipBounds.size.height
             }
             
+            completionHandler?()
             return nil
         }()
         
-        guard let targetPosition = optionalTargetPosition else { return }
+        guard let targetPosition = optionalTargetPosition else { return true }
         
         let targetOrigin = NSPoint(x: 0, y: targetPosition)
         
-        NSAnimationContext.beginGrouping()
-        NSAnimationContext.current.duration = 0.3
+        NSAnimationContext.runAnimationGroup(
+            {
+                $0.duration = 0.3
+                clipView.animator().setBoundsOrigin(targetOrigin)
+                scrollView.reflectScrolledClipView(clipView)
+            },
+            completionHandler: completionHandler
+        )
         
-        clipView.animator().setBoundsOrigin(targetOrigin)
-        scrollView.reflectScrolledClipView(clipView)
-        
-        NSAnimationContext.endGrouping()
+        return true
     }
 }

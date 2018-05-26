@@ -34,14 +34,16 @@ class Task: Codable, Observable
             subtasks.isValid(index: indexes.max())
         else
         {
+            log(warning: "Tried to group invalid indexes \(indexes).")
             return nil
         }
         
         let removedTasks = removeSubtasks(at: indexes)
         
-        guard let group = insert(Task(), at: groupIndex) else
+        guard let group = create(at: groupIndex) else
         {
-            fatalError("Could not insert group at valid index \(groupIndex).")
+            log(error: "Could not create group at valid index \(groupIndex).")
+            return nil
         }
         
         for removedTask in removedTasks
@@ -97,6 +99,25 @@ class Task: Codable, Observable
         send(.didInsert(at: [index]))
         
         //print("task \(title.value ?? "unfiltered") inserted subtask at \(index)")
+        
+        return subtask
+    }
+    
+    @discardableResult
+    func create(at index: Int) -> Task?
+    {
+        guard index >= 0, index <= subtasks.count else
+        {
+            log(warning: "Tried to create subtask at out of bound index \(index).")
+            return nil
+        }
+        
+        let subtask = Task()
+        subtask.supertask = self
+        
+        subtasks.insert(subtask, at: index)
+        
+        send(.didCreate(at: index))
         
         return subtask
     }

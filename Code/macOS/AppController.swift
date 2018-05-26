@@ -13,11 +13,6 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
         window.show()
     }
     
-    func windowWillClose(_ notification: Notification)
-    {
-        NSApp.terminate(self)
-    }
-    
     func windowWillEnterFullScreen(_ notification: Notification)
     {
         menu.windowChangesFullscreen(to: true)
@@ -26,6 +21,11 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     func windowDidExitFullScreen(_ notification: Notification)
     {
         menu.windowChangesFullscreen(to: false)
+    }
+    
+    func windowWillClose(_ notification: Notification)
+    {
+        NSApp.terminate(self)
     }
     
     func applicationWillTerminate(_ notification: Notification)

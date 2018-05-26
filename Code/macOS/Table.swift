@@ -116,11 +116,48 @@ class Table: AnimatedTableView, Observer
         
         switch edit
         {
+        case .didCreate(let index): didCreate(at: index)
         case .didInsert(let indexes): didInsert(at: indexes)
         case .didRemove(_, let indexes): didRemove(from: indexes)
         case .didMove(let from, let to): didMove(from: from, to: to)
         case .didNothing: break
         }
+    }
+    
+    private func didCreate(at index: Int)
+    {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock
+        {
+            self.editTitle(at: index)
+        }
+        
+        self.didInsert(at: [index])
+        
+        CATransaction.commit()
+        
+        scrollAnimatedTo(row: min(numberOfRows - 1, index))
+    }
+    
+    func editTitle(at index: Int)
+    {
+        guard index < numberOfRows else
+        {
+            log(warning: "Tried to edit task title at invalid row \(index)")
+            return
+        }
+        
+        guard let view = view(atColumn: 0,
+                              row: index,
+                              makeIfNecessary: false),
+            let taskView = view as? TaskView
+        else
+        {
+            log(warning: "Couldn't get task view at row \(index)")
+            return
+        }
+        
+        taskView.editTitle()
     }
     
     private func didRemove(from indexes: [Int])
