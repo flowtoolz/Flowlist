@@ -51,51 +51,35 @@ class SelectableListView: NSView, Observer, Observable
     override func keyDown(with event: NSEvent)
     {
         //Swift.print("key own. code: \(event.keyCode) characters: <\(event.characters ?? "nil")>")
-        
-        let cmd = event.cmd
      
         switch event.key
         {
         case .enter:
             let numSelections = list?.selection.count ?? 0
             
-            if numSelections == 0
+            if numSelections > 0, event.cmd
             {
-                list?.createBelowSelection()
+                if let index = list?.selection.indexes.first
+                {
+                    scrollTable.tableView.editTitle(at: index)
+                }
+                
+                break
             }
-            else if numSelections == 1
+            
+            if numSelections < 2
             {
-                if cmd
-                {
-                    if let index = list?.selection.indexes.first
-                    {
-                        scrollTable.tableView.editTitle(at: index)
-                    }
-                }
-                else
-                {
-                    list?.createBelowSelection()
-                }
+               list?.createBelowSelection()
             }
             else
             {
-                if cmd
-                {
-                    if let index = list?.selection.indexes.first
-                    {
-                        scrollTable.tableView.editTitle(at: index)
-                    }
-                }
-                else
-                {
-                    list?.groupSelectedTasks()
-                }
+                list?.groupSelectedTasks()
             }
             
         case .space: list?.create(at: 0)
             
         case .delete:
-            if cmd
+            if event.cmd
             {
                 list?.checkOffFirstSelectedUncheckedTask()
             }
@@ -108,9 +92,9 @@ class SelectableListView: NSView, Observer, Observable
             
         case .right: send(.wantsToPassFocusRight)
             
-        case .down: if cmd { list?.moveSelectedTask(1) }
+        case .down: if event.cmd { list?.moveSelectedTask(1) }
             
-        case .up: if cmd { list?.moveSelectedTask(-1) }
+        case .up: if event.cmd { list?.moveSelectedTask(-1) }
             
         case .unknown: if event.characters == "t" { store.root.debug() }
         }
