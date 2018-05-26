@@ -7,15 +7,6 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     func applicationDidFinishLaunching(_ aNotification: Notification)
     {
-        NSEvent.addLocalMonitorForEvents(matching: .keyDown)
-        {
-            event in
-            
-            //log(error: "\(event.key) (\(event.keyCode))")
-            
-            return event
-        }
-        
         NSApp.mainMenu = menu
         
         store.load()

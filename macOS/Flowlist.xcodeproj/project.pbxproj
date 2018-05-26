@@ -13,6 +13,7 @@
 		9E1AAD6C20B58AD1001657A7 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1AAD6B20B58AD0001657A7 /* Header.swift */; };
 		9E1AAD6E20B595A5001657A7 /* NSView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1AAD6D20B595A5001657A7 /* NSView+Style.swift */; };
 		9E3388A020B92818004E4182 /* AnimatedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33889F20B92818004E4182 /* AnimatedTableView.swift */; };
+		9E3388A220B9FE3B004E4182 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3388A120B9FE3B004E4182 /* Keyboard.swift */; };
 		9E542E951EEEE41C00534981 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E542E941EEEE41C00534981 /* main.swift */; };
 		9E6C720B20B19C88001C3D2C /* Task+List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Task+List.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
@@ -56,6 +57,7 @@
 		9E1AAD6B20B58AD0001657A7 /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Header.swift; path = ../Code/macOS/Header.swift; sourceTree = "<group>"; };
 		9E1AAD6D20B595A5001657A7 /* NSView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSView+Style.swift"; path = "../Code/macOS/NSView+Style.swift"; sourceTree = "<group>"; };
 		9E33889F20B92818004E4182 /* AnimatedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnimatedTableView.swift; path = ../Code/macOS/AnimatedTableView.swift; sourceTree = "<group>"; };
+		9E3388A120B9FE3B004E4182 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Keyboard.swift; path = ../Code/macOS/Keyboard.swift; sourceTree = "<group>"; };
 		9E542E911EEEE41C00534981 /* Flowlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flowlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E542E941EEEE41C00534981 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../Code/macOS/main.swift; sourceTree = "<group>"; };
 		9E6C720A20B19C88001C3D2C /* Task+List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+List.swift"; path = "../Code/Task+List.swift"; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				9E91650D20551C1900A438FB /* Task */,
 				9EE2EE5220B4AFF4007CDC2F /* Style */,
 				9E33889F20B92818004E4182 /* AnimatedTableView.swift */,
+				9E3388A120B9FE3B004E4182 /* Keyboard.swift */,
 			);
 			name = Code;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */,
 				9EAD75411EF6502000DC46FD /* Table.swift in Sources */,
 				9E88F54F20B7761F00A64F7B /* Menu.swift in Sources */,
+				9E3388A220B9FE3B004E4182 /* Keyboard.swift in Sources */,
 				9EF0A79120B71DA100E1A23A /* Window.swift in Sources */,
 				9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */,
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,

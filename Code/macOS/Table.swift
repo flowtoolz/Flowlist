@@ -1,6 +1,7 @@
 import AppKit
 import SwiftObserver
 import SwiftyToolz
+import UIToolz
 
 class Table: AnimatedTableView, Observer
 {
@@ -196,6 +197,29 @@ class Table: AnimatedTableView, Observer
     }
     
     // MARK: - Input
+    /*
+    override func becomeFirstResponder() -> Bool
+    {
+        observe(keyboard)
+        {
+            [weak self] event in
+            
+            guard let event = event, let me = self else { return }
+            
+            me.process(event)
+            //log("keyboard: \(event.key) (\(event.keyCode)) \(self)")
+        }
+        
+        return super.becomeFirstResponder()
+    }
+    
+    override func resignFirstResponder() -> Bool
+    {
+        stopObserving(keyboard)
+        
+        return super.resignFirstResponder()
+    }
+ */
     
     override func keyDown(with event: NSEvent)
     {

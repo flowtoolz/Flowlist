@@ -61,7 +61,7 @@ class Window: NSWindow
         }
     }
     
-    // MARK: - Avoid Beep for Unprocessed Keydown Events
+    // MARK: - Avoid Beep from Unprocessed Keys
     
-    override func noResponder(for eventSelector: Selector) {}
+    override func noResponder(for eventSelector: Selector) { }
 }
