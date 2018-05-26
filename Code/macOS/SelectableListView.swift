@@ -112,19 +112,7 @@ class SelectableListView: NSView, Observer, Observable
             
         case .up: if cmd { list?.moveSelectedTask(-1) }
             
-        case .unknown: didPress(key: event.characters, with: cmd)
-        }
-    }
-    
-    private func didPress(key: String?, with cmd: Bool)
-    {
-        guard let key = key else { return }
-        
-        switch key
-        {
-        case "s": if cmd { store.save() }
-        case "t": store.root.debug()
-        default: break
+        case .unknown: if event.characters == "t" { store.root.debug() }
         }
     }
     
