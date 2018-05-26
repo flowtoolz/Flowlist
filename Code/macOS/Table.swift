@@ -92,7 +92,7 @@ class Table: AnimatedTableView, Observer
         {
             guard oldValue !== list else
             {
-                log(warning: "Tried to set identical list.")
+                log(warning: "Tried to set identical list:\n\(list?.description ?? "nil")")
                 return
             }
             
