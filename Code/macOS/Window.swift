@@ -63,13 +63,13 @@ class Window: NSWindow
     
     // MARK: - Process Keyboard Events
     
-    override func sendEvent(_ event: NSEvent)
+    override func performKeyEquivalent(with event: NSEvent) -> Bool
     {
-        super.sendEvent(event)
-        
         if event.type == .keyDown
         {
             log(error: "\(event.key) (\(event.keyCode))")
         }
+        
+        return super.performKeyEquivalent(with: event)
     }
 }
