@@ -60,4 +60,8 @@ class Window: NSWindow
             orderOut(self)
         }
     }
+    
+    // MARK: - Avoid Beep for Unprocessed Keydown Events
+    
+    override func noResponder(for eventSelector: Selector) {}
 }

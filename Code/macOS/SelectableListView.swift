@@ -98,6 +98,8 @@ class SelectableListView: NSView, Observer, Observable
             
         case .tab, .unknown: if event.characters == "t" { store.root.debug() }
         }
+        
+        super.keyDown(with: event)
     }
     
     // MARK: - Header
