@@ -123,17 +123,6 @@ class SelectableListView: NSView, Observer, Observable
         switch key
         {
         case "s": if cmd { store.save() }
-        case "l":
-            if cmd
-            {
-                store.load()
-                // TODO: the table view update should happen reactively
-                scrollTable.tableView.reloadData()
-            }
-            else
-            {
-                list?.debug()
-            }
         case "t": store.root.debug()
         default: break
         }
