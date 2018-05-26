@@ -61,7 +61,7 @@ class SelectableListView: NSView, Observer, Observable
             
             if numSelections == 0
             {
-                scrollTable.createTask()
+                createTask()
             }
             else if numSelections == 1
             {
@@ -74,7 +74,7 @@ class SelectableListView: NSView, Observer, Observable
                 }
                 else
                 {
-                    scrollTable.createTask()
+                    createTask()
                 }
             }
             else
@@ -88,11 +88,11 @@ class SelectableListView: NSView, Observer, Observable
                 }
                 else
                 {
-                    scrollTable.createTask(group: true)
+                    createTask(group: true)
                 }
             }
             
-        case .space: scrollTable.createTask(at: 0)
+        case .space: createTask(at: 0)
             
         case .delete:
             if cmd
@@ -136,6 +136,32 @@ class SelectableListView: NSView, Observer, Observable
             }
         case "t": store.root.debug()
         default: break
+        }
+    }
+    
+    // MARK: - Create Tasks
+    
+    func createTask(at index: Int? = nil, group: Bool = false)
+    {
+        if group && list?.selection.count ?? 0 > 1
+        {
+            list?.groupSelectedTasks()
+        }
+        else
+        {
+            createTask(at: index)
+        }
+    }
+    
+    private func createTask(at index: Int?)
+    {
+        if let index = index
+        {
+            list?.create(at: index)
+        }
+        else
+        {
+            list?.createBelowSelection()
         }
     }
     

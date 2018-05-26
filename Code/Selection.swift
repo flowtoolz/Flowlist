@@ -102,6 +102,19 @@ class Selection: Observable
         if didChange { send(.didChange) }
     }
     
+    func removeTask(at index: Int)
+    {
+        guard let task = root?.subtask(at: index), isSelected(task) else
+        {
+            log(warning: "Tried invalid deselection of index \(index).")
+            return
+        }
+        
+        selectedTasks[task.hash] = nil
+        
+        send(.didChange)
+    }
+    
     func removeAll()
     {
         guard count > 0 else

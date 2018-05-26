@@ -59,7 +59,7 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         tableView.selectionDidChange()
     }
     
-    // MARK: - Creating Task Views
+    // MARK: - Creating & Observing Task Views
     
     private lazy var source: TableSource =
     {
@@ -84,67 +84,20 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         {
             [weak self, weak taskView] event in
             
-            switch event
-            {
-            case .didNothing: break
-            case .didEditTitle: self?.editTitleOfNextSelectedTask(in: taskView)
-            case .willContainFirstResponder: self?.send(.wantsToBeRevealed)
-            case .willDeinit: self?.stopObserving(taskView)
-            }
+            self?.didReceive(event, from: taskView)
         }
     }
     
-    // MARK: - Editing
-    
-    private func editTitleOfNextSelectedTask(in taskView: TaskView?)
+    private func didReceive(_ event: TaskView.Event,
+                            from taskView: TaskView?)
     {
-        guard let taskView = taskView else { return }
-        
-        if list?.selection.count ?? 0 > 1,
-            let firstSelectedIndex = list?.selection.indexes.first,
-            tableView.row(for: taskView) == firstSelectedIndex,
-            let firstSelectedTask = taskView.task
+        switch event
         {
-            list?.selection.remove(tasks: [firstSelectedTask])
-            
-            if let nextEditingIndex = list?.selection.indexes.first
-            {
-                tableView.editTitle(at: nextEditingIndex)
-            }
+        case .didNothing: break
+        case .didEditTitle: tableView.editTitleOfNextSelectedTaskView()
+        case .willContainFirstResponder: send(.wantsToBeRevealed)
+        case .willDeinit: stopObserving(taskView)
         }
-    }
-    
-    func createTask(at index: Int? = nil, group: Bool = false)
-    {
-        if group && list?.selection.count ?? 0 > 1
-        {
-            list?.groupSelectedTasks()
-        }
-        else
-        {
-            createTask(at: index)
-        }
-    }
-    
-    private func createTask(at index: Int?)
-    {
-        if let index = index
-        {
-            list?.create(at: index)
-        }
-        else
-        {
-            list?.createBelowSelection()
-        }
-    }
-    
-    private func jumpToTop()
-    {
-        var newOrigin = contentView.bounds.origin
-        
-        newOrigin.y = 0
-        
-        contentView.setBoundsOrigin(newOrigin)
     }
     
     // MARK: - Basics

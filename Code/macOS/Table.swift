@@ -139,27 +139,6 @@ class Table: AnimatedTableView, Observer
         scrollAnimatedTo(row: min(numberOfRows - 1, index))
     }
     
-    func editTitle(at index: Int)
-    {
-        guard index < numberOfRows else
-        {
-            log(warning: "Tried to edit task title at invalid row \(index)")
-            return
-        }
-        
-        guard let view = view(atColumn: 0,
-                              row: index,
-                              makeIfNecessary: false),
-            let taskView = view as? TaskView
-        else
-        {
-            log(warning: "Couldn't get task view at row \(index)")
-            return
-        }
-        
-        taskView.editTitle()
-    }
-    
     private func didRemove(from indexes: [Int])
     {
         beginUpdates()
@@ -179,6 +158,43 @@ class Table: AnimatedTableView, Observer
         beginUpdates()
         moveRow(at: from, to: to)
         endUpdates()
+    }
+    
+    // MARK: - Edit Titles
+    
+    func editTitleOfNextSelectedTaskView()
+    {
+        guard list?.selection.count ?? 0 > 1,
+            let firstSelectedIndex = list?.selection.indexes.first else
+        {
+            return
+        }
+        
+        list?.selection.removeTask(at: firstSelectedIndex)
+        
+        if let nextEditingIndex = list?.selection.indexes.first
+        {
+            editTitle(at: nextEditingIndex)
+        }
+    }
+    
+    func editTitle(at index: Int)
+    {
+        guard index < numberOfRows else
+        {
+            log(warning: "Tried to edit task title at invalid row \(index)")
+            return
+        }
+        
+        guard let taskView = view(atColumn: 0,
+                                  row: index,
+                                  makeIfNecessary: false) as? TaskView else
+        {
+            log(warning: "Couldn't get task view at row \(index)")
+            return
+        }
+        
+        taskView.editTitle()
     }
     
     // MARK: - Input
