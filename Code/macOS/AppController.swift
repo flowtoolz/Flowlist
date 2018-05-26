@@ -23,6 +23,21 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
         menu.windowChangesFullscreen(to: false)
     }
     
+    func windowWillMiniaturize(_ notification: Notification)
+    {
+        store.save()
+    }
+    
+    func applicationWillHide(_ notification: Notification)
+    {
+        store.save()
+    }
+    
+    func applicationWillResignActive(_ notification: Notification)
+    {
+        store.save()
+    }
+    
     func windowWillClose(_ notification: Notification)
     {
         NSApp.terminate(self)
