@@ -201,24 +201,12 @@ class Table: AnimatedTableView, Observer
     
     override func keyDown(with event: NSEvent)
     {
-        if forward(keyEvent: event)
-        {
-            nextResponder?.keyDown(with: event)
-        }
-        else
-        {
-            super.keyDown(with: event)
-        }
-    }
-    
-    private func forward(keyEvent event: NSEvent) -> Bool
-    {
-        switch event.key
-        {
-        case .enter: return true
-        case .down, .up: return event.cmd
-        default: return false
-        }
+        let key = event.key
+        let useDefaultBehaviour = (key == .up || key == .down) && !event.cmd
+        
+        if useDefaultBehaviour { super.keyDown(with: event) }
+        
+        nextResponder?.keyDown(with: event)
     }
     
     override func mouseDown(with event: NSEvent)

@@ -118,13 +118,8 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         case wantsToBeRevealed
     }
     
-    // MARK: - Forward Input
-    
-    override func keyDown(with event: NSEvent)
-    {
-        nextResponder?.keyDown(with: event)
-    }
-    
+    // MARK: - Forward Mouse Clicks
+    // FIXME: still needed??
     override func mouseDown(with event: NSEvent)
     {
         super.mouseDown(with: event)

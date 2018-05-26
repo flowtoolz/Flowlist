@@ -49,7 +49,7 @@ class SelectableListView: NSView, Observer, Observable
     // MARK: - Keyboard Input
     
     override func keyDown(with event: NSEvent)
-    {
+    {   
         //Swift.print("key own. code: \(event.keyCode) characters: <\(event.characters ?? "nil")>")
      
         switch event.key
@@ -96,8 +96,10 @@ class SelectableListView: NSView, Observer, Observable
             
         case .up: if event.cmd { list?.moveSelectedTask(-1) }
             
-        case .unknown: if event.characters == "t" { store.root.debug() }
+        case .tab, .unknown: if event.characters == "t" { store.root.debug() }
         }
+        
+        nextResponder?.keyDown(with: event)
     }
     
     // MARK: - Header

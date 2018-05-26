@@ -59,4 +59,11 @@ class Window: NSWindow
             orderOut(self)
         }
     }
+    
+    // MARK: - Process Keyboard Events
+    
+    override func keyDown(with event: NSEvent)
+    {
+        //log(error: "\(event.key) (\(event.keyCode))")
+    }
 }
