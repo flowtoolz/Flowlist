@@ -6,9 +6,10 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     func applicationDidFinishLaunching(_ aNotification: Notification)
     {
-        NSApp.enableRelaunchOnLogin()
         NSApp.mainMenu = menu
+        
         store.load()
+        
         window.show()
     }
     

@@ -1,4 +1,5 @@
 import AppKit
+import SwiftyToolz
 
 class Window: NSWindow
 {
@@ -62,8 +63,13 @@ class Window: NSWindow
     
     // MARK: - Process Keyboard Events
     
-    override func keyDown(with event: NSEvent)
+    override func sendEvent(_ event: NSEvent)
     {
-        //log(error: "\(event.key) (\(event.keyCode))")
+        super.sendEvent(event)
+        
+        if event.type == .keyDown
+        {
+            log(error: "\(event.key) (\(event.keyCode))")
+        }
     }
 }

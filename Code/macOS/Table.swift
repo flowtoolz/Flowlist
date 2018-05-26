@@ -203,12 +203,13 @@ class Table: AnimatedTableView, Observer
     {
         let key = event.key
         let useDefaultBehaviour = (key == .up || key == .down) && !event.cmd
-        
+
         if useDefaultBehaviour { super.keyDown(with: event) }
         
         nextResponder?.keyDown(with: event)
     }
     
+    // FIXME: can this be avoided?
     override func mouseDown(with event: NSEvent)
     {
         super.mouseDown(with: event)
