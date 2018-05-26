@@ -76,11 +76,9 @@ class Table: AnimatedTableView, Observer
     private func selectionChanged(in list: SelectableList)
     {
         let listSelection = list.selection.indexes
-        
         guard listSelection.last ?? 0 < numberOfRows else { return }
         
         let tableSelection = Array(selectedRowIndexes).sorted()
-        
         guard tableSelection != listSelection else { return }
         
         selectRowIndexes(IndexSet(listSelection), byExtendingSelection: false)

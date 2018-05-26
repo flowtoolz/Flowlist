@@ -7,6 +7,12 @@ class SelectableList: List
     
     func groupSelectedTasks()
     {
+        guard selection.count > 1 else
+        {
+            log(warning: "Tried to group less than 2 selected tasks.")
+            return
+        }
+        
         if let group = root?.groupSubtasks(at: selection.indexes)
         {
             selection.set(with: group)
