@@ -45,6 +45,7 @@ class AnimatedTableView: NSTableView
             }
             
             completionHandler?()
+            
             return nil
         }()
         

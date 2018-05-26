@@ -11,22 +11,22 @@ class Window: NSWindow
     }
     
     override init(contentRect: NSRect,
-                  styleMask style: NSWindow.StyleMask,
-                  backing backingStoreType: NSWindow.BackingStoreType,
+                  styleMask style: StyleMask,
+                  backing backingStoreType: BackingStoreType,
                   defer flag: Bool)
     {
+        let windowStyle: StyleMask = [.resizable,
+                                      .titled,
+                                      .miniaturizable,
+                                      .closable]
+        
         super.init(contentRect: contentRect,
-                   styleMask: style,
+                   styleMask: windowStyle,
                    backing: backingStoreType,
                    defer: flag)
         
         title = "Flowlist"
         isReleasedWhenClosed = false
-        styleMask = [.resizable,
-                     .titled,
-                     .miniaturizable,
-                     .closable,
-                     .unifiedTitleAndToolbar]
         contentViewController = ViewController()
         initializeFrame()
     }
@@ -52,8 +52,7 @@ class Window: NSWindow
     {
         if show
         {
-            makeKeyAndOrderFront(NSApp)
-            NSApp.activate(ignoringOtherApps: true)
+            makeKeyAndOrderFront(self)
         }
         else
         {

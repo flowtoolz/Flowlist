@@ -1,5 +1,4 @@
 import AppKit
-import SwiftyToolz
 
 class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
 {
@@ -17,30 +16,20 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     {
         menu.windowChangesFullscreen(to: true)
     }
-    
+
     func windowDidExitFullScreen(_ notification: Notification)
     {
         menu.windowChangesFullscreen(to: false)
     }
-    
-    func windowWillMiniaturize(_ notification: Notification)
-    {
-        store.save()
-    }
-    
-    func applicationWillHide(_ notification: Notification)
-    {
-        store.save()
-    }
-    
-    func applicationWillResignActive(_ notification: Notification)
-    {
-        store.save()
-    }
-    
+
     func windowWillClose(_ notification: Notification)
     {
         NSApp.terminate(self)
+    }
+    
+    func windowDidResignKey(_ notification: Notification)
+    {
+        store.save()
     }
     
     func applicationWillTerminate(_ notification: Notification)
