@@ -60,16 +60,4 @@ class Window: NSWindow
             orderOut(self)
         }
     }
-    
-    // MARK: - Process Keyboard Events
-    
-    override func performKeyEquivalent(with event: NSEvent) -> Bool
-    {
-        if event.type == .keyDown
-        {
-            log(error: "\(event.key) (\(event.keyCode))")
-        }
-        
-        return super.performKeyEquivalent(with: event)
-    }
 }
