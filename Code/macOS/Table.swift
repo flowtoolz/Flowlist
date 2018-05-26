@@ -34,20 +34,43 @@ class Table: AnimatedTableView, Observer
     
     func configure(with list: SelectableList)
     {
-        stopObserving(self.list)
+        observe(list: self.list, start: false)
+        observe(list: list)
+        
+        self.list = list
+    }
+    
+    private func observe(list: SelectableList?, start: Bool = true)
+    {
+        guard let list = list else
+        {
+            log(warning: "Tried to \(start ? "start" : "stop") observing nil list.")
+            stopObservingDeadObservables()
+            return
+        }
+        
+        guard start else
+        {
+            stopObserving(list)
+            stopObserving(list.selection)
+            return
+        }
+        
         observe(list) { [weak self] edit in self?.did(edit) }
         
-        stopObserving(self.list?.selection)
         observe(list.selection, select: .didChange)
         {
             [weak self, weak list] in
             
-            guard let list = list else { return }
+            guard let list = list else
+            {
+                log(error: "Received selection update from dead list.")
+                self?.stopObservingDeadObservables()
+                return
+            }
             
             self?.selectionChanged(in: list)
         }
-        
-        self.list = list
     }
     
     private func selectionChanged(in list: SelectableList)
