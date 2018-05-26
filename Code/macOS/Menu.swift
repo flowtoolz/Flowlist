@@ -6,7 +6,7 @@ class Menu: NSMenu
     
     init()
     {
-        super.init(title: appMenuTitle)
+        super.init(title: "Flowlist Main Menu")
         
         addItem(applicationMenuItem())
     }
@@ -17,9 +17,7 @@ class Menu: NSMenu
     
     private func applicationMenuItem() -> NSMenuItem
     {
-        let menuItem = NSMenuItem(title: appMenuTitle,
-                                  action: nil,
-                                  keyEquivalent: "")
+        let menuItem = NSMenuItem()
         
         menuItem.submenu = applicationMenu()
         
@@ -28,7 +26,7 @@ class Menu: NSMenu
     
     private func applicationMenu() -> NSMenu
     {
-        let menu = NSMenu(title: appMenuTitle)
+        let menu = NSMenu()
         
         menu.addItem(fullscreenItem)
         
@@ -46,8 +44,6 @@ class Menu: NSMenu
         
         return menu
     }
-    
-    private let appMenuTitle = "Application"
     
     // MARK: - Toggle Fullscreen
     
