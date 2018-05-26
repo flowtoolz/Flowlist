@@ -9,7 +9,7 @@ class Table: AnimatedTableView, Observer
     override init(frame frameRect: NSRect)
     {
         super.init(frame: frameRect)
-        
+
         addTableColumn(NSTableColumn(identifier: TaskView.uiIdentifier))
         allowsMultipleSelection = true
         backgroundColor = NSColor.clear
@@ -196,8 +196,6 @@ class Table: AnimatedTableView, Observer
     }
     
     // MARK: - Input
-    
-    override var acceptsFirstResponder: Bool { return true }
     
     override func keyDown(with event: NSEvent)
     {

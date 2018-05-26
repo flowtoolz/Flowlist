@@ -1,4 +1,5 @@
 import AppKit
+import SwiftyToolz
 
 class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
 {
@@ -10,17 +11,14 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
         {
             event in
             
-            log(error: "\(event.key) (\(event.keyCode))")
+            //log(error: "\(event.key) (\(event.keyCode))")
             
             return event
         }
         
-        Log.shared.minimumLevel = .error
-        
         NSApp.mainMenu = menu
         
         store.load()
-        
         window.show()
     }
     
@@ -33,15 +31,15 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     {
         menu.windowChangesFullscreen(to: false)
     }
-
-    func windowWillClose(_ notification: Notification)
-    {
-        NSApp.terminate(self)
-    }
     
     func windowDidResignKey(_ notification: Notification)
     {
         store.save()
+    }
+    
+    func windowWillClose(_ notification: Notification)
+    {
+        NSApp.terminate(self)
     }
     
     func applicationWillTerminate(_ notification: Notification)
