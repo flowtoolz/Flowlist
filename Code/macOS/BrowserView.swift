@@ -82,7 +82,7 @@ class BrowserView: LayerBackedView, Observer
         case .tab: break
             
         case .unknown:
-            if keyEvent.characters == "t"
+            if keyEvent.characters == "t" && keyEvent.cmd
             {
                 store.root.debug()
             }
@@ -207,59 +207,58 @@ class BrowserView: LayerBackedView, Observer
         
         if index >= listViews.count - 2
         {
-            navigateRight()
+            goRight()
         }
         else if index <= 1
         {
-            navigateLeft()
+            goLeft()
         }
     }
     
-    private func navigateRight()
+    // MARK: - Move Perspective Left/Right
+    
+    private func goRight()
     {
-        // remove list view from front
-        let removedListView = listViews.remove(at: 0)
-        removedListView.removeFromSuperview()
+        let newRightList = browser.moveRight()
         
-        // let coordinator go right
-        let rightList = browser.moveRight()
+        guard let newRightListView = moveListViews(by: -1) else { return }
         
-        // append new list view to end
-        let addedListView = addListView()
-        addedListView.configure(with: rightList)
-        addedListView.isHidden = true
+        newRightListView.configure(with: newRightList)
         
-        // animate the shit outa this
-        NSAnimationContext.runAnimationGroup(
-            {
-                $0.allowsImplicitAnimation = true
-                $0.duration = 0.3
-                
-                layoutListViews()
-                layoutSubtreeIfNeeded()
-            },
-            completionHandler:
-            {
-                addedListView.isHidden = false
-            }
-        )
+        relayoutAnimated(with: newRightListView)
     }
     
-    private func navigateLeft()
+    private func goLeft()
     {
-        // remove list view from end
-        guard let removedListView = listViews.popLast() else { return }
-        removedListView.removeFromSuperview()
+        let newLeftList = browser.moveLeft()
         
-        // let coordinator go left
-        let leftList = browser.moveLeft()
+        guard let newLeftListView = moveListViews(by: 1) else { return }
         
-        // add new list view to front
-        let addedListView = addListView(prepend: true)
-        addedListView.configure(with: leftList)
+        newLeftListView.configure(with: newLeftList)
+        
+        relayoutAnimated(with: newLeftListView)
+    }
+    
+    private func moveListViews(by positions: Int) -> SelectableListView?
+    {
+        guard abs(positions) == 1 else
+        {
+            log(error: "Moving list views by \(positions) positions is not supported.")
+            return nil
+        }
+        
+        let moveLeft = positions < 0
+        
+        let removalIndex = moveLeft ? 0 : listViews.count - 1
+        listViews.remove(at: removalIndex).removeFromSuperview()
+    
+        return addListView(prepend: !moveLeft)
+    }
+    
+    private func relayoutAnimated(with addedListView: SelectableListView)
+    {
         addedListView.isHidden = true
         
-        // animate the shit outa this
         NSAnimationContext.runAnimationGroup(
             {
                 $0.allowsImplicitAnimation = true
