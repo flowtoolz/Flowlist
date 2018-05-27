@@ -113,8 +113,6 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
     enum NavigationRequest
     {
         case wantsNothing
-        case wantsToPassFocusRight
-        case wantsToPassFocusLeft
         case wantsToBeRevealed
     }
     

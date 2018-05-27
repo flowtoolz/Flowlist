@@ -15,11 +15,79 @@ class BrowserView: LayerBackedView, Observer
         
         createListViews()
         layoutListViews()
+        
+        observe(keyboard) { [weak self] in self?.process($0) }
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
-    deinit { stopAllObserving() }
+    deinit { stopObserving(keyboard) }
+    
+    // MARK: - Keyboard Input
+    
+    private func process(_ keyEvent: NSEvent)
+    {
+        guard let list = browser.list(at: 2) else { return }
+        
+        //log("keyboard: \(keyEvent.key) (\(keyEvent.keyCode))")
+        
+        switch keyEvent.key
+        {
+        
+        case .left: passFocusLeft(from: listViews[2])
+            
+        case .right: passFocusRight(from: listViews[2])
+            
+        case .enter:
+        
+            guard !TextField.isEditing else { return }
+        
+            let numSelections = list.selection.count
+            
+            if numSelections > 0, keyEvent.cmd
+            {
+                if let index = list.selection.indexes.first
+                {
+                    listViews[2].scrollTable.tableView.editTitle(at: index)
+                }
+                
+                break
+            }
+            
+            if numSelections < 2
+            {
+                list.createBelowSelection()
+            }
+            else
+            {
+                list.groupSelectedTasks()
+            }
+            
+        case .space: list.create(at: 0)
+            
+        case .delete:
+            if keyEvent.cmd
+            {
+                list.checkOffFirstSelectedUncheckedTask()
+            }
+            else
+            {
+                _ = list.removeSelectedTasks()
+            }
+            
+        case .down: if keyEvent.cmd { list.moveSelectedTask(1) }
+            
+        case .up: if keyEvent.cmd { list.moveSelectedTask(-1) }
+            
+        case .tab: break
+            
+        case .unknown:
+            if keyEvent.characters == "t"
+            {
+                store.root.debug()
+            }
+        }
+    }
     
     // MARK: - Create and Configure List Views
     
@@ -81,8 +149,6 @@ class BrowserView: LayerBackedView, Observer
         switch request
         {
         case .wantsNothing: break
-        case .wantsToPassFocusRight: passFocusRight(from: listView)
-        case .wantsToPassFocusLeft: passFocusLeft(from: listView)
         case .wantsToBeRevealed: navigateTo(listView)
         }
     }

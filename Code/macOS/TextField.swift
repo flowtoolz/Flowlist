@@ -45,7 +45,7 @@ class TextField: NSTextField, Observable
         textColor = color.nsColor
     }
 
-    // MARK: - Observability
+    // MARK: - Editing State
     
     override func becomeFirstResponder() -> Bool
     {
@@ -55,6 +55,40 @@ class TextField: NSTextField, Observable
         
         return willBeFirstResponder
     }
+    
+    override func selectText(_ sender: Any?)
+    {
+        TextField.isEditing = true
+        
+        super.selectText(sender)
+    }
+
+    override func performKeyEquivalent(with event: NSEvent) -> Bool
+    {
+        if TextField.isEditing { return true }
+
+        return super.performKeyEquivalent(with: event)
+    }
+    
+    override func abortEditing() -> Bool
+    {
+        let abort = super.abortEditing()
+        
+        TextField.isEditing = !abort
+
+        return abort
+    }
+    
+    override func textDidEndEditing(_ notification: Notification)
+    {
+        super.textDidEndEditing(notification)
+
+        TextField.isEditing = false
+    }
+
+    static var isEditing = false
+    
+    // MARK: - Observability
     
     var latestUpdate: Event { return .didNothing }
     
