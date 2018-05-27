@@ -197,38 +197,20 @@ class Table: AnimatedTableView, Observer
     }
     
     // MARK: - Input
-    /*
-    override func becomeFirstResponder() -> Bool
-    {
-        observe(keyboard)
-        {
-            [weak self] event in
-            
-            guard let event = event, let me = self else { return }
-            
-            me.process(event)
-            //log("keyboard: \(event.key) (\(event.keyCode)) \(self)")
-        }
-        
-        return super.becomeFirstResponder()
-    }
-    
-    override func resignFirstResponder() -> Bool
-    {
-        stopObserving(keyboard)
-        
-        return super.resignFirstResponder()
-    }
- */
-    
+
     override func keyDown(with event: NSEvent)
     {
         let key = event.key
         let useDefaultBehaviour = (key == .up || key == .down) && !event.cmd
 
-        if useDefaultBehaviour { super.keyDown(with: event) }
-        
-        nextResponder?.keyDown(with: event)
+        if useDefaultBehaviour
+        {
+            super.keyDown(with: event)
+        }
+        else
+        {
+            nextResponder?.keyDown(with: event)
+        }
     }
     
     // FIXME: can this be avoided?

@@ -96,10 +96,18 @@ class SelectableListView: NSView, Observer, Observable
             
         case .up: if event.cmd { list?.moveSelectedTask(-1) }
             
-        case .tab, .unknown: if event.characters == "t" { store.root.debug() }
+        case .tab: break
+            
+        case .unknown:
+            if event.characters == "t"
+            {
+                store.root.debug()
+            }
+            else
+            {
+                super.keyDown(with: event)
+            }
         }
-        
-        super.keyDown(with: event)
     }
     
     // MARK: - Header
