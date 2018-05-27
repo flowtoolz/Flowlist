@@ -65,7 +65,7 @@ class TextField: NSTextField, Observable
 
     override func performKeyEquivalent(with event: NSEvent) -> Bool
     {
-        if TextField.isEditing { return true }
+        if event.key == .enter && TextField.isEditing { return true }
 
         return super.performKeyEquivalent(with: event)
     }
