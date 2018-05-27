@@ -213,7 +213,7 @@ class Table: AnimatedTableView, Observer
         }
     }
     
-    // FIXME: can this be avoided?
+    
     override func mouseDown(with event: NSEvent)
     {
         super.mouseDown(with: event)

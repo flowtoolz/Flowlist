@@ -109,12 +109,4 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
     // MARK: - Observability
     
     var latestUpdate: TaskView.Event { return .didNothing }
-    
-    // MARK: - Forward Mouse Clicks
-    // FIXME: still needed??
-    override func mouseDown(with event: NSEvent)
-    {
-        super.mouseDown(with: event)
-        nextResponder?.mouseDown(with: event)
-    }
 }

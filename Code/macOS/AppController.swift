@@ -1,5 +1,4 @@
 import AppKit
-import SwiftyToolz
 
 class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
 {
