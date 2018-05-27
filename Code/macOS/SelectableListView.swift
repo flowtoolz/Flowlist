@@ -43,7 +43,7 @@ class SelectableListView: NSView, Observer, Observable
     {
         super.mouseDown(with: event)
         
-        send(.wantsToBeRevealed)
+        send(.didReceiveUserInput)
     }
     
     // MARK: - Header
@@ -81,12 +81,15 @@ class SelectableListView: NSView, Observer, Observable
     
     lazy var scrollTable: ScrollTable =
     {
-        let view = ScrollTable.newAutoLayout()
-        self.addSubview(view)
+        let scrollView = ScrollTable.newAutoLayout()
+        self.addSubview(scrollView)
         
-        observe(view) { [weak self] in self?.send($0) }
+        observe(scrollView, select: .didEditTitle)
+        {
+            [weak self] in self?.send(.didReceiveUserInput)
+        }
         
-        return view
+        return scrollView
     }()
     
     // MARK: - List
@@ -95,5 +98,7 @@ class SelectableListView: NSView, Observer, Observable
     
     // MARK: - Observability
     
-    var latestUpdate: ScrollTable.NavigationRequest { return .wantsNothing }
+    var latestUpdate: Event { return .didNothing }
+    
+    enum Event { case didNothing, didReceiveUserInput }
 }

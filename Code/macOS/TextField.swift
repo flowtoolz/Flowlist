@@ -44,37 +44,30 @@ class TextField: NSTextField, Observable
         let color: Color = state == .done ? .grayedOut : .black
         textColor = color.nsColor
     }
-
-    // MARK: - Editing State
     
-    override func becomeFirstResponder() -> Bool
-    {
-        let willBeFirstResponder = super.becomeFirstResponder()
-        
-        if willBeFirstResponder { send(.willBecomeFirstResponder) }
-        
-        return willBeFirstResponder
-    }
+    // MARK: - Avoid Beep When Return is Dispatched While Some Field Is Editing
     
-    override func selectText(_ sender: Any?)
-    {
-        TextField.isEditing = true
-        
-        super.selectText(sender)
-    }
-
     override func performKeyEquivalent(with event: NSEvent) -> Bool
     {
         if event.key == .enter && TextField.isEditing { return true }
-
+        
         return super.performKeyEquivalent(with: event)
+    }
+
+    // MARK: - Editing State
+    
+    override func selectText(_ sender: Any?)
+    {
+        willEdit()
+        
+        super.selectText(sender)
     }
     
     override func abortEditing() -> Bool
     {
         let abort = super.abortEditing()
         
-        TextField.isEditing = !abort
+        if abort { didEdit() }
 
         return abort
     }
@@ -83,7 +76,21 @@ class TextField: NSTextField, Observable
     {
         super.textDidEndEditing(notification)
 
+        didEdit()
+    }
+    
+    private func didEdit()
+    {
         TextField.isEditing = false
+
+        send(.didEdit)
+    }
+    
+    private func willEdit()
+    {
+        TextField.isEditing = true
+        
+        send(.willEdit)
     }
 
     static var isEditing = false
@@ -92,5 +99,5 @@ class TextField: NSTextField, Observable
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, willBecomeFirstResponder }
+    enum Event { case didNothing, willEdit, didEdit }
 }

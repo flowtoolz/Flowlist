@@ -44,7 +44,7 @@ class TaskView: LayerBackedView, NSTextFieldDelegate, Observer, Observable
         
         self.task = task
         
-        updateTitle()
+        updateTitleField()
         updateState()
         updateGroupIndicator()
         
@@ -62,7 +62,7 @@ class TaskView: LayerBackedView, NSTextFieldDelegate, Observer, Observable
         
         observe(task.title)
         {
-            [weak self] _ in self?.updateTitle()
+            [weak self] _ in self?.updateTitleField()
         }
         
         observe(task.state)
@@ -87,34 +87,13 @@ class TaskView: LayerBackedView, NSTextFieldDelegate, Observer, Observable
     
     // MARK: - Title Field
     
-    private func updateTitle()
+    func editTitle() { titleField.selectText(self) }
+    
+    private func updateTitleField()
     {
         titleField.stringValue = task?.title.value ?? ""
     }
-    
-    func editTitle() { titleField.selectText(self) }
-    
-    func control(_ control: NSControl,
-                 textShouldEndEditing fieldEditor: NSText) -> Bool
-    {
-        task?.title <- String(withNonEmpty: fieldEditor.string)
-        
-        NotificationCenter.default.removeObserver(self)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(didEditTitle),
-                                               name: NSText.didEndEditingNotification,
-                                               object: fieldEditor)
-        
-        return true
-    }
-    
-    @objc private func didEditTitle()
-    {
-        NotificationCenter.default.removeObserver(self)
-        
-        send(.didEditTitle)
-    }
-    
+
     private func constrainTitleField()
     {
         titleField.autoAlignAxis(.horizontal, toSameAxisOf: self)
@@ -132,13 +111,25 @@ class TaskView: LayerBackedView, NSTextFieldDelegate, Observer, Observable
 
         textField.delegate = self
         
-        self.observe(textField, select: .willBecomeFirstResponder)
-        {
-            [weak self] in self?.send(.willContainFirstResponder)
-        }
+        self.observe(textField) { [weak self] in self?.didReceive($0) }
         
         return textField
     }()
+    
+    private func didReceive(_ event: TextField.Event)
+    {
+        switch event
+        {
+        case .didNothing: break
+            
+        case .didEdit:
+            task?.title <- String(withNonEmpty: titleField.stringValue)
+            send(.didEditTitle)
+            
+        case .willEdit:
+            send(.willEditTitle)
+        }
+    }
     
     // MARK: - Check Box
 
@@ -196,11 +187,5 @@ class TaskView: LayerBackedView, NSTextFieldDelegate, Observer, Observable
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event
-    {
-        case didNothing
-        case didEditTitle
-        case willContainFirstResponder
-        case willDeinit
-    }
+    enum Event { case didNothing, willEditTitle, didEditTitle, willDeinit }
 }

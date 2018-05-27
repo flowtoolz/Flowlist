@@ -133,23 +133,13 @@ class BrowserView: LayerBackedView, Observer
     
     private func observe(listView: SelectableListView)
     {
-        observe(listView)
+        observe(listView, select: .didReceiveUserInput)
         {
-            [weak listView, weak self] request in
+            [weak listView, weak self] in
             
             guard let listView = listView else { return }
             
-            self?.didReceive(request, from: listView)
-        }
-    }
-    
-    private func didReceive(_ request: ScrollTable.NavigationRequest,
-                            from listView: SelectableListView)
-    {
-        switch request
-        {
-        case .wantsNothing: break
-        case .wantsToBeRevealed: navigateTo(listView)
+            self?.navigateTo(listView)
         }
     }
     

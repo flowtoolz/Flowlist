@@ -95,7 +95,7 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
         {
         case .didNothing: break
         case .didEditTitle: tableView.editTitleOfNextSelectedTaskView()
-        case .willContainFirstResponder: send(.wantsToBeRevealed)
+        case .willEditTitle: send(event)
         case .willDeinit: stopObserving(taskView)
         }
     }
@@ -108,13 +108,7 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
 
     // MARK: - Observability
     
-    var latestUpdate: NavigationRequest { return .wantsNothing }
-    
-    enum NavigationRequest
-    {
-        case wantsNothing
-        case wantsToBeRevealed
-    }
+    var latestUpdate: TaskView.Event { return .didNothing }
     
     // MARK: - Forward Mouse Clicks
     // FIXME: still needed??
