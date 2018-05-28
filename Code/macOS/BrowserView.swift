@@ -36,9 +36,9 @@ class BrowserView: LayerBackedView, Observer
         switch keyEvent.key
         {
         
-        case .left: passFocusLeft()
+        case .left: focusList(at: 1)
             
-        case .right: passFocusRight()
+        case .right: focusList(at: 3)
             
         case .enter:
         
@@ -146,29 +146,6 @@ class BrowserView: LayerBackedView, Observer
     }
     
     // MARK: - Control Browser
-    
-    private func passFocusRight()
-    {
-        let listView = listViews[2]
-        
-        guard let index = listViews.index(where: { $0 === listView }),
-            index >= 0, index < listViews.count - 1,
-            (listView.list?.numberOfTasks ?? 0) > 0 else { return }
-        
-        focusList(at: index + 1)
-    }
-    
-    private func passFocusLeft()
-    {
-        let listView = listViews[2]
-        
-        guard let index = listViews.index(where: { $0 === listView }) else
-        {
-            return
-        }
-        
-        focusList(at: index - 1)
-    }
     
     @discardableResult
     private func focusList(at index: Int) -> Bool
