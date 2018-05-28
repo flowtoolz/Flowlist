@@ -44,12 +44,14 @@ class AnimatedTableView: NSTableView
                 return (rowRect.origin.y + rowRect.size.height) - clipBounds.size.height
             }
             
-            completionHandler?()
-            
             return nil
         }()
         
-        guard let targetPosition = optionalTargetPosition else { return true }
+        guard let targetPosition = optionalTargetPosition else
+        {
+            completionHandler?()
+            return true
+        }
         
         let targetOrigin = NSPoint(x: 0, y: targetPosition)
         

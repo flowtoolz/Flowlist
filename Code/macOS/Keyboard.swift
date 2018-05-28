@@ -19,10 +19,7 @@ class Keyboard: Messenger<NSEvent>
             return event
         }
         
-        if monitor == nil
-        {
-            log(error: "Couldn't get event monitor.")
-        }
+        if monitor == nil { log(error: "Couldn't get event monitor.") }
     }
 }
 

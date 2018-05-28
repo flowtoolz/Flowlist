@@ -37,9 +37,9 @@ class BrowserView: LayerBackedView, Observer
         switch keyEvent.key
         {
         
-        case .left: browser.move(.left)
+        case .left: move(.left)
             
-        case .right: browser.move(.right)
+        case .right: move(.right)
             
         case .enter:
         
@@ -148,11 +148,18 @@ class BrowserView: LayerBackedView, Observer
     {
         switch listViews.index(where: { $0 === listView })
         {
-        case 1: browser.move(.left)
-        case 3: browser.move(.right)
+        case 1: move(.left)
+        case 3: move(.right)
         default: break
         }
     }
+    
+    private func move(_ direction: Direction)
+    {
+        if !isMoving { isMoving = browser.move(direction) }
+    }
+    
+    private var isMoving = false
     
     // MARK: - React to Browser
     
@@ -177,10 +184,11 @@ class BrowserView: LayerBackedView, Observer
         guard let newList = browser.list(at: newListIndex) else
         {
             log(error: "Couldn't get first list from browser.")
+            isMoving = false
             return
         }
         
-        guard let newListView = moveListViews(direction.reverse) else { return }
+        let newListView = moveListViews(direction.reverse)
         
         newListView.configure(with: newList)
         
@@ -189,7 +197,7 @@ class BrowserView: LayerBackedView, Observer
         relayoutAnimated(with: newListView)
     }
     
-    private func moveListViews(_ direction: Direction) -> SelectableListView?
+    private func moveListViews(_ direction: Direction) -> SelectableListView
     {
         let left = direction == .left
         let removalIndex = left ? 0 : listViews.count - 1
@@ -213,6 +221,7 @@ class BrowserView: LayerBackedView, Observer
             completionHandler:
             {
                 addedListView.isHidden = false
+                self.isMoving = false
             }
         )
     }
