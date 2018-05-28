@@ -19,35 +19,35 @@ extension Browser
     }
 }
 
-class Browser: Observer
+class Browser: Observer, Observable
 {
     // MARK: - Navigate
     
-    func moveRight() -> SelectableList
+    func moveRight()
     {
         observeSelection(in: lists.remove(at: 0), start: false)
         
-        let newLastList = addTaskList()
+        _ = addTaskList()
         
         updateRootOfList(at: lists.count - 1)
         
-        return newLastList
+        send(.didMoveRight)
     }
     
-    func moveLeft() -> SelectableList
+    func moveLeft()
     {
+        defer { send(.didMoveLeft) }
+        
         observeSelection(in: lists.popLast(), start: false)
         
         let firstList = addTaskList(prepend: true)
 
         guard lists.count > 1,
             let sublistRoot = lists[1].root,
-            let firstRoot = sublistRoot.supertask else { return firstList }
+            let firstRoot = sublistRoot.supertask else { return }
 
         firstList.set(root: firstRoot)
         firstList.selection.set(with: sublistRoot)
-        
-        return firstList
     }
     
     // MARK: - Create Task Lists
@@ -136,4 +136,10 @@ class Browser: Observer
     var numberOfLists: Int { return lists.count }
     
     private var lists = [SelectableList]()
+    
+    // MARK: - Observability
+    
+    var latestUpdate: Event { return .didNothing }
+    
+    enum Event { case didNothing, didMoveLeft, didMoveRight }
 }

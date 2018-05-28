@@ -11,12 +11,14 @@ class BrowserView: LayerBackedView, Observer
     {
         super.init(frame: frameRect)
         
+        observe(keyboard) { [weak self] in self?.process($0) }
+        
+        observeBrowser()
+        
         backgroundColor = Color.background
         
         createListViews()
         layoutListViews()
-        
-        observe(keyboard) { [weak self] in self?.process($0) }
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -34,9 +36,9 @@ class BrowserView: LayerBackedView, Observer
         switch keyEvent.key
         {
         
-        case .left: passFocusLeft(from: listViews[2])
+        case .left: passFocusLeft()
             
-        case .right: passFocusRight(from: listViews[2])
+        case .right: passFocusRight()
             
         case .enter:
         
@@ -143,10 +145,12 @@ class BrowserView: LayerBackedView, Observer
         }
     }
     
-    // MARK: - Navigation
+    // MARK: - Control Browser
     
-    private func passFocusRight(from listView: SelectableListView)
+    private func passFocusRight()
     {
+        let listView = listViews[2]
+        
         guard let index = listViews.index(where: { $0 === listView }),
             index >= 0, index < listViews.count - 1,
             (listView.list?.numberOfTasks ?? 0) > 0 else { return }
@@ -154,8 +158,10 @@ class BrowserView: LayerBackedView, Observer
         focusList(at: index + 1)
     }
     
-    private func passFocusLeft(from listView: SelectableListView)
+    private func passFocusLeft()
     {
+        let listView = listViews[2]
+        
         guard let index = listViews.index(where: { $0 === listView }) else
         {
             return
@@ -202,24 +208,42 @@ class BrowserView: LayerBackedView, Observer
     
     private func navigateToList(at index: Int)
     {
-        guard listViews.isValid(index: index),
-            listViews[index].list?.root != nil else { return }
+        let moveRight = index > 2
+        let moveLeft = index < 2
         
-        if index >= listViews.count - 2
+        guard moveLeft || moveRight else { return }
+        
+        let newIndex = moveRight ? 3 : 1
+        
+        guard let list = browser.list(at: newIndex), list.root != nil else { return }
+        
+        if moveRight { browser.moveRight() } else { browser.moveLeft() }
+    }
+    
+    // MARK: - React to Browser
+    
+    private func observeBrowser()
+    {
+        observe(browser)
         {
-            goRight()
-        }
-        else if index <= 1
-        {
-            goLeft()
+            [unowned self] event in
+            
+            switch event
+            {
+            case .didNothing: break
+            case .didMoveLeft: self.browserDidMoveLeft()
+            case .didMoveRight: self.browserDidMoveRight()
+            }
         }
     }
     
-    // MARK: - Move Perspective Left/Right
-    
-    private func goRight()
+    private func browserDidMoveRight()
     {
-        let newRightList = browser.moveRight()
+        guard let newRightList = browser.list(at: browser.numberOfLists - 1) else
+        {
+            log(error: "Couldn't get last list from browser.")
+            return
+        }
         
         guard let newRightListView = moveListViews(by: -1) else { return }
         
@@ -228,9 +252,13 @@ class BrowserView: LayerBackedView, Observer
         relayoutAnimated(with: newRightListView)
     }
     
-    private func goLeft()
+    private func browserDidMoveLeft()
     {
-        let newLeftList = browser.moveLeft()
+        guard let newLeftList = browser.list(at: 0) else
+        {
+            log(error: "Couldn't get first list from browser.")
+            return
+        }
         
         guard let newLeftListView = moveListViews(by: 1) else { return }
         
