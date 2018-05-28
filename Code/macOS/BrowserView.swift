@@ -18,6 +18,7 @@ class BrowserView: LayerBackedView, Observer
         backgroundColor = Color.background
         
         createListViews()
+        configureListViews()
         layoutListViews()
     }
     
@@ -36,9 +37,9 @@ class BrowserView: LayerBackedView, Observer
         switch keyEvent.key
         {
         
-        case .left: focusList(at: 1)
+        case .left: browser.move(.left)
             
-        case .right: focusList(at: 3)
+        case .right: browser.move(.right)
             
         case .enter:
         
@@ -84,22 +85,24 @@ class BrowserView: LayerBackedView, Observer
         case .tab: break
             
         case .unknown:
-            if keyEvent.characters == "t" && keyEvent.cmd
+            switch keyEvent.characters
             {
-                store.root.debug()
+            case "t": if keyEvent.cmd { store.root.debug() }
+            case "l": if keyEvent.cmd { browser.list(at: 2)?.debug() }
+            default: break
             }
         }
     }
     
     // MARK: - Create and Configure List Views
     
-    func configureListViews()
+    private func configureListViews()
     {
         for index in 0 ..< browser.numberOfLists
         {
             guard let list = browser.list(at: index),
                 listViews.isValid(index: index)
-                else
+            else
             {
                 log(error: "Couldn't find list or list view at index \(index).")
                 continue
@@ -107,8 +110,6 @@ class BrowserView: LayerBackedView, Observer
             
             listViews[index].configure(with: list)
         }
-        
-        if listViews.count > 2 { focusList(at: 2) }
     }
     
     private func createListViews()
@@ -131,8 +132,6 @@ class BrowserView: LayerBackedView, Observer
         return listView
     }
     
-    // MARK: - Observe List Views
-    
     private func observe(listView: SelectableListView)
     {
         observe(listView, select: .didReceiveUserInput)
@@ -141,60 +140,18 @@ class BrowserView: LayerBackedView, Observer
             
             guard let listView = listView else { return }
             
-            self?.navigateTo(listView)
+            self?.listViewReceivedUserInput(listView)
         }
     }
     
-    // MARK: - Control Browser
-    
-    @discardableResult
-    private func focusList(at index: Int) -> Bool
+    private func listViewReceivedUserInput(_ listView: SelectableListView)
     {
-        guard listViews.isValid(index: index) else { return false }
-        
-        let listView = listViews[index]
-        
-        guard listView.list?.root != nil else { return false }
-        
-        if let firstTask = listView.list?.task(at: 0),
-            listView.list?.selection.count == 0
+        switch listViews.index(where: { $0 === listView })
         {
-            listView.list?.selection.add(task: firstTask)
+        case 1: browser.move(.left)
+        case 3: browser.move(.right)
+        default: break
         }
-        
-        guard listView.scrollTable.tableView.makeFirstResponder() else
-        {
-            log(warning: "Could not make table view first responder.")
-            return false
-        }
-        
-        navigateToList(at: index)
-        
-        return true
-    }
-    
-    private func navigateTo(_ listView: SelectableListView)
-    {
-        guard let index = listViews.index(where: { $0 === listView }) else
-        {
-            return
-        }
-        
-        navigateToList(at: index)
-    }
-    
-    private func navigateToList(at index: Int)
-    {
-        let moveRight = index > 2
-        let moveLeft = index < 2
-        
-        guard moveLeft || moveRight else { return }
-        
-        let newIndex = moveRight ? 3 : 1
-        
-        guard let list = browser.list(at: newIndex), list.root != nil else { return }
-        
-        if moveRight { browser.moveRight() } else { browser.moveLeft() }
     }
     
     // MARK: - React to Browser
@@ -205,59 +162,40 @@ class BrowserView: LayerBackedView, Observer
         {
             [unowned self] event in
             
-            switch event
+            if case .didMove(let direction) = event
             {
-            case .didNothing: break
-            case .didMoveLeft: self.browserDidMoveLeft()
-            case .didMoveRight: self.browserDidMoveRight()
+                self.browserDidMove(direction)
             }
         }
     }
     
-    private func browserDidMoveRight()
+    private func browserDidMove(_ direction: Direction)
     {
-        guard let newRightList = browser.list(at: browser.numberOfLists - 1) else
-        {
-            log(error: "Couldn't get last list from browser.")
-            return
-        }
+        let movedLeft = direction == .left
+        let newListIndex = movedLeft ? 0 : browser.numberOfLists - 1
         
-        guard let newRightListView = moveListViews(by: -1) else { return }
-        
-        newRightListView.configure(with: newRightList)
-        
-        relayoutAnimated(with: newRightListView)
-    }
-    
-    private func browserDidMoveLeft()
-    {
-        guard let newLeftList = browser.list(at: 0) else
+        guard let newList = browser.list(at: newListIndex) else
         {
             log(error: "Couldn't get first list from browser.")
             return
         }
         
-        guard let newLeftListView = moveListViews(by: 1) else { return }
+        guard let newListView = moveListViews(direction.reverse) else { return }
         
-        newLeftListView.configure(with: newLeftList)
+        newListView.configure(with: newList)
         
-        relayoutAnimated(with: newLeftListView)
+        makeFocusedTableFirstResponder()
+        
+        relayoutAnimated(with: newListView)
     }
     
-    private func moveListViews(by positions: Int) -> SelectableListView?
+    private func moveListViews(_ direction: Direction) -> SelectableListView?
     {
-        guard abs(positions) == 1 else
-        {
-            log(error: "Moving list views by \(positions) positions is not supported.")
-            return nil
-        }
-        
-        let moveLeft = positions < 0
-        
-        let removalIndex = moveLeft ? 0 : listViews.count - 1
+        let left = direction == .left
+        let removalIndex = left ? 0 : listViews.count - 1
         listViews.remove(at: removalIndex).removeFromSuperview()
     
-        return addListView(prepend: !moveLeft)
+        return addListView(prepend: !left)
     }
     
     private func relayoutAnimated(with addedListView: SelectableListView)
@@ -324,6 +262,27 @@ class BrowserView: LayerBackedView, Observer
     }
     
     private var listViewContraints = [NSLayoutConstraint]()
+    
+    // MARK: - Manage First Responder Status
+    
+    override var acceptsFirstResponder: Bool { return true }
+    
+    override func becomeFirstResponder() -> Bool
+    {
+        return makeFocusedTableFirstResponder()
+    }
+    
+    @discardableResult
+    private func makeFocusedTableFirstResponder() -> Bool
+    {
+        guard listViews.isValid(index: 2), listViews[2].scrollTable.tableView.makeFirstResponder() else
+        {
+            log(error: "Could not make table view first responder.")
+            return false
+        }
+        
+        return true
+    }
     
     // MARK: - Basics
     

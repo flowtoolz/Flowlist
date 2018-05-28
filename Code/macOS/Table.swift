@@ -39,6 +39,8 @@ class Table: AnimatedTableView, Observer
         observe(list: list)
         
         self.list = list
+        
+        selectionChanged(in: list)
     }
     
     private func observe(list: SelectableList?, start: Bool = true)

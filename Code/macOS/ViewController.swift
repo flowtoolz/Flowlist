@@ -3,29 +3,13 @@ import UIToolz
 
 class ViewController: NSViewController
 {
-    // MARK: - View Life Cycle
-    
-    override func loadView() { view = LayerBackedView() }
-    
-    override func viewDidLoad()
+    override func loadView()
     {
-        super.viewDidLoad()
+        view = LayerBackedView()
         
-        constrainBrowserView()
-    }
-    
-    override func viewDidAppear()
-    {
-        browserView.configureListViews()
-    }
-    
-    // MARK: - Browser View
-
-    private func constrainBrowserView()
-    {
         browserView.autoPinEdgesToSuperviewEdges()
     }
-    
+
     private lazy var browserView: BrowserView =
     {
         let bv = BrowserView.newAutoLayout()

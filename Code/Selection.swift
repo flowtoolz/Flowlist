@@ -1,6 +1,22 @@
 import SwiftObserver
 import SwiftyToolz
 
+extension Selection
+{
+    var description: String
+    {
+        var desc = ""
+        
+        for task in selectedTasks.values
+        {
+            desc += task.title.value ?? "untitled"
+            desc += ", "
+        }
+        
+        return desc
+    }
+}
+
 class Selection: Observable
 {
     // MARK: - Select Tasks
@@ -156,8 +172,6 @@ class Selection: Observable
     {
         return selectedTasks[task.hash] === task
     }
-    
-    var description: String { return selectedTasks.values.description }
     
     var count: Int { return selectedTasks.count }
     var first: Task? { return selectedTasks.values.first }

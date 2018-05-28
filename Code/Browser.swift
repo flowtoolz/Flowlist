@@ -23,31 +23,36 @@ class Browser: Observer, Observable
 {
     // MARK: - Navigate
     
-    func moveRight()
+    func move(_ direction: Direction)
     {
-        observeSelection(in: lists.remove(at: 0), start: false)
+        let moveLeft = direction == .left
+        let newFocusedIndex = moveLeft ? 1 : 3
         
-        _ = addTaskList()
+        guard lists[newFocusedIndex].root != nil else { return }
         
-        updateRootOfList(at: lists.count - 1)
+        let removalIndex = moveLeft ? lists.count - 1 : 0
         
-        send(.didMoveRight)
-    }
-    
-    func moveLeft()
-    {
-        defer { send(.didMoveLeft) }
+        observeSelection(in: lists.remove(at: removalIndex), start: false)
         
-        observeSelection(in: lists.popLast(), start: false)
+        let newList = addTaskList(prepend: moveLeft)
         
-        let firstList = addTaskList(prepend: true)
-
-        guard lists.count > 1,
-            let sublistRoot = lists[1].root,
-            let firstRoot = sublistRoot.supertask else { return }
-
-        firstList.set(root: firstRoot)
-        firstList.selection.set(with: sublistRoot)
+        defer { send(.didMove(direction: direction)) }
+        
+        if moveLeft
+        {
+            guard lists.count > 1,
+                let sublistRoot = lists[1].root,
+                let firstRoot = sublistRoot.supertask else { return }
+            
+            newList.set(root: firstRoot)
+            newList.selection.set(with: sublistRoot)
+        }
+        else
+        {
+            updateRootOfList(at: lists.count - 1)
+            
+            lists[2].select()
+        }
     }
     
     // MARK: - Create Task Lists
@@ -57,6 +62,7 @@ class Browser: Observer, Observable
         for _ in 0 ..< 5 { addTaskList() }
         
         lists[2].set(root: store.root)
+        lists[2].select()
     }
     
     @discardableResult
@@ -141,5 +147,12 @@ class Browser: Observer, Observable
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, didMoveLeft, didMoveRight }
+    enum Event { case didNothing, didMove(direction: Direction) }
+}
+
+enum Direction
+{
+    case left, right
+    
+    var reverse: Direction { return self == .left ? .right : .left }
 }

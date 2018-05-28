@@ -100,6 +100,14 @@ class SelectableList: List
     
     // MARK: - Manage the Selection
     
+    func select()
+    {
+        if numberOfTasks > 0 && selection.count == 0
+        {
+            selection.setWithTasksListed(at: [0])
+        }
+    }
+    
     override func set(root newRoot: Task?)
     {
         super.set(root: newRoot)

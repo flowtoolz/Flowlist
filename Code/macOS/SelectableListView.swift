@@ -84,7 +84,7 @@ class SelectableListView: NSView, Observer, Observable
         let scrollView = ScrollTable.newAutoLayout()
         self.addSubview(scrollView)
         
-        observe(scrollView, select: .didEditTitle)
+        observe(scrollView, select: .willEditTitle)
         {
             [weak self] in self?.send(.didReceiveUserInput)
         }
