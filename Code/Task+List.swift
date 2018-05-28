@@ -2,10 +2,7 @@ extension Task
 {
     func moveSubtaskToTopOfDoneList(from index: Int)
     {
-        guard let unchecked = indexOfLastUncheckedSubtask else
-        {
-            return
-        }
+        guard let unchecked = indexOfLastUncheckedSubtask else { return }
         
         let belowUnchecked = unchecked + (unchecked < index ? 1 : 0)
         

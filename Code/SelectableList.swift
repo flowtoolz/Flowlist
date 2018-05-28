@@ -15,6 +15,7 @@ class SelectableList: List
         
         if let group = root?.groupSubtasks(at: selection.indexes)
         {
+            observe(listedTask: group)
             selection.set(with: group)
         }
     }
@@ -24,13 +25,16 @@ class SelectableList: List
         create(at: (selection.indexes.last ?? -1) + 1)
     }
     
+    // FIXME: move to List
     func create(at index: Int)
     {
-        guard let _ = root?.create(at: index) else { return }
+        guard let newTask = root?.create(at: index) else { return }
         
-        selection.setWithTasksListed(at: [index])
+        observe(listedTask: newTask)
+        selection.set(with: newTask)
     }
     
+    // FIXME: how is observing stopped? pull code down to List ...
     func removeSelectedTasks() -> Bool
     {
         let selectedIndexes = selection.indexes
@@ -64,7 +68,7 @@ class SelectableList: List
         }
 
         return root.moveSubtask(from: selectedIndex,
-                                     to: selectedIndex + positions)
+                                to: selectedIndex + positions)
     }
     
     func checkOffFirstSelectedUncheckedTask()

@@ -99,7 +99,7 @@ class List: Observable, Observer
         }
     }
     
-    private func observe(listedTask task: Task, start: Bool = true)
+    func observe(listedTask task: Task, start: Bool = true)
     {
         guard start else
         {
