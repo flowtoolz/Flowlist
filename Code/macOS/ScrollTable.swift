@@ -8,7 +8,7 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
     
     override init(frame frameRect: NSRect)
     {
-        super.init(frame: NSZeroRect)
+        super.init(frame: frameRect)
         
         tableView.delegate = self
         tableView.dataSource = source
@@ -102,7 +102,7 @@ class ScrollTable: NSScrollView, NSTableViewDelegate, Observer, Observable
     
     // MARK: - Basics
     
-    let tableView = Table.newAutoLayout()
+    let tableView = Table()
     
     private weak var list: SelectableList?
 

@@ -127,17 +127,15 @@ class Table: AnimatedTableView, Observer
     
     private func didCreate(at index: Int)
     {
-        CATransaction.begin()
-        CATransaction.setCompletionBlock
+        didInsert(at: [index])
+        
+        OperationQueue.main.addOperation
         {
-            self.editTitle(at: index)
+            self.scrollAnimatedTo(row: index)
+            {
+                self.editTitle(at: index)
+            }
         }
-        
-        self.didInsert(at: [index])
-        
-        CATransaction.commit()
-        
-        scrollAnimatedTo(row: min(numberOfRows - 1, index))
     }
     
     private func didRemove(from indexes: [Int])
