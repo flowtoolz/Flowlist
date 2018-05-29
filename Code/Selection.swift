@@ -168,8 +168,10 @@ class Selection: Observable
     
     // MARK: - Selected Tasks
     
-    func isSelected(_ task: Task) -> Bool
+    func isSelected(_ task: Task?) -> Bool
     {
+        guard let task = task else { return false }
+        
         return selectedTasks[task.hash] === task
     }
     

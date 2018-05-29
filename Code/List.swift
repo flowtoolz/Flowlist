@@ -138,16 +138,7 @@ class List: Observable, Observer
         return root.subtask(at: index)
     }
     
-    var numberOfTasks: Int
-    {
-        guard let root = root else
-        {
-            log(warning: "Tried to get task number from list without root.")
-            return 0
-        }
-        
-        return root.numberOfSubtasks
-    }
+    var numberOfTasks: Int { return root?.numberOfSubtasks ?? 0 }
     
     // MARK: - Root
     

@@ -19,7 +19,7 @@ class BrowserView: LayerBackedView, Observer
         
         createListViews()
         configureListViews()
-        layoutListViews()
+        constrainListViews()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -215,7 +215,7 @@ class BrowserView: LayerBackedView, Observer
                 $0.allowsImplicitAnimation = true
                 $0.duration = 0.3
                 
-                layoutListViews()
+                constrainListViews()
                 layoutSubtreeIfNeeded()
             },
             completionHandler:
@@ -228,7 +228,7 @@ class BrowserView: LayerBackedView, Observer
     
     // MARK: - Layout List Views
     
-    private func layoutListViews()
+    private func constrainListViews()
     {
         removeConstraints(listViewContraints)
         listViewContraints.removeAll()

@@ -22,16 +22,7 @@ class Table: AnimatedTableView, Observer
     
     deinit { stopAllObserving() }
     
-    // MARK: - Selection
-    
-    func selectionDidChange()
-    {
-        let selectedIndexes = Array(selectedRowIndexes)
-        
-        list?.selection.setWithTasksListed(at: selectedIndexes)
-    }
-    
-    // MARK: - Configuration
+    // MARK: - Configuration & Selection
     
     func configure(with list: SelectableList)
     {
@@ -39,15 +30,13 @@ class Table: AnimatedTableView, Observer
         observe(list: list)
         
         self.list = list
-        
-        selectionChanged(in: list)
     }
     
     private func observe(list: SelectableList?, start: Bool = true)
     {
         guard let list = list else
         {
-            log(warning: "Tried to \(start ? "start" : "stop") observing nil list.")
+            if start { log(error: "Tried to observe nil list.") }
             stopObservingDeadObservables()
             return
         }
@@ -76,15 +65,11 @@ class Table: AnimatedTableView, Observer
         }
     }
     
-    private func selectionChanged(in list: SelectableList)
+    func selectionDidChange()
     {
-        let listSelection = list.selection.indexes
-        guard listSelection.last ?? 0 < numberOfRows else { return }
+        let selectedIndexes = Array(selectedRowIndexes)
         
-        let tableSelection = Array(selectedRowIndexes).sorted()
-        guard tableSelection != listSelection else { return }
-        
-        selectRowIndexes(IndexSet(listSelection), byExtendingSelection: false)
+        list?.selection.setWithTasksListed(at: selectedIndexes)
     }
     
     private weak var list: SelectableList?
@@ -97,6 +82,8 @@ class Table: AnimatedTableView, Observer
                 return
             }
             
+            selectionChanged(in: list)
+            
             if let oldNumber = oldValue?.numberOfTasks, oldNumber > 0
             {
                 didRemove(from: Array(0 ..< oldNumber))
@@ -107,6 +94,23 @@ class Table: AnimatedTableView, Observer
                 didInsert(at: Array(0 ..< newNumber))
             }
         }
+    }
+    
+    private func selectionChanged(in list: SelectableList?)
+    {
+        let rowNumber = dataSource?.numberOfRows?(in: self) ?? 0
+        
+        let listSelection = list?.selection.indexes ?? []
+        if let last = listSelection.last, last >= rowNumber
+        {
+            log(error: "List has at least one invalid selection index.")
+            return
+        }
+        
+        let tableSelection = Array(selectedRowIndexes).sorted()
+        guard tableSelection != listSelection else { return }
+        
+        selectRowIndexes(IndexSet(listSelection), byExtendingSelection: false)
     }
     
     // MARK: - Animation

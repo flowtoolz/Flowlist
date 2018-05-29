@@ -27,6 +27,13 @@ class TableSource: NSObject, Observable, NSTableViewDataSource
     {
         let task = list?.task(at: row)
         
+        let isSelected = list?.selection.isSelected(task) ?? false
+        
+        if isSelected
+        {
+            tableView.selectRowIndexes([row], byExtendingSelection: true)
+        }
+        
         return retrieveTaskView(from: tableView).configure(with: task)
     }
     
