@@ -24,7 +24,6 @@ class SelectableList: List
         create(at: (selection.indexes.last ?? -1) + 1)
     }
     
-    // FIXME: move to List, than override here
     func create(at index: Int)
     {
         guard let newTask = root?.create(at: index) else { return }

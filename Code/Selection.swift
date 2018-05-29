@@ -150,8 +150,6 @@ class Selection: Observable
     {
         didSet
         {
-            //print("selection gets new root \(root?.title.value ?? "untitled")")
-            
             guard oldValue !== root else
             {
                 log(warning: "Tried to set identical root in selection.")

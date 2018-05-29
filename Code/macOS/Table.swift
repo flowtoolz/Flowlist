@@ -97,8 +97,6 @@ class Table: AnimatedTableView, Observer, Observable
     
     private func did(_ edit: Edit)
     {
-        //Swift.print("list view <\(titleField.stringValue)> \(change)")
-        
         switch edit
         {
         case .didCreate(let index): didCreate(at: index)

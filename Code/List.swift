@@ -13,8 +13,6 @@ class List: Observable, Observer
             return
         }
         
-        //print("setting list root \(newRoot?.title.value ?? "untitled")")
-        
         observeTasks(with: root, start: false)
         observeTasks(with: newRoot)
         
@@ -28,8 +26,6 @@ class List: Observable, Observer
             if !start  { stopObservingDeadObservables() }
             return
         }
-        
-        //print("observing tasks with root \(root.title.value ?? "untitled")")
         
         observe(root: root, start: start)
         observeTasksListed(in: root, start: start)
@@ -47,8 +43,6 @@ class List: Observable, Observer
             return
         }
         
-        //print("start observing root \(root.title.value ?? "untitled")")
-        
         observe(root)
         {
             [weak self, weak root] edit in
@@ -61,8 +55,6 @@ class List: Observable, Observer
     
     func received(_ edit: Edit, from root: Task)
     {
-        //print("list <\(root.title.value ?? "untitled")> \(change)")
-        
         switch edit
         {
         case .didInsert(let indexes):
@@ -153,9 +145,7 @@ class List: Observable, Observer
     }
     
     private func didSwitchRoot(from old: Task?, to new: Task?)
-    {
-        //print("list changed root from \(old?.title.value ?? "untitled") to \(new?.title.value ?? "untitled")")
-        
+    {   
         title.observable = new?.title
         
         sendDidRemoveTasksOf(oldRoot: old)
