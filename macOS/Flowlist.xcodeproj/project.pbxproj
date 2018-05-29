@@ -53,6 +53,19 @@
 		73F5B44C9211479F59673188 /* Pods-FlowlistTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowlistTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests.debug.xcconfig"; sourceTree = "<group>"; };
 		78B3E83C8B5F1E96FF074B6D /* Pods-Flowlist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flowlist.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist.debug.xcconfig"; sourceTree = "<group>"; };
 		9E049FBF20BD92090008F7C4 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Tree.swift; path = ../Code/Tree.swift; sourceTree = "<group>"; };
+		9E049FE620BDC7630008F7C4 /* TaskListCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListCoordinator.swift; path = ../Code/OLD/TaskListCoordinator.swift; sourceTree = "<group>"; };
+		9E049FE720BDC7630008F7C4 /* TaskStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskStore.swift; path = ../Code/OLD/TaskStore.swift; sourceTree = "<group>"; };
+		9E049FE820BDC7630008F7C4 /* TaskArchive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskArchive.swift; path = ../Code/OLD/TaskArchive.swift; sourceTree = "<group>"; };
+		9E049FE920BDC7630008F7C4 /* TaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskList.swift; path = ../Code/OLD/TaskList.swift; sourceTree = "<group>"; };
+		9E049FEA20BDC7630008F7C4 /* Task+UUID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Task+UUID.swift"; path = "../Code/OLD/Task+UUID.swift"; sourceTree = "<group>"; };
+		9E049FEB20BDC7630008F7C4 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../Code/OLD/Task.swift; sourceTree = "<group>"; };
+		9E049FFA20BDC77E0008F7C4 /* TaskListTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListTableView.swift; path = ../Code/OLD/macOS/TaskListTableView.swift; sourceTree = "<group>"; };
+		9E049FFB20BDC77E0008F7C4 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainVC.swift; path = ../Code/OLD/macOS/MainVC.swift; sourceTree = "<group>"; };
+		9E049FFC20BDC77E0008F7C4 /* TaskListRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListRow.swift; path = ../Code/OLD/macOS/TaskListRow.swift; sourceTree = "<group>"; };
+		9E049FFD20BDC77E0008F7C4 /* TaskStore+Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TaskStore+Persistence.swift"; path = "../Code/OLD/macOS/TaskStore+Persistence.swift"; sourceTree = "<group>"; };
+		9E049FFE20BDC77E0008F7C4 /* ListHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListHeaderView.swift; path = ../Code/OLD/macOS/ListHeaderView.swift; sourceTree = "<group>"; };
+		9E049FFF20BDC77E0008F7C4 /* TaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskListView.swift; path = ../Code/OLD/macOS/TaskListView.swift; sourceTree = "<group>"; };
+		9E04A00020BDC77E0008F7C4 /* TaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = ../Code/OLD/macOS/TaskView.swift; sourceTree = "<group>"; };
 		9E15185B1EEEE8CE00B35AD5 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../Code/Task.swift; sourceTree = "<group>"; };
 		9E15185D1EEEE97700B35AD5 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../Code/macOS/ViewController.swift; sourceTree = "<group>"; };
 		9E1AAD6920B57CA9001657A7 /* GroupIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GroupIndicator.swift; path = ../Code/macOS/GroupIndicator.swift; sourceTree = "<group>"; };
@@ -133,6 +146,34 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9E049FDD20BDC7550008F7C4 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				9E049FF920BDC7710008F7C4 /* macOS */,
+				9E049FEB20BDC7630008F7C4 /* Task.swift */,
+				9E049FEA20BDC7630008F7C4 /* Task+UUID.swift */,
+				9E049FE820BDC7630008F7C4 /* TaskArchive.swift */,
+				9E049FE920BDC7630008F7C4 /* TaskList.swift */,
+				9E049FE620BDC7630008F7C4 /* TaskListCoordinator.swift */,
+				9E049FE720BDC7630008F7C4 /* TaskStore.swift */,
+			);
+			name = Old;
+			sourceTree = "<group>";
+		};
+		9E049FF920BDC7710008F7C4 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				9E049FFE20BDC77E0008F7C4 /* ListHeaderView.swift */,
+				9E049FFB20BDC77E0008F7C4 /* MainVC.swift */,
+				9E049FFC20BDC77E0008F7C4 /* TaskListRow.swift */,
+				9E049FFA20BDC77E0008F7C4 /* TaskListTableView.swift */,
+				9E049FFF20BDC77E0008F7C4 /* TaskListView.swift */,
+				9E049FFD20BDC77E0008F7C4 /* TaskStore+Persistence.swift */,
+				9E04A00020BDC77E0008F7C4 /* TaskView.swift */,
+			);
+			name = macOS;
+			sourceTree = "<group>";
+		};
 		9E1AAD6F20B595B4001657A7 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +252,7 @@
 				9E33889F20B92818004E4182 /* AnimatedTableView.swift */,
 				9E3388A120B9FE3B004E4182 /* Keyboard.swift */,
 				9E049FBF20BD92090008F7C4 /* Tree.swift */,
+				9E049FDD20BDC7550008F7C4 /* Old */,
 			);
 			name = Code;
 			sourceTree = "<group>";
