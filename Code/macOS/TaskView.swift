@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class TaskView: LayerBackedView, NSTextFieldDelegate, Observer, Observable
+class TaskView: LayerBackedView, Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -108,8 +108,6 @@ class TaskView: LayerBackedView, NSTextFieldDelegate, Observer, Observable
     {
         let textField = TextField("untitled")
         self.addSubview(textField)
-
-        textField.delegate = self
         
         self.observe(textField) { [weak self] in self?.didReceive($0) }
         
