@@ -67,9 +67,11 @@ class Table: AnimatedTableView, Observer
     
     func selectionDidChange()
     {
-        let selectedIndexes = Array(selectedRowIndexes)
+        let tableSelection = selection
         
-        list?.selection.setWithTasksListed(at: selectedIndexes)
+        guard tableSelection != listSelection else { return }
+        
+        list?.selection.setWithTasksListed(at: tableSelection)
     }
     
     private weak var list: SelectableList?
@@ -98,20 +100,23 @@ class Table: AnimatedTableView, Observer
     
     private func selectionChanged(in list: SelectableList?)
     {
+        let listSelection = self.listSelection
+        
+        guard selection != listSelection else { return }
+        
         let rowNumber = dataSource?.numberOfRows?(in: self) ?? 0
         
-        let listSelection = list?.selection.indexes ?? []
         if let last = listSelection.last, last >= rowNumber
         {
             log(error: "List has at least one invalid selection index.")
             return
         }
         
-        let tableSelection = Array(selectedRowIndexes).sorted()
-        guard tableSelection != listSelection else { return }
-        
         selectRowIndexes(IndexSet(listSelection), byExtendingSelection: false)
     }
+    
+    private var selection: [Int] { return Array(selectedRowIndexes).sorted() }
+    private var listSelection: [Int] { return list?.selection.indexes ?? [] }
     
     // MARK: - Animation
     
