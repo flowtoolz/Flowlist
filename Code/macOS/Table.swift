@@ -3,7 +3,7 @@ import SwiftObserver
 import SwiftyToolz
 import UIToolz
 
-class Table: AnimatedTableView, NSTableViewDelegate, Observer, Observable
+class Table: AnimatedTableView, Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -17,47 +17,15 @@ class Table: AnimatedTableView, NSTableViewDelegate, Observer, Observable
         headerView = nil
         intercellSpacing = NSSize(width: 0, height: Float.verticalGap.cgFloat)
         
-        delegate = self
-        dataSource = source
+        delegate = content
+        dataSource = content
     }
     
     required init?(coder: NSCoder) { fatalError() }
     
     deinit { stopAllObserving() }
     
-    // MARK: - Table View Delegate
-    
-    func tableView(_ tableView: NSTableView,
-                   heightOfRow row: Int) -> CGFloat
-    {
-        return Float.itemHeight.cgFloat
-    }
-    
-    func tableView(_ tableView: NSTableView,
-                   viewFor tableColumn: NSTableColumn?,
-                   row: Int) -> NSView?
-    {
-        return source.tableView(tableView,
-                                viewFor: tableColumn,
-                                row: row)
-    }
-    
-    func tableView(_ tableView: NSTableView,
-                   rowViewForRow row: Int) -> NSTableRowView?
-    {
-        return source.tableView(tableView, rowViewForRow: row)
-    }
-    
-    func tableViewSelectionDidChange(_ notification: Notification)
-    {
-        let tableSelection = selection
-        
-        guard tableSelection != listSelection else { return }
-        
-        list?.selection.setWithTasksListed(at: tableSelection)
-    }
-    
-    // MARK: - Configuration & Selection
+    // MARK: - Configuration
     
     func configure(with list: SelectableList)
     {
@@ -96,7 +64,7 @@ class Table: AnimatedTableView, NSTableViewDelegate, Observer, Observable
                 return
             }
             
-            self?.selectionChanged(in: list)
+            self?.selectionDidChanged(in: list)
         }
     }
     
@@ -110,8 +78,8 @@ class Table: AnimatedTableView, NSTableViewDelegate, Observer, Observable
                 return
             }
             
-            source.configure(with: list)
-            selectionChanged(in: list)
+            content.configure(with: list)
+            selectionDidChanged(in: list)
             
             if let oldNumber = oldValue?.numberOfTasks, oldNumber > 0
             {
@@ -124,26 +92,6 @@ class Table: AnimatedTableView, NSTableViewDelegate, Observer, Observable
             }
         }
     }
-    
-    private func selectionChanged(in list: SelectableList?)
-    {
-        let listSelection = self.listSelection
-        
-        guard selection != listSelection else { return }
-        
-        let rowNumber = dataSource?.numberOfRows?(in: self) ?? 0
-        
-        if let last = listSelection.last, last >= rowNumber
-        {
-            log(error: "List has at least one invalid selection index.")
-            return
-        }
-        
-        selectRowIndexes(IndexSet(listSelection), byExtendingSelection: false)
-    }
-    
-    private var selection: [Int] { return Array(selectedRowIndexes).sorted() }
-    private var listSelection: [Int] { return list?.selection.indexes ?? [] }
     
     // MARK: - Animation
     
@@ -195,24 +143,59 @@ class Table: AnimatedTableView, NSTableViewDelegate, Observer, Observable
         endUpdates()
     }
     
-    // MARK: - Creating & Observing Task Views
+    // MARK: - Content
     
-    private lazy var source: TableSource =
+    private lazy var content: TableContent =
     {
-        let src = TableSource()
+        let tableContent = TableContent()
         
-        observe(src)
+        observe(tableContent) { [unowned self] in self.didReceive($0) }
+        
+        return tableContent
+    }()
+    
+    private func didReceive(_ event: TableContent.Event)
+    {
+        switch event
         {
-            [unowned self] event in
-            
-            if case .didCreate(let taskView) = event
-            {
-                self.observe(taskView: taskView)
-            }
+        case .didCreate(let taskView): observe(taskView: taskView)
+        case .selectionDidChange: selectionDidChange()
+        case .didNothing: break
+        }
+    }
+    
+    // MARK: - Selection
+    
+    private func selectionDidChanged(in list: SelectableList?)
+    {
+        let listSelection = list?.selection.indexes ?? []
+        
+        guard selection != listSelection else { return }
+        
+        let rowNumber = dataSource?.numberOfRows?(in: self) ?? 0
+        
+        if let last = listSelection.last, last >= rowNumber
+        {
+            log(error: "List has at least one invalid selection index.")
+            return
         }
         
-        return src
-    }()
+        selectRowIndexes(IndexSet(listSelection), byExtendingSelection: false)
+    }
+    
+    private func selectionDidChange()
+    {
+        let tableSelection = selection
+        let listSelection = list?.selection.indexes ?? []
+        
+        guard tableSelection != listSelection else { return }
+        
+        list?.selection.setWithTasksListed(at: tableSelection)
+    }
+    
+    private var selection: [Int] { return Array(selectedRowIndexes).sorted() }
+    
+    // MARK: - Observe Task Views
     
     private func observe(taskView: TaskView)
     {

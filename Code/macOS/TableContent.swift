@@ -2,16 +2,14 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class TableSource: NSObject, Observable, NSTableViewDataSource
+class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDelegate
 {
-    // MARK: - Data Source
+    // MARK: - Rows
     
     func numberOfRows(in tableView: NSTableView) -> Int
     {
         return list?.numberOfTasks ?? 0
     }
-    
-    // MARK: - Delegate: Rows
     
     func tableView(_ tableView: NSTableView,
                    rowViewForRow row: Int) -> NSTableRowView?
@@ -19,7 +17,13 @@ class TableSource: NSObject, Observable, NSTableViewDataSource
         return Row(with: list?.task(at: row))
     }
     
-    // MARK: - Delegate: Cells
+    func tableView(_ tableView: NSTableView,
+                   heightOfRow row: Int) -> CGFloat
+    {
+        return Float.itemHeight.cgFloat
+    }
+    
+    // MARK: - Cells
     
     func tableView(_ tableView: NSTableView,
                    viewFor tableColumn: NSTableColumn?,
@@ -68,6 +72,13 @@ class TableSource: NSObject, Observable, NSTableViewDataSource
         return taskView
     }
     
+    // MARK: - Selection
+    
+    func tableViewSelectionDidChange(_ notification: Notification)
+    {
+        send(.selectionDidChange)
+    }
+    
     // MARK: - List
     
     func configure(with list: SelectableList?)
@@ -81,5 +92,8 @@ class TableSource: NSObject, Observable, NSTableViewDataSource
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, didCreate(taskView: TaskView) }
+    enum Event
+    {
+        case didNothing, didCreate(taskView: TaskView), selectionDidChange
+    }
 }
