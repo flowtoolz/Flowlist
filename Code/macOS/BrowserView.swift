@@ -51,7 +51,7 @@ class BrowserView: LayerBackedView, Observer
             {
                 if let index = list.selection.indexes.first
                 {
-                    listViews[2].scrollTable.tableView.editTitle(at: index)
+                    listViews[2].scrollTable.table.editTitle(at: index)
                 }
                 
                 break
@@ -268,7 +268,7 @@ class BrowserView: LayerBackedView, Observer
     @discardableResult
     private func makeFocusedTableFirstResponder() -> Bool
     {
-        guard listViews.isValid(index: 2), listViews[2].scrollTable.tableView.makeFirstResponder() else
+        guard listViews.isValid(index: 2), listViews[2].scrollTable.table.makeFirstResponder() else
         {
             log(error: "Could not make table view first responder.")
             return false

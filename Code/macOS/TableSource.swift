@@ -70,7 +70,7 @@ class TableSource: NSObject, Observable, NSTableViewDataSource
     
     // MARK: - List
     
-    func configure(with list: SelectableList)
+    func configure(with list: SelectableList?)
     {
         self.list = list
     }

@@ -3,7 +3,7 @@ import SwiftObserver
 import SwiftyToolz
 import UIToolz
 
-class Table: AnimatedTableView, Observer
+class Table: AnimatedTableView, NSTableViewDelegate, Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -16,11 +16,46 @@ class Table: AnimatedTableView, Observer
         backgroundColor = NSColor.clear
         headerView = nil
         intercellSpacing = NSSize(width: 0, height: Float.verticalGap.cgFloat)
+        
+        delegate = self
+        dataSource = source
     }
     
     required init?(coder: NSCoder) { fatalError() }
     
     deinit { stopAllObserving() }
+    
+    // MARK: - Table View Delegate
+    
+    func tableView(_ tableView: NSTableView,
+                   heightOfRow row: Int) -> CGFloat
+    {
+        return Float.itemHeight.cgFloat
+    }
+    
+    func tableView(_ tableView: NSTableView,
+                   viewFor tableColumn: NSTableColumn?,
+                   row: Int) -> NSView?
+    {
+        return source.tableView(tableView,
+                                viewFor: tableColumn,
+                                row: row)
+    }
+    
+    func tableView(_ tableView: NSTableView,
+                   rowViewForRow row: Int) -> NSTableRowView?
+    {
+        return source.tableView(tableView, rowViewForRow: row)
+    }
+    
+    func tableViewSelectionDidChange(_ notification: Notification)
+    {
+        let tableSelection = selection
+        
+        guard tableSelection != listSelection else { return }
+        
+        list?.selection.setWithTasksListed(at: tableSelection)
+    }
     
     // MARK: - Configuration & Selection
     
@@ -65,15 +100,6 @@ class Table: AnimatedTableView, Observer
         }
     }
     
-    func selectionDidChange()
-    {
-        let tableSelection = selection
-        
-        guard tableSelection != listSelection else { return }
-        
-        list?.selection.setWithTasksListed(at: tableSelection)
-    }
-    
     private weak var list: SelectableList?
     {
         didSet
@@ -84,6 +110,7 @@ class Table: AnimatedTableView, Observer
                 return
             }
             
+            source.configure(with: list)
             selectionChanged(in: list)
             
             if let oldNumber = oldValue?.numberOfTasks, oldNumber > 0
@@ -168,6 +195,47 @@ class Table: AnimatedTableView, Observer
         endUpdates()
     }
     
+    // MARK: - Creating & Observing Task Views
+    
+    private lazy var source: TableSource =
+    {
+        let src = TableSource()
+        
+        observe(src)
+        {
+            [unowned self] event in
+            
+            if case .didCreate(let taskView) = event
+            {
+                self.observe(taskView: taskView)
+            }
+        }
+        
+        return src
+    }()
+    
+    private func observe(taskView: TaskView)
+    {
+        observe(taskView)
+        {
+            [weak self, weak taskView] event in
+            
+            self?.didReceive(event, from: taskView)
+        }
+    }
+    
+    private func didReceive(_ event: TaskView.Event,
+                            from taskView: TaskView?)
+    {
+        switch event
+        {
+        case .didNothing: break
+        case .didEditTitle: editTitleOfNextSelectedTaskView()
+        case .willEditTitle: send(event)
+        case .willDeinit: stopObserving(taskView)
+        }
+    }
+    
     // MARK: - Edit Titles
     
     func editTitleOfNextSelectedTaskView()
@@ -222,10 +290,13 @@ class Table: AnimatedTableView, Observer
         }
     }
     
-    
     override func mouseDown(with event: NSEvent)
     {
         super.mouseDown(with: event)
         nextResponder?.mouseDown(with: event)
     }
+    
+    // MARK: - Observability
+    
+    var latestUpdate: TaskView.Event { return .didNothing }
 }
