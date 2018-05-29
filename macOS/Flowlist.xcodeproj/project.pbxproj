@@ -210,9 +210,7 @@
 				9E91650F20551C5C00A438FB /* Store */,
 				9E91650D20551C1900A438FB /* Task */,
 				9EE2EE5220B4AFF4007CDC2F /* Style */,
-				9E33889F20B92818004E4182 /* AnimatedTableView.swift */,
-				9E3388A120B9FE3B004E4182 /* Keyboard.swift */,
-				9E049FBF20BD92090008F7C4 /* Tree.swift */,
+				9EFA20DF20BDF94400FB2156 /* Framework Candidates */,
 			);
 			name = Code;
 			sourceTree = "<group>";
@@ -330,6 +328,16 @@
 				9E15185D1EEEE97700B35AD5 /* ViewController.swift */,
 			);
 			name = Main;
+			sourceTree = "<group>";
+		};
+		9EFA20DF20BDF94400FB2156 /* Framework Candidates */ = {
+			isa = PBXGroup;
+			children = (
+				9E33889F20B92818004E4182 /* AnimatedTableView.swift */,
+				9E3388A120B9FE3B004E4182 /* Keyboard.swift */,
+				9E049FBF20BD92090008F7C4 /* Tree.swift */,
+			);
+			name = "Framework Candidates";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
