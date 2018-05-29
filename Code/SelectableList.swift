@@ -15,7 +15,6 @@ class SelectableList: List
         
         if let group = root?.groupSubtasks(at: selection.indexes)
         {
-            observe(listedTask: group)
             selection.set(with: group)
         }
     }
@@ -30,7 +29,6 @@ class SelectableList: List
     {
         guard let newTask = root?.create(at: index) else { return }
         
-        observe(listedTask: newTask)
         selection.set(with: newTask)
     }
     

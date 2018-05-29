@@ -51,11 +51,11 @@ class List: Observable, Observer
         
         observe(root)
         {
-            [weak self, weak root] change in
+            [weak self, weak root] edit in
             
             guard let root = root else { return }
             
-            self?.received(change, from: root)
+            self?.received(edit, from: root)
         }
     }
     
@@ -71,7 +71,10 @@ class List: Observable, Observer
         case .didRemove(let tasks, _):
             for task in tasks { observe(listedTask: task, start: false) }
             
-        default: break
+        case .didCreate(let index):
+            observeTasksListed(in: root, at: [index])
+        
+        case .didNothing, .didMove: break
         }
         
         send(edit)
@@ -99,7 +102,7 @@ class List: Observable, Observer
         }
     }
     
-    func observe(listedTask task: Task, start: Bool = true)
+    private func observe(listedTask task: Task, start: Bool = true)
     {
         guard start else
         {
