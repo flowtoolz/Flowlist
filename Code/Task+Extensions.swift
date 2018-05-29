@@ -12,11 +12,11 @@ extension Task
         let bullet = isLast ? "└╴" : "├╴"
         var desc = "\(prefix)\(bullet)" + (title.value ?? "untitled")
         
-        for i in 0 ..< numberOfSubtasks
+        for i in 0 ..< numberOfBranches
         {
-            guard let subtask = subtask(at: i) else { continue }
+            guard let subtask = branch(at: i) else { continue }
             
-            let isLastSubtask = i == numberOfSubtasks - 1
+            let isLastSubtask = i == numberOfBranches - 1
             let subtaskPrefix = prefix + (isLast ? " " : "│") + " "
 
             desc += "\n\(subtask.description(subtaskPrefix, isLastSubtask))"
@@ -29,5 +29,5 @@ extension Task
     
     var isDone: Bool { return state.value == .done }
     
-    var indexInSupertask: Int? { return supertask?.index(of: self) }
+    var indexInSupertask: Int? { return root?.index(of: self) }
 }

@@ -158,7 +158,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func updateGroupIndicator()
     {
-        groupIndicator.isHidden = !(task?.hasSubtasks ?? false)
+        groupIndicator.isHidden = !(task?.hasBranches ?? false)
     }
     
     private func contrainGroupIndicator()

@@ -44,7 +44,7 @@ class SelectableList: List
             return false
         }
        
-        guard root.hasSubtasks else { return true }
+        guard root.hasBranches else { return true }
         
         let newSelectedIndex = max(firstSelectedIndex - 1, 0)
         

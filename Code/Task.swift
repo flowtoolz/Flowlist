@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-class Task: Codable, Observable
+final class Task: Codable, Observable, Tree
 {
     // MARK: - Initialization
     
@@ -13,7 +13,7 @@ class Task: Codable, Observable
     
     // MARK: - Data
     
-    enum CodingKeys: CodingKey { case title, state, subtasks }
+    enum CodingKeys: CodingKey { case title, state, branches }
     
     private(set) var title = Var<String>()
     
@@ -30,8 +30,8 @@ class Task: Codable, Observable
     func groupSubtasks(at indexes: [Int]) -> Task?
     {
         guard let groupIndex = indexes.min(),
-            subtasks.isValid(index: groupIndex),
-            subtasks.isValid(index: indexes.max())
+            branches.isValid(index: groupIndex),
+            branches.isValid(index: indexes.max())
         else
         {
             log(warning: "Tried to group invalid indexes \(indexes).")
@@ -48,7 +48,7 @@ class Task: Codable, Observable
         
         for removedTask in removedTasks
         {
-            group.insert(removedTask, at: group.numberOfSubtasks)
+            group.insert(removedTask, at: group.numberOfBranches)
         }
        
         return group
@@ -57,28 +57,12 @@ class Task: Codable, Observable
     @discardableResult
     func removeSubtasks(at indexes: [Int]) -> [Task]
     {
-        var sortedIndexes = indexes.sorted()
+        let removedSubtasks = removeBranches(at: indexes)
         
-        guard subtasks.isValid(index: sortedIndexes.first),
-            subtasks.isValid(index: sortedIndexes.last)
-            else
+        if !removedSubtasks.isEmpty
         {
-            log(warning: "Tried to remove subtasks from at least one out of bound index in \(indexes).")
-            return []
+            send(.didRemove(subtasks: removedSubtasks, from: indexes))
         }
-        
-        var removedSubtasks = [Task]()
-        
-        while let indexToRemove = sortedIndexes.popLast()
-        {
-            let removedSubtask = subtasks.remove(at: indexToRemove)
-        
-            removedSubtask.supertask = nil
-            
-            removedSubtasks.insert(removedSubtask, at: 0)
-        }
-        
-        send(.didRemove(subtasks: removedSubtasks, from: indexes))
         
         return removedSubtasks
     }
@@ -86,15 +70,7 @@ class Task: Codable, Observable
     @discardableResult
     func insert(_ subtask: Task, at index: Int) -> Task?
     {
-        guard index >= 0, index <= subtasks.count else
-        {
-            log(warning: "Tried to insert subask at out of bound index \(index).")
-            return nil
-        }
-        
-        subtasks.insert(subtask, at: index)
-        
-        subtask.supertask = self
+        guard insert(branch: subtask, at: index) else { return nil }
         
         send(.didInsert(at: [index]))
         
@@ -106,16 +82,9 @@ class Task: Codable, Observable
     @discardableResult
     func create(at index: Int) -> Task?
     {
-        guard index >= 0, index <= subtasks.count else
-        {
-            log(warning: "Tried to create subtask at out of bound index \(index).")
-            return nil
-        }
-        
         let subtask = Task()
-        subtask.supertask = self
         
-        subtasks.insert(subtask, at: index)
+        guard insert(branch: subtask, at: index) else { return nil }
         
         send(.didCreate(at: index))
         
@@ -125,50 +94,18 @@ class Task: Codable, Observable
     @discardableResult
     func moveSubtask(from: Int, to: Int) -> Bool
     {
-        guard subtasks.moveElement(from: from, to: to) else { return false }
+        guard moveBranch(from: from, to: to) else { return false }
         
         send(.didMove(from: from, to: to))
         
         return true
     }
     
-    // MARK: - Subtasks
+    // MARK: - Tree
     
-    func subtask(at index: Int?) -> Task?
-    {
-        guard let index = index else { return nil }
-        
-        guard subtasks.isValid(index: index) else
-        {
-            log(warning: "Tried to access subask at out of bound index \(index).")
-            return nil
-        }
-        
-        return subtasks[index]
-    }
+    weak var root: Task? = nil
     
-    func index(of subtask: Task) -> Int?
-    {
-        return subtasks.index { $0 === subtask }
-    }
-    
-    var hasSubtasks: Bool { return subtasks.count > 0 }
-    var numberOfSubtasks: Int { return subtasks.count }
-    
-    private var subtasks = [Task]()
-    
-    // MARK: - Supertask
-    
-    func recoverSupertasks()
-    {
-        for subtask in subtasks
-        {
-            subtask.supertask = self
-            subtask.recoverSupertasks()
-        }
-    }
-    
-    private(set) weak var supertask: Task? = nil
+    var branches = [Task]()
     
     // MARK: - Observability
     

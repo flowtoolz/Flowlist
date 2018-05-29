@@ -42,7 +42,7 @@ class Browser: Observer, Observable
         {
             guard lists.count > 1,
                 let sublistRoot = lists[1].root,
-                let firstRoot = sublistRoot.supertask else { return }
+                let firstRoot = sublistRoot.root else { return }
             
             newList.set(root: firstRoot)
             newList.selection.set(with: sublistRoot)

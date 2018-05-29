@@ -21,7 +21,7 @@ extension Store
             return
         }
         
-        loadedRoot.recoverSupertasks()
+        loadedRoot.recoverRoots()
         
         root = loadedRoot
     }

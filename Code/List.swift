@@ -85,7 +85,7 @@ class List: Observable, Observer
     private func observeTasksListed(in root: Task,
                                     start: Bool = true)
     {
-        let indexes = Array(0 ..< root.numberOfSubtasks)
+        let indexes = Array(0 ..< root.numberOfBranches)
         
         observeTasksListed(in: root, at: indexes, start: start)
     }
@@ -96,7 +96,7 @@ class List: Observable, Observer
     {
         for index in indexes
         {
-            guard let task = root.subtask(at: index) else { continue }
+            guard let task = root.branch(at: index) else { continue }
             
             observe(listedTask: task, start: start)
         }
@@ -135,10 +135,10 @@ class List: Observable, Observer
             return nil
         }
         
-        return root.subtask(at: index)
+        return root.branch(at: index)
     }
     
-    var numberOfTasks: Int { return root?.numberOfSubtasks ?? 0 }
+    var numberOfTasks: Int { return root?.numberOfBranches ?? 0 }
     
     // MARK: - Root
     
@@ -164,14 +164,14 @@ class List: Observable, Observer
     
     private func sendDidRemoveTasksOf(oldRoot old: Task?)
     {
-        guard let old = old, old.hasSubtasks else { return }
+        guard let old = old, old.hasBranches else { return }
 
         var subtasks = [Task]()
         var indexes = [Int]()
         
-        for index in 0 ..< old.numberOfSubtasks
+        for index in 0 ..< old.numberOfBranches
         {
-            if let subtask = old.subtask(at: index)
+            if let subtask = old.branch(at: index)
             {
                 subtasks.append(subtask)
                 indexes.append(index)
@@ -183,9 +183,9 @@ class List: Observable, Observer
     
     private func sendDidInsertTasksOf(newRoot new: Task?)
     {
-        guard let new = new, new.hasSubtasks else { return }
+        guard let new = new, new.hasBranches else { return }
         
-        let indexes = Array(0 ..< new.numberOfSubtasks)
+        let indexes = Array(0 ..< new.numberOfBranches)
 
         send(.didInsert(at: indexes))
     }

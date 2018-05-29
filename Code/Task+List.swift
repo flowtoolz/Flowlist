@@ -11,9 +11,9 @@ extension Task
     
     var indexOfLastUncheckedSubtask: Int?
     {
-        for subtaskIndex in (0 ..< numberOfSubtasks).reversed()
+        for subtaskIndex in (0 ..< numberOfBranches).reversed()
         {
-            if let subtask = subtask(at: subtaskIndex), !subtask.isDone
+            if let subtask = branch(at: subtaskIndex), !subtask.isDone
             {
                 return subtaskIndex
             }
@@ -24,9 +24,9 @@ extension Task
     
     func indexOfFirstUncheckedSubtask(from: Int = 0) -> Int?
     {
-        for i in from ..< numberOfSubtasks
+        for i in from ..< numberOfBranches
         {
-            if let subtask = subtask(at: i), !subtask.isDone
+            if let subtask = branch(at: i), !subtask.isDone
             {
                 return i
             }

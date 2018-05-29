@@ -6,9 +6,9 @@ extension Selection
     {
         var result = [Int]()
         
-        for index in 0 ..< (root?.numberOfSubtasks ?? 0)
+        for index in 0 ..< (root?.numberOfBranches ?? 0)
         {
-            if let task = root?.subtask(at: index), isSelected(task)
+            if let task = root?.branch(at: index), isSelected(task)
             {
                 result.append(index)
             }

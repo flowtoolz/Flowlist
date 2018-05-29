@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E049FC020BD92090008F7C4 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E049FBF20BD92090008F7C4 /* Tree.swift */; };
 		9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185B1EEEE8CE00B35AD5 /* Task.swift */; };
 		9E15185E1EEEE97700B35AD5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185D1EEEE97700B35AD5 /* ViewController.swift */; };
 		9E1AAD6A20B57CA9001657A7 /* GroupIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1AAD6920B57CA9001657A7 /* GroupIndicator.swift */; };
@@ -51,6 +52,7 @@
 		6F31C4A5AA59FD1BF6AFBF3A /* Pods-FlowlistTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowlistTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests.release.xcconfig"; sourceTree = "<group>"; };
 		73F5B44C9211479F59673188 /* Pods-FlowlistTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowlistTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests.debug.xcconfig"; sourceTree = "<group>"; };
 		78B3E83C8B5F1E96FF074B6D /* Pods-Flowlist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flowlist.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist.debug.xcconfig"; sourceTree = "<group>"; };
+		9E049FBF20BD92090008F7C4 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Tree.swift; path = ../Code/Tree.swift; sourceTree = "<group>"; };
 		9E15185B1EEEE8CE00B35AD5 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../Code/Task.swift; sourceTree = "<group>"; };
 		9E15185D1EEEE97700B35AD5 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../Code/macOS/ViewController.swift; sourceTree = "<group>"; };
 		9E1AAD6920B57CA9001657A7 /* GroupIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GroupIndicator.swift; path = ../Code/macOS/GroupIndicator.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				9EE2EE5220B4AFF4007CDC2F /* Style */,
 				9E33889F20B92818004E4182 /* AnimatedTableView.swift */,
 				9E3388A120B9FE3B004E4182 /* Keyboard.swift */,
+				9E049FBF20BD92090008F7C4 /* Tree.swift */,
 			);
 			name = Code;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				9EF0A78A20B5E26F00E1A23A /* TableContent.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* SelectableList.swift in Sources */,
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
+				9E049FC020BD92090008F7C4 /* Tree.swift in Sources */,
 				9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */,
 				9E72881B1EEF3095003A2F46 /* SelectableListView.swift in Sources */,
 				9EE2EE5120B4AE35007CDC2F /* Style.swift in Sources */,

@@ -39,7 +39,7 @@ class Selection: Observable
         
         for index in indexes
         {
-            if let task = root.subtask(at: index)
+            if let task = root.branch(at: index)
             {
                 selectedTasks[task.hash] = task
             }
@@ -120,7 +120,7 @@ class Selection: Observable
     
     func removeTask(at index: Int)
     {
-        guard let task = root?.subtask(at: index), isSelected(task) else
+        guard let task = root?.branch(at: index), isSelected(task) else
         {
             log(warning: "Tried invalid deselection of index \(index).")
             return
