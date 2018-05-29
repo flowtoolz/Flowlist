@@ -15,7 +15,7 @@ extension Tree
             branches.isValid(index: indexes.max())
         else
         {
-            log(warning: "Tried to group tasks at invalid indexes \(indexes).")
+            log(error: "Tried to merge branches at invalid indexes \(indexes).")
             return nil
         }
         
@@ -40,7 +40,7 @@ extension Tree
               branches.isValid(index: sortedIndexes.last)
         else
         {
-            log(warning: "Tried to remove branches at invalid indexes \(indexes).")
+            log(error: "Tried to remove branches from invalid indexes \(indexes).")
             return nil
         }
         
@@ -63,7 +63,7 @@ extension Tree
     {
         guard index >= 0, index <= branches.count else
         {
-            log(warning: "Tried to insert branch at out of bound index \(index).")
+            log(error: "Tried to insert branch at invalid index \(index).")
             return false
         }
         
@@ -97,7 +97,7 @@ extension Tree
         
         guard branches.isValid(index: index) else
         {
-            log(warning: "Tried to access subtree at out of bound index \(index).")
+            log(error: "Tried to access branch at invalid index \(index).")
             return nil
         }
         
