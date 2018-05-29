@@ -37,9 +37,9 @@ class BrowserView: LayerBackedView, Observer
         switch keyEvent.key
         {
         
-        case .left: move(.left)
+        case .left: browser.move(.left)
             
-        case .right: move(.right)
+        case .right: browser.move(.right)
             
         case .enter:
         
@@ -148,18 +148,11 @@ class BrowserView: LayerBackedView, Observer
     {
         switch listViews.index(where: { $0 === listView })
         {
-        case 1: move(.left)
-        case 3: move(.right)
+        case 1: browser.move(.left)
+        case 3: browser.move(.right)
         default: break
         }
     }
-    
-    private func move(_ direction: Direction)
-    {
-        if !isMoving { isMoving = browser.move(direction) }
-    }
-    
-    private var isMoving = false
     
     // MARK: - React to Browser
     
@@ -184,7 +177,6 @@ class BrowserView: LayerBackedView, Observer
         guard let newList = browser.list(at: newListIndex) else
         {
             log(error: "Couldn't get first list from browser.")
-            isMoving = false
             return
         }
         
@@ -208,22 +200,14 @@ class BrowserView: LayerBackedView, Observer
     
     private func relayoutAnimated(with addedListView: SelectableListView)
     {
-        addedListView.isHidden = true
-        
         NSAnimationContext.runAnimationGroup(
-            {
-                $0.allowsImplicitAnimation = true
-                $0.duration = 0.3
-                
-                constrainListViews()
-                layoutSubtreeIfNeeded()
-            },
-            completionHandler:
-            {
-                addedListView.isHidden = false
-                self.isMoving = false
-            }
-        )
+        {
+            $0.allowsImplicitAnimation = true
+            $0.duration = 0.3
+            
+            constrainListViews()
+            layoutSubtreeIfNeeded()
+        })
     }
     
     // MARK: - Layout List Views

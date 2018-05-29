@@ -23,12 +23,12 @@ class Browser: Observer, Observable
 {
     // MARK: - Navigate
     
-    func move(_ direction: Direction) -> Bool
+    func move(_ direction: Direction)
     {
         let moveLeft = direction == .left
         let newFocusedIndex = moveLeft ? 1 : 3
         
-        guard lists[newFocusedIndex].root != nil else { return false }
+        guard lists[newFocusedIndex].root != nil else { return }
         
         let removalIndex = moveLeft ? lists.count - 1 : 0
         
@@ -42,7 +42,7 @@ class Browser: Observer, Observable
         {
             guard lists.count > 1,
                 let sublistRoot = lists[1].root,
-                let firstRoot = sublistRoot.supertask else { return true }
+                let firstRoot = sublistRoot.supertask else { return }
             
             newList.set(root: firstRoot)
             newList.selection.set(with: sublistRoot)
@@ -53,8 +53,6 @@ class Browser: Observer, Observable
             
             lists[2].select()
         }
-        
-        return true
     }
     
     // MARK: - Create Task Lists
@@ -115,7 +113,7 @@ class Browser: Observer, Observable
             return
         }
         
-        updateRootOfList(at: index + 1)
+        if index < lists.count - 1 { updateRootOfList(at: index + 1) }
     }
     
     // MARK: - Lists
