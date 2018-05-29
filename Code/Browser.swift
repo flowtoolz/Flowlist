@@ -130,8 +130,9 @@ class Browser: Observer, Observable
         
         let superSelection = lists[index - 1].selection
         let newRoot = superSelection.count == 1 ? superSelection.first : nil
+        let list = lists[index]
         
-        lists[index].set(root: newRoot)
+        if newRoot !== list.root { list.set(root: newRoot) }
     }
     
     func list(at index: Int) -> SelectableList?
