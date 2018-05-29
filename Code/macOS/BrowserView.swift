@@ -30,9 +30,10 @@ class BrowserView: LayerBackedView, Observer
     
     private func process(_ keyEvent: NSEvent)
     {
-        guard let list = browser.list(at: 2) else { return }
-        
-        //log("keyboard: \(keyEvent.key) (\(keyEvent.keyCode))")
+        guard let list = browser.list(at: 2), !TextField.isEditing else
+        {
+            return
+        }
         
         switch keyEvent.key
         {
@@ -42,8 +43,6 @@ class BrowserView: LayerBackedView, Observer
         case .right: browser.move(.right)
             
         case .enter:
-        
-            guard !TextField.isEditing else { return }
         
             let numSelections = list.selection.count
             
