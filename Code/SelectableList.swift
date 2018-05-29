@@ -38,7 +38,8 @@ class SelectableList: List
         
         guard let root = root,
             let firstSelectedIndex = selectedIndexes.first,
-            root.removeSubtasks(at: selectedIndexes).count > 0
+            let removedTasks = root.removeSubtasks(at: selectedIndexes),
+            removedTasks.count > 0
         else
         {
             return false
@@ -118,7 +119,7 @@ class SelectableList: List
         selection.root = newRoot
     }
     
-    override func received(_ edit: ListEdit, from root: Task)
+    override func received(_ edit: Edit, from root: Task)
     {
         super.received(edit, from: root)
         

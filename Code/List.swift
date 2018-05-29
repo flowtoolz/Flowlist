@@ -59,7 +59,7 @@ class List: Observable, Observer
         }
     }
     
-    func received(_ edit: ListEdit, from root: Task)
+    func received(_ edit: Edit, from root: Task)
     {
         //print("list <\(root.title.value ?? "untitled")> \(change)")
         
@@ -117,7 +117,7 @@ class List: Observable, Observer
             
             if let task = task,
                 stateUpdate.new != stateUpdate.old,
-                let taskIndex = task.indexInSupertask,
+                let taskIndex = task.indexInRoot,
                 task.isDone
             {
                 self?.root?.moveSubtaskToTopOfDoneList(from: taskIndex)
@@ -196,5 +196,5 @@ class List: Observable, Observer
     
     // MARK: - Observability
     
-    var latestUpdate: ListEdit { return .didNothing }
+    var latestUpdate: Edit { return .didNothing }
 }

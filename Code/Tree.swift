@@ -5,16 +5,43 @@ extension Tree
     // MARK: - Editing
     
     @discardableResult
-    func removeBranches(at indexes: [Int]) -> [Self]
+    func mergeBranches(at indexes: [Int],
+                       as merged: Self,
+                       at index: Int) -> [Self]?
+    {
+        guard
+            branches.isValid(index: index),
+            branches.isValid(index: indexes.min()),
+            branches.isValid(index: indexes.max())
+        else
+        {
+            log(warning: "Tried to group tasks at invalid indexes \(indexes).")
+            return nil
+        }
+        
+        guard let removedBranches = removeBranches(at: indexes) else { return nil }
+        
+        guard insert(branch: merged, at: index) else { return nil }
+        
+        for removed in removedBranches
+        {
+            merged.insert(branch: removed, at: merged.numberOfBranches)
+        }
+        
+        return removedBranches
+    }
+    
+    @discardableResult
+    func removeBranches(at indexes: [Int]) -> [Self]?
     {
         var sortedIndexes = indexes.sorted()
         
         guard branches.isValid(index: sortedIndexes.first),
-            branches.isValid(index: sortedIndexes.last)
-            else
+              branches.isValid(index: sortedIndexes.last)
+        else
         {
-            log(warning: "Tried to remove branches from at least one out of bound index in \(indexes).")
-            return []
+            log(warning: "Tried to remove branches at invalid indexes \(indexes).")
+            return nil
         }
         
         var removedBranches = [Self]()
@@ -82,6 +109,7 @@ extension Tree
         return branches.index { $0 === branch }
     }
     
+    var indexInRoot: Int? { return root?.index(of: self) }
     var hasBranches: Bool { return branches.count > 0 }
     var numberOfBranches: Int { return branches.count }
 }

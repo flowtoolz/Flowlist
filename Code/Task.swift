@@ -16,7 +16,6 @@ final class Task: Codable, Observable, Tree
     enum CodingKeys: CodingKey { case title, state, branches }
     
     private(set) var title = Var<String>()
-    
     private(set) var state = Var<State>()
     
     enum State: Int, Codable
@@ -24,45 +23,36 @@ final class Task: Codable, Observable, Tree
         case inProgress, onHold, done, archived
     }
     
-    // MARK: - Edit Subtask List
+    // MARK: - Observable Tree Editing
     
     @discardableResult
     func groupSubtasks(at indexes: [Int]) -> Task?
     {
-        guard let groupIndex = indexes.min(),
-            branches.isValid(index: groupIndex),
-            branches.isValid(index: indexes.max())
-        else
+        guard let groupIndex = indexes.min() else
         {
-            log(warning: "Tried to group invalid indexes \(indexes).")
+            log(warning: "Tried to group tasks at no indexes.")
             return nil
         }
         
-        let removedTasks = removeSubtasks(at: indexes)
+        let group = Task()
         
-        guard let group = create(at: groupIndex) else
-        {
-            log(error: "Could not create group at valid index \(groupIndex).")
-            return nil
-        }
+        guard let merged = mergeBranches(at: indexes,
+                                         as: group,
+                                         at: groupIndex) else { return nil }
+
+        send(.didRemove(subtasks: merged, from: indexes))
+        send(.didCreate(at: groupIndex))
+        group.send(.didInsert(at: Array(0 ..< group.numberOfBranches)))
         
-        for removedTask in removedTasks
-        {
-            group.insert(removedTask, at: group.numberOfBranches)
-        }
-       
         return group
     }
     
     @discardableResult
-    func removeSubtasks(at indexes: [Int]) -> [Task]
+    func removeSubtasks(at indexes: [Int]) -> [Task]?
     {
-        let removedSubtasks = removeBranches(at: indexes)
+        guard let removedSubtasks = removeBranches(at: indexes) else { return nil }
         
-        if !removedSubtasks.isEmpty
-        {
-            send(.didRemove(subtasks: removedSubtasks, from: indexes))
-        }
+        send(.didRemove(subtasks: removedSubtasks, from: indexes))
         
         return removedSubtasks
     }
@@ -73,9 +63,7 @@ final class Task: Codable, Observable, Tree
         guard insert(branch: subtask, at: index) else { return nil }
         
         send(.didInsert(at: [index]))
-        
-        //print("task \(title.value ?? "unfiltered") inserted subtask at \(index)")
-        
+
         return subtask
     }
     
@@ -109,5 +97,5 @@ final class Task: Codable, Observable, Tree
     
     // MARK: - Observability
     
-    var latestUpdate: ListEdit { return .didNothing }
+    var latestUpdate: Edit { return .didNothing }
 }

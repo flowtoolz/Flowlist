@@ -95,7 +95,7 @@ class Table: AnimatedTableView, Observer, Observable
     
     // MARK: - Animation
     
-    private func did(_ edit: ListEdit)
+    private func did(_ edit: Edit)
     {
         //Swift.print("list view <\(titleField.stringValue)> \(change)")
         

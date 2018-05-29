@@ -1,4 +1,4 @@
-enum ListEdit
+enum Edit
 {
     case didNothing
     case didCreate(at: Int)
