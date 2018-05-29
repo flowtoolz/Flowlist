@@ -24,7 +24,7 @@ class SelectableList: List
         create(at: (selection.indexes.last ?? -1) + 1)
     }
     
-    // FIXME: move to List
+    // FIXME: move to List, than override here
     func create(at index: Int)
     {
         guard let newTask = root?.create(at: index) else { return }
@@ -32,7 +32,6 @@ class SelectableList: List
         selection.set(with: newTask)
     }
     
-    // FIXME: how is observing stopped? pull code down to List ...
     func removeSelectedTasks() -> Bool
     {
         let selectedIndexes = selection.indexes
@@ -45,6 +44,8 @@ class SelectableList: List
             return false
         }
        
+        guard root.hasSubtasks else { return true }
+        
         let newSelectedIndex = max(firstSelectedIndex - 1, 0)
         
         selection.setWithTasksListed(at: [newSelectedIndex])
