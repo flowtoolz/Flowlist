@@ -10,7 +10,7 @@ enum ListEdit
     {
         switch self
         {
-        case .didRemove, .didInsert: return true
+        case .didRemove, .didInsert, .didCreate: return true
         default: return false
         }
     }
