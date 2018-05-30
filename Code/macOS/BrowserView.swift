@@ -24,7 +24,7 @@ class BrowserView: LayerBackedView, Observer
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
-    deinit { stopObserving(keyboard) }
+    deinit { stopAllObserving() }
     
     // MARK: - Keyboard Input
     

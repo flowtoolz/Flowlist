@@ -1,8 +1,7 @@
 import AppKit
-import SwiftObserver
 import SwiftyToolz
 
-class ScrollTable: NSScrollView, Observer
+class ScrollTable: NSScrollView
 {
     // MARK: - Initialization
     

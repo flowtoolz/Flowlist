@@ -21,6 +21,18 @@ extension Browser
 
 class Browser: Observer, Observable
 {
+    // MARK: - Life Cycle
+    
+    init()
+    {
+        for _ in 0 ..< 5 { addTaskList() }
+        
+        lists[2].set(root: store.root)
+        lists[2].select()
+    }
+    
+    deinit { stopAllObserving() }
+    
     // MARK: - Navigate
     
     func move(_ direction: Direction)
@@ -56,14 +68,6 @@ class Browser: Observer, Observable
     }
     
     // MARK: - Create Task Lists
-    
-    init()
-    {
-        for _ in 0 ..< 5 { addTaskList() }
-        
-        lists[2].set(root: store.root)
-        lists[2].select()
-    }
     
     @discardableResult
     private func addTaskList(prepend: Bool = false) -> SelectableList

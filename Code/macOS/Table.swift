@@ -55,16 +55,7 @@ class Table: AnimatedTableView, Observer, Observable
         
         observe(list.selection, select: .didChange)
         {
-            [weak self, weak list] in
-            
-            guard let list = list else
-            {
-                log(error: "Received selection update from dead list.")
-                self?.stopObservingDeadObservables()
-                return
-            }
-            
-            self?.selectionDidChanged(in: list)
+            [weak self] in self?.listDidChangeSelection()
         }
     }
     
@@ -79,7 +70,7 @@ class Table: AnimatedTableView, Observer, Observable
             }
             
             content.configure(with: list)
-            selectionDidChanged(in: list)
+            listDidChangeSelection()
             
             if let oldNumber = oldValue?.numberOfTasks, oldNumber > 0
             {
@@ -157,15 +148,21 @@ class Table: AnimatedTableView, Observer, Observable
         switch event
         {
         case .didCreate(let taskView): observe(taskView: taskView)
-        case .selectionDidChange: selectionDidChange()
+        case .selectionDidChange: didChangeSelection()
         case .didNothing: break
         }
     }
     
     // MARK: - Selection
     
-    private func selectionDidChanged(in list: SelectableList?)
+    private func listDidChangeSelection()
     {
+        if list == nil
+        {
+            // FIXME: why does this happen sometimes when going left?
+            //log(warning: "List changed selection but list is nil.")
+        }
+        
         let listSelection = list?.selection.indexes ?? []
         
         guard selection != listSelection else { return }
@@ -181,14 +178,21 @@ class Table: AnimatedTableView, Observer, Observable
         selectRowIndexes(IndexSet(listSelection), byExtendingSelection: false)
     }
     
-    private func selectionDidChange()
+    private func didChangeSelection()
     {
+        guard let list = list else
+        {
+            // FIXME: why does this happen sometimes when going left?
+            //log(warning: "Selection changed and list is nil.")
+            return
+        }
+        
         let tableSelection = selection
-        let listSelection = list?.selection.indexes ?? []
+        let listSelection = list.selection.indexes
         
         guard tableSelection != listSelection else { return }
         
-        list?.selection.setWithTasksListed(at: tableSelection)
+        list.selection.setWithTasksListed(at: tableSelection)
     }
     
     private var selection: [Int] { return Array(selectedRowIndexes).sorted() }
