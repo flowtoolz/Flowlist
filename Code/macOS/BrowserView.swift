@@ -185,7 +185,7 @@ class BrowserView: LayerBackedView, Observer
         
         makeFocusedTableFirstResponder()
         
-        relayoutAnimated()
+        relayoutAnimated(with: newListView, direction: direction)
     }
     
     private func moveListViews(_ direction: Direction) -> SelectableListView
@@ -197,16 +197,26 @@ class BrowserView: LayerBackedView, Observer
         return addListView(prepend: !left)
     }
     
-    private func relayoutAnimated()
+    private func relayoutAnimated(with addedView: SelectableListView,
+                                  direction: Direction)
     {
-        NSAnimationContext.runAnimationGroup(
-        {
-            $0.allowsImplicitAnimation = true
-            $0.duration = 0.3
-            
-            constrainListViews()
-            layoutSubtreeIfNeeded()
-        })
+        let moveLeft = direction == .left
+        
+        addedView.frame.origin.x = frame.size.width * (moveLeft ? -1.3333 : 2)
+        addedView.frame.origin.y = 0
+        addedView.frame.size.height = frame.size.height
+        addedView.frame.size.width = frame.size.width / 3
+        
+        NSAnimationContext.beginGrouping()
+        
+        let context = NSAnimationContext.current
+        context.allowsImplicitAnimation = true
+        context.duration = 0.3
+        
+        constrainListViews()
+        layoutSubtreeIfNeeded()
+        
+        NSAnimationContext.endGrouping()
     }
     
     // MARK: - Layout List Views
