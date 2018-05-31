@@ -63,6 +63,13 @@ class TextField: NSTextField, Observable
         super.selectText(sender)
     }
     
+    override func textDidChange(_ notification: Notification)
+    {
+        super.textDidChange(notification)
+        
+        send(.didChange(text: stringValue))
+    }
+    
     override func abortEditing() -> Bool
     {
         let abort = super.abortEditing()
@@ -99,5 +106,5 @@ class TextField: NSTextField, Observable
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, willEdit, didEdit }
+    enum Event { case didNothing, willEdit, didChange(text: String), didEdit }
 }

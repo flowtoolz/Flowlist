@@ -120,12 +120,15 @@ class TaskView: LayerBackedView, Observer, Observable
         {
         case .didNothing: break
             
+        case .willEdit:
+            send(.willEditTitle)
+            
+        case .didChange(let text):
+            task?.title <- String(withNonEmpty: text)
+            
         case .didEdit:
             task?.title <- String(withNonEmpty: titleField.stringValue)
             send(.didEditTitle)
-            
-        case .willEdit:
-            send(.willEditTitle)
         }
     }
     
