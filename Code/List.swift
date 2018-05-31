@@ -185,7 +185,7 @@ class List: Observable, Observer
     
     // MARK: - Title
     
-    let title = Var<String>().new().unwrap("")
+    let title = Var<String>().new()
     
     // MARK: - Observability
     

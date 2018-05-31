@@ -22,7 +22,13 @@ class Header: LayerBackedView
     
     // MARK: - Title
     
-    func set(title: String?) { titleField.stringValue = title ?? "" }
+    func set(title: String?)
+    {
+        titleField.stringValue = title ?? "untitled"
+        
+        let textColor: Color = title == nil ? .grayedOut : .black
+        titleField.textColor = textColor.nsColor
+    }
     
     private func constrainTitleField()
     {

@@ -7,7 +7,7 @@ extension SelectableList
     
     var description: String
     {
-        var desc = title.latestUpdate + ":"
+        var desc = (title.latestUpdate ?? "untitled") + ":"
         
         for i in 0 ..< numberOfTasks
         {
