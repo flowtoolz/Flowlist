@@ -1,6 +1,7 @@
 enum Edit
 {
     case didNothing
+    case didChangeRoot(from: Task?, to: Task?)
     case didCreate(at: Int)
     case didInsert(at: [Int])
     case didMove(from: Int, to: Int)

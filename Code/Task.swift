@@ -92,6 +92,14 @@ final class Task: Codable, Observable, Tree
     // MARK: - Tree
     
     weak var root: Task? = nil
+    {
+        didSet
+        {
+            guard oldValue !== root else { return }
+            
+            send(.didChangeRoot(from: oldValue, to: root))
+        }
+    }
     
     var branches = [Task]()
     

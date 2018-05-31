@@ -94,7 +94,8 @@ class Table: AnimatedTableView, Observer, Observable
         case .didInsert(let indexes): didInsert(at: indexes)
         case .didRemove(_, let indexes): didRemove(from: indexes)
         case .didMove(let from, let to): didMove(from: from, to: to)
-        case .didNothing: break
+        case .didNothing, .didChangeRoot: break
+            // TODO: consider processing .didChangeRoot here
         }
     }
     

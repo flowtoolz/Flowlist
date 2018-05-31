@@ -66,7 +66,7 @@ class List: Observable, Observer
         case .didCreate(let index):
             observeTasksListed(in: root, at: [index])
         
-        case .didNothing, .didMove: break
+        case .didNothing, .didMove, .didChangeRoot: break
         }
         
         send(edit)
@@ -139,15 +139,18 @@ class List: Observable, Observer
         didSet
         {
             guard oldValue !== root else { return }
-            
+
             didSwitchRoot(from: oldValue, to: root)
         }
     }
     
     private func didSwitchRoot(from old: Task?, to new: Task?)
-    {   
+    {
         title.observable = new?.title
         
+        send(.didChangeRoot(from: old, to: new))
+        
+        // TODO: do this as reaction to the event .didChangeRoot
         sendDidRemoveTasksOf(oldRoot: old)
         sendDidInsertTasksOf(newRoot: new)
     }
