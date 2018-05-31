@@ -1,23 +1,16 @@
 import Foundation
 import FoundationToolz
+import SwiftObserver
 import SwiftyToolz
 
 extension Store
 {
-    func save()
-    {
-        guard let _ = root.save(to: fileUrl) else
-        {
-            log(error: "Failed to save tasks to " + fileUrl.absoluteString)
-            return
-        }
-    }
-    
     func load()
     {
         if FileManager.default.fileExists(atPath: legacyFilePath)
         {
             loadLegacyFile()
+            root.title <- bundlePath + "/" + legacyFilePath.fileName
             save()
             try? FileManager.default.removeItem(atPath: legacyFilePath)
             return
@@ -25,19 +18,35 @@ extension Store
         
         guard let loadedRoot = Task(from: fileUrl) else
         {
-            log(error: "Failed to load tasks from " + fileUrl.absoluteString)
+            log(warning: "Failed to load tasks from " + fileUrl.absoluteString)
+            save()
             return
         }
         
         loadedRoot.recoverRoots()
+        loadedRoot.title <- bundlePath.fileName
         
         root = loadedRoot
     }
     
+    func save()
+    {
+        guard let _ = root.save(to: fileUrl) else
+        {
+            log(error: "Failed to save tasks to " + fileUrl.absoluteString)
+            return
+        }
+        
+        root.title <- bundlePath.fileName
+    }
+    
     private var fileUrl: URL
     {
-        return URL(fileURLWithPath: Bundle.main.bundlePath + "/flowlist.json")
+        return URL(fileURLWithPath: bundlePath + "/" + jsonFileName)
     }
+    
+    private var bundlePath: String { return Bundle.main.bundlePath }
+    private var jsonFileName: String { return "flowlist.json" }
     
     // MARK: - Legacy
     
