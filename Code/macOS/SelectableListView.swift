@@ -23,6 +23,7 @@ class SelectableListView: NSView, Observer, Observable
     
     func configure(with list: SelectableList)
     {
+        // header
         stopObserving(self.list?.title)
         observe(list.title)
         {
@@ -31,10 +32,26 @@ class SelectableListView: NSView, Observer, Observable
             self?.header.set(title: newTitle)
         }
         
-        self.list = list
-        
         header.set(title: list.title.latestUpdate)
+        
+        // scroll table
         scrollTable.configure(with: list)
+        
+        // list
+        stopObserving(self.list)
+        observe(list)
+        {
+            [weak self] event in
+            
+            if case .didChangeRoot(_, let new) = event
+            {
+                self?.isHidden = new == nil
+            }
+        }
+        
+        isHidden = list.root == nil
+        
+        self.list = list
     }
     
     // MARK: - Mouse Input
