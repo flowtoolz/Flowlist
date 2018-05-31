@@ -41,7 +41,7 @@ class Selection: Observable
         {
             if let task = root.branch(at: index)
             {
-                selectedTasks[task.hash] = task
+                selectedTasks[task] = task
             }
             else
             {
@@ -66,7 +66,7 @@ class Selection: Observable
             return
         }
         
-        selectedTasks = [task.hash : task]
+        selectedTasks = [task : task]
         
         send(.didChange)
     }
@@ -91,7 +91,7 @@ class Selection: Observable
             return
         }
         
-        selectedTasks[task.hash] = task
+        selectedTasks[task] = task
         
         send(.didChange)
     }
@@ -110,7 +110,7 @@ class Selection: Observable
                 continue
             }
             
-            selectedTasks[task.hash] = nil
+            selectedTasks[task] = nil
             
             didChange = true
         }
@@ -126,7 +126,7 @@ class Selection: Observable
             return
         }
         
-        selectedTasks[task.hash] = nil
+        selectedTasks[task] = nil
         
         send(.didChange)
     }
@@ -170,13 +170,13 @@ class Selection: Observable
     {
         guard let task = task else { return false }
         
-        return selectedTasks[task.hash] === task
+        return selectedTasks[task] === task
     }
     
     var count: Int { return selectedTasks.count }
     var first: Task? { return selectedTasks.values.first }
     
-    private var selectedTasks = [HashValue : Task]()
+    private var selectedTasks = [Task : Task]()
     
     // MARK: - Observability
     
