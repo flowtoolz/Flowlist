@@ -4,15 +4,15 @@ import SwiftyToolz
 
 let keyboard = Keyboard()
 
-class Keyboard: Messenger<NSEvent>
+class Keyboard: Observable
 {
     fileprivate init()
     {
-        super.init(NSEvent())
-
         let monitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown)
         {
-            event in
+            [unowned self] event in
+            
+            self.lastEvent = event
             
             self.send(event)
             
@@ -21,5 +21,9 @@ class Keyboard: Messenger<NSEvent>
         
         if monitor == nil { log(error: "Couldn't get event monitor.") }
     }
+    
+    var latestUpdate: NSEvent { return lastEvent }
+    
+    private var lastEvent = NSEvent()
 }
 
