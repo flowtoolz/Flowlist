@@ -2,15 +2,7 @@ import SwiftObserver
 import SwiftyToolz
 
 final class Task: Codable, Observable, Tree
-{
-    // MARK: - Initialization
-    
-    convenience init(_ title: String)
-    {
-        self.init()
-        self.title <- title
-    }
-    
+{    
     // MARK: - Data
     
     enum CodingKeys: CodingKey { case title, state, branches }

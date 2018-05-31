@@ -4,5 +4,5 @@ class Store
 {
     fileprivate init() {}
 
-    var root = Task("All Items")
+    var root = Task()
 }
