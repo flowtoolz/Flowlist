@@ -29,7 +29,6 @@
 		9E72881B1EEF3095003A2F46 /* SelectableListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E72881A1EEF3095003A2F46 /* SelectableListView.swift */; };
 		9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651931EEF428100DE2B07 /* TaskView.swift */; };
 		9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* Store.swift */; };
-		9E7C977A20BE8FD400392038 /* TimeLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C977920BE8FD400392038 /* TimeLogger.swift */; };
 		9E82A7A91EF2A558006AEF02 /* SelectableList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* SelectableList.swift */; };
 		9E88F54F20B7761F00A64F7B /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E88F54E20B7761F00A64F7B /* Menu.swift */; };
 		9E8ABF0020B2F0F1001E862B /* SelectableList+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABEFF20B2F0F1001E862B /* SelectableList+Debugging.swift */; };
@@ -82,7 +81,6 @@
 		9E72881A1EEF3095003A2F46 /* SelectableListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectableListView.swift; path = ../Code/macOS/SelectableListView.swift; sourceTree = "<group>"; };
 		9E7651931EEF428100DE2B07 /* TaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = ../Code/macOS/TaskView.swift; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Store.swift; path = ../Code/Store.swift; sourceTree = "<group>"; };
-		9E7C977920BE8FD400392038 /* TimeLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TimeLogger.swift; path = ../Code/TimeLogger.swift; sourceTree = "<group>"; };
 		9E82A7A81EF2A558006AEF02 /* SelectableList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectableList.swift; path = ../Code/SelectableList.swift; sourceTree = "<group>"; };
 		9E88F54E20B7761F00A64F7B /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Menu.swift; path = ../Code/macOS/Menu.swift; sourceTree = "<group>"; };
 		9E8ABEFF20B2F0F1001E862B /* SelectableList+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SelectableList+Debugging.swift"; path = "../Code/SelectableList+Debugging.swift"; sourceTree = "<group>"; };
@@ -349,7 +347,6 @@
 		9EFA20DF20BDF94400FB2156 /* Framework Candidates */ = {
 			isa = PBXGroup;
 			children = (
-				9E7C977920BE8FD400392038 /* TimeLogger.swift */,
 				9E33889F20B92818004E4182 /* AnimatedTableView.swift */,
 				9E3388A120B9FE3B004E4182 /* Keyboard.swift */,
 				9E049FBF20BD92090008F7C4 /* Tree.swift */,
@@ -496,7 +493,6 @@
 				9E15185E1EEEE97700B35AD5 /* ViewController.swift in Sources */,
 				9E1AAD6E20B595A5001657A7 /* NSView+Style.swift in Sources */,
 				9EA2B9691EF035D900F05F20 /* Row.swift in Sources */,
-				9E7C977A20BE8FD400392038 /* TimeLogger.swift in Sources */,
 				9E6C721020B1E66D001C3D2C /* Task+Debugging.swift in Sources */,
 				9E5768BA20C1436500749C0C /* TaskState.swift in Sources */,
 				9EF0A78C20B5F8B200E1A23A /* ScrollTable.swift in Sources */,

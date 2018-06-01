@@ -2,8 +2,7 @@ import AppKit.NSView
 
 extension NSView
 {
-    func addForAutoLayout<ViewType>(_ view: ViewType) -> ViewType
-        where ViewType: NSView
+    func addForAutoLayout<View>(_ view: View) -> View where View: NSView
     {
         view.translatesAutoresizingMaskIntoConstraints = false
         
