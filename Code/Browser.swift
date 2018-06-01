@@ -154,10 +154,3 @@ class Browser: Observer, Observable
     
     enum Event { case didNothing, didMove(direction: Direction) }
 }
-
-enum Direction
-{
-    case left, right
-    
-    var reverse: Direction { return self == .left ? .right : .left }
-}
