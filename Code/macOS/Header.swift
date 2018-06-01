@@ -39,8 +39,7 @@ class Header: LayerBackedView
     
     private lazy var titleField: NSTextField =
     {
-        let field = NSTextField.newAutoLayout()
-        self.addSubview(field)
+        let field = addForAutoLayout(NSTextField())
         
         field.textColor = NSColor.black
         field.font = Font.text.nsFont

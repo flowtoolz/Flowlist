@@ -14,7 +14,7 @@ class TaskView: LayerBackedView, Observer, Observable
         identifier = TaskView.uiIdentifier
         
         constrainCheckBox()
-        contrainGroupIndicator()
+        contrainGroupIcon()
         constrainTitleField()
         
         setItemBorder()
@@ -46,7 +46,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         updateTitleField()
         updateState()
-        updateGroupIndicator()
+        updateGroupIcon()
         
         return self
     }
@@ -57,7 +57,7 @@ class TaskView: LayerBackedView, Observer, Observable
         {
             [weak self] event in
             
-            if event.itemsDidChange { self?.updateGroupIndicator() }
+            if event.itemsDidChange { self?.updateGroupIcon() }
         }
         
         observe(task.title)
@@ -100,14 +100,13 @@ class TaskView: LayerBackedView, Observer, Observable
         titleField.autoPinEdge(.left, to: .right, of: checkBox)
         titleField.autoPinEdge(.right,
                                to: .left,
-                               of: groupIndicator,
+                               of: groupIcon,
                                withOffset: -10)
     }
     
     private lazy var titleField: TextField =
     {
-        let textField = TextField("untitled")
-        self.addSubview(textField)
+        let textField = addForAutoLayout(TextField())
         
         self.observe(textField) { [weak self] in self?.didReceive($0) }
         
@@ -143,8 +142,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private lazy var checkBox: CheckBox =
     {
-        let button = CheckBox.newAutoLayout()
-        self.addSubview(button)
+        let button = addForAutoLayout(CheckBox())
 
         button.action = #selector(didClickCheckBox)
         button.target = self
@@ -157,26 +155,20 @@ class TaskView: LayerBackedView, Observer, Observable
         task?.state <- task?.isDone ?? false ? nil : .done
     }
     
-    // MARK: - Group Indicator
+    // MARK: - Group Icon
     
-    private func updateGroupIndicator()
+    private func updateGroupIcon()
     {
-        groupIndicator.isHidden = !(task?.hasBranches ?? false)
+        groupIcon.isHidden = !(task?.hasBranches ?? false)
     }
     
-    private func contrainGroupIndicator()
+    private func contrainGroupIcon()
     {
-        groupIndicator.autoAlignAxis(toSuperviewAxis: .horizontal)
-        groupIndicator.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+        groupIcon.autoAlignAxis(toSuperviewAxis: .horizontal)
+        groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
     }
     
-    private lazy var groupIndicator: GroupIndicator =
-    {
-        let view = GroupIndicator.newAutoLayout()
-        self.addSubview(view)
-        
-        return view
-    }()
+    private lazy var groupIcon: GroupIcon = addForAutoLayout(GroupIcon())
     
     // MARK: - Data
     

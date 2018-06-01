@@ -7,14 +7,7 @@ class ViewController: NSViewController
     {
         view = LayerBackedView()
         
+        let browserView = view.addForAutoLayout(BrowserView())
         browserView.autoPinEdgesToSuperviewEdges()
     }
-
-    private lazy var browserView: BrowserView =
-    {
-        let bv = BrowserView.newAutoLayout()
-        view.addSubview(bv)
-        
-        return bv
-    }()
 }

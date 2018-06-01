@@ -10,12 +10,13 @@
 		9E049FC020BD92090008F7C4 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E049FBF20BD92090008F7C4 /* Tree.swift */; };
 		9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185B1EEEE8CE00B35AD5 /* Task.swift */; };
 		9E15185E1EEEE97700B35AD5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185D1EEEE97700B35AD5 /* ViewController.swift */; };
-		9E1AAD6A20B57CA9001657A7 /* GroupIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1AAD6920B57CA9001657A7 /* GroupIndicator.swift */; };
+		9E1AAD6A20B57CA9001657A7 /* GroupIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1AAD6920B57CA9001657A7 /* GroupIcon.swift */; };
 		9E1AAD6C20B58AD1001657A7 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1AAD6B20B58AD0001657A7 /* Header.swift */; };
 		9E1AAD6E20B595A5001657A7 /* NSView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1AAD6D20B595A5001657A7 /* NSView+Style.swift */; };
 		9E3388A020B92818004E4182 /* AnimatedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33889F20B92818004E4182 /* AnimatedTableView.swift */; };
 		9E3388A220B9FE3B004E4182 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3388A120B9FE3B004E4182 /* Keyboard.swift */; };
 		9E542E951EEEE41C00534981 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E542E941EEEE41C00534981 /* main.swift */; };
+		9E5768B820C13D6200749C0C /* NSView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768B720C13D6200749C0C /* NSView+AutoLayout.swift */; };
 		9E6C720B20B19C88001C3D2C /* Task+List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Task+List.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
 		9E6C721020B1E66D001C3D2C /* Task+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720F20B1E66D001C3D2C /* Task+Extensions.swift */; };
@@ -57,13 +58,14 @@
 		9E049FBF20BD92090008F7C4 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Tree.swift; path = ../Code/Tree.swift; sourceTree = "<group>"; };
 		9E15185B1EEEE8CE00B35AD5 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../Code/Task.swift; sourceTree = "<group>"; };
 		9E15185D1EEEE97700B35AD5 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../Code/macOS/ViewController.swift; sourceTree = "<group>"; };
-		9E1AAD6920B57CA9001657A7 /* GroupIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GroupIndicator.swift; path = ../Code/macOS/GroupIndicator.swift; sourceTree = "<group>"; };
+		9E1AAD6920B57CA9001657A7 /* GroupIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GroupIcon.swift; path = ../Code/macOS/GroupIcon.swift; sourceTree = "<group>"; };
 		9E1AAD6B20B58AD0001657A7 /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Header.swift; path = ../Code/macOS/Header.swift; sourceTree = "<group>"; };
 		9E1AAD6D20B595A5001657A7 /* NSView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSView+Style.swift"; path = "../Code/macOS/NSView+Style.swift"; sourceTree = "<group>"; };
 		9E33889F20B92818004E4182 /* AnimatedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnimatedTableView.swift; path = ../Code/macOS/AnimatedTableView.swift; sourceTree = "<group>"; };
 		9E3388A120B9FE3B004E4182 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Keyboard.swift; path = ../Code/macOS/Keyboard.swift; sourceTree = "<group>"; };
 		9E542E911EEEE41C00534981 /* Flowlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flowlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E542E941EEEE41C00534981 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../Code/macOS/main.swift; sourceTree = "<group>"; };
+		9E5768B720C13D6200749C0C /* NSView+AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSView+AutoLayout.swift"; path = "../Code/macOS/NSView+AutoLayout.swift"; sourceTree = "<group>"; };
 		9E6C720A20B19C88001C3D2C /* Task+List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+List.swift"; path = "../Code/Task+List.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = List.swift; path = ../Code/List.swift; sourceTree = "<group>"; };
 		9E6C720F20B1E66D001C3D2C /* Task+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Extensions.swift"; path = "../Code/Task+Extensions.swift"; sourceTree = "<group>"; };
@@ -281,7 +283,7 @@
 				9E7651931EEF428100DE2B07 /* TaskView.swift */,
 				9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */,
 				9EE2EE4A20B4A693007CDC2F /* TextField.swift */,
-				9E1AAD6920B57CA9001657A7 /* GroupIndicator.swift */,
+				9E1AAD6920B57CA9001657A7 /* GroupIcon.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -339,6 +341,7 @@
 				9E33889F20B92818004E4182 /* AnimatedTableView.swift */,
 				9E3388A120B9FE3B004E4182 /* Keyboard.swift */,
 				9E049FBF20BD92090008F7C4 /* Tree.swift */,
+				9E5768B720C13D6200749C0C /* NSView+AutoLayout.swift */,
 			);
 			name = "Framework Candidates";
 			sourceTree = "<group>";
@@ -466,8 +469,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E5768B820C13D6200749C0C /* NSView+AutoLayout.swift in Sources */,
 				9E6C720B20B19C88001C3D2C /* Task+List.swift in Sources */,
-				9E1AAD6A20B57CA9001657A7 /* GroupIndicator.swift in Sources */,
+				9E1AAD6A20B57CA9001657A7 /* GroupIcon.swift in Sources */,
 				9EF0A78E20B6E6CD00E1A23A /* BrowserView.swift in Sources */,
 				9EF0A78A20B5E26F00E1A23A /* TableContent.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* SelectableList.swift in Sources */,

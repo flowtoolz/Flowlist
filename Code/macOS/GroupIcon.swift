@@ -1,6 +1,6 @@
 import AppKit
 
-class GroupIndicator: NSImageView
+class GroupIcon: NSImageView
 {
     override init(frame frameRect: NSRect)
     {

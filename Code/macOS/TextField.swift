@@ -5,25 +5,7 @@ import SwiftyToolz
 class TextField: NSTextField, Observable
 {
     // MARK: - Initialization
-    
-    convenience init(_ placeholder: String)
-    {
-        self.init(frame: .zero)
-        
-        translatesAutoresizingMaskIntoConstraints = false
-        
-        let attributes: [NSAttributedStringKey : Any] =
-        [
-            NSAttributedStringKey.foregroundColor: Color.grayedOut.nsColor,
-            NSAttributedStringKey.font: Font.text.nsFont
-        ]
-        
-        let attributedString = NSAttributedString(string: placeholder,
-                                                  attributes: attributes)
-        
-        placeholderAttributedString = attributedString
-    }
-    
+
     override init(frame frameRect: NSRect)
     {
         super.init(frame: frameRect)
@@ -33,9 +15,27 @@ class TextField: NSTextField, Observable
         isBezeled = false
         lineBreakMode = .byTruncatingTail
         font = Font.text.nsFont
+        
+        set(placeholder: "untitled")
     }
     
     required init?(coder: NSCoder) { fatalError() }
+    
+    // MARK: - Setup Placeholder
+    
+    private func set(placeholder: String)
+    {
+        let attributes: [NSAttributedStringKey : Any] =
+            [
+                NSAttributedStringKey.foregroundColor: Color.grayedOut.nsColor,
+                NSAttributedStringKey.font: Font.text.nsFont
+        ]
+        
+        let attributedString = NSAttributedString(string: placeholder,
+                                                  attributes: attributes)
+        
+        placeholderAttributedString = attributedString
+    }
     
     // MARK: - Update
     

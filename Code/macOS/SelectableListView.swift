@@ -73,13 +73,7 @@ class SelectableListView: NSView, Observer, Observable
         header.autoSetDimension(.height, toSize: Float.itemHeight.cgFloat)
     }
     
-    private lazy var header: Header =
-    {
-        let view = Header()
-        self.addSubview(view)
-        
-        return view
-    }()
+    private lazy var header: Header = addForAutoLayout(Header())
     
     // MARK: - Scroll Table
     
@@ -98,8 +92,7 @@ class SelectableListView: NSView, Observer, Observable
     
     lazy var scrollTable: ScrollTable =
     {
-        let scrollView = ScrollTable.newAutoLayout()
-        self.addSubview(scrollView)
+        let scrollView = addForAutoLayout(ScrollTable())
         
         observe(scrollView.table, select: .willEditTitle)
         {

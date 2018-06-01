@@ -121,8 +121,7 @@ class BrowserView: LayerBackedView, Observer
     @discardableResult
     private func addListView(prepend: Bool = false) -> SelectableListView
     {
-        let listView = SelectableListView.newAutoLayout()
-        addSubview(listView)
+        let listView = addForAutoLayout(SelectableListView())
         
         listViews.insert(listView, at: prepend ? 0 : listViews.count)
         
