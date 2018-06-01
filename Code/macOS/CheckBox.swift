@@ -19,7 +19,7 @@ class CheckBox: NSButton
     
     // MARK: - Update
     
-    func update(with state: Task.State?)
+    func update(with state: TaskState?)
     {
         image = image(checked: state == .done)
     }

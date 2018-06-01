@@ -39,7 +39,7 @@ class TextField: NSTextField, Observable
     
     // MARK: - Update
     
-    func update(with state: Task.State?)
+    func update(with state: TaskState?)
     {
         let color: Color = state == .done ? .grayedOut : .black
         textColor = color.nsColor

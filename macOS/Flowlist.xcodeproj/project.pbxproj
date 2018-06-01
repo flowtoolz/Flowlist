@@ -17,6 +17,7 @@
 		9E3388A220B9FE3B004E4182 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3388A120B9FE3B004E4182 /* Keyboard.swift */; };
 		9E542E951EEEE41C00534981 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E542E941EEEE41C00534981 /* main.swift */; };
 		9E5768B820C13D6200749C0C /* NSView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768B720C13D6200749C0C /* NSView+AutoLayout.swift */; };
+		9E5768BA20C1436500749C0C /* TaskState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768B920C1436500749C0C /* TaskState.swift */; };
 		9E6C720B20B19C88001C3D2C /* Task+List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Task+List.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
 		9E6C721020B1E66D001C3D2C /* Task+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720F20B1E66D001C3D2C /* Task+Extensions.swift */; };
@@ -66,6 +67,7 @@
 		9E542E911EEEE41C00534981 /* Flowlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flowlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E542E941EEEE41C00534981 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../Code/macOS/main.swift; sourceTree = "<group>"; };
 		9E5768B720C13D6200749C0C /* NSView+AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSView+AutoLayout.swift"; path = "../Code/macOS/NSView+AutoLayout.swift"; sourceTree = "<group>"; };
+		9E5768B920C1436500749C0C /* TaskState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskState.swift; path = ../Code/TaskState.swift; sourceTree = "<group>"; };
 		9E6C720A20B19C88001C3D2C /* Task+List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+List.swift"; path = "../Code/Task+List.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = List.swift; path = ../Code/List.swift; sourceTree = "<group>"; };
 		9E6C720F20B1E66D001C3D2C /* Task+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Extensions.swift"; path = "../Code/Task+Extensions.swift"; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			children = (
 				9E6C720F20B1E66D001C3D2C /* Task+Extensions.swift */,
 				9E15185B1EEEE8CE00B35AD5 /* Task.swift */,
+				9E5768B920C1436500749C0C /* TaskState.swift */,
 				9E8ABF0120B32A3B001E862B /* Edit.swift */,
 			);
 			name = Model;
@@ -486,6 +489,7 @@
 				9EA2B9691EF035D900F05F20 /* Row.swift in Sources */,
 				9E7C977A20BE8FD400392038 /* TimeLogger.swift in Sources */,
 				9E6C721020B1E66D001C3D2C /* Task+Extensions.swift in Sources */,
+				9E5768BA20C1436500749C0C /* TaskState.swift in Sources */,
 				9EF0A78C20B5F8B200E1A23A /* ScrollTable.swift in Sources */,
 				9E8ABF0420B34E96001E862B /* Selection+Extensions.swift in Sources */,
 				9EFA20DE20BDF1BC00FB2156 /* TaskArchive.swift in Sources */,

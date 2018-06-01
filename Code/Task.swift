@@ -8,12 +8,7 @@ final class Task: Codable, Observable, Tree
     enum CodingKeys: CodingKey { case title, state, branches }
     
     private(set) var title = Var<String>()
-    private(set) var state = Var<State>()
-    
-    enum State: Int, Codable
-    {
-        case inProgress, onHold, done, archived
-    }
+    private(set) var state = Var<TaskState>()
     
     // MARK: - Observable Tree Editing
     
