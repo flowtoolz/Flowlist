@@ -1,9 +1,10 @@
 import AppKit
 import PureLayout
+import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class SelectableListView: NSView, Observer, Observable
+class SelectableListView: LayerBackedView, Observer, Observable
 {
     // MARK: - Life Cycle
     
