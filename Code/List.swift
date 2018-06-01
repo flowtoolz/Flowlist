@@ -88,7 +88,7 @@ class List: Observable, Observer
     {
         for index in indexes
         {
-            guard let task = root.branch(at: index) else { continue }
+            guard let task = root[index] else { continue }
             
             observe(listedTask: task, start: start)
         }
@@ -119,7 +119,7 @@ class List: Observable, Observer
     
     // MARK: - Listed Tasks
     
-    func task(at index: Int) -> Task?
+    subscript(_ index: Int) -> Task?
     {
         guard let root = root else
         {
@@ -127,7 +127,7 @@ class List: Observable, Observer
             return nil
         }
         
-        return root.branch(at: index)
+        return root[index]
     }
     
     var numberOfTasks: Int { return root?.numberOfBranches ?? 0 }
@@ -164,7 +164,7 @@ class List: Observable, Observer
         
         for index in 0 ..< old.numberOfBranches
         {
-            if let subtask = old.branch(at: index)
+            if let subtask = old[index]
             {
                 subtasks.append(subtask)
                 indexes.append(index)

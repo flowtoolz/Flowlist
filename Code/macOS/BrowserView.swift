@@ -30,10 +30,7 @@ class BrowserView: LayerBackedView, Observer
     
     private func process(_ keyEvent: NSEvent)
     {
-        guard let list = browser.list(at: 2), !TextField.isEditing else
-        {
-            return
-        }
+        guard let list = browser[2], !TextField.isEditing else { return }
         
         switch keyEvent.key
         {
@@ -84,10 +81,15 @@ class BrowserView: LayerBackedView, Observer
         case .tab: break
             
         case .unknown:
+            guard keyEvent.cmd else { break }
+            
             switch keyEvent.characters
             {
-            case "t": if keyEvent.cmd { store.root.debug() }
-            case "l": if keyEvent.cmd { browser.list(at: 2)?.debug() }
+            case "t": store.root.debug()
+            case "l": browser[2]?.debug()
+            case "c": list.copy()
+            case "x": list.cut()
+            case "v": list.paste()
             default: break
             }
         }
@@ -99,7 +101,7 @@ class BrowserView: LayerBackedView, Observer
     {
         for index in 0 ..< browser.numberOfLists
         {
-            guard let list = browser.list(at: index),
+            guard let list = browser[index],
                 listViews.isValid(index: index)
             else
             {
@@ -172,7 +174,7 @@ class BrowserView: LayerBackedView, Observer
         let movedLeft = direction == .left
         let newListIndex = movedLeft ? 0 : browser.numberOfLists - 1
         
-        guard let newList = browser.list(at: newListIndex) else
+        guard let newList = browser[newListIndex] else
         {
             log(error: "Couldn't get first list from browser.")
             return

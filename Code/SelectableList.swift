@@ -21,7 +21,12 @@ class SelectableList: List
     
     func createBelowSelection()
     {
-        create(at: (selection.indexes.last ?? -1) + 1)
+        create(at: newIndexBelowSelection)
+    }
+    
+    var newIndexBelowSelection: Int
+    {
+        return (selection.indexes.last ?? -1) + 1
     }
     
     func create(at index: Int)
@@ -44,13 +49,16 @@ class SelectableList: List
             return false
         }
        
-        guard root.hasBranches else { return true }
-        
-        let newSelectedIndex = max(firstSelectedIndex - 1, 0)
-        
-        selection.setWithTasksListed(at: [newSelectedIndex])
+        selectAfterRemoval(from: firstSelectedIndex)
         
         return true
+    }
+    
+    func selectAfterRemoval(from index: Int)
+    {
+        guard root?.hasBranches ?? false else { return }
+        
+        selection.setWithTasksListed(at: [max(index - 1, 0)])
     }
     
     @discardableResult
@@ -92,7 +100,7 @@ class SelectableList: List
     {
         for selectedIndex in selection.indexes
         {
-            if let task = task(at: selectedIndex), !task.isDone
+            if let task = self[selectedIndex], !task.isDone
             {
                 return task
             }

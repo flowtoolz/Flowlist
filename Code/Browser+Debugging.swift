@@ -6,7 +6,7 @@ extension Browser
         
         for i in 0 ..< numberOfLists
         {
-            guard let list = list(at: i) else { continue }
+            guard let list = self[i] else { continue }
             
             desc += "\(i): "
             desc += list.title.observable?.value ?? "untitled"

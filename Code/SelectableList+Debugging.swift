@@ -11,7 +11,7 @@ extension SelectableList
         
         for i in 0 ..< numberOfTasks
         {
-            guard let task = task(at: i) else { continue }
+            guard let task = self[i] else { continue }
             
             desc += "\n- \(task.title.value ?? "untitled")"
         }

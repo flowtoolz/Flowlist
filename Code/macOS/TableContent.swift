@@ -14,7 +14,7 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     func tableView(_ tableView: NSTableView,
                    rowViewForRow row: Int) -> NSTableRowView?
     {
-        return Row(with: list?.task(at: row))
+        return Row(with: list?[row])
     }
     
     func tableView(_ tableView: NSTableView,
@@ -29,7 +29,7 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
                    viewFor tableColumn: NSTableColumn?,
                    row: Int) -> NSView?
     {
-        let task = list?.task(at: row)
+        let task = list?[row]
         
         let isSelected = list?.selection.isSelected(task) ?? false
         

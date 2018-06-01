@@ -119,7 +119,7 @@ class Browser: Observer, Observable
         if newRoot !== list.root { list.set(root: newRoot) }
     }
     
-    func list(at index: Int) -> SelectableList?
+    subscript(_ index: Int) -> SelectableList?
     {
         guard lists.isValid(index: index) else { return nil }
         

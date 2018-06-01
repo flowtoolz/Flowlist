@@ -13,7 +13,7 @@ extension Task
     {
         for subtaskIndex in (0 ..< numberOfBranches).reversed()
         {
-            if let subtask = branch(at: subtaskIndex), !subtask.isDone
+            if let subtask = self[subtaskIndex], !subtask.isDone
             {
                 return subtaskIndex
             }
@@ -26,7 +26,7 @@ extension Task
     {
         for i in from ..< numberOfBranches
         {
-            if let subtask = branch(at: i), !subtask.isDone
+            if let subtask = self[i], !subtask.isDone
             {
                 return i
             }

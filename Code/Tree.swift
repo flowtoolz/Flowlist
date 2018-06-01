@@ -59,6 +59,22 @@ extension Tree
     }
     
     @discardableResult
+    func insert(branches toInsert: [Self], at index: Int) -> Bool
+    {
+        guard index >= 0, index <= branches.count else
+        {
+            log(error: "Tried to insert branches at invalid index \(index).")
+            return false
+        }
+        
+        branches.insert(contentsOf: toInsert, at: index)
+        
+        for inserted in toInsert { inserted.root = self }
+        
+        return true
+    }
+    
+    @discardableResult
     func insert(branch: Self, at index: Int) -> Bool
     {
         guard index >= 0, index <= branches.count else
@@ -91,13 +107,25 @@ extension Tree
         }
     }
     
-    func branch(at index: Int?) -> Self?
+    subscript(_ indexes: [Int]) -> [Self]
+    {
+        let result = branches[indexes]
+        
+        if result.count != indexes.count
+        {
+            log(warning: "Tried to access at least 1 branch at invalid index.")
+        }
+        
+        return result
+    }
+    
+    subscript(_ index: Int?) -> Self?
     {
         guard let index = index else { return nil }
         
         guard branches.isValid(index: index) else
         {
-            log(error: "Tried to access branch at invalid index \(index).")
+            log(warning: "Tried to access branch at invalid index \(index).")
             return nil
         }
         

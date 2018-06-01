@@ -14,7 +14,7 @@ extension Task
         
         for i in 0 ..< numberOfBranches
         {
-            guard let subtask = branch(at: i) else { continue }
+            guard let subtask = self[i] else { continue }
             
             let isLastSubtask = i == numberOfBranches - 1
             let subtaskPrefix = prefix + (isLast ? " " : "│") + " "

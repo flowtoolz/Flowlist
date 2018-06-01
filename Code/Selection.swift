@@ -23,7 +23,7 @@ class Selection: Observable
         
         for index in indexes
         {
-            if let task = root.branch(at: index)
+            if let task = root[index]
             {
                 selectedTasks[task] = task
             }
@@ -104,7 +104,7 @@ class Selection: Observable
     
     func removeTask(at index: Int)
     {
-        guard let task = root?.branch(at: index), isSelected(task) else
+        guard let task = root?[index], isSelected(task) else
         {
             log(warning: "Tried invalid deselection of index \(index).")
             return
@@ -136,7 +136,7 @@ class Selection: Observable
         
         for index in 0 ..< (root?.numberOfBranches ?? 0)
         {
-            if let task = root?.branch(at: index), isSelected(task)
+            if let task = root?[index], isSelected(task)
             {
                 result.append(index)
             }

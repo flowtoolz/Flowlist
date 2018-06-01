@@ -55,6 +55,21 @@ final class Task: Codable, Observable, Tree
     }
     
     @discardableResult
+    func insert(_ subtasks: [Task], at index: Int) -> Bool
+    {
+        guard insert(branches: subtasks, at: index) else { return false }
+        
+        if !subtasks.isEmpty
+        {
+            let insertedIndexes = Array(index ..< index + subtasks.count)
+        
+            send(.didInsert(at: insertedIndexes))
+        }
+        
+        return true
+    }
+    
+    @discardableResult
     func create(at index: Int) -> Task?
     {
         let subtask = Task()
