@@ -1,18 +1,5 @@
 import SwiftyToolz
 
-extension Task: Equatable
-{
-    static func == (lhs: Task, rhs: Task) -> Bool
-    {
-        return lhs === rhs
-    }
-}
-
-extension Task: Hashable
-{
-    var hashValue: HashValue { return hash(self) }
-}
-
 extension Task
 {
     func debug()
@@ -37,6 +24,4 @@ extension Task
         
         return desc
     }
-    
-    var isDone: Bool { return state.value == .done }
 }

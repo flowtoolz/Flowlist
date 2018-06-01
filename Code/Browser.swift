@@ -1,24 +1,6 @@
 import SwiftObserver
 import SwiftyToolz
 
-extension Browser
-{
-    var description: String
-    {
-        var desc = ""
-        
-        for i in 0 ..< lists.count
-        {
-            let list = lists[i]
-            desc += "\(i): "
-            desc += list.title.observable?.value ?? "untitled"
-            desc += "\n"
-        }
-        
-        return desc
-    }
-}
-
 class Browser: Observer, Observable
 {
     // MARK: - Life Cycle

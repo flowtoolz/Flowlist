@@ -1,22 +1,6 @@
 import SwiftObserver
 import SwiftyToolz
 
-extension Selection
-{
-    var description: String
-    {
-        var desc = ""
-        
-        for task in selectedTasks.values
-        {
-            desc += task.title.value ?? "untitled"
-            desc += ", "
-        }
-        
-        return desc
-    }
-}
-
 class Selection: Observable
 {
     // MARK: - Select Tasks
@@ -146,6 +130,21 @@ class Selection: Observable
     
     // MARK: - Root
     
+    var indexes: [Int]
+    {
+        var result = [Int]()
+        
+        for index in 0 ..< (root?.numberOfBranches ?? 0)
+        {
+            if let task = root?.branch(at: index), isSelected(task)
+            {
+                result.append(index)
+            }
+        }
+        
+        return result
+    }
+    
     weak var root: Task?
     {
         didSet
@@ -165,6 +164,19 @@ class Selection: Observable
     }
     
     // MARK: - Selected Tasks
+    
+    var description: String
+    {
+        var desc = ""
+        
+        for task in selectedTasks.values
+        {
+            desc += task.title.value ?? "untitled"
+            desc += ", "
+        }
+        
+        return desc
+    }
     
     func isSelected(_ task: Task?) -> Bool
     {

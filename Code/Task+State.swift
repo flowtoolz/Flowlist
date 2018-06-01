@@ -34,4 +34,6 @@ extension Task
         
         return nil
     }
+    
+    var isDone: Bool { return state.value == .done }
 }

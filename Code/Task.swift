@@ -3,7 +3,7 @@ import SwiftyToolz
 
 final class Task: Codable, Observable, Tree
 {    
-    // MARK: - Data
+    // MARK: - Codable Data
     
     enum CodingKeys: CodingKey { case title, state, branches }
     
