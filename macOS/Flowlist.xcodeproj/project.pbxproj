@@ -45,6 +45,8 @@
 		9EAD75411EF6502000DC46FD /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD75401EF6502000DC46FD /* Table.swift */; };
 		9EB6217220C27DD500DD3DA5 /* ApplicationMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217120C27DD500DD3DA5 /* ApplicationMenu.swift */; };
 		9EB6217420C2816800DD3DA5 /* NSMenuItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217320C2816800DD3DA5 /* NSMenuItem+Extensions.swift */; };
+		9EB6217720C2830200DD3DA5 /* EditMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217620C2830200DD3DA5 /* EditMenu.swift */; };
+		9EB6217920C2898C00DD3DA5 /* NSMenu+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217820C2898C00DD3DA5 /* NSMenu+Extensions.swift */; };
 		9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* Browser.swift */; };
 		9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextField.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
@@ -105,6 +107,8 @@
 		9EAD75401EF6502000DC46FD /* Table.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Table.swift; path = ../Code/macOS/Table.swift; sourceTree = "<group>"; };
 		9EB6217120C27DD500DD3DA5 /* ApplicationMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ApplicationMenu.swift; path = ../Code/macOS/ApplicationMenu.swift; sourceTree = "<group>"; };
 		9EB6217320C2816800DD3DA5 /* NSMenuItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSMenuItem+Extensions.swift"; path = "../Code/macOS/NSMenuItem+Extensions.swift"; sourceTree = "<group>"; };
+		9EB6217620C2830200DD3DA5 /* EditMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditMenu.swift; path = ../Code/macOS/EditMenu.swift; sourceTree = "<group>"; };
+		9EB6217820C2898C00DD3DA5 /* NSMenu+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSMenu+Extensions.swift"; path = "../Code/macOS/NSMenu+Extensions.swift"; sourceTree = "<group>"; };
 		9EBC70282056FD02007A1EA8 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Browser.swift; path = ../Code/Browser.swift; sourceTree = "<group>"; };
 		9EE2EE4A20B4A693007CDC2F /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = ../Code/macOS/TextField.swift; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Style.swift"; path = "../Code/Float+Style.swift"; sourceTree = "<group>"; };
@@ -294,6 +298,7 @@
 			children = (
 				9E88F54E20B7761F00A64F7B /* Menu.swift */,
 				9EB6217120C27DD500DD3DA5 /* ApplicationMenu.swift */,
+				9EB6217620C2830200DD3DA5 /* EditMenu.swift */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -388,6 +393,7 @@
 				9E049FBF20BD92090008F7C4 /* Tree.swift */,
 				9E5768B720C13D6200749C0C /* NSView+AutoLayout.swift */,
 				9EB6217320C2816800DD3DA5 /* NSMenuItem+Extensions.swift */,
+				9EB6217820C2898C00DD3DA5 /* NSMenu+Extensions.swift */,
 			);
 			name = "Framework Candidates";
 			sourceTree = "<group>";
@@ -547,8 +553,10 @@
 				9E5768C220C15CDF00749C0C /* Task+Hashable.swift in Sources */,
 				9EA2B96B1EF0A80A00F05F20 /* Store+Persistence.swift in Sources */,
 				9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */,
+				9EB6217720C2830200DD3DA5 /* EditMenu.swift in Sources */,
 				9E3388A020B92818004E4182 /* AnimatedTableView.swift in Sources */,
 				9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */,
+				9EB6217920C2898C00DD3DA5 /* NSMenu+Extensions.swift in Sources */,
 				9E5768C020C15B6300749C0C /* Browser+Debugging.swift in Sources */,
 				9EAD75411EF6502000DC46FD /* Table.swift in Sources */,
 				9E88F54F20B7761F00A64F7B /* Menu.swift in Sources */,

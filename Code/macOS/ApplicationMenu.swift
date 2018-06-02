@@ -2,6 +2,8 @@ import AppKit
 
 class ApplicationMenu: NSMenu
 {
+    // MARK: - Initialization
+    
     init()
     {
         super.init(title: "Application Menu")
@@ -13,8 +15,8 @@ class ApplicationMenu: NSMenu
         addItem(NSMenuItem.separator())
         
         addItem(withTitle: "Hide",
-                 action: #selector(NSApplication.hide(_:)),
-                 keyEquivalent: "h")
+                action: #selector(NSApplication.hide(_:)),
+                keyEquivalent: "h")
         
         addItem(withTitle: "Quit",
                 action: #selector(NSApplication.terminate(_:)),
@@ -36,17 +38,11 @@ class ApplicationMenu: NSMenu
         NSApp.mainWindow?.toggleFullScreen(self)
     }
     
-    private lazy var fullscreenItem: NSMenuItem =
-    {
-        let item = NSMenuItem()
-        item.target = self
-        item.title = fullscreenItemTitle(isFullscreen: false)
-        item.action = #selector(toggleFullscreen)
-        item.keyEquivalent = "f"
-        return item
-    }()
+    private lazy var fullscreenItem: NSMenuItem = item(fullscreenItemTitle(),
+                                                       action: #selector(toggleFullscreen),
+                                                       key: "f")
     
-    private func fullscreenItemTitle(isFullscreen: Bool) -> String
+    private func fullscreenItemTitle(isFullscreen: Bool = false) -> String
     {
         return isFullscreen ? "Leave Fullscreen" : "Fullscreen"
     }
@@ -75,17 +71,11 @@ class ApplicationMenu: NSMenu
         }
     }
     
-    private lazy var focusItem: NSMenuItem =
-    {
-        let item = NSMenuItem()
-        item.target = self
-        item.title = focusItemTitle(isFocused: false)
-        item.action = #selector(toggleFocus)
-        item.keyEquivalent = "m"
-        return item
-    }()
+    private lazy var focusItem: NSMenuItem = item(focusItemTitle(),
+                                                  action: #selector(toggleFocus),
+                                                  key: "m")
     
-    private func focusItemTitle(isFocused: Bool) -> String
+    private func focusItemTitle(isFocused: Bool = false) -> String
     {
         return isFocused ? "Multitasking" : "Monotasking"
     }
