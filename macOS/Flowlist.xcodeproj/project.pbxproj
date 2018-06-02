@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9E049FC020BD92090008F7C4 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E049FBF20BD92090008F7C4 /* Tree.swift */; };
 		9E0D5A9F20C160BA00F0D827 /* Font+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0D5A9E20C160BA00F0D827 /* Font+Style.swift */; };
 		9E0D5AA120C160C800F0D827 /* Color+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0D5AA020C160C800F0D827 /* Color+Style.swift */; };
 		9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185B1EEEE8CE00B35AD5 /* Task.swift */; };
@@ -17,11 +16,7 @@
 		9E1AAD6E20B595A5001657A7 /* NSView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1AAD6D20B595A5001657A7 /* NSView+Style.swift */; };
 		9E2CCE8D20C1DE030037D755 /* SelectableList+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CCE8C20C1DE030037D755 /* SelectableList+Clipboard.swift */; };
 		9E2CCE8F20C1EAFF0037D755 /* Task+Copyable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CCE8E20C1EAFF0037D755 /* Task+Copyable.swift */; };
-		9E2CCE9120C1F7670037D755 /* Copyable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CCE9020C1F7670037D755 /* Copyable.swift */; };
-		9E3388A020B92818004E4182 /* AnimatedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33889F20B92818004E4182 /* AnimatedTableView.swift */; };
-		9E3388A220B9FE3B004E4182 /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3388A120B9FE3B004E4182 /* Keyboard.swift */; };
 		9E542E951EEEE41C00534981 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E542E941EEEE41C00534981 /* main.swift */; };
-		9E5768B820C13D6200749C0C /* NSView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768B720C13D6200749C0C /* NSView+AutoLayout.swift */; };
 		9E5768BA20C1436500749C0C /* TaskState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768B920C1436500749C0C /* TaskState.swift */; };
 		9E5768BC20C14B9300749C0C /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768BB20C14B9300749C0C /* Direction.swift */; };
 		9E5768C020C15B6300749C0C /* Browser+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768BF20C15B6300749C0C /* Browser+Debugging.swift */; };
@@ -40,13 +35,10 @@
 		9EA2B9691EF035D900F05F20 /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B9681EF035D900F05F20 /* Row.swift */; };
 		9EA2B96B1EF0A80A00F05F20 /* Store+Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B96A1EF0A80A00F05F20 /* Store+Persistence.swift */; };
 		9EA5925B20AF7AD200F70CBF /* Selection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5925A20AF7AD200F70CBF /* Selection.swift */; };
-		9EA7F99A20C19A3B0059166B /* Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7F99920C19A3B0059166B /* Clipboard.swift */; };
 		9EA7F99C20C19B210059166B /* Task+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7F99B20C19B210059166B /* Task+Clipboard.swift */; };
 		9EAD75411EF6502000DC46FD /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD75401EF6502000DC46FD /* Table.swift */; };
 		9EB6217220C27DD500DD3DA5 /* ApplicationMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217120C27DD500DD3DA5 /* ApplicationMenu.swift */; };
-		9EB6217420C2816800DD3DA5 /* NSMenuItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217320C2816800DD3DA5 /* NSMenuItem+Extensions.swift */; };
 		9EB6217720C2830200DD3DA5 /* EditMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217620C2830200DD3DA5 /* EditMenu.swift */; };
-		9EB6217920C2898C00DD3DA5 /* NSMenu+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217820C2898C00DD3DA5 /* NSMenu+Extensions.swift */; };
 		9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* Browser.swift */; };
 		9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextField.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
@@ -67,7 +59,6 @@
 		6F31C4A5AA59FD1BF6AFBF3A /* Pods-FlowlistTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowlistTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests.release.xcconfig"; sourceTree = "<group>"; };
 		73F5B44C9211479F59673188 /* Pods-FlowlistTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowlistTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests.debug.xcconfig"; sourceTree = "<group>"; };
 		78B3E83C8B5F1E96FF074B6D /* Pods-Flowlist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flowlist.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist.debug.xcconfig"; sourceTree = "<group>"; };
-		9E049FBF20BD92090008F7C4 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Tree.swift; path = ../Code/Tree.swift; sourceTree = "<group>"; };
 		9E0D5A9E20C160BA00F0D827 /* Font+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Font+Style.swift"; path = "../Code/Font+Style.swift"; sourceTree = "<group>"; };
 		9E0D5AA020C160C800F0D827 /* Color+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Color+Style.swift"; path = "../Code/Color+Style.swift"; sourceTree = "<group>"; };
 		9E15185B1EEEE8CE00B35AD5 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../Code/Task.swift; sourceTree = "<group>"; };
@@ -77,12 +68,8 @@
 		9E1AAD6D20B595A5001657A7 /* NSView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSView+Style.swift"; path = "../Code/macOS/NSView+Style.swift"; sourceTree = "<group>"; };
 		9E2CCE8C20C1DE030037D755 /* SelectableList+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SelectableList+Clipboard.swift"; path = "../Code/SelectableList+Clipboard.swift"; sourceTree = "<group>"; };
 		9E2CCE8E20C1EAFF0037D755 /* Task+Copyable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Copyable.swift"; path = "../Code/Task+Copyable.swift"; sourceTree = "<group>"; };
-		9E2CCE9020C1F7670037D755 /* Copyable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Copyable.swift; path = ../Code/Copyable.swift; sourceTree = "<group>"; };
-		9E33889F20B92818004E4182 /* AnimatedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnimatedTableView.swift; path = ../Code/macOS/AnimatedTableView.swift; sourceTree = "<group>"; };
-		9E3388A120B9FE3B004E4182 /* Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Keyboard.swift; path = ../Code/macOS/Keyboard.swift; sourceTree = "<group>"; };
 		9E542E911EEEE41C00534981 /* Flowlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flowlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E542E941EEEE41C00534981 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../Code/macOS/main.swift; sourceTree = "<group>"; };
-		9E5768B720C13D6200749C0C /* NSView+AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSView+AutoLayout.swift"; path = "../Code/macOS/NSView+AutoLayout.swift"; sourceTree = "<group>"; };
 		9E5768B920C1436500749C0C /* TaskState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskState.swift; path = ../Code/TaskState.swift; sourceTree = "<group>"; };
 		9E5768BB20C14B9300749C0C /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Direction.swift; path = ../Code/Direction.swift; sourceTree = "<group>"; };
 		9E5768BF20C15B6300749C0C /* Browser+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Browser+Debugging.swift"; path = "../Code/Browser+Debugging.swift"; sourceTree = "<group>"; };
@@ -102,13 +89,10 @@
 		9EA2B9681EF035D900F05F20 /* Row.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Row.swift; path = ../Code/macOS/Row.swift; sourceTree = "<group>"; };
 		9EA2B96A1EF0A80A00F05F20 /* Store+Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Store+Persistence.swift"; path = "../Code/Store+Persistence.swift"; sourceTree = "<group>"; };
 		9EA5925A20AF7AD200F70CBF /* Selection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Selection.swift; path = ../Code/Selection.swift; sourceTree = "<group>"; };
-		9EA7F99920C19A3B0059166B /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Clipboard.swift; path = ../Code/Clipboard.swift; sourceTree = "<group>"; };
 		9EA7F99B20C19B210059166B /* Task+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Clipboard.swift"; path = "../Code/Task+Clipboard.swift"; sourceTree = "<group>"; };
 		9EAD75401EF6502000DC46FD /* Table.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Table.swift; path = ../Code/macOS/Table.swift; sourceTree = "<group>"; };
 		9EB6217120C27DD500DD3DA5 /* ApplicationMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ApplicationMenu.swift; path = ../Code/macOS/ApplicationMenu.swift; sourceTree = "<group>"; };
-		9EB6217320C2816800DD3DA5 /* NSMenuItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSMenuItem+Extensions.swift"; path = "../Code/macOS/NSMenuItem+Extensions.swift"; sourceTree = "<group>"; };
 		9EB6217620C2830200DD3DA5 /* EditMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditMenu.swift; path = ../Code/macOS/EditMenu.swift; sourceTree = "<group>"; };
-		9EB6217820C2898C00DD3DA5 /* NSMenu+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSMenu+Extensions.swift"; path = "../Code/macOS/NSMenu+Extensions.swift"; sourceTree = "<group>"; };
 		9EBC70282056FD02007A1EA8 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Browser.swift; path = ../Code/Browser.swift; sourceTree = "<group>"; };
 		9EE2EE4A20B4A693007CDC2F /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = ../Code/macOS/TextField.swift; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Style.swift"; path = "../Code/Float+Style.swift"; sourceTree = "<group>"; };
@@ -386,14 +370,6 @@
 		9EFA20DF20BDF94400FB2156 /* Framework Candidates */ = {
 			isa = PBXGroup;
 			children = (
-				9E33889F20B92818004E4182 /* AnimatedTableView.swift */,
-				9EA7F99920C19A3B0059166B /* Clipboard.swift */,
-				9E2CCE9020C1F7670037D755 /* Copyable.swift */,
-				9E3388A120B9FE3B004E4182 /* Keyboard.swift */,
-				9E049FBF20BD92090008F7C4 /* Tree.swift */,
-				9E5768B720C13D6200749C0C /* NSView+AutoLayout.swift */,
-				9EB6217320C2816800DD3DA5 /* NSMenuItem+Extensions.swift */,
-				9EB6217820C2898C00DD3DA5 /* NSMenu+Extensions.swift */,
 			);
 			name = "Framework Candidates";
 			sourceTree = "<group>";
@@ -521,9 +497,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E5768B820C13D6200749C0C /* NSView+AutoLayout.swift in Sources */,
 				9E6C720B20B19C88001C3D2C /* Task+State.swift in Sources */,
-				9EA7F99A20C19A3B0059166B /* Clipboard.swift in Sources */,
 				9E1AAD6A20B57CA9001657A7 /* GroupIcon.swift in Sources */,
 				9EF0A78E20B6E6CD00E1A23A /* BrowserView.swift in Sources */,
 				9EF0A78A20B5E26F00E1A23A /* TableContent.swift in Sources */,
@@ -531,10 +505,7 @@
 				9EA7F99C20C19B210059166B /* Task+Clipboard.swift in Sources */,
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
 				9E2CCE8F20C1EAFF0037D755 /* Task+Copyable.swift in Sources */,
-				9EB6217420C2816800DD3DA5 /* NSMenuItem+Extensions.swift in Sources */,
-				9E049FC020BD92090008F7C4 /* Tree.swift in Sources */,
 				9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */,
-				9E2CCE9120C1F7670037D755 /* Copyable.swift in Sources */,
 				9E72881B1EEF3095003A2F46 /* SelectableListView.swift in Sources */,
 				9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */,
 				9EF0A79320B72B5A00E1A23A /* AppController.swift in Sources */,
@@ -554,13 +525,10 @@
 				9EA2B96B1EF0A80A00F05F20 /* Store+Persistence.swift in Sources */,
 				9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */,
 				9EB6217720C2830200DD3DA5 /* EditMenu.swift in Sources */,
-				9E3388A020B92818004E4182 /* AnimatedTableView.swift in Sources */,
 				9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */,
-				9EB6217920C2898C00DD3DA5 /* NSMenu+Extensions.swift in Sources */,
 				9E5768C020C15B6300749C0C /* Browser+Debugging.swift in Sources */,
 				9EAD75411EF6502000DC46FD /* Table.swift in Sources */,
 				9E88F54F20B7761F00A64F7B /* Menu.swift in Sources */,
-				9E3388A220B9FE3B004E4182 /* Keyboard.swift in Sources */,
 				9E2CCE8D20C1DE030037D755 /* SelectableList+Clipboard.swift in Sources */,
 				9EF0A79120B71DA100E1A23A /* Window.swift in Sources */,
 				9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */,
