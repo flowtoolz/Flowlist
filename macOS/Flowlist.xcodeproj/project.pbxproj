@@ -43,6 +43,8 @@
 		9EA7F99A20C19A3B0059166B /* Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7F99920C19A3B0059166B /* Clipboard.swift */; };
 		9EA7F99C20C19B210059166B /* Task+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7F99B20C19B210059166B /* Task+Clipboard.swift */; };
 		9EAD75411EF6502000DC46FD /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD75401EF6502000DC46FD /* Table.swift */; };
+		9EB6217220C27DD500DD3DA5 /* ApplicationMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217120C27DD500DD3DA5 /* ApplicationMenu.swift */; };
+		9EB6217420C2816800DD3DA5 /* NSMenuItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217320C2816800DD3DA5 /* NSMenuItem+Extensions.swift */; };
 		9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* Browser.swift */; };
 		9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextField.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
@@ -101,6 +103,8 @@
 		9EA7F99920C19A3B0059166B /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Clipboard.swift; path = ../Code/Clipboard.swift; sourceTree = "<group>"; };
 		9EA7F99B20C19B210059166B /* Task+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Clipboard.swift"; path = "../Code/Task+Clipboard.swift"; sourceTree = "<group>"; };
 		9EAD75401EF6502000DC46FD /* Table.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Table.swift; path = ../Code/macOS/Table.swift; sourceTree = "<group>"; };
+		9EB6217120C27DD500DD3DA5 /* ApplicationMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ApplicationMenu.swift; path = ../Code/macOS/ApplicationMenu.swift; sourceTree = "<group>"; };
+		9EB6217320C2816800DD3DA5 /* NSMenuItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSMenuItem+Extensions.swift"; path = "../Code/macOS/NSMenuItem+Extensions.swift"; sourceTree = "<group>"; };
 		9EBC70282056FD02007A1EA8 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Browser.swift; path = ../Code/Browser.swift; sourceTree = "<group>"; };
 		9EE2EE4A20B4A693007CDC2F /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = ../Code/macOS/TextField.swift; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Style.swift"; path = "../Code/Float+Style.swift"; sourceTree = "<group>"; };
@@ -285,6 +289,15 @@
 			name = Clipboard;
 			sourceTree = "<group>";
 		};
+		9EB6217520C2823000DD3DA5 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				9E88F54E20B7761F00A64F7B /* Menu.swift */,
+				9EB6217120C27DD500DD3DA5 /* ApplicationMenu.swift */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
 		9ED0277B20AB2F24004289E6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,7 +371,7 @@
 			children = (
 				9E542E941EEEE41C00534981 /* main.swift */,
 				9EF0A79220B72B5A00E1A23A /* AppController.swift */,
-				9E88F54E20B7761F00A64F7B /* Menu.swift */,
+				9EB6217520C2823000DD3DA5 /* Menu */,
 				9EF0A79020B71DA100E1A23A /* Window.swift */,
 				9E15185D1EEEE97700B35AD5 /* ViewController.swift */,
 			);
@@ -374,6 +387,7 @@
 				9E3388A120B9FE3B004E4182 /* Keyboard.swift */,
 				9E049FBF20BD92090008F7C4 /* Tree.swift */,
 				9E5768B720C13D6200749C0C /* NSView+AutoLayout.swift */,
+				9EB6217320C2816800DD3DA5 /* NSMenuItem+Extensions.swift */,
 			);
 			name = "Framework Candidates";
 			sourceTree = "<group>";
@@ -511,12 +525,14 @@
 				9EA7F99C20C19B210059166B /* Task+Clipboard.swift in Sources */,
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
 				9E2CCE8F20C1EAFF0037D755 /* Task+Copyable.swift in Sources */,
+				9EB6217420C2816800DD3DA5 /* NSMenuItem+Extensions.swift in Sources */,
 				9E049FC020BD92090008F7C4 /* Tree.swift in Sources */,
 				9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */,
 				9E2CCE9120C1F7670037D755 /* Copyable.swift in Sources */,
 				9E72881B1EEF3095003A2F46 /* SelectableListView.swift in Sources */,
 				9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */,
 				9EF0A79320B72B5A00E1A23A /* AppController.swift in Sources */,
+				9EB6217220C27DD500DD3DA5 /* ApplicationMenu.swift in Sources */,
 				9E15185E1EEEE97700B35AD5 /* ViewController.swift in Sources */,
 				9E1AAD6E20B595A5001657A7 /* NSView+Style.swift in Sources */,
 				9EA2B9691EF035D900F05F20 /* Row.swift in Sources */,
