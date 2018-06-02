@@ -54,6 +54,18 @@ class SelectableList: List
         return true
     }
     
+    func undoLastRemoval()
+    {
+        let index = newIndexBelowSelection
+        
+        guard let recovered = root?.insertLastRemoved(at: index),
+            recovered > 0 else { return }
+        
+        let recoveredIndexes = Array(index ..< index + recovered)
+        
+        selection.setWithTasksListed(at: recoveredIndexes)
+    }
+    
     func selectAfterRemoval(from index: Int)
     {
         guard root?.hasBranches ?? false else { return }

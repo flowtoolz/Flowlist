@@ -91,6 +91,7 @@ class BrowserView: LayerBackedView, Observer
             case "c": list.copy()
             case "x": list.cut()
             case "v": list.paste()
+            case "z": list.undoLastRemoval()
             default: break
             }
         }
