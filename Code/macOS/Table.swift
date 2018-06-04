@@ -234,7 +234,7 @@ class Table: AnimatedTableView, Observer, Observable
     
     // MARK: - Edit Titles
     
-    func editTitleOfNextSelectedTaskView()
+    private func editTitleOfNextSelectedTaskView()
     {
         guard list?.selection.count ?? 0 > 1,
             let firstSelectedIndex = list?.selection.indexes.first else
@@ -250,7 +250,7 @@ class Table: AnimatedTableView, Observer, Observable
         }
     }
     
-    func editTitle(at index: Int)
+    private func editTitle(at index: Int)
     {
         guard index < numberOfRows else
         {
