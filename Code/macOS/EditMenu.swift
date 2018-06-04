@@ -1,7 +1,9 @@
 import AppKit
+import UIObserver
 import SwiftyToolz
+import SwiftObserver
 
-class EditMenu: NSMenu
+class EditMenu: NSMenu, Observer
 {
     // MARK: - Initialization
     
@@ -30,9 +32,16 @@ class EditMenu: NSMenu
         addItem(copyItem)
         addItem(cutItem)
         addItem(pasteItem)
+        
+        observe(keyboard)
+        {
+            [unowned self] in if $0.key == .space { self.list?.create(at: 0) }
+        }
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
+    
+    deinit { stopAllObserving() }
     
     // MARK: - Action Availability
     
@@ -82,7 +91,7 @@ class EditMenu: NSMenu
                                             action: #selector(createAtTop),
                                             key: " ",
                                             modifiers: [])
-    @objc private func createAtTop() { list?.create(at: 0) }
+    @objc private func createAtTop() { }
     
     private lazy var renameItem = item("Rename Item",
                                        action: #selector(rename),
