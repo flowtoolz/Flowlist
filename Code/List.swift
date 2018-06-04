@@ -69,7 +69,7 @@ class List: Observable, Observer
         case .didNothing, .didMove, .didChangeRoot: break
         }
         
-        send(edit)
+        send(.did(edit: edit))
     }
     
     // MARK: - Observe Listed Tasks
@@ -117,6 +117,21 @@ class List: Observable, Observer
         }
     }
     
+    // MARK: - Title
+    
+    func editTitle(at index: Int)
+    {
+        guard index >= 0, index < numberOfTasks else
+        {
+            log(warning: "Tried to edit title at invalid index \(index).")
+            return
+        }
+        
+        send(.wantToEditTitle(at: index))
+    }
+    
+    let title = Var<String>().new()
+    
     // MARK: - Listed Tasks
     
     subscript(_ index: Int) -> Task?
@@ -148,7 +163,7 @@ class List: Observable, Observer
     {
         title.observable = new?.title
         
-        send(.didChangeRoot(from: old, to: new))
+        send(.did(edit: .didChangeRoot(from: old, to: new)))
         
         // TODO: do this as reaction to the event .didChangeRoot
         sendDidRemoveTasksOf(oldRoot: old)
@@ -171,7 +186,7 @@ class List: Observable, Observer
             }
         }
         
-        send(.didRemove(subtasks: subtasks, from: indexes))
+        send(.did(edit: .didRemove(subtasks: subtasks, from: indexes)))
     }
     
     private func sendDidInsertTasksOf(newRoot new: Task?)
@@ -180,14 +195,12 @@ class List: Observable, Observer
         
         let indexes = Array(0 ..< new.numberOfBranches)
 
-        send(.didInsert(at: indexes))
+        send(.did(edit: .didInsert(at: indexes)))
     }
-    
-    // MARK: - Title
-    
-    let title = Var<String>().new()
     
     // MARK: - Observability
     
-    var latestUpdate: Edit { return .didNothing }
+    var latestUpdate: Event { return .didNothing }
+    
+    enum Event { case didNothing, did(edit: Edit), wantToEditTitle(at: Int) }
 }

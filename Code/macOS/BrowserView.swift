@@ -46,10 +46,7 @@ class BrowserView: LayerBackedView, Observer
             
             if numSelections > 0, keyEvent.cmd
             {
-                if let index = list.selection.indexes.first
-                {
-                    listViews[2].scrollTable.table.editTitle(at: index)
-                }
+                list.editTitle()
                 
                 break
             }

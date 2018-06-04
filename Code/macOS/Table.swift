@@ -51,7 +51,17 @@ class Table: AnimatedTableView, Observer, Observable
             return
         }
         
-        observe(list) { [weak self] edit in self?.did(edit) }
+        observe(list)
+        {
+            [weak self] event in
+            
+            switch event
+            {
+            case .didNothing: break
+            case .did(let edit): self?.did(edit)
+            case .wantToEditTitle(let index): self?.editTitle(at: index)
+            }
+        }
         
         observe(list.selection, select: .didChange)
         {

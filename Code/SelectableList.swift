@@ -121,6 +121,13 @@ class SelectableList: List
         return nil
     }
     
+    func editTitle()
+    {
+        guard let index = selection.indexes.first else { return }
+        
+        editTitle(at: index)
+    }
+    
     // MARK: - Manage the Selection
     
     func select()
