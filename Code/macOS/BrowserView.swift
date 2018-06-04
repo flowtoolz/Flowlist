@@ -11,9 +11,7 @@ class BrowserView: LayerBackedView, Observer
     override init(frame frameRect: NSRect)
     {
         super.init(frame: frameRect)
-        
-        observe(keyboard) { [weak self] in self?.process($0) }
-        
+
         observeBrowser()
         
         backgroundColor = Color.background
@@ -26,73 +24,6 @@ class BrowserView: LayerBackedView, Observer
     required init?(coder decoder: NSCoder) { fatalError() }
     
     deinit { stopAllObserving() }
-    
-    // MARK: - Keyboard Input
-    
-    private func process(_ keyEvent: NSEvent)
-    {
-        guard let list = browser[2], !TextField.isEditing else { return }
-        
-        switch keyEvent.key
-        {
-        
-        case .left: break
-            
-        case .right: break
-            
-        case .enter:
-        
-            let numSelections = list.selection.count
-            
-            if numSelections > 0, keyEvent.cmd
-            {
-                list.editTitle()
-                
-                break
-            }
-            
-            if numSelections < 2
-            {
-                list.createBelowSelection()
-            }
-            else
-            {
-                list.groupSelectedTasks()
-            }
-            
-        case .space: list.create(at: 0)
-            
-        case .delete:
-            if keyEvent.cmd
-            {
-                list.checkOffFirstSelectedUncheckedTask()
-            }
-            else
-            {
-                _ = list.removeSelectedTasks()
-            }
-            
-        case .down: if keyEvent.cmd { list.moveSelectedTask(1) }
-            
-        case .up: if keyEvent.cmd { list.moveSelectedTask(-1) }
-            
-        case .tab: break
-            
-        case .unknown:
-            guard keyEvent.cmd else { break }
-            
-            switch keyEvent.characters
-            {
-            case "t": store.root.debug()
-            case "l": browser[2]?.debug()
-            case "c": list.copy()
-            case "x": list.cut()
-            case "v": list.paste()
-            case "z": list.undoLastRemoval()
-            default: break
-            }
-        }
-    }
     
     // MARK: - Create and Configure List Views
     

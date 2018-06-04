@@ -19,7 +19,21 @@ class Browser: Observer, Observable
     
     deinit { stopAllObserving() }
     
-    // MARK: - Navigate
+    // MARK: - Editing
+    
+    func createTaskAtTop() { self[2]?.create(at: 0) }
+    func renameTask() { self[2]?.editTitle() }
+    func createTask() { self[2]?.createTask() }
+    func checkOff() { self[2]?.checkOffFirstSelectedUncheckedTask() }
+    func delete() { self[2]?.removeSelectedTasks() }
+    func moveTaskUp() { self[2]?.moveSelectedTask(-1) }
+    func moveTaskDown() { self[2]?.moveSelectedTask(1) }
+    func copy() { self[2]?.copy() }
+    func cut() { self[2]?.cut() }
+    func paste() { self[2]?.paste() }
+    func undo() { self[2]?.undoLastRemoval() }
+    
+    // MARK: - Navigation
     
     func move(_ direction: Direction)
     {

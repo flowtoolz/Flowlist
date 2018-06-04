@@ -3,7 +3,19 @@ import SwiftyToolz
 
 class SelectableList: List
 {
-    // MARK: - Selection Dependent Editing
+    // MARK: - Create
+    
+    func createTask()
+    {
+        if selection.count < 2
+        {
+            createBelowSelection()
+        }
+        else
+        {
+            groupSelectedTasks()
+        }
+    }
     
     func groupSelectedTasks()
     {
@@ -24,11 +36,6 @@ class SelectableList: List
         create(at: newIndexBelowSelection)
     }
     
-    var newIndexBelowSelection: Int
-    {
-        return (selection.indexes.last ?? -1) + 1
-    }
-    
     func create(at index: Int)
     {
         guard let newTask = root?.create(at: index) else { return }
@@ -36,6 +43,9 @@ class SelectableList: List
         selection.set(with: newTask)
     }
     
+    // MARK: - Remove
+    
+    @discardableResult
     func removeSelectedTasks() -> Bool
     {
         let selectedIndexes = selection.indexes
@@ -44,14 +54,21 @@ class SelectableList: List
             let firstSelectedIndex = selectedIndexes.first,
             let removedTasks = root.removeSubtasks(at: selectedIndexes),
             removedTasks.count > 0
-        else
+            else
         {
             return false
         }
-       
+        
         selectAfterRemoval(from: firstSelectedIndex)
         
         return true
+    }
+    
+    func selectAfterRemoval(from index: Int)
+    {
+        guard root?.hasBranches ?? false else { return }
+        
+        selection.setWithTasksListed(at: [max(index - 1, 0)])
     }
     
     func undoLastRemoval()
@@ -66,29 +83,12 @@ class SelectableList: List
         selection.setWithTasksListed(at: recoveredIndexes)
     }
     
-    func selectAfterRemoval(from index: Int)
+    var newIndexBelowSelection: Int
     {
-        guard root?.hasBranches ?? false else { return }
-        
-        selection.setWithTasksListed(at: [max(index - 1, 0)])
+        return (selection.indexes.last ?? -1) + 1
     }
     
-    @discardableResult
-    func moveSelectedTask(_ positions: Int) -> Bool
-    {
-        guard positions != 0,
-            let root = root,
-            selection.count == 1,
-            let selectedTask = selection.first,
-            let selectedIndex = root.index(of: selectedTask)
-        else
-        {
-            return false
-        }
-
-        return root.moveSubtask(from: selectedIndex,
-                                to: selectedIndex + positions)
-    }
+    // MARK: - Check Off
     
     func checkOffFirstSelectedUncheckedTask()
     {
@@ -120,6 +120,27 @@ class SelectableList: List
         
         return nil
     }
+    
+    // MARK: - Move
+    
+    @discardableResult
+    func moveSelectedTask(_ positions: Int) -> Bool
+    {
+        guard positions != 0,
+            let root = root,
+            selection.count == 1,
+            let selectedTask = selection.first,
+            let selectedIndex = root.index(of: selectedTask)
+            else
+        {
+            return false
+        }
+        
+        return root.moveSubtask(from: selectedIndex,
+                                to: selectedIndex + positions)
+    }
+    
+    // MARK: - Edit Title
     
     func editTitle()
     {
