@@ -11,7 +11,7 @@ enum Edit
     {
         switch self
         {
-        case .didRemove, .didInsert, .didCreate: return true
+        case .didRemove, .didInsert, .didCreate, .didChangeRoot: return true
         default: return false
         }
     }
