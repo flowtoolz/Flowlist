@@ -9,8 +9,8 @@ class EditMenu: NSMenu
     {
         super.init(title: "Edit")
         
-        addItem(createTaskAtTopItem)
-        addItem(createTaskItem)
+        addItem(createAtTopItem)
+        addItem(createItem)
         
         addItem(deleteItem)
         addItem(undoItem)
@@ -59,22 +59,22 @@ class EditMenu: NSMenu
     
     // MARK: - Items
     
-    private lazy var createTaskItem = item("Add (Group)",
-                                           action: #selector(createTask),
-                                           key: "\n",
-                                           modifiers: [])
-    @objc private func createTask() { list?.createTask() }
+    private lazy var createItem = item("Add (Group)",
+                                       action: #selector(create),
+                                       key: "\n",
+                                       modifiers: [])
+    @objc private func create() { list?.createTask() }
     
-    private lazy var createTaskAtTopItem = item("Add on Top",
-                                                action: #selector(createTaskAtTop),
-                                                key: " ",
-                                                modifiers: [])
-    @objc private func createTaskAtTop() { list?.create(at: 0) }
+    private lazy var createAtTopItem = item("Add on Top",
+                                            action: #selector(createAtTop),
+                                            key: " ",
+                                            modifiers: [])
+    @objc private func createAtTop() { list?.create(at: 0) }
     
     private lazy var renameItem = item("Rename",
-                                       action: #selector(renameTask),
+                                       action: #selector(rename),
                                        key: "\n")
-    @objc private func renameTask() { list?.editTitle() }
+    @objc private func rename() { list?.editTitle() }
     
     private lazy var checkOffItem = item("Check Off",
                                          action: #selector(checkOff),
@@ -88,14 +88,14 @@ class EditMenu: NSMenu
     @objc private func delete() { list?.removeSelectedTasks() }
     
     private lazy var moveUpItem = item("Move Up",
-                                       action: #selector(moveTaskUp),
+                                       action: #selector(moveUp),
                                        key: String(unicode: NSUpArrowFunctionKey))
-    @objc private func moveTaskUp() { list?.moveSelectedTask(-1) }
+    @objc private func moveUp() { list?.moveSelectedTask(-1) }
     
     private lazy var moveDownItem = item("Move Down",
-                                         action: #selector(moveTaskDown),
+                                         action: #selector(moveDown),
                                          key: String(unicode: NSDownArrowFunctionKey))
-    @objc private func moveTaskDown() { list?.moveSelectedTask(1) }
+    @objc private func moveDown() { list?.moveSelectedTask(1) }
     
     private lazy var copyItem = item("Copy", action: #selector(copyTasks), key: "c")
     @objc private func copyTasks() { list?.copy() }
