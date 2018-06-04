@@ -57,6 +57,8 @@ final class Task: Codable, Observable, Tree
         
         return lastRemovedObjects.count
     }
+    
+    var hasRemovedSubtasks: Bool { return lastRemoved.count > 0 }
 
     private let lastRemoved = Clipboard<Task>()
     

@@ -24,7 +24,7 @@ class NavigationMenu: NSMenu
         {
         case goRightItem: return Browser.active?.canMove(.right) ?? false
         case goLeftItem: return Browser.active?.canMove(.left) ?? false
-        default: return false
+        default: return true
         }
     }
     

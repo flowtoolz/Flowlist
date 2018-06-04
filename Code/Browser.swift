@@ -9,8 +9,10 @@ class Browser: Observer, Observable
     {
         for _ in 0 ..< 5 { addTaskList() }
         
-        lists[2].set(root: store.root)
-        lists[2].select()
+        guard lists.isValid(index: focusedListIndex) else { fatalError() }
+        
+        focusedList.set(root: store.root)
+        focusedList.select()
         
         Browser.active = self
     }
@@ -18,20 +20,6 @@ class Browser: Observer, Observable
     static var active: Browser?
     
     deinit { stopAllObserving() }
-    
-    // MARK: - Editing
-    
-    func createTaskAtTop() { self[2]?.create(at: 0) }
-    func renameTask() { self[2]?.editTitle() }
-    func createTask() { self[2]?.createTask() }
-    func checkOff() { self[2]?.checkOffFirstSelectedUncheckedTask() }
-    func delete() { self[2]?.removeSelectedTasks() }
-    func moveTaskUp() { self[2]?.moveSelectedTask(-1) }
-    func moveTaskDown() { self[2]?.moveSelectedTask(1) }
-    func copy() { self[2]?.copy() }
-    func cut() { self[2]?.cut() }
-    func paste() { self[2]?.paste() }
-    func undo() { self[2]?.undoLastRemoval() }
     
     // MARK: - Navigation
     
@@ -51,7 +39,7 @@ class Browser: Observer, Observable
         if moveLeft
         {
             guard lists.count > 1,
-                let sublistRoot = lists[1].root,
+                let sublistRoot = self[focusedListIndex - 1]?.root,
                 let firstRoot = sublistRoot.root else { return }
             
             newList.set(root: firstRoot)
@@ -61,15 +49,15 @@ class Browser: Observer, Observable
         {
             updateRootOfList(at: lists.count - 1)
             
-            lists[2].select()
+            focusedList.select()
         }
     }
     
     func canMove(_ direction: Direction) -> Bool
     {
-        let targetIndex = direction == .left ? 1 : 3
+        let indexOffset = direction == .left ? -1 : 1
         
-        return lists[targetIndex].root != nil
+        return lists[focusedListIndex + indexOffset].root != nil
     }
     
     // MARK: - Create Task Lists
@@ -151,6 +139,8 @@ class Browser: Observer, Observable
     
     var numberOfLists: Int { return lists.count }
     
+    var focusedList: SelectableList { return lists[focusedListIndex] }
+    private let focusedListIndex = 2
     private var lists = [SelectableList]()
     
     // MARK: - Observability
