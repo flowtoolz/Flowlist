@@ -59,7 +59,7 @@ class EditMenu: NSMenu
     
     // MARK: - Items
     
-    private lazy var createTaskItem = item("Add / Group",
+    private lazy var createTaskItem = item("Add (Group)",
                                            action: #selector(createTask),
                                            key: "\n",
                                            modifiers: [])
