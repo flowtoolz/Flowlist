@@ -62,64 +62,64 @@ class EditMenu: NSMenu
     private func updateTitles(numberOfDeletedItems deleted: Int,
                               numberOfSelectedItems selected: Int)
     {
-        createItem.title = selected > 1 ? "Group \(selected) Items" : "Add"
-        renameItem.title = selected > 1 ? "Rename \(selected) Items" : "Rename"
-        checkOffItem.title = selected > 1 ? "Check Off 1st of \(selected) Items" : "Check Off"
-        deleteItem.title = selected > 1 ? "Delete \(selected) Items" : "Delete"
-        copyItem.title = selected > 1 ? "Copy \(selected) Items" : "Copy"
-        cutItem.title = selected > 1 ? "Cut \(selected) Items" : "Cut"
-        pasteItem.title = clipboard.count > 0 ? "Paste \(clipboard.count) Items" : "Paste"
-        undoItem.title = deleted > 0 ? "Paste \(deleted) Deleted Items" : "Paste Deleted Items"
+        createItem.title = selected > 1 ? "Group \(selected) Items" : "Add Item"
+        renameItem.title = selected > 1 ? "Rename \(selected) Items" : "Rename Item"
+        checkOffItem.title = selected > 1 ? "Check Off 1st of \(selected) Items" : "Check Item Off"
+        deleteItem.title = selected > 1 ? "Delete \(selected) Items" : "Delete Item"
+        copyItem.title = selected > 1 ? "Copy \(selected) Items" : "Copy Item"
+        cutItem.title = selected > 1 ? "Cut \(selected) Items" : "Cut Item"
+        pasteItem.title = clipboard.count > 1 ? "Paste \(clipboard.count) Items" : "Paste Item"
+        undoItem.title = deleted > 1 ? "Paste \(deleted) Deleted Items" : "Paste Deleted Item"
     }
     
-    private lazy var createItem = item("Add",
+    private lazy var createItem = item("Add Item",
                                        action: #selector(create),
                                        key: "\n",
                                        modifiers: [])
     @objc private func create() { list?.createTask() }
     
-    private lazy var createAtTopItem = item("Add on Top",
+    private lazy var createAtTopItem = item("Add Item on Top",
                                             action: #selector(createAtTop),
                                             key: " ",
                                             modifiers: [])
     @objc private func createAtTop() { list?.create(at: 0) }
     
-    private lazy var renameItem = item("Rename",
+    private lazy var renameItem = item("Rename Item",
                                        action: #selector(rename),
                                        key: "\n")
     @objc private func rename() { list?.editTitle() }
     
-    private lazy var checkOffItem = item("Check Off",
+    private lazy var checkOffItem = item("Check Item Off",
                                          action: #selector(checkOff),
                                          key: String(unicode: NSBackspaceCharacter))
     @objc private func checkOff() { list?.checkOffFirstSelectedUncheckedTask() }
     
-    private lazy var deleteItem = item("Delete",
+    private lazy var deleteItem = item("Delete Item",
                                        action: #selector(delete),
                                        key: String(unicode: NSBackspaceCharacter),
                                        modifiers: [])
     @objc private func delete() { list?.removeSelectedTasks() }
     
-    private lazy var moveUpItem = item("Move Up",
+    private lazy var moveUpItem = item("Move Item Up",
                                        action: #selector(moveUp),
                                        key: String(unicode: NSUpArrowFunctionKey))
     @objc private func moveUp() { list?.moveSelectedTask(-1) }
     
-    private lazy var moveDownItem = item("Move Down",
+    private lazy var moveDownItem = item("Move Item Down",
                                          action: #selector(moveDown),
                                          key: String(unicode: NSDownArrowFunctionKey))
     @objc private func moveDown() { list?.moveSelectedTask(1) }
     
-    private lazy var copyItem = item("Copy", action: #selector(copyTasks), key: "c")
+    private lazy var copyItem = item("Copy Item", action: #selector(copyTasks), key: "c")
     @objc private func copyTasks() { list?.copy() }
     
-    private lazy var cutItem = item("Cut", action: #selector(cut), key: "x")
+    private lazy var cutItem = item("Cut Item", action: #selector(cut), key: "x")
     @objc private func cut() { list?.cut() }
     
-    private lazy var pasteItem = item("Paste", action: #selector(paste), key: "v")
+    private lazy var pasteItem = item("Paste Item", action: #selector(paste), key: "v")
     @objc private func paste() { list?.paste() }
     
-    private lazy var undoItem = item("Paste Deleted Items",
+    private lazy var undoItem = item("Paste Deleted Item",
                                      action: #selector(undo),
                                      key: "z")
     @objc private func undo() { list?.undoLastRemoval() }
