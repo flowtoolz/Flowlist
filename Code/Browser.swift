@@ -37,11 +37,9 @@ class Browser: Observer, Observable
     
     func move(_ direction: Direction)
     {
+        guard canMove(direction) else { return }
+        
         let moveLeft = direction == .left
-        let newFocusedIndex = moveLeft ? 1 : 3
-        
-        guard lists[newFocusedIndex].root != nil else { return }
-        
         let removalIndex = moveLeft ? lists.count - 1 : 0
         
         observeSelection(in: lists.remove(at: removalIndex), start: false)
@@ -65,6 +63,13 @@ class Browser: Observer, Observable
             
             lists[2].select()
         }
+    }
+    
+    func canMove(_ direction: Direction) -> Bool
+    {
+        let targetIndex = direction == .left ? 1 : 3
+        
+        return lists[targetIndex].root != nil
     }
     
     // MARK: - Create Task Lists
