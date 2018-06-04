@@ -40,18 +40,18 @@ class EditMenu: NSMenu
     {
         guard !TextField.isEditing else { return false }
         
+        let selected = numberOfSelectedTasks
+        let deleted = list?.root?.numberOfRemovedSubtasks ?? 0
+        
+        updateTitles(numberOfDeletedItems: deleted, numberOfSelectedItems: selected)
+        
         switch menuItem
         {
-        case renameItem, checkOffItem, deleteItem, copyItem, cutItem:
-            return numberOfSelectedTasks > 0
-        case moveUpItem, moveDownItem:
-            return numberOfSelectedTasks == 1
-        case pasteItem:
-            return clipboard.count > 0
-        case undoItem:
-            return list?.root?.hasRemovedSubtasks ?? false
-        default:
-            return list != nil
+        case renameItem, checkOffItem, deleteItem, copyItem, cutItem: return selected > 0
+        case moveUpItem, moveDownItem: return selected == 1
+        case pasteItem: return clipboard.count > 0
+        case undoItem: return deleted > 0
+        default: return list != nil
         }
     }
     
@@ -59,7 +59,20 @@ class EditMenu: NSMenu
     
     // MARK: - Items
     
-    private lazy var createItem = item("Add (Group)",
+    private func updateTitles(numberOfDeletedItems deleted: Int,
+                              numberOfSelectedItems selected: Int)
+    {
+        createItem.title = selected > 1 ? "Group \(selected) Items" : "Add"
+        renameItem.title = selected > 1 ? "Rename \(selected) Items" : "Rename"
+        checkOffItem.title = selected > 1 ? "Check Off 1st of \(selected) Items" : "Check Off"
+        deleteItem.title = selected > 1 ? "Delete \(selected) Items" : "Delete"
+        copyItem.title = selected > 1 ? "Copy \(selected) Items" : "Copy"
+        cutItem.title = selected > 1 ? "Cut \(selected) Items" : "Cut"
+        pasteItem.title = clipboard.count > 0 ? "Paste \(clipboard.count) Items" : "Paste"
+        undoItem.title = deleted > 0 ? "Paste \(deleted) Deleted Items" : "Paste Deleted Items"
+    }
+    
+    private lazy var createItem = item("Add",
                                        action: #selector(create),
                                        key: "\n",
                                        modifiers: [])
