@@ -11,7 +11,11 @@ class Browser: Observer, Observable
         
         lists[2].set(root: store.root)
         lists[2].select()
+        
+        Browser.active = self
     }
+    
+    static var active: Browser?
     
     deinit { stopAllObserving() }
     

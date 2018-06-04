@@ -1,4 +1,5 @@
 import AppKit
+import SwiftyToolz
 
 class EditMenu: NSMenu
 {
@@ -48,21 +49,34 @@ class EditMenu: NSMenu
         addItem(item("Copy", action: #selector(doNothingHere), key: "c"))
         addItem(item("Cut", action: #selector(doNothingHere), key: "x"))
         addItem(item("Paste", action: #selector(doNothingHere), key: "v"))
+        
+        addItem(item("Go to Details",
+                     action: #selector(goRight),
+                     key: String(unicode: NSRightArrowFunctionKey),
+                     modifiers: []))
+        addItem(item("Go to Overview",
+                     action: #selector(goLeft),
+                     key: String(unicode: NSLeftArrowFunctionKey),
+                     modifiers: []))
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
     
-    // MARK: - Dummy Function
+    // MARK: - Actions
     
     @objc private func doNothingHere() { }
-}
-
-extension String
-{
-    init(unicode: Int)
+    
+    @objc private func goRight() { Browser.active?.move(.right) }
+    
+    @objc private func goLeft() { Browser.active?.move(.left) }
+    
+    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
-        var unicharacter = unichar(unicode)
+        if menuItem.title == "Go to Details" || menuItem.title == "Go to Overview"
+        {
+            return !TextField.isEditing
+        }
         
-        self = String(utf16CodeUnits: &unicharacter, count: 1)
+        return super.validateMenuItem(menuItem)
     }
 }

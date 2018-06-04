@@ -36,9 +36,9 @@ class BrowserView: LayerBackedView, Observer
         switch keyEvent.key
         {
         
-        case .left: browser.move(.left)
+        case .left: break
             
-        case .right: browser.move(.right)
+        case .right: break
             
         case .enter:
         
