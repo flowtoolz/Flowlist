@@ -106,7 +106,7 @@ class BrowserView: LayerBackedView, Observer
         
         guard let newList = browser[newListIndex] else
         {
-            log(error: "Couldn't get first list from browser.")
+            log(error: "Couldn't get new list from browser.")
             return
         }
         
@@ -122,9 +122,9 @@ class BrowserView: LayerBackedView, Observer
     private func moveListViews(_ direction: Direction) -> SelectableListView
     {
         let left = direction == .left
-        let removalIndex = left ? 0 : listViews.count - 1
-        listViews.remove(at: removalIndex).removeFromSuperview()
     
+        removeListView(at: left ? 0 : listViews.count - 1)
+        
         return addListView(prepend: !left)
     }
     
@@ -218,6 +218,15 @@ class BrowserView: LayerBackedView, Observer
     }
     
     // MARK: - Basics
+    
+    private func removeListView(at index: Int)
+    {
+        guard listViews.isValid(index: index) else { return }
+        
+        let removedListView = listViews.remove(at: index)
+        stopObserving(removedListView)
+        removedListView.removeFromSuperview()
+    }
     
     private var listViews = [SelectableListView]()
     
