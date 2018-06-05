@@ -35,7 +35,22 @@ class EditMenu: NSMenu, Observer
         
         observe(keyboard)
         {
-            [unowned self] in if $0.key == .space { self.list?.create(at: 0) }
+            [unowned self] in
+            
+            switch $0.key
+            {
+            case .space: self.list?.create(at: 0)
+            case .unknown:
+                guard $0.cmd else { break }
+                
+                switch $0.characters
+                {
+                case "l": self.list?.debug()
+                case "t": store.root.debug()
+                default: break
+                }
+            default: break
+            }
         }
     }
     
