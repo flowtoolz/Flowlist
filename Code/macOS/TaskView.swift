@@ -34,7 +34,7 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         guard let task = task else
         {
-            log(error: "Cannot configure \(typeName(of: self)) with nil task.")
+            log(error: "Cannot configure \(typeName(self)) with nil task.")
             return nil
         }
         

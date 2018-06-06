@@ -2,7 +2,7 @@ import SwiftyToolz
 
 extension Task: Hashable
 {
-    var hashValue: HashValue { return hash(self) }
+    var hashValue: HashValue { return SwiftyToolz.hashValue(self) }
     
     static func == (lhs: Task, rhs: Task) -> Bool
     {
