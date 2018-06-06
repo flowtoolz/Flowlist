@@ -53,7 +53,6 @@ class List: Observable, Observer
             {
             case .didNothing: break
             case .did(let edit): self?.received(edit, from: root)
-            case .willDeinit: self?.stopObserving(root)
             }
         }
     }

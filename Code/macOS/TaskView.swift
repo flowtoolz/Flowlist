@@ -24,8 +24,8 @@ class TaskView: LayerBackedView, Observer, Observable
     
     deinit
     {
-        send(.willDeinit)
         stopAllObserving()
+        removeObservers()
     }
     
     // MARK: - Configuration
@@ -74,7 +74,6 @@ class TaskView: LayerBackedView, Observer, Observable
         {
         case .didNothing: break
         case .did(let edit): if edit.changesItems { updateGroupIcon() }
-        case .willDeinit: stopObserving(task: task)
         }
     }
     
@@ -187,5 +186,5 @@ class TaskView: LayerBackedView, Observer, Observable
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, willEditTitle, didEditTitle, willDeinit }
+    enum Event { case didNothing, willEditTitle, didEditTitle }
 }

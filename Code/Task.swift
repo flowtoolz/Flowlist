@@ -14,7 +14,7 @@ final class Task: Codable, Observable, Tree
         self.root = root
     }
     
-    deinit { send(.willDeinit) }
+    deinit { removeObservers() }
     
     // MARK: - Codable Data
     
@@ -142,5 +142,5 @@ final class Task: Codable, Observable, Tree
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, did(Edit), willDeinit }
+    enum Event { case didNothing, did(Edit) }
 }

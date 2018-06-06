@@ -228,7 +228,6 @@ class Table: AnimatedTableView, Observer, Observable
         case .didNothing: break
         case .didEditTitle: editTitleOfNextSelectedTaskView()
         case .willEditTitle: send(event)
-        case .willDeinit: stopObserving(taskView)
         }
     }
     
