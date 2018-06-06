@@ -39,7 +39,9 @@ class EditMenu: NSMenu, Observer
             
             switch $0.key
             {
-            case .space: self.list?.create(at: 0)
+            case .space:
+                if !TextField.isEditing { self.list?.create(at: 0) }
+                
             case .unknown:
                 guard $0.cmd else { break }
                 
@@ -49,6 +51,7 @@ class EditMenu: NSMenu, Observer
                 case "t": store.root.debug()
                 default: break
                 }
+                
             default: break
             }
         }
