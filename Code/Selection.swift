@@ -3,6 +3,10 @@ import SwiftyToolz
 
 class Selection: Observable
 {
+    // MARK: - Life Cycle
+    
+    deinit { removeObservers() }
+    
     // MARK: - Select Tasks
     
     func setWithTasksListed(at indexes: [Int])

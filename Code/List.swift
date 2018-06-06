@@ -3,6 +3,14 @@ import SwiftyToolz
 
 class List: Observable, Observer
 {
+    // MARK: - Life Cycle
+    
+    deinit
+    {
+        stopAllObserving()
+        removeObservers()
+    }
+    
     // MARK: - Configuration
     
     func set(root newRoot: Task?)
@@ -30,8 +38,6 @@ class List: Observable, Observer
         observe(root: root, start: start)
         observeTasksListed(in: root, start: start)
     }
-    
-    deinit { stopAllObserving() }
     
     // MARK: - Observe Root
     
