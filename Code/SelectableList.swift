@@ -159,6 +159,11 @@ class SelectableList: List
         }
     }
     
+    func selectAll()
+    {
+        selection.setWithTasksListed(at: Array(0 ..< numberOfTasks))
+    }
+    
     override func set(root newRoot: Task?)
     {
         super.set(root: newRoot)

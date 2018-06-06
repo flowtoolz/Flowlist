@@ -1,15 +1,19 @@
 import AppKit
 
-class NavigationMenu: NSMenu
+class SelectionMenu: NSMenu
 {
     // MARK: - Initialization
     
     init()
     {
-        super.init(title: "Navigate")
+        super.init(title: "Select")
         
         addItem(goRightItem)
         addItem(goLeftItem)
+        
+        addItem(NSMenuItem.separator())
+        
+        addItem(selectAllItem)
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
@@ -24,6 +28,7 @@ class NavigationMenu: NSMenu
         {
         case goRightItem: return Browser.active?.canMove(.right) ?? false
         case goLeftItem: return Browser.active?.canMove(.left) ?? false
+        case selectAllItem: return list?.numberOfTasks ?? 0 > 0
         default: return true
         }
     }
@@ -41,4 +46,11 @@ class NavigationMenu: NSMenu
                                        key: String(unicode: NSLeftArrowFunctionKey),
                                        modifiers: [])
     @objc private func goLeft() { Browser.active?.move(.left) }
+    
+    private lazy var selectAllItem = item("Select All",
+                                          action: #selector(selectAll),
+                                          key: "a")
+    @objc private func selectAll() { list?.selectAll() }
+    
+    private var list: SelectableList? { return Browser.active?.focusedList }
 }

@@ -12,7 +12,7 @@ extension SelectableList
     
     func copy() { root?.copy(at: selection.indexes) }
     
-    func paste()
+    func pasteFromClipboard()
     {
         let index = newIndexBelowSelection
         

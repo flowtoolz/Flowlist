@@ -5,7 +5,9 @@ final class Task: Codable, Observable, Tree
 {
     // MARK: - Life Cycle
     
-    convenience init(title: String?, state: TaskState?, root: Task? = nil)
+    convenience init(title: String?,
+                     state: TaskState? = nil,
+                     root: Task? = nil)
     {
         self.init()
         
