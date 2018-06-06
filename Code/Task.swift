@@ -2,7 +2,20 @@ import SwiftObserver
 import SwiftyToolz
 
 final class Task: Codable, Observable, Tree
-{    
+{
+    // MARK: - Life Cycle
+    
+    convenience init(title: String?, state: TaskState?, root: Task? = nil)
+    {
+        self.init()
+        
+        self.title = Var(title)
+        self.state = Var(state)
+        self.root = root
+    }
+    
+    deinit { send(.willDeinit) }
+    
     // MARK: - Codable Data
     
     enum CodingKeys: CodingKey { case title, state, branches }
@@ -27,9 +40,11 @@ final class Task: Codable, Observable, Tree
                                          as: group,
                                          at: groupIndex) else { return nil }
 
-        send(.didRemove(subtasks: merged, from: indexes))
-        send(.didCreate(at: groupIndex))
-        group.send(.didInsert(at: Array(0 ..< group.numberOfBranches)))
+        send(.did(.remove(subtasks: merged, from: indexes)))
+        send(.did(.create(at: groupIndex)))
+        
+        let insertedIndexesInGroup = Array(0 ..< group.numberOfBranches)
+        group.send(.did(.insert(at: insertedIndexesInGroup)))
         
         return group
     }
@@ -39,7 +54,7 @@ final class Task: Codable, Observable, Tree
     {
         guard let removedSubtasks = removeBranches(at: indexes) else { return nil }
         
-        send(.didRemove(subtasks: removedSubtasks, from: indexes))
+        send(.did(.remove(subtasks: removedSubtasks, from: indexes)))
         
         lastRemoved.storeCopies(of: removedSubtasks)
         
@@ -67,7 +82,7 @@ final class Task: Codable, Observable, Tree
     {
         guard insert(branch: subtask, at: index) else { return nil }
         
-        send(.didInsert(at: [index]))
+        send(.did(.insert(at: [index])))
 
         return subtask
     }
@@ -81,7 +96,7 @@ final class Task: Codable, Observable, Tree
         {
             let insertedIndexes = Array(index ..< index + subtasks.count)
         
-            send(.didInsert(at: insertedIndexes))
+            send(.did(.insert(at: insertedIndexes)))
         }
         
         return true
@@ -94,7 +109,7 @@ final class Task: Codable, Observable, Tree
         
         guard insert(branch: subtask, at: index) else { return nil }
         
-        send(.didCreate(at: index))
+        send(.did(.create(at: index)))
         
         return subtask
     }
@@ -104,7 +119,7 @@ final class Task: Codable, Observable, Tree
     {
         guard moveBranch(from: from, to: to) else { return false }
         
-        send(.didMove(from: from, to: to))
+        send(.did(.move(from: from, to: to)))
         
         return true
     }
@@ -117,7 +132,7 @@ final class Task: Codable, Observable, Tree
         {
             guard oldValue !== root else { return }
             
-            send(.didChangeRoot(from: oldValue, to: root))
+            send(.did(.changeRoot(from: oldValue, to: root)))
         }
     }
     
@@ -125,5 +140,7 @@ final class Task: Codable, Observable, Tree
     
     // MARK: - Observability
     
-    var latestUpdate: Edit { return .didNothing }
+    var latestUpdate: Event { return .didNothing }
+    
+    enum Event { case didNothing, did(Edit), willDeinit }
 }

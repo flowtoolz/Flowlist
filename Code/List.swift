@@ -45,11 +45,16 @@ class List: Observable, Observer
         
         observe(root)
         {
-            [weak self, weak root] edit in
+            [weak self, weak root] event in
             
             guard let root = root else { return }
             
-            self?.received(edit, from: root)
+            switch event
+            {
+            case .didNothing: break
+            case .did(let edit): self?.received(edit, from: root)
+            case .willDeinit: self?.stopObserving(root)
+            }
         }
     }
     
@@ -57,19 +62,19 @@ class List: Observable, Observer
     {
         switch edit
         {
-        case .didInsert(let indexes):
+        case .insert(let indexes):
             observeTasksListed(in: root, at: indexes)
             
-        case .didRemove(let tasks, _):
+        case .remove(let tasks, _):
             for task in tasks { observe(listedTask: task, start: false) }
             
-        case .didCreate(let index):
+        case .create(let index):
             observeTasksListed(in: root, at: [index])
         
-        case .didNothing, .didMove, .didChangeRoot: break
+        case .nothing, .move, .changeRoot: break
         }
         
-        send(.did(edit: edit))
+        send(.did(edit))
     }
     
     // MARK: - Observe Listed Tasks
@@ -163,7 +168,7 @@ class List: Observable, Observer
     {
         title.observable = new?.title
         
-        send(.did(edit: .didChangeRoot(from: old, to: new)))
+        send(.did(.changeRoot(from: old, to: new)))
         
         // TODO: do this as reaction to the event .didChangeRoot
         sendDidRemoveTasksOf(oldRoot: old)
@@ -186,7 +191,7 @@ class List: Observable, Observer
             }
         }
         
-        send(.did(edit: .didRemove(subtasks: subtasks, from: indexes)))
+        send(.did(.remove(subtasks: subtasks, from: indexes)))
     }
     
     private func sendDidInsertTasksOf(newRoot new: Task?)
@@ -195,12 +200,12 @@ class List: Observable, Observer
         
         let indexes = Array(0 ..< new.numberOfBranches)
 
-        send(.did(edit: .didInsert(at: indexes)))
+        send(.did(.insert(at: indexes)))
     }
     
     // MARK: - Observability
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, did(edit: Edit), wantToEditTitle(at: Int) }
+    enum Event { case didNothing, did(Edit), wantToEditTitle(at: Int) }
 }

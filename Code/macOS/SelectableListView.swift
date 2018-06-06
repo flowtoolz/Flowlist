@@ -46,7 +46,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
             
             if case .did(let edit) = event
             {
-                if case .didChangeRoot(_, let new) = edit
+                if case .changeRoot(_, let new) = edit
                 {
                     self?.isHidden = new == nil
                 }

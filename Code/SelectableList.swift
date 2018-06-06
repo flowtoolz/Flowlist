@@ -170,7 +170,7 @@ class SelectableList: List
     {
         super.received(edit, from: root)
         
-        if case .didRemove(let subtasks, _) = edit
+        if case .remove(let subtasks, _) = edit
         {
             selection.remove(tasks: subtasks)
         }

@@ -1,17 +1,17 @@
 enum Edit
 {
-    case didNothing
-    case didChangeRoot(from: Task?, to: Task?)
-    case didCreate(at: Int)
-    case didInsert(at: [Int])
-    case didMove(from: Int, to: Int)
-    case didRemove(subtasks: [Task], from: [Int])
+    case nothing
+    case changeRoot(from: Task?, to: Task?)
+    case create(at: Int)
+    case insert(at: [Int])
+    case move(from: Int, to: Int)
+    case remove(subtasks: [Task], from: [Int])
     
-    var itemsDidChange: Bool
+    var changesItems: Bool
     {
         switch self
         {
-        case .didRemove, .didInsert, .didCreate, .didChangeRoot: return true
+        case .remove, .insert, .create, .changeRoot: return true
         default: return false
         }
     }

@@ -29,7 +29,11 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
                    viewFor tableColumn: NSTableColumn?,
                    row: Int) -> NSView?
     {
-        let task = list?[row]
+        guard let task = list?[row] else
+        {
+            log(error: "Couldn't find task for row \(row) in list \(list?.title.observable?.value ?? "nil").")
+            return nil
+        }
         
         let isSelected = list?.selection.isSelected(task) ?? false
         

@@ -100,11 +100,11 @@ class Table: AnimatedTableView, Observer, Observable
     {
         switch edit
         {
-        case .didCreate(let index): didCreate(at: index)
-        case .didInsert(let indexes): didInsert(at: indexes)
-        case .didRemove(_, let indexes): didRemove(from: indexes)
-        case .didMove(let from, let to): didMove(from: from, to: to)
-        case .didNothing, .didChangeRoot: break
+        case .create(let index): didCreate(at: index)
+        case .insert(let indexes): didInsert(at: indexes)
+        case .remove(_, let indexes): didRemove(from: indexes)
+        case .move(let from, let to): didMove(from: from, to: to)
+        case .nothing, .changeRoot: break
             // TODO: consider processing .didChangeRoot here
         }
     }

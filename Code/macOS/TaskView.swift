@@ -25,7 +25,6 @@ class TaskView: LayerBackedView, Observer, Observable
     deinit
     {
         send(.willDeinit)
-        NotificationCenter.default.removeObserver(self)
         stopAllObserving()
     }
     
@@ -35,7 +34,7 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         guard let task = task else
         {
-            log(error: "Cannot configure task view with nil task.")
+            log(error: "Cannot configure \(typeName(of: self)) with nil task.")
             return nil
         }
         
@@ -55,9 +54,7 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         observe(task)
         {
-            [weak self] event in
-            
-            if event.itemsDidChange { self?.updateGroupIcon() }
+            [weak self] event in self?.received(event, from: task)
         }
         
         observe(task.title)
@@ -68,6 +65,16 @@ class TaskView: LayerBackedView, Observer, Observable
         observe(task.state)
         {
             [weak self] _ in self?.updateState()
+        }
+    }
+    
+    private func received(_ event: Task.Event, from task: Task)
+    {
+        switch event
+        {
+        case .didNothing: break
+        case .did(let edit): if edit.changesItems { updateGroupIcon() }
+        case .willDeinit: stopObserving(task: task)
         }
     }
     
