@@ -11,7 +11,7 @@ However reality isn't fragmented by such arbitrary categories, much less can you
 
 Because they are so rigid, conventional task managers are really bad at capturing thoughts, brainstorming, developing ideas through "live thinking" or iterating over tasks and projects over time.
 
-I need to keep the structure of captured items in line with reality. I need a tool that supports an agile (i.e. realistic) way of thinking, working and living. That means, it must allow to freely mould the hierarchy of captured items: Group items together, Add sub items "into" an item, Move items to a whole different level, and so forth.
+I need to evolve the structure of captured items to keep them in line with reality. I need a tool that supports an agile (i.e. realistic) way of thinking, working and living. That means, it must allow to freely mould the item hierarchy: Group items together, add sub items "into" an item, move items to a whole different level, and so forth.
 
 So a year ago, I prototyped a novel kind of task manager and named it "Flowlist". And I've been happily using it every day since. This year, I decided to turn Flowlist into much more and make it available to you. More is to come at [flowlistapp.com](http://flowlistapp.com).
 
