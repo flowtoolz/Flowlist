@@ -1,4 +1,48 @@
-#Why I'm Building Flowlist
+#Flowlist 1.0 Tutorial
+
+* In the next 3 minutes, we'll have a look at Flowlist and see what the app can already do. Unfortunately, I didnt have the time to make a shorter video.
+* After first launch it looks quite deserted. We have a list header here displaying the app's filename. This list contains items stored inside the app, but right now, the app is empty.
+* In Flowlist, you can do everything with the keyboard. (show menu options) So your hands never have to switch to a trackpad or mouse in between writing.
+* In this video, you'll see every key command I hit visualized in the bottom right corner.
+* Now, Let's create some items:
+    * ice with Susan
+    * bring package to post office
+    * groceries
+    * suffer through dentist's appointment
+    * write article
+    * organize workshop
+* I feel a bit distracted by those other windows, we could switch to monotasking mode like that (switch), but let's go fullscreen and really focus. (...)
+* For these 4 tasks (select 1-4), I gotta head to the city, so let's group them (group -> name city)
+* Those tasks (point) are now subtasks of city
+* Now let's focus the new "city" list (enter it). You see there's always context to the left, the item or list of interest in the middle, and details to the right. And we move in and out to change our focus.
+* I got my priorities wrong here, the dreaded appointment is in the morning, the reward comes last (moving 4 to 1 then 2 to 4)
+* Oh, I need my bike to do all that, and I think I forgot it in the city yesterday night after some drinks. So I should find that first. (space -> find bike)
+* The space bar adds an item to the top of the list, almost like pushing an item onto a stack. (quickly add some untitled items)
+* Now, let's get back to this. (select organize workshop) I'm not sure what it takes to organize a workshop, so let's focus its details and brainstorm (enter the task)
+    * book location
+    * prepare content
+    * invite people
+* the location should be booked for either tuesday or thursday (add subtask "tuesday or thursday") and i gotta talk to tim about it (add another subtask "tim knows more..."
+* items don't have descriptions to detail them, because we can always add sub items for that, like we did here. (move out, point to sub items)
+* this article is actually part of the workshop content, so I cut it out and insert it where it belongs (cut and paste "write article")
+* the article will certainly have sections (create item "section")
+* let's create a bunch of them (copy and paste "section" 4 times)
+* and you know what, I can name them better (rename first 5, appending these titles)
+    * 1. intro
+    * 2. challenge
+    * 3. solution
+    * 4. in practice
+    * 5. outlook
+* The others we don't need (delete multiple including "outlook")
+* Oops, I deleted 1 too many, but I can undo that. (undo)
+* Notice, we write and delete items like lines in a text (delete single single items, add some with enter, delete again)
+* now we go to wikipedia (swipe screen) copy some text (copy formatted bullet points or so)
+* and paste the text as items into section 1 of our article (...)
+* Btw. let's say we completed our little city tour ... so check those tasks off (check 1st 3 off)
+* the tasks that are done are now at the bottom of the list, with the last checked item first, like we piled them onto a stack
+* That's all the time I got. Thanks for watching.
+
+#Flowlist Backstory
 
 Sometimes, I feel overwhelmed by all the stuff I have to do, and even more by all the stuff I'm passionate about. So, most of my life, I've been on a quest to sort myself out, get more shit done and turn more ideas into real things.
 
@@ -14,63 +58,15 @@ I need to evolve my captured items to keep them in line with reality. I need a t
 
 So a year ago, I prototyped a novel kind of task manager and named it "Flowlist". And I've been happily using it every day since. This year, I decided to turn Flowlist into much more and make it available to you. More is to come at [flowlistapp.com](http://flowlistapp.com).
 
-#The Big Idea
-
-Flow, Simplicity, Simple (Universal) Domain Model leads to great Applicability and Power, etc...
-
-#How to Use Flowlist
-
-* In the next X minutes, we'll have a look at Flowlist and see what the app can already do. I didnt have the time to make a shorter video.
-* After first launch it looks quite deserted. We have a list header here displaying the app's filename. This list contains items stored in the app, but right now, the app is empty.
-* In Flowlist, you can do everything with the keyboard. (show menu options) So your hands never have to switch to a trackpad or mouse in between writing.
-* In this video, you'll see every key command I hit visualized in the bottom right corner.
-* Let's create some items:
-    * ice with Susan
-    * bring package to post office
-    * groceries
-    * suffer through dentist's appointment
-    * write article
-    * organize workshop
-* I feel a bit distracted by those other windows, we could switch to monotasking mode like that (switch), but let's go fullscreen and really focus. (...)
-* For these 4 tasks (select 1-4), I gotta head to the city, so let's group them (group -> name city)
-* Those tasks (point) are now subtasks of city
-* Now let's focus the new "city" list (enter it). You see there's always context to the left, the item or list of interest in the middle, and details to the right. And we move in and out to change our focus.
-* I got my priorities wrong here, the dreaded appointment is in the morning, the reward comes last (moving 4 to 1 then 2 to 4)
-* Oh, I need my bike for these tasks, and I think I forgot it in the city yesterday night after some drinks. So I should find that first. (space -> find bike)
-* The space bar adds an item to the top of the list, almost like pushing an item onto a stack. (quickly add some untitled items)
-* Now, let's get back to this. (select organize workshop) I'm not sure what it takes to organize a workshop, so let's focus its details and brainstorm (enter the task)
-    * book location
-    * prepare content
-    * invite people
-* ... oh the location should be booked for either tuesday or thursday (add subtask "tuesday or thursday") and i gotta talk to tim about that (add another subtask "tim knows more..."
-* items don't have descriptions to detail them, because we can always add sub items for that, like we did here.
-* this article is actually part of the workshop content, so I cut it out and insert it where it belongs (cut and paste "write article")
-* the article will certainly have sections (create item "section")
-* let's create a bunch of them (copy and paste "section" 4 times)
-* you what, I can name them better (rename first 5, appending these titles)
-    * 1. intro
-    * 2. challenge
-    * 3. solution
-    * 4. in practice
-    * 5. outlook
-* The others we don't need (delete multiple including "outlook")
-* Oops, I deleted 1 too many, but I can undo that. (undo)
-* Notice, we write and delete items like lines in a text (delete single single items, add some with enter, delete again)
-* now we go to wikipedia (swipe screen) copy some text (copy formatted bullet points or so)
-* and paste the text as items into section 1 of our article (...)
-* Btw. let's say we completed our little city tour ... so check those tasks off (check 1st 3 off)
-* the tasks that are done are now at the bottom of the list, with the last checked item first, like piled them onto a stack
-* That's all the time I got. Thanks for watching.
-
 #Flowlist Light
 
 Want to try it yourself? Go to flowlistapp.com and download Flowlist Light for free.
 
 Flowlist Light has just 1 limitation: It cannot hold more than 100 items at the same time. Other than that, it has all features, it saves all your items, you can use it forever, and it is totally free, you don't even have to give away your email. Go to flowlistapp.com and start organizing your thoughts and your life today!
 
-#Put on Shades, The Future is Bright
+#Flowlist Future Development
 
-This isn't even the beginning. I have many great things planned for Flowlist. 
+Put on shades, the future is bright. Version 1.0 isn't even the beginning. I have many great things planned for Flowlist. 
 
 * A system wide keyboard short cut will allow you to quickly capture thoughts, even while you're using other apps. Neither will you forget anything nor will you be distracted. Whenever you have an idea, you capture it and just move on with whatever you're doing.
 
@@ -78,7 +74,7 @@ This isn't even the beginning. I have many great things planned for Flowlist.
 
 * Flowlist will have independent filters that let you customize what items you see. There'll be a custom tag hierarchy, colors, a live keyword search, due dates and more task states like "in progress" or "trashed". For example you'll be able to setup a filter that shows all work-related appointments and tasks of today.
 
-#Pricing
+#Flowlist Pricing
 
 I really don't like paid subscriptions. So I'll never require this for Flowlist. You pay once, then you can use the app forever.
 
@@ -88,6 +84,26 @@ Now, as I'll make Flowlist more and more powerful, I'll have to adjust the price
 
 #Brain Storm
 
+##Flowlist Promo Video / Teaser
+
+* less than 2 minutes
+* narration but sparse
+* back story
+* big idea
+* animations (practical use cases)
+* montage of heavy use (many items, my own lists)
+* download options -> C2A
+
+##The Big Idea
+
+Flow, Simplicity, Simple (Universal) Domain Model leads to great Applicability and Power, etc...
+
 ##Flowlist Light
 
-Because it is not distributed via the AppStore, you can treat the Flowlist Light app like file: duplicate it, put it on a usb stick, rename it whatever. Every copy of the app is self-contained: it contains its own data. No need to import, export or find files on your machine. The app is like file that opens itself. The root task list is named by the app filename.
+### Migration
+
+how to migrate from light to the app store version
+
+### Copy It As You Please
+
+Because it is not distributed via the AppStore, you can treat the Flowlist Light app like a file: duplicate it, put it on a usb stick, rename it whatever. Every copy of the app is self-contained: it contains its own data. No need to import, export or find files on your machine. The app is like a file that opens itself. The root task list is named by the app filename so it's easy to work with multiple different copies.
