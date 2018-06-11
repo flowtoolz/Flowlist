@@ -1,31 +1,36 @@
 #Flowlist Promo Video / Teaser
 
-* Ever feel overwhelmed by all the things you want to accomplish in this modern life? your errands? your projects? thoughts? ideas and big dreams?
-* I certainly felt that way. So I tried the conventional task managers to finally get organized.
-* But I didn't like them. So I built exactly what I needed, and named it Flowlist.
+* Ever feel overwhelmed by all the things you want to accomplish? your errands? your projects? ideas and big dreams?
+* I certainly felt that way. And I tried all popular task managers to finally get organized.
+* But they just felt limiting and distracting. So I created Flowlist.
 * With Flowlist, I
     * Quickly capture whatever pops into my head
     * I develop notes into Ideas,
     * Manage Tasks and Projects
     * and Plan my Day and my Future
-* I use Flowlist everyday, and it has honestly changed my life
 * Now, Flowlist can do all these things, not because it's packed with menus, knobs and buttons, but because it is so radically simple.
-    * Write and delete items just like lines of a text
-    * Group items together into a new item
-    * Add sub items into an item
-    * copy, cut and paste items
+    * Write and delete items just like lines in a text
+    * prioritize
+    * check items off
+    * Group them together
+    * Add sub items
+    * copy, cut and paste
     * or copy text from a website or pdf and paste it as items into Flowlist
-    * There's no limit to how deeply nested your items can be and you can edit this hierarchy in every way to keep it true to your life
-* Flowlist supports working in a flow state.
-    * you see context on the left and details on the right, but you always focus on the list in the middle.
-    * Chose the scope of your focus by moving right for details or left to a higher level.
-    * Work in fullscreen
-    * Or switch to monotasking mode which blends out the menu bar, the dock and all other apps. (animation montage...)
-* Want to try it yourself? Flowlist Light is available now and it's totally free. I has just 1 limitation: It cannot hold more than 100 items at the same time.
-* Or, support further development and get the unlimited version from the AppStore for just 5 bucks.
-* We have many great features planned, and we'll adjust the price as when adding them. But if you already have the app, you'll get them all as free updates, so if you get onboard early, Flowlist is a steal.
-* Go to flowlistapp.com and start organizing your thoughts and your life today!
-
+    * There's no limit to how deeply nested your items can be, and you can edit this hierarchy in every way to keep it true to your life
+* Flowlist helps working in a flow state.
+    * Your hands never have to leave the keyboard for anything.
+    * and The interface is super clean
+    * With the overview to the left and details to the right, you focus on the list in the middle.
+    * Chose the scope of your focus by going deeper into details or back to a higher level.
+    * Work in fullscreen Or switch to monotasking mode (animation montage)
+* I've been using Flowlist daily for a year now, and it has changed my life
+* So I have many great things planned, like a shortcut for adding items when using other apps, a synchronized iOS app, and independent filters for keywords, tags, colors and due dates.
+* Flowlist is now available on the Mac AppStore.
+* Use it for free with up to 100 items, ...
+* Or, support further development and unlock the full version for less than 10 dollars. No subscription required.
+* Of course, I'll have to adjust the price when adding features, but I reward those who get onboard early.
+* Once you have the full version, you get all new features as free updates.
+* Sounds fair? Go to flowlistapp.com and start organizing your thoughts and your life today!
 
 
 #Flowlist 1.0 Tutorial
