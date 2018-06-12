@@ -13,7 +13,7 @@ class ScrollTable: NSScrollView
         
         drawsBackground = false
         automaticallyAdjustsContentInsets = false
-        contentInsets = NSEdgeInsets(top: 0, left: 0, bottom: 10, right: 0.5)
+        contentInsets = NSEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
     }
     
     required init?(coder: NSCoder) { fatalError() }

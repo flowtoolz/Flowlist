@@ -72,7 +72,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
     private func constrainHeader()
     {
         header.autoPinEdge(toSuperviewEdge: .left)
-        header.autoPinEdge(toSuperviewEdge: .right)
+        header.autoPinEdge(toSuperviewEdge: .right, withInset: 0.5)
         header.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         header.autoSetDimension(.height, toSize: Float.itemHeight.cgFloat)
     }
@@ -83,7 +83,9 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func constrainScrollTable()
     {
-        scrollTable.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+        let insets = NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 0.5)
+        
+        scrollTable.autoPinEdgesToSuperviewEdges(with: insets,
                                                  excludingEdge: .top)
         
         let halfVerticalGap = Float.verticalGap.cgFloat / 2
