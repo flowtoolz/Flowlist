@@ -84,7 +84,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
     private func constrainScrollTable()
     {
         scrollTable.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                excludingEdge: .top)
+                                                 excludingEdge: .top)
         
         let halfVerticalGap = Float.verticalGap.cgFloat / 2
         
