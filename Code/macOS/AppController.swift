@@ -9,6 +9,10 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
         NSApp.activate(ignoringOtherApps: true)
         NSApp.mainMenu = menu
         store.load()
+    }
+    
+    func applicationWillBecomeActive(_ notification: Notification)
+    {
         window.show()
     }
     
@@ -29,7 +33,7 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     func windowWillClose(_ notification: Notification)
     {
-        NSApp.terminate(self)
+        NSApp.hide(self)
     }
     
     func applicationWillTerminate(_ notification: Notification)

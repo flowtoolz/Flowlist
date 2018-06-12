@@ -14,9 +14,9 @@ class ApplicationMenu: NSMenu
         
         addItem(NSMenuItem.separator())
         
-        addItem(withTitle: "Hide",
+        addItem(withTitle: "Close Window",
                 action: #selector(NSApplication.hide(_:)),
-                keyEquivalent: "h")
+                keyEquivalent: "w")
         
         addItem(withTitle: "Quit",
                 action: #selector(NSApplication.terminate(_:)),
