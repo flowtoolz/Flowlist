@@ -190,7 +190,7 @@ class Selection: Observable
     }
     
     var count: Int { return selectedTasks.count }
-    var first: Task? { return selectedTasks.values.first }
+    var someTask: Task? { return selectedTasks.values.first }
     
     private var selectedTasks = [Task : Task]()
     

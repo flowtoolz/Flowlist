@@ -90,15 +90,15 @@ class SelectableList: List
     
     // MARK: - Check Off
     
-    func checkOffFirstSelectedUncheckedTask()
+    func toggleDoneStateOfFirstSelectedTask()
     {
-        guard let task = firstSelectedUnchecked() else { return }
+        guard let task = firstSelectedTask else { return }
         
-        task.state <- .done
+        task.state <- !task.isDone ? .done : nil
         
-        guard let nextIndex = root?.indexOfFirstUncheckedSubtask() else { return }
-        
-        if selection.count == 1
+        if selection.count == 1,
+            task.isDone,
+            let nextIndex = root?.indexOfFirstUncheckedSubtask()
         {
             selection.setWithTasksListed(at: [nextIndex])
         }
@@ -108,17 +108,11 @@ class SelectableList: List
         }
     }
     
-    private func firstSelectedUnchecked() -> Task?
+    private var firstSelectedTask: Task?
     {
-        for selectedIndex in selection.indexes
-        {
-            if let task = self[selectedIndex], !task.isDone
-            {
-                return task
-            }
-        }
+        guard let index = selection.indexes.first else { return nil }
         
-        return nil
+        return self[index]
     }
     
     // MARK: - Move
@@ -129,7 +123,7 @@ class SelectableList: List
         guard positions != 0,
             let root = root,
             selection.count == 1,
-            let selectedTask = selection.first,
+            let selectedTask = selection.someTask,
             let selectedIndex = root.index(of: selectedTask)
             else
         {

@@ -124,7 +124,7 @@ class Browser: Observer, Observable
         }
         
         let superSelection = lists[index - 1].selection
-        let newRoot = superSelection.count == 1 ? superSelection.first : nil
+        let newRoot = superSelection.count == 1 ? superSelection.someTask : nil
         let list = lists[index]
         
         if newRoot !== list.root { list.set(root: newRoot) }

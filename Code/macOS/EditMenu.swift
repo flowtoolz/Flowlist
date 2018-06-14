@@ -21,11 +21,11 @@ class EditMenu: NSMenu, Observer
         
         addItem(moveUpItem)
         addItem(moveDownItem)
+        addItem(checkOffItem)
         
         addItem(NSMenuItem.separator())
         
         addItem(renameItem)
-        addItem(checkOffItem)
         
         addItem(NSMenuItem.separator())
         
@@ -134,8 +134,8 @@ class EditMenu: NSMenu, Observer
     
     private lazy var checkOffItem = item("Check Item Off",
                                          action: #selector(checkOff),
-                                         key: String(unicode: NSBackspaceCharacter))
-    @objc private func checkOff() { list?.checkOffFirstSelectedUncheckedTask() }
+                                         key: String(unicode: NSLeftArrowFunctionKey))
+    @objc private func checkOff() { list?.toggleDoneStateOfFirstSelectedTask() }
     
     private lazy var deleteItem = item("Delete Item",
                                        action: #selector(delete),
