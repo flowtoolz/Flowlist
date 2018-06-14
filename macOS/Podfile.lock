@@ -1,14 +1,14 @@
 PODS:
   - FoundationToolz (1.0.0)
   - PureLayout (3.0.2)
-  - SwiftObserver (1.3.0):
-    - SwiftyToolz (= 1.0.0)
-  - SwiftyToolz (1.0.0)
+  - SwiftObserver (1.3.2):
+    - SwiftyToolz (= 1.1.0)
+  - SwiftyToolz (1.1.0)
   - UIObserver (0.1.0):
-    - SwiftObserver (= 1.3.0)
+    - SwiftObserver
   - UIToolz (1.0.0):
     - PureLayout (= 3.0.2)
-    - SwiftyToolz (= 1.0.0)
+    - SwiftyToolz
 
 DEPENDENCIES:
   - FoundationToolz (from `../../Github Repos/FoundationToolz`)
@@ -37,10 +37,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   FoundationToolz: e40cc7cc969480357a44eaafd9bab4b75a3f0c7a
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
-  SwiftObserver: b901490298c3f056c118c65dd1bdb5f0ff1da5fb
-  SwiftyToolz: c2946e4cb45066232f8434780a21e8a40bde0213
-  UIObserver: 0d433a966655d483f0de668df9458df85bf6c9de
-  UIToolz: 248249aa2e4811e3b64b11e63e4c157a3caca7a0
+  SwiftObserver: a8d183c0984fa9ffa531069f462b59f061390924
+  SwiftyToolz: 461391682260e0c485c4007f60c7cc882b8f7211
+  UIObserver: d52d08987839f94e2ca4f4767b233fc53e6837e3
+  UIToolz: e44bb6bbe50f0dd3b0696ef66bc419bc334ab5ec
 
 PODFILE CHECKSUM: decd485108c4fb948784ab3c46dfe1fa65f84639
 
