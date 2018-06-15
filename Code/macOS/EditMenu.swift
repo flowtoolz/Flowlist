@@ -92,10 +92,17 @@ class EditMenu: NSMenu, Observer
                               numberOfSelectedItems selected: Int,
                               systemPasteboardHasText systemPasteboard: Bool)
     {
+        let task = list?.firstSelectedTask
+        
         createItem.title = selected > 1 ? "Group \(selected) Items" : "Add New Item"
         renameItem.title = selected > 1 ? "Rename \(selected) Items" : "Rename Item"
-        checkOffItem.title = selected > 1 ? "Check/Uncheck 1st of \(selected) Items" : "Check/Uncheck Item"
-        inProgressItem.title = selected > 1 ? "Start/Pause 1st of \(selected) Items" : "Start/Pause Item"
+        
+        let checkAction = task?.isDone ?? false ? "Uncheck" : "Check"
+        checkOffItem.title = selected > 1 ? "\(checkAction) 1st of \(selected) Items" : "\(checkAction) Item"
+        
+        let progressAction = task?.isInProgress ?? false ? "Pause" : "Start"
+        inProgressItem.title = selected > 1 ? "\(progressAction) 1st of \(selected) Items" : "\(progressAction) Item"
+
         deleteItem.title = selected > 1 ? "Delete \(selected) Items" : "Delete Item"
         copyItem.title = selected > 1 ? "Copy \(selected) Items" : "Copy Item"
         cutItem.title = selected > 1 ? "Cut \(selected) Items" : "Cut Item"
@@ -143,12 +150,12 @@ class EditMenu: NSMenu, Observer
                                        key: "\n")
     @objc private func rename() { list?.editTitle() }
     
-    private lazy var checkOffItem = item("Check/Uncheck Item",
+    private lazy var checkOffItem = item("Check Item",
                                          action: #selector(checkOff),
                                          key: String(unicode: NSLeftArrowFunctionKey))
     @objc private func checkOff() { list?.toggleDoneStateOfFirstSelectedTask() }
     
-    private lazy var inProgressItem = item("Start/Pause Item",
+    private lazy var inProgressItem = item("Start Item",
                                            action: #selector(startProgress),
                                            key: String(unicode: NSRightArrowFunctionKey))
     @objc private func startProgress() { list?.toggleInProgressStateOfFirstSelectedTask() }

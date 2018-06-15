@@ -122,13 +122,6 @@ class SelectableList: List
         }
     }
     
-    private var firstSelectedTask: Task?
-    {
-        guard let index = selection.indexes.first else { return nil }
-        
-        return self[index]
-    }
-    
     // MARK: - Move
     
     @discardableResult
@@ -170,6 +163,13 @@ class SelectableList: List
     func selectAll()
     {
         selection.setWithTasksListed(at: Array(0 ..< numberOfTasks))
+    }
+    
+    var firstSelectedTask: Task?
+    {
+        guard let index = selection.indexes.first else { return nil }
+        
+        return self[index]
     }
     
     override func set(root newRoot: Task?)
