@@ -95,7 +95,7 @@ class EditMenu: NSMenu, Observer
         createItem.title = selected > 1 ? "Group \(selected) Items" : "Add New Item"
         renameItem.title = selected > 1 ? "Rename \(selected) Items" : "Rename Item"
         checkOffItem.title = selected > 1 ? "Check/Uncheck 1st of \(selected) Items" : "Check/Uncheck Item"
-        inProgressItem.title = selected > 1 ? "Start/Pause Working on 1st of \(selected) Items" : "Start/Pause Working on Item"
+        inProgressItem.title = selected > 1 ? "Start/Pause 1st of \(selected) Items" : "Start/Pause Item"
         deleteItem.title = selected > 1 ? "Delete \(selected) Items" : "Delete Item"
         copyItem.title = selected > 1 ? "Copy \(selected) Items" : "Copy Item"
         cutItem.title = selected > 1 ? "Cut \(selected) Items" : "Cut Item"
@@ -122,7 +122,7 @@ class EditMenu: NSMenu, Observer
                                        modifiers: [])
     @objc private func create() { list?.createTask() }
     
-    private lazy var createAtTopItem = item("Start Working on New Item",
+    private lazy var createAtTopItem = item("Start New Item",
                                             action: #selector(createAtTop),
                                             key: " ",
                                             modifiers: [])
@@ -148,7 +148,7 @@ class EditMenu: NSMenu, Observer
                                          key: String(unicode: NSLeftArrowFunctionKey))
     @objc private func checkOff() { list?.toggleDoneStateOfFirstSelectedTask() }
     
-    private lazy var inProgressItem = item("Start/Pause Working on Item",
+    private lazy var inProgressItem = item("Start/Pause Item",
                                            action: #selector(startProgress),
                                            key: String(unicode: NSRightArrowFunctionKey))
     @objc private func startProgress() { list?.toggleInProgressStateOfFirstSelectedTask() }
