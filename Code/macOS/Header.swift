@@ -16,9 +16,37 @@ class Header: LayerBackedView
         backgroundColor = Color.white
         
         constrainTitleField()
+        constrainIcon()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
+    
+    // MARK: - Icon
+    
+    func showIcon(_ show: Bool = true)
+    {
+        titleField.isHidden = show
+        icon.isHidden = !show
+    }
+    
+    private func constrainIcon()
+    {
+        icon.autoCenterInSuperview()
+    }
+    
+    private lazy var icon: NSImageView =
+    {
+        let view = addForAutoLayout(NSImageView())
+        
+        view.image = Header.iconImage
+        view.imageScaling = .scaleNone
+        view.imageAlignment = .alignCenter
+        view.isHidden = true
+        
+        return view
+    }()
+    
+    private static let iconImage = #imageLiteral(resourceName: "home")
     
     // MARK: - Title
     

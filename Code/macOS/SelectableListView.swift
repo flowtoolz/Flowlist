@@ -34,6 +34,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
         }
         
         header.set(title: list.title.latestUpdate)
+        header.showIcon(list.isRootList)
         
         // scroll table
         scrollTable.configure(with: list)

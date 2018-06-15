@@ -163,6 +163,8 @@ class List: Observable, Observer
     
     // MARK: - Root
     
+    var isRootList: Bool { return root != nil && root?.root == nil }
+    
     private(set) weak var root: Task?
     {
         didSet
