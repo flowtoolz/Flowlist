@@ -26,7 +26,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-06-15 10:04:46 +0000</string>
+	<string>2018-06-15 11:17:32 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -125,6 +125,69 @@
 			<key>GraphicsList</key>
 			<array>
 				<dict>
+					<key>Bounds</key>
+					<string>{{216, 504}, {72, 72}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>42</integer>
+					<key>Shape</key>
+					<string>HorizontalTriangle</string>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>CornerRadius</key>
+							<real>4</real>
+							<key>Width</key>
+							<real>4</real>
+						</dict>
+					</dict>
+					<key>Text</key>
+					<dict>
+						<key>VerticalPad</key>
+						<real>0.0</real>
+					</dict>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{72, 504}, {72, 72}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>41</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>CornerRadius</key>
+							<real>12</real>
+							<key>Width</key>
+							<real>4</real>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
 					<key>Class</key>
 					<string>LineGraphic</string>
 					<key>Head</key>
@@ -201,7 +264,7 @@
 							<key>TailArrow</key>
 							<string>0</string>
 							<key>Width</key>
-							<real>5</real>
+							<real>4</real>
 						</dict>
 					</dict>
 				</dict>
@@ -238,7 +301,7 @@
 							<key>TailArrow</key>
 							<string>0</string>
 							<key>Width</key>
-							<real>5</real>
+							<real>4</real>
 						</dict>
 					</dict>
 				</dict>
@@ -275,7 +338,7 @@
 							<key>TailArrow</key>
 							<string>0</string>
 							<key>Width</key>
-							<real>5</real>
+							<real>4</real>
 						</dict>
 					</dict>
 				</dict>
@@ -494,7 +557,7 @@
 							<key>TailArrow</key>
 							<string>0</string>
 							<key>Width</key>
-							<real>10</real>
+							<real>4</real>
 						</dict>
 					</dict>
 				</dict>
@@ -1077,6 +1140,11 @@
 					<integer>23</integer>
 					<key>Style</key>
 					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
 						<key>shadow</key>
 						<dict>
 							<key>Draws</key>
@@ -1176,12 +1244,12 @@
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{-202.05479452054789, -218.49315068493163}, {1021.9178082191784, 904.10958904109589}}</string>
+		<string>{{-104.20069561989624, -67.895460191863293}, {838.20224719101122, 741.57303370786519}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Arbeitsfläche 1</string>
-				<real>0.72999999999999998</real>
+				<real>0.89000000000000001</real>
 				<real>1</real>
 			</array>
 		</array>
@@ -1212,7 +1280,7 @@
 	<key>lastExportTypeKey</key>
 	<integer>0</integer>
 	<key>marginWidthKey</key>
-	<real>7.2000002861022949</real>
+	<real>0.0</real>
 	<key>previewTypeKey</key>
 	<integer>0</integer>
 	<key>readOnlyKey</key>
@@ -1236,7 +1304,7 @@
 	<key>useArtboardsKey</key>
 	<false/>
 	<key>useMarginKey</key>
-	<true/>
+	<false/>
 	<key>useNotesKey</key>
 	<false/>
 </dict>

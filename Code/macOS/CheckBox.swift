@@ -32,12 +32,12 @@ class CheckBox: NSButton
         
         switch state
         {
+        case .inProgress: return CheckBox.imageInProgress
         case .done, .trashed: return CheckBox.imageChecked
-        case .inProgress: return CheckBox.imageThick
         }
     }
     
     private static let imageEmpty = #imageLiteral(resourceName: "checkbox_unchecked")
     private static let imageChecked = #imageLiteral(resourceName: "checkbox_checked")
-    private static let imageThick = #imageLiteral(resourceName: "checkbox_thick")
+    private static let imageInProgress = #imageLiteral(resourceName: "play")
 }
