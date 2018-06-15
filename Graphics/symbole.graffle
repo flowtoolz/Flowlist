@@ -5,16 +5,14 @@
 	<key>ApplicationVersion</key>
 	<array>
 		<string>com.omnigroup.OmniGraffle7</string>
-		<string>177.6.0.286920</string>
+		<string>186.9.0.304876</string>
 	</array>
 	<key>CreationDate</key>
 	<string>2015-05-10 01:56:37 +0000</string>
 	<key>Creator</key>
 	<string>Sebastian Fichtner</string>
-	<key>CurrentSheet</key>
-	<integer>0</integer>
 	<key>GraphDocumentVersion</key>
-	<integer>13</integer>
+	<integer>14</integer>
 	<key>GuidesLocked</key>
 	<string>NO</string>
 	<key>GuidesVisible</key>
@@ -28,9 +26,9 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2017-06-17 09:25:26 +0000</string>
+	<string>2018-06-15 06:59:21 +0000</string>
 	<key>Modifier</key>
-	<string>Sebastian</string>
+	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
 	<string>NO</string>
 	<key>NotesVisible</key>
@@ -86,12 +84,14 @@
 			<integer>0</integer>
 			<key>AutoAdjust</key>
 			<integer>6</integer>
+			<key>AutosizingMargin</key>
+			<integer>0</integer>
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{0, 0}, {1519.178082191781, 1609.5890410958909}}</string>
+				<string>{{0, 0}, {559, 783}}</string>
 				<key>Class</key>
-				<string>ShapedGraphic</string>
+				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
 				<integer>2</integer>
 				<key>Style</key>
@@ -110,8 +110,12 @@
 			</dict>
 			<key>BaseZoom</key>
 			<integer>0</integer>
+			<key>CanvasDimensionsOrigin</key>
+			<string>{0, 0}</string>
 			<key>CanvasOrigin</key>
 			<string>{0, 0}</string>
+			<key>CanvasSizingMode</key>
+			<integer>1</integer>
 			<key>ColumnAlign</key>
 			<integer>1</integer>
 			<key>ColumnSpacing</key>
@@ -120,6 +124,34 @@
 			<string>1 in = 1.00000 in</string>
 			<key>GraphicsList</key>
 			<array>
+				<dict>
+					<key>Bounds</key>
+					<string>{{72, 504}, {72, 72}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>23</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>CornerRadius</key>
+							<real>12</real>
+							<key>Width</key>
+							<real>10</real>
+						</dict>
+					</dict>
+				</dict>
 				<dict>
 					<key>Class</key>
 					<string>LineGraphic</string>
@@ -911,6 +943,8 @@
 	<false/>
 	<key>WindowInfo</key>
 	<dict>
+		<key>CurrentSheet</key>
+		<integer>0</integer>
 		<key>Frame</key>
 		<string>{{3, 0}, {1234, 777}}</string>
 		<key>ShowInfo</key>
@@ -920,11 +954,11 @@
 		<key>Sidebar</key>
 		<true/>
 		<key>SidebarWidth</key>
-		<integer>200</integer>
+		<integer>216</integer>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{-223.97260273972597, -89.041095890411157}, {960.27397260273983, 827.39726027397273}}</string>
+		<string>{{-222.60273972602721, -89.041095890411057}, {958.90410958904113, 847.94520547945206}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>

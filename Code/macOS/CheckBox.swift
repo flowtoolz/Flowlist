@@ -33,4 +33,5 @@ class CheckBox: NSButton
     
     private static let imageEmpty = #imageLiteral(resourceName: "checkbox_unchecked")
     private static let imageChecked = #imageLiteral(resourceName: "checkbox_checked")
+    private static let imageThick = #imageLiteral(resourceName: "checkbox_thick")
 }
