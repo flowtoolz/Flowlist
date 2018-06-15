@@ -109,7 +109,7 @@ class EditMenu: NSMenu, Observer
         
         if systemPasteboard
         {
-            pasteItem.title = "Paste Items From Text"
+            pasteItem.title = "Paste Text as Items"
         }
         else if clipboard.count > 1
         {
