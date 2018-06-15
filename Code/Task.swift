@@ -109,6 +109,8 @@ final class Task: Codable, Observable, Tree
     {
         let subtask = Task()
         
+        if index == 0 { subtask.state <- .inProgress }
+        
         guard insert(branch: subtask, at: index) else { return nil }
         
         send(.did(.create(at: index)))
