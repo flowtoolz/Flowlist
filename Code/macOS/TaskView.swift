@@ -79,7 +79,8 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func updateState()
     {
-        let state = self.task?.state.value
+        let state = task?.state.value
+        
         checkBox.update(with: state)
         titleField.update(with: state)
     }

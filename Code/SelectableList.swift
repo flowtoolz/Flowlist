@@ -88,6 +88,20 @@ class SelectableList: List
         return (selection.indexes.last ?? -1) + 1
     }
     
+    // MARK: - Put Item in Progress
+    
+    func toggleInProgressStateOfFirstSelectedTask()
+    {
+        guard let task = firstSelectedTask else { return }
+        
+        task.state <- !task.isInProgress ? .inProgress : nil
+        
+        if selection.count > 1
+        {
+            selection.remove(tasks: [task])
+        }
+    }
+    
     // MARK: - Check Off
     
     func toggleDoneStateOfFirstSelectedTask()
@@ -98,7 +112,7 @@ class SelectableList: List
         
         if selection.count == 1,
             task.isDone,
-            let nextIndex = root?.indexOfFirstUncheckedSubtask()
+            let nextIndex = root?.indexOfFirstOpenSubtask()
         {
             selection.setWithTasksListed(at: [nextIndex])
         }

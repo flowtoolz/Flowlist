@@ -22,11 +22,11 @@ extension Task
         return nil
     }
     
-    func indexOfFirstUncheckedSubtask(from: Int = 0) -> Int?
+    func indexOfFirstOpenSubtask(from: Int = 0) -> Int?
     {
         for i in from ..< numberOfBranches
         {
-            if let subtask = self[i], !subtask.isDone
+            if let subtask = self[i], subtask.isOpen
             {
                 return i
             }
@@ -35,5 +35,7 @@ extension Task
         return nil
     }
     
+    var isOpen: Bool { return isInProgress || state.value == nil }
     var isDone: Bool { return state.value == .done }
+    var isInProgress: Bool { return state.value == .inProgress }
 }

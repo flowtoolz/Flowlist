@@ -21,14 +21,20 @@ class CheckBox: NSButton
     
     func update(with state: TaskState?)
     {
-        image = image(checked: state == .done)
+        image = image(for: state)
     }
     
     // MARK: - Image
     
-    private func image(checked: Bool) -> NSImage
+    private func image(for state: TaskState?) -> NSImage
     {
-        return checked ? CheckBox.imageChecked : CheckBox.imageEmpty
+        guard let state = state else { return CheckBox.imageEmpty }
+        
+        switch state
+        {
+        case .done, .trashed: return CheckBox.imageChecked
+        case .inProgress: return CheckBox.imageThick
+        }
     }
     
     private static let imageEmpty = #imageLiteral(resourceName: "checkbox_unchecked")

@@ -117,12 +117,16 @@ class List: Observable, Observer
         {
             [weak self, weak task] stateUpdate in
             
-            if let task = task,
-                stateUpdate.new != stateUpdate.old,
-                let taskIndex = task.indexInRoot,
-                task.isDone
+            guard let task = task,
+                let taskIndex = task.indexInRoot else { return }
+            
+            if task.isDone
             {
                 self?.root?.moveSubtaskToTopOfDoneList(from: taskIndex)
+            }
+            else if task.isInProgress
+            {
+                self?.root?.moveSubtask(from: taskIndex, to: 0)
             }
         }
     }

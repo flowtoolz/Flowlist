@@ -13,7 +13,7 @@ class EditMenu: NSMenu, Observer
         
         addItem(createAtTopItem)
         addItem(createItem)
-        
+        addItem(renameItem)
         addItem(deleteItem)
         addItem(undoItem)
         
@@ -22,10 +22,7 @@ class EditMenu: NSMenu, Observer
         addItem(moveUpItem)
         addItem(moveDownItem)
         addItem(checkOffItem)
-        
-        addItem(NSMenuItem.separator())
-        
-        addItem(renameItem)
+        addItem(inProgressItem)
         
         addItem(NSMenuItem.separator())
         
@@ -76,7 +73,7 @@ class EditMenu: NSMenu, Observer
         
         switch menuItem
         {
-        case renameItem, checkOffItem, deleteItem, copyItem, cutItem: return selected > 0
+        case renameItem, checkOffItem, deleteItem, copyItem, cutItem, inProgressItem: return selected > 0
         case moveUpItem, moveDownItem: return selected == 1
         case pasteItem: return clipboard.count > 0 || systemPasteboard
         case undoItem: return deleted > 0
@@ -94,7 +91,8 @@ class EditMenu: NSMenu, Observer
     {
         createItem.title = selected > 1 ? "Group \(selected) Items" : "Add Item"
         renameItem.title = selected > 1 ? "Rename \(selected) Items" : "Rename Item"
-        checkOffItem.title = selected > 1 ? "Check Off 1st of \(selected) Items" : "Check Item Off"
+        checkOffItem.title = selected > 1 ? "Check/Uncheck 1st of \(selected) Items" : "Check/Uncheck Item"
+        inProgressItem.title = selected > 1 ? "Start/Pause Working on 1st of \(selected) Items" : "Start/Pause Working on Item"
         deleteItem.title = selected > 1 ? "Delete \(selected) Items" : "Delete Item"
         copyItem.title = selected > 1 ? "Copy \(selected) Items" : "Copy Item"
         cutItem.title = selected > 1 ? "Cut \(selected) Items" : "Cut Item"
@@ -132,10 +130,15 @@ class EditMenu: NSMenu, Observer
                                        key: "\n")
     @objc private func rename() { list?.editTitle() }
     
-    private lazy var checkOffItem = item("Check Item Off",
+    private lazy var checkOffItem = item("Check/Uncheck Item",
                                          action: #selector(checkOff),
                                          key: String(unicode: NSLeftArrowFunctionKey))
     @objc private func checkOff() { list?.toggleDoneStateOfFirstSelectedTask() }
+    
+    private lazy var inProgressItem = item("Start/Pause Working on Item",
+                                           action: #selector(startProgress),
+                                           key: String(unicode: NSRightArrowFunctionKey))
+    @objc private func startProgress() { list?.toggleInProgressStateOfFirstSelectedTask() }
     
     private lazy var deleteItem = item("Delete Item",
                                        action: #selector(delete),
