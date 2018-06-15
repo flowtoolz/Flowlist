@@ -12,6 +12,9 @@ class EditMenu: NSMenu, Observer
         super.init(title: "Edit")
         
         addItem(createAtTopItem)
+        
+        addItem(NSMenuItem.separator())
+        
         addItem(createItem)
         addItem(renameItem)
         addItem(deleteItem)
@@ -37,7 +40,7 @@ class EditMenu: NSMenu, Observer
             switch $0.key
             {
             case .space:
-                if !TextField.isEditing { self.list?.create(at: 0) }
+                self.createAtTop()
                 
             case .unknown:
                 guard $0.cmd else { break }
@@ -99,7 +102,7 @@ class EditMenu: NSMenu, Observer
         
         if systemPasteboard
         {
-            pasteItem.title = "Paste Items from Text"
+            pasteItem.title = "Paste Items From Text"
         }
         else if clipboard.count > 1
         {
@@ -119,11 +122,21 @@ class EditMenu: NSMenu, Observer
                                        modifiers: [])
     @objc private func create() { list?.createTask() }
     
-    private lazy var createAtTopItem = item("Add Item on Top",
+    private lazy var createAtTopItem = item("Start Working on New Item",
                                             action: #selector(createAtTop),
                                             key: " ",
                                             modifiers: [])
-    @objc private func createAtTop() { }
+    @objc private func createAtTop()
+    {
+        if !TextField.isEditing { list?.create(at: 0) }
+    }
+    
+    override func performKeyEquivalent(with event: NSEvent) -> Bool
+    {
+        guard event.key != .space else { return true }
+        
+        return super.performKeyEquivalent(with: event)
+    }
     
     private lazy var renameItem = item("Rename Item",
                                        action: #selector(rename),
