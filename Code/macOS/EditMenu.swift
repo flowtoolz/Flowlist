@@ -92,7 +92,7 @@ class EditMenu: NSMenu, Observer
                               numberOfSelectedItems selected: Int,
                               systemPasteboardHasText systemPasteboard: Bool)
     {
-        createItem.title = selected > 1 ? "Group \(selected) Items" : "Add Item"
+        createItem.title = selected > 1 ? "Group \(selected) Items" : "Add New Item"
         renameItem.title = selected > 1 ? "Rename \(selected) Items" : "Rename Item"
         checkOffItem.title = selected > 1 ? "Check/Uncheck 1st of \(selected) Items" : "Check/Uncheck Item"
         inProgressItem.title = selected > 1 ? "Start/Pause Working on 1st of \(selected) Items" : "Start/Pause Working on Item"
@@ -116,7 +116,7 @@ class EditMenu: NSMenu, Observer
         undoItem.title = deleted > 1 ? "Paste \(deleted) Deleted Items" : "Paste Deleted Item"
     }
     
-    private lazy var createItem = item("Add Item",
+    private lazy var createItem = item("Add New Item",
                                        action: #selector(create),
                                        key: "\n",
                                        modifiers: [])
