@@ -3,7 +3,7 @@ import SwiftyToolz
 extension Color
 {
     static let backlog = Color.gray(brightness: 0.95)
-    static let done = Color.gray(brightness: 0.85)
+    static let done = Color.gray(brightness: 0.86)
     static let background = Color.gray(brightness: 0.9)
     
     static let selected = Color(163, 205, 254)
