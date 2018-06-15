@@ -97,7 +97,7 @@ class EditMenu: NSMenu, Observer
         createItem.title = selected > 1 ? "Group \(selected) Items" : "Add New Item"
         renameItem.title = selected > 1 ? "Rename \(selected) Items" : "Rename Item"
         
-        let checkAction = task?.isDone ?? false ? "Uncheck" : "Check"
+        let checkAction = task?.isDone ?? false ? "Uncheck" : "Check Off"
         checkOffItem.title = selected > 1 ? "\(checkAction) 1st of \(selected) Items" : "\(checkAction) Item"
         
         let progressAction = task?.isInProgress ?? false ? "Pause" : "Start"
@@ -150,7 +150,7 @@ class EditMenu: NSMenu, Observer
                                        key: "\n")
     @objc private func rename() { list?.editTitle() }
     
-    private lazy var checkOffItem = item("Check Item",
+    private lazy var checkOffItem = item("Check Off Item",
                                          action: #selector(checkOff),
                                          key: String(unicode: NSLeftArrowFunctionKey))
     @objc private func checkOff() { list?.toggleDoneStateOfFirstSelectedTask() }
