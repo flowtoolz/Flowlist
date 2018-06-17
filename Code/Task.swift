@@ -5,7 +5,7 @@ final class Task: Codable, Observable, Tree
 {
     // MARK: - Life Cycle
     
-    convenience init(title: String?,
+    convenience init(title: String? = nil,
                      state: TaskState? = nil,
                      root: Task? = nil)
     {
@@ -36,7 +36,7 @@ final class Task: Codable, Observable, Tree
             return nil
         }
         
-        let group = Task()
+        let group = Task(state: highestPriorityState(at: indexes))
         
         guard let merged = mergeBranches(at: indexes,
                                          as: group,
@@ -49,6 +49,27 @@ final class Task: Codable, Observable, Tree
         group.send(.did(.insert(at: insertedIndexesInGroup)))
         
         return group
+    }
+    
+    private func highestPriorityState(at indexes: [Int]) -> TaskState?
+    {
+        var highestPriorityState: TaskState? = .trashed
+        
+        for index in indexes
+        {
+            guard let subtask = self[index] else { continue }
+            
+            let subtaskState = subtask.state.value
+            let subtaskPriority = TaskState.priority(of: subtaskState)
+            let highestPriority = TaskState.priority(of: highestPriorityState)
+            
+            if subtaskPriority < highestPriority
+            {
+                highestPriorityState = subtaskState
+            }
+        }
+        
+        return highestPriorityState
     }
     
     @discardableResult
