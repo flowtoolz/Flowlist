@@ -115,23 +115,25 @@ class List: Observable, Observer
         
         observe(task.state)
         {
-            [weak self, weak task] stateUpdate in
-            
-            guard let task = task,
-                let taskIndex = task.indexInRoot else { return }
-            
-            if task.isDone
-            {
-                self?.root?.moveSubtaskToTopOfDoneList(from: taskIndex)
-            }
-            else if task.isInProgress
-            {
-                self?.root?.moveSubtask(from: taskIndex, to: 0)
-            }
-            else if task.state.value == nil
-            {
-                self?.root?.moveSubtaskToTopOfUndoneList(from: taskIndex)
-            }
+            [weak self, weak task] _ in self?.taskDidChangeState(task)
+        }
+    }
+    
+    private func taskDidChangeState(_ task: Task?)
+    {
+        guard let task = task, let index = task.indexInRoot else { return }
+        
+        if task.isDone
+        {
+            root?.moveSubtaskToTopOfDoneList(from: index)
+        }
+        else if task.isInProgress
+        {
+            root?.moveSubtask(from: index, to: 0)
+        }
+        else if task.isUndone
+        {
+            root?.moveSubtaskToTopOfUndoneList(from: index)
         }
     }
     
