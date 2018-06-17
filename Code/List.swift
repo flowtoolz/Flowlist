@@ -128,6 +128,10 @@ class List: Observable, Observer
             {
                 self?.root?.moveSubtask(from: taskIndex, to: 0)
             }
+            else if task.state.value == nil
+            {
+                self?.root?.moveSubtaskToTopOfUndoneList(from: taskIndex)
+            }
         }
     }
     
