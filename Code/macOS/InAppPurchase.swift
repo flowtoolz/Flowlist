@@ -3,6 +3,10 @@ import StoreKit
 
 class InAppPurchaseController: NSObject, SKProductsRequestDelegate
 {
+    
+    
+    var userCanPay: Bool { return SKPaymentQueue.canMakePayments() }
+    
     // MARK: - Load Product From AppStore
     
     func retrieveFullVersionProduct()
@@ -64,5 +68,19 @@ class InAppPurchaseController: NSObject, SKProductsRequestDelegate
     {
         return Bundle.main.url(forResource: "product_identifiers",
                                withExtension: "plist")
+    }
+}
+
+extension SKProduct
+{
+    var formattedPrice: String?
+    {
+        let formatter = NumberFormatter()
+        
+        formatter.locale = priceLocale
+        formatter.formatterBehavior = .behavior10_4
+        formatter.numberStyle = .currency
+        
+        return formatter.string(from: price)
     }
 }
