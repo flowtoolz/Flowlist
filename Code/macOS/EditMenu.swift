@@ -129,7 +129,7 @@ class EditMenu: NSMenu, Observer
                                        modifiers: [])
     @objc private func create() { list?.createTask() }
     
-    private lazy var createAtTopItem = item("Start New Item",
+    private lazy var createAtTopItem = item("Add New Item on Top",
                                             action: #selector(createAtTop),
                                             key: " ",
                                             modifiers: [])

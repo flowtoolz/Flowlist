@@ -128,15 +128,15 @@ final class Task: Codable, Observable, Tree
     @discardableResult
     func create(at index: Int) -> Task?
     {
-        let subtask = Task()
+        let taskBelowIsInProgress = self[index]?.state.value == .inProgress
         
-        if index == 0 { subtask.state <- .inProgress }
+        let newSubtask = Task(state: taskBelowIsInProgress ? .inProgress : nil)
         
-        guard insert(branch: subtask, at: index) else { return nil }
+        guard insert(branch: newSubtask, at: index) else { return nil }
         
         send(.did(.create(at: index)))
         
-        return subtask
+        return newSubtask
     }
     
     @discardableResult
