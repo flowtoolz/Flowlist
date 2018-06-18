@@ -1,33 +1,68 @@
 import Foundation
+import StoreKit
 
-func printProductIdentifiers()
+class InAppPurchaseController: NSObject, SKProductsRequestDelegate
 {
-    let identifiers = loadProductIdentifiers()
+    // MARK: - Load Product From AppStore
     
-    for id in identifiers
+    func retrieveFullVersionProduct()
     {
-        print(id)
-    }
-}
-
-func loadProductIdentifiers() -> [String]
-{
-    guard let fileUrl = productIdentifiersFileUrl,
-        let data = try? Data(contentsOf: fileUrl)
-    else
-    {
-        return []
+        productsRequest = SKProductsRequest(productIdentifiers: [fullVersionId])
+        productsRequest?.delegate = self
+        
+        productsRequest?.start()
     }
     
-    let plist = try? PropertyListSerialization.propertyList(from: data,
-                                                            options: [],
-                                                            format: nil)
+    private var productsRequest: SKProductsRequest?
     
-    return (plist as? [String]) ?? []
-}
-
-var productIdentifiersFileUrl: URL?
-{
-    return Bundle.main.url(forResource: "product_identifiers",
-                           withExtension: "plist")
+    public func productsRequest(_ request: SKProductsRequest,
+                                didReceive response: SKProductsResponse)
+    {
+        for product in response.products
+        {
+            if product.productIdentifier == fullVersionId
+            {
+                fullVersionProduct = product
+                
+                return
+            }
+        }
+    }
+    
+    private var fullVersionProduct: SKProduct?
+    private let fullVersionId = "com.flowtoolz.flowlist.full_version"
+    
+    // MARK: - Load Product IDs From File
+    
+    func printProductIdentifiers()
+    {
+        let identifiers = loadProductIdentifiers()
+        
+        for id in identifiers
+        {
+            print(id)
+        }
+    }
+    
+    private func loadProductIdentifiers() -> [String]
+    {
+        guard let fileUrl = productIdentifiersFileUrl,
+            let data = try? Data(contentsOf: fileUrl)
+            else
+        {
+            return []
+        }
+        
+        let plist = try? PropertyListSerialization.propertyList(from: data,
+                                                                options: [],
+                                                                format: nil)
+        
+        return (plist as? [String]) ?? []
+    }
+    
+    private var productIdentifiersFileUrl: URL?
+    {
+        return Bundle.main.url(forResource: "product_identifiers",
+                               withExtension: "plist")
+    }
 }
