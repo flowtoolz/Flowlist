@@ -24,6 +24,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     func configure(with list: SelectableList)
     {
+        // TODO: move this to Header
         // header
         stopObserving(self.list?.title)
         observe(list.title)
@@ -36,27 +37,45 @@ class SelectableListView: LayerBackedView, Observer, Observable
         header.set(title: list.title.latestUpdate)
         header.showIcon(list.isRootList)
         
+        if let root = list.root { header.update(with: root) }
+        
         // scroll table
         scrollTable.configure(with: list)
         
         // list
         stopObserving(self.list)
-        observe(list)
-        {
-            [weak self] event in
-            
-            if case .did(let edit) = event
-            {
-                if case .changeRoot(_, let new) = edit
-                {
-                    self?.isHidden = new == nil
-                }
-            }
-        }
+        observe(list) { [weak self] in self?.didReceive($0) }
         
         isHidden = list.root == nil
         
         self.list = list
+    }
+    
+    private func didReceive(_ event: List.Event)
+    {
+        guard case .did(let edit) = event,
+            case .changeRoot(let old, let new) = edit else
+        {
+            return
+        }
+        
+        isHidden = new == nil
+        
+        stopObserving(old?.state)
+        
+        if let newRoot = new
+        {
+            observe(newRoot.state)
+            {
+                [weak self, weak newRoot] _ in
+                
+                guard let root = newRoot else { return }
+                
+                self?.header.update(with: root)
+            }
+            
+            header.update(with: newRoot)
+        }
     }
     
     // MARK: - Mouse Input

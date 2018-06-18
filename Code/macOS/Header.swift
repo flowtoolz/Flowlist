@@ -21,6 +21,16 @@ class Header: LayerBackedView
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
+    // MARK: - Adjust to Root State
+    
+    func update(with root: Task)
+    {
+        backgroundColor = root.backgroundColor
+        
+        let textColor: Color = root.isDone ? .grayedOut : .black
+        titleField.textColor = textColor.nsColor
+    }
+    
     // MARK: - Icon
     
     func showIcon(_ show: Bool = true)

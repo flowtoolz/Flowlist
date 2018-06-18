@@ -38,16 +38,7 @@ class Row: NSTableRowView, Observer
     
     override func drawBackground(in dirtyRect: NSRect)
     {
-        let color: Color =
-        {
-            guard let state = task?.state.value else { return .backlog }
-            
-            switch state
-            {
-            case .done, .trashed: return .done
-            case .inProgress: return .white
-            }
-        }()
+        let color: Color = task?.backgroundColor ?? .white
         
         drawBackground(with: color.nsColor)
     }
