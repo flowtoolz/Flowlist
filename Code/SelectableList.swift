@@ -88,7 +88,7 @@ class SelectableList: List
         return (selection.indexes.last ?? -1) + 1
     }
     
-    // MARK: - Put Item in Progress
+    // MARK: - Toggle States
     
     func toggleInProgressStateOfFirstSelectedTask()
     {
@@ -102,17 +102,19 @@ class SelectableList: List
         }
     }
     
-    // MARK: - Check Off
-    
     func toggleDoneStateOfFirstSelectedTask()
     {
-        guard let task = firstSelectedTask else { return }
+        guard let selectionIndex = selection.indexes.first,
+            let task = self[selectionIndex]
+        else { return }
+        
+        // FIXME: chose last open task before selection index instead
+        // also: remember task, not the index!
+        let nextIndex = max(0, selectionIndex - 1)
         
         task.state <- !task.isDone ? .done : nil
         
-        if selection.count == 1,
-            task.isDone,
-            let nextIndex = root?.indexOfFirstOpenSubtask()
+        if selection.count == 1, task.isDone
         {
             selection.setWithTasksListed(at: [nextIndex])
         }
