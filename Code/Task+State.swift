@@ -13,7 +13,7 @@ extension Task
     {
         for subtaskIndex in (0 ..< numberOfBranches).reversed()
         {
-            if let subtask = self[subtaskIndex], !subtask.isOpen
+            if let subtask = self[subtaskIndex], subtask.isOpen
             {
                 return subtaskIndex
             }
@@ -24,14 +24,14 @@ extension Task
     
     func moveSubtaskToTopOfUndoneList(from index: Int)
     {
-        guard let lastInProgress = indexOfLastSubtaskInProgress else { return }
+        let lastInProgress = indexOfLastSubtaskInProgress
         
         let belowInProgress = lastInProgress + (lastInProgress < index ? 1 : 0)
         
         moveSubtask(from: index, to: belowInProgress)
     }
     
-    var indexOfLastSubtaskInProgress: Int?
+    var indexOfLastSubtaskInProgress: Int
     {
         for subtaskIndex in (0 ..< numberOfBranches).reversed()
         {
@@ -41,7 +41,7 @@ extension Task
             }
         }
         
-        return nil
+        return -1
     }
     
     func indexOfFirstOpenSubtask(from: Int = 0) -> Int?
