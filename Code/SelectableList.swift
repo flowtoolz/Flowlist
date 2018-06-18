@@ -104,24 +104,35 @@ class SelectableList: List
     
     func toggleDoneStateOfFirstSelectedTask()
     {
-        guard let selectionIndex = selection.indexes.first,
-            let task = self[selectionIndex]
-        else { return }
+        guard let selected = selection.indexes.first, let task = self[selected] else
+        {
+            return
+        }
         
-        // FIXME: chose last open task before selection index instead
-        // also: remember task, not the index!
-        let nextIndex = max(0, selectionIndex - 1)
+        let newSelectedTask = lastOpenTask(above: selected)
         
         task.state <- !task.isDone ? .done : nil
         
-        if selection.count == 1, task.isDone
+        if selection.count == 1, task.isDone, let newSelectedTask = newSelectedTask
         {
-            selection.setWithTasksListed(at: [nextIndex])
+            selection.set(with: newSelectedTask)
         }
         else if selection.count > 1
         {
             selection.remove(tasks: [task])
         }
+    }
+    
+    private func lastOpenTask(above index: Int) -> Task?
+    {
+        for i in (0 ..< index).reversed()
+        {
+            guard let task = self[i] else { continue }
+            
+            if task.isOpen { return task }
+        }
+        
+        return nil
     }
     
     // MARK: - Move
