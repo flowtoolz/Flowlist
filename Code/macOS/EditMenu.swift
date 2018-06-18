@@ -77,7 +77,8 @@ class EditMenu: NSMenu, Observer
         switch menuItem
         {
         case renameItem, checkOffItem, deleteItem, copyItem, cutItem, inProgressItem: return selected > 0
-        case moveUpItem, moveDownItem: return selected == 1
+        case moveUpItem: return list?.canMoveItems(up: true) ?? false
+        case moveDownItem: return list?.canMoveItems(up: false) ?? false
         case pasteItem: return clipboard.count > 0 || systemPasteboard
         case undoItem: return deleted > 0
         default: return list != nil

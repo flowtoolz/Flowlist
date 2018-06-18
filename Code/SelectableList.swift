@@ -137,6 +137,20 @@ class SelectableList: List
     
     // MARK: - Move
     
+    func canMoveItems(up: Bool) -> Bool
+    {
+        guard selection.count == 1, let selected = selection.indexes.first else
+        {
+            return false
+        }
+        
+        if up && selected == 0 { return false }
+        
+        if !up && selected == numberOfTasks - 1 { return false }
+        
+        return true
+    }
+    
     @discardableResult
     func moveSelectedTask(_ positions: Int) -> Bool
     {
