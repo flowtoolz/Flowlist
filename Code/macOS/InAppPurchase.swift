@@ -1,13 +1,68 @@
 import Foundation
 import StoreKit
+import SwiftyToolz
 
-class InAppPurchaseController: NSObject, SKProductsRequestDelegate
+let inAppPurchaseController = InAppPurchaseController()
+
+class InAppPurchaseController: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserver
 {
+    fileprivate override init() { super.init() }
     
+    // MARK: - Buy Full Version
+    
+    func setup() { SKPaymentQueue.default().add(self) }
+    
+    func requestPaymentForFullVersion()
+    {
+        guard userCanPay, let product = fullVersionProduct else { return }
+        
+        let payment = SKPayment(product: product)
+        
+        SKPaymentQueue.default().add(payment)
+    }
+    
+    func paymentQueue(_ queue: SKPaymentQueue,
+                      updatedTransactions transactions: [SKPaymentTransaction])
+    {
+        for transaction in transactions
+        {
+            didUpdateFullVersionPurchaseTransaction(transaction)
+        }
+    }
+    
+    private func didUpdateFullVersionPurchaseTransaction(_ transaction: SKPaymentTransaction)
+    {
+        guard transaction.payment.productIdentifier == fullVersionId else
+        {
+            log(error: "Updated transaction is not the full version purchase.")
+            return
+        }
+        
+        switch transaction.transactionState
+        {
+        case .purchasing: break
+        case .purchased: unlockFullVersion()
+        case .failed:
+            guard let error = transaction.error else
+            {
+                log(error: "Full version purchase failed without error.")
+                return
+            }
+            
+            log(error: "Full version purchase failed with error: \(error.localizedDescription)")
+        case .restored: unlockFullVersion()
+        case .deferred: break
+        }
+    }
+    
+    private func unlockFullVersion()
+    {
+        print("TODO: UNLOCK FULL VERSION")
+    }
     
     var userCanPay: Bool { return SKPaymentQueue.canMakePayments() }
     
-    // MARK: - Load Product From AppStore
+    // MARK: - Load Full Version Product From AppStore
     
     func retrieveFullVersionProduct()
     {
