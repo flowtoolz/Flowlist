@@ -4,6 +4,8 @@ extension Task
 {
     var backgroundColor: Color
     {
+        if root == nil { return .white }
+        
         guard let state = state.value else { return .backlog }
         
         switch state
