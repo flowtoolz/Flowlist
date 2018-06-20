@@ -77,10 +77,13 @@ class EditMenu: NSMenu, Observer
         
         switch menuItem
         {
-        case renameItem, checkOffItem, deleteItem, copyItem, cutItem, inProgressItem: return selected > 0
+        case createItem, createAtTopItem: return !reachedTaskNumberLimit
+        case renameItem, checkOffItem, deleteItem, cutItem, inProgressItem: return selected > 0
+        case copyItem: return selected > 0 && !reachedTaskNumberLimit
         case moveUpItem: return list?.canMoveItems(up: true) ?? false
         case moveDownItem: return list?.canMoveItems(up: false) ?? false
-        case pasteItem: return clipboard.count > 0 || systemPasteboard
+        case pasteItem:
+            return clipboard.count > 0 || (systemPasteboard && !reachedTaskNumberLimit)
         case undoItem: return deleted > 0
         default: return list != nil
         }
@@ -137,7 +140,7 @@ class EditMenu: NSMenu, Observer
                                             modifiers: [])
     @objc private func createAtTop()
     {
-        if !TextField.isEditing { list?.create(at: 0) }
+        if !TextField.isEditing && !reachedTaskNumberLimit { list?.create(at: 0) }
     }
     
     override func performKeyEquivalent(with event: NSEvent) -> Bool
