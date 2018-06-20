@@ -8,9 +8,57 @@ class InAppPurchaseController: NSObject, SKProductsRequestDelegate, SKPaymentTra
 {
     fileprivate override init() { super.init() }
     
-    // MARK: - Buy Full Version
+    // MARK: Observe Transactions
     
     func setup() { SKPaymentQueue.default().add(self) }
+    
+    func paymentQueue(_ queue: SKPaymentQueue,
+                      updatedTransactions transactions: [SKPaymentTransaction])
+    {
+        for transaction in transactions
+        {
+            if transaction.payment.productIdentifier == fullVersionId
+            {
+                didUpdateFullVersionPurchaseTransaction(transaction)
+            }
+        }
+    }
+    
+    func requestDidFinish(_ request: SKRequest)
+    {
+        switch request
+        {
+        case productsRequest: break
+        case receiptRequest: readAppStoreReceipt()
+        default: log(warning: "Unknown request finished.")
+        }
+    }
+    
+    // MARK: Request AppStore Receipt
+    
+    func readAppStoreReceipt()
+    {
+        guard let url = Bundle.main.appStoreReceiptURL,
+            let data = try? Data(contentsOf: url) else
+        {
+            log(error: "Couldn't load App Store receipt.")
+            return
+        }
+        
+        // ...
+    }
+    
+    func requestAppStoreReceipt()
+    {
+        receiptRequest = SKReceiptRefreshRequest()
+        receiptRequest?.delegate = self
+        
+        receiptRequest?.start()
+    }
+    
+    private var receiptRequest: SKReceiptRefreshRequest?
+    
+    // MARK: - Buy Full Version
     
     func requestPaymentForFullVersion()
     {
@@ -21,23 +69,8 @@ class InAppPurchaseController: NSObject, SKProductsRequestDelegate, SKPaymentTra
         SKPaymentQueue.default().add(payment)
     }
     
-    func paymentQueue(_ queue: SKPaymentQueue,
-                      updatedTransactions transactions: [SKPaymentTransaction])
-    {
-        for transaction in transactions
-        {
-            didUpdateFullVersionPurchaseTransaction(transaction)
-        }
-    }
-    
     private func didUpdateFullVersionPurchaseTransaction(_ transaction: SKPaymentTransaction)
     {
-        guard transaction.payment.productIdentifier == fullVersionId else
-        {
-            log(error: "Updated transaction is not the full version purchase.")
-            return
-        }
-        
         let queue = SKPaymentQueue.default()
         
         switch transaction.transactionState
