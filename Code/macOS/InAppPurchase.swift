@@ -38,10 +38,14 @@ class InAppPurchaseController: NSObject, SKProductsRequestDelegate, SKPaymentTra
             return
         }
         
+        let queue = SKPaymentQueue.default()
+        
         switch transaction.transactionState
         {
         case .purchasing: break
-        case .purchased: unlockFullVersion()
+        case .purchased:
+            unlockFullVersion()
+            queue.finishTransaction(transaction)
         case .failed:
             guard let error = transaction.error else
             {
@@ -50,7 +54,10 @@ class InAppPurchaseController: NSObject, SKProductsRequestDelegate, SKPaymentTra
             }
             
             log(error: "Full version purchase failed with error: \(error.localizedDescription)")
-        case .restored: unlockFullVersion()
+            queue.finishTransaction(transaction)
+        case .restored:
+            unlockFullVersion()
+            queue.finishTransaction(transaction)
         case .deferred: break
         }
     }
@@ -58,6 +65,8 @@ class InAppPurchaseController: NSObject, SKProductsRequestDelegate, SKPaymentTra
     private func unlockFullVersion()
     {
         print("TODO: UNLOCK FULL VERSION")
+        // update limitation flag
+        // persist limitation flag
     }
     
     var userCanPay: Bool { return SKPaymentQueue.canMakePayments() }
