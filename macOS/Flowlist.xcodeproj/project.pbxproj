@@ -27,7 +27,6 @@
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
 		9E6C721020B1E66D001C3D2C /* Task+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720F20B1E66D001C3D2C /* Task+Debugging.swift */; };
 		9E71504020D7CBC70061601E /* Task+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71503F20D7CBC70061601E /* Task+ViewModel.swift */; };
-		9E71504220D7D70A0061601E /* product_identifiers.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9E71504120D7D70A0061601E /* product_identifiers.plist */; };
 		9E71504520D7D80F0061601E /* InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71504420D7D80F0061601E /* InAppPurchase.swift */; };
 		9E72881B1EEF3095003A2F46 /* SelectableListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E72881A1EEF3095003A2F46 /* SelectableListView.swift */; };
 		9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651931EEF428100DE2B07 /* TaskView.swift */; };
@@ -86,7 +85,6 @@
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = List.swift; path = ../Code/List.swift; sourceTree = "<group>"; };
 		9E6C720F20B1E66D001C3D2C /* Task+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Debugging.swift"; path = "../Code/Task+Debugging.swift"; sourceTree = "<group>"; };
 		9E71503F20D7CBC70061601E /* Task+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+ViewModel.swift"; path = "../Code/Task+ViewModel.swift"; sourceTree = "<group>"; };
-		9E71504120D7D70A0061601E /* product_identifiers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = product_identifiers.plist; path = Resources/product_identifiers.plist; sourceTree = "<group>"; };
 		9E71504420D7D80F0061601E /* InAppPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InAppPurchase.swift; path = ../Code/macOS/InAppPurchase.swift; sourceTree = "<group>"; };
 		9E72881A1EEF3095003A2F46 /* SelectableListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectableListView.swift; path = ../Code/macOS/SelectableListView.swift; sourceTree = "<group>"; };
 		9E7651931EEF428100DE2B07 /* TaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = ../Code/macOS/TaskView.swift; sourceTree = "<group>"; };
@@ -286,7 +284,6 @@
 				9E0410F820CE60B300C7C3E3 /* Flowlist.entitlements */,
 				9E916518205520B800A438FB /* Info.plist */,
 				9E91651320551E5500A438FB /* Assets.xcassets */,
-				9E71504120D7D70A0061601E /* product_identifiers.plist */,
 			);
 			name = Resources;
 			sourceTree = SOURCE_ROOT;
@@ -467,7 +464,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E91651520551E5600A438FB /* Assets.xcassets in Resources */,
-				9E71504220D7D70A0061601E /* product_identifiers.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
