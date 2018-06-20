@@ -1,10 +1,11 @@
 import Foundation
 import StoreKit
 import SwiftyToolz
+import SwiftObserver
 
 let inAppPurchaseController = InAppPurchaseController()
 
-class InAppPurchaseController: NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserver
+class InAppPurchaseController: NSObject, Observable, SKProductsRequestDelegate, SKPaymentTransactionObserver
 {
     fileprivate override init() { super.init() }
     
@@ -37,26 +38,30 @@ class InAppPurchaseController: NSObject, SKProductsRequestDelegate, SKPaymentTra
     
     private func didUpdateFullVersionPurchaseTransaction(_ transaction: SKPaymentTransaction)
     {
-        let queue = SKPaymentQueue.default()
-        
+        guard transaction.payment.productIdentifier == fullVersionId else { return }
+
         switch transaction.transactionState
         {
         case .purchasing: break
         case .purchased:
-            unlockFullVersion()
-            queue.finishTransaction(transaction)
+            send(.didPurchaseFullVersion)
+            SKPaymentQueue.default().finishTransaction(transaction)
         case .failed:
             guard let error = transaction.error else
             {
-                log(error: "Full version purchase failed without error.")
+                let message = "Purchasing full version failed with technical error."
+                log(error: message)
+                send(.didFailToPurchaseFullVersion(message: message))
                 return
             }
             
-            log(error: "Full version purchase failed with error: \(error.localizedDescription)")
-            queue.finishTransaction(transaction)
+            let message = "Purchasing full version failed with error: \(error.localizedDescription)"
+            log(error: message)
+            send(.didFailToPurchaseFullVersion(message: message))
+            SKPaymentQueue.default().finishTransaction(transaction)
         case .restored:
-            unlockFullVersion()
-            queue.finishTransaction(transaction)
+            send(.didPurchaseFullVersion)
+            SKPaymentQueue.default().finishTransaction(transaction)
         case .deferred: break
         }
     }
@@ -90,13 +95,13 @@ class InAppPurchaseController: NSObject, SKProductsRequestDelegate, SKPaymentTra
             if product.productIdentifier == fullVersionId
             {
                 fullVersionProduct = product
-                
+                send(.didLoadFullVersionProduct)
                 return
             }
         }
     }
     
-    private var fullVersionProduct: SKProduct?
+    var fullVersionProduct: SKProduct?
     private let fullVersionId = "com.flowtoolz.flowlist.full_version"
     
     // MARK: - Load Product IDs From File
@@ -131,6 +136,18 @@ class InAppPurchaseController: NSObject, SKProductsRequestDelegate, SKPaymentTra
     {
         return Bundle.main.url(forResource: "product_identifiers",
                                withExtension: "plist")
+    }
+    
+    // MARK: Observability
+    
+    var latestUpdate: Event { return .didNothing }
+    
+    enum Event
+    {
+        case didNothing
+        case didLoadFullVersionProduct
+        case didPurchaseFullVersion
+        case didFailToPurchaseFullVersion(message: String)
     }
 }
 
