@@ -9,7 +9,7 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
         NSApp.activate(ignoringOtherApps: true)
         NSApp.mainMenu = menu
         store.load()
-        inAppPurchaseController.setup()
+        fullVersionPurchaseController.setup()
     }
     
     func applicationWillBecomeActive(_ notification: Notification)

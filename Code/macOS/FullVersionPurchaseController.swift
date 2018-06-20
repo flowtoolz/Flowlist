@@ -3,9 +3,9 @@ import StoreKit
 import SwiftyToolz
 import SwiftObserver
 
-let inAppPurchaseController = InAppPurchaseController()
+let fullVersionPurchaseController = FullVersionPurchaseController()
 
-class InAppPurchaseController: NSObject, Observable, SKProductsRequestDelegate, SKPaymentTransactionObserver
+class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDelegate, SKPaymentTransactionObserver
 {
     // MARK: - Setup
     
@@ -44,6 +44,7 @@ class InAppPurchaseController: NSObject, Observable, SKProductsRequestDelegate, 
         {
         case .purchasing: break
         case .purchased:
+            isFullVersion = true
             send(.didPurchaseFullVersion)
             SKPaymentQueue.default().finishTransaction(transaction)
         case .failed:
@@ -60,6 +61,7 @@ class InAppPurchaseController: NSObject, Observable, SKProductsRequestDelegate, 
             send(.didFailToPurchaseFullVersion(message: message))
             SKPaymentQueue.default().finishTransaction(transaction)
         case .restored:
+            isFullVersion = true
             send(.didPurchaseFullVersion)
             SKPaymentQueue.default().finishTransaction(transaction)
         case .deferred: break
