@@ -24,7 +24,7 @@ class InAppPurchaseController: NSObject, SKProductsRequestDelegate, SKPaymentTra
         }
     }
     
-    // MARK: - Buy Full Version
+    // MARK: - Buy or Restore Full Version
     
     func requestPaymentForFullVersion()
     {
