@@ -16,7 +16,16 @@ final class Task: Codable, Observable, Tree
         self.root = root
     }
     
-    deinit { removeObservers() }
+    init() { Task.numberOfTasks += 1 }
+    
+    deinit
+    {
+        removeObservers()
+        
+        Task.numberOfTasks -= 1
+    }
+    
+    static var numberOfTasks: Int = 0
     
     // MARK: - Codable Data
     

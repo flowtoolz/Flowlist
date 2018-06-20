@@ -49,6 +49,7 @@ class EditMenu: NSMenu, Observer
                 {
                 case "l": self.list?.debug()
                 case "t": store.root.debug()
+                case "n": print("number of all existing items: \(Task.numberOfTasks)")
                 default: break
                 }
                 

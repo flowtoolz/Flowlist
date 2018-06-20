@@ -17,7 +17,11 @@ extension Store
         loadedRoot.recoverRoots()
         loadedRoot.title <- NSFullUserName()
         
+        Task.numberOfTasks -= root.numberOfBranchesRecursively
+        
         root = loadedRoot
+        
+        Task.numberOfTasks += root.numberOfBranchesRecursively
     }
     
     func save()
