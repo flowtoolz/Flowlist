@@ -38,6 +38,6 @@ extension Store
     
     private var fileUrl: URL?
     {
-        return URL.documentDirectory?.appendingPathComponent("flowlist.json")
+        return URL.documentDirectory?.appendingPathComponent("flowlist_debug.json")
     }
 }
