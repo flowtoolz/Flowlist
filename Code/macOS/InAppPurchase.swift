@@ -7,11 +7,22 @@ let inAppPurchaseController = InAppPurchaseController()
 
 class InAppPurchaseController: NSObject, Observable, SKProductsRequestDelegate, SKPaymentTransactionObserver
 {
+    // MARK: - Setup
+    
     fileprivate override init() { super.init() }
     
-    // MARK: Observe Transactions
-    
     func setup() { SKPaymentQueue.default().add(self) }
+    
+    // MARK: - Buy or Restore Full Version
+    
+    func purchaseFullVersion()
+    {
+        guard userCanPay, let product = fullVersionProduct else { return }
+        
+        let payment = SKPayment(product: product)
+        
+        SKPaymentQueue.default().add(payment)
+    }
     
     func paymentQueue(_ queue: SKPaymentQueue,
                       updatedTransactions transactions: [SKPaymentTransaction])
@@ -23,17 +34,6 @@ class InAppPurchaseController: NSObject, Observable, SKProductsRequestDelegate, 
                 didUpdateFullVersionPurchaseTransaction(transaction)
             }
         }
-    }
-    
-    // MARK: - Buy or Restore Full Version
-    
-    func requestPaymentForFullVersion()
-    {
-        guard userCanPay, let product = fullVersionProduct else { return }
-        
-        let payment = SKPayment(product: product)
-        
-        SKPaymentQueue.default().add(payment)
     }
     
     private func didUpdateFullVersionPurchaseTransaction(_ transaction: SKPaymentTransaction)
@@ -66,18 +66,11 @@ class InAppPurchaseController: NSObject, Observable, SKProductsRequestDelegate, 
         }
     }
     
-    private func unlockFullVersion()
-    {
-        print("TODO: UNLOCK FULL VERSION")
-        // update limitation flag
-        // persist limitation flag
-    }
-    
-    var userCanPay: Bool { return SKPaymentQueue.canMakePayments() }
+    private var userCanPay: Bool { return SKPaymentQueue.canMakePayments() }
     
     // MARK: - Load Full Version Product From AppStore
     
-    func retrieveFullVersionProduct()
+    func loadFullVersionProductFromAppStore()
     {
         productsRequest = SKProductsRequest(productIdentifiers: [fullVersionId])
         productsRequest?.delegate = self
@@ -96,7 +89,6 @@ class InAppPurchaseController: NSObject, Observable, SKProductsRequestDelegate, 
             {
                 fullVersionProduct = product
                 send(.didLoadFullVersionProduct)
-                return
             }
         }
     }
