@@ -24,40 +24,6 @@ class InAppPurchaseController: NSObject, SKProductsRequestDelegate, SKPaymentTra
         }
     }
     
-    func requestDidFinish(_ request: SKRequest)
-    {
-        switch request
-        {
-        case productsRequest: break
-        case receiptRequest: readAppStoreReceipt()
-        default: log(warning: "Unknown request finished.")
-        }
-    }
-    
-    // MARK: Request AppStore Receipt
-    
-    func readAppStoreReceipt()
-    {
-        guard let url = Bundle.main.appStoreReceiptURL,
-            let data = try? Data(contentsOf: url) else
-        {
-            log(error: "Couldn't load App Store receipt.")
-            return
-        }
-        
-        // ...
-    }
-    
-    func requestAppStoreReceipt()
-    {
-        receiptRequest = SKReceiptRefreshRequest()
-        receiptRequest?.delegate = self
-        
-        receiptRequest?.start()
-    }
-    
-    private var receiptRequest: SKReceiptRefreshRequest?
-    
     // MARK: - Buy Full Version
     
     func requestPaymentForFullVersion()
