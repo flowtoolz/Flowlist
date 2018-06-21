@@ -43,8 +43,6 @@ extension Store
     {
         #if DEBUG
         let filename = "flowlist_debug.json"
-        #elseif BETA
-        let filename = "flowlist_beta.json"
         #else
         let filename = "flowlist.json"
         #endif
