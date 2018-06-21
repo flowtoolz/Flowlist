@@ -36,6 +36,14 @@ extension Store
     
     private var fileUrl: URL?
     {
-        return URL.documentDirectory?.appendingPathComponent("flowlist_debug.json")
+        #if DEBUG
+        let filename = "flowlist_debug.json"
+        #elseif BETA
+        let filename = "flowlist_beta.json"
+        #else
+        let filename = "flowlist.json"
+        #endif
+        
+        return URL.documentDirectory?.appendingPathComponent(filename)
     }
 }
