@@ -26,6 +26,12 @@ final class Task: Codable, Observable, Tree
     }
     
     static var numberOfTasks: Int = 0
+    {
+        didSet
+        {
+            print("task number: \(numberOfTasks)")
+        }
+    }
     
     // MARK: - Codable Data
 
@@ -37,7 +43,7 @@ final class Task: Codable, Observable, Tree
     private(set) var title = Var<String>()
     private(set) var state = Var<TaskState>()
     
-    // MARK: - Observable Tree Editing
+    // MARK: - Group
     
     @discardableResult
     func groupSubtasks(at indexes: [Int]) -> Task?
@@ -84,6 +90,8 @@ final class Task: Codable, Observable, Tree
         return highestPriorityState
     }
     
+    // MARK: - Remove
+    
     @discardableResult
     func removeSubtasks(at indexes: [Int]) -> [Task]?
     {
@@ -112,6 +120,8 @@ final class Task: Codable, Observable, Tree
 
     private let lastRemoved = Clipboard<Task>()
     
+    // MARK: - Insert
+    
     @discardableResult
     func insert(_ subtask: Task, at index: Int) -> Task?
     {
@@ -137,6 +147,8 @@ final class Task: Codable, Observable, Tree
         return true
     }
     
+    // MARK: - Create
+    
     @discardableResult
     func create(at index: Int) -> Task?
     {
@@ -150,6 +162,8 @@ final class Task: Codable, Observable, Tree
         
         return newSubtask
     }
+    
+    // MARK: - Move
     
     @discardableResult
     func moveSubtask(from: Int, to: Int) -> Bool

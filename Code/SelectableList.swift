@@ -54,7 +54,7 @@ class SelectableList: List
             let firstSelectedIndex = selectedIndexes.first,
             let removedTasks = root.removeSubtasks(at: selectedIndexes),
             removedTasks.count > 0
-            else
+        else
         {
             return false
         }
