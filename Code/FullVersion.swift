@@ -2,7 +2,11 @@ import Foundation
 
 var reachedTaskNumberLimit: Bool
 {
+    #if RELEASE
     return !isFullVersion && Task.numberOfTasks >= maxNumberOfTasksInTrial
+    #else
+    return false
+    #endif
 }
 
 var isFullVersion: Bool
