@@ -28,8 +28,11 @@ final class Task: Codable, Observable, Tree
     static var numberOfTasks: Int = 0
     
     // MARK: - Codable Data
-    
-    enum CodingKeys: CodingKey { case title, state, branches }
+
+    enum CodingKeys: String, CodingKey
+    {
+        case title, state, branches = "subtasks"
+    }
     
     private(set) var title = Var<String>()
     private(set) var state = Var<TaskState>()
