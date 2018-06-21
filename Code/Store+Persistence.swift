@@ -6,11 +6,16 @@ extension Store
 {
     func load()
     {
-        guard let fileUrl = fileUrl, let loadedRoot = Task(from: fileUrl) else
+        guard let fileUrl = fileUrl,
+            FileManager.default.fileExists(atPath: fileUrl.path)
+        else
         {
-            let fileString = self.fileUrl?.absoluteString ?? "file"
-            log(warning: "Failed to load tasks from " + fileString)
-            save()
+            return
+        }
+        
+        guard let loadedRoot = Task(from: fileUrl) else
+        {
+            log(error: "Failed to load tasks from " + fileUrl.absoluteString)
             return
         }
         
