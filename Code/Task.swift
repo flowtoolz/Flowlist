@@ -26,12 +26,6 @@ final class Task: Codable, Observable, Tree
     }
     
     static var numberOfTasks: Int = 0
-    {
-        didSet
-        {
-            print("task number: \(numberOfTasks)")
-        }
-    }
     
     // MARK: - Codable Data
 
