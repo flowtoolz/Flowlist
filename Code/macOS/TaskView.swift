@@ -54,7 +54,11 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         observe(task)
         {
-            [weak self] event in self?.received(event, from: task)
+            [weak self, weak task] event in
+            
+            guard let task = task else { return }
+            
+            self?.received(event, from: task)
         }
         
         observe(task.title)
