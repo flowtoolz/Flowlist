@@ -183,6 +183,8 @@ class List: Observable, Observer
     
     private func didSwitchRoot(from old: Task?, to new: Task?)
     {
+        old?.lastRemoved.removeAll()
+        
         title.observable = new?.title
         
         send(.did(.changeRoot(from: old, to: new)))

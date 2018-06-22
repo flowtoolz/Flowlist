@@ -105,14 +105,14 @@ final class Task: Codable, Observable, Tree
         guard lastRemovedObjects.count > 0,
             insert(lastRemovedObjects, at: index) else { return 0 }
         
-        lastRemoved.storeCopies(of: [])
+        lastRemoved.removeAll()
         
         return lastRemovedObjects.count
     }
     
     var numberOfRemovedSubtasks: Int { return lastRemoved.count }
 
-    private let lastRemoved = Clipboard<Task>()
+    let lastRemoved = Clipboard<Task>()
     
     // MARK: - Insert
     
