@@ -25,7 +25,7 @@ final class Task: Codable, Observable, Tree
         Task.numberOfTasks -= 1
     }
     
-    static var numberOfTasks: Int = 0
+    static var numberOfTasks = Var(0)
     
     // MARK: - Codable Data
 

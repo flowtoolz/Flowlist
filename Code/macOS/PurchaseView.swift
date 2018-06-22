@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class PurchaseView: LayerBackedView, Observable
+class PurchaseView: LayerBackedView, Observable, Observer
 {
     // MARK: - Life Cycle
     
@@ -18,6 +18,15 @@ class PurchaseView: LayerBackedView, Observable
         
         constrainExpandedContent()
         constrainC2aButton()
+        
+        observe(Task.numberOfTasks)
+        {
+            [weak self] in
+            
+            guard let me = self else { return }
+            
+            me.itemLabel.stringValue = me.itemText(with: $0.new ?? 0)
+        }
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -69,10 +78,15 @@ class PurchaseView: LayerBackedView, Observable
         field.isEditable = false
         field.isBordered = false
         field.font = Font.text.nsFont
-        field.stringValue = "Items: \(Task.numberOfTasks)"
+        field.stringValue = itemText(with: Task.numberOfTasks.value ?? 0)
         
         return field
     }()
+    
+    private func itemText(with taskNumber: Int) -> String
+    {
+        return "Items: \(taskNumber)"
+    }
     
     // MARK: - Expand Button
     
