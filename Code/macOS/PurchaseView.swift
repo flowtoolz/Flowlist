@@ -21,11 +21,11 @@ class PurchaseView: LayerBackedView, Observable, Observer
         
         observe(Task.numberOfTasks)
         {
-            [weak self] in
+            [weak self] _ in
             
             guard let me = self else { return }
             
-            me.itemLabel.stringValue = me.itemText(with: $0.new ?? 0)
+            me.itemLabel.stringValue = me.composeItemText()
         }
     }
     
@@ -78,14 +78,16 @@ class PurchaseView: LayerBackedView, Observable, Observer
         field.isEditable = false
         field.isBordered = false
         field.font = Font.text.nsFont
-        field.stringValue = itemText(with: Task.numberOfTasks.value ?? 0)
+        field.stringValue = composeItemText()
         
         return field
     }()
     
-    private func itemText(with taskNumber: Int) -> String
+    private func composeItemText() -> String
     {
-        return "Items: \(taskNumber)"
+        let number = Task.numberOfTasks.value ?? 0
+        
+        return "Items: \(number)"
     }
     
     // MARK: - Expand Button
