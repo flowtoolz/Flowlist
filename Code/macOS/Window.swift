@@ -26,7 +26,14 @@ class Window: NSWindow
                    backing: backingStoreType,
                    defer: flag)
         
+        #if DEBUG
+        title = "Flowlist (Debug)"
+        #elseif BETA
+        title = "Flowlist (Beta)"
+        #else
         title = "Flowlist"
+        #endif
+        
         isReleasedWhenClosed = false
         contentViewController = ViewController()
         initializeFrame()
