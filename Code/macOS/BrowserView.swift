@@ -14,7 +14,7 @@ class BrowserView: LayerBackedView, Observer
 
         observeBrowser()
         
-        backgroundColor = Color.background
+        backgroundColor = .background
         
         createListViews()
         configureListViews()

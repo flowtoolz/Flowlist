@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E08E6B320DD13E000C32356 /* PurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E6B220DD13E000C32356 /* PurchaseView.swift */; };
 		9E0D5A9F20C160BA00F0D827 /* Font+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0D5A9E20C160BA00F0D827 /* Font+Style.swift */; };
 		9E0D5AA120C160C800F0D827 /* Color+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0D5AA020C160C800F0D827 /* Color+Style.swift */; };
 		9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185B1EEEE8CE00B35AD5 /* Task.swift */; };
@@ -65,6 +66,7 @@
 		73F5B44C9211479F59673188 /* Pods-FlowlistTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlowlistTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlowlistTests/Pods-FlowlistTests.debug.xcconfig"; sourceTree = "<group>"; };
 		78B3E83C8B5F1E96FF074B6D /* Pods-Flowlist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flowlist.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist.debug.xcconfig"; sourceTree = "<group>"; };
 		9E0410F820CE60B300C7C3E3 /* Flowlist.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Flowlist.entitlements; path = Resources/Flowlist.entitlements; sourceTree = "<group>"; };
+		9E08E6B220DD13E000C32356 /* PurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PurchaseView.swift; path = ../Code/macOS/PurchaseView.swift; sourceTree = "<group>"; };
 		9E0D5A9E20C160BA00F0D827 /* Font+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Font+Style.swift"; path = "../Code/Font+Style.swift"; sourceTree = "<group>"; };
 		9E0D5AA020C160C800F0D827 /* Color+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Color+Style.swift"; path = "../Code/Color+Style.swift"; sourceTree = "<group>"; };
 		9E15185B1EEEE8CE00B35AD5 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../Code/Task.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 		9E71504320D7D7E80061601E /* Full Version Purchase */ = {
 			isa = PBXGroup;
 			children = (
+				9E08E6B220DD13E000C32356 /* PurchaseView.swift */,
 				9E71504420D7D80F0061601E /* FullVersionPurchaseController.swift */,
 				9EE582FE20DA7377004DE407 /* FullVersion.swift */,
 			);
@@ -531,6 +534,7 @@
 				9E6C720B20B19C88001C3D2C /* Task+State.swift in Sources */,
 				9E1AAD6A20B57CA9001657A7 /* GroupIcon.swift in Sources */,
 				9EF0A78E20B6E6CD00E1A23A /* BrowserView.swift in Sources */,
+				9E08E6B320DD13E000C32356 /* PurchaseView.swift in Sources */,
 				9EF0A78A20B5E26F00E1A23A /* TableContent.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* SelectableList.swift in Sources */,
 				9E71504520D7D80F0061601E /* FullVersionPurchaseController.swift in Sources */,
