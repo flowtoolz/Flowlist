@@ -109,7 +109,7 @@ class SelectableList: List
             return
         }
         
-        let newSelectedTask = lastOpenTask(above: selected)
+        let newSelectedTask = nextSelectedTaskAfterCheckingOff(at: selected)
         
         task.state <- !task.isDone ? .done : nil
         
@@ -123,8 +123,15 @@ class SelectableList: List
         }
     }
     
-    private func lastOpenTask(above index: Int) -> Task?
+    private func nextSelectedTaskAfterCheckingOff(at index: Int) -> Task?
     {
+        for i in index + 1 ..< numberOfTasks
+        {
+            guard let task = self[i] else { continue }
+            
+            if task.isOpen { return task }
+        }
+        
         for i in (0 ..< index).reversed()
         {
             guard let task = self[i] else { continue }
