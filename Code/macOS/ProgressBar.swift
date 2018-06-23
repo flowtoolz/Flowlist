@@ -4,6 +4,21 @@ import SwiftyToolz
 
 class ProgressBar: LayerBackedView
 {
+    // MARK: - Color
+    
+    var progressColor: Color
+    {
+        set
+        {
+            progressIndicator.backgroundColor = newValue
+        }
+        
+        get
+        {
+            return progressIndicator.backgroundColor
+        }
+    }
+    
     // MARK: - Initialization
     
     override init(frame frameRect: NSRect)

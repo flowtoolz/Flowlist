@@ -14,8 +14,9 @@ class PurchaseView: LayerBackedView, Observable, Observer
         backgroundColor = .white
         
         constrainItemLabel()
-        constrainExpandButton()
         constrainProgressBar()
+        constrainExpandIcon()
+        constrainExpandButton()
         
         constrainExpandedContent()
         constrainC2aButton()
@@ -34,12 +35,35 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
+    // MARK: - Expand / Collapse
+    
+    var isExpanded: Bool = false
+    {
+        didSet
+        {
+            NSAnimationContext.beginGrouping()
+            
+            let context = NSAnimationContext.current
+            context.allowsImplicitAnimation = true
+            context.duration = 0.3
+            
+            expandedContent.alphaValue = isExpanded ? 1 : 0
+            itemLabel.alphaValue = isExpanded ? 0 : 1
+            expandIcon.image = isExpanded ? #imageLiteral(resourceName: "close_indicator") : #imageLiteral(resourceName: "expand_indicator")
+            
+            NSAnimationContext.endGrouping()
+        }
+    }
+    
     // MARK: - Item Label
     
     private func constrainItemLabel()
     {
-        itemLabel.autoAlignAxis(.horizontal, toSameAxisOf: expandButton)
         itemLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 20)
+        itemLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 20)
+        itemLabel.autoAlignAxis(.horizontal,
+                                toSameAxisOf: expandButton,
+                                withOffset: -CGFloat(Float.progressBarHeight / 2))
     }
     
     private lazy var itemLabel: NSTextField =
@@ -51,6 +75,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
         field.isEditable = false
         field.isBordered = false
         field.font = Font.text.nsFont
+        field.textColor = Color.grayedOut.nsColor
+        field.alignment = .center
         
         let itemNumber = numberOfUserCreatedTasks.latestUpdate
         field.stringValue = composeItemText(with: itemNumber)
@@ -60,27 +86,45 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func composeItemText(with number: Int) -> String
     {
-        return "Items: \(number)"
+        return "Items in use: \(number) of 100. Click to remove limit."
     }
+    
+    // MARK: - Expand Icon
+    
+    private func constrainExpandIcon()
+    {
+        expandIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+        expandIcon.autoAlignAxis(.horizontal, toSameAxisOf: itemLabel)
+    }
+    
+    private lazy var expandIcon: NSImageView =
+    {
+        let icon = addForAutoLayout(NSImageView())
+        
+        icon.image = #imageLiteral(resourceName: "expand_indicator")
+        icon.imageScaling = .scaleNone
+        icon.imageAlignment = .alignCenter
+        icon.alphaValue = 0.33
+        
+        return icon
+    }()
     
     // MARK: - Expand Button
     
     private func constrainExpandButton()
     {
-        expandButtonBackground.autoPinEdge(toSuperviewEdge: .top)
-        expandButtonBackground.autoPinEdge(toSuperviewEdge: .right)
+        expandButton.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                                  excludingEdge: .bottom)
         
-        let height = CGFloat(Float.itemHeight)
-        expandButtonBackground.autoSetDimensions(to: CGSize(width: 100,
-                                                            height: height))
-        expandButton.autoPinEdgesToSuperviewEdges()
+        let height = CGFloat(Float.itemHeight + Float.progressBarHeight)
+        expandButton.autoSetDimension(.height, toSize: height)
     }
     
     private lazy var expandButton: NSButton =
     {
-        let button = expandButtonBackground.addForAutoLayout(NSButton())
+        let button = addForAutoLayout(NSButton())
         
-        button.title = "Expand"
+        button.title = ""
         button.font = Font.text.nsFont
         button.isBordered = false
         button.bezelStyle = .regularSquare
@@ -94,15 +138,6 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         send(.expandButtonWasClicked)
     }
-    
-    private lazy var expandButtonBackground: NSView =
-    {
-        let view = addForAutoLayout(LayerBackedView())
-        
-        view.backgroundColor = Color(0.9, 1.0, 0.8)
-        
-        return view
-    }()
     
     // MARK: - Progress Bar
     
@@ -120,6 +155,9 @@ class PurchaseView: LayerBackedView, Observable, Observer
         let bar = addForAutoLayout(ProgressBar())
         
         bar.progress = CGFloat(numberOfUserCreatedTasks.latestUpdate) / 100.0
+        
+        bar.backgroundColor = Color(0.9, 1.0, 0.8)
+        bar.progressColor = Color(1.0, 0.9, 0.8)
         
         return bar
     }()
@@ -166,22 +204,6 @@ class PurchaseView: LayerBackedView, Observable, Observer
         expandedContent.autoPinEdge(.bottom, to: .top, of: progressBar)
         expandedContent.autoPinEdge(toSuperviewEdge: .top,
                                     withInset: CGFloat(Float.itemHeight))
-    }
-    
-    var isExpanded: Bool = false
-    {
-        didSet
-        {
-            NSAnimationContext.beginGrouping()
-            
-            let context = NSAnimationContext.current
-            context.allowsImplicitAnimation = true
-            context.duration = 0.3
-            
-            expandedContent.alphaValue = isExpanded ? 1 : 0
-            
-            NSAnimationContext.endGrouping()
-        }
     }
     
     private lazy var expandedContent: NSView =
