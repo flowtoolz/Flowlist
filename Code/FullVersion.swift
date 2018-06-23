@@ -2,7 +2,9 @@ import Foundation
 
 var reachedTaskNumberLimit: Bool
 {
-    return !isFullVersion && store.numberOfTasks.value ?? 0 >= maxNumberOfTasksInTrial
+    let userCreatedTasks = numberOfUserCreatedTasks.latestUpdate
+    
+    return !isFullVersion && userCreatedTasks >= maxNumberOfTasksInTrial
 }
 
 var isFullVersion: Bool
