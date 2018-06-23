@@ -12,6 +12,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         super.init(frame: frameRect)
         
         backgroundColor = .white
+        setItemBorder()
         
         constrainItemLabel()
         constrainProgressBar()
@@ -23,13 +24,13 @@ class PurchaseView: LayerBackedView, Observable, Observer
         
         observe(numberOfUserCreatedTasks)
         {
-            [weak self] newNumber in
+            [weak self] itemNumber in
             
             guard let me = self else { return }
             
-            me.itemLabel.stringValue = me.composeItemText(with: newNumber)
-            
-            me.progressBar.progress = CGFloat(newNumber) / 100.0
+            me.itemLabel.stringValue = me.composeItemText(with: itemNumber)
+            me.itemLabel.textColor = me.labelColor(for: itemNumber).nsColor
+            me.progressBar.progress = CGFloat(itemNumber) / 100.0
         }
     }
     
@@ -50,6 +51,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
             expandedContent.alphaValue = isExpanded ? 1 : 0
             itemLabel.alphaValue = isExpanded ? 0 : 1
             expandIcon.image = isExpanded ? #imageLiteral(resourceName: "close_indicator") : #imageLiteral(resourceName: "expand_indicator")
+            progressBar.alphaValue = isExpanded ? 0 : 1
             
             NSAnimationContext.endGrouping()
         }
@@ -75,7 +77,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
         field.isEditable = false
         field.isBordered = false
         field.font = Font.text.nsFont
-        field.textColor = Color.grayedOut.nsColor
+        let color = labelColor(for: numberOfUserCreatedTasks.latestUpdate)
+        field.textColor = color.nsColor
         field.alignment = .center
         
         let itemNumber = numberOfUserCreatedTasks.latestUpdate
@@ -83,6 +86,11 @@ class PurchaseView: LayerBackedView, Observable, Observer
         
         return field
     }()
+    
+    private func labelColor(for itemNumber: Int) -> Color
+    {
+        return itemNumber >= 95 ? .black : .grayedOut
+    }
     
     private func composeItemText(with number: Int) -> String
     {
@@ -104,7 +112,6 @@ class PurchaseView: LayerBackedView, Observable, Observer
         icon.image = #imageLiteral(resourceName: "expand_indicator")
         icon.imageScaling = .scaleNone
         icon.imageAlignment = .alignCenter
-        icon.alphaValue = 0.33
         
         return icon
     }()
@@ -193,18 +200,18 @@ class PurchaseView: LayerBackedView, Observable, Observer
         return view
     }()
     
-    let collapsedHeight = CGFloat(Float.itemHeight + Float.progressBarHeight)
-    
     // MARK: - Expanded Content
     
     private func constrainExpandedContent()
     {
         expandedContent.autoPinEdge(toSuperviewEdge: .left)
         expandedContent.autoPinEdge(toSuperviewEdge: .right)
-        expandedContent.autoPinEdge(.bottom, to: .top, of: progressBar)
+        expandedContent.autoPinEdge(toSuperviewEdge: .bottom)
         expandedContent.autoPinEdge(toSuperviewEdge: .top,
-                                    withInset: CGFloat(Float.itemHeight))
+                                    withInset: collapsedHeight)
     }
+    
+    let collapsedHeight = CGFloat(Float.itemHeight + Float.progressBarHeight)
     
     private lazy var expandedContent: NSView =
     {
