@@ -7,13 +7,15 @@ final class Task: Codable, Observable, Tree
     
     convenience init(title: String? = nil,
                      state: TaskState? = nil,
-                     root: Task? = nil)
+                     root: Task? = nil,
+                     numberOfTasks: Int = 1)
     {
         self.init()
         
         self.title = Var(title)
         self.state = Var(state)
         self.root = root
+        self.numberOfTasks = numberOfTasks
     }
     
     deinit { removeObservers() }

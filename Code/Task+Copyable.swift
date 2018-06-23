@@ -12,7 +12,8 @@ extension Task: Copyable
     {
         self.init(title: original.title.value,
                   state: original.state.value,
-                  root: root)
+                  root: root,
+                  numberOfTasks: original.numberOfTasks)
         
         for subtask in original.branches
         {
