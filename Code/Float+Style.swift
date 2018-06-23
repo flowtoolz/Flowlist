@@ -7,5 +7,3 @@ extension Float
     static let itemHeight: Float = 36
     static let progressBarHeight: Float = 10
 }
-
-

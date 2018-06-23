@@ -161,9 +161,11 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainExpandedContent()
     {
-        expandedContent.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                     excludingEdge: .top)
-        expandedContent.autoPinEdge(toSuperviewEdge: .top, withInset: collapsedHeight)
+        expandedContent.autoPinEdge(toSuperviewEdge: .left)
+        expandedContent.autoPinEdge(toSuperviewEdge: .right)
+        expandedContent.autoPinEdge(.bottom, to: .top, of: progressBar)
+        expandedContent.autoPinEdge(toSuperviewEdge: .top,
+                                    withInset: CGFloat(Float.itemHeight))
     }
     
     var isExpanded: Bool = false
