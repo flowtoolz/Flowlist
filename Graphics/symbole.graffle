@@ -117,7 +117,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-06-22 16:40:34 +0000</string>
+	<string>2018-06-23 12:47:01 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -180,7 +180,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-231.59609120521174, -184.69055374592833}, {1057.9804560260586, 1211.0749185667753}}</string>
+				<string>{{-1285.1851851851857, -1050}, {3855.5555555555547, 3150.0000000000005}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -342,13 +342,11 @@
 					<key>AllowConnections</key>
 					<string>NO</string>
 					<key>Bounds</key>
-					<string>{{383.08004243390246, 568.54805923361971}, {11.25, 9}}</string>
+					<string>{{450, 567}, {11.25, 9}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>6</integer>
-					<key>Rotation</key>
-					<real>351</real>
+					<integer>46</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -381,13 +379,11 @@
 					<key>AllowConnections</key>
 					<string>NO</string>
 					<key>Bounds</key>
-					<string>{{409.4992571073044, 500.81263934052606}, {9, 18}}</string>
+					<string>{{486, 504}, {9, 18}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>7</integer>
-					<key>Rotation</key>
-					<real>351</real>
+					<integer>47</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -420,13 +416,11 @@
 					<key>AllowConnections</key>
 					<string>NO</string>
 					<key>Bounds</key>
-					<string>{{397.66995756609754, 502.45194076638029}, {11.25, 9}}</string>
+					<string>{{474.75, 504}, {11.25, 9}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>8</integer>
-					<key>Rotation</key>
-					<real>351</real>
+					<integer>48</integer>
 					<key>Style</key>
 					<dict>
 						<key>shadow</key>
@@ -445,13 +439,11 @@
 					<key>AllowConnections</key>
 					<string>NO</string>
 					<key>Bounds</key>
-					<string>{{373.5007428926956, 561.18736065947394}, {9, 18}}</string>
+					<string>{{441, 558}, {9, 18}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>9</integer>
-					<key>Rotation</key>
-					<real>351</real>
+					<integer>49</integer>
 					<key>Style</key>
 					<dict>
 						<key>shadow</key>
@@ -476,15 +468,13 @@
 					<key>Class</key>
 					<string>LineGraphic</string>
 					<key>ID</key>
-					<integer>10</integer>
+					<integer>50</integer>
 					<key>Points</key>
 					<array>
-						<string>{391.66583595561781, 527.01818494830627}</string>
-						<string>{386.4068498419627, 536.96331265268407}</string>
-						<string>{383.48059598294259, 532.87069266634649}</string>
+						<string>{465.75, 526.5}</string>
+						<string>{459, 535.5}</string>
+						<string>{456.75, 531}</string>
 					</array>
-					<key>Rotation</key>
-					<real>351</real>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -531,15 +521,13 @@
 					<key>Class</key>
 					<string>LineGraphic</string>
 					<key>ID</key>
-					<integer>11</integer>
+					<integer>51</integer>
 					<key>Points</key>
 					<array>
-						<string>{404.77876157706032, 552.27785995901274}</string>
-						<string>{408.51940401705741, 547.12930733365363}</string>
-						<string>{403.37085139169824, 543.38866489365648}</string>
+						<string>{474.75, 553.5}</string>
+						<string>{479.25, 549.00000000000011}</string>
+						<string>{474.75, 544.5}</string>
 					</array>
-					<key>Rotation</key>
-					<real>351</real>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -580,15 +568,13 @@
 					<key>AllowConnections</key>
 					<string>NO</string>
 					<key>Bounds</key>
-					<string>{{377.88919506535626, 502.59208981463792}, {54, 72}}</string>
+					<string>{{450, 504}, {54, 72}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>HFlip</key>
 					<string>YES</string>
 					<key>ID</key>
-					<integer>12</integer>
-					<key>Rotation</key>
-					<real>351</real>
+					<integer>52</integer>
 					<key>Shape</key>
 					<string>Bezier</string>
 					<key>ShapeData</key>
@@ -674,13 +660,11 @@
 					<key>AllowConnections</key>
 					<string>NO</string>
 					<key>Bounds</key>
-					<string>{{360.11080493464374, 505.40791018536208}, {54, 72}}</string>
+					<string>{{432, 504}, {54, 72}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>13</integer>
-					<key>Rotation</key>
-					<real>351</real>
+					<integer>53</integer>
 					<key>Shape</key>
 					<string>Bezier</string>
 					<key>ShapeData</key>
@@ -743,64 +727,6 @@
 							<real>9</real>
 							<key>Draws</key>
 							<string>NO</string>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>AllowConnections</key>
-					<string>NO</string>
-					<key>Bounds</key>
-					<string>{{360, 504}, {72, 72}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>ID</key>
-					<integer>14</integer>
-					<key>Rotation</key>
-					<real>351</real>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>0.59999999999999998</real>
-								<key>g</key>
-								<real>0.59999999999999998</real>
-								<key>r</key>
-								<real>0.59999999999999998</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Fuzziness</key>
-							<real>4</real>
-							<key>ShadowVector</key>
-							<string>{0, 1.0000800043344498}</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>0.95686274509803926</real>
-								<key>g</key>
-								<real>0.72941176470588232</real>
-								<key>r</key>
-								<real>0.49411764705882355</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
-							<key>CornerRadius</key>
-							<real>9</real>
-							<key>Draws</key>
-							<string>NO</string>
-							<key>Outer</key>
-							<true/>
-							<key>Width</key>
-							<real>2</real>
 						</dict>
 					</dict>
 				</dict>
@@ -1910,6 +1836,62 @@
 						</dict>
 					</dict>
 				</dict>
+				<dict>
+					<key>AllowConnections</key>
+					<string>NO</string>
+					<key>Bounds</key>
+					<string>{{432, 504}, {72, 72}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>54</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Color</key>
+							<dict>
+								<key>b</key>
+								<real>0.59999999999999998</real>
+								<key>g</key>
+								<real>0.59999999999999998</real>
+								<key>r</key>
+								<real>0.59999999999999998</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Fuzziness</key>
+							<real>4</real>
+							<key>ShadowVector</key>
+							<string>{0, 1.0000800043344498}</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Color</key>
+							<dict>
+								<key>b</key>
+								<real>0.95686274509803926</real>
+								<key>g</key>
+								<real>0.72941176470588232</real>
+								<key>r</key>
+								<real>0.49411764705882355</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>CornerRadius</key>
+							<real>9</real>
+							<key>Draws</key>
+							<string>NO</string>
+							<key>Outer</key>
+							<true/>
+							<key>Width</key>
+							<real>2</real>
+						</dict>
+					</dict>
+				</dict>
 			</array>
 			<key>GridInfo</key>
 			<dict>
@@ -1987,7 +1969,7 @@
 		<key>CurrentSheet</key>
 		<integer>0</integer>
 		<key>Frame</key>
-		<string>{{0, 52}, {1245, 725}}</string>
+		<string>{{0, 52}, {1228, 725}}</string>
 		<key>ShowInfo</key>
 		<true/>
 		<key>ShowRuler</key>
@@ -1999,12 +1981,12 @@
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{317.16898736442744, 427.18974836238351}, {231.59609120521185, 184.69055374592847}}</string>
+		<string>{{-365.87613149419445, -276.45099451449369}, {1285.185185185185, 1050}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Arbeitsfläche 1</string>
-				<real>3.0699999999999998</real>
+				<real>0.54000000000000004</real>
 				<real>1</real>
 			</array>
 		</array>
