@@ -23,7 +23,11 @@ class ProgressBar: LayerBackedView
     {
         set
         {
-            // TODO: animate the shit outa this!
+            NSAnimationContext.beginGrouping()
+            
+            let context = NSAnimationContext.current
+            context.allowsImplicitAnimation = true
+            context.duration = 0.3
             
             if let constraint = widthConstraint
             {
@@ -34,6 +38,10 @@ class ProgressBar: LayerBackedView
             let cappedCGFloat = max(0.0, min(1.0, newValue))
 
             constrainIndicator(widthFactor: cappedCGFloat)
+            
+            layoutSubtreeIfNeeded()
+            
+            NSAnimationContext.endGrouping()
         }
         
         get { return widthConstraint?.multiplier ?? 0 }
