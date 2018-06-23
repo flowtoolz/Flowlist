@@ -34,11 +34,10 @@ extension Store
         didLoadTasksSuccessfully = true
         
         loadedRoot.recoverRoots()
+        loadedRoot.recoverNumberOfTasks()
         loadedRoot.title <- NSFullUserName()
         
         root = loadedRoot
-        
-        Task.numberOfTasks += root.numberOfBranchesRecursively
     }
     private func createFile()
     {

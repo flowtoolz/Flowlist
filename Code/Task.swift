@@ -16,16 +16,7 @@ final class Task: Codable, Observable, Tree
         self.root = root
     }
     
-    init() { Task.numberOfTasks += 1 }
-    
-    deinit
-    {
-        removeObservers()
-        
-        Task.numberOfTasks -= 1
-    }
-    
-    static var numberOfTasks = Var(0)
+    deinit { removeObservers() }
     
     // MARK: - Codable Data
 
@@ -53,6 +44,8 @@ final class Task: Codable, Observable, Tree
         guard let merged = mergeBranches(at: indexes,
                                          as: group,
                                          at: groupIndex) else { return nil }
+        
+        group.updateNumberOfTasks()
 
         send(.did(.remove(subtasks: merged, from: indexes)))
         send(.did(.create(at: groupIndex)))
@@ -91,6 +84,8 @@ final class Task: Codable, Observable, Tree
     {
         guard let removedSubtasks = removeBranches(at: indexes) else { return nil }
         
+        updateNumberOfTasks()
+        
         send(.did(.remove(subtasks: removedSubtasks, from: indexes)))
         
         lastRemoved.storeCopies(of: removedSubtasks)
@@ -121,6 +116,8 @@ final class Task: Codable, Observable, Tree
     {
         guard insert(branch: subtask, at: index) else { return nil }
         
+        updateNumberOfTasks()
+        
         send(.did(.insert(at: [index])))
 
         return subtask
@@ -130,6 +127,8 @@ final class Task: Codable, Observable, Tree
     func insert(_ subtasks: [Task], at index: Int) -> Bool
     {
         guard insert(branches: subtasks, at: index) else { return false }
+        
+        updateNumberOfTasks()
         
         if !subtasks.isEmpty
         {
@@ -152,6 +151,8 @@ final class Task: Codable, Observable, Tree
         
         guard insert(branch: newSubtask, at: index) else { return nil }
         
+        updateNumberOfTasks()
+        
         send(.did(.create(at: index)))
         
         return newSubtask
@@ -167,6 +168,49 @@ final class Task: Codable, Observable, Tree
         send(.did(.move(from: from, to: to)))
         
         return true
+    }
+    
+    // MARK: - Counting Tasks
+    
+    @discardableResult
+    func recoverNumberOfTasks() -> Int
+    {
+        var subtaskNumber = 0
+        
+        for subtask in branches
+        {
+            subtaskNumber += subtask.recoverNumberOfTasks()
+        }
+        
+        numberOfTasks = subtaskNumber + 1
+        
+        return numberOfTasks
+    }
+    
+    private func updateNumberOfTasks()
+    {
+        let newNumber = numberOfTasksRecursively()
+        
+        guard newNumber != numberOfTasks else { return }
+        
+        numberOfTasks = newNumber
+        root?.updateNumberOfTasks()
+        
+        send(.didChange(numberOfTasks: numberOfTasks))
+    }
+    
+    private(set) var numberOfTasks = 1
+    
+    private func numberOfTasksRecursively() -> Int
+    {
+        var subtaskNumber = 0
+        
+        for subtask in branches
+        {
+            subtaskNumber += subtask.numberOfTasks
+        }
+        
+        return subtaskNumber + 1
     }
     
     // MARK: - Tree
@@ -187,5 +231,5 @@ final class Task: Codable, Observable, Tree
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, did(Edit) }
+    enum Event { case didNothing, did(Edit), didChange(numberOfTasks: Int) }
 }

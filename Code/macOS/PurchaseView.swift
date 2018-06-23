@@ -19,13 +19,13 @@ class PurchaseView: LayerBackedView, Observable, Observer
         constrainExpandedContent()
         constrainC2aButton()
         
-        observe(Task.numberOfTasks)
+        observe(numberOfUserCreatedTasks)
         {
-            [weak self] _ in
+            [weak self] newNumber in
             
             guard let me = self else { return }
             
-            me.itemLabel.stringValue = me.composeItemText()
+            me.itemLabel.stringValue = me.composeItemText(with: newNumber)
         }
     }
     
@@ -78,15 +78,15 @@ class PurchaseView: LayerBackedView, Observable, Observer
         field.isEditable = false
         field.isBordered = false
         field.font = Font.text.nsFont
-        field.stringValue = composeItemText()
+        
+        let itemNumber = numberOfUserCreatedTasks.latestUpdate
+        field.stringValue = composeItemText(with: itemNumber)
         
         return field
     }()
     
-    private func composeItemText() -> String
+    private func composeItemText(with number: Int) -> String
     {
-        let number = Task.numberOfTasks.value ?? 0
-        
         return "Items: \(number)"
     }
     

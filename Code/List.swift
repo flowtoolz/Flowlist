@@ -58,6 +58,7 @@ class List: Observable, Observer
             switch event
             {
             case .didNothing: break
+            case .didChange(numberOfTasks: _): break
             case .did(let edit): self?.received(edit, from: root)
             }
         }

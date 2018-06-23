@@ -2,7 +2,7 @@ import Foundation
 
 var reachedTaskNumberLimit: Bool
 {
-    return !isFullVersion && Task.numberOfTasks.value ?? 0 >= maxNumberOfTasksInTrial
+    return !isFullVersion && store.numberOfTasks.value ?? 0 >= maxNumberOfTasksInTrial
 }
 
 var isFullVersion: Bool
@@ -36,6 +36,8 @@ var isFullVersion: Bool
         }
     }
 }
+
+let numberOfUserCreatedTasks = store.numberOfTasks.new().unwrap(1).map { $0 - 1 }
 
 fileprivate var isFullVersion_Cached: Bool?
 fileprivate let maxNumberOfTasksInTrial = 100
