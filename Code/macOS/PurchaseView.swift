@@ -69,7 +69,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         expandButtonBackground.autoPinEdge(toSuperviewEdge: .top)
         expandButtonBackground.autoPinEdge(toSuperviewEdge: .right)
-        expandButtonBackground.autoSetDimensions(to: CGSize(width: 100, height: 64))
+        
+        let height = CGFloat(Float.itemHeight)
+        expandButtonBackground.autoSetDimensions(to: CGSize(width: 100,
+                                                            height: height))
         expandButton.autoPinEdgesToSuperviewEdges()
     }
     
@@ -108,7 +111,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
         progressBar.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                  excludingEdge: .top)
         
-        progressBar.autoSetDimension(.height, toSize: 2)
+        let height = CGFloat(Float.progressBarHeight)
+        progressBar.autoSetDimension(.height, toSize: height)
     }
     
     private lazy var progressBar: ProgressBar =
@@ -124,7 +128,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainC2aButton()
     {
-        c2aButtonBackground.autoSetDimensions(to: CGSize(width: 200, height: 64))
+        c2aButtonBackground.autoSetDimensions(to: CGSize(width: 200,
+                                                         height: collapsedHeight))
         c2aButtonBackground.autoCenterInSuperview()
         c2aButton.autoPinEdgesToSuperviewEdges()
     }
@@ -150,13 +155,15 @@ class PurchaseView: LayerBackedView, Observable, Observer
         return view
     }()
     
+    let collapsedHeight = CGFloat(Float.itemHeight + Float.progressBarHeight)
+    
     // MARK: - Expanded Content
     
     private func constrainExpandedContent()
     {
         expandedContent.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                      excludingEdge: .top)
-        expandedContent.autoPinEdge(toSuperviewEdge: .top, withInset: 64)
+        expandedContent.autoPinEdge(toSuperviewEdge: .top, withInset: collapsedHeight)
     }
     
     var isExpanded: Bool = false
