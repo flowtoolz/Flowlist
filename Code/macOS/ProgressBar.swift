@@ -10,58 +10,58 @@ class ProgressBar: LayerBackedView
     {
         super.init(frame: frameRect)
         
-        backgroundColor = Color(1.0, 0.8, 0.8)
+        backgroundColor = Color(1.0, 0.0, 0.0)
+        
+        constrainProgressIndicator()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
     // MARK: - Progress Indicator
     
-    var progress: Float
+    var progress: CGFloat
     {
         set
         {
-            // TODO: animate the sit outa this!
+            // TODO: animate the shit outa this!
             
-            if let constraint = indicatorWidthConstraint
+            if let constraint = widthConstraint
             {
                 removeConstraint(constraint)
+                progressIndicator.removeConstraint(constraint)
             }
             
-            let cappedCGFloat = CGFloat(min(0.0, max(1.0, newValue)))
-            
-            constrainProgressIndicatorWidth(with: cappedCGFloat)
+            let cappedCGFloat = max(0.0, min(1.0, newValue))
+
+            constrainIndicator(widthFactor: cappedCGFloat)
         }
         
-        get
-        {
-            return Float(indicatorWidthConstraint?.multiplier ?? 0)
-        }
+        get { return widthConstraint?.multiplier ?? 0 }
     }
     
-    private func constrainProgressIndicator()
+    private func constrainProgressIndicator(with widthFactor: CGFloat = 0)
     {
         progressIndicator.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                        excludingEdge: .right)
         
-        constrainProgressIndicatorWidth(with: 0.5)
+        constrainIndicator(widthFactor: widthFactor)
     }
     
-    private func constrainProgressIndicatorWidth(with multiplier: CGFloat)
+    private func constrainIndicator(widthFactor: CGFloat)
     {
-        indicatorWidthConstraint = progressIndicator.autoMatch(.width,
-                                                               to: .width,
-                                                               of: self,
-                                                               withMultiplier: multiplier)
+        widthConstraint = progressIndicator.autoMatch(.width,
+                                                      to: .width,
+                                                      of: self,
+                                                      withMultiplier: widthFactor)
     }
     
-    private var indicatorWidthConstraint: NSLayoutConstraint?
+    private var widthConstraint: NSLayoutConstraint?
     
     private lazy var progressIndicator: LayerBackedView =
     {
         let view = addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = Color(0.8, 1.0, 0.8)
+        view.backgroundColor = Color(0.0, 1.0, 0.0)
         
         return view
     }()

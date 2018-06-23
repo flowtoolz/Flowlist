@@ -15,6 +15,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         
         constrainItemLabel()
         constrainExpandButton()
+        constrainProgressBar()
         
         constrainExpandedContent()
         constrainC2aButton()
@@ -26,6 +27,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
             guard let me = self else { return }
             
             me.itemLabel.stringValue = me.composeItemText(with: newNumber)
+            
+            me.progressBar.progress = CGFloat(newNumber) / 100.0
         }
     }
     
@@ -98,7 +101,24 @@ class PurchaseView: LayerBackedView, Observable, Observer
         return view
     }()
     
-    //private lazy var 
+    // MARK: - Progress Bar
+    
+    private func constrainProgressBar()
+    {
+        progressBar.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                                 excludingEdge: .top)
+        
+        progressBar.autoSetDimension(.height, toSize: 2)
+    }
+    
+    private lazy var progressBar: ProgressBar =
+    {
+        let bar = addForAutoLayout(ProgressBar())
+        
+        bar.progress = CGFloat(numberOfUserCreatedTasks.latestUpdate) / 100.0
+        
+        return bar
+    }()
     
     // MARK: - C2A Button
     
