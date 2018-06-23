@@ -28,7 +28,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
             
             guard let me = self else { return }
             
-            me.itemLabel.stringValue = me.composeItemText(with: itemNumber)
+            me.itemLabel.stringValue = me.labelText(for: itemNumber)
             me.itemLabel.textColor = me.labelColor(for: itemNumber).nsColor
             me.progressBar.progress = CGFloat(itemNumber) / 100.0
         }
@@ -61,8 +61,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainItemLabel()
     {
-        itemLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 20)
-        itemLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 20)
+        itemLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
+        itemLabel.autoPinEdge(.right, to: .left, of: expandIcon, withOffset: -10)
         itemLabel.autoAlignAxis(.horizontal,
                                 toSameAxisOf: expandButton,
                                 withOffset: -CGFloat(Float.progressBarHeight / 2))
@@ -72,6 +72,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         let field = addForAutoLayout(NSTextField())
         
+        let priority = NSLayoutConstraint.Priority(rawValue: 0.1)
+        field.setContentCompressionResistancePriority(priority, for: .horizontal)
+        field.lineBreakMode = .byTruncatingTail
+        
         field.drawsBackground = false
         field.isBezeled = false
         field.isEditable = false
@@ -79,10 +83,9 @@ class PurchaseView: LayerBackedView, Observable, Observer
         field.font = Font.text.nsFont
         let color = labelColor(for: numberOfUserCreatedTasks.latestUpdate)
         field.textColor = color.nsColor
-        field.alignment = .center
         
         let itemNumber = numberOfUserCreatedTasks.latestUpdate
-        field.stringValue = composeItemText(with: itemNumber)
+        field.stringValue = labelText(for: itemNumber)
         
         return field
     }()
@@ -92,9 +95,9 @@ class PurchaseView: LayerBackedView, Observable, Observer
         return itemNumber >= 90 ? .black : .grayedOut
     }
     
-    private func composeItemText(with number: Int) -> String
+    private func labelText(for itemNumber: Int) -> String
     {
-        return "Items: \(number) / 100. Click to remove limit."
+        return "Items: \(itemNumber) of 100. Click to remove limit."
     }
     
     // MARK: - Expand Icon
