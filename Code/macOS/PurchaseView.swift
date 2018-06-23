@@ -89,12 +89,12 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func labelColor(for itemNumber: Int) -> Color
     {
-        return itemNumber >= 95 ? .black : .grayedOut
+        return itemNumber >= 90 ? .black : .grayedOut
     }
     
     private func composeItemText(with number: Int) -> String
     {
-        return "Items in use: \(number) of 100. Click to remove limit."
+        return "Items: \(number) / 100. Click to remove limit."
     }
     
     // MARK: - Expand Icon
