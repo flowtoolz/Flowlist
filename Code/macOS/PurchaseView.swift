@@ -19,8 +19,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         constrainExpandIcon()
         constrainExpandButton()
         
-        constrainExpandedContent()
-        constrainC2aButton()
+        constrainContent()
         
         observe(numberOfUserCreatedTasks)
         {
@@ -48,7 +47,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
             context.allowsImplicitAnimation = true
             context.duration = 0.3
             
-            expandedContent.alphaValue = isExpanded ? 1 : 0
+            content.alphaValue = isExpanded ? 1 : 0
             itemLabel.alphaValue = isExpanded ? 0 : 1
             expandIcon.image = isExpanded ? #imageLiteral(resourceName: "close_indicator") : #imageLiteral(resourceName: "expand_indicator")
             progressBar.alphaValue = isExpanded ? 0 : 1
@@ -155,53 +154,21 @@ class PurchaseView: LayerBackedView, Observable, Observer
         return bar
     }()
     
-    // MARK: - C2A Button
-    
-    private func constrainC2aButton()
-    {
-        c2aButtonBackground.autoSetDimensions(to: CGSize(width: 200,
-                                                         height: collapsedHeight))
-        c2aButtonBackground.autoCenterInSuperview()
-        c2aButton.autoPinEdgesToSuperviewEdges()
-    }
-    
-    private lazy var c2aButton: NSButton =
-    {
-        let button = c2aButtonBackground.addForAutoLayout(NSButton())
-        
-        button.title = "Buy this shit now!"
-        button.font = Font.text.nsFont
-        button.isBordered = false
-        button.bezelStyle = .regularSquare
-        
-        return button
-    }()
-    
-    private lazy var c2aButtonBackground: NSView =
-    {
-        let view = expandedContent.addForAutoLayout(LayerBackedView())
-        
-        view.backgroundColor = Color(0.9, 1.0, 0.8)
-        
-        return view
-    }()
-    
     // MARK: - Expanded Content
     
-    private func constrainExpandedContent()
+    private func constrainContent()
     {
-        expandedContent.autoPinEdge(toSuperviewEdge: .left)
-        expandedContent.autoPinEdge(toSuperviewEdge: .right)
-        expandedContent.autoPinEdge(toSuperviewEdge: .bottom)
-        expandedContent.autoPinEdge(toSuperviewEdge: .top,
-                                    withInset: collapsedHeight)
+        content.autoPinEdge(toSuperviewEdge: .left)
+        content.autoPinEdge(toSuperviewEdge: .right)
+        content.autoPinEdge(toSuperviewEdge: .bottom)
+        content.autoPinEdge(toSuperviewEdge: .top, withInset: collapsedHeight)
     }
     
     let collapsedHeight = CGFloat(Float.itemHeight + Float.progressBarHeight)
     
-    private lazy var expandedContent: NSView =
+    private lazy var content: PurchaseContentView =
     {
-        let view = addForAutoLayout(NSView())
+        let view = addForAutoLayout(PurchaseContentView())
         
         view.alphaValue = 0
         

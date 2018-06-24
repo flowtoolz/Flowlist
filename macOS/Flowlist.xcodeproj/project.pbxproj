@@ -47,6 +47,7 @@
 		9EC8E09620DE8FD500DBF2CD /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC8E09520DE8FD500DBF2CD /* ProgressBar.swift */; };
 		9ED5C8D920DF83F900EF84CB /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8D820DF83F900EF84CB /* Icon.swift */; };
 		9ED5C8DB20DF88E300EF84CB /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8DA20DF88E300EF84CB /* Label.swift */; };
+		9ED5C8DD20DF970000EF84CB /* PurchaseContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */; };
 		9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextField.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
 		9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */; };
@@ -110,6 +111,7 @@
 		9EC8E09520DE8FD500DBF2CD /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressBar.swift; path = ../Code/macOS/ProgressBar.swift; sourceTree = "<group>"; };
 		9ED5C8D820DF83F900EF84CB /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Icon.swift; path = ../Code/macOS/Icon.swift; sourceTree = "<group>"; };
 		9ED5C8DA20DF88E300EF84CB /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Label.swift; path = ../Code/macOS/Label.swift; sourceTree = "<group>"; };
+		9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PurchaseContentView.swift; path = ../Code/macOS/PurchaseContentView.swift; sourceTree = "<group>"; };
 		9EE2EE4A20B4A693007CDC2F /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = ../Code/macOS/TextField.swift; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Style.swift"; path = "../Code/Float+Style.swift"; sourceTree = "<group>"; };
 		9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckBox.swift; path = ../Code/macOS/CheckBox.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				9E08E6B220DD13E000C32356 /* PurchaseView.swift */,
+				9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */,
 				9E71504420D7D80F0061601E /* FullVersionPurchaseController.swift */,
 				9EE582FE20DA7377004DE407 /* FullVersion.swift */,
 			);
@@ -563,6 +566,7 @@
 				9E8ABF0020B2F0F1001E862B /* SelectableList+Debugging.swift in Sources */,
 				9E2F83E520C8639F003E771E /* SelectableList+NSPasteboard.swift in Sources */,
 				9E0D5A9F20C160BA00F0D827 /* Font+Style.swift in Sources */,
+				9ED5C8DD20DF970000EF84CB /* PurchaseContentView.swift in Sources */,
 				9EA5925B20AF7AD200F70CBF /* Selection.swift in Sources */,
 				9E5768C220C15CDF00749C0C /* Task+Hashable.swift in Sources */,
 				9EA2B96B1EF0A80A00F05F20 /* Store+Persistence.swift in Sources */,
