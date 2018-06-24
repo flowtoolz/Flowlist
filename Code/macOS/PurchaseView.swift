@@ -158,9 +158,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainContent()
     {
-        content.autoPinEdge(toSuperviewEdge: .left)
-        content.autoPinEdge(toSuperviewEdge: .right)
-        content.autoPinEdge(toSuperviewEdge: .bottom)
+        let insets = NSEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
+        content.autoPinEdgesToSuperviewEdges(with: insets, excludingEdge: .top)
         content.autoPinEdge(toSuperviewEdge: .top, withInset: collapsedHeight)
     }
     

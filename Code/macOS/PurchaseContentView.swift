@@ -10,6 +10,7 @@ class PurchaseContentView: NSView
     {
         super.init(frame: frameRect)
         
+        constrainColumns()
         constrainC2aButton()
     }
     
@@ -19,9 +20,10 @@ class PurchaseContentView: NSView
     
     private func constrainC2aButton()
     {
-        c2aButtonBackground.autoSetDimensions(to: CGSize(width: 200,
-                                                         height: CGFloat(Float.itemHeight)))
-        c2aButtonBackground.autoCenterInSuperview()
+        c2aButtonBackground.autoSetDimension(.height, toSize: CGFloat(Float.itemHeight))
+        c2aButtonBackground.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                                         excludingEdge: .top)
+        
         c2aButton.autoPinEdgesToSuperviewEdges()
     }
     
@@ -39,10 +41,34 @@ class PurchaseContentView: NSView
     
     private lazy var c2aButtonBackground: NSView =
     {
-        let view = addForAutoLayout(LayerBackedView())
+        let view = columns[1].addForAutoLayout(LayerBackedView())
         
         view.backgroundColor = Color(0.9, 1.0, 0.8)
         
         return view
     }()
+    
+    // MARK: - Columns
+    
+    private func constrainColumns()
+    {
+        for column in columns
+        {
+            column.autoPinEdge(toSuperviewEdge: .top)
+            column.autoPinEdge(toSuperviewEdge: .bottom)
+        }
+        
+        columns[0].autoPinEdge(toSuperviewEdge: .left)
+        
+        columns[1].autoPinEdge(.left, to: .right, of: columns[0], withOffset: 10)
+        columns[1].autoMatch(.width, to: .width, of: columns[0])
+        
+        columns[2].autoPinEdge(.left, to: .right, of: columns[1], withOffset: 10)
+        columns[2].autoMatch(.width, to: .width, of: columns[1])
+        columns[2].autoPinEdge(toSuperviewEdge: .right)
+    }
+    
+    private lazy var columns: [LayerBackedView] = [addForAutoLayout(LayerBackedView()),
+                                          addForAutoLayout(LayerBackedView()),
+                                          addForAutoLayout(LayerBackedView())]
 }
