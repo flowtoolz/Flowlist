@@ -14,7 +14,7 @@ class Header: LayerBackedView
         setItemBorder()
         backgroundColor = Color.white
         
-        constrainTitleField()
+        constrainTitleLabel()
         
         constrainIcon()
         icon.isHidden = true
@@ -29,14 +29,14 @@ class Header: LayerBackedView
         backgroundColor = root.backgroundColor
         
         let textColor: Color = root.isDone ? .grayedOut : .black
-        titleField.textColor = textColor.nsColor
+        titleLabel.textColor = textColor.nsColor
     }
     
     // MARK: - Icon
     
     func showIcon(_ show: Bool = true)
     {
-        titleField.isHidden = show
+        titleLabel.isHidden = show
         icon.isHidden = !show
     }
     
@@ -53,37 +53,27 @@ class Header: LayerBackedView
     
     func set(title: String?)
     {
-        titleField.stringValue = title ?? "untitled"
+        titleLabel.stringValue = title ?? "untitled"
         
         let textColor: Color = title == nil ? .grayedOut : .black
-        titleField.textColor = textColor.nsColor
+        titleLabel.textColor = textColor.nsColor
     }
     
-    private func constrainTitleField()
+    private func constrainTitleLabel()
     {
-        titleField.autoAlignAxis(.horizontal, toSameAxisOf: self)
-        titleField.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
-        titleField.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+        titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: self)
+        titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
+        titleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
     }
     
-    private lazy var titleField: NSTextField =
+    private lazy var titleLabel: Label =
     {
-        let field = addForAutoLayout(NSTextField())
+        let label = addForAutoLayout(Label())
         
-        field.textColor = NSColor.black
-        field.font = Font.text.nsFont
+        label.textColor = NSColor.black
+        label.font = Font.text.nsFont
+        label.alignment = .center
         
-        let priority = NSLayoutConstraint.Priority(rawValue: 0.1)
-        field.setContentCompressionResistancePriority(priority, for: .horizontal)
-        
-        field.lineBreakMode = .byTruncatingTail
-        field.drawsBackground = false
-        field.alignment = .center
-        field.isEditable = false
-        field.isBezeled = false
-        field.isBordered = false
-        field.isSelectable = false
-        
-        return field
+        return label
     }()
 }

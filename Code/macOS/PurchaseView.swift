@@ -68,18 +68,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
                                 withOffset: -CGFloat(Float.progressBarHeight / 2))
     }
     
-    private lazy var itemLabel: NSTextField =
+    private lazy var itemLabel: Label =
     {
-        let field = addForAutoLayout(NSTextField())
+        let field = addForAutoLayout(Label())
         
-        let priority = NSLayoutConstraint.Priority(rawValue: 0.1)
-        field.setContentCompressionResistancePriority(priority, for: .horizontal)
-        field.lineBreakMode = .byTruncatingTail
-        
-        field.drawsBackground = false
-        field.isBezeled = false
-        field.isEditable = false
-        field.isBordered = false
         field.font = Font.text.nsFont
         let color = labelColor(for: numberOfUserCreatedTasks.latestUpdate)
         field.textColor = color.nsColor

@@ -1,4 +1,4 @@
-import AppKit
+import AppKit.NSImageView
 
 class Icon: NSImageView
 {

@@ -26,9 +26,9 @@ class TextField: NSTextField, Observable
     private func set(placeholder: String)
     {
         let attributes: [NSAttributedStringKey : Any] =
-            [
-                NSAttributedStringKey.foregroundColor: Color.grayedOut.nsColor,
-                NSAttributedStringKey.font: Font.text.nsFont
+        [
+            NSAttributedStringKey.foregroundColor: Color.grayedOut.nsColor,
+            NSAttributedStringKey.font: Font.text.nsFont
         ]
         
         let attributedString = NSAttributedString(string: placeholder,

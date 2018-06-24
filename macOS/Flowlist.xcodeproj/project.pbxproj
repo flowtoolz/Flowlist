@@ -46,6 +46,7 @@
 		9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* Browser.swift */; };
 		9EC8E09620DE8FD500DBF2CD /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC8E09520DE8FD500DBF2CD /* ProgressBar.swift */; };
 		9ED5C8D920DF83F900EF84CB /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8D820DF83F900EF84CB /* Icon.swift */; };
+		9ED5C8DB20DF88E300EF84CB /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8DA20DF88E300EF84CB /* Label.swift */; };
 		9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextField.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
 		9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */; };
@@ -108,6 +109,7 @@
 		9EBC70282056FD02007A1EA8 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Browser.swift; path = ../Code/Browser.swift; sourceTree = "<group>"; };
 		9EC8E09520DE8FD500DBF2CD /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressBar.swift; path = ../Code/macOS/ProgressBar.swift; sourceTree = "<group>"; };
 		9ED5C8D820DF83F900EF84CB /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Icon.swift; path = ../Code/macOS/Icon.swift; sourceTree = "<group>"; };
+		9ED5C8DA20DF88E300EF84CB /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Label.swift; path = ../Code/macOS/Label.swift; sourceTree = "<group>"; };
 		9EE2EE4A20B4A693007CDC2F /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = ../Code/macOS/TextField.swift; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Style.swift"; path = "../Code/Float+Style.swift"; sourceTree = "<group>"; };
 		9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckBox.swift; path = ../Code/macOS/CheckBox.swift; sourceTree = "<group>"; };
@@ -403,6 +405,7 @@
 			children = (
 				9EC8E09520DE8FD500DBF2CD /* ProgressBar.swift */,
 				9ED5C8D820DF83F900EF84CB /* Icon.swift */,
+				9ED5C8DA20DF88E300EF84CB /* Label.swift */,
 			);
 			name = "Framework Candidates";
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				9EAD75411EF6502000DC46FD /* Table.swift in Sources */,
 				9E88F54F20B7761F00A64F7B /* Menu.swift in Sources */,
 				9E2CCE8D20C1DE030037D755 /* SelectableList+Clipboard.swift in Sources */,
+				9ED5C8DB20DF88E300EF84CB /* Label.swift in Sources */,
 				9EF0A79120B71DA100E1A23A /* Window.swift in Sources */,
 				9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */,
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,
