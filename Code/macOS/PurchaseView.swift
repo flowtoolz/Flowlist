@@ -12,7 +12,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
         super.init(frame: frameRect)
         
         backgroundColor = .white
-        setItemBorder()
+        layer?.borderColor = Color.border.cgColor
+        layer?.borderWidth = 1.0
         
         constrainItemLabel()
         constrainProgressBar()
