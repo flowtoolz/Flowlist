@@ -28,13 +28,10 @@ class PurchaseContentView: NSView
     
     private lazy var icon: NSImageView =
     {
-        let view = columns[1].addForAutoLayout(NSImageView())
+        let image = NSImage(named: NSImage.Name("AppIcon"))
+        let imageView = NSImageView(withAspectFillImage: image)
         
-        view.image = NSImage(named: NSImage.Name("AppIcon"))
-        view.imageScaling = .scaleProportionallyUpOrDown
-        view.imageAlignment = .alignCenter
-        
-        return view
+        return columns[1].addForAutoLayout(imageView)
     }()
     
     // MARK: - C2A Button
@@ -45,6 +42,10 @@ class PurchaseContentView: NSView
         c2aButtonBackground.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                          excludingEdge: .top)
         
+        c2aButtonLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
+        c2aButtonLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+        c2aButtonLabel.autoAlignAxis(.horizontal, toSameAxisOf: c2aButtonBackground)
+        
         c2aButton.autoPinEdgesToSuperviewEdges()
     }
     
@@ -52,12 +53,22 @@ class PurchaseContentView: NSView
     {
         let button = c2aButtonBackground.addForAutoLayout(NSButton())
         
-        button.title = "Buy this shit now!"
+        button.title = ""
         button.font = Font.text.nsFont
         button.isBordered = false
         button.bezelStyle = .regularSquare
         
         return button
+    }()
+    
+    private lazy var c2aButtonLabel: Label =
+    {
+        let label = c2aButtonBackground.addForAutoLayout(Label())
+        
+        label.stringValue = "Buy this shit now!"
+        label.alignment = .center
+        
+        return label
     }()
     
     private lazy var c2aButtonBackground: NSView =
