@@ -100,7 +100,7 @@ class PurchaseContentView: NSView
         columns[2].autoPinEdge(toSuperviewEdge: .right)
     }
     
-    private lazy var columns: [LayerBackedView] = [addForAutoLayout(LayerBackedView()),
-                                          addForAutoLayout(LayerBackedView()),
-                                          addForAutoLayout(LayerBackedView())]
+    private lazy var columns: [NSView] = [addForAutoLayout(NSView()),
+                                          addForAutoLayout(NSView()),
+                                          addForAutoLayout(NSView())]
 }
