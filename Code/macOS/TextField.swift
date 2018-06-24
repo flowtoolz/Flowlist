@@ -2,7 +2,7 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class TextField: NSTextField, Observable
+class TextField: Label, Observable
 {
     // MARK: - Initialization
 
@@ -10,10 +10,7 @@ class TextField: NSTextField, Observable
     {
         super.init(frame: frameRect)
         
-        isBordered = false
-        drawsBackground = false
-        isBezeled = false
-        lineBreakMode = .byTruncatingTail
+        isEditable = true
         font = Font.text.nsFont
         
         set(placeholder: "untitled")
