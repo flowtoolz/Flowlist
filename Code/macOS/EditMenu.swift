@@ -84,7 +84,7 @@ class EditMenu: NSMenu, Observer
         case moveDownItem: return list?.canMoveItems(up: false) ?? false
         case pasteItem:
             return !reachedTaskNumberLimit && (clipboard.count > 0 || systemPasteboard)
-        case undoItem: return deleted > 0
+        case undoItem: return deleted > 0 && !reachedTaskNumberLimit
         default: return list != nil
         }
     }
