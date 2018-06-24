@@ -12,11 +12,12 @@ class Header: LayerBackedView
         super.init(frame: frameRect)
         
         setItemBorder()
-        
         backgroundColor = Color.white
         
         constrainTitleField()
+        
         constrainIcon()
+        icon.isHidden = true
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -44,17 +45,7 @@ class Header: LayerBackedView
         icon.autoCenterInSuperview()
     }
     
-    private lazy var icon: NSImageView =
-    {
-        let view = addForAutoLayout(NSImageView())
-        
-        view.image = Header.iconImage
-        view.imageScaling = .scaleNone
-        view.imageAlignment = .alignCenter
-        view.isHidden = true
-        
-        return view
-    }()
+    private lazy var icon: Icon = addForAutoLayout(Icon(with: Header.iconImage))
     
     private static let iconImage = #imageLiteral(resourceName: "home")
     

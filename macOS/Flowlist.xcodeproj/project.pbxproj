@@ -12,7 +12,6 @@
 		9E0D5AA120C160C800F0D827 /* Color+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0D5AA020C160C800F0D827 /* Color+Style.swift */; };
 		9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185B1EEEE8CE00B35AD5 /* Task.swift */; };
 		9E15185E1EEEE97700B35AD5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185D1EEEE97700B35AD5 /* ViewController.swift */; };
-		9E1AAD6A20B57CA9001657A7 /* GroupIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1AAD6920B57CA9001657A7 /* GroupIcon.swift */; };
 		9E1AAD6C20B58AD1001657A7 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1AAD6B20B58AD0001657A7 /* Header.swift */; };
 		9E1AAD6E20B595A5001657A7 /* NSView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1AAD6D20B595A5001657A7 /* NSView+Style.swift */; };
 		9E2CCE8D20C1DE030037D755 /* SelectableList+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CCE8C20C1DE030037D755 /* SelectableList+Clipboard.swift */; };
@@ -46,6 +45,7 @@
 		9EB6217720C2830200DD3DA5 /* EditMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217620C2830200DD3DA5 /* EditMenu.swift */; };
 		9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* Browser.swift */; };
 		9EC8E09620DE8FD500DBF2CD /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC8E09520DE8FD500DBF2CD /* ProgressBar.swift */; };
+		9ED5C8D920DF83F900EF84CB /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8D820DF83F900EF84CB /* Icon.swift */; };
 		9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextField.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
 		9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */; };
@@ -72,7 +72,6 @@
 		9E0D5AA020C160C800F0D827 /* Color+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Color+Style.swift"; path = "../Code/Color+Style.swift"; sourceTree = "<group>"; };
 		9E15185B1EEEE8CE00B35AD5 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../Code/Task.swift; sourceTree = "<group>"; };
 		9E15185D1EEEE97700B35AD5 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../Code/macOS/ViewController.swift; sourceTree = "<group>"; };
-		9E1AAD6920B57CA9001657A7 /* GroupIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GroupIcon.swift; path = ../Code/macOS/GroupIcon.swift; sourceTree = "<group>"; };
 		9E1AAD6B20B58AD0001657A7 /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Header.swift; path = ../Code/macOS/Header.swift; sourceTree = "<group>"; };
 		9E1AAD6D20B595A5001657A7 /* NSView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSView+Style.swift"; path = "../Code/macOS/NSView+Style.swift"; sourceTree = "<group>"; };
 		9E2CCE8C20C1DE030037D755 /* SelectableList+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SelectableList+Clipboard.swift"; path = "../Code/SelectableList+Clipboard.swift"; sourceTree = "<group>"; };
@@ -108,6 +107,7 @@
 		9EB6217620C2830200DD3DA5 /* EditMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditMenu.swift; path = ../Code/macOS/EditMenu.swift; sourceTree = "<group>"; };
 		9EBC70282056FD02007A1EA8 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Browser.swift; path = ../Code/Browser.swift; sourceTree = "<group>"; };
 		9EC8E09520DE8FD500DBF2CD /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressBar.swift; path = ../Code/macOS/ProgressBar.swift; sourceTree = "<group>"; };
+		9ED5C8D820DF83F900EF84CB /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Icon.swift; path = ../Code/macOS/Icon.swift; sourceTree = "<group>"; };
 		9EE2EE4A20B4A693007CDC2F /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = ../Code/macOS/TextField.swift; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Style.swift"; path = "../Code/Float+Style.swift"; sourceTree = "<group>"; };
 		9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckBox.swift; path = ../Code/macOS/CheckBox.swift; sourceTree = "<group>"; };
@@ -346,7 +346,6 @@
 				9E7651931EEF428100DE2B07 /* TaskView.swift */,
 				9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */,
 				9EE2EE4A20B4A693007CDC2F /* TextField.swift */,
-				9E1AAD6920B57CA9001657A7 /* GroupIcon.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -403,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				9EC8E09520DE8FD500DBF2CD /* ProgressBar.swift */,
+				9ED5C8D820DF83F900EF84CB /* Icon.swift */,
 			);
 			name = "Framework Candidates";
 			sourceTree = "<group>";
@@ -535,7 +535,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E6C720B20B19C88001C3D2C /* Task+State.swift in Sources */,
-				9E1AAD6A20B57CA9001657A7 /* GroupIcon.swift in Sources */,
 				9EF0A78E20B6E6CD00E1A23A /* BrowserView.swift in Sources */,
 				9E08E6B320DD13E000C32356 /* PurchaseView.swift in Sources */,
 				9EF0A78A20B5E26F00E1A23A /* TableContent.swift in Sources */,
@@ -564,6 +563,7 @@
 				9EA5925B20AF7AD200F70CBF /* Selection.swift in Sources */,
 				9E5768C220C15CDF00749C0C /* Task+Hashable.swift in Sources */,
 				9EA2B96B1EF0A80A00F05F20 /* Store+Persistence.swift in Sources */,
+				9ED5C8D920DF83F900EF84CB /* Icon.swift in Sources */,
 				9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */,
 				9E2F83E720C88220003E771E /* SelectionMenu.swift in Sources */,
 				9EB6217720C2830200DD3DA5 /* EditMenu.swift in Sources */,

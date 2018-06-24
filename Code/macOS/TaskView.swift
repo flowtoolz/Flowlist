@@ -180,7 +180,7 @@ class TaskView: LayerBackedView, Observer, Observable
         groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
     }
     
-    private lazy var groupIcon: GroupIcon = addForAutoLayout(GroupIcon())
+    private lazy var groupIcon: Icon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "group_indicator")))
     
     // MARK: - Data
     

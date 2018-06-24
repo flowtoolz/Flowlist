@@ -108,16 +108,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         expandIcon.autoAlignAxis(.horizontal, toSameAxisOf: itemLabel)
     }
     
-    private lazy var expandIcon: NSImageView =
-    {
-        let icon = addForAutoLayout(NSImageView())
-        
-        icon.image = #imageLiteral(resourceName: "expand_indicator")
-        icon.imageScaling = .scaleNone
-        icon.imageAlignment = .alignCenter
-        
-        return icon
-    }()
+    private lazy var expandIcon: Icon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "expand_indicator")))
     
     // MARK: - Expand Button
     
