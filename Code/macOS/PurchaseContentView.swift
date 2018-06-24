@@ -12,9 +12,30 @@ class PurchaseContentView: NSView
         
         constrainColumns()
         constrainC2aButton()
+        constrainIcon()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
+    
+    // MARK: - App Icon
+    
+    private func constrainIcon()
+    {
+        icon.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                          excludingEdge: .bottom)
+        icon.autoPinEdge(.bottom, to: .top, of: c2aButton, withOffset: -10)
+    }
+    
+    private lazy var icon: NSImageView =
+    {
+        let view = columns[1].addForAutoLayout(NSImageView())
+        
+        view.image = NSImage(named: NSImage.Name("AppIcon"))
+        view.imageScaling = .scaleProportionallyUpOrDown
+        view.imageAlignment = .alignCenter
+        
+        return view
+    }()
     
     // MARK: - C2A Button
     
