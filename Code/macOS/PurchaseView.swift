@@ -155,13 +155,12 @@ class PurchaseView: LayerBackedView, Observable, Observer
         return bar
     }()
     
-    // MARK: - Expanded Content
+    // MARK: - Content
     
     private func constrainContent()
     {
-        let insets = NSEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
-        content.autoPinEdgesToSuperviewEdges(with: insets, excludingEdge: .top)
-        content.autoPinEdge(toSuperviewEdge: .top, withInset: collapsedHeight)
+        let insets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        content.autoPinEdgesToSuperviewEdges(with: insets)
     }
     
     let collapsedHeight = CGFloat(Float.itemHeight + Float.progressBarHeight)
