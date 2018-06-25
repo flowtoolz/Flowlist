@@ -65,8 +65,10 @@ class PurchaseContentView: NSView
     {
         let label = c2aButtonBackground.addForAutoLayout(Label())
         
-        label.stringValue = "Buy this shit now!"
+        label.stringValue = "Unlock Full Version"
         label.alignment = .center
+        label.textColor = .white
+        label.font = Font.text.nsFont
         
         return label
     }()
@@ -75,7 +77,8 @@ class PurchaseContentView: NSView
     {
         let view = columns[1].addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = Color(0.9, 1.0, 0.8)
+        view.backgroundColor = Color.flowlistBlue
+        view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         
         return view
     }()
