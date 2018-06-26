@@ -58,6 +58,7 @@
 		9EF0A79120B71DA100E1A23A /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0A79020B71DA100E1A23A /* Window.swift */; };
 		9EF0A79320B72B5A00E1A23A /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0A79220B72B5A00E1A23A /* AppController.swift */; };
 		9EF6C67B20E21D6B0003264A /* PriceTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF6C67A20E21D6B0003264A /* PriceTag.swift */; };
+		9EF6C67D20E22DE10003264A /* SKProduct+FormattedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF6C67C20E22DE10003264A /* SKProduct+FormattedPrice.swift */; };
 		C932DAFCC628909A261C9DC7 /* Pods_Flowlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D591083E3159C05E29673835 /* Pods_Flowlist.framework */; };
 /* End PBXBuildFile section */
 
@@ -123,6 +124,7 @@
 		9EF0A79020B71DA100E1A23A /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Window.swift; path = ../Code/macOS/Window.swift; sourceTree = "<group>"; };
 		9EF0A79220B72B5A00E1A23A /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppController.swift; path = ../Code/macOS/AppController.swift; sourceTree = "<group>"; };
 		9EF6C67A20E21D6B0003264A /* PriceTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PriceTag.swift; path = ../Code/macOS/PriceTag.swift; sourceTree = "<group>"; };
+		9EF6C67C20E22DE10003264A /* SKProduct+FormattedPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SKProduct+FormattedPrice.swift"; path = "../Code/macOS/SKProduct+FormattedPrice.swift"; sourceTree = "<group>"; };
 		BA6347ACAE78132863C2FF94 /* Pods_FlowlistTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlowlistTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCFD3E12471EE5C3B17C7DE0 /* Pods_TodayListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodayListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C499DBA6E96C7098BCE851AA /* Pods-TodayList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TodayList/Pods-TodayList.debug.xcconfig"; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 				9EC8E09520DE8FD500DBF2CD /* ProgressBar.swift */,
 				9ED5C8D820DF83F900EF84CB /* Icon.swift */,
 				9ED5C8DA20DF88E300EF84CB /* Label.swift */,
+				9EF6C67C20E22DE10003264A /* SKProduct+FormattedPrice.swift */,
 			);
 			name = "Framework Candidates";
 			sourceTree = "<group>";
@@ -552,6 +555,7 @@
 				9EA7F99C20C19B210059166B /* Task+Clipboard.swift in Sources */,
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
 				9E2CCE8F20C1EAFF0037D755 /* Task+Copyable.swift in Sources */,
+				9EF6C67D20E22DE10003264A /* SKProduct+FormattedPrice.swift in Sources */,
 				9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */,
 				9E72881B1EEF3095003A2F46 /* SelectableListView.swift in Sources */,
 				9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */,

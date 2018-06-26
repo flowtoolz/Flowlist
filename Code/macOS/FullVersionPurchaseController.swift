@@ -112,17 +112,3 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
         case didFailToPurchaseFullVersion(message: String)
     }
 }
-
-extension SKProduct
-{
-    var formattedPrice: String?
-    {
-        let formatter = NumberFormatter()
-        
-        formatter.locale = priceLocale
-        formatter.formatterBehavior = .behavior10_4
-        formatter.numberStyle = .currency
-        
-        return formatter.string(from: price)
-    }
-}

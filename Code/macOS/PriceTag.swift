@@ -10,6 +10,7 @@ class PriceTag: NSView, Observer
     {
         super.init(frame: frameRect)
         
+        constrainDiscountPriceLabel()
         constrainPriceLabel()
         
         update()
@@ -28,23 +29,44 @@ class PriceTag: NSView, Observer
     
     func update()
     {
-        priceLabel.stringValue = fullVersionPurchaseController.fullVersionProduct?.formattedPrice ?? ""
+        guard let product = fullVersionPurchaseController.fullVersionProduct else
+        {
+            return
+        }
+        
+        priceLabel.stringValue = product.formattedPrice ?? ""
+        discountPriceLabel.stringValue = product.formattedDiscountPrice ?? ""
     }
     
     // MARK: - Price Label
     
     private func constrainPriceLabel()
     {
-        priceLabel.autoCenterInSuperview()
+        priceLabel.autoPinEdge(toSuperviewEdge: .left)
+        priceLabel.autoPinEdge(toSuperviewEdge: .right)
+        priceLabel.autoPinEdge(.bottom, to: .top, of: discountPriceLabel)
+        priceLabel.autoConstrainAttribute(.lastBaseline, to: .horizontal, of: self)
     }
     
-    lazy var priceLabel: Label =
+    lazy var priceLabel: Label = addPriceLabel()
+    
+    // MARK: - Discount Price Label
+    
+    private func constrainDiscountPriceLabel()
+    {
+        discountPriceLabel.autoPinEdge(toSuperviewEdge: .left)
+        discountPriceLabel.autoPinEdge(toSuperviewEdge: .right)
+    }
+    
+    lazy var discountPriceLabel: Label = addPriceLabel()
+    
+    private func addPriceLabel() -> Label
     {
         let label = addForAutoLayout(Label())
         
         label.font = Font.textLarge.nsFont
+        label.alignment = .center
         
         return label
-    }()
-    
+    }
 }
