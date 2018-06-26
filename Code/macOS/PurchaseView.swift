@@ -18,9 +18,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
         constrainItemLabel()
         constrainProgressBar()
         constrainExpandIcon()
-        constrainExpandButton()
-        
         constrainContent()
+        constrainButtonOverlay()
         
         observe(numberOfUserCreatedTasks)
         {
@@ -64,7 +63,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         itemLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
         itemLabel.autoPinEdge(.right, to: .left, of: expandIcon, withOffset: -10)
         itemLabel.autoAlignAxis(.horizontal,
-                                toSameAxisOf: expandButton,
+                                toSameAxisOf: buttonOverlay,
                                 withOffset: -CGFloat(Float.progressBarHeight / 2))
     }
     
@@ -102,36 +101,6 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private lazy var expandIcon: Icon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "expand_indicator")))
     
-    // MARK: - Expand Button
-    
-    private func constrainExpandButton()
-    {
-        expandButton.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                  excludingEdge: .bottom)
-        
-        let height = CGFloat(Float.itemHeight + Float.progressBarHeight)
-        expandButton.autoSetDimension(.height, toSize: height)
-    }
-    
-    private lazy var expandButton: NSButton =
-    {
-        let button = addForAutoLayout(NSButton())
-        
-        button.title = ""
-        button.font = Font.text.nsFont
-        button.isBordered = false
-        button.bezelStyle = .regularSquare
-        button.target = self
-        button.action = #selector(didClickExpandButton)
-        
-        return button
-    }()
-    
-    @objc private func didClickExpandButton()
-    {
-        send(.expandButtonWasClicked)
-    }
-    
     // MARK: - Progress Bar
     
     private func constrainProgressBar()
@@ -145,10 +114,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private lazy var progressBar: ProgressBar =
     {
-        let bar = addForAutoLayout(ProgressBar())
+        let bar = ProgressBar.newAutoLayout()
+        addSubview(bar, positioned: .below, relativeTo: buttonOverlay)
         
         bar.progress = CGFloat(numberOfUserCreatedTasks.latestUpdate) / 100.0
-        
         bar.backgroundColor = Color.flowlistBlue.with(alpha: 0.5)
         bar.progressColor = .flowlistBlue
         
@@ -167,12 +136,43 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private lazy var content: PurchaseContentView =
     {
-        let view = addForAutoLayout(PurchaseContentView())
+        let view = PurchaseContentView.newAutoLayout()
+        addSubview(view, positioned: .below, relativeTo: buttonOverlay)
         
         view.alphaValue = 0
         
         return view
     }()
+    
+    // MARK: - Button Overlay
+    
+    private func constrainButtonOverlay()
+    {
+        buttonOverlay.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                                  excludingEdge: .bottom)
+        
+        let height = CGFloat(Float.itemHeight + Float.progressBarHeight)
+        buttonOverlay.autoSetDimension(.height, toSize: height)
+    }
+    
+    private lazy var buttonOverlay: NSButton =
+    {
+        let button = addForAutoLayout(NSButton())
+        
+        button.title = ""
+        button.font = Font.text.nsFont
+        button.isBordered = false
+        button.bezelStyle = .regularSquare
+        button.target = self
+        button.action = #selector(didClickExpandButton)
+        
+        return button
+    }()
+    
+    @objc private func didClickExpandButton()
+    {
+        send(.expandButtonWasClicked)
+    }
     
     // MARK: - Observability
     
