@@ -24,8 +24,8 @@ class TextField: Label, Observable
     {
         let attributes: [NSAttributedStringKey : Any] =
         [
-            NSAttributedStringKey.foregroundColor: Color.grayedOut.nsColor,
-            NSAttributedStringKey.font: Font.text.nsFont
+            .foregroundColor: Color.grayedOut.nsColor,
+            .font: Font.text.nsFont
         ]
         
         let attributedString = NSAttributedString(string: placeholder,

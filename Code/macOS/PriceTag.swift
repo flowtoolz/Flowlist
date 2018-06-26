@@ -1,4 +1,6 @@
 import AppKit
+import StoreKit
+import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
@@ -29,24 +31,35 @@ class PriceTag: NSView, Observer
     
     func update()
     {
-        guard let product = fullVersionPurchaseController.fullVersionProduct else
-        {
-            return
-        }
+        priceLabel.stringValue = product?.formattedPrice ?? ""
+        discountPriceLabel.stringValue = product?.formattedDiscountPrice ?? ""
         
-        priceLabel.stringValue = product.formattedPrice ?? ""
-        discountPriceLabel.stringValue = product.formattedDiscountPrice ?? ""
+        stroke.isHidden = !discountIsAvailable
+        discountPriceLabel.isHidden = !discountIsAvailable
     }
     
     // MARK: - Price Label
     
     private func constrainPriceLabel()
     {
-        priceLabel.autoPinEdge(toSuperviewEdge: .left)
-        priceLabel.autoPinEdge(toSuperviewEdge: .right)
+        priceLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         priceLabel.autoPinEdge(.bottom, to: .top, of: discountPriceLabel)
         priceLabel.autoConstrainAttribute(.lastBaseline, to: .horizontal, of: self)
+        
+        stroke.autoAlignAxis(.horizontal, toSameAxisOf: priceLabel, withOffset: 3)
+        stroke.autoPinEdge(.left, to: .left, of: priceLabel, withOffset: -10)
+        stroke.autoPinEdge(.right, to: .right, of: priceLabel, withOffset: 10)
     }
+    
+    private lazy var stroke: LayerBackedView =
+    {
+        let view = addForAutoLayout(LayerBackedView())
+        
+        view.backgroundColor = discountRed
+        view.autoSetDimension(.height, toSize: 3)
+        
+        return view
+    }()
     
     lazy var priceLabel: Label = addPriceLabel()
     
@@ -54,19 +67,35 @@ class PriceTag: NSView, Observer
     
     private func constrainDiscountPriceLabel()
     {
-        discountPriceLabel.autoPinEdge(toSuperviewEdge: .left)
-        discountPriceLabel.autoPinEdge(toSuperviewEdge: .right)
+        discountPriceLabel.autoAlignAxis(toSuperviewAxis: .vertical)
     }
     
-    lazy var discountPriceLabel: Label = addPriceLabel()
+    lazy var discountPriceLabel: Label = addPriceLabel(color: discountRed)
     
-    private func addPriceLabel() -> Label
+    private func addPriceLabel(color: Color = .black) -> Label
     {
         let label = addForAutoLayout(Label())
         
         label.font = Font.textLarge.nsFont
         label.alignment = .center
+        label.textColor = color.nsColor
         
         return label
+    }
+    
+    private let discountRed = Color(1.0, 0, 0, 0.5)
+    
+    // MARK: - Product Information
+    
+    private var discountIsAvailable: Bool
+    {
+        guard #available(OSX 10.13.2, *) else { return false }
+        
+        return product?.introductoryPrice != nil
+    }
+    
+    private var product: SKProduct?
+    {
+        return fullVersionPurchaseController.fullVersionProduct
     }
 }
