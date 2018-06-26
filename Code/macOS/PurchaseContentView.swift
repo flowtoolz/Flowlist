@@ -29,7 +29,7 @@ class PurchaseContentView: NSView, Observer
     {
         icon.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                           excludingEdge: .bottom)
-        icon.autoPinEdge(.bottom, to: .top, of: c2aButton, withOffset: -10)
+        icon.autoPinEdge(.bottom, to: .top, of: priceTag, withOffset: -10)
     }
     
     private lazy var icon: NSImageView =
@@ -44,24 +44,29 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainPriceTag()
     {
-        priceTag.autoAlignAxis(toSuperviewAxis: .horizontal)
+        priceTag.autoPinEdge(.bottom,
+                             to: .top,
+                             of: c2aButtonBackground,
+                             withOffset: -10)
         priceTag.autoPinEdge(toSuperviewEdge: .left)
         priceTag.autoPinEdge(toSuperviewEdge: .right)
     }
     
-    private lazy var priceTag: PriceTag = columns[0].addForAutoLayout(PriceTag())
+    private lazy var priceTag: PriceTag = columns[1].addForAutoLayout(PriceTag())
     
     // MARK: - C2A Button
     
     private func constrainC2aButton()
     {
-        c2aButtonBackground.autoSetDimension(.height, toSize: CGFloat(Float.itemHeight))
+        c2aButtonBackground.autoSetDimension(.height,
+                                             toSize: CGFloat(Float.itemHeight))
         c2aButtonBackground.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                          excludingEdge: .top)
         
         c2aButtonLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
         c2aButtonLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
-        c2aButtonLabel.autoAlignAxis(.horizontal, toSameAxisOf: c2aButtonBackground)
+        c2aButtonLabel.autoAlignAxis(.horizontal,
+                                     toSameAxisOf: c2aButtonBackground)
         
         c2aButton.autoPinEdgesToSuperviewEdges()
     }

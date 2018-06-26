@@ -42,13 +42,13 @@ class PriceTag: NSView, Observer
     
     private func constrainPriceLabel()
     {
-        priceLabel.autoPinEdge(toSuperviewEdge: .top)
+        priceLabel.autoConstrainAttribute(.baseline, to: .horizontal, of: self)
         priceLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         stroke.autoConstrainAttribute(.horizontal,
-                                      to: .top,
+                                      to: .horizontal,
                                       of: priceLabel,
-                                      withOffset: 18)
+                                      withOffset: 3)
         stroke.autoPinEdge(.left, to: .left, of: priceLabel, withOffset: -10)
         stroke.autoPinEdge(.right, to: .right, of: priceLabel, withOffset: 10)
     }
@@ -58,7 +58,7 @@ class PriceTag: NSView, Observer
         let view = addForAutoLayout(LayerBackedView())
         
         view.backgroundColor = discountRed
-        view.autoSetDimension(.height, toSize: 3)
+        view.autoSetDimension(.height, toSize: 2.5)
         
         return view
     }()
@@ -69,7 +69,6 @@ class PriceTag: NSView, Observer
     
     private func constrainDiscountPriceLabel()
     {
-        discountPriceLabel.autoPinEdge(toSuperviewEdge: .bottom)
         discountPriceLabel.autoAlignAxis(toSuperviewAxis: .vertical)
         
         discountPriceLabel.autoPinEdge(.top, to: .bottom, of: priceLabel)
