@@ -7,11 +7,13 @@ let fullVersionPurchaseController = FullVersionPurchaseController()
 
 class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDelegate, SKPaymentTransactionObserver
 {
-    // MARK: - Setup
+    // MARK: - Life Cycle
     
     fileprivate override init() { super.init() }
     
     func setup() { SKPaymentQueue.default().add(self) }
+    
+    deinit { removeObservers() }
     
     // MARK: - Buy or Restore Full Version
     
@@ -102,7 +104,7 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event
+    enum Event: Equatable
     {
         case didNothing
         case didLoadFullVersionProduct

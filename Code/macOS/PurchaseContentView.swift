@@ -13,6 +13,7 @@ class PurchaseContentView: NSView
         constrainColumns()
         constrainC2aButton()
         constrainIcon()
+        constrainPriceTag()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -33,6 +34,15 @@ class PurchaseContentView: NSView
         
         return columns[1].addForAutoLayout(imageView)
     }()
+    
+    // MARK: - Price Tag
+    
+    private func constrainPriceTag()
+    {
+        priceTag.autoPinEdgesToSuperviewEdges()
+    }
+    
+    private lazy var priceTag: PriceTag = columns[0].addForAutoLayout(PriceTag())
     
     // MARK: - C2A Button
     
