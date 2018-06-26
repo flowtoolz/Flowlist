@@ -149,9 +149,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         
         bar.progress = CGFloat(numberOfUserCreatedTasks.latestUpdate) / 100.0
         
-        var bgColor = Color.flowlistBlue
-        bgColor.alpha = 0.5
-        bar.backgroundColor = bgColor
+        bar.backgroundColor = Color.flowlistBlue.with(alpha: 0.5)
         bar.progressColor = .flowlistBlue
         
         return bar
