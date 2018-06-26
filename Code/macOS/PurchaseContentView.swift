@@ -1,10 +1,11 @@
 import AppKit.NSView
 import UIToolz
+import SwiftObserver
 import SwiftyToolz
 
-class PurchaseContentView: NSView
+class PurchaseContentView: NSView, Observer
 {
-    // MARK: - Initialization
+    // MARK: - Life Cycle
     
     override init(frame frameRect: NSRect)
     {
@@ -14,9 +15,13 @@ class PurchaseContentView: NSView
         constrainC2aButton()
         constrainIcon()
         constrainPriceTag()
+        constrainDescriptionLabel()
+        setupDescriptionLabel()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
+    
+    deinit { stopAllObserving() }
     
     // MARK: - App Icon
     
@@ -91,6 +96,42 @@ class PurchaseContentView: NSView
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         
         return view
+    }()
+    
+    // MARK: - Description
+    
+    private func setupDescriptionLabel()
+    {
+        updateDescriptionLabel()
+        
+        observe(fullVersionPurchaseController, select: .didLoadFullVersionProduct)
+        {
+            [weak self] in
+            
+            self?.updateDescriptionLabel()
+        }
+    }
+    
+    private func updateDescriptionLabel()
+    {
+        let productDescription = fullVersionPurchaseController.fullVersionProduct?.localizedDescription
+        
+        descriptionLabel.stringValue = productDescription ?? ""
+    }
+    
+    private func constrainDescriptionLabel()
+    {
+        descriptionLabel.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                                      excludingEdge: .bottom)
+    }
+    
+    private lazy var descriptionLabel: Label =
+    {
+        let label = columns[2].addForAutoLayout(Label())
+        
+        label.lineBreakMode = .byWordWrapping
+        
+        return label
     }()
     
     // MARK: - Columns
