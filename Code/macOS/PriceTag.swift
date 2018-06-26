@@ -31,8 +31,8 @@ class PriceTag: NSView, Observer
     
     func update()
     {
-        priceLabel.stringValue = product?.formattedPrice ?? ""
-        discountPriceLabel.stringValue = product?.formattedDiscountPrice ?? ""
+        priceLabel.stringValue = "regular price" //product?.formattedPrice ?? ""
+        discountPriceLabel.stringValue = "discount price" //product?.formattedDiscountPrice ?? ""
         
         stroke.isHidden = !discountIsAvailable
         discountPriceLabel.isHidden = !discountIsAvailable
@@ -42,11 +42,13 @@ class PriceTag: NSView, Observer
     
     private func constrainPriceLabel()
     {
+        priceLabel.autoPinEdge(toSuperviewEdge: .top)
         priceLabel.autoAlignAxis(toSuperviewAxis: .vertical)
-        priceLabel.autoPinEdge(.bottom, to: .top, of: discountPriceLabel)
-        priceLabel.autoConstrainAttribute(.lastBaseline, to: .horizontal, of: self)
         
-        stroke.autoAlignAxis(.horizontal, toSameAxisOf: priceLabel, withOffset: 3)
+        stroke.autoConstrainAttribute(.horizontal,
+                                      to: .top,
+                                      of: priceLabel,
+                                      withOffset: 18)
         stroke.autoPinEdge(.left, to: .left, of: priceLabel, withOffset: -10)
         stroke.autoPinEdge(.right, to: .right, of: priceLabel, withOffset: 10)
     }
@@ -67,7 +69,10 @@ class PriceTag: NSView, Observer
     
     private func constrainDiscountPriceLabel()
     {
+        discountPriceLabel.autoPinEdge(toSuperviewEdge: .bottom)
         discountPriceLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        
+        discountPriceLabel.autoPinEdge(.top, to: .bottom, of: priceLabel)
     }
     
     lazy var discountPriceLabel: Label = addPriceLabel(color: discountRed)
@@ -89,6 +94,7 @@ class PriceTag: NSView, Observer
     
     private var discountIsAvailable: Bool
     {
+        return true
         guard #available(OSX 10.13.2, *) else { return false }
         
         return product?.introductoryPrice != nil

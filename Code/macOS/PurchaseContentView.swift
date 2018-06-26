@@ -44,7 +44,9 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainPriceTag()
     {
-        priceTag.autoPinEdgesToSuperviewEdges()
+        priceTag.autoAlignAxis(toSuperviewAxis: .horizontal)
+        priceTag.autoPinEdge(toSuperviewEdge: .left)
+        priceTag.autoPinEdge(toSuperviewEdge: .right)
     }
     
     private lazy var priceTag: PriceTag = columns[0].addForAutoLayout(PriceTag())
@@ -114,7 +116,7 @@ class PurchaseContentView: NSView, Observer
     
     private func updateDescriptionLabel()
     {
-        let productDescription = fullVersionPurchaseController.fullVersionProduct?.localizedDescription
+        let productDescription =  "dummy description with many words dummy description with many words dummy description with many words dummy description with many words dummy description with many words dummy description with many words dummy description with many words dummy description with many words dummy description with many words dummy description with many words" // fullVersionPurchaseController.fullVersionProduct?.localizedDescription
         
         descriptionLabel.stringValue = productDescription ?? ""
     }
