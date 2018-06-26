@@ -51,8 +51,8 @@ class PriceTag: NSView, Observer
                                       to: .horizontal,
                                       of: priceLabel,
                                       withOffset: 2)
-        stroke.autoPinEdge(.left, to: .left, of: priceLabel, withOffset: -5)
-        stroke.autoPinEdge(.right, to: .right, of: priceLabel, withOffset: 5)
+        stroke.autoPinEdge(.left, to: .left, of: priceLabel, withOffset: -3)
+        stroke.autoPinEdge(.right, to: .right, of: priceLabel, withOffset: 3)
     }
     
     private lazy var stroke: LayerBackedView =
@@ -89,7 +89,7 @@ class PriceTag: NSView, Observer
         return label
     }
     
-    private let discountRed = Color(1.0, 0, 0, 0.5)
+    private let discountRed = Color(0.75, 0, 0, 0.75)
     
     // MARK: - Product Information
     
