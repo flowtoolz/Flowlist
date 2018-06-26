@@ -15,6 +15,8 @@ class PriceTag: NSView, Observer
         constrainDiscountPriceLabel()
         constrainPriceLabel()
         
+        autoSetDimension(.height, toSize: 60, relation: .lessThanOrEqual)
+        
         update()
         
         observe(fullVersionPurchaseController, select: .didLoadFullVersionProduct)
@@ -48,9 +50,9 @@ class PriceTag: NSView, Observer
         stroke.autoConstrainAttribute(.horizontal,
                                       to: .horizontal,
                                       of: priceLabel,
-                                      withOffset: 3)
-        stroke.autoPinEdge(.left, to: .left, of: priceLabel, withOffset: -10)
-        stroke.autoPinEdge(.right, to: .right, of: priceLabel, withOffset: 10)
+                                      withOffset: 2)
+        stroke.autoPinEdge(.left, to: .left, of: priceLabel, withOffset: -5)
+        stroke.autoPinEdge(.right, to: .right, of: priceLabel, withOffset: 5)
     }
     
     private lazy var stroke: LayerBackedView =
@@ -58,7 +60,7 @@ class PriceTag: NSView, Observer
         let view = addForAutoLayout(LayerBackedView())
         
         view.backgroundColor = discountRed
-        view.autoSetDimension(.height, toSize: 2.5)
+        view.autoSetDimension(.height, toSize: 1.5)
         
         return view
     }()
@@ -80,7 +82,7 @@ class PriceTag: NSView, Observer
     {
         let label = addForAutoLayout(Label())
         
-        label.font = Font.textLarge.nsFont
+        label.font = Font.text.nsFont
         label.alignment = .center
         label.textColor = color.nsColor
         

@@ -17,11 +17,22 @@ class PurchaseContentView: NSView, Observer
         constrainPriceTag()
         constrainDescriptionLabel()
         setupDescriptionLabel()
+        constrainOverview()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
     deinit { stopAllObserving() }
+    
+    // MARK: - Overview
+    
+    private func constrainOverview()
+    {
+        overview.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                              excludingEdge: .bottom)
+    }
+    
+    private lazy var overview: PurchaseOverview = columns[0].addForAutoLayout(PurchaseOverview())
     
     // MARK: - App Icon
     
@@ -29,7 +40,7 @@ class PurchaseContentView: NSView, Observer
     {
         icon.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                           excludingEdge: .bottom)
-        icon.autoPinEdge(.bottom, to: .top, of: priceTag, withOffset: -10)
+        icon.autoPinEdge(.bottom, to: .top, of: priceTag)
     }
     
     private lazy var icon: NSImageView =
@@ -87,7 +98,7 @@ class PurchaseContentView: NSView, Observer
     {
         let label = c2aButtonBackground.addForAutoLayout(Label())
         
-        label.stringValue = "Unlock Full Version"
+        label.stringValue = "Purchase Full Version"
         label.alignment = .center
         label.textColor = .white
         label.font = Font.text.nsFont
@@ -151,12 +162,20 @@ class PurchaseContentView: NSView, Observer
             column.autoPinEdge(toSuperviewEdge: .bottom)
         }
         
+        let gap = CGFloat(Float.itemHeight)
+        
         columns[0].autoPinEdge(toSuperviewEdge: .left)
         
-        columns[1].autoPinEdge(.left, to: .right, of: columns[0], withOffset: 10)
+        columns[1].autoPinEdge(.left,
+                               to: .right,
+                               of: columns[0],
+                               withOffset: gap)
         columns[1].autoMatch(.width, to: .width, of: columns[0])
         
-        columns[2].autoPinEdge(.left, to: .right, of: columns[1], withOffset: 10)
+        columns[2].autoPinEdge(.left,
+                               to: .right,
+                               of: columns[1],
+                               withOffset: gap)
         columns[2].autoMatch(.width, to: .width, of: columns[1])
         columns[2].autoPinEdge(toSuperviewEdge: .right)
     }

@@ -53,7 +53,7 @@ class ViewController: NSViewController, Observer
     
     private var purchaseViewHeight: CGFloat
     {
-        return purchaseView.isExpanded ? 300 : purchaseView.collapsedHeight
+        return purchaseView.isExpanded ? 350 : purchaseView.collapsedHeight
     }
     
     private var purchaseViewHeightConstraint: NSLayoutConstraint?

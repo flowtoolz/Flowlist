@@ -59,6 +59,7 @@
 		9EF0A79320B72B5A00E1A23A /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0A79220B72B5A00E1A23A /* AppController.swift */; };
 		9EF6C67B20E21D6B0003264A /* PriceTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF6C67A20E21D6B0003264A /* PriceTag.swift */; };
 		9EF6C67D20E22DE10003264A /* SKProduct+FormattedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF6C67C20E22DE10003264A /* SKProduct+FormattedPrice.swift */; };
+		9EF6C67F20E272340003264A /* PurchaseOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF6C67E20E272340003264A /* PurchaseOverview.swift */; };
 		C932DAFCC628909A261C9DC7 /* Pods_Flowlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D591083E3159C05E29673835 /* Pods_Flowlist.framework */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +126,7 @@
 		9EF0A79220B72B5A00E1A23A /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppController.swift; path = ../Code/macOS/AppController.swift; sourceTree = "<group>"; };
 		9EF6C67A20E21D6B0003264A /* PriceTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PriceTag.swift; path = ../Code/macOS/PriceTag.swift; sourceTree = "<group>"; };
 		9EF6C67C20E22DE10003264A /* SKProduct+FormattedPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SKProduct+FormattedPrice.swift"; path = "../Code/macOS/SKProduct+FormattedPrice.swift"; sourceTree = "<group>"; };
+		9EF6C67E20E272340003264A /* PurchaseOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PurchaseOverview.swift; path = ../Code/macOS/PurchaseOverview.swift; sourceTree = "<group>"; };
 		BA6347ACAE78132863C2FF94 /* Pods_FlowlistTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlowlistTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCFD3E12471EE5C3B17C7DE0 /* Pods_TodayListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodayListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C499DBA6E96C7098BCE851AA /* Pods-TodayList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TodayList/Pods-TodayList.debug.xcconfig"; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			children = (
 				9E08E6B220DD13E000C32356 /* PurchaseView.swift */,
 				9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */,
+				9EF6C67E20E272340003264A /* PurchaseOverview.swift */,
 				9EF6C67A20E21D6B0003264A /* PriceTag.swift */,
 				9E71504420D7D80F0061601E /* FullVersionPurchaseController.swift */,
 				9EE582FE20DA7377004DE407 /* FullVersion.swift */,
@@ -595,6 +598,7 @@
 				9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */,
 				9E71504020D7CBC70061601E /* Task+ViewModel.swift in Sources */,
 				9EE582FF20DA7377004DE407 /* FullVersion.swift in Sources */,
+				9EF6C67F20E272340003264A /* PurchaseOverview.swift in Sources */,
 				9E1AAD6C20B58AD1001657A7 /* Header.swift in Sources */,
 				9E0D5AA120C160C800F0D827 /* Color+Style.swift in Sources */,
 			);

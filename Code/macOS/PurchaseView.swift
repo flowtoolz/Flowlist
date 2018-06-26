@@ -88,7 +88,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func labelText(for itemNumber: Int) -> String
     {
-        return "Items: \(itemNumber) of 100. Click to remove limit."
+        return "This is a trial version. You have \(itemNumber) of maximum 100 items. Click this bar to learn about the unlimited full version."
     }
     
     // MARK: - Expand Icon
@@ -129,9 +129,9 @@ class PurchaseView: LayerBackedView, Observable, Observer
     private func constrainContent()
     {
         let insets = NSEdgeInsets(top: CGFloat(Float.itemHeight),
-                                  left: 10,
-                                  bottom: 10,
-                                  right: 10)
+                                  left: CGFloat(Float.itemHeight),
+                                  bottom: CGFloat(Float.itemHeight),
+                                  right: CGFloat(Float.itemHeight))
         
         content.autoPinEdgesToSuperviewEdges(with: insets)
     }
