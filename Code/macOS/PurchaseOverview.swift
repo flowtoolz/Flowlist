@@ -75,9 +75,9 @@ class PurchaseOverview: NSView
     
     private let bulletpoints =
     [
-        "Infinite items (and no more info bar about the trial version).",
+        "Infinite items.\n(And no more info bar about the trial version)",
         "Support the development of Flowlist and enable me to add more features.",
         "Early bird advantage: Users who have the full version get new features as free updates, even when the full version price increases.",
-        "Pay once, then use Flowlist forever, no subscription required."
+        "Pay once, then use Flowlist forever.\nNo subscription required."
     ]
 }

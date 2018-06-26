@@ -98,7 +98,7 @@ class PurchaseContentView: NSView, Observer
     {
         let label = c2aButtonBackground.addForAutoLayout(Label())
         
-        label.stringValue = "Purchase Full Version"
+        label.stringValue = "Purchase or Restore Full Version"
         label.alignment = .center
         label.textColor = .white
         label.font = Font.text.nsFont
