@@ -148,6 +148,7 @@ class PurchaseContentView: NSView, Observer
         let label = columns[2].addForAutoLayout(Label())
         
         label.lineBreakMode = .byWordWrapping
+        label.font = Font.text.nsFont
         
         return label
     }()

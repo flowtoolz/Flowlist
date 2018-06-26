@@ -1,5 +1,6 @@
 import AppKit.NSView
 import UIToolz
+import SwiftyToolz
 
 class PurchaseOverview: NSView
 {
@@ -20,7 +21,6 @@ class PurchaseOverview: NSView
             icon.autoPinEdge(toSuperviewEdge: .left)
             
             let label = bulletpointLabels[index]
-            //label.autoPinEdge(.left, to: .right, of: icon, withOffset: 10)
             label.autoPinEdge(toSuperviewEdge: .right)
             label.autoPinEdge(toSuperviewEdge: .left, withInset: 25)
             
@@ -39,7 +39,7 @@ class PurchaseOverview: NSView
                 label.autoPinEdge(.top,
                                   to: .bottom,
                                   of: bulletpointLabels[index - 1],
-                                  withOffset: 10)
+                                  withOffset: 20)
             }
             
             icon.autoConstrainAttribute(.top, to: .top, of: label)
@@ -65,6 +65,7 @@ class PurchaseOverview: NSView
         for bulletpoint in bulletpoints
         {
             let label = addForAutoLayout(Label())
+            label.font = Font.text.nsFont
             label.stringValue = bulletpoint
             label.lineBreakMode = .byWordWrapping
             labels.append(label)
