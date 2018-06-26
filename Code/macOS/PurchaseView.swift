@@ -88,7 +88,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func labelText(for itemNumber: Int) -> String
     {
-        return "This is a trial version. You have \(itemNumber) of maximum 100 items. Click this bar to learn about the unlimited full version."
+        return "You have \(itemNumber) items. This trial version can hold up to 100 items. Click here to learn about the unlimited full version."
     }
     
     // MARK: - Expand Icon
