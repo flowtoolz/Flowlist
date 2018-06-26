@@ -22,7 +22,7 @@ class PurchaseOverview: NSView
             
             let label = bulletpointLabels[index]
             label.autoPinEdge(toSuperviewEdge: .right)
-            label.autoPinEdge(toSuperviewEdge: .left, withInset: 25)
+            label.autoPinEdge(toSuperviewEdge: .left, withInset: 27)
             
             if index == 0
             {
