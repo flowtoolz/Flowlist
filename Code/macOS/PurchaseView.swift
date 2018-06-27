@@ -43,11 +43,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         didSet
         {
-            if isExpanded
-            {
-                content.hideError()
-                fullVersionPurchaseController.loadFullVersionProductFromAppStore()
-            }
+            if isExpanded { content.reloadProductInfos() }
             
             NSAnimationContext.beginGrouping()
             

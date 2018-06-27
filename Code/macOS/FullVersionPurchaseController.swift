@@ -86,6 +86,8 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
     
     func loadFullVersionProductFromAppStore()
     {
+        fullVersionProduct = nil
+        
         productsRequest = SKProductsRequest(productIdentifiers: [fullVersionId])
         productsRequest?.delegate = self
         
@@ -102,8 +104,21 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
             if product.productIdentifier == fullVersionId
             {
                 fullVersionProduct = product
-                send(.didLoadFullVersionProduct)
             }
+        }
+        
+        DispatchQueue.main.async { self.didProcessProductsResponse() }
+    }
+    
+    private func didProcessProductsResponse()
+    {
+        if fullVersionProduct != nil
+        {
+            send(.didLoadFullVersionProduct)
+        }
+        else
+        {
+            send(.didFailToLoadFullVersionProduct)
         }
     }
     
@@ -118,6 +133,7 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
     {
         case didNothing
         case didLoadFullVersionProduct
+        case didFailToLoadFullVersionProduct
         case didPurchaseFullVersion
         case didFailToPurchaseFullVersion(message: String)
     }

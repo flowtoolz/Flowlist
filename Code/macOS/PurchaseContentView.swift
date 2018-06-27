@@ -12,11 +12,15 @@ class PurchaseContentView: NSView, Observer
         super.init(frame: frameRect)
         
         constrainColumns()
-        constrainC2aButton()
+        
+        constrainOverview()
+        
         constrainIcon()
         constrainPriceTag()
+        constrainC2aButton()
+        
         constrainDescriptionLabel()
-        constrainOverview()
+        constrainLoadingIndicator()
         constrainErrorView()
         
         updateDescriptionLabel()
@@ -25,8 +29,6 @@ class PurchaseContentView: NSView, Observer
         {
             [weak self] event in self?.didReceive(event)
         }
-        
-        fullVersionPurchaseController.loadFullVersionProductFromAppStore()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -41,36 +43,58 @@ class PurchaseContentView: NSView, Observer
         {
             
         case .didNothing: break
+        
+        case .didFailToLoadFullVersionProduct:
+            show(error: productLoadingFailedMessage)
             
         case .didLoadFullVersionProduct:
             updateDescriptionLabel()
-            hideError()
-            
-        case .didPurchaseFullVersion:
-            hideError()
-            isFullVersion = true
-            
+            showDescription()
+            c2aButton.isHidden = false
+        
         case .didFailToPurchaseFullVersion(let message):
             log(error: message)
-            show(error: errorLabelText)
+            show(error: purchaseFailedMessage)
+            
+        case .didPurchaseFullVersion:
+            showDescription()
+            isFullVersion = true
         }
     }
     
-    // MARK: - Error Label
+    // MARK: - Adjust to Loading State
+    
+    func reloadProductInfos()
+    {
+        showLoadingIndicator()
+        c2aButton.isHidden = true
+        fullVersionPurchaseController.loadFullVersionProductFromAppStore()
+    }
+    
+    func showDescription()
+    {
+        descriptionLabel.isHidden = false
+        loadingIndicator.isHidden = true
+        errorView.isHidden = true
+    }
+    
+    func showLoadingIndicator()
+    {
+        descriptionLabel.isHidden = true
+        loadingIndicator.isHidden = false
+        errorView.isHidden = true
+    }
     
     private func show(error: String)
     {
-        descriptionLabel.isHidden = true
-        
         errorLabel.stringValue = error
+        
+        descriptionLabel.isHidden = true
+        loadingIndicator.isHidden = true
         errorView.isHidden = false
     }
     
-    func hideError()
-    {
-        errorView.isHidden = true
-        descriptionLabel.isHidden = false
-    }
+    // MARK: - Error View
     
     private func constrainErrorView()
     {
@@ -93,7 +117,9 @@ class PurchaseContentView: NSView, Observer
         return label
     }()
     
-    private let errorLabelText = "Something went wrong.\n\nPlease make sure you have internet access and are eligible to pay for AppStore products. Then reopen this panel."
+    private let productLoadingFailedMessage = "Could not reach AppStore.\n\nPlease make sure you have internet access. Then reopen this panel."
+    
+    private let purchaseFailedMessage = "Something went wrong.\n\nPlease make sure you have internet access and are eligible to pay for AppStore products. Then reopen this panel."
     
     private lazy var errorView: LayerBackedView =
     {
@@ -101,6 +127,48 @@ class PurchaseContentView: NSView, Observer
         
         view.backgroundColor = Color(1.0, 0, 0, 0.5)
         view.isHidden = true
+        view.layer?.cornerRadius = CGFloat(Float.cornerRadius)
+        
+        return view
+    }()
+    
+    // MARK: - Loading Indicator
+    
+    private func constrainLoadingIndicator()
+    {
+        loadingIndicator.autoPinEdgesToSuperviewEdges()
+        let insets = NSEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
+        loadingLabel.autoPinEdgesToSuperviewEdges(with: insets,
+                                                  excludingEdge: .bottom)
+        spinner.autoCenterInSuperview()
+    }
+    
+    private lazy var loadingLabel: Label =
+    {
+        let label = loadingIndicator.addForAutoLayout(Label())
+        
+        label.stringValue = "Loading infos from AppStore ..."
+        label.font = Font.text.nsFont
+        label.textColor = .white
+        
+        return label
+    }()
+    
+    private lazy var spinner: NSProgressIndicator =
+    {
+        let view = loadingIndicator.addForAutoLayout(NSProgressIndicator())
+        
+        view.style = .spinning
+        view.startAnimation(self)
+        
+        return view
+    }()
+    
+    private lazy var loadingIndicator: LayerBackedView =
+    {
+        let view = columns[2].addForAutoLayout(LayerBackedView())
+        
+        view.backgroundColor = Color.flowlistBlue.with(alpha: 0.5)
         view.layer?.cornerRadius = CGFloat(Float.cornerRadius)
         
         return view
@@ -201,6 +269,7 @@ class PurchaseContentView: NSView, Observer
         
         view.backgroundColor = Color.flowlistBlue
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
+        view.isHidden = true
         
         return view
     }()
@@ -227,6 +296,7 @@ class PurchaseContentView: NSView, Observer
         
         label.lineBreakMode = .byWordWrapping
         label.font = Font.text.nsFont
+        label.isHidden = true
         
         return label
     }()
