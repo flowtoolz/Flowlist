@@ -33,8 +33,8 @@ class PriceTag: NSView, Observer
     
     func update()
     {
-        priceLabel.stringValue = "regular price" //product?.formattedPrice ?? ""
-        discountPriceLabel.stringValue = "discount price" //product?.formattedDiscountPrice ?? ""
+        priceLabel.stringValue = product?.formattedPrice ?? ""
+        discountPriceLabel.stringValue = product?.formattedDiscountPrice ?? ""
         
         stroke.isHidden = !discountIsAvailable
         discountPriceLabel.isHidden = !discountIsAvailable
@@ -95,7 +95,6 @@ class PriceTag: NSView, Observer
     
     private var discountIsAvailable: Bool
     {
-        return true
         guard #available(OSX 10.13.2, *) else { return false }
         
         return product?.introductoryPrice != nil
