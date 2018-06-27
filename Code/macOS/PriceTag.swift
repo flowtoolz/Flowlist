@@ -33,24 +33,30 @@ class PriceTag: NSView, Observer
     
     func update()
     {
-        let appStorePrice = product?.formattedPrice ?? ""
+        guard let product = product else { return }
+        
+        let appStorePrice = product.formattedPrice ?? ""
         discountPriceLabel.stringValue = appStorePrice
         
-        if discountIsAvailable
+        if summerDiscountIsAvailable
         {
-            let minRegularPriceNumber = NSDecimalNumber(value: minimumRegularPrice)
-            let locale = product?.priceLocale ?? Locale.current
-            let minRegularPrice = minRegularPriceNumber.formattedPrice(in: locale)
+            let roundedPrice = product.price.intValue
+            let roundedPriceNumber = NSDecimalNumber(value: roundedPrice)
+            let regularPriceNumber = product.price.adding(roundedPriceNumber)
             
-            priceLabel.stringValue = minRegularPrice ?? ""
+            let locale = product.priceLocale
+            
+            let regularPrice = regularPriceNumber.formattedPrice(in: locale) ?? ""
+            
+            priceLabel.stringValue = regularPrice
         }
         else
         {
             priceLabel.stringValue = appStorePrice
         }
 
-        stroke.isHidden = !discountIsAvailable
-        discountPriceLabel.isHidden = !discountIsAvailable
+        stroke.isHidden = !summerDiscountIsAvailable
+        discountPriceLabel.isHidden = !summerDiscountIsAvailable
     }
     
     // MARK: - Price Label
@@ -106,12 +112,22 @@ class PriceTag: NSView, Observer
     
     // MARK: - Product Information
     
-    private var discountIsAvailable: Bool
+    private var summerDiscountIsAvailable: Bool
     {
-        guard let price = product?.price else { return false }
+        guard let discountEnd = summerDiscountEnd else { return false }
         
-        return price.doubleValue < minimumRegularPrice
+        return Date() < discountEnd
     }
+    
+    private let summerDiscountEnd: Date? =
+    {
+        var dateComponents = DateComponents()
+        dateComponents.day = 20
+        dateComponents.month = 9
+        dateComponents.year = 2018
+        
+        return Calendar.current.date(from: dateComponents)
+    }()
     
     private var product: SKProduct?
     {
