@@ -19,7 +19,17 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
     
     func purchaseFullVersion()
     {
-        guard userCanPay, let product = fullVersionProduct else { return }
+        guard userCanPay else
+        {
+            send(.didFailToPurchaseFullVersion(message: "Cannot purchase full version because user is not eligible to pay in the AppStore."))
+            return
+        }
+        
+        guard let product = fullVersionProduct else
+        {
+            send(.didFailToPurchaseFullVersion(message: "Cannot purchase full version because product infos haven't yet been downloaded from the AppStore."))
+            return
+        }
         
         let payment = SKPayment(product: product)
         

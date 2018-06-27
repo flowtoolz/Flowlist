@@ -10,6 +10,7 @@ class TextField: Label, Observable
     {
         super.init(frame: frameRect)
         
+        drawsBackground = false
         isEditable = true
         font = Font.text.nsFont
         

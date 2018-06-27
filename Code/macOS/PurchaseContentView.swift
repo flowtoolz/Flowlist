@@ -17,6 +17,7 @@ class PurchaseContentView: NSView, Observer
         constrainPriceTag()
         constrainDescriptionLabel()
         constrainOverview()
+        constrainErrorView()
         
         updateDescriptionLabel()
         
@@ -39,16 +40,71 @@ class PurchaseContentView: NSView, Observer
         switch event
         {
             
-        case .didNothing:
-            break
+        case .didNothing: break
+            
         case .didLoadFullVersionProduct:
             updateDescriptionLabel()
+            hideError()
+            
         case .didPurchaseFullVersion:
+            hideError()
             isFullVersion = true
+            
         case .didFailToPurchaseFullVersion(let message):
-            break
+            log(error: message)
+            show(error: errorLabelText)
         }
     }
+    
+    // MARK: - Error Label
+    
+    private func show(error: String)
+    {
+        descriptionLabel.isHidden = true
+        
+        errorLabel.stringValue = error
+        errorView.isHidden = false
+    }
+    
+    func hideError()
+    {
+        errorView.isHidden = true
+        descriptionLabel.isHidden = false
+    }
+    
+    private func constrainErrorView()
+    {
+        errorView.autoPinEdge(toSuperviewEdge: .left)
+        errorView.autoPinEdge(toSuperviewEdge: .right)
+        errorView.autoPinEdge(toSuperviewEdge: .top)
+        
+        let insets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        errorLabel.autoPinEdgesToSuperviewEdges(with: insets)
+    }
+    
+    private lazy var errorLabel: Label =
+    {
+        let label = errorView.addForAutoLayout(Label())
+        
+        label.lineBreakMode = .byWordWrapping
+        label.textColor = .white
+        label.font = Font.text.nsFont
+        
+        return label
+    }()
+    
+    private let errorLabelText = "Something went wrong.\n\nPlease make sure you have internet access and are eligible to pay for AppStore products. Then reopen this panel."
+    
+    private lazy var errorView: LayerBackedView =
+    {
+        let view = columns[2].addForAutoLayout(LayerBackedView())
+        
+        view.backgroundColor = Color(1.0, 0, 0, 0.5)
+        view.isHidden = true
+        view.layer?.cornerRadius = CGFloat(Float.cornerRadius)
+        
+        return view
+    }()
     
     // MARK: - Overview
     

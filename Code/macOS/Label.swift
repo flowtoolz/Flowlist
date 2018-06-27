@@ -10,7 +10,8 @@ class Label: NSTextField
         setContentCompressionResistancePriority(priority, for: .horizontal)
         lineBreakMode = .byTruncatingTail
         
-        drawsBackground = false
+        backgroundColor = .clear
+
         isBezeled = false
         isEditable = false
         isBordered = false
