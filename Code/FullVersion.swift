@@ -39,7 +39,7 @@ var isFullVersion: Bool
     }
 }
 
-let numberOfUserCreatedTasks = store.numberOfTasks.new().unwrap(1).map { $0 - 1 }
+let numberOfUserCreatedTasks = store.numberOfUserCreatedLeafs.new().unwrap(0)
 
 fileprivate var isFullVersion_Cached: Bool?
 fileprivate let maxNumberOfTasksInTrial = 100

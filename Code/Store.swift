@@ -4,18 +4,22 @@ let store = Store()
 
 class Store: Observer
 {
+    // MARK: - Initialization
+    
     fileprivate init()
     {
-        numberOfTasks <- root.numberOfTasks
+        updateUserCreatedLeafs(with: root)
         
         observe(newRoot: root)
     }
 
+    // MARK: - Root
+    
     var root = Task()
     {
         didSet
         {
-            numberOfTasks <- root.numberOfTasks
+            updateUserCreatedLeafs(with: root)
             
             stopObserving(oldValue)
             observe(newRoot: root)
@@ -26,14 +30,32 @@ class Store: Observer
     {
         observe(newRoot)
         {
-            [weak self] event in
+            [weak self, weak newRoot] event in
             
-            if case .didChange(let numberOfTasks) = event
-            {
-                self?.numberOfTasks <- numberOfTasks
-            }
+            guard let newRoot = newRoot else { return }
+            
+            self?.didReceive(event, from: newRoot)
         }
     }
     
-    let numberOfTasks = Var<Int>()
+    // MARK: - Count Leafs Inside Root
+    
+    private func didReceive(_ event: Task.Event, from root: Task)
+    {
+        if case .didChange(_) = event
+        {
+            updateUserCreatedLeafs(with: root)
+        }
+        else if case .did(let edit) = event, edit.changesItems
+        {
+            updateUserCreatedLeafs(with: root)
+        }
+    }
+    
+    private func updateUserCreatedLeafs(with root: Task)
+    {
+        numberOfUserCreatedLeafs <- root.isLeaf ? 0 : root.numberOfLeafs
+    }
+    
+    let numberOfUserCreatedLeafs = Var<Int>()
 }

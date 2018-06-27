@@ -8,14 +8,14 @@ final class Task: Codable, Observable, Tree
     convenience init(title: String? = nil,
                      state: TaskState? = nil,
                      root: Task? = nil,
-                     numberOfTasks: Int = 1)
+                     numberOfLeafs: Int = 1)
     {
         self.init()
         
         self.title = Var(title)
         self.state = Var(state)
         self.root = root
-        self.numberOfTasks = numberOfTasks
+        self.numberOfLeafs = numberOfLeafs
     }
     
     deinit { removeObservers() }
@@ -47,7 +47,7 @@ final class Task: Codable, Observable, Tree
                                          as: group,
                                          at: groupIndex) else { return nil }
         
-        group.updateNumberOfTasks()
+        group.numberOfLeafs = group.numberOfLeafsRecursively()
 
         send(.did(.remove(subtasks: merged, from: indexes)))
         send(.did(.create(at: groupIndex)))
@@ -86,7 +86,7 @@ final class Task: Codable, Observable, Tree
     {
         guard let removedSubtasks = removeBranches(at: indexes) else { return nil }
         
-        updateNumberOfTasks()
+        updateNumberOfLeafs()
         
         send(.did(.remove(subtasks: removedSubtasks, from: indexes)))
         
@@ -118,7 +118,7 @@ final class Task: Codable, Observable, Tree
     {
         guard insert(branch: subtask, at: index) else { return nil }
         
-        updateNumberOfTasks()
+        updateNumberOfLeafs()
         
         send(.did(.insert(at: [index])))
 
@@ -130,7 +130,7 @@ final class Task: Codable, Observable, Tree
     {
         guard insert(branches: subtasks, at: index) else { return false }
         
-        updateNumberOfTasks()
+        updateNumberOfLeafs()
         
         if !subtasks.isEmpty
         {
@@ -153,7 +153,7 @@ final class Task: Codable, Observable, Tree
         
         guard insert(branch: newSubtask, at: index) else { return nil }
         
-        updateNumberOfTasks()
+        updateNumberOfLeafs()
         
         send(.did(.create(at: index)))
         
@@ -175,45 +175,53 @@ final class Task: Codable, Observable, Tree
     // MARK: - Counting Tasks
     
     @discardableResult
-    func recoverNumberOfTasks() -> Int
+    func recoverNumberOfLeafs() -> Int
     {
-        var subtaskNumber = 0
+        if isLeaf
+        {
+            numberOfLeafs = 1
+            return numberOfLeafs
+        }
+        
+        var subtaskLeafs = 0
         
         for subtask in branches
         {
-            subtaskNumber += subtask.recoverNumberOfTasks()
+            subtaskLeafs += subtask.recoverNumberOfLeafs()
         }
         
-        numberOfTasks = subtaskNumber + 1
+        numberOfLeafs = subtaskLeafs
         
-        return numberOfTasks
+        return numberOfLeafs
     }
     
-    private func updateNumberOfTasks()
+    private func updateNumberOfLeafs()
     {
-        let newNumber = numberOfTasksRecursively()
+        let newNumber = numberOfLeafsRecursively()
         
-        guard newNumber != numberOfTasks else { return }
+        guard newNumber != numberOfLeafs else { return }
         
-        numberOfTasks = newNumber
-        root?.updateNumberOfTasks()
+        numberOfLeafs = newNumber
+        root?.updateNumberOfLeafs()
         
-        send(.didChange(numberOfTasks: numberOfTasks))
+        send(.didChange(numberOfLeafs: numberOfLeafs))
     }
     
-    private(set) var numberOfTasks = 1
-    
-    private func numberOfTasksRecursively() -> Int
+    private func numberOfLeafsRecursively() -> Int
     {
-        var subtaskNumber = 0
+        if isLeaf { return 1 }
+        
+        var subtaskLeafs = 0
         
         for subtask in branches
         {
-            subtaskNumber += subtask.numberOfTasks
+            subtaskLeafs += subtask.numberOfLeafs
         }
         
-        return subtaskNumber + 1
+        return subtaskLeafs
     }
+    
+    private(set) var numberOfLeafs = 1
     
     // MARK: - Tree
     
@@ -233,5 +241,6 @@ final class Task: Codable, Observable, Tree
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, did(Edit), didChange(numberOfTasks: Int) }
+    // TODO: consider making number of leafs a Var<Int> instead of sending it via this event
+    enum Event { case didNothing, did(Edit), didChange(numberOfLeafs: Int) }
 }

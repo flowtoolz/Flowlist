@@ -77,7 +77,7 @@ class TaskView: LayerBackedView, Observer, Observable
         switch event
         {
         case .didNothing: break
-        case .didChange(numberOfTasks: _): break
+        case .didChange(numberOfLeafs: _): break
         case .did(let edit): if edit.changesItems { updateGroupIcon() }
         }
     }

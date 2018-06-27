@@ -34,7 +34,7 @@ extension Store
         didLoadTasksSuccessfully = true
         
         loadedRoot.recoverRoots()
-        loadedRoot.recoverNumberOfTasks()
+        loadedRoot.recoverNumberOfLeafs()
         loadedRoot.title <- NSFullUserName()
         
         root = loadedRoot
