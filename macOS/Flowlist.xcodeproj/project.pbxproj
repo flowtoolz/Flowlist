@@ -26,6 +26,7 @@
 		9E6C720B20B19C88001C3D2C /* Task+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Task+State.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
 		9E6C721020B1E66D001C3D2C /* Task+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720F20B1E66D001C3D2C /* Task+Debugging.swift */; };
+		9E6C8C7120E3E5D90068EBCF /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C8C7020E3E5D90068EBCF /* NSDecimalNumber+Price.swift */; };
 		9E71504020D7CBC70061601E /* Task+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71503F20D7CBC70061601E /* Task+ViewModel.swift */; };
 		9E71504520D7D80F0061601E /* FullVersionPurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71504420D7D80F0061601E /* FullVersionPurchaseController.swift */; };
 		9E72881B1EEF3095003A2F46 /* SelectableListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E72881A1EEF3095003A2F46 /* SelectableListView.swift */; };
@@ -92,6 +93,7 @@
 		9E6C720A20B19C88001C3D2C /* Task+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+State.swift"; path = "../Code/Task+State.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = List.swift; path = ../Code/List.swift; sourceTree = "<group>"; };
 		9E6C720F20B1E66D001C3D2C /* Task+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Debugging.swift"; path = "../Code/Task+Debugging.swift"; sourceTree = "<group>"; };
+		9E6C8C7020E3E5D90068EBCF /* NSDecimalNumber+Price.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSDecimalNumber+Price.swift"; path = "../Code/NSDecimalNumber+Price.swift"; sourceTree = "<group>"; };
 		9E71503F20D7CBC70061601E /* Task+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+ViewModel.swift"; path = "../Code/Task+ViewModel.swift"; sourceTree = "<group>"; };
 		9E71504420D7D80F0061601E /* FullVersionPurchaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FullVersionPurchaseController.swift; path = ../Code/macOS/FullVersionPurchaseController.swift; sourceTree = "<group>"; };
 		9E72881A1EEF3095003A2F46 /* SelectableListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectableListView.swift; path = ../Code/macOS/SelectableListView.swift; sourceTree = "<group>"; };
@@ -418,6 +420,7 @@
 				9ED5C8D820DF83F900EF84CB /* Icon.swift */,
 				9ED5C8DA20DF88E300EF84CB /* Label.swift */,
 				9EF6C67C20E22DE10003264A /* SKProduct+FormattedPrice.swift */,
+				9E6C8C7020E3E5D90068EBCF /* NSDecimalNumber+Price.swift */,
 			);
 			name = "Framework Candidates";
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				9EF0A78A20B5E26F00E1A23A /* TableContent.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* SelectableList.swift in Sources */,
 				9E71504520D7D80F0061601E /* FullVersionPurchaseController.swift in Sources */,
+				9E6C8C7120E3E5D90068EBCF /* NSDecimalNumber+Price.swift in Sources */,
 				9EA7F99C20C19B210059166B /* Task+Clipboard.swift in Sources */,
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
 				9E2CCE8F20C1EAFF0037D755 /* Task+Copyable.swift in Sources */,

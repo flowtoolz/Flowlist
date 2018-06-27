@@ -33,9 +33,22 @@ class PriceTag: NSView, Observer
     
     func update()
     {
-        priceLabel.stringValue = product?.formattedPrice ?? ""
-        discountPriceLabel.stringValue = product?.formattedDiscountPrice ?? ""
+        let appStorePrice = product?.formattedPrice ?? ""
+        discountPriceLabel.stringValue = appStorePrice
         
+        if discountIsAvailable
+        {
+            let minRegularPriceNumber = NSDecimalNumber(value: minimumRegularPrice)
+            let locale = product?.priceLocale ?? Locale.current
+            let minRegularPrice = minRegularPriceNumber.formattedPrice(in: locale)
+            
+            priceLabel.stringValue = minRegularPrice ?? ""
+        }
+        else
+        {
+            priceLabel.stringValue = appStorePrice
+        }
+
         stroke.isHidden = !discountIsAvailable
         discountPriceLabel.isHidden = !discountIsAvailable
     }
@@ -50,7 +63,7 @@ class PriceTag: NSView, Observer
         stroke.autoConstrainAttribute(.horizontal,
                                       to: .horizontal,
                                       of: priceLabel,
-                                      withOffset: 2)
+                                      withOffset: 1)
         stroke.autoPinEdge(.left, to: .left, of: priceLabel, withOffset: -3)
         stroke.autoPinEdge(.right, to: .right, of: priceLabel, withOffset: 3)
     }
@@ -95,9 +108,9 @@ class PriceTag: NSView, Observer
     
     private var discountIsAvailable: Bool
     {
-        guard #available(OSX 10.13.2, *) else { return false }
+        guard let price = product?.price else { return false }
         
-        return product?.introductoryPrice != nil
+        return price.doubleValue < minimumRegularPrice
     }
     
     private var product: SKProduct?
