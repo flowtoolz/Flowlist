@@ -16,13 +16,39 @@ class PurchaseContentView: NSView, Observer
         constrainIcon()
         constrainPriceTag()
         constrainDescriptionLabel()
-        setupDescriptionLabel()
         constrainOverview()
+        
+        updateDescriptionLabel()
+        
+        observe(fullVersionPurchaseController)
+        {
+            [weak self] event in self?.didReceive(event)
+        }
+        
+        fullVersionPurchaseController.loadFullVersionProductFromAppStore()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
     deinit { stopAllObserving() }
+    
+    // MARK: - Load Data From AppStore
+    
+    private func didReceive(_ event: FullVersionPurchaseController.Event)
+    {
+        switch event
+        {
+            
+        case .didNothing:
+            break
+        case .didLoadFullVersionProduct:
+            updateDescriptionLabel()
+        case .didPurchaseFullVersion:
+            isFullVersion = true
+        case .didFailToPurchaseFullVersion(let message):
+            break
+        }
+    }
     
     // MARK: - Overview
     
@@ -90,9 +116,16 @@ class PurchaseContentView: NSView, Observer
         button.font = Font.text.nsFont
         button.isBordered = false
         button.bezelStyle = .regularSquare
+        button.target = self
+        button.action = #selector(didClickC2aButton)
         
         return button
     }()
+    
+    @objc private func didClickC2aButton()
+    {
+        fullVersionPurchaseController.purchaseFullVersion()
+    }
     
     private lazy var c2aButtonLabel: Label =
     {
@@ -117,18 +150,6 @@ class PurchaseContentView: NSView, Observer
     }()
     
     // MARK: - Description
-    
-    private func setupDescriptionLabel()
-    {
-        updateDescriptionLabel()
-        
-        observe(fullVersionPurchaseController, select: .didLoadFullVersionProduct)
-        {
-            [weak self] in
-            
-            self?.updateDescriptionLabel()
-        }
-    }
     
     private func updateDescriptionLabel()
     {
