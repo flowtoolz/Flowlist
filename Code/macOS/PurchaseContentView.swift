@@ -23,8 +23,6 @@ class PurchaseContentView: NSView, Observer
         constrainLoadingIndicator()
         constrainErrorView()
         
-        updateDescriptionLabel()
-        
         observe(fullVersionPurchaseController)
         {
             [weak self] event in self?.didReceive(event)
@@ -41,23 +39,19 @@ class PurchaseContentView: NSView, Observer
     {
         switch event
         {
-            
         case .didNothing: break
         
         case .didFailToLoadFullVersionProduct:
             show(error: productLoadingFailedMessage)
             
         case .didLoadFullVersionProduct:
-            updateDescriptionLabel()
-            showDescription()
-            c2aButton.isHidden = false
+            showPriceAndC2aButton()
         
         case .didFailToPurchaseFullVersion(let message):
             log(error: message)
-            show(error: purchaseFailedMessage)
             
         case .didPurchaseFullVersion:
-            showDescription()
+            showPriceAndC2aButton()
             isFullVersion = true
         }
     }
@@ -67,20 +61,23 @@ class PurchaseContentView: NSView, Observer
     func reloadProductInfos()
     {
         showLoadingIndicator()
-        c2aButton.isHidden = true
+        c2aButtonBackground.isHidden = true
+        priceTag.isHidden = true
         fullVersionPurchaseController.loadFullVersionProductFromAppStore()
     }
     
-    func showDescription()
+    func showPriceAndC2aButton()
     {
-        descriptionLabel.isHidden = false
+        priceTag.isHidden = false
+        c2aButtonBackground.isHidden = false
         loadingIndicator.isHidden = true
         errorView.isHidden = true
     }
     
     func showLoadingIndicator()
     {
-        descriptionLabel.isHidden = true
+        priceTag.isHidden = true
+        c2aButtonBackground.isHidden = true
         loadingIndicator.isHidden = false
         errorView.isHidden = true
     }
@@ -89,7 +86,8 @@ class PurchaseContentView: NSView, Observer
     {
         errorLabel.stringValue = error
         
-        descriptionLabel.isHidden = true
+        priceTag.isHidden = true
+        c2aButtonBackground.isHidden = true
         loadingIndicator.isHidden = true
         errorView.isHidden = false
     }
@@ -100,10 +98,12 @@ class PurchaseContentView: NSView, Observer
     {
         errorView.autoPinEdge(toSuperviewEdge: .left)
         errorView.autoPinEdge(toSuperviewEdge: .right)
-        errorView.autoPinEdge(toSuperviewEdge: .top)
+        errorView.autoPinEdge(toSuperviewEdge: .bottom)
+        errorView.autoPinEdge(.top, to: .bottom, of: icon, withOffset: 10)
         
-        let insets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        errorLabel.autoPinEdgesToSuperviewEdges(with: insets)
+        let insets = NSEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
+        errorLabel.autoPinEdgesToSuperviewEdges(with: insets,
+                                                excludingEdge: .bottom)
     }
     
     private lazy var errorLabel: Label =
@@ -119,11 +119,9 @@ class PurchaseContentView: NSView, Observer
     
     private let productLoadingFailedMessage = "Could not reach AppStore.\n\nPlease make sure you have internet access. Then reopen this panel."
     
-    private let purchaseFailedMessage = "Something went wrong.\n\nPlease make sure you have internet access and are eligible to pay for AppStore products. Then reopen this panel."
-    
     private lazy var errorView: LayerBackedView =
     {
-        let view = columns[2].addForAutoLayout(LayerBackedView())
+        let view = columns[1].addForAutoLayout(LayerBackedView())
         
         view.backgroundColor = Color(1.0, 0, 0, 0.5)
         view.isHidden = true
@@ -136,11 +134,17 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainLoadingIndicator()
     {
-        loadingIndicator.autoPinEdgesToSuperviewEdges()
+        loadingIndicator.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                                      excludingEdge: .top)
+        loadingIndicator.autoPinEdge(.top,
+                                     to: .bottom,
+                                     of: icon,
+                                     withOffset: 10)
         let insets = NSEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
         loadingLabel.autoPinEdgesToSuperviewEdges(with: insets,
                                                   excludingEdge: .bottom)
-        spinner.autoCenterInSuperview()
+        spinner.autoAlignAxis(toSuperviewAxis: .vertical)
+        spinner.autoPinEdge(toSuperviewEdge: .bottom, withInset: 20)
     }
     
     private lazy var loadingLabel: Label =
@@ -166,7 +170,7 @@ class PurchaseContentView: NSView, Observer
     
     private lazy var loadingIndicator: LayerBackedView =
     {
-        let view = columns[2].addForAutoLayout(LayerBackedView())
+        let view = columns[1].addForAutoLayout(LayerBackedView())
         
         view.backgroundColor = Color.flowlistBlue.with(alpha: 0.5)
         view.layer?.cornerRadius = CGFloat(Float.cornerRadius)
@@ -276,14 +280,6 @@ class PurchaseContentView: NSView, Observer
     
     // MARK: - Description
     
-    private func updateDescriptionLabel()
-    {
-        let product = fullVersionPurchaseController.fullVersionProduct
-        let productDescription = product?.localizedDescription
-        
-        descriptionLabel.stringValue = productDescription ?? ""
-    }
-    
     private func constrainDescriptionLabel()
     {
         descriptionLabel.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
@@ -296,7 +292,7 @@ class PurchaseContentView: NSView, Observer
         
         label.lineBreakMode = .byWordWrapping
         label.font = Font.text.nsFont
-        label.isHidden = true
+        label.stringValue = "ljhrebf ueg rgw rtgu hwrögh wöjthb öwrut wur hvbjlhsfg vjzsftgblwrtb vul vbuljwzrtbv öwbv ljhrebf ueg rgw rtgu hwrögh wöjthb öwrut wur hvbjlhsfg vjzsftgblwrtb vul vbuljwzrtbv öwbv ljhrebf ueg rgw rtgu hwrögh wöjthb öwrut wur hvbjlhsfg vjzsftgblwrtb vul vbuljwzrtbv öwbv ljhrebf ueg rgw rtgu hwrögh wöjthb öwrut wur hvbjlhsfg vjzsftgblwrtb vul vbuljwzrtbv öwbv ljhrebf ueg rgw rtgu hwrögh wöjthb öwrut wur hvbjlhsfg vjzsftgblwrtb vul vbuljwzrtbv öwbv"
         
         return label
     }()

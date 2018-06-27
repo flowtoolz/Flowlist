@@ -43,7 +43,10 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
         {
             if transaction.payment.productIdentifier == fullVersionId
             {
-                didUpdateFullVersionPurchaseTransaction(transaction)
+                DispatchQueue.main.async
+                {
+                    self.didUpdateFullVersionPurchaseTransaction(transaction)
+                }
             }
         }
     }
@@ -55,10 +58,12 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
         switch transaction.transactionState
         {
         case .purchasing: break
+            
         case .purchased:
             isFullVersion = true
             send(.didPurchaseFullVersion)
             SKPaymentQueue.default().finishTransaction(transaction)
+            
         case .failed:
             guard let error = transaction.error else
             {
@@ -72,10 +77,12 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
             log(error: message)
             send(.didFailToPurchaseFullVersion(message: message))
             SKPaymentQueue.default().finishTransaction(transaction)
+            
         case .restored:
             isFullVersion = true
             send(.didPurchaseFullVersion)
             SKPaymentQueue.default().finishTransaction(transaction)
+            
         case .deferred: break
         }
     }
