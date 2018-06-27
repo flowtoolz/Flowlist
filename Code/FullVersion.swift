@@ -40,7 +40,7 @@ var isFullVersion: Bool
 }
 
 let numberOfUserCreatedTasks = store.numberOfUserCreatedLeafs.new().unwrap(0)
+let maxNumberOfTasksInTrial = 100
 
 fileprivate var isFullVersion_Cached: Bool?
-fileprivate let maxNumberOfTasksInTrial = 100
 fileprivate let userNameKey = "UserName"

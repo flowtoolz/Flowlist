@@ -29,7 +29,9 @@ class PurchaseView: LayerBackedView, Observable, Observer
             
             me.itemLabel.stringValue = me.labelText(for: itemNumber)
             me.itemLabel.textColor = me.labelColor(for: itemNumber).nsColor
-            me.progressBar.progress = CGFloat(itemNumber) / 100.0
+            
+            let progress = CGFloat(itemNumber) / CGFloat(maxNumberOfTasksInTrial)
+            me.progressBar.progress = progress
         }
     }
     
@@ -88,7 +90,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func labelText(for itemNumber: Int) -> String
     {
-        return "You have \(itemNumber) items. This trial version can hold up to 100 items. Click here to learn about the unlimited full version."
+        return "You have \(itemNumber) items. This trial version can hold up to \(maxNumberOfTasksInTrial) items. Click here to learn about the unlimited full version."
     }
     
     // MARK: - Expand Icon
@@ -117,7 +119,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
         let bar = ProgressBar.newAutoLayout()
         addSubview(bar, positioned: .below, relativeTo: buttonOverlay)
         
-        bar.progress = CGFloat(numberOfUserCreatedTasks.latestUpdate) / 100.0
+        let progress = CGFloat(numberOfUserCreatedTasks.latestUpdate) / CGFloat(maxNumberOfTasksInTrial)
+        bar.progress = progress
         bar.backgroundColor = Color.flowlistBlue.with(alpha: 0.5)
         bar.progressColor = .flowlistBlue
         
