@@ -153,7 +153,8 @@ class PurchaseContentView: NSView, Observer
     
     private func updateDescriptionLabel()
     {
-        let productDescription =  "dummy description with many words dummy description with many words dummy description with many words dummy description with many words dummy description with many words dummy description with many words dummy description with many words dummy description with many words dummy description with many words dummy description with many words" // fullVersionPurchaseController.fullVersionProduct?.localizedDescription
+        let product = fullVersionPurchaseController.fullVersionProduct
+        let productDescription = product?.localizedDescription
         
         descriptionLabel.stringValue = productDescription ?? ""
     }
