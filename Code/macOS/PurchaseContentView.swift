@@ -273,11 +273,7 @@ class PurchaseContentView: NSView, Observer
     {
         let view = columns[1].addForAutoLayout(LayerBackedView())
         
-        var color = Color.flowlistBlue
-        color.red = 0.75 * color.red
-        color.green = 0.75 * color.green
-        color.blue = 0.75 * color.blue
-        view.backgroundColor = color
+        view.backgroundColor = Color.flowlistBlue
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         view.isHidden = true
         
