@@ -147,7 +147,11 @@ final class Task: Codable, Observable, Tree
     @discardableResult
     func create(at index: Int) -> Task?
     {
-        let taskBelowIsInProgress = self[index]?.state.value == .inProgress
+        let taskBelowIsInProgress: Bool =
+        {
+            guard branches.isValid(index: index) else { return false }
+            return self[index]?.state.value == .inProgress
+        }()
         
         let newSubtask = Task(state: taskBelowIsInProgress ? .inProgress : nil)
         
