@@ -47,6 +47,12 @@ class SelectionMenu: NSMenu
                                        modifiers: [])
     @objc private func goLeft() { Browser.active?.move(.left) }
     
+    private lazy var selectUpItem = item("Extend Selection Upwards",
+                                       action: #selector(selectUp),
+                                       key: String(unicode: NSUpArrowFunctionKey),
+                                       modifiers: [.shift])
+    @objc private func selectUp() {  }
+    
     private lazy var selectAllItem = item("Select All",
                                           action: #selector(selectAll),
                                           key: "a")
