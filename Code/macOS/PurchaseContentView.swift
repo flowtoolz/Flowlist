@@ -155,7 +155,7 @@ class PurchaseContentView: NSView, Observer
         
         label.stringValue = "Loading infos from AppStore ..."
         label.font = Font.text.nsFont
-        label.textColor = .white
+        label.alignment = .center
         
         return label
     }()
@@ -170,15 +170,7 @@ class PurchaseContentView: NSView, Observer
         return view
     }()
     
-    private lazy var loadingIndicator: LayerBackedView =
-    {
-        let view = columns[1].addForAutoLayout(LayerBackedView())
-        
-        view.backgroundColor = .flowlistBlue
-        view.layer?.cornerRadius = CGFloat(Float.cornerRadius)
-        
-        return view
-    }()
+    private lazy var loadingIndicator: NSView = columns[1].addForAutoLayout(NSView())
     
     // MARK: - Title Label
     
@@ -256,8 +248,9 @@ class PurchaseContentView: NSView, Observer
         c2aButtonBackground.autoSetDimension(.height,
                                              toSize: CGFloat(Float.itemHeight))
     
-        c2aButtonBackground.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                         excludingEdge: .top)
+        c2aButtonBackground.autoPinEdge(toSuperviewEdge: .bottom)
+        c2aButtonBackground.autoAlignAxis(toSuperviewAxis: .vertical)
+        c2aButtonBackground.autoSetDimension(.width, toSize: 214)
         
         c2aButtonLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
         c2aButtonLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
