@@ -174,7 +174,7 @@ class PurchaseContentView: NSView, Observer
     {
         let view = columns[1].addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = Color.flowlistBlue.with(alpha: 0.5)
+        view.backgroundColor = .flowlistBlue
         view.layer?.cornerRadius = CGFloat(Float.cornerRadius)
         
         return view
