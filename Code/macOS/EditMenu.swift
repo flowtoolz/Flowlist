@@ -143,13 +143,6 @@ class EditMenu: NSMenu, Observer
         if !TextField.isEditing && !reachedTaskNumberLimit { list?.create(at: 0) }
     }
     
-    override func performKeyEquivalent(with event: NSEvent) -> Bool
-    {
-        guard event.key != .space else { return true }
-        
-        return super.performKeyEquivalent(with: event)
-    }
-    
     private lazy var renameItem = item("Rename Item",
                                        action: #selector(rename),
                                        key: "\n")
