@@ -36,9 +36,11 @@ class PriceTag: NSView, Observer
         guard let product = product else { return }
         
         let appStorePrice = product.formattedPrice ?? ""
-        discountPriceLabel.stringValue = appStorePrice
+        discountPriceLabel.stringValue = "Introductory Price " + appStorePrice
         
-        if summerDiscountIsAvailable
+        let discountAvailable = fullVersionPurchaseController.summerDiscountIsAvailable
+        
+        if discountAvailable
         {
             let roundedPrice = product.price.intValue
             let roundedPriceNumber = NSDecimalNumber(value: roundedPrice)
@@ -55,8 +57,8 @@ class PriceTag: NSView, Observer
             priceLabel.stringValue = appStorePrice
         }
 
-        stroke.isHidden = !summerDiscountIsAvailable
-        discountPriceLabel.isHidden = !summerDiscountIsAvailable
+        stroke.isHidden = !discountAvailable
+        discountPriceLabel.isHidden = !discountAvailable
     }
     
     // MARK: - Price Label
@@ -78,7 +80,7 @@ class PriceTag: NSView, Observer
     {
         let view = addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = discountRed
+        view.backgroundColor = .discountRed
         view.autoSetDimension(.height, toSize: 1.5)
         
         return view
@@ -95,7 +97,7 @@ class PriceTag: NSView, Observer
         discountPriceLabel.autoPinEdge(.top, to: .bottom, of: priceLabel)
     }
     
-    lazy var discountPriceLabel: Label = addPriceLabel(color: discountRed)
+    lazy var discountPriceLabel: Label = addPriceLabel(color: .discountRed)
     
     private func addPriceLabel(color: Color = .black) -> Label
     {
@@ -108,26 +110,7 @@ class PriceTag: NSView, Observer
         return label
     }
     
-    private let discountRed = Color(0.75, 0, 0, 0.75)
-    
     // MARK: - Product Information
-    
-    private var summerDiscountIsAvailable: Bool
-    {
-        guard let discountEnd = summerDiscountEnd else { return false }
-        
-        return Date() < discountEnd
-    }
-    
-    private let summerDiscountEnd: Date? =
-    {
-        var dateComponents = DateComponents()
-        dateComponents.day = 20
-        dateComponents.month = 9
-        dateComponents.year = 2018
-        
-        return Calendar.current.date(from: dateComponents)
-    }()
     
     private var product: SKProduct?
     {

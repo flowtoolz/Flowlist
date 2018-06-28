@@ -2,7 +2,7 @@ import AppKit.NSView
 import UIToolz
 import SwiftyToolz
 
-class PurchaseOverview: NSView
+class BulletpointList: NSView
 {
     override init(frame frameRect: NSRect)
     {
@@ -31,7 +31,7 @@ class PurchaseOverview: NSView
             
             if index == bulletpoints.count - 1
             {
-                label.autoPinEdge(toSuperviewEdge: .bottom)
+                label.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
             }
             
             if index > 0

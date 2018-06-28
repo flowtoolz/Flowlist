@@ -10,4 +10,5 @@ extension Color
     static let grayedOut = Color(0, 0, 0, 0.33)
     
     static let flowlistBlue = Color(36, 145, 241)
+    static let discountRed = Color(0.75, 0, 0, 0.75)
 }

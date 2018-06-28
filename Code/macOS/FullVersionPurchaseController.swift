@@ -132,7 +132,26 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
     var fullVersionProduct: SKProduct?
     private let fullVersionId = "com.flowtoolz.flowlist.full_version"
     
-    // MARK: Observability
+    // MARK: - Discount
+    
+    var summerDiscountIsAvailable: Bool
+    {
+        guard let discountEnd = summerDiscountEnd else { return false }
+        
+        return Date() < discountEnd
+    }
+    
+    private let summerDiscountEnd: Date? =
+    {
+        var dateComponents = DateComponents()
+        dateComponents.day = 20
+        dateComponents.month = 9
+        dateComponents.year = 2018
+        
+        return Calendar.current.date(from: dateComponents)
+    }()
+    
+    // MARK: - Observability
     
     var latestUpdate: Event { return .didNothing }
     

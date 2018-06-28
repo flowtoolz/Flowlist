@@ -1,5 +1,6 @@
 import AppKit.NSView
 import UIToolz
+import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
@@ -13,7 +14,7 @@ class PurchaseContentView: NSView, Observer
         
         constrainColumns()
         
-        constrainOverview()
+        constrainBulletpointList()
         
         constrainIcon()
         constrainPriceTag()
@@ -178,15 +179,15 @@ class PurchaseContentView: NSView, Observer
         return view
     }()
     
-    // MARK: - Overview
+    // MARK: - Bulletpoint List
     
-    private func constrainOverview()
+    private func constrainBulletpointList()
     {
-        overview.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                              excludingEdge: .bottom)
+        bulletpointList.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                                     excludingEdge: .bottom)
     }
     
-    private lazy var overview: PurchaseOverview = columns[0].addForAutoLayout(PurchaseOverview())
+    private lazy var bulletpointList: BulletpointList = columns[2].addForAutoLayout(BulletpointList())
     
     // MARK: - App Icon
     
@@ -225,6 +226,7 @@ class PurchaseContentView: NSView, Observer
     {
         c2aButtonBackground.autoSetDimension(.height,
                                              toSize: CGFloat(Float.itemHeight))
+    
         c2aButtonBackground.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                          excludingEdge: .top)
         
@@ -271,7 +273,11 @@ class PurchaseContentView: NSView, Observer
     {
         let view = columns[1].addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = Color.flowlistBlue
+        var color = Color.flowlistBlue
+        color.red = 0.75 * color.red
+        color.green = 0.75 * color.green
+        color.blue = 0.75 * color.blue
+        view.backgroundColor = color
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         view.isHidden = true
         
@@ -288,14 +294,22 @@ class PurchaseContentView: NSView, Observer
     
     private lazy var descriptionLabel: Label =
     {
-        let label = columns[2].addForAutoLayout(Label())
+        let label = columns[0].addForAutoLayout(Label())
         
         label.lineBreakMode = .byWordWrapping
         label.font = Font.text.nsFont
-        label.stringValue = "ljhrebf ueg rgw rtgu hwrögh wöjthb öwrut wur hvbjlhsfg vjzsftgblwrtb vul vbuljwzrtbv öwbv ljhrebf ueg rgw rtgu hwrögh wöjthb öwrut wur hvbjlhsfg vjzsftgblwrtb vul vbuljwzrtbv öwbv ljhrebf ueg rgw rtgu hwrögh wöjthb öwrut wur hvbjlhsfg vjzsftgblwrtb vul vbuljwzrtbv öwbv ljhrebf ueg rgw rtgu hwrögh wöjthb öwrut wur hvbjlhsfg vjzsftgblwrtb vul vbuljwzrtbv öwbv ljhrebf ueg rgw rtgu hwrögh wöjthb öwrut wur hvbjlhsfg vjzsftgblwrtb vul vbuljwzrtbv öwbv"
+        label.stringValue = productDescription
         
         return label
     }()
+    
+    private let productDescription = """
+        Flowlist is the most elegant app for capturing ideas and managing tasks. Its editable item hierarchy makes it radically simple yet immensely powerful.
+
+        Focus on what's important, and be in flow while organizing your thoughts and your life.
+        
+        I have many features planned, like a system wide shortcut for adding items, a synced iOS app, independent filters for search terms, colored tags and due dates, as well as turning Flowlist into a creative writing tool.
+        """
     
     // MARK: - Columns
     
