@@ -92,7 +92,8 @@ class PriceTag: NSView, Observer
     
     private func constrainDiscountPriceLabel()
     {
-        discountPriceLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        discountPriceLabel.autoPinEdge(toSuperviewEdge: .left)
+        discountPriceLabel.autoPinEdge(toSuperviewEdge: .right)
         
         discountPriceLabel.autoPinEdge(.top, to: .bottom, of: priceLabel)
     }
