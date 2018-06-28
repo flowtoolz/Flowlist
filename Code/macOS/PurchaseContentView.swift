@@ -14,15 +14,16 @@ class PurchaseContentView: NSView, Observer
         
         constrainColumns()
         
-        constrainBulletpointList()
+        constrainTitleLabel()
+        constrainDescriptionLabel()
         
         constrainIcon()
         constrainPriceTag()
         constrainC2aButton()
-        
-        constrainDescriptionLabel()
         constrainLoadingIndicator()
         constrainErrorView()
+        
+        constrainBulletpointList()
         
         observe(fullVersionPurchaseController)
         {
@@ -179,12 +180,40 @@ class PurchaseContentView: NSView, Observer
         return view
     }()
     
+    // MARK: - Title Label
+    
+    private func constrainTitleLabel()
+    {
+        titleLabel.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                                excludingEdge: .bottom)
+    }
+    
+    private lazy var titleLabel: Label =
+    {
+        let label = columns[0].addForAutoLayout(Label())
+
+        // TODO: specify weight in model class Font
+        if #available(OSX 10.11.0, *)
+        {
+            label.font = NSFont.systemFont(ofSize: 26, weight: .bold)
+        }
+        else
+        {
+            label.font = NSFont.systemFont(ofSize: 26)
+        }
+        
+        label.stringValue = "Flowlist Full Version"
+        
+        return label
+    }()
+    
     // MARK: - Bulletpoint List
     
     private func constrainBulletpointList()
     {
-        bulletpointList.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                     excludingEdge: .bottom)
+        bulletpointList.autoPinEdge(toSuperviewEdge: .left)
+        bulletpointList.autoPinEdge(toSuperviewEdge: .right)
+        bulletpointList.autoPinEdge(toSuperviewEdge: .top, withInset: 11)
     }
     
     private lazy var bulletpointList: BulletpointList = columns[2].addForAutoLayout(BulletpointList())
@@ -273,7 +302,7 @@ class PurchaseContentView: NSView, Observer
     {
         let view = columns[1].addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = Color.flowlistBlue
+        view.backgroundColor = .flowlistBlue
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         view.isHidden = true
         
@@ -284,8 +313,9 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainDescriptionLabel()
     {
-        descriptionLabel.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                      excludingEdge: .bottom)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .left)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .right)
+        descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 10)
     }
     
     private lazy var descriptionLabel: Label =
@@ -300,11 +330,9 @@ class PurchaseContentView: NSView, Observer
     }()
     
     private let productDescription = """
-        Flowlist is the most elegant app for capturing ideas and managing tasks. Its editable item hierarchy makes it radically simple yet immensely powerful.
-
-        Focus on what's important, and be in flow while organizing your thoughts and your life.
+        Flowlist is the most elegant app for capturing ideas and managing tasks. Its editable item hierarchy makes it simple yet powerful. Be in flow organizing your thoughts and your life!
         
-        I have many features planned, like a system wide shortcut for adding items, a synced iOS app, independent filters for search terms, colored tags and due dates, as well as turning Flowlist into a creative writing tool.
+        I have many features planned: A system wide shortcut for adding items, a synced iOS app, filters for search terms / colored tags / due dates, turning Flowlist into a creative writing tool and more.
         """
     
     // MARK: - Columns
