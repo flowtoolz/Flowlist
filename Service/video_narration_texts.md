@@ -2,7 +2,7 @@
 
 * Ever feel overwhelmed by all the things you want to accomplish? your errands? your projects? ideas and big dreams?
 * I certainly felt that way. And I tried all popular task managers to finally get organized.
-* But they just felt limiting and distracting. So I created Flowlist.
+* But they just felt rigid, cumbersome and distracting. So I created Flowlist.
 * With Flowlist, I
     * Quickly capture whatever pops into my head
     * I develop notes into Ideas,
@@ -21,14 +21,16 @@
     * Your hands never have to leave the keyboard for anything.
     * and The interface is super clean
     * With the overview to the left and details to the right, you focus on the list in the middle.
-    * Chose the scope of your focus by going deeper into details or back to a higher level.
-    * Work in fullscreen Or switch to monotasking mode (animation montage)
+    * Change the scope of your focus by going deeper into details or back to a higher level.
+    * Work in fullscreen or switch to monotasking mode (animation montage)
 * I've been using Flowlist daily for a year now, and it has changed my life
-* So I have many great things planned, like a shortcut for adding items when using other apps, a synchronized iOS app, and independent filters for keywords, tags, colors and due dates.
+* So I have many great things planned, like a shortcut for adding items when using other apps, a synchronized iOS app, as well as independent filters for keywords, tags, colors and due dates.
 * Flowlist is now available on the Mac AppStore.
 * Use it for free with up to 100 items, ...
-* Or, support further development and unlock the full version for less than 10 dollars. No subscription required.
-* Of course, I'll have to adjust the price when adding features, but I reward those who get onboard early.
+* Or, support further development and unlock the full version.
+* No subscription required.
+* I even offer an introductory price over the whole summer. 
+* Of course, I'll have to adjust the price when adding features, but I also reward those who get onboard early.
 * Once you have the full version, you get all new features as free updates.
 * Sounds fair? Go to flowlistapp.com and start organizing your thoughts and your life today!
 
@@ -93,11 +95,11 @@ I need to evolve my captured items to keep them in line with reality. I need a t
 
 So a year ago, I prototyped a novel kind of task manager and named it "Flowlist". And I've been happily using it every day since. This year, I decided to turn Flowlist into much more and make it available to you. More is to come at [flowlistapp.com](http://flowlistapp.com).
 
-#Flowlist Light
+#Flowlist Trial Version
 
-Want to try it yourself? Go to flowlistapp.com and download Flowlist Light for free.
+Want to try it yourself? Go to flowlistapp.com and download Flowlist for free from the AppStore.
 
-Flowlist Light has just 1 limitation: It cannot hold more than 100 items at the same time. Other than that, it has all features, it saves all your items, you can use it forever, and it is totally free, you don't even have to give away your email. Go to flowlistapp.com and start organizing your thoughts and your life today!
+The free trial version has just 1 limitation: It cannot hold more than 100 items at the same time. Other than that, it has all features, it saves all your items, you can use it forever, and it is totally free, you don't even have to give away your email. Go to flowlistapp.com and start organizing your thoughts and your life today!
 
 #Flowlist Future Development
 
@@ -122,13 +124,3 @@ Now, as I'll make Flowlist more and more powerful, I'll have to adjust the price
 ##The Big Idea
 
 Flow, Simplicity, Simple (Universal) Domain Model leads to great Applicability and Power, etc...
-
-##Flowlist Light
-
-### Migration
-
-how to migrate from light to the app store version
-
-### Copy It As You Please
-
-Because it is not distributed via the AppStore, you can treat the Flowlist Light app like a file: duplicate it, put it on a usb stick, rename it whatever. Every copy of the app is self-contained: it contains its own data. No need to import, export or find files on your machine. The app is like a file that opens itself. The root task list is named by the app filename so it's easy to work with multiple different copies.
