@@ -150,10 +150,19 @@ final class Task: Codable, Observable, Tree
         let taskBelowIsInProgress: Bool =
         {
             guard branches.isValid(index: index) else { return false }
-            return self[index]?.state.value == .inProgress
+            return self[index]?.isInProgress ?? false
         }()
         
-        let newSubtask = Task(state: taskBelowIsInProgress ? .inProgress : nil)
+        let taskAboveIsInProgress: Bool =
+        {
+            guard index > 0 else { return true }
+            
+            return self[index - 1]?.isInProgress ?? false
+        }()
+        
+        let shouldBeInProgress = taskBelowIsInProgress && taskAboveIsInProgress
+        
+        let newSubtask = Task(state: shouldBeInProgress ? .inProgress : nil)
         
         guard insert(branch: newSubtask, at: index) else { return nil }
         
