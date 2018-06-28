@@ -18,23 +18,49 @@ class ViewController: NSViewController, Observer
             {
                 [weak self] in self?.togglePurchaseView()
             }
+            
+            observe(fullVersionPurchaseController, select: .didPurchaseFullVersion)
+            {
+                [weak self] in self?.didPurchaseFullVersion()
+            }
         }
     }
     
     // MARK: - Purchase View
     
+    private func didPurchaseFullVersion()
+    {
+        guard isFullVersion else { return }
+        
+        set(purchaseViewHeight: 0) { self.removePurchaseView() }
+    }
+    
+    private func removePurchaseView()
+    {
+        view.removeConstraints(view.constraints)
+        purchaseView.removeFromSuperview()
+        
+        constrainBrowserView()
+    }
+    
     private func togglePurchaseView()
     {
         purchaseView.isExpanded = !purchaseView.isExpanded
         
+        set(purchaseViewHeight: purchaseViewHeight)
+    }
+    
+    private func set(purchaseViewHeight: CGFloat,
+                     completionHandler: (() -> Void)? = nil)
+    {
         NSAnimationContext.beginGrouping()
-
+        
         let context = NSAnimationContext.current
         context.allowsImplicitAnimation = true
         context.duration = 0.3
+        context.completionHandler = completionHandler
         
         purchaseViewHeightConstraint?.constant = purchaseViewHeight
-
         view.layoutSubtreeIfNeeded()
         
         NSAnimationContext.endGrouping()
