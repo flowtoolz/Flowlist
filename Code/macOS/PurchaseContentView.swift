@@ -290,7 +290,7 @@ class PurchaseContentView: NSView, Observer
     {
         let label = c2aButtonBackground.addForAutoLayout(Label())
         
-        label.stringValue = "Purchase or Restore Full Version"
+        label.stringValue = "Purchase the Full Version"
         label.alignment = .center
         label.textColor = .white
         label.font = Font.text.nsFont
@@ -330,9 +330,9 @@ class PurchaseContentView: NSView, Observer
     }()
     
     private let productDescription = """
-        Flowlist is the most elegant app for capturing ideas and managing tasks. Its editable item hierarchy makes it simple yet powerful. Be in flow organizing your thoughts and your life!
+        Flowlist is an elegant app for capturing ideas and managing tasks. Its editable item hierarchy makes it simple yet powerful. Be in a flow state while organizing your thoughts and your life!
         
-        I have many features planned: A system wide shortcut for adding items, a synced iOS app, filters for search terms / colored tags / due dates, turning Flowlist into a creative writing tool and more.
+        I have many features planned: A system wide shortcut for adding items, a synced iOS app, filters for search terms / colored tags / due dates, extensions that will make Flowlist a creative writing tool, and more.
         """
     
     // MARK: - Columns
