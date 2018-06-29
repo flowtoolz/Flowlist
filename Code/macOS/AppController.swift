@@ -1,4 +1,5 @@
 import AppKit
+import FoundationToolz
 
 class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
 {
@@ -12,8 +13,9 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
         
         NSApp.activate(ignoringOtherApps: true)
         NSApp.mainMenu = menu
-        store.load()
         fullVersionPurchaseController.setup()
+        networkReachability.setup()
+        store.load()
     }
     
     func applicationWillBecomeActive(_ notification: Notification)
