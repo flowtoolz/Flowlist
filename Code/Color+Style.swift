@@ -2,9 +2,9 @@ import SwiftyToolz
 
 extension Color
 {
-    static let backlog = Color.gray(brightness: 0.97)
-    static let background = Color.gray(brightness: 0.9)
-    static let done = Color.gray(brightness: 0.87)
+    static let backlog = Color.white
+    static let background = Color.gray(brightness: 0.94)
+    static let done = Color.gray(brightness: 0.88)
     
     static let border = Color(0, 0, 0, 0.15)
     static let grayedOut = Color(0, 0, 0, 0.33)
