@@ -1,4 +1,37 @@
-#Flowlist Promo Video / Teaser
+#Flowlist Teaser Video
+
+* INTRO sentence wrtoijwrtüiuhwrth wurt göwrh tgibu
+* With Flowlist, I
+    * Quickly capture whatever pops into my head
+    * I develop notes into Ideas,
+    * Manage Tasks and Projects
+    * and Plan my Day and my Future
+* Now, Flowlist can do all these things, not because it's packed with menus, knobs and buttons, but because it is so radically simple.
+    * Write and delete items just like lines in a text
+    * prioritize
+    * check items off
+    * Group them together
+    * Add sub items
+    * copy, cut and paste
+    * or copy text from a website or pdf and paste it as items into Flowlist
+    * There's no limit to how deeply nested your items can be, and you can edit this hierarchy in every way to keep it true to your life
+* Flowlist helps working in a flow state.
+    * Your hands never have to leave the keyboard for anything.
+    * and The interface is super clean
+    * With the overview to the left and details to the right, you focus on the list in the middle.
+    * Change the scope of your focus by going deeper into details or back to a higher level.
+    * Work in fullscreen or switch to monotasking mode (animation montage)
+* I have many things planned, like a shortcut for adding items when using other apps, a synchronized iOS app, keyword search, tags, colors, due dates and more.
+* Flowlist is now available on the Mac AppStore.
+* Use it for free with up to 100 items, ...
+* Or, support further development and unlock the full version.
+* No subscription required.
+* I also offer an introductory price over the whole summer. 
+* Of course, I'll have to adjust the price when adding features, but I also reward those who get onboard early.
+* Once you have the full version, you get all new features as free updates.
+* Sounds fair? Go to flowlistapp.com and start organizing your thoughts and your life today!
+
+#Flowlist Promo Video
 
 * Ever feel overwhelmed by all the things you want to accomplish? your errands? your projects? ideas and big dreams?
 * I certainly felt that way. And I tried all popular task managers to finally get organized.
