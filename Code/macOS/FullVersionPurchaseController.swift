@@ -1,5 +1,6 @@
 import Foundation
 import StoreKit
+import FoundationToolz
 import SwiftyToolz
 import SwiftObserver
 
@@ -93,6 +94,12 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
     
     func loadFullVersionProductFromAppStore()
     {
+        guard networkReachability.isReachable else
+        {
+            send(.didFailToLoadFullVersionProduct)
+            return
+        }
+        
         fullVersionProduct = nil
         
         productsRequest = SKProductsRequest(productIdentifiers: [fullVersionId])
