@@ -6,6 +6,10 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     func applicationDidFinishLaunching(_ aNotification: Notification)
     {
+        #if DEBUG
+        isFullVersion = true
+        #endif
+        
         NSApp.activate(ignoringOtherApps: true)
         NSApp.mainMenu = menu
         store.load()
