@@ -28,7 +28,8 @@ class Header: LayerBackedView
     {
         backgroundColor = root.backgroundColor
         
-        let textColor: Color = root.isDone ? .grayedOut : .black
+        let isUntitled = String(withNonEmpty: root.title.value) == nil
+        let textColor: Color = root.isDone || isUntitled ? .grayedOut : .black
         titleLabel.textColor = textColor.nsColor
     }
     
