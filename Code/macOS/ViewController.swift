@@ -8,6 +8,14 @@ class ViewController: NSViewController, Observer
     {
         view = LayerBackedView()
         
+        // For making screen shots and screen recordings
+//        #if DEBUG
+//        view.layer?.backgroundColor = NSColor.black.cgColor
+//        browserView.autoSetDimensions(to: CGSize(width: 960, height: 540))
+//        browserView.autoCenterInSuperview()
+//        return
+//        #endif
+        
         constrainBrowserView()
         
         if !isFullVersion
