@@ -3,12 +3,31 @@ import FoundationToolz
 
 class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
 {
+    // MARK: - Initialization
+    
+    override init()
+    {
+        super.init()
+        
+        initApp()
+        runApp()
+    }
+    
+    private func initApp() { _ = NSApplication.shared }
+    
     // MARK: - App Life Cycle
+    
+    private func runApp()
+    {
+        NSApp.mainMenu = menu // must be set before delegate on macOS 10.10
+        NSApp.delegate = self
+        NSApp.run()
+    }
     
     func applicationDidFinishLaunching(_ aNotification: Notification)
     {
         NSApp.activate(ignoringOtherApps: true)
-        NSApp.mainMenu = menu
+        
         fullVersionPurchaseController.setup()
         networkReachability.setup()
         store.load()
