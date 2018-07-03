@@ -10,6 +10,7 @@ class ViewController: NSViewController, Observer
         
         // For making screen shots and screen recordings
 //        #if DEBUG
+//        isFullVersion = true
 //        view.layer?.backgroundColor = NSColor.black.cgColor
 //        browserView.autoSetDimensions(to: CGSize(width: 960, height: 540))
 //        browserView.autoCenterInSuperview()

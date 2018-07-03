@@ -39,6 +39,7 @@ extension Store
         
         root = loadedRoot
     }
+    
     private func createFile()
     {
         root.title <- NSFullUserName()
