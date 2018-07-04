@@ -42,7 +42,13 @@ class PriceTag: NSView, Observer
         
         if discountAvailable
         {
-            let roundedPrice = product.price.intValue
+            var roundedPrice = product.price.intValue
+            
+            if Double(roundedPrice) < product.price.doubleValue
+            {
+                roundedPrice += 1
+            }
+            
             let roundedPriceNumber = NSDecimalNumber(value: roundedPrice)
             let regularPriceNumber = product.price.adding(roundedPriceNumber)
             
