@@ -117,7 +117,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-07-03 10:45:18 +0000</string>
+	<string>2018-07-04 12:25:54 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -457,6 +457,8 @@
 						</dict>
 						<key>shadow</key>
 						<dict>
+							<key>Draws</key>
+							<string>NO</string>
 							<key>Fuzziness</key>
 							<real>4</real>
 							<key>ShadowVector</key>
