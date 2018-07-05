@@ -214,8 +214,10 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainIcon()
     {
-        icon.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                          excludingEdge: .bottom)
+        icon.autoPinEdge(toSuperviewEdge: .top, withInset: 12)
+        icon.autoPinEdge(toSuperviewEdge: .left)
+        icon.autoPinEdge(toSuperviewEdge: .right)
+        
         icon.autoPinEdge(.bottom, to: .top, of: priceTag)
     }
     
@@ -250,7 +252,7 @@ class PurchaseContentView: NSView, Observer
     
         c2aButtonBackground.autoPinEdge(toSuperviewEdge: .bottom)
         c2aButtonBackground.autoAlignAxis(toSuperviewAxis: .vertical)
-        c2aButtonBackground.autoSetDimension(.width, toSize: 214)
+        c2aButtonBackground.autoSetDimension(.width, toSize: 200)
         
         c2aButtonLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
         c2aButtonLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
@@ -295,8 +297,8 @@ class PurchaseContentView: NSView, Observer
     {
         let view = columns[1].addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = .flowlistBlue
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
+        view.backgroundColor = Color(0.3, 0.6, 0.15)
         view.isHidden = true
         
         return view

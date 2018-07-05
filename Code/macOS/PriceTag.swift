@@ -15,7 +15,7 @@ class PriceTag: NSView, Observer
         constrainDiscountPriceLabel()
         constrainPriceLabel()
         
-        autoSetDimension(.height, toSize: 60, relation: .lessThanOrEqual)
+        autoSetDimension(.height, toSize: 90)
         
         update()
         
