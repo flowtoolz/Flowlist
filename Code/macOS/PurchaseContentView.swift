@@ -306,9 +306,12 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainDescriptionLabel()
     {
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .left)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .right)
-        descriptionLabel.autoPinEdge(.top, to: .bottom, of: titleLabel, withOffset: 10)
+        descriptionLabel.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
+                                                      excludingEdge: .top)
+        descriptionLabel.autoPinEdge(.top,
+                                     to: .bottom,
+                                     of: titleLabel,
+                                     withOffset: 10)
     }
     
     private lazy var descriptionLabel: Label =
