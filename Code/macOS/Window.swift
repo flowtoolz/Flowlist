@@ -34,6 +34,8 @@ class Window: NSWindow
         title = "Flowlist"
         #endif
         
+        collectionBehavior = [.managed, .fullScreenPrimary] // required for macOS 10.10 ?
+        
         isReleasedWhenClosed = false
         contentViewController = ViewController()
         initializeFrame()
