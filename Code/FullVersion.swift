@@ -15,6 +15,10 @@ var isFullVersion: Bool
         
         return true
         
+        #elseif DEBUG
+        
+        return false
+        
         #else
         
         if let fullVersion = isFullVersion_Cached { return fullVersion }
