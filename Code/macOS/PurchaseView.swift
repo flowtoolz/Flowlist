@@ -101,6 +101,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         expandIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
         expandIcon.autoAlignAxis(.horizontal, toSameAxisOf: itemLabel)
+        expandIcon.autoSetDimensions(to: CGSize(width: 18, height: 18))
     }
     
     private lazy var expandIcon: Icon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "expand_indicator")))
