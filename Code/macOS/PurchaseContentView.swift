@@ -221,7 +221,7 @@ class PurchaseContentView: NSView, Observer
     
     private lazy var icon: NSImageView =
     {
-        let image = NSImage(named: NSImage.Name("AppIcon"))
+        let image = NSImage(named: .applicationIcon)
         let imageView = NSImageView(withAspectFillImage: image)
         
         return columns[1].addForAutoLayout(imageView)
