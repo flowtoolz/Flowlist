@@ -54,7 +54,6 @@ class PurchaseContentView: NSView, Observer
             
         case .didPurchaseFullVersion:
             showPriceAndC2aButton()
-            isFullVersion = true
         }
     }
     
