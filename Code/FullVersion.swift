@@ -11,16 +11,6 @@ var isFullVersion: Bool
 {
     get
     {
-        #if BETA
-        
-        return true
-        
-        #elseif DEBUG
-        
-        return false
-        
-        #else
-        
         if let fullVersion = isFullVersion_Cached { return fullVersion }
         
         let fullVersion = UserDefaults.standard.string(forKey: userNameKey) != nil
@@ -28,8 +18,6 @@ var isFullVersion: Bool
         isFullVersion_Cached = fullVersion
         
         return fullVersion
-        
-        #endif
     }
     
     set
