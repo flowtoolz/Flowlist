@@ -109,9 +109,11 @@
 	<key>GuidesVisible</key>
 	<string>YES</string>
 	<key>ImageCounter</key>
-	<integer>17</integer>
+	<integer>21</integer>
 	<key>ImageLinkBack</key>
 	<array>
+		<dict/>
+		<dict/>
 		<dict/>
 		<dict/>
 		<dict/>
@@ -126,6 +128,8 @@
 	</array>
 	<key>ImageList</key>
 	<array>
+		<string>image20.png</string>
+		<string>image19.png</string>
 		<string>image16.png</string>
 		<string>image15.png</string>
 		<string>image14.png</string>
@@ -145,7 +149,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-07-02 19:16:14 +0000</string>
+	<string>2018-07-07 11:26:06 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -208,7 +212,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-1636.7073170731712, -3103.5121951219512}, {8031.7073170731719, 16309.756097560976}}</string>
+				<string>{{-2356.6129032258045, -3561.4193548387093}, {9470.967741935483, 17225.806451612905}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -245,6 +249,90 @@
 			<array>
 				<dict>
 					<key>Bounds</key>
+					<string>{{1694.99755859375, 0}, {705, 48}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>194</integer>
+					<key>ImageID</key>
+					<integer>19</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{959.9990234375, 0}, {442, 323}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>193</integer>
+					<key>ImageID</key>
+					<integer>20</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{1394.9978637695312, 0}, {705, 48}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>192</integer>
+					<key>ImageID</key>
+					<integer>19</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>Bounds</key>
 					<string>{{1228.5353356338132, 6959.992919921875}, {1261.4621314072024, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
@@ -253,21 +341,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>395</integer>
+					<integer>3</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -305,12 +393,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 check, uncheck, delete}</string>
+\f0\fs100 \cf2 check, uncheck, delete}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -339,7 +427,7 @@
 						<real>45</real>
 					</dict>
 					<key>ID</key>
-					<integer>394</integer>
+					<integer>4</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -385,7 +473,7 @@
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>393</integer>
+					<integer>5</integer>
 					<key>ImageID</key>
 					<integer>16</integer>
 					<key>Style</key>
@@ -434,21 +522,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>391</integer>
+					<integer>6</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -486,12 +574,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 rename, group,  start, pause,}</string>
+\f0\fs100 \cf2 rename, group,  start, pause,}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -505,7 +593,7 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>388</integer>
+							<integer>8</integer>
 							<key>Points</key>
 							<array>
 								<string>{1213.9012041789726, 6734.627295517339}</string>
@@ -528,17 +616,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -546,7 +623,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -556,7 +633,7 @@
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>389</integer>
+							<integer>9</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -573,27 +650,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>387</integer>
+					<integer>7</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -625,21 +691,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>390</integer>
+					<integer>10</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -677,14 +743,14 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Remove from selection via 
-\f1 \cf3 \uc0\u8984 
-\f0 Click}</string>
+\f0\fs100 \cf2 Remove from selection via 
+\f1\b \cf2 \uc0\u8984 
+\f0 \cf2 Click}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -696,7 +762,7 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>372</integer>
+							<integer>12</integer>
 							<key>Points</key>
 							<array>
 								<string>{1213.9012041789726, 6494.627539657964}</string>
@@ -719,17 +785,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -737,7 +792,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -747,7 +802,7 @@
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>373</integer>
+							<integer>13</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -764,27 +819,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>371</integer>
+					<integer>11</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -816,21 +860,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>LucidaGrande-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>374</integer>
+					<integer>14</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -868,15 +912,15 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Extend selection up or down via 
-\f1 \cf3 \uc0\u8679 \u8593 
-\f0 \cf2  or 
-\f1 \cf3 \uc0\u8679 \u8595 }</string>
+\f0\fs100 \cf2 Extend selection up or down via 
+\f1\b \cf2 \uc0\u8679 \u8593 
+\f0\b0 \cf2  or 
+\f1\b \cf2 \uc0\u8679 \u8595 }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -888,7 +932,7 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>376</integer>
+							<integer>16</integer>
 							<key>Points</key>
 							<array>
 								<string>{1213.9012041789726, 6854.6271734470265}</string>
@@ -911,17 +955,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -929,7 +962,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -939,7 +972,7 @@
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>377</integer>
+							<integer>17</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -956,27 +989,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>375</integer>
+					<integer>15</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -1008,21 +1030,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>378</integer>
+					<integer>18</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -1060,12 +1082,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Rapidly effect multiple items:}</string>
+\f0\fs100 \cf2 Rapidly effect multiple items:}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -1078,21 +1100,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>90</real>
+						<real>100</real>
 					</dict>
 					<key>ID</key>
-					<integer>379</integer>
+					<integer>19</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -1128,12 +1150,13 @@
 						<real>0.0</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs180 \cf2 Batch Processing}</string>
+\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
+Batch Processing}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -1147,7 +1170,7 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>381</integer>
+							<integer>21</integer>
 							<key>Points</key>
 							<array>
 								<string>{1213.9012041789731, 6614.6274175876515}</string>
@@ -1170,17 +1193,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -1188,7 +1200,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -1198,7 +1210,7 @@
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>382</integer>
+							<integer>22</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -1215,27 +1227,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>380</integer>
+					<integer>20</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -1267,21 +1268,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>383</integer>
+					<integer>23</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -1319,14 +1320,14 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Add to selection via 
-\f1 \cf3 \uc0\u8984 
-\f0 Click}</string>
+\f0\fs100 \cf2 Add to selection via 
+\f1\b \cf2 \uc0\u8984 
+\f0 \cf2 Click}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -1349,7 +1350,7 @@
 						<real>33</real>
 					</dict>
 					<key>ID</key>
-					<integer>384</integer>
+					<integer>24</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -1357,11 +1358,26 @@
 							<key>Color</key>
 							<dict>
 								<key>b</key>
-								<real>0.95686300000000002</real>
+								<real>1</real>
 								<key>g</key>
-								<real>0.64313699999999996</real>
+								<real>1</real>
 								<key>r</key>
-								<real>0.16078400000000001</real>
+								<real>0.99999600649999998</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>FillType</key>
+							<integer>2</integer>
+							<key>GradientAngle</key>
+							<real>90</real>
+							<key>GradientColor</key>
+							<dict>
+								<key>b</key>
+								<string>0.941176</string>
+								<key>g</key>
+								<string>0.941176</string>
+								<key>r</key>
+								<string>0.941176</string>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
@@ -1387,7 +1403,7 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>369</integer>
+							<integer>26</integer>
 							<key>Points</key>
 							<array>
 								<string>{1318.9010973674492, 10694.623267197027}</string>
@@ -1410,17 +1426,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -1428,7 +1433,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -1438,7 +1443,7 @@
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>370</integer>
+							<integer>27</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -1455,27 +1460,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>368</integer>
+					<integer>25</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -1506,7 +1500,7 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>366</integer>
+							<integer>29</integer>
 							<key>Points</key>
 							<array>
 								<string>{1318.9010973674492, 10574.623389267339}</string>
@@ -1529,17 +1523,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -1547,7 +1530,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -1557,7 +1540,7 @@
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>367</integer>
+							<integer>30</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -1574,27 +1557,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>365</integer>
+					<integer>28</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -1625,7 +1597,7 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>363</integer>
+							<integer>32</integer>
 							<key>Points</key>
 							<array>
 								<string>{1318.9010973674492, 10454.623511337652}</string>
@@ -1648,17 +1620,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -1666,7 +1627,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -1676,7 +1637,7 @@
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>364</integer>
+							<integer>33</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -1693,27 +1654,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>362</integer>
+					<integer>31</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -1745,21 +1695,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>354</integer>
+					<integer>34</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -1797,14 +1747,14 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Toggle fullscreen mode via 
-\f1 \cf3 \uc0\u8984 
-\f0 F}</string>
+\f0\fs100 \cf2 Toggle fullscreen mode via 
+\f1\b \cf2 \uc0\u8984 
+\f0 \cf2 F}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -1817,21 +1767,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>355</integer>
+					<integer>35</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -1869,12 +1819,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Dont\'92t worry, Flowlist auto-saves}</string>
+\f0\fs100 \cf2 Dont\'92t worry, Flowlist auto-saves}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -1887,21 +1837,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>90</real>
+						<real>100</real>
 					</dict>
 					<key>ID</key>
-					<integer>356</integer>
+					<integer>36</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -1937,12 +1887,13 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs180 \cf2 Get Into Flow}</string>
+\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
+Get Into Flow}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -1957,21 +1908,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>357</integer>
+					<integer>37</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -2009,14 +1960,15 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Toggle monotasking mode via 
-\f1 \cf3 \uc0\u8984 
-\f0 M\cf2  }</string>
+\f0\fs100 \cf2 Toggle monotasking mode via 
+\f1\b \cf2 \uc0\u8984 
+\f0 \cf2 M
+\b0  }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -2039,7 +1991,7 @@
 						<real>33</real>
 					</dict>
 					<key>ID</key>
-					<integer>361</integer>
+					<integer>38</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -2047,11 +1999,26 @@
 							<key>Color</key>
 							<dict>
 								<key>b</key>
-								<real>0.95686300000000002</real>
+								<real>1</real>
 								<key>g</key>
-								<real>0.64313699999999996</real>
+								<real>1</real>
 								<key>r</key>
-								<real>0.16078400000000001</real>
+								<real>0.99999600649999998</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>FillType</key>
+							<integer>2</integer>
+							<key>GradientAngle</key>
+							<real>90</real>
+							<key>GradientColor</key>
+							<dict>
+								<key>b</key>
+								<string>0.941176</string>
+								<key>g</key>
+								<string>0.941176</string>
+								<key>r</key>
+								<string>0.941176</string>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
@@ -2097,7 +2064,7 @@
 								<real>12</real>
 							</dict>
 							<key>ID</key>
-							<integer>341</integer>
+							<integer>40</integer>
 							<key>Points</key>
 							<array>
 								<string>{1709.9982604980469, 9569.9902648925781}</string>
@@ -2128,7 +2095,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -2156,7 +2123,7 @@
 								<real>12</real>
 							</dict>
 							<key>ID</key>
-							<integer>342</integer>
+							<integer>41</integer>
 							<key>Points</key>
 							<array>
 								<string>{1709.9982604980469, 9509.9903259277344}</string>
@@ -2187,7 +2154,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -2215,7 +2182,7 @@
 								<real>12</real>
 							</dict>
 							<key>ID</key>
-							<integer>343</integer>
+							<integer>42</integer>
 							<key>Points</key>
 							<array>
 								<string>{1619.9983520507812, 9539.9902954101562}</string>
@@ -2246,13 +2213,13 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>344</integer>
+					<integer>39</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -2278,7 +2245,7 @@
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>333</integer>
+					<integer>43</integer>
 					<key>ImageID</key>
 					<integer>15</integer>
 					<key>Style</key>
@@ -2323,7 +2290,7 @@
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>332</integer>
+					<integer>44</integer>
 					<key>ImageID</key>
 					<integer>14</integer>
 					<key>ManualSizeImage</key>
@@ -2368,11 +2335,11 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1154.9988250732422, 9329.9905090332031}, {58.536525819359724, 58.53652581935976}}</string>
+					<string>{{1184.9987945556641, 9329.9905090332031}, {58.536525819359724, 58.53652581935976}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>329</integer>
+					<integer>45</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Shape</key>
@@ -2391,29 +2358,18 @@
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.999996</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
 							<key>Width</key>
-							<real>6</real>
+							<real>4</real>
 						</dict>
 					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1154.9988250732422, 9209.9906311035156}, {58.536525819359724, 58.53652581935976}}</string>
+					<string>{{1184.9987945556641, 9209.9906311035156}, {58.536525819359724, 58.53652581935976}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>328</integer>
+					<integer>46</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Shape</key>
@@ -2432,29 +2388,18 @@
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.999996</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
 							<key>Width</key>
-							<real>6</real>
+							<real>4</real>
 						</dict>
 					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1154.9988250732422, 9089.9907531738281}, {58.536525819359724, 58.53652581935976}}</string>
+					<string>{{1184.9987945556641, 9089.9907531738281}, {58.536525819359724, 58.53652581935976}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>308</integer>
+					<integer>47</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Shape</key>
@@ -2473,25 +2418,14 @@
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.999996</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
 							<key>Width</key>
-							<real>6</real>
+							<real>4</real>
 						</dict>
 					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1213.5353508926019, 9089.9907531738281}, {1201.4621924423591, 59.99993896484375}}</string>
+					<string>{{1243.5353203750237, 9089.9907531738281}, {1201.4621924423591, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -2499,21 +2433,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>309</integer>
+					<integer>48</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -2551,17 +2485,17 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Copy text from any document or web page}</string>
+\f0\fs100 \cf2 Copy text from any document or web page}</string>
 					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1213.5353508926023, 9329.9905090332031}, {1201.4621924423586, 59.99993896484375}}</string>
+					<string>{{1243.5353203750242, 9329.9905090332031}, {1201.4621924423586, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -2569,21 +2503,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>313</integer>
+					<integer>49</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -2621,12 +2555,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Flowlist will paste the text as separate items}</string>
+\f0\fs100 \cf2 Flowlist will paste the text as separate items}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -2639,21 +2573,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>90</real>
+						<real>100</real>
 					</dict>
 					<key>ID</key>
-					<integer>314</integer>
+					<integer>50</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -2689,19 +2623,20 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs180 \cf2 Import From Anywhere}</string>
+\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
+Import From Anywhere}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1213.5353508926028, 9209.9906311035156}, {1261.4621314072019, 59.99993896484375}}</string>
+					<string>{{1243.5353203750246, 9209.9906311035156}, {1261.4621314072019, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -2709,21 +2644,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>318</integer>
+					<integer>51</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -2761,14 +2696,15 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Go to one of your subitem lists and press 
-\f1 \cf3 \uc0\u8984 
-\f0 V\cf2  }</string>
+\f0\fs100 \cf2 Go to one of your subitem lists and press 
+\f1\b \cf2 \uc0\u8984 
+\f0 \cf2 V
+\b0  }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -2777,7 +2713,7 @@
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>304</integer>
+					<integer>52</integer>
 					<key>ImageID</key>
 					<integer>13</integer>
 					<key>ManualSizeImage</key>
@@ -2829,12 +2765,12 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>291</integer>
+							<integer>54</integer>
 							<key>Points</key>
 							<array>
-								<string>{1123.901295731707, 7724.6262884372609}</string>
-								<string>{1101.9500985494469, 7753.8945513469416}</string>
-								<string>{1094.633032822027, 7739.2604198921017}</string>
+								<string>{1153.9012652141289, 7724.6262884372609}</string>
+								<string>{1131.9500680318688, 7753.8945513469416}</string>
+								<string>{1124.6330023044488, 7739.2604198921017}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -2852,17 +2788,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -2870,17 +2795,17 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1079.9989013671875, 7709.9921569824219}, {58.536525819359724, 58.53652581935976}}</string>
+							<string>{{1109.9988708496094, 7709.9921569824219}, {58.536525819359724, 58.53652581935976}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>292</integer>
+							<integer>55</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -2897,27 +2822,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>290</integer>
+					<integer>53</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -2941,7 +2855,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1138.5354271865472, 7709.9921569824219}, {1201.4621924423591, 59.99993896484375}}</string>
+					<string>{{1168.535396668969, 7709.9921569824219}, {1201.4621924423591, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -2949,21 +2863,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>293</integer>
+					<integer>56</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -3001,12 +2915,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 The universal item structure covers many use cases}</string>
+\f0\fs100 \cf2 The universal item structure covers many use cases}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -3018,12 +2932,12 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>295</integer>
+							<integer>58</integer>
 							<key>Points</key>
 							<array>
-								<string>{1123.901295731707, 7964.6260442966359}</string>
-								<string>{1101.9500985494469, 7993.8943072063166}</string>
-								<string>{1094.633032822027, 7979.2601757514767}</string>
+								<string>{1153.9012652141289, 7964.6260442966359}</string>
+								<string>{1131.9500680318688, 7993.8943072063166}</string>
+								<string>{1124.6330023044488, 7979.2601757514767}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -3041,17 +2955,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -3059,17 +2962,17 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1079.9989013671875, 7949.9919128417969}, {58.536525819359724, 58.53652581935976}}</string>
+							<string>{{1109.9988708496094, 7949.9919128417969}, {58.536525819359724, 58.53652581935976}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>296</integer>
+							<integer>59</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -3086,27 +2989,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>294</integer>
+					<integer>57</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -3130,7 +3022,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1138.5354271865476, 7949.9919128417969}, {1201.4621924423586, 59.99993896484375}}</string>
+					<string>{{1168.5353966689695, 7949.9919128417969}, {1201.4621924423586, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -3138,21 +3030,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>297</integer>
+					<integer>60</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -3190,12 +3082,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Just put new subitems into an item to add details}</string>
+\f0\fs100 \cf2 Just put new subitems into an item to add details}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -3208,21 +3100,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>90</real>
+						<real>100</real>
 					</dict>
 					<key>ID</key>
-					<integer>298</integer>
+					<integer>61</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -3258,12 +3150,13 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs180 \cf2 Structured Descriptions}</string>
+\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
+Structured Descriptions}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -3277,12 +3170,12 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>300</integer>
+							<integer>63</integer>
 							<key>Points</key>
 							<array>
-								<string>{1123.9012957317075, 7844.6261663669484}</string>
-								<string>{1101.9500985494474, 7873.8944292766291}</string>
-								<string>{1094.6330328220274, 7859.2602978217892}</string>
+								<string>{1153.9012652141294, 7844.6261663669484}</string>
+								<string>{1131.9500680318693, 7873.8944292766291}</string>
+								<string>{1124.6330023044493, 7859.2602978217892}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -3300,17 +3193,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -3318,17 +3200,17 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1079.998901367188, 7829.9920349121094}, {58.536525819359724, 58.53652581935976}}</string>
+							<string>{{1109.9988708496098, 7829.9920349121094}, {58.536525819359724, 58.53652581935976}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>301</integer>
+							<integer>64</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -3345,27 +3227,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>299</integer>
+					<integer>62</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -3389,7 +3260,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1138.5354271865481, 7829.9920349121094}, {1261.4621314072019, 59.99993896484375}}</string>
+					<string>{{1168.53539666897, 7829.9920349121094}, {1261.4621314072019, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -3397,21 +3268,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>302</integer>
+					<integer>65</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -3449,12 +3320,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Dedicated description texts aren\'92t even necessary}</string>
+\f0\fs100 \cf2 Dedicated description texts aren\'92t even necessary}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -3477,7 +3348,7 @@
 						<real>33</real>
 					</dict>
 					<key>ID</key>
-					<integer>303</integer>
+					<integer>66</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -3485,11 +3356,26 @@
 							<key>Color</key>
 							<dict>
 								<key>b</key>
-								<real>0.95686300000000002</real>
+								<real>1</real>
 								<key>g</key>
-								<real>0.64313699999999996</real>
+								<real>1</real>
 								<key>r</key>
-								<real>0.16078400000000001</real>
+								<real>0.99999600649999998</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>FillType</key>
+							<integer>2</integer>
+							<key>GradientAngle</key>
+							<real>90</real>
+							<key>GradientColor</key>
+							<dict>
+								<key>b</key>
+								<string>0.941176</string>
+								<key>g</key>
+								<string>0.941176</string>
+								<key>r</key>
+								<string>0.941176</string>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
@@ -3515,12 +3401,12 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>287</integer>
+							<integer>68</integer>
 							<key>Points</key>
 							<array>
-								<string>{1153.9012652141289, 5669.6283788913624}</string>
-								<string>{1131.9500680318688, 5698.8966418010432}</string>
-								<string>{1124.6330023044488, 5684.2625103462033}</string>
+								<string>{1183.9012346965508, 5669.6283788913624}</string>
+								<string>{1161.9500375142907, 5698.8966418010432}</string>
+								<string>{1154.6329717868707, 5684.2625103462033}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -3538,17 +3424,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -3556,17 +3431,17 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1109.9988708496094, 5654.9942474365234}, {58.536525819359724, 58.53652581935976}}</string>
+							<string>{{1139.9988403320312, 5654.9942474365234}, {58.536525819359724, 58.53652581935976}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>288</integer>
+							<integer>69</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -3583,27 +3458,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>286</integer>
+					<integer>67</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -3627,7 +3491,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1168.5353966689693, 5654.9942474365234}, {1141.4622534775147, 59.99993896484375}}</string>
+					<string>{{1198.5353661513911, 5654.9942474365234}, {1141.4622534775147, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -3635,21 +3499,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>289</integer>
+					<integer>70</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -3687,12 +3551,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Evolve your item hierarchy in every possible way }</string>
+\f0\fs100 \cf2 Evolve your item hierarchy in every possible way }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -3704,12 +3568,12 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>279</integer>
+							<integer>72</integer>
 							<key>Points</key>
 							<array>
-								<string>{1153.9012652141289, 5909.6281347507374}</string>
-								<string>{1131.9500680318688, 5938.8963976604182}</string>
-								<string>{1124.6330023044488, 5924.2622662055783}</string>
+								<string>{1183.9012346965508, 5909.6281347507374}</string>
+								<string>{1161.9500375142907, 5938.8963976604182}</string>
+								<string>{1154.6329717868707, 5924.2622662055783}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -3727,17 +3591,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -3745,17 +3598,17 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1109.9988708496094, 5894.9940032958984}, {58.536525819359724, 58.53652581935976}}</string>
+							<string>{{1139.9988403320312, 5894.9940032958984}, {58.536525819359724, 58.53652581935976}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>280</integer>
+							<integer>73</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -3772,27 +3625,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>278</integer>
+					<integer>71</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -3816,7 +3658,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1168.5353966689695, 5894.9940032958984}, {1201.4621924423586, 59.99993896484375}}</string>
+					<string>{{1198.5353661513914, 5894.9940032958984}, {1111.462283995093, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -3824,21 +3666,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>281</integer>
+					<integer>74</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -3876,16 +3718,17 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Move items to a different level using 
-\f1 \cf3 \uc0\u8984 
-\f0 X\cf2  and 
-\f1 \cf3 \uc0\u8984 
-\f0 V}</string>
+\f0\fs100 \cf2 Move items to a different level using 
+\f1\b \cf2 \uc0\u8984 
+\f0 \cf2 X
+\b0  and 
+\f1\b \cf2 \uc0\u8984 
+\f0 \cf2 V}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -3898,21 +3741,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>90</real>
+						<real>100</real>
 					</dict>
 					<key>ID</key>
-					<integer>269</integer>
+					<integer>75</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -3948,12 +3791,13 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs180 \cf2 Total Control}</string>
+\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
+Total Control}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -3965,12 +3809,12 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>272</integer>
+							<integer>77</integer>
 							<key>Points</key>
 							<array>
-								<string>{1153.9012652141294, 5789.6282568210499}</string>
-								<string>{1131.9500680318693, 5818.8965197307307}</string>
-								<string>{1124.6330023044493, 5804.2623882758908}</string>
+								<string>{1183.9012346965512, 5789.6282568210499}</string>
+								<string>{1161.9500375142911, 5818.8965197307307}</string>
+								<string>{1154.6329717868712, 5804.2623882758908}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -3988,17 +3832,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -4006,17 +3839,17 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1109.9988708496098, 5774.9941253662109}, {58.536525819359724, 58.53652581935976}}</string>
+							<string>{{1139.9988403320317, 5774.9941253662109}, {58.536525819359724, 58.53652581935976}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>273</integer>
+							<integer>78</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -4033,27 +3866,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>271</integer>
+					<integer>76</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -4077,7 +3899,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1168.5353966689697, 5774.9941253662109}, {1141.4622534775147, 59.99993896484375}}</string>
+					<string>{{1198.5353661513916, 5774.9941253662109}, {1141.4622534775147, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -4085,21 +3907,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>275</integer>
+					<integer>79</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -4137,20 +3959,20 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;
-}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;\cssrgb\c100000\c100000\c100000;
-}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Copy, cut and paste items  with 
-\f1 \cf3 \uc0\u8984 
-\f0 C\cf4 , 
-\f1 \cf3 \uc0\u8984 
-\f0 X\cf4  and 
-\f1 \cf3 \uc0\u8984 
-\f0 V}</string>
+\f0\fs100 \cf2 Copy, cut and paste items  with 
+\f1\b \cf2 \uc0\u8984 
+\f0 \cf2 C
+\b0 , 
+\f1\b \cf2 \uc0\u8984 
+\f0 \cf2 X
+\b0  and 
+\f1\b \cf2 \uc0\u8984 
+\f0 \cf2 V}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -4173,7 +3995,7 @@
 						<real>33</real>
 					</dict>
 					<key>ID</key>
-					<integer>277</integer>
+					<integer>80</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -4181,11 +4003,26 @@
 							<key>Color</key>
 							<dict>
 								<key>b</key>
-								<real>0.95686300000000002</real>
+								<real>1</real>
 								<key>g</key>
-								<real>0.64313699999999996</real>
+								<real>1</real>
 								<key>r</key>
-								<real>0.16078400000000001</real>
+								<real>0.99999600649999998</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>FillType</key>
+							<integer>2</integer>
+							<key>GradientAngle</key>
+							<real>90</real>
+							<key>GradientColor</key>
+							<dict>
+								<key>b</key>
+								<string>0.941176</string>
+								<key>g</key>
+								<string>0.941176</string>
+								<key>r</key>
+								<string>0.941176</string>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
@@ -4208,7 +4045,7 @@
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>262</integer>
+					<integer>81</integer>
 					<key>Shape</key>
 					<string>HorizontalTriangle</string>
 					<key>Style</key>
@@ -4225,21 +4062,10 @@
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.999996</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
 							<key>CornerRadius</key>
 							<real>3</real>
 							<key>Width</key>
-							<real>6</real>
+							<real>4</real>
 						</dict>
 					</dict>
 					<key>Text</key>
@@ -4254,7 +4080,7 @@
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>261</integer>
+					<integer>82</integer>
 					<key>Shape</key>
 					<string>HorizontalTriangle</string>
 					<key>Style</key>
@@ -4271,21 +4097,10 @@
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.999996</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
 							<key>CornerRadius</key>
 							<real>3</real>
 							<key>Width</key>
-							<real>6</real>
+							<real>4</real>
 						</dict>
 					</dict>
 					<key>Text</key>
@@ -4303,7 +4118,7 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>242</integer>
+							<integer>84</integer>
 							<key>Points</key>
 							<array>
 								<string>{1154.9988250732422, 4304.9956207275391}</string>
@@ -4326,17 +4141,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -4344,7 +4148,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -4354,7 +4158,7 @@
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>243</integer>
+							<integer>85</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -4371,27 +4175,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>241</integer>
+					<integer>83</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -4423,21 +4216,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>244</integer>
+					<integer>86</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -4475,12 +4268,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Paused items slide below items in progress}</string>
+\f0\fs100 \cf2 Paused items slide below items in progress}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -4493,21 +4286,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>90</real>
+						<real>100</real>
 					</dict>
 					<key>ID</key>
-					<integer>245</integer>
+					<integer>87</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -4543,12 +4336,13 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs180 \cf2 Start &amp; Pause}</string>
+\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
+Start &amp; Pause}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -4557,7 +4351,7 @@
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>246</integer>
+					<integer>88</integer>
 					<key>ImageID</key>
 					<integer>12</integer>
 					<key>ManualSizeImage</key>
@@ -4609,7 +4403,7 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>248</integer>
+							<integer>90</integer>
 							<key>Points</key>
 							<array>
 								<string>{1154.9988250732422, 4424.9954986572266}</string>
@@ -4632,17 +4426,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -4650,7 +4433,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -4660,7 +4443,7 @@
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>249</integer>
+							<integer>91</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -4677,27 +4460,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>247</integer>
+					<integer>89</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -4729,21 +4501,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>256</integer>
+					<integer>92</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -4781,12 +4553,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Items in progress slide to the top of the list}</string>
+\f0\fs100 \cf2 Items in progress slide to the top of the list}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -4799,21 +4571,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>LucidaGrande-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>257</integer>
+					<integer>93</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -4851,16 +4623,16 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 You can still manually move items via 
-\f1 \cf3 \uc0\u8984 \u8593 
-\f0 \cf2  and 
-\f1 \cf3 \uc0\u8984 \u8595 
-\f0 \cf2  }</string>
+\f0\fs100 \cf2 You can still manually move items via 
+\f1\b \cf2 \uc0\u8984 \u8593 
+\f0\b0 \cf2  and 
+\f1\b \cf2 \uc0\u8984 \u8595 
+\f0\b0 \cf2  }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -4873,21 +4645,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>LucidaGrande-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>258</integer>
+					<integer>94</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -4925,13 +4697,13 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Set items in progress or pause them via 
-\f1 \cf3 \uc0\u8984 \u8594 }</string>
+\f0\fs100 \cf2 Set items in progress or pause them via 
+\f1\b \cf2 \uc0\u8984 \u8594 }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -4954,7 +4726,7 @@
 						<real>33</real>
 					</dict>
 					<key>ID</key>
-					<integer>259</integer>
+					<integer>95</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -4962,11 +4734,26 @@
 							<key>Color</key>
 							<dict>
 								<key>b</key>
-								<real>0.95686300000000002</real>
+								<real>1</real>
 								<key>g</key>
-								<real>0.64313699999999996</real>
+								<real>1</real>
 								<key>r</key>
-								<real>0.16078400000000001</real>
+								<real>0.99999600649999998</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>FillType</key>
+							<integer>2</integer>
+							<key>GradientAngle</key>
+							<real>90</real>
+							<key>GradientColor</key>
+							<dict>
+								<key>b</key>
+								<string>0.941176</string>
+								<key>g</key>
+								<string>0.941176</string>
+								<key>r</key>
+								<string>0.941176</string>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
@@ -4985,7 +4772,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1169.9988098144531, 1349.9986267089844}, {1199.998779296875, 59.99993896484375}}</string>
+					<string>{{1199.998779296875, 1349.9986267089844}, {1079.9989013671875, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -4993,21 +4780,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>233</integer>
+					<integer>96</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -5045,12 +4832,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Add new subitems into any other (empty) item}</string>
+\f0\fs100 \cf2 Add new subitems into any other (empty) item}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -5062,12 +4849,12 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>235</integer>
+							<integer>98</integer>
 							<key>Points</key>
 							<array>
-								<string>{1154.9988250732422, 1364.9986114501953}</string>
-								<string>{1132.4988479614258, 1394.9985809326172}</string>
-								<string>{1124.9988555908203, 1379.9985961914062}</string>
+								<string>{1184.9987945556641, 1364.9986114501953}</string>
+								<string>{1162.4988174438477, 1394.9985809326172}</string>
+								<string>{1154.9988250732422, 1379.9985961914062}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -5085,17 +4872,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -5103,17 +4879,17 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1109.9988708496094, 1349.9986267089844}, {59.99993896484375, 59.99993896484375}}</string>
+							<string>{{1139.9988403320312, 1349.9986267089844}, {59.99993896484375, 59.99993896484375}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>236</integer>
+							<integer>99</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -5130,27 +4906,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>234</integer>
+					<integer>97</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -5181,12 +4946,12 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>231</integer>
+							<integer>101</integer>
 							<key>Points</key>
 							<array>
-								<string>{1154.9988250732422, 1484.9984893798828}</string>
-								<string>{1132.4988479614258, 1514.9984588623047}</string>
-								<string>{1124.9988555908203, 1499.9984741210938}</string>
+								<string>{1184.9987945556641, 1484.9984893798828}</string>
+								<string>{1162.4988174438477, 1514.9984588623047}</string>
+								<string>{1154.9988250732422, 1499.9984741210938}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -5204,17 +4969,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -5222,17 +4976,17 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1109.9988708496094, 1469.9985046386719}, {59.99993896484375, 59.99993896484375}}</string>
+							<string>{{1139.9988403320312, 1469.9985046386719}, {59.99993896484375, 59.99993896484375}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>232</integer>
+							<integer>102</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -5249,27 +5003,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>230</integer>
+					<integer>100</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -5293,7 +5036,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1169.9988098144531, 1469.9985046386719}, {1199.998779296875, 59.99993896484375}}</string>
+					<string>{{1199.998779296875, 1469.9985046386719}, {1079.9989013671875, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -5301,21 +5044,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>229</integer>
+					<integer>103</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -5353,12 +5096,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Focus on any subitem list in your item hierarchy:}</string>
+\f0\fs100 \cf2 Focus on any subitem list in your item hierarchy:}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -5371,21 +5114,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>90</real>
+						<real>100</real>
 					</dict>
 					<key>ID</key>
-					<integer>228</integer>
+					<integer>104</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -5421,12 +5164,13 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs180 \cf2 Create Your Own Structure}</string>
+\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
+Create Your Own Structure}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -5441,21 +5185,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>90</real>
+						<real>100</real>
 					</dict>
 					<key>ID</key>
-					<integer>227</integer>
+					<integer>105</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -5491,12 +5235,13 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs180 \cf2 Rapid List Editing}</string>
+\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
+Rapid List Editing}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -5510,12 +5255,12 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>224</integer>
+							<integer>107</integer>
 							<key>Points</key>
 							<array>
-								<string>{1109.9988708496094, 3614.9963226318359}</string>
-								<string>{1087.498893737793, 3644.9962921142578}</string>
-								<string>{1079.9989013671875, 3629.9963073730469}</string>
+								<string>{1139.9988403320312, 3614.9963226318359}</string>
+								<string>{1117.4988632202148, 3644.9962921142578}</string>
+								<string>{1109.9988708496094, 3629.9963073730469}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -5533,17 +5278,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -5551,17 +5285,17 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1064.9989166259766, 3599.996337890625}, {59.99993896484375, 59.99993896484375}}</string>
+							<string>{{1094.9988861083984, 3599.996337890625}, {59.99993896484375, 59.99993896484375}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>225</integer>
+							<integer>108</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -5578,27 +5312,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>223</integer>
+					<integer>106</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -5622,7 +5345,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1124.9988555908203, 3599.9968872070312}, {959.9990234375, 59.99993896484375}}</string>
+					<string>{{1154.9988250732422, 3599.9968872070312}, {959.9990234375, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -5630,21 +5353,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>226</integer>
+					<integer>109</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -5682,12 +5405,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Selection auto-adjusts intelligently}</string>
+\f0\fs100 \cf2 Selection auto-adjusts intelligently}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -5699,12 +5422,12 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>220</integer>
+							<integer>111</integer>
 							<key>Points</key>
 							<array>
-								<string>{1109.9988708496094, 3374.9965667724609}</string>
-								<string>{1087.498893737793, 3404.9965362548828}</string>
-								<string>{1079.9989013671875, 3389.9965515136719}</string>
+								<string>{1139.9988403320312, 3374.9965667724609}</string>
+								<string>{1117.4988632202148, 3404.9965362548828}</string>
+								<string>{1109.9988708496094, 3389.9965515136719}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -5722,17 +5445,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -5740,17 +5452,17 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1064.9989166259766, 3359.99658203125}, {59.99993896484375, 59.99993896484375}}</string>
+							<string>{{1094.9988861083984, 3359.99658203125}, {59.99993896484375, 59.99993896484375}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>221</integer>
+							<integer>112</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -5767,27 +5479,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>219</integer>
+					<integer>110</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -5811,7 +5512,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1124.9988555908203, 3359.99658203125}, {1019.9989624023438, 59.99993896484375}}</string>
+					<string>{{1154.9988250732422, 3359.99658203125}, {1019.9989624023438, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -5819,21 +5520,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>222</integer>
+					<integer>113</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -5871,12 +5572,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Done list shows last finished on top}</string>
+\f0\fs100 \cf2 Done list shows last finished on top}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -5889,21 +5590,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>90</real>
+						<real>100</real>
 					</dict>
 					<key>ID</key>
-					<integer>218</integer>
+					<integer>114</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -5939,12 +5640,13 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs180 \cf2 Check Off &amp; Review}</string>
+\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
+Check Off &amp; Review}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -5955,7 +5657,7 @@
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>215</integer>
+					<integer>115</integer>
 					<key>ImageID</key>
 					<integer>10</integer>
 					<key>ManualSizeImage</key>
@@ -6007,12 +5709,12 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>201</integer>
+							<integer>117</integer>
 							<key>Points</key>
 							<array>
-								<string>{1109.9988708496094, 3494.9964447021484}</string>
-								<string>{1087.498893737793, 3524.9964141845703}</string>
-								<string>{1079.9989013671875, 3509.9964294433594}</string>
+								<string>{1139.9988403320312, 3494.9964447021484}</string>
+								<string>{1117.4988632202148, 3524.9964141845703}</string>
+								<string>{1109.9988708496094, 3509.9964294433594}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -6030,17 +5732,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -6048,17 +5739,17 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1064.9989166259766, 3479.9964599609375}, {59.99993896484375, 59.99993896484375}}</string>
+							<string>{{1094.9988861083984, 3479.9964599609375}, {59.99993896484375, 59.99993896484375}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>202</integer>
+							<integer>118</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -6075,27 +5766,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>200</integer>
+					<integer>116</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -6126,12 +5806,12 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>204</integer>
+							<integer>120</integer>
 							<key>Points</key>
 							<array>
-								<string>{1109.9988708496094, 3254.9966888427734}</string>
-								<string>{1087.498893737793, 3284.9966583251953}</string>
-								<string>{1079.9989013671875, 3269.9966735839844}</string>
+								<string>{1139.9988403320312, 3254.9966888427734}</string>
+								<string>{1117.4988632202148, 3284.9966583251953}</string>
+								<string>{1109.9988708496094, 3269.9966735839844}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -6149,17 +5829,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -6167,17 +5836,17 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1064.9989166259766, 3239.9967041015625}, {59.99993896484375, 59.99993896484375}}</string>
+							<string>{{1094.9988861083984, 3239.9967041015625}, {59.99993896484375, 59.99993896484375}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>205</integer>
+							<integer>121</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -6194,27 +5863,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>203</integer>
+					<integer>119</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -6245,12 +5903,12 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>207</integer>
+							<integer>123</integer>
 							<key>Points</key>
 							<array>
-								<string>{1109.9988708496094, 3134.9968109130859}</string>
-								<string>{1087.498893737793, 3164.9967803955078}</string>
-								<string>{1079.9989013671875, 3149.9967956542969}</string>
+								<string>{1139.9988403320312, 3134.9968109130859}</string>
+								<string>{1117.4988632202148, 3164.9967803955078}</string>
+								<string>{1109.9988708496094, 3149.9967956542969}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -6268,17 +5926,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -6286,17 +5933,17 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1064.9989166259766, 3119.996826171875}, {59.99993896484375, 59.99993896484375}}</string>
+							<string>{{1094.9988861083984, 3119.996826171875}, {59.99993896484375, 59.99993896484375}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>208</integer>
+							<integer>124</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -6313,27 +5960,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>206</integer>
+					<integer>122</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -6357,7 +5993,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1124.9988555908203, 3239.9967041015625}, {1019.9989624023438, 59.99993896484375}}</string>
+					<string>{{1154.9988250732422, 3239.9967041015625}, {1019.9989624023438, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -6365,21 +6001,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>209</integer>
+					<integer>125</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -6417,17 +6053,17 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Checked off items slide to done list}</string>
+\f0\fs100 \cf2 Checked off items slide to done list}</string>
 					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1124.9988555908203, 3479.9970092773438}, {959.9990234375, 59.99993896484375}}</string>
+					<string>{{1154.9988250732422, 3479.9970092773438}, {959.9990234375, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -6435,21 +6071,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>211</integer>
+					<integer>126</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -6487,17 +6123,17 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Unckecked items move back up}</string>
+\f0\fs100 \cf2 Unckecked items move back up}</string>
 					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1124.9988555908203, 3119.996826171875}, {989.99899291992188, 59.99993896484375}}</string>
+					<string>{{1154.9988250732422, 3119.996826171875}, {989.99899291992188, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -6505,21 +6141,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>LucidaGrande-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>212</integer>
+					<integer>127</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -6557,13 +6193,13 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Check off or unckeck items with 
-\f1 \cf3 \uc0\u8984 \u8592 }</string>
+\f0\fs100 \cf2 Check off or unckeck items with 
+\f1\b \cf2 \uc0\u8984 \u8592 }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -6586,7 +6222,7 @@
 						<real>33</real>
 					</dict>
 					<key>ID</key>
-					<integer>214</integer>
+					<integer>128</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -6594,11 +6230,26 @@
 							<key>Color</key>
 							<dict>
 								<key>b</key>
-								<real>0.95686300000000002</real>
+								<real>1</real>
 								<key>g</key>
-								<real>0.64313699999999996</real>
+								<real>1</real>
 								<key>r</key>
-								<real>0.16078400000000001</real>
+								<real>0.99999600649999998</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>FillType</key>
+							<integer>2</integer>
+							<key>GradientAngle</key>
+							<real>90</real>
+							<key>GradientColor</key>
+							<dict>
+								<key>b</key>
+								<string>0.941176</string>
+								<key>g</key>
+								<string>0.941176</string>
+								<key>r</key>
+								<string>0.941176</string>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
@@ -6624,7 +6275,7 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>195</integer>
+							<integer>130</integer>
 							<key>Points</key>
 							<array>
 								<string>{1244.9987335205078, 2504.9974517822266}</string>
@@ -6647,17 +6298,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -6665,7 +6305,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -6675,7 +6315,7 @@
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>196</integer>
+							<integer>131</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -6692,27 +6332,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>194</integer>
+					<integer>129</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -6743,7 +6372,7 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>192</integer>
+							<integer>133</integer>
 							<key>Points</key>
 							<array>
 								<string>{1244.9987335205078, 2384.9975738525391}</string>
@@ -6766,17 +6395,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -6784,7 +6402,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -6794,7 +6412,7 @@
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>193</integer>
+							<integer>134</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -6811,27 +6429,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>191</integer>
+					<integer>132</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -6862,7 +6469,7 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>189</integer>
+							<integer>136</integer>
 							<key>Points</key>
 							<array>
 								<string>{1244.9987335205078, 2264.9976959228516}</string>
@@ -6885,17 +6492,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -6903,7 +6499,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -6913,7 +6509,7 @@
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>190</integer>
+							<integer>137</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -6930,27 +6526,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>188</integer>
+					<integer>135</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -6981,7 +6566,7 @@
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>186</integer>
+							<integer>139</integer>
 							<key>Points</key>
 							<array>
 								<string>{1244.9987335205078, 2144.9978179931641}</string>
@@ -7004,17 +6589,6 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -7022,7 +6596,7 @@
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
@@ -7032,7 +6606,7 @@
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>187</integer>
+							<integer>140</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -7049,27 +6623,16 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>185</integer>
+					<integer>138</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -7101,21 +6664,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>158</integer>
+					<integer>141</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -7153,14 +6716,14 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Undo last deletion with 
-\f1 \cf3 \uc0\u8984 
-\f0 Z}</string>
+\f0\fs100 \cf2 Undo last deletion with 
+\f1\b \cf2 \uc0\u8984 
+\f0 \cf2 Z}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7169,7 +6732,7 @@
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>157</integer>
+					<integer>142</integer>
 					<key>ImageID</key>
 					<integer>11</integer>
 					<key>ManualSizeImage</key>
@@ -7224,21 +6787,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>137</integer>
+					<integer>143</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -7276,12 +6839,13 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Add item to the top of the list via \cf3 Space}</string>
+\f0\fs100 \cf2 Add item to the top of the list via 
+\b Space}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7294,21 +6858,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>LucidaGrande-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>141</integer>
+					<integer>144</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -7346,15 +6910,15 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Add or delete items like text via 
-\f1 \cf3 \uc0\u8629 
-\f0 \cf2  or 
-\f1 \cf3 \uc0\u9003 }</string>
+\f0\fs100 \cf2 Add or delete items like text via 
+\f1\b \cf2 \uc0\u8629 
+\f0\b0 \cf2  or 
+\f1\b \cf2 \uc0\u9003 }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7367,18 +6931,18 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>LucidaGrande-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
 					<integer>145</integer>
@@ -7419,15 +6983,15 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;\f1\fnil\fcharset0 LucidaGrande;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Prioritize by moving item via 
-\f1 \cf3 \uc0\u8984 \u8593 
-\f0 \cf2  or 
-\f1 \cf3 \uc0\u8984 \u8595 }</string>
+\f0\fs100 \cf2 Prioritize by moving item via 
+\f1\b \cf2 \uc0\u8984 \u8593 
+\f0\b0 \cf2  or 
+\f1\b \cf2 \uc0\u8984 \u8595 }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7450,7 +7014,7 @@
 						<real>33</real>
 					</dict>
 					<key>ID</key>
-					<integer>155</integer>
+					<integer>146</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -7458,11 +7022,26 @@
 							<key>Color</key>
 							<dict>
 								<key>b</key>
-								<real>0.95686300000000002</real>
+								<real>1</real>
 								<key>g</key>
-								<real>0.64313699999999996</real>
+								<real>1</real>
 								<key>r</key>
-								<real>0.16078400000000001</real>
+								<real>0.99999600649999998</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>FillType</key>
+							<integer>2</integer>
+							<key>GradientAngle</key>
+							<real>90</real>
+							<key>GradientColor</key>
+							<dict>
+								<key>b</key>
+								<string>0.941176</string>
+								<key>g</key>
+								<string>0.941176</string>
+								<key>r</key>
+								<string>0.941176</string>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
@@ -7481,7 +7060,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1439.99853515625, 59.99993896484375}, {809.99917602539062, 239.999755859375}}</string>
+					<string>{{1409.9985656738281, 59.99993896484375}, {839.9991455078125, 239.999755859375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -7489,21 +7068,21 @@
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>90</real>
+						<real>100</real>
 					</dict>
 					<key>ID</key>
-					<integer>132</integer>
+					<integer>147</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -7541,12 +7120,13 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs180 \cf2 Intuitive\
+\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
+Intuitive\
 Key Commands}</string>
 					</dict>
 					<key>TextPlacement</key>
@@ -7554,7 +7134,7 @@ Key Commands}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1169.9988098144531, 1229.9987487792969}, {1199.998779296875, 59.99993896484375}}</string>
+					<string>{{1199.998779296875, 1229.9987487792969}, {1079.9989013671875, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -7562,21 +7142,21 @@ Key Commands}</string>
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>126</integer>
+					<integer>148</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -7614,12 +7194,12 @@ Key Commands}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Group items together as subitems of a new item}</string>
+\f0\fs100 \cf2 Group items together as subitems of a new item}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7631,12 +7211,12 @@ Key Commands}</string>
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>128</integer>
+							<integer>150</integer>
 							<key>Points</key>
 							<array>
-								<string>{1154.9988250732422, 1244.9987335205078}</string>
-								<string>{1132.4988479614258, 1274.9987030029297}</string>
-								<string>{1124.9988555908203, 1259.9987182617188}</string>
+								<string>{1184.9987945556641, 1244.9987335205078}</string>
+								<string>{1162.4988174438477, 1274.9987030029297}</string>
+								<string>{1154.9988250732422, 1259.9987182617188}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -7654,17 +7234,6 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -7672,17 +7241,17 @@ Key Commands}</string>
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1109.9988708496094, 1229.9987487792969}, {59.99993896484375, 59.99993896484375}}</string>
+							<string>{{1139.9988403320312, 1229.9987487792969}, {59.99993896484375, 59.99993896484375}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>129</integer>
+							<integer>151</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -7699,27 +7268,16 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>127</integer>
+					<integer>149</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -7760,12 +7318,12 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>125</integer>
+					<integer>152</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -7801,12 +7359,12 @@ Key Commands}</string>
 						<real>0.0</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs90 \cf2 Focus}</string>
+\f0\b\fs100 \cf2 Focus}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7828,12 +7386,12 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>124</integer>
+					<integer>153</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -7869,12 +7427,12 @@ Key Commands}</string>
 						<real>0.0</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs90 \cf2 Details}</string>
+\f0\b\fs100 \cf2 Details}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7896,12 +7454,12 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Bold</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>107</integer>
+					<integer>154</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -7937,12 +7495,12 @@ Key Commands}</string>
 						<real>0.0</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs90 \cf2 Overview}</string>
+\f0\b\fs100 \cf2 Overview}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7951,7 +7509,7 @@ Key Commands}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>119</integer>
+					<integer>155</integer>
 					<key>ImageID</key>
 					<integer>6</integer>
 					<key>ManualSizeImage</key>
@@ -8014,7 +7572,7 @@ Key Commands}</string>
 						<real>33</real>
 					</dict>
 					<key>ID</key>
-					<integer>118</integer>
+					<integer>156</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -8022,11 +7580,26 @@ Key Commands}</string>
 							<key>Color</key>
 							<dict>
 								<key>b</key>
-								<real>0.95686300000000002</real>
+								<real>1</real>
 								<key>g</key>
-								<real>0.64313699999999996</real>
+								<real>1</real>
 								<key>r</key>
-								<real>0.16078400000000001</real>
+								<real>0.99999600649999998</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>FillType</key>
+							<integer>2</integer>
+							<key>GradientAngle</key>
+							<real>90</real>
+							<key>GradientColor</key>
+							<dict>
+								<key>b</key>
+								<string>0.941176</string>
+								<key>g</key>
+								<string>0.941176</string>
+								<key>r</key>
+								<string>0.941176</string>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
@@ -8045,7 +7618,7 @@ Key Commands}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1154.9988250732422, 479.99951171875}, {1199.998779296875, 59.99993896484375}}</string>
+					<string>{{1184.9987945556641, 479.99951171875}, {1199.998779296875, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -8053,21 +7626,21 @@ Key Commands}</string>
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>95</integer>
+					<integer>157</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -8105,12 +7678,12 @@ Key Commands}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Menu shows all currently available actions}</string>
+\f0\fs100 \cf2 Menu shows all currently available actions}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -8122,12 +7695,12 @@ Key Commands}</string>
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>97</integer>
+							<integer>159</integer>
 							<key>Points</key>
 							<array>
-								<string>{1139.9988403320312, 494.99949645996094}</string>
-								<string>{1117.4988632202148, 524.99946594238281}</string>
-								<string>{1109.9988708496094, 509.99948120117188}</string>
+								<string>{1169.9988098144531, 494.99949645996094}</string>
+								<string>{1147.4988327026367, 524.99946594238281}</string>
+								<string>{1139.9988403320312, 509.99948120117188}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -8145,17 +7718,6 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -8163,17 +7725,17 @@ Key Commands}</string>
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1094.9988861083984, 479.99951171875}, {59.99993896484375, 59.99993896484375}}</string>
+							<string>{{1124.9988555908203, 479.99951171875}, {59.99993896484375, 59.99993896484375}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>98</integer>
+							<integer>160</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -8190,27 +7752,16 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>96</integer>
+					<integer>158</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -8234,7 +7785,7 @@ Key Commands}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1154.9988250732422, 599.9993896484375}, {1199.998779296875, 59.99993896484375}}</string>
+					<string>{{1184.9987945556641, 599.9993896484375}, {1199.998779296875, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -8242,21 +7793,21 @@ Key Commands}</string>
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>91</integer>
+					<integer>161</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -8294,12 +7845,12 @@ Key Commands}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Rapid editing, navigation &amp; window management}</string>
+\f0\fs100 \cf2 Rapid editing, navigation &amp; window management}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -8311,12 +7862,12 @@ Key Commands}</string>
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>93</integer>
+							<integer>163</integer>
 							<key>Points</key>
 							<array>
-								<string>{1139.9988403320312, 614.99937438964844}</string>
-								<string>{1117.4988632202148, 644.99934387207031}</string>
-								<string>{1109.9988708496094, 629.99935913085938}</string>
+								<string>{1169.9988098144531, 614.99937438964844}</string>
+								<string>{1147.4988327026367, 644.99934387207031}</string>
+								<string>{1139.9988403320312, 629.99935913085938}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -8334,17 +7885,6 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -8352,17 +7892,17 @@ Key Commands}</string>
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1094.9988861083984, 599.9993896484375}, {59.99993896484375, 59.99993896484375}}</string>
+							<string>{{1124.9988555908203, 599.9993896484375}, {59.99993896484375, 59.99993896484375}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>94</integer>
+							<integer>164</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -8379,27 +7919,16 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>92</integer>
+					<integer>162</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -8423,7 +7952,7 @@ Key Commands}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1154.9988250732422, 719.999267578125}, {1199.998779296875, 59.99993896484375}}</string>
+					<string>{{1184.9987945556641, 719.999267578125}, {1199.998779296875, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -8431,21 +7960,21 @@ Key Commands}</string>
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>87</integer>
+					<integer>165</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -8483,12 +8012,12 @@ Key Commands}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Super clean interface for deep focus and flow}</string>
+\f0\fs100 \cf2 Super clean interface for deep focus and flow}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -8500,12 +8029,12 @@ Key Commands}</string>
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>89</integer>
+							<integer>167</integer>
 							<key>Points</key>
 							<array>
-								<string>{1139.9988403320312, 734.99925231933594}</string>
-								<string>{1117.4988632202148, 764.99922180175781}</string>
-								<string>{1109.9988708496094, 749.99923706054688}</string>
+								<string>{1169.9988098144531, 734.99925231933594}</string>
+								<string>{1147.4988327026367, 764.99922180175781}</string>
+								<string>{1139.9988403320312, 749.99923706054688}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -8523,17 +8052,6 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -8541,17 +8059,17 @@ Key Commands}</string>
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1094.9988861083984, 719.999267578125}, {59.99993896484375, 59.99993896484375}}</string>
+							<string>{{1124.9988555908203, 719.999267578125}, {59.99993896484375, 59.99993896484375}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>90</integer>
+							<integer>168</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -8568,27 +8086,16 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>88</integer>
+					<integer>166</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -8634,7 +8141,7 @@ Key Commands}</string>
 						<real>45</real>
 					</dict>
 					<key>ID</key>
-					<integer>78</integer>
+					<integer>169</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -8687,7 +8194,7 @@ Key Commands}</string>
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>80</integer>
+							<integer>171</integer>
 							<key>Points</key>
 							<array>
 								<string>{1124.9988555908203, -1064.9983673095703}</string>
@@ -8738,7 +8245,7 @@ Key Commands}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>81</integer>
+							<integer>172</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -8775,7 +8282,7 @@ Key Commands}</string>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>79</integer>
+					<integer>170</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -8803,7 +8310,7 @@ Key Commands}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>82</integer>
+					<integer>173</integer>
 					<key>ImageID</key>
 					<integer>5</integer>
 					<key>Style</key>
@@ -8831,7 +8338,7 @@ Key Commands}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>83</integer>
+					<integer>174</integer>
 					<key>ImageID</key>
 					<integer>1</integer>
 					<key>ManualSizeImage</key>
@@ -8880,7 +8387,7 @@ Key Commands}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>84</integer>
+					<integer>175</integer>
 					<key>ImageID</key>
 					<integer>4</integer>
 					<key>Style</key>
@@ -8922,7 +8429,7 @@ Key Commands}</string>
 						<real>33</real>
 					</dict>
 					<key>ID</key>
-					<integer>85</integer>
+					<integer>176</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -8953,7 +8460,7 @@ Key Commands}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1154.9988250732422, 359.9996337890625}, {1199.998779296875, 59.99993896484375}}</string>
+					<string>{{1184.9987945556641, 359.9996337890625}, {1199.998779296875, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -8961,21 +8468,21 @@ Key Commands}</string>
 						<key>Color</key>
 						<dict>
 							<key>b</key>
-							<string>1</string>
+							<string>0</string>
 							<key>g</key>
-							<string>1</string>
+							<string>0</string>
 							<key>r</key>
-							<string>0.999996</string>
+							<string>0</string>
 							<key>space</key>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
+						<string>MyriadSetPro-Text</string>
 						<key>Size</key>
-						<real>45</real>
+						<real>50</real>
 					</dict>
 					<key>ID</key>
-					<integer>67</integer>
+					<integer>177</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -9013,12 +8520,12 @@ Key Commands}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Fingers can stay on the keys without interruption}</string>
+\f0\fs100 \cf2 Fingers can stay on the keys without interruption}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -9030,12 +8537,12 @@ Key Commands}</string>
 							<key>Class</key>
 							<string>LineGraphic</string>
 							<key>ID</key>
-							<integer>69</integer>
+							<integer>179</integer>
 							<key>Points</key>
 							<array>
-								<string>{1139.9988403320312, 374.99961853027344}</string>
-								<string>{1117.4988632202148, 404.99958801269531}</string>
-								<string>{1109.9988708496094, 389.99960327148438}</string>
+								<string>{1169.9988098144531, 374.99961853027344}</string>
+								<string>{1147.4988327026367, 404.99958801269531}</string>
+								<string>{1139.9988403320312, 389.99960327148438}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -9053,17 +8560,6 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>HeadArrow</key>
 									<string>0</string>
 									<key>Legacy</key>
@@ -9071,17 +8567,17 @@ Key Commands}</string>
 									<key>TailArrow</key>
 									<string>0</string>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1094.9988861083984, 359.9996337890625}, {59.99993896484375, 59.99993896484375}}</string>
+							<string>{{1124.9988555908203, 359.9996337890625}, {59.99993896484375, 59.99993896484375}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
-							<integer>70</integer>
+							<integer>180</integer>
 							<key>Scaling</key>
 							<integer>1</integer>
 							<key>Style</key>
@@ -9098,27 +8594,16 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>Color</key>
-									<dict>
-										<key>b</key>
-										<real>1</real>
-										<key>g</key>
-										<real>1</real>
-										<key>r</key>
-										<real>0.999996</real>
-										<key>space</key>
-										<string>srgb</string>
-									</dict>
 									<key>CornerRadius</key>
 									<real>10</real>
 									<key>Width</key>
-									<real>6</real>
+									<real>4</real>
 								</dict>
 							</dict>
 						</dict>
 					</array>
 					<key>ID</key>
-					<integer>68</integer>
+					<integer>178</integer>
 					<key>Scaling</key>
 					<integer>1</integer>
 					<key>Style</key>
@@ -9142,19 +8627,274 @@ Key Commands}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1695.99755859375, 0}, {704, 122}}</string>
+					<string>{{1154.9988250732422, 9328.1386571813528}, {119.9998779296875, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
+					<key>FontInfo</key>
+					<dict>
+						<key>Color</key>
+						<dict>
+							<key>b</key>
+							<string>0</string>
+							<key>g</key>
+							<string>0</string>
+							<key>r</key>
+							<string>0</string>
+							<key>space</key>
+							<string>srgb</string>
+						</dict>
+						<key>Font</key>
+						<string>MyriadSetPro-Text</string>
+						<key>Size</key>
+						<real>50</real>
+					</dict>
 					<key>ID</key>
-					<integer>77</integer>
-					<key>ImageID</key>
-					<integer>5</integer>
+					<integer>184</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
 						<dict>
+							<key>Color</key>
+							<dict>
+								<key>b</key>
+								<real>0.95686300000000002</real>
+								<key>g</key>
+								<real>0.64313699999999996</real>
+								<key>r</key>
+								<real>0.16078400000000001</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
 							<key>Draws</key>
 							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+					<key>Text</key>
+					<dict>
+						<key>Pad</key>
+						<real>30</real>
+						<key>Text</key>
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
+
+\f0\fs100 \cf2 \expnd0\expndtw0\kerning0
+3}</string>
+						<key>VerticalPad</key>
+						<real>6</real>
+					</dict>
+					<key>TextPlacement</key>
+					<integer>0</integer>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{1154.9988250732422, 9208.1387792516653}, {119.9998779296875, 59.99993896484375}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>FontInfo</key>
+					<dict>
+						<key>Color</key>
+						<dict>
+							<key>b</key>
+							<string>0</string>
+							<key>g</key>
+							<string>0</string>
+							<key>r</key>
+							<string>0</string>
+							<key>space</key>
+							<string>srgb</string>
+						</dict>
+						<key>Font</key>
+						<string>MyriadSetPro-Text</string>
+						<key>Size</key>
+						<real>50</real>
+					</dict>
+					<key>ID</key>
+					<integer>185</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Color</key>
+							<dict>
+								<key>b</key>
+								<real>0.95686300000000002</real>
+								<key>g</key>
+								<real>0.64313699999999996</real>
+								<key>r</key>
+								<real>0.16078400000000001</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+					<key>Text</key>
+					<dict>
+						<key>Pad</key>
+						<real>30</real>
+						<key>Text</key>
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
+
+\f0\fs100 \cf2 \expnd0\expndtw0\kerning0
+2}</string>
+						<key>VerticalPad</key>
+						<real>6</real>
+					</dict>
+					<key>TextPlacement</key>
+					<integer>0</integer>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{1154.9988250732422, 9088.1389013219778}, {119.9998779296875, 59.99993896484375}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>FontInfo</key>
+					<dict>
+						<key>Color</key>
+						<dict>
+							<key>b</key>
+							<string>0</string>
+							<key>g</key>
+							<string>0</string>
+							<key>r</key>
+							<string>0</string>
+							<key>space</key>
+							<string>srgb</string>
+						</dict>
+						<key>Font</key>
+						<string>MyriadSetPro-Text</string>
+						<key>Size</key>
+						<real>50</real>
+					</dict>
+					<key>ID</key>
+					<integer>186</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Color</key>
+							<dict>
+								<key>b</key>
+								<real>0.95686300000000002</real>
+								<key>g</key>
+								<real>0.64313699999999996</real>
+								<key>r</key>
+								<real>0.16078400000000001</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+					<key>Text</key>
+					<dict>
+						<key>Pad</key>
+						<real>30</real>
+						<key>Text</key>
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
+
+\f0\fs100 \cf2 \expnd0\expndtw0\kerning0
+1}</string>
+						<key>VerticalPad</key>
+						<real>6</real>
+					</dict>
+					<key>TextPlacement</key>
+					<integer>0</integer>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{959.9990234375, 8849.9909973144531}, {1439.99853515625, 899.9996337890625}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>FontInfo</key>
+					<dict>
+						<key>Color</key>
+						<dict>
+							<key>space</key>
+							<string>gg22</string>
+							<key>w</key>
+							<string>0</string>
+						</dict>
+						<key>Font</key>
+						<string>HelveticaNeue-Thin</string>
+						<key>Size</key>
+						<real>33</real>
+					</dict>
+					<key>ID</key>
+					<integer>187</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Color</key>
+							<dict>
+								<key>b</key>
+								<real>1</real>
+								<key>g</key>
+								<real>1</real>
+								<key>r</key>
+								<real>0.99999600649999998</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>FillType</key>
+							<integer>2</integer>
+							<key>GradientAngle</key>
+							<real>90</real>
+							<key>GradientColor</key>
+							<dict>
+								<key>b</key>
+								<string>0.941176</string>
+								<key>g</key>
+								<string>0.941176</string>
+								<key>r</key>
+								<string>0.941176</string>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
 						</dict>
 						<key>shadow</key>
 						<dict>
@@ -9170,19 +8910,55 @@ Key Commands}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{959.9990234375, 0}, {908, 743}}</string>
+					<string>{{959.9990234375, 329.99911499023438}, {1439.99853515625, 569.99996948242188}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
+					<key>FontInfo</key>
+					<dict>
+						<key>Color</key>
+						<dict>
+							<key>space</key>
+							<string>gg22</string>
+							<key>w</key>
+							<string>0</string>
+						</dict>
+						<key>Font</key>
+						<string>HelveticaNeue-Thin</string>
+						<key>Size</key>
+						<real>33</real>
+					</dict>
 					<key>ID</key>
-					<integer>76</integer>
-					<key>ImageID</key>
-					<integer>4</integer>
+					<integer>195</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
 						<dict>
-							<key>Draws</key>
-							<string>NO</string>
+							<key>Color</key>
+							<dict>
+								<key>b</key>
+								<real>1</real>
+								<key>g</key>
+								<real>1</real>
+								<key>r</key>
+								<real>0.999996</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>FillType</key>
+							<integer>2</integer>
+							<key>GradientAngle</key>
+							<real>90</real>
+							<key>GradientColor</key>
+							<dict>
+								<key>b</key>
+								<string>0.941176</string>
+								<key>g</key>
+								<string>0.941176</string>
+								<key>r</key>
+								<string>0.941176</string>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
 						</dict>
 						<key>shadow</key>
 						<dict>
@@ -9216,7 +8992,7 @@ Key Commands}</string>
 						<real>33</real>
 					</dict>
 					<key>ID</key>
-					<integer>18</integer>
+					<integer>183</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -9224,270 +9000,11 @@ Key Commands}</string>
 							<key>Color</key>
 							<dict>
 								<key>b</key>
-								<real>0.95686274509803915</real>
+								<real>1</real>
 								<key>g</key>
-								<real>0.64313725490196072</real>
+								<real>1</real>
 								<key>r</key>
-								<real>0.16078431372549018</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Bounds</key>
-					<string>{{1124.9988555908203, 9328.1386571813528}, {119.9998779296875, 59.99993896484375}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>FontInfo</key>
-					<dict>
-						<key>Color</key>
-						<dict>
-							<key>b</key>
-							<string>1</string>
-							<key>g</key>
-							<string>1</string>
-							<key>r</key>
-							<string>0.999996</string>
-							<key>space</key>
-							<string>srgb</string>
-						</dict>
-						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
-						<key>Size</key>
-						<real>45</real>
-					</dict>
-					<key>ID</key>
-					<integer>331</integer>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>0.95686300000000002</real>
-								<key>g</key>
-								<real>0.64313699999999996</real>
-								<key>r</key>
-								<real>0.16078400000000001</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-					<key>Text</key>
-					<dict>
-						<key>Pad</key>
-						<real>30</real>
-						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
-
-\f0\fs90 \cf2 3}</string>
-						<key>VerticalPad</key>
-						<real>0.0</real>
-					</dict>
-				</dict>
-				<dict>
-					<key>Bounds</key>
-					<string>{{1124.9988555908203, 9208.1387792516653}, {119.9998779296875, 59.99993896484375}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>FontInfo</key>
-					<dict>
-						<key>Color</key>
-						<dict>
-							<key>b</key>
-							<string>1</string>
-							<key>g</key>
-							<string>1</string>
-							<key>r</key>
-							<string>0.999996</string>
-							<key>space</key>
-							<string>srgb</string>
-						</dict>
-						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
-						<key>Size</key>
-						<real>45</real>
-					</dict>
-					<key>ID</key>
-					<integer>330</integer>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>0.95686300000000002</real>
-								<key>g</key>
-								<real>0.64313699999999996</real>
-								<key>r</key>
-								<real>0.16078400000000001</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-					<key>Text</key>
-					<dict>
-						<key>Pad</key>
-						<real>30</real>
-						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
-
-\f0\fs90 \cf2 2}</string>
-						<key>VerticalPad</key>
-						<real>0.0</real>
-					</dict>
-				</dict>
-				<dict>
-					<key>Bounds</key>
-					<string>{{1124.9988555908203, 9088.1389013219778}, {119.9998779296875, 59.99993896484375}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>FontInfo</key>
-					<dict>
-						<key>Color</key>
-						<dict>
-							<key>b</key>
-							<string>1</string>
-							<key>g</key>
-							<string>1</string>
-							<key>r</key>
-							<string>0.999996</string>
-							<key>space</key>
-							<string>srgb</string>
-						</dict>
-						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
-						<key>Size</key>
-						<real>45</real>
-					</dict>
-					<key>ID</key>
-					<integer>320</integer>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>0.95686300000000002</real>
-								<key>g</key>
-								<real>0.64313699999999996</real>
-								<key>r</key>
-								<real>0.16078400000000001</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-					<key>Text</key>
-					<dict>
-						<key>Pad</key>
-						<real>30</real>
-						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fswiss\fcharset0 ArialRoundedMTBold;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
-
-\f0\fs90 \cf2 1}</string>
-						<key>VerticalPad</key>
-						<real>0.0</real>
-					</dict>
-				</dict>
-				<dict>
-					<key>Bounds</key>
-					<string>{{959.9990234375, 8849.9909973144531}, {1439.99853515625, 899.9996337890625}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>FontInfo</key>
-					<dict>
-						<key>Color</key>
-						<dict>
-							<key>space</key>
-							<string>gg22</string>
-							<key>w</key>
-							<string>0</string>
-						</dict>
-						<key>Font</key>
-						<string>HelveticaNeue-Thin</string>
-						<key>Size</key>
-						<real>33</real>
-					</dict>
-					<key>ID</key>
-					<integer>319</integer>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>0.95686300000000002</real>
-								<key>g</key>
-								<real>0.64313699999999996</real>
-								<key>r</key>
-								<real>0.16078400000000001</real>
+								<real>0.99999600649999998</real>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
@@ -9579,7 +9096,7 @@ Key Commands}</string>
 		<key>CurrentSheet</key>
 		<integer>0</integer>
 		<key>Frame</key>
-		<string>{{4, 14}, {1232, 740}}</string>
+		<string>{{6, -159}, {1232, 740}}</string>
 		<key>ShowInfo</key>
 		<true/>
 		<key>ShowRuler</key>
@@ -9591,12 +9108,12 @@ Key Commands}</string>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{501.45862665447504, 5980.158856493159}, {2231.707317073171, 1419.5121951219517}}</string>
+		<string>{{43.256821358055099, 9694.7608476444038}, {2951.6129032258054, 1877.419354838712}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Arbeitsfläche 1</string>
-				<real>0.40999999999999998</real>
+				<real>0.31</real>
 				<real>0.5</real>
 			</array>
 		</array>
