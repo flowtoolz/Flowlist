@@ -19,7 +19,7 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     private func runApp()
     {
-        NSApp.mainMenu = menu // must be set before delegate on macOS 10.10
+        NSApp.mainMenu = menu // must be set before delegate
         NSApp.delegate = self
         NSApp.run()
     }
@@ -28,8 +28,8 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     {
         NSApp.activate(ignoringOtherApps: true)
         
-        fullVersionPurchaseController.setup()
         networkReachability.setup()
+        fullVersionPurchaseController.setup()
         store.load()
     }
     
