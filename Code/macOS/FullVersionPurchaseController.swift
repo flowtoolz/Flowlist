@@ -137,7 +137,7 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
     }
     
     var fullVersionProduct: SKProduct?
-    private let fullVersionId = "com.flowtoolz.flowlist.full_version"
+    private let fullVersionId = "com.flowtoolz.flowlist.fullversion"
     
     // MARK: - Discount
     
