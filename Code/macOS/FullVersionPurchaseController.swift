@@ -96,7 +96,7 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
     {
         guard networkReachability.isReachable else
         {
-            send(.didFailToLoadFullVersionProduct)
+            send(.didCancelLoadingFullversionProductBecauseOffline)
             return
         }
         
@@ -167,6 +167,7 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
         case didNothing
         case didLoadFullVersionProduct
         case didFailToLoadFullVersionProduct
+        case didCancelLoadingFullversionProductBecauseOffline
         case didPurchaseFullVersion
         case didFailToPurchaseFullVersion(message: String)
     }

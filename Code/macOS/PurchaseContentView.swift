@@ -43,6 +43,9 @@ class PurchaseContentView: NSView, Observer
         {
         case .didNothing: break
         
+        case .didCancelLoadingFullversionProductBecauseOffline:
+            show(error: productLoadingCanceledOfflineMessage)
+            
         case .didFailToLoadFullVersionProduct:
             show(error: productLoadingFailedMessage)
             
@@ -100,7 +103,7 @@ class PurchaseContentView: NSView, Observer
         errorView.autoPinEdge(toSuperviewEdge: .left)
         errorView.autoPinEdge(toSuperviewEdge: .right)
         errorView.autoPinEdge(toSuperviewEdge: .bottom)
-        errorView.autoPinEdge(.top, to: .bottom, of: icon, withOffset: 10)
+        errorView.autoPinEdge(.top, to: .bottom, of: icon, withOffset: 30)
         
         let insets = NSEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
         errorLabel.autoPinEdgesToSuperviewEdges(with: insets,
@@ -118,13 +121,15 @@ class PurchaseContentView: NSView, Observer
         return label
     }()
     
-    private let productLoadingFailedMessage = "Could not reach AppStore.\n\nPlease make sure you have internet access. Then reopen this panel."
+    private let productLoadingCanceledOfflineMessage = "You seem to be offline.\n\nPlease make sure you have internet access. Then reopen this panel."
+    
+    private let productLoadingFailedMessage = "Could not load infos from AppStore.\n\nPlease ensure Flowlist is up to date and you can access the AppStore. Then reopen this panel."
     
     private lazy var errorView: LayerBackedView =
     {
         let view = columns[1].addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = Color(1.0, 0, 0, 0.5)
+        view.backgroundColor = Color.discountRed
         view.isHidden = true
         view.layer?.cornerRadius = CGFloat(Float.cornerRadius)
         
@@ -140,7 +145,7 @@ class PurchaseContentView: NSView, Observer
         loadingIndicator.autoPinEdge(.top,
                                      to: .bottom,
                                      of: icon,
-                                     withOffset: 10)
+                                     withOffset: 20)
         let insets = NSEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
         loadingLabel.autoPinEdgesToSuperviewEdges(with: insets,
                                                   excludingEdge: .bottom)
