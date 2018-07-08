@@ -94,11 +94,13 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
     
     func loadFullVersionProductFromAppStore()
     {
-        guard networkReachability.isReachable else
-        {
-            send(.didCancelLoadingFullversionProductBecauseOffline)
-            return
-        }
+        productLoadingTimer?.invalidate()
+        
+        productLoadingTimer = Timer.scheduledTimer(timeInterval: 10.0,
+                                                   target: self,
+                                                   selector: #selector(productLoadingDidTimeOut),
+                                                   userInfo: nil,
+                                                   repeats: false)
         
         fullVersionProduct = nil
         
@@ -108,11 +110,20 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
         productsRequest?.start()
     }
     
+    @objc private func productLoadingDidTimeOut()
+    {
+        productLoadingTimer?.invalidate()
+        
+        send(.didCancelLoadingFullversionProductBecauseOffline)
+    }
+    
     private var productsRequest: SKProductsRequest?
     
     public func productsRequest(_ request: SKProductsRequest,
                                 didReceive response: SKProductsResponse)
     {
+        productLoadingTimer?.invalidate()
+        
         for product in response.products
         {
             if product.productIdentifier == fullVersionId
@@ -123,6 +134,8 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
         
         DispatchQueue.main.async { self.didProcessProductsResponse() }
     }
+    
+    private var productLoadingTimer: Timer?
     
     private func didProcessProductsResponse()
     {
