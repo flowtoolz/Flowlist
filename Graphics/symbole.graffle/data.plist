@@ -5,7 +5,7 @@
 	<key>ApplicationVersion</key>
 	<array>
 		<string>com.omnigroup.OmniGraffle7</string>
-		<string>186.9.0.304876</string>
+		<string>191.6.0.313439</string>
 	</array>
 	<key>ColorProfiles</key>
 	<array>
@@ -103,7 +103,7 @@
 	<key>Creator</key>
 	<string>Sebastian Fichtner</string>
 	<key>GraphDocumentVersion</key>
-	<integer>14</integer>
+	<integer>15</integer>
 	<key>GuidesLocked</key>
 	<string>NO</string>
 	<key>GuidesVisible</key>
@@ -114,13 +114,11 @@
 	<array>
 		<dict/>
 		<dict/>
-		<dict/>
 	</array>
 	<key>ImageList</key>
 	<array>
 		<string>image4.pdf</string>
 		<string>image3.pdf</string>
-		<string>image1.pdf</string>
 	</array>
 	<key>LinksVisible</key>
 	<string>NO</string>
@@ -129,7 +127,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-07-05 19:49:15 +0000</string>
+	<string>2018-07-09 16:37:10 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -192,11 +190,11 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-362.02531645569616, -391.77215189873414}, {1913.9240506329111, 1625.3164556962024}}</string>
+				<string>{{-577.77777777777783, -625.25252525252506}, {2345.4545454545455, 2091.9191919191921}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
-				<integer>2</integer>
+				<integer>0</integer>
 				<key>Style</key>
 				<dict>
 					<key>shadow</key>
@@ -266,34 +264,6 @@
 					<integer>3</integer>
 					<key>Rotation</key>
 					<real>351</real>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Bounds</key>
-					<string>{{837, 63}, {36, 36}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>ID</key>
-					<integer>5</integer>
-					<key>ImageID</key>
-					<integer>1</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -450,12 +420,8 @@
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>2</real>
 						</dict>
@@ -503,12 +469,8 @@
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>2</real>
 						</dict>
@@ -643,81 +605,6 @@
 					</dict>
 				</dict>
 				<dict>
-					<key>Bounds</key>
-					<string>{{873, 63}, {189, 36}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>FontInfo</key>
-					<dict>
-						<key>Color</key>
-						<dict>
-							<key>b</key>
-							<string>0</string>
-							<key>g</key>
-							<string>0</string>
-							<key>r</key>
-							<string>0</string>
-							<key>space</key>
-							<string>srgb</string>
-						</dict>
-						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
-						<key>Size</key>
-						<real>22</real>
-					</dict>
-					<key>ID</key>
-					<integer>13</integer>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>0.95686300000000002</real>
-								<key>g</key>
-								<real>0.64313699999999996</real>
-								<key>r</key>
-								<real>0.16078400000000001</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-					<key>Text</key>
-					<dict>
-						<key>Align</key>
-						<integer>0</integer>
-						<key>Pad</key>
-						<real>8</real>
-						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
-
-\f0\b\fs44 \cf2 \expnd0\expndtw0\kerning0
-Flowlistapp.com}</string>
-						<key>VerticalPad</key>
-						<real>8</real>
-					</dict>
-					<key>TextPlacement</key>
-					<integer>0</integer>
-				</dict>
-				<dict>
 					<key>Class</key>
 					<string>Group</string>
 					<key>Graphics</key>
@@ -816,12 +703,8 @@ Flowlistapp.com}</string>
 										<key>space</key>
 										<string>srgb</string>
 									</dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>2</real>
 								</dict>
@@ -871,12 +754,8 @@ Flowlistapp.com}</string>
 										<key>space</key>
 										<string>srgb</string>
 									</dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>2</real>
 								</dict>
@@ -1335,72 +1214,6 @@ Flowlistapp.com}</string>
 					</dict>
 				</dict>
 				<dict>
-					<key>Bounds</key>
-					<string>{{792, 0}, {288, 162}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>FontInfo</key>
-					<dict>
-						<key>Color</key>
-						<dict>
-							<key>space</key>
-							<string>gg22</string>
-							<key>w</key>
-							<string>0</string>
-						</dict>
-						<key>Font</key>
-						<string>HelveticaNeue-Thin</string>
-						<key>Size</key>
-						<real>36</real>
-					</dict>
-					<key>ID</key>
-					<integer>25</integer>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.99999600649999998</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
-							<key>FillType</key>
-							<integer>2</integer>
-							<key>GradientAngle</key>
-							<real>90</real>
-							<key>GradientColor</key>
-							<dict>
-								<key>b</key>
-								<string>0.941176</string>
-								<key>g</key>
-								<string>0.941176</string>
-								<key>r</key>
-								<string>0.941176</string>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-							<key>Fuzziness</key>
-							<real>1</real>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
 					<key>AllowConnections</key>
 					<string>NO</string>
 					<key>AllowLabelDrop</key>
@@ -1430,12 +1243,8 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -1471,12 +1280,8 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -1513,12 +1318,8 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -1548,14 +1349,10 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
 							<key>LineType</key>
 							<integer>1</integer>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -1592,14 +1389,10 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
 							<key>LineType</key>
 							<integer>1</integer>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -1634,14 +1427,10 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
 							<key>LineType</key>
 							<integer>1</integer>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -1735,12 +1524,8 @@ Flowlistapp.com}</string>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>2</real>
 						</dict>
@@ -1788,12 +1573,8 @@ Flowlistapp.com}</string>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>2</real>
 						</dict>
@@ -2281,14 +2062,10 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
 							<key>LineType</key>
 							<integer>1</integer>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>5</real>
 						</dict>
@@ -2318,14 +2095,10 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
 							<key>LineType</key>
 							<integer>1</integer>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -2362,14 +2135,10 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
 							<key>LineType</key>
 							<integer>1</integer>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -2399,14 +2168,10 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
 							<key>LineType</key>
 							<integer>1</integer>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -2436,14 +2201,10 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
 							<key>LineType</key>
 							<integer>1</integer>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>5</real>
 						</dict>
@@ -2474,12 +2235,8 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -2509,14 +2266,10 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
 							<key>LineType</key>
 							<integer>1</integer>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -2547,12 +2300,8 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -2582,14 +2331,10 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
 							<key>LineType</key>
 							<integer>1</integer>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -2625,12 +2370,8 @@ Flowlistapp.com}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -2715,14 +2456,10 @@ Flowlistapp.com}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
 									<key>LineType</key>
 									<integer>1</integer>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -2752,14 +2489,10 @@ Flowlistapp.com}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
 									<key>LineType</key>
 									<integer>1</integer>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -2789,14 +2522,10 @@ Flowlistapp.com}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
 									<key>LineType</key>
 									<integer>1</integer>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -2833,14 +2562,10 @@ Flowlistapp.com}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
 									<key>LineType</key>
 									<integer>1</integer>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -2870,14 +2595,10 @@ Flowlistapp.com}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
 									<key>LineType</key>
 									<integer>1</integer>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -2907,14 +2628,10 @@ Flowlistapp.com}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
 									<key>LineType</key>
 									<integer>1</integer>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -2971,14 +2688,10 @@ Flowlistapp.com}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
 									<key>LineType</key>
 									<integer>1</integer>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -3008,14 +2721,10 @@ Flowlistapp.com}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
 									<key>LineType</key>
 									<integer>1</integer>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -3045,14 +2754,10 @@ Flowlistapp.com}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
 									<key>LineType</key>
 									<integer>1</integer>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -3082,14 +2787,10 @@ Flowlistapp.com}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
 									<key>LineType</key>
 									<integer>1</integer>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -3119,14 +2820,10 @@ Flowlistapp.com}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
 									<key>LineType</key>
 									<integer>1</integer>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -3156,14 +2853,10 @@ Flowlistapp.com}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
 									<key>LineType</key>
 									<integer>1</integer>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -3215,14 +2908,10 @@ Flowlistapp.com}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>HeadArrow</key>
-							<string>0</string>
 							<key>Legacy</key>
 							<true/>
 							<key>LineType</key>
 							<integer>1</integer>
-							<key>TailArrow</key>
-							<string>0</string>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -3384,12 +3073,12 @@ Flowlistapp.com}</string>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{572.42510541323259, 283.88623941316433}, {362.02531645569638, 391.77215189873419}}</string>
+		<string>{{552.64032732387102, -50.118271320803501}, {577.77777777777794, 625.2525252525254}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Arbeitsfläche 1</string>
-				<real>1.5800000000000001</real>
+				<real>0.98999999999999999</real>
 				<real>1</real>
 			</array>
 		</array>
@@ -3421,8 +3110,6 @@ Flowlistapp.com}</string>
 	<integer>0</integer>
 	<key>marginWidthKey</key>
 	<real>0.0</real>
-	<key>previewTypeKey</key>
-	<integer>0</integer>
 	<key>readOnlyKey</key>
 	<false/>
 	<key>resolutionForBMPKey</key>
