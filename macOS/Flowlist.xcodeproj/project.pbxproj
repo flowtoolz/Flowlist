@@ -18,6 +18,7 @@
 		9E2CCE8F20C1EAFF0037D755 /* Task+Copyable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CCE8E20C1EAFF0037D755 /* Task+Copyable.swift */; };
 		9E2F83E520C8639F003E771E /* SelectableList+NSPasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F83E420C8639F003E771E /* SelectableList+NSPasteboard.swift */; };
 		9E2F83E720C88220003E771E /* SelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F83E620C88220003E771E /* SelectionMenu.swift */; };
+		9E43503F20F350D200014FFF /* WindowMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E43503E20F350D200014FFF /* WindowMenu.swift */; };
 		9E542E951EEEE41C00534981 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E542E941EEEE41C00534981 /* main.swift */; };
 		9E5768BA20C1436500749C0C /* TaskState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768B920C1436500749C0C /* TaskState.swift */; };
 		9E5768BC20C14B9300749C0C /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768BB20C14B9300749C0C /* Direction.swift */; };
@@ -84,6 +85,7 @@
 		9E2CCE8E20C1EAFF0037D755 /* Task+Copyable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Copyable.swift"; path = "../Code/Task+Copyable.swift"; sourceTree = "<group>"; };
 		9E2F83E420C8639F003E771E /* SelectableList+NSPasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SelectableList+NSPasteboard.swift"; path = "../Code/macOS/SelectableList+NSPasteboard.swift"; sourceTree = "<group>"; };
 		9E2F83E620C88220003E771E /* SelectionMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectionMenu.swift; path = ../Code/macOS/SelectionMenu.swift; sourceTree = "<group>"; };
+		9E43503E20F350D200014FFF /* WindowMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WindowMenu.swift; path = ../Code/macOS/WindowMenu.swift; sourceTree = "<group>"; };
 		9E542E911EEEE41C00534981 /* Flowlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flowlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E542E941EEEE41C00534981 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../Code/macOS/main.swift; sourceTree = "<group>"; };
 		9E5768B920C1436500749C0C /* TaskState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskState.swift; path = ../Code/TaskState.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				9EB6217120C27DD500DD3DA5 /* ApplicationMenu.swift */,
 				9E2F83E620C88220003E771E /* SelectionMenu.swift */,
 				9EB6217620C2830200DD3DA5 /* EditMenu.swift */,
+				9E43503E20F350D200014FFF /* WindowMenu.swift */,
 				9E2F83E420C8639F003E771E /* SelectableList+NSPasteboard.swift */,
 			);
 			name = Menu;
@@ -555,6 +558,7 @@
 			files = (
 				9E6C720B20B19C88001C3D2C /* Task+State.swift in Sources */,
 				9EF0A78E20B6E6CD00E1A23A /* BrowserView.swift in Sources */,
+				9E43503F20F350D200014FFF /* WindowMenu.swift in Sources */,
 				9E08E6B320DD13E000C32356 /* PurchaseView.swift in Sources */,
 				9EF0A78A20B5E26F00E1A23A /* TableContent.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* SelectableList.swift in Sources */,

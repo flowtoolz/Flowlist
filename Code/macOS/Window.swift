@@ -1,15 +1,11 @@
 import AppKit
 import SwiftyToolz
 
+let mainWindow = Window()
+
 class Window: NSWindow
 {
     // MARK: - Initialization
-    
-    convenience init(delegate: NSWindowDelegate)
-    {
-        self.init()
-        self.delegate = delegate
-    }
     
     override init(contentRect: NSRect,
                   styleMask style: StyleMask,
@@ -34,7 +30,7 @@ class Window: NSWindow
         title = "Flowlist"
         #endif
         
-        collectionBehavior = [.managed, .fullScreenPrimary] // required for macOS 10.10 ?
+        collectionBehavior = [.managed, .fullScreenPrimary] // required for macOS 10.10
         
         isReleasedWhenClosed = false
         contentViewController = ViewController()

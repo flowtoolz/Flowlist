@@ -8,21 +8,22 @@ class Menu: NSMenu
     {
         super.init(title: "Flowlist Menu Bar")
 
-        addItem(NSMenuItem(with: applicationMenu))
+        addItem(NSMenuItem(with: ApplicationMenu()))
         addItem(NSMenuItem(with: SelectionMenu()))
         addItem(NSMenuItem(with: EditMenu()))
+        addItem(NSMenuItem(with: windowMenu))
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
     
-    // MARK: - Appliaction Menu
+    // MARK: - Switch Fullscreen
     
     func windowChangesFullscreen(to fullscreen: Bool)
     {
-        applicationMenu.windowChangesFullscreen(to: fullscreen)
+        windowMenu.windowChangesFullscreen(to: fullscreen)
     }
     
-    private let applicationMenu = ApplicationMenu()
+    private let windowMenu = WindowMenu()
     
     // MARK: - Avoid Space Key Equivalent Altogether For It's Unreliable
     

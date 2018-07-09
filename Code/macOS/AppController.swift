@@ -28,6 +28,7 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     {
         NSApp.activate(ignoringOtherApps: true)
         
+        mainWindow.delegate = self
         networkReachability.setup()
         fullVersionPurchaseController.setup()
         store.load()
@@ -35,7 +36,7 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     func applicationWillBecomeActive(_ notification: Notification)
     {
-        window.show()
+        mainWindow.show()
     }
     
     func windowWillEnterFullScreen(_ notification: Notification)
@@ -53,11 +54,6 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
         store.save()
     }
     
-    func windowWillClose(_ notification: Notification)
-    {
-        NSApp.hide(self)
-    }
-    
     func applicationWillTerminate(_ notification: Notification)
     {
         store.save()
@@ -66,5 +62,4 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     // MARK: - Basics
     
     private let menu = Menu()
-    private lazy var window = Window(delegate: self)
 }
