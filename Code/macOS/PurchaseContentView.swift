@@ -20,6 +20,7 @@ class PurchaseContentView: NSView, Observer
         constrainIcon()
         constrainPriceTag()
         constrainC2aButton()
+        constrainRestoreButton()
         constrainLoadingIndicator()
         constrainErrorView()
         
@@ -140,8 +141,9 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainLoadingIndicator()
     {
-        loadingIndicator.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                      excludingEdge: .top)
+        loadingIndicator.autoPinEdge(toSuperviewEdge: .left)
+        loadingIndicator.autoPinEdge(toSuperviewEdge: .right)
+        loadingIndicator.autoPinEdge(.bottom, to: .top, of: restoreButton)
         loadingIndicator.autoPinEdge(.top,
                                      to: .bottom,
                                      of: icon,
@@ -150,7 +152,7 @@ class PurchaseContentView: NSView, Observer
         loadingLabel.autoPinEdgesToSuperviewEdges(with: insets,
                                                   excludingEdge: .bottom)
         spinner.autoAlignAxis(toSuperviewAxis: .vertical)
-        spinner.autoPinEdge(toSuperviewEdge: .bottom, withInset: 20)
+        spinner.autoPinEdge(.top, to: .bottom, of: loadingLabel, withOffset: 20)
     }
     
     private lazy var loadingLabel: Label =
@@ -247,6 +249,8 @@ class PurchaseContentView: NSView, Observer
     
     private lazy var priceTag: PriceTag = columns[1].addForAutoLayout(PriceTag())
     
+    // FIXME: extract buttons into dedicated Button class with background, label etc
+    
     // MARK: - C2A Button
     
     private func constrainC2aButton()
@@ -254,7 +258,10 @@ class PurchaseContentView: NSView, Observer
         c2aButtonBackground.autoSetDimension(.height,
                                              toSize: CGFloat(Float.itemHeight))
     
-        c2aButtonBackground.autoPinEdge(toSuperviewEdge: .bottom)
+        c2aButtonBackground.autoPinEdge(.bottom,
+                                        to: .top,
+                                        of: restoreButtonBackground,
+                                        withOffset: -20)
         c2aButtonBackground.autoAlignAxis(toSuperviewAxis: .vertical)
         c2aButtonBackground.autoSetDimension(.width, toSize: 200)
         
@@ -304,6 +311,66 @@ class PurchaseContentView: NSView, Observer
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         view.backgroundColor = Color(0.3, 0.6, 0.15)
         view.isHidden = true
+        
+        return view
+    }()
+    
+    // MARK: - Restore Button
+    
+    private func constrainRestoreButton()
+    {
+        restoreButtonBackground.autoSetDimension(.height,
+                                             toSize: CGFloat(Float.itemHeight))
+        
+        restoreButtonBackground.autoPinEdge(toSuperviewEdge: .bottom)
+        restoreButtonBackground.autoAlignAxis(toSuperviewAxis: .vertical)
+        restoreButtonBackground.autoSetDimension(.width, toSize: 200)
+        
+        restoreButtonLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
+        restoreButtonLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+        restoreButtonLabel.autoAlignAxis(.horizontal,
+                                         toSameAxisOf: restoreButtonBackground)
+        
+        restoreButton.autoPinEdgesToSuperviewEdges()
+    }
+    
+    private lazy var restoreButton: NSButton =
+    {
+        let button = restoreButtonBackground.addForAutoLayout(NSButton())
+        
+        button.title = ""
+        button.font = Font.text.nsFont
+        button.isBordered = false
+        button.bezelStyle = .regularSquare
+        button.target = self
+        button.action = #selector(didClickRestoreButton)
+        
+        return button
+    }()
+    
+    @objc private func didClickRestoreButton()
+    {
+        fullVersionPurchaseController.restorePurchases()
+    }
+    
+    private lazy var restoreButtonLabel: Label =
+    {
+        let label = restoreButtonBackground.addForAutoLayout(Label())
+        
+        label.stringValue = "Restore Previous Purchase"
+        label.alignment = .center
+        label.textColor = .white
+        label.font = Font.text.nsFont
+        
+        return label
+    }()
+    
+    private lazy var restoreButtonBackground: NSView =
+    {
+        let view = columns[1].addForAutoLayout(LayerBackedView())
+        
+        view.layer?.cornerRadius = Float.cornerRadius.cgFloat
+        view.backgroundColor = Color.gray(brightness: 0.5)
         
         return view
     }()
