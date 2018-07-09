@@ -1,4 +1,4 @@
-import AppKit.NSMenu
+import AppKit
 
 class WindowMenu: NSMenu
 {
@@ -9,7 +9,6 @@ class WindowMenu: NSMenu
         super.init(title: "Window")
         
         addItem(fullscreenItem)
-        
         addItem(focusItem)
         
         addItem(NSMenuItem.separator())

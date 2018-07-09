@@ -28,7 +28,6 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     {
         NSApp.activate(ignoringOtherApps: true)
         
-        mainWindow.delegate = self
         networkReachability.setup()
         fullVersionPurchaseController.setup()
         store.load()
@@ -36,6 +35,7 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
     
     func applicationWillBecomeActive(_ notification: Notification)
     {
+        mainWindow.delegate = self
         mainWindow.show()
     }
     
@@ -59,7 +59,7 @@ class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
         store.save()
     }
     
-    // MARK: - Basics
+    // MARK: - Menu
     
     private let menu = Menu()
 }
