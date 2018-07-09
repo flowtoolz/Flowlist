@@ -16,19 +16,34 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
     
     deinit { removeObservers() }
     
-    // MARK: - Buy or Restore Full Version
+    // MARK: - Restore Purchases
+    
+    func restorePurchases()
+    {
+        SKPaymentQueue.default().restoreCompletedTransactions()
+    }
+    
+    func paymentQueue(_ queue: SKPaymentQueue,
+                      restoreCompletedTransactionsFailedWithError error: Error)
+    {
+        send(.didFailToPurchaseFullVersion(message: "An error occured while restoring AppStore purchases."))
+        
+        log(error: error.localizedDescription)
+    }
+    
+    // MARK: - Purchase Full Version
     
     func purchaseFullVersion()
     {
         guard userCanPay else
         {
-            send(.didFailToPurchaseFullVersion(message: "Cannot purchase full version because user is not eligible to pay in the AppStore."))
+            send(.didFailToPurchaseFullVersion(message: "Cannot purchase full version because the user is not eligible to pay in the AppStore."))
             return
         }
         
         guard let product = fullVersionProduct else
         {
-            send(.didFailToPurchaseFullVersion(message: "Cannot purchase full version because product infos haven't yet been downloaded from the AppStore."))
+            send(.didFailToPurchaseFullVersion(message: "Cannot purchase full version because product infos haven't yet been downloaded."))
             return
         }
         
@@ -36,6 +51,10 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
         
         SKPaymentQueue.default().add(payment)
     }
+    
+    private var userCanPay: Bool { return SKPaymentQueue.canMakePayments() }
+    
+    // MARK: - Observe Payment Queue
     
     func paymentQueue(_ queue: SKPaymentQueue,
                       updatedTransactions transactions: [SKPaymentTransaction])
@@ -60,7 +79,7 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
         {
         case .purchasing: break
             
-        case .purchased:
+        case .purchased, .restored:
             isFullVersion = true
             send(.didPurchaseFullVersion)
             SKPaymentQueue.default().finishTransaction(transaction)
@@ -79,16 +98,9 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
             send(.didFailToPurchaseFullVersion(message: message))
             SKPaymentQueue.default().finishTransaction(transaction)
             
-        case .restored:
-            isFullVersion = true
-            send(.didPurchaseFullVersion)
-            SKPaymentQueue.default().finishTransaction(transaction)
-            
         case .deferred: break
         }
     }
-    
-    private var userCanPay: Bool { return SKPaymentQueue.canMakePayments() }
     
     // MARK: - Load Full Version Product From AppStore
     
