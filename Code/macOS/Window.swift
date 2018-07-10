@@ -22,13 +22,9 @@ class Window: NSWindow
                    backing: backingStoreType,
                    defer: flag)
         
-        #if DEBUG
-        title = "Flowlist (Debug)"
-        #elseif BETA
-        title = "Flowlist (Beta)"
-        #else
-        title = "Flowlist"
-        #endif
+        titlebarAppearsTransparent = true
+        titleVisibility = .hidden
+        backgroundColor = Color.background.nsColor
         
         collectionBehavior = [.managed, .fullScreenPrimary] // required for macOS 10.10
         
