@@ -1,7 +1,3 @@
-#Flowlist Website Copywriting
-
-* 
-
 #Flowlist AppStore Description
 
 Flowlist is an elegant app for capturing ideas and managing tasks. Its editable item hierarchy makes it simple yet powerful. Be in a flow state while organizing your thoughts and your life!
