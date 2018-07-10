@@ -13,6 +13,7 @@ class TextField: Label, Observable
         drawsBackground = false
         isEditable = true
         font = Font.text.nsFont
+        focusRingType = .none
         
         set(placeholder: "untitled")
     }
