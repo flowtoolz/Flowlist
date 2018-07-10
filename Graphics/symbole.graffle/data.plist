@@ -127,7 +127,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-07-09 16:37:10 +0000</string>
+	<string>2018-07-10 06:38:57 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -190,7 +190,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-577.77777777777783, -625.25252525252506}, {2345.4545454545455, 2091.9191919191921}}</string>
+				<string>{{-202.12014134275603, -218.72791519434628}, {1593.9929328621911, 1279.1519434628974}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -227,13 +227,15 @@
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{792, 504}, {72, 72}}</string>
+					<string>{{841.5, 450}, {45, 45}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
 					<integer>3</integer>
 					<key>ImageID</key>
 					<integer>4</integer>
+					<key>Rotation</key>
+					<real>351</real>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -285,7 +287,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{648, 216}, {72, 72}}</string>
+					<string>{{792, 432}, {144, 81}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -311,11 +313,26 @@
 							<key>Color</key>
 							<dict>
 								<key>b</key>
-								<real>0.94117647058823528</real>
+								<real>1</real>
 								<key>g</key>
-								<real>0.94117647058823528</real>
+								<real>1</real>
 								<key>r</key>
-								<real>0.94117647058823528</real>
+								<real>0.99999600649999998</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>FillType</key>
+							<integer>2</integer>
+							<key>GradientAngle</key>
+							<real>90</real>
+							<key>GradientColor</key>
+							<dict>
+								<key>b</key>
+								<string>0.941176</string>
+								<key>g</key>
+								<string>0.941176</string>
+								<key>r</key>
+								<string>0.941176</string>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
@@ -2987,6 +3004,10 @@
 			</array>
 			<key>GridInfo</key>
 			<dict>
+				<key>GridSpacing</key>
+				<real>4.5</real>
+				<key>MajorGridSpacing</key>
+				<integer>16</integer>
 				<key>ShowsGrid</key>
 				<string>YES</string>
 				<key>SnapsToGrid</key>
@@ -3073,12 +3094,12 @@
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{552.64032732387102, -50.118271320803501}, {577.77777777777794, 625.2525252525254}}</string>
+		<string>{{758.68222864689324, 325.43991148231385}, {202.12014134275637, 218.72791519434645}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Arbeitsfläche 1</string>
-				<real>0.98999999999999999</real>
+				<real>2.8300000000000001</real>
 				<real>1</real>
 			</array>
 		</array>
@@ -3088,9 +3109,9 @@
 	<key>copyLinkedImagesKey</key>
 	<false/>
 	<key>createSinglePDFKey</key>
-	<false/>
+	<integer>0</integer>
 	<key>exportAreaKey</key>
-	<integer>3</integer>
+	<integer>0</integer>
 	<key>exportQualityKey</key>
 	<real>100</real>
 	<key>exportSizesKey</key>

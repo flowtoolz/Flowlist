@@ -5,7 +5,7 @@
 	<key>ApplicationVersion</key>
 	<array>
 		<string>com.omnigroup.OmniGraffle7</string>
-		<string>186.9.0.304876</string>
+		<string>191.6.0.313439</string>
 	</array>
 	<key>ColorProfiles</key>
 	<array>
@@ -103,7 +103,7 @@
 	<key>Creator</key>
 	<string>Sebastian Fichtner</string>
 	<key>GraphDocumentVersion</key>
-	<integer>14</integer>
+	<integer>15</integer>
 	<key>GuidesLocked</key>
 	<string>NO</string>
 	<key>GuidesVisible</key>
@@ -112,8 +112,6 @@
 	<integer>21</integer>
 	<key>ImageLinkBack</key>
 	<array>
-		<dict/>
-		<dict/>
 		<dict/>
 		<dict/>
 		<dict/>
@@ -138,8 +136,6 @@
 		<string>image11.png</string>
 		<string>image10.png</string>
 		<string>image6.png</string>
-		<string>image5.png</string>
-		<string>image4.png</string>
 		<string>image1.png</string>
 	</array>
 	<key>LinksVisible</key>
@@ -149,7 +145,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-07-07 11:26:06 +0000</string>
+	<string>2018-07-09 18:18:00 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -212,11 +208,11 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-2356.6129032258045, -3561.4193548387093}, {9470.967741935483, 17225.806451612905}}</string>
+				<string>{{-2264.375, -3502.7500000000005}, {9287.4999999999982, 17109.375}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
-				<integer>2</integer>
+				<integer>0</integer>
 				<key>Style</key>
 				<dict>
 					<key>shadow</key>
@@ -333,7 +329,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1228.5353356338132, 6959.992919921875}, {1261.4621314072024, 59.99993896484375}}</string>
+					<string>{{1228.5353356338132, 6959.992919921875}, {781.46261968845238, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -350,9 +346,9 @@
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>3</integer>
@@ -393,76 +389,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 check, uncheck, delete}</string>
-					</dict>
-					<key>TextPlacement</key>
-					<integer>0</integer>
-				</dict>
-				<dict>
-					<key>Bounds</key>
-					<string>{{1138.5354271865476, 7019.9928588867188}, {1261.4621314072024, 59.99993896484375}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>FontInfo</key>
-					<dict>
-						<key>Color</key>
-						<dict>
-							<key>b</key>
-							<string>1</string>
-							<key>g</key>
-							<string>1</string>
-							<key>r</key>
-							<string>0.999996</string>
-							<key>space</key>
-							<string>srgb</string>
-						</dict>
-						<key>Font</key>
-						<string>ArialRoundedMTBold</string>
-						<key>Size</key>
-						<real>45</real>
-					</dict>
-					<key>ID</key>
-					<integer>4</integer>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>0.95686300000000002</real>
-								<key>g</key>
-								<real>0.64313699999999996</real>
-								<key>r</key>
-								<real>0.16078400000000001</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-					<key>Text</key>
-					<dict>
-						<key>Align</key>
-						<integer>0</integer>
-						<key>Pad</key>
-						<real>30</real>
+\f0\fs90 \cf2 check, uncheck, delete}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -487,23 +419,10 @@
 						<dict>
 							<key>Beneath</key>
 							<string>YES</string>
-							<key>Color</key>
-							<dict>
-								<key>a</key>
-								<real>0.33486729452054792</real>
-								<key>b</key>
-								<real>0.0</real>
-								<key>g</key>
-								<real>0.0</real>
-								<key>r</key>
-								<real>0.0</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
 							<key>Fuzziness</key>
 							<real>60</real>
 							<key>ShadowVector</key>
-							<string>{0, 20.000159740447998}</string>
+							<string>{0, 4.9996799826622009}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
@@ -514,7 +433,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1228.5353356338132, 6899.9929809570312}, {1261.4621314072024, 59.99993896484375}}</string>
+					<string>{{1228.5353356338132, 6899.9929809570312}, {781.46261968845238, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -531,9 +450,9 @@
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>6</integer>
@@ -574,12 +493,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 rename, group,  start, pause,}</string>
+\f0\fs90 \cf2 rename, group,  start, pause,}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -616,12 +535,8 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -700,9 +615,9 @@
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Thin</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>10</integer>
@@ -743,14 +658,15 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande-Bold;\f2\fnil\fcharset0 SFProDisplay-Thin;
+}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Remove from selection via 
+\f0\fs90 \cf2 Remove from selection via 
 \f1\b \cf2 \uc0\u8984 
-\f0 \cf2 Click}</string>
+\f2 \cf2 Click}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -785,12 +701,8 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -869,9 +781,9 @@
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>LucidaGrande-Bold</string>
+						<string>SFProDisplay-Thin</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>14</integer>
@@ -912,15 +824,18 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande-Bold;\f2\fnil\fcharset0 SFProDisplay-Thin;
+}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Extend selection up or down via 
-\f1\b \cf2 \uc0\u8679 \u8593 
-\f0\b0 \cf2  or 
-\f1\b \cf2 \uc0\u8679 \u8595 }</string>
+\f0\fs90 \cf2 Extend selection up or down via 
+\f1\b \cf2 \uc0\u8679 
+\f2 \cf2 \uc0\u8593 
+\f0\b0  or 
+\f1\b \cf2 \uc0\u8679 
+\f2 \cf2 \uc0\u8595 }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -955,12 +870,8 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -1022,7 +933,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1228.5353356338132, 6839.9930419921875}, {1261.4621314072024, 59.99993896484375}}</string>
+					<string>{{1228.5353356338132, 6839.9930419921875}, {781.46261968845238, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -1039,9 +950,9 @@
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>18</integer>
@@ -1082,12 +993,12 @@
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Rapidly effect multiple items:}</string>
+\f0\fs90 \cf2 Rapidly effect multiple items:}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -1109,9 +1020,9 @@
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>100</real>
+						<real>90</real>
 					</dict>
 					<key>ID</key>
 					<integer>19</integer>
@@ -1150,13 +1061,12 @@
 						<real>0.0</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
-Batch Processing}</string>
+\f0\b\fs180 \cf2 Batch Processing}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -1193,12 +1103,8 @@ Batch Processing}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -1277,9 +1183,9 @@ Batch Processing}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Thin</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>23</integer>
@@ -1320,14 +1226,15 @@ Batch Processing}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande-Bold;\f2\fnil\fcharset0 SFProDisplay-Thin;
+}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Add to selection via 
+\f0\fs90 \cf2 Add to selection via 
 \f1\b \cf2 \uc0\u8984 
-\f0 \cf2 Click}</string>
+\f2 \cf2 Click}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -1406,9 +1313,9 @@ Batch Processing}</string>
 							<integer>26</integer>
 							<key>Points</key>
 							<array>
-								<string>{1318.9010973674492, 10694.623267197027}</string>
-								<string>{1296.9499001851891, 10723.891530106706}</string>
-								<string>{1289.6328344577691, 10709.257398651867}</string>
+								<string>{1318.9010973674492, 10724.623236679448}</string>
+								<string>{1296.9499001851891, 10753.891499589128}</string>
+								<string>{1289.6328344577691, 10739.257368134289}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -1426,12 +1333,8 @@ Batch Processing}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -1439,7 +1342,7 @@ Batch Processing}</string>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1274.9987030029297, 10679.989135742188}, {58.536525819359724, 58.53652581935976}}</string>
+							<string>{{1274.9987030029297, 10709.989105224609}, {58.536525819359724, 58.53652581935976}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
@@ -1503,9 +1406,9 @@ Batch Processing}</string>
 							<integer>29</integer>
 							<key>Points</key>
 							<array>
-								<string>{1318.9010973674492, 10574.623389267339}</string>
-								<string>{1296.9499001851891, 10603.891652177019}</string>
-								<string>{1289.6328344577691, 10589.25752072218}</string>
+								<string>{1318.9010973674492, 10604.623358749761}</string>
+								<string>{1296.9499001851891, 10633.891621659441}</string>
+								<string>{1289.6328344577691, 10619.257490204602}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -1523,12 +1426,8 @@ Batch Processing}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -1536,7 +1435,7 @@ Batch Processing}</string>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1274.9987030029297, 10559.9892578125}, {58.536525819359724, 58.53652581935976}}</string>
+							<string>{{1274.9987030029297, 10589.989227294922}, {58.536525819359724, 58.53652581935976}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
@@ -1600,9 +1499,9 @@ Batch Processing}</string>
 							<integer>32</integer>
 							<key>Points</key>
 							<array>
-								<string>{1318.9010973674492, 10454.623511337652}</string>
-								<string>{1296.9499001851891, 10483.891774247331}</string>
-								<string>{1289.6328344577691, 10469.257642792492}</string>
+								<string>{1318.9010973674492, 10484.623480820073}</string>
+								<string>{1296.9499001851891, 10513.891743729753}</string>
+								<string>{1289.6328344577691, 10499.257612274914}</string>
 							</array>
 							<key>Scaling</key>
 							<integer>1</integer>
@@ -1620,12 +1519,8 @@ Batch Processing}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -1633,7 +1528,7 @@ Batch Processing}</string>
 						</dict>
 						<dict>
 							<key>Bounds</key>
-							<string>{{1274.9987030029297, 10439.989379882812}, {58.536525819359724, 58.53652581935976}}</string>
+							<string>{{1274.9987030029297, 10469.989349365234}, {58.536525819359724, 58.53652581935976}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>ID</key>
@@ -1687,7 +1582,7 @@ Batch Processing}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1333.5352288222894, 10439.989379882812}, {796.46260442966377, 59.99993896484375}}</string>
+					<string>{{1333.5352288222894, 10469.989349365234}, {796.46260442966377, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -1704,9 +1599,9 @@ Batch Processing}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>34</integer>
@@ -1747,19 +1642,19 @@ Batch Processing}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Toggle fullscreen mode via 
-\f1\b \cf2 \uc0\u8984 
-\f0 \cf2 F}</string>
+\f0\fs90 \cf2 Toggle fullscreen mode via 
+\f1 \uc0\u8984 
+\f0 F}</string>
 					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1333.5352288222898, 10679.989135742188}, {796.46260442966332, 59.99993896484375}}</string>
+					<string>{{1333.5352288222898, 10709.989105224609}, {796.46260442966332, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -1776,9 +1671,9 @@ Batch Processing}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>35</integer>
@@ -1819,17 +1714,17 @@ Batch Processing}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Dont\'92t worry, Flowlist auto-saves}</string>
+\f0\fs90 \cf2 Dont\'92t worry, Flowlist auto-saves}</string>
 					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{959.9990234375, 10259.989562988281}, {1439.99853515625, 119.9998779296875}}</string>
+					<string>{{959.9990234375, 10259.989562988281}, {1439.99853515625, 149.99984741210938}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -1846,9 +1741,9 @@ Batch Processing}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>100</real>
+						<real>90</real>
 					</dict>
 					<key>ID</key>
 					<integer>36</integer>
@@ -1887,20 +1782,19 @@ Batch Processing}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
-Get Into Flow}</string>
+\f0\b\fs180 \cf2 Get Into Flow}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1333.5352288222903, 10559.9892578125}, {826.46257391208474, 59.99993896484375}}</string>
+					<string>{{1333.5352288222903, 10589.989227294922}, {826.46257391208474, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -1917,9 +1811,9 @@ Get Into Flow}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>37</integer>
@@ -1960,15 +1854,14 @@ Get Into Flow}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Toggle monotasking mode via 
-\f1\b \cf2 \uc0\u8984 
-\f0 \cf2 M
-\b0  }</string>
+\f0\fs90 \cf2 Toggle monotasking mode via 
+\f1 \uc0\u8984 
+\f0 M }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -2084,16 +1977,12 @@ Get Into Flow}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>HeadScale</key>
 									<real>3</real>
 									<key>Join</key>
 									<integer>0</integer>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -2143,16 +2032,12 @@ Get Into Flow}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>HeadScale</key>
 									<real>3</real>
 									<key>Join</key>
 									<integer>0</integer>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -2202,16 +2087,12 @@ Get Into Flow}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>HeadScale</key>
 									<real>3</real>
 									<key>Join</key>
 									<integer>0</integer>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -2259,23 +2140,10 @@ Get Into Flow}</string>
 						<dict>
 							<key>Beneath</key>
 							<string>YES</string>
-							<key>Color</key>
-							<dict>
-								<key>a</key>
-								<real>0.33000000000000002</real>
-								<key>b</key>
-								<real>0.0</real>
-								<key>g</key>
-								<real>0.0</real>
-								<key>r</key>
-								<real>0.0</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
 							<key>Fuzziness</key>
-							<real>60</real>
+							<real>120</real>
 							<key>ShadowVector</key>
-							<string>{0, 20.000159740447998}</string>
+							<string>{0, 10.000079870223999}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
@@ -2308,23 +2176,10 @@ Get Into Flow}</string>
 						<dict>
 							<key>Beneath</key>
 							<string>YES</string>
-							<key>Color</key>
-							<dict>
-								<key>a</key>
-								<real>0.33000000000000002</real>
-								<key>b</key>
-								<real>0.0</real>
-								<key>g</key>
-								<real>0.0</real>
-								<key>r</key>
-								<real>0.0</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
 							<key>Fuzziness</key>
 							<real>60</real>
 							<key>ShadowVector</key>
-							<string>{0, 20.000159740447998}</string>
+							<string>{0, 14.999760389328003}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
@@ -2335,7 +2190,7 @@ Get Into Flow}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1184.9987945556641, 9329.9905090332031}, {58.536525819359724, 58.53652581935976}}</string>
+					<string>{{1154.9988250732422, 9329.9905090332031}, {58.536525819359724, 58.53652581935976}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
@@ -2365,7 +2220,7 @@ Get Into Flow}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1184.9987945556641, 9209.9906311035156}, {58.536525819359724, 58.53652581935976}}</string>
+					<string>{{1154.9988250732422, 9209.9906311035156}, {58.536525819359724, 58.53652581935976}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
@@ -2395,7 +2250,7 @@ Get Into Flow}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1184.9987945556641, 9089.9907531738281}, {58.536525819359724, 58.53652581935976}}</string>
+					<string>{{1154.9988250732422, 9089.9907531738281}, {58.536525819359724, 58.53652581935976}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
@@ -2425,7 +2280,7 @@ Get Into Flow}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1243.5353203750237, 9089.9907531738281}, {1201.4621924423591, 59.99993896484375}}</string>
+					<string>{{1213.5353508926019, 9089.9907531738281}, {1201.4621924423591, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -2442,9 +2297,9 @@ Get Into Flow}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>48</integer>
@@ -2485,17 +2340,17 @@ Get Into Flow}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Copy text from any document or web page}</string>
+\f0\fs90 \cf2 Copy text from any document or web page}</string>
 					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1243.5353203750242, 9329.9905090332031}, {1201.4621924423586, 59.99993896484375}}</string>
+					<string>{{1213.5353508926023, 9329.9905090332031}, {1201.4621924423586, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -2512,9 +2367,9 @@ Get Into Flow}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>49</integer>
@@ -2555,12 +2410,12 @@ Get Into Flow}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Flowlist will paste the text as separate items}</string>
+\f0\fs90 \cf2 Flowlist will paste the text as separate items}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -2582,9 +2437,9 @@ Get Into Flow}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>100</real>
+						<real>90</real>
 					</dict>
 					<key>ID</key>
 					<integer>50</integer>
@@ -2623,20 +2478,19 @@ Get Into Flow}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
-Import From Anywhere}</string>
+\f0\b\fs180 \cf2 Import From Anywhere}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1243.5353203750246, 9209.9906311035156}, {1261.4621314072019, 59.99993896484375}}</string>
+					<string>{{1213.5353508926028, 9209.9906311035156}, {1261.4621314072019, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -2653,9 +2507,9 @@ Import From Anywhere}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Thin</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>51</integer>
@@ -2696,15 +2550,16 @@ Import From Anywhere}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande-Bold;\f2\fnil\fcharset0 SFProDisplay-Thin;
+}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Go to one of your subitem lists and press 
+\f0\fs90 \cf2 Go to one of your subitem lists and press 
 \f1\b \cf2 \uc0\u8984 
-\f0 \cf2 V
-\b0  }</string>
+\f2 V
+\f0\b0 \cf2  }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -2731,23 +2586,10 @@ Import From Anywhere}</string>
 						<dict>
 							<key>Beneath</key>
 							<string>YES</string>
-							<key>Color</key>
-							<dict>
-								<key>a</key>
-								<real>0.33000000000000002</real>
-								<key>b</key>
-								<real>0.0</real>
-								<key>g</key>
-								<real>0.0</real>
-								<key>r</key>
-								<real>0.0</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
 							<key>Fuzziness</key>
 							<real>60</real>
 							<key>ShadowVector</key>
-							<string>{0, 20.000159740447998}</string>
+							<string>{0, 14.999760389328003}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
@@ -2788,12 +2630,8 @@ Import From Anywhere}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -2872,9 +2710,9 @@ Import From Anywhere}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>56</integer>
@@ -2915,12 +2753,12 @@ Import From Anywhere}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 The universal item structure covers many use cases}</string>
+\f0\fs90 \cf2 The universal item structure covers many use cases}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -2955,12 +2793,8 @@ Import From Anywhere}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -3039,9 +2873,9 @@ Import From Anywhere}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>60</integer>
@@ -3082,12 +2916,12 @@ Import From Anywhere}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Just put new subitems into an item to add details}</string>
+\f0\fs90 \cf2 Just put new subitems into an item to add details}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -3109,9 +2943,9 @@ Import From Anywhere}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>100</real>
+						<real>90</real>
 					</dict>
 					<key>ID</key>
 					<integer>61</integer>
@@ -3150,13 +2984,12 @@ Import From Anywhere}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
-Structured Descriptions}</string>
+\f0\b\fs180 \cf2 Structured Descriptions}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -3193,12 +3026,8 @@ Structured Descriptions}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -3277,9 +3106,9 @@ Structured Descriptions}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>65</integer>
@@ -3320,12 +3149,12 @@ Structured Descriptions}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Dedicated description texts aren\'92t even necessary}</string>
+\f0\fs90 \cf2 Dedicated description texts aren\'92t even necessary}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -3424,12 +3253,8 @@ Structured Descriptions}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -3508,9 +3333,9 @@ Structured Descriptions}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>70</integer>
@@ -3551,12 +3376,12 @@ Structured Descriptions}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Evolve your item hierarchy in every possible way }</string>
+\f0\fs90 \cf2 Evolve your item hierarchy in every possible way }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -3591,12 +3416,8 @@ Structured Descriptions}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -3675,9 +3496,9 @@ Structured Descriptions}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Thin</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>74</integer>
@@ -3718,22 +3539,23 @@ Structured Descriptions}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande-Bold;\f2\fnil\fcharset0 SFProDisplay-Thin;
+}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Move items to a different level using 
+\f0\fs90 \cf2 Move items to a different level using 
 \f1\b \cf2 \uc0\u8984 
-\f0 \cf2 X
-\b0  and 
+\f2 \cf2 X
+\f0\b0  and 
 \f1\b \cf2 \uc0\u8984 
-\f0 \cf2 V}</string>
+\f2 \cf2 V}</string>
 					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{959.9990234375, 5384.9945220947266}, {1439.99853515625, 254.99974060058594}}</string>
+					<string>{{959.9990234375, 5429.9944763183594}, {1439.99853515625, 209.99978637695312}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -3750,9 +3572,9 @@ Structured Descriptions}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>100</real>
+						<real>90</real>
 					</dict>
 					<key>ID</key>
 					<integer>75</integer>
@@ -3791,13 +3613,12 @@ Structured Descriptions}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
-Total Control}</string>
+\f0\b\fs180 \cf2 Total Control}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -3832,12 +3653,8 @@ Total Control}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -3916,9 +3733,9 @@ Total Control}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Thin</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>79</integer>
@@ -3959,25 +3776,26 @@ Total Control}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande-Bold;\f2\fnil\fcharset0 SFProDisplay-Thin;
+}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Copy, cut and paste items  with 
+\f0\fs90 \cf2 Copy, cut and paste items  with 
 \f1\b \cf2 \uc0\u8984 
-\f0 \cf2 C
-\b0 , 
+\f2 \cf2 C
+\f0\b0 , 
 \f1\b \cf2 \uc0\u8984 
-\f0 \cf2 X
-\b0  and 
+\f2 \cf2 X
+\f0\b0  and 
 \f1\b \cf2 \uc0\u8984 
-\f0 \cf2 V}</string>
+\f2 \cf2 V}</string>
 					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{959.9990234375, 5279.99462890625}, {1439.99853515625, 899.9996337890625}}</string>
+					<string>{{959.9990234375, 5279.9940795898438}, {1439.99853515625, 899.9996337890625}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -4141,12 +3959,8 @@ Total Control}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -4225,9 +4039,9 @@ Total Control}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>86</integer>
@@ -4268,12 +4082,12 @@ Total Control}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Paused items slide below items in progress}</string>
+\f0\fs90 \cf2 Paused items slide below items in progress}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -4295,9 +4109,9 @@ Total Control}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>100</real>
+						<real>90</real>
 					</dict>
 					<key>ID</key>
 					<integer>87</integer>
@@ -4336,13 +4150,12 @@ Total Control}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
-Start &amp; Pause}</string>
+\f0\b\fs180 \cf2 Start &amp; Pause}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -4369,23 +4182,10 @@ Start &amp; Pause}</string>
 						<dict>
 							<key>Beneath</key>
 							<string>YES</string>
-							<key>Color</key>
-							<dict>
-								<key>a</key>
-								<real>0.33000000000000002</real>
-								<key>b</key>
-								<real>0.0</real>
-								<key>g</key>
-								<real>0.0</real>
-								<key>r</key>
-								<real>0.0</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
 							<key>Fuzziness</key>
 							<real>60</real>
 							<key>ShadowVector</key>
-							<string>{0, 20.000159740447998}</string>
+							<string>{0, 14.999760389328003}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
@@ -4426,12 +4226,8 @@ Start &amp; Pause}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -4510,9 +4306,9 @@ Start &amp; Pause}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>92</integer>
@@ -4553,12 +4349,12 @@ Start &amp; Pause}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Items in progress slide to the top of the list}</string>
+\f0\fs90 \cf2 Items in progress slide to the top of the list}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -4580,9 +4376,9 @@ Start &amp; Pause}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>LucidaGrande-Bold</string>
+						<string>SFProDisplay-Thin</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>93</integer>
@@ -4623,16 +4419,19 @@ Start &amp; Pause}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande-Bold;\f2\fnil\fcharset0 SFProDisplay-Thin;
+}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 You can still manually move items via 
-\f1\b \cf2 \uc0\u8984 \u8593 
-\f0\b0 \cf2  and 
-\f1\b \cf2 \uc0\u8984 \u8595 
-\f0\b0 \cf2  }</string>
+\f0\fs90 \cf2 You can still manually move items via 
+\f1\b \cf2 \uc0\u8984 
+\f2 \cf2 \uc0\u8593 
+\f0\b0  and 
+\f1\b \cf2 \uc0\u8984 
+\f2 \cf2 \uc0\u8595 
+\f0\b0  }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -4654,9 +4453,9 @@ Start &amp; Pause}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>LucidaGrande-Bold</string>
+						<string>SFProDisplay-Thin</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>94</integer>
@@ -4697,13 +4496,15 @@ Start &amp; Pause}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande-Bold;\f2\fnil\fcharset0 SFProDisplay-Thin;
+}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Set items in progress or pause them via 
-\f1\b \cf2 \uc0\u8984 \u8594 }</string>
+\f0\fs90 \cf2 Set items in progress or pause them via 
+\f1\b \cf2 \uc0\u8984 
+\f2 \cf2 \uc0\u8594 }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -4789,9 +4590,9 @@ Start &amp; Pause}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>96</integer>
@@ -4832,12 +4633,12 @@ Start &amp; Pause}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Add new subitems into any other (empty) item}</string>
+\f0\fs90 \cf2 Add new subitems into any other (empty) item}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -4872,12 +4673,8 @@ Start &amp; Pause}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -4969,12 +4766,8 @@ Start &amp; Pause}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -5036,7 +4829,7 @@ Start &amp; Pause}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1199.998779296875, 1469.9985046386719}, {1079.9989013671875, 59.99993896484375}}</string>
+					<string>{{1199.998779296875, 1469.9985046386719}, {1109.9988708496094, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -5053,9 +4846,9 @@ Start &amp; Pause}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>103</integer>
@@ -5096,12 +4889,12 @@ Start &amp; Pause}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Focus on any subitem list in your item hierarchy:}</string>
+\f0\fs90 \cf2 Focus on any subitem list in your item hierarchy:}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -5123,9 +4916,9 @@ Start &amp; Pause}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>100</real>
+						<real>90</real>
 					</dict>
 					<key>ID</key>
 					<integer>104</integer>
@@ -5164,13 +4957,12 @@ Start &amp; Pause}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
-Create Your Own Structure}</string>
+\f0\b\fs180 \cf2 Create Your Own Structure}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -5194,9 +4986,9 @@ Create Your Own Structure}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>100</real>
+						<real>90</real>
 					</dict>
 					<key>ID</key>
 					<integer>105</integer>
@@ -5235,13 +5027,12 @@ Create Your Own Structure}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
-Rapid List Editing}</string>
+\f0\b\fs180 \cf2 Rapid List Editing}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -5278,12 +5069,8 @@ Rapid List Editing}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -5362,9 +5149,9 @@ Rapid List Editing}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>109</integer>
@@ -5405,12 +5192,12 @@ Rapid List Editing}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Selection auto-adjusts intelligently}</string>
+\f0\fs90 \cf2 Selection auto-adjusts intelligently}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -5445,12 +5232,8 @@ Rapid List Editing}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -5529,9 +5312,9 @@ Rapid List Editing}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>113</integer>
@@ -5572,12 +5355,12 @@ Rapid List Editing}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Done list shows last finished on top}</string>
+\f0\fs90 \cf2 Done list shows last finished on top}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -5599,9 +5382,9 @@ Rapid List Editing}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>100</real>
+						<real>90</real>
 					</dict>
 					<key>ID</key>
 					<integer>114</integer>
@@ -5640,13 +5423,12 @@ Rapid List Editing}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
-Check Off &amp; Review}</string>
+\f0\b\fs180 \cf2 Check Off &amp; Review}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -5675,23 +5457,10 @@ Check Off &amp; Review}</string>
 						<dict>
 							<key>Beneath</key>
 							<string>YES</string>
-							<key>Color</key>
-							<dict>
-								<key>a</key>
-								<real>0.33000000000000002</real>
-								<key>b</key>
-								<real>0.0</real>
-								<key>g</key>
-								<real>0.0</real>
-								<key>r</key>
-								<real>0.0</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
 							<key>Fuzziness</key>
 							<real>60</real>
 							<key>ShadowVector</key>
-							<string>{0, 20.000159740447998}</string>
+							<string>{0, 14.999760389328003}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
@@ -5732,12 +5501,8 @@ Check Off &amp; Review}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -5829,12 +5594,8 @@ Check Off &amp; Review}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -5926,12 +5687,8 @@ Check Off &amp; Review}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -6010,9 +5767,9 @@ Check Off &amp; Review}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>125</integer>
@@ -6053,12 +5810,12 @@ Check Off &amp; Review}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Checked off items slide to done list}</string>
+\f0\fs90 \cf2 Checked off items slide to done list}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -6080,9 +5837,9 @@ Check Off &amp; Review}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>126</integer>
@@ -6123,12 +5880,12 @@ Check Off &amp; Review}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Unckecked items move back up}</string>
+\f0\fs90 \cf2 Unckecked items move back up}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -6150,9 +5907,9 @@ Check Off &amp; Review}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>LucidaGrande-Bold</string>
+						<string>SFProDisplay-Thin</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>127</integer>
@@ -6193,13 +5950,15 @@ Check Off &amp; Review}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande-Bold;\f2\fnil\fcharset0 SFProDisplay-Thin;
+}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Check off or unckeck items with 
-\f1\b \cf2 \uc0\u8984 \u8592 }</string>
+\f0\fs90 \cf2 Check off or unckeck items with 
+\f1\b \cf2 \uc0\u8984 
+\f2 \cf2 \uc0\u8592 }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -6298,12 +6057,8 @@ Check Off &amp; Review}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -6395,12 +6150,8 @@ Check Off &amp; Review}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -6492,12 +6243,8 @@ Check Off &amp; Review}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -6589,12 +6336,8 @@ Check Off &amp; Review}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -6673,9 +6416,9 @@ Check Off &amp; Review}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>141</integer>
@@ -6716,14 +6459,15 @@ Check Off &amp; Review}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande-Bold;\f2\fnil\fcharset0 SFProDisplay-Thin;
+}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Undo last deletion with 
+\f0\fs90 \cf2 Undo last deleted items via 
 \f1\b \cf2 \uc0\u8984 
-\f0 \cf2 Z}</string>
+\f2 \cf2 Z}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -6750,23 +6494,10 @@ Check Off &amp; Review}</string>
 						<dict>
 							<key>Beneath</key>
 							<string>YES</string>
-							<key>Color</key>
-							<dict>
-								<key>a</key>
-								<real>0.33000000000000002</real>
-								<key>b</key>
-								<real>0.0</real>
-								<key>g</key>
-								<real>0.0</real>
-								<key>r</key>
-								<real>0.0</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
 							<key>Fuzziness</key>
 							<real>60</real>
 							<key>ShadowVector</key>
-							<string>{0, 20.000159740447998}</string>
+							<string>{0, 14.999760389328003}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
@@ -6796,9 +6527,9 @@ Check Off &amp; Review}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>143</integer>
@@ -6839,13 +6570,13 @@ Check Off &amp; Review}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Add item to the top of the list via 
-\b Space}</string>
+\f0\fs90 \cf2 Add item to the top of the list via 
+\f1\b Space}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -6867,9 +6598,9 @@ Check Off &amp; Review}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>LucidaGrande-Bold</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>144</integer>
@@ -6910,12 +6641,12 @@ Check Off &amp; Review}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande-Bold;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Add or delete items like text via 
+\f0\fs90 \cf2 Add or delete items like text via 
 \f1\b \cf2 \uc0\u8629 
 \f0\b0 \cf2  or 
 \f1\b \cf2 \uc0\u9003 }</string>
@@ -6940,9 +6671,9 @@ Check Off &amp; Review}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>LucidaGrande-Bold</string>
+						<string>SFProDisplay-Thin</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>145</integer>
@@ -6983,15 +6714,18 @@ Check Off &amp; Review}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;\f1\fnil\fcharset0 LucidaGrande-Bold;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;\f1\fnil\fcharset0 LucidaGrande-Bold;\f2\fnil\fcharset0 SFProDisplay-Thin;
+}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Prioritize by moving item via 
-\f1\b \cf2 \uc0\u8984 \u8593 
-\f0\b0 \cf2  or 
-\f1\b \cf2 \uc0\u8984 \u8595 }</string>
+\f0\fs90 \cf2 Prioritize by moving item via 
+\f1\b \cf2 \uc0\u8984 
+\f2 \cf2 \uc0\u8593 
+\f0\b0  or 
+\f1\b \cf2 \uc0\u8984 
+\f2 \cf2 \uc0\u8595 }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7077,9 +6811,9 @@ Check Off &amp; Review}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>100</real>
+						<real>90</real>
 					</dict>
 					<key>ID</key>
 					<integer>147</integer>
@@ -7120,17 +6854,16 @@ Check Off &amp; Review}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\b\fs200 \cf2 \kerning1\expnd-8\expndtw-40
-Intuitive\
+\f0\b\fs180 \cf2 Intuitive\
 Key Commands}</string>
+						<key>VerticalPad</key>
+						<real>0.0</real>
 					</dict>
-					<key>TextPlacement</key>
-					<integer>0</integer>
 				</dict>
 				<dict>
 					<key>Bounds</key>
@@ -7151,9 +6884,9 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>148</integer>
@@ -7194,12 +6927,12 @@ Key Commands}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Group items together as subitems of a new item}</string>
+\f0\fs90 \cf2 Group items together as subitems of a new item}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7234,12 +6967,8 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -7318,9 +7047,9 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>152</integer>
@@ -7359,12 +7088,12 @@ Key Commands}</string>
 						<real>0.0</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\b\fs100 \cf2 Focus}</string>
+\f0\b\fs90 \cf2 Focus}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7386,9 +7115,9 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>153</integer>
@@ -7427,12 +7156,12 @@ Key Commands}</string>
 						<real>0.0</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\b\fs100 \cf2 Details}</string>
+\f0\b\fs90 \cf2 Details}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7454,9 +7183,9 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Bold</string>
+						<string>SFProDisplay-Bold</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>154</integer>
@@ -7495,12 +7224,12 @@ Key Commands}</string>
 						<real>0.0</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProDisplay-Thin;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\b\fs100 \cf2 Overview}</string>
+\f0\b\fs90 \cf2 Overview}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7527,23 +7256,10 @@ Key Commands}</string>
 						<dict>
 							<key>Beneath</key>
 							<string>YES</string>
-							<key>Color</key>
-							<dict>
-								<key>a</key>
-								<real>0.33000000000000002</real>
-								<key>b</key>
-								<real>0.0</real>
-								<key>g</key>
-								<real>0.0</real>
-								<key>r</key>
-								<real>0.0</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
 							<key>Fuzziness</key>
 							<real>60</real>
 							<key>ShadowVector</key>
-							<string>{0, 20.000159740447998}</string>
+							<string>{0, 14.999760389328003}</string>
 						</dict>
 						<key>stroke</key>
 						<dict>
@@ -7635,9 +7351,9 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>157</integer>
@@ -7678,12 +7394,12 @@ Key Commands}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Menu shows all currently available actions}</string>
+\f0\fs90 \cf2 Menu shows all currently available actions}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7718,12 +7434,8 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -7802,9 +7514,9 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>161</integer>
@@ -7845,12 +7557,12 @@ Key Commands}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Rapid editing, navigation &amp; window management}</string>
+\f0\fs90 \cf2 Rapid editing, navigation &amp; window management}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -7885,12 +7597,8 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -7969,9 +7677,9 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>165</integer>
@@ -8012,12 +7720,12 @@ Key Commands}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Super clean interface for deep focus and flow}</string>
+\f0\fs90 \cf2 Super clean interface for deep focus and flow}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -8052,12 +7760,8 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -8228,12 +7932,8 @@ Key Commands}</string>
 										<key>space</key>
 										<string>srgb</string>
 									</dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>6</real>
 								</dict>
@@ -8306,34 +8006,6 @@ Key Commands}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1695.99755859375, -1199.9982299804688}, {704, 122}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>ID</key>
-					<integer>173</integer>
-					<key>ImageID</key>
-					<integer>5</integer>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Bounds</key>
 					<string>{{1199.9987697601318, -959.99846649169922}, {959.99903297424316, 539.99944305419922}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
@@ -8383,34 +8055,6 @@ Key Commands}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{959.9990234375, -1199.9982299804688}, {908, 743}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>ID</key>
-					<integer>175</integer>
-					<key>ImageID</key>
-					<integer>4</integer>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Bounds</key>
 					<string>{{959.9990234375, -1199.998779296875}, {1439.99853515625, 899.9996337890625}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
@@ -8437,11 +8081,26 @@ Key Commands}</string>
 							<key>Color</key>
 							<dict>
 								<key>b</key>
-								<real>0.95686300000000002</real>
+								<real>1</real>
 								<key>g</key>
-								<real>0.64313699999999996</real>
+								<real>1</real>
 								<key>r</key>
-								<real>0.16078400000000001</real>
+								<real>0.99999600649999998</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>FillType</key>
+							<integer>2</integer>
+							<key>GradientAngle</key>
+							<real>90</real>
+							<key>GradientColor</key>
+							<dict>
+								<key>b</key>
+								<string>0.941176</string>
+								<key>g</key>
+								<string>0.941176</string>
+								<key>r</key>
+								<string>0.941176</string>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
@@ -8477,9 +8136,9 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>177</integer>
@@ -8520,12 +8179,12 @@ Key Commands}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs100 \cf2 Fingers can stay on the keys without interruption}</string>
+\f0\fs90 \cf2 Fingers can stay on the keys without interruption}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -8560,12 +8219,8 @@ Key Commands}</string>
 								</dict>
 								<key>stroke</key>
 								<dict>
-									<key>HeadArrow</key>
-									<string>0</string>
 									<key>Legacy</key>
 									<true/>
-									<key>TailArrow</key>
-									<string>0</string>
 									<key>Width</key>
 									<real>4</real>
 								</dict>
@@ -8627,7 +8282,7 @@ Key Commands}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1154.9988250732422, 9328.1386571813528}, {119.9998779296875, 59.99993896484375}}</string>
+					<string>{{1124.9988555908203, 9328.1386571813528}, {119.9998779296875, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -8644,9 +8299,9 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>184</integer>
@@ -8685,22 +8340,22 @@ Key Commands}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs100 \cf2 \expnd0\expndtw0\kerning0
+\f0\fs90 \cf2 \expnd0\expndtw0\kerning0
 3}</string>
 						<key>VerticalPad</key>
-						<real>6</real>
+						<real>4</real>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1154.9988250732422, 9208.1387792516653}, {119.9998779296875, 59.99993896484375}}</string>
+					<string>{{1124.9988555908203, 9208.1387792516653}, {119.9998779296875, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -8717,9 +8372,9 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>185</integer>
@@ -8758,22 +8413,22 @@ Key Commands}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs100 \cf2 \expnd0\expndtw0\kerning0
+\f0\fs90 \cf2 \expnd0\expndtw0\kerning0
 2}</string>
 						<key>VerticalPad</key>
-						<real>6</real>
+						<real>4</real>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1154.9988250732422, 9088.1389013219778}, {119.9998779296875, 59.99993896484375}}</string>
+					<string>{{1124.9988555908203, 9088.1389013219778}, {119.9998779296875, 59.99993896484375}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -8790,9 +8445,9 @@ Key Commands}</string>
 							<string>srgb</string>
 						</dict>
 						<key>Font</key>
-						<string>MyriadSetPro-Text</string>
+						<string>SFProText-Regular</string>
 						<key>Size</key>
-						<real>50</real>
+						<real>45</real>
 					</dict>
 					<key>ID</key>
 					<integer>186</integer>
@@ -8831,15 +8486,15 @@ Key Commands}</string>
 						<real>30</real>
 						<key>Text</key>
 						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
-{\fonttbl\f0\fnil\fcharset0 MyriadSetPro-Text;}
+{\fonttbl\f0\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs100 \cf2 \expnd0\expndtw0\kerning0
+\f0\fs90 \cf2 \expnd0\expndtw0\kerning0
 1}</string>
 						<key>VerticalPad</key>
-						<real>6</real>
+						<real>4</real>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -9096,7 +8751,7 @@ Key Commands}</string>
 		<key>CurrentSheet</key>
 		<integer>0</integer>
 		<key>Frame</key>
-		<string>{{6, -159}, {1232, 740}}</string>
+		<string>{{0, 0}, {1232, 740}}</string>
 		<key>ShowInfo</key>
 		<true/>
 		<key>ShowRuler</key>
@@ -9108,12 +8763,12 @@ Key Commands}</string>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{43.256821358055099, 9694.7608476444038}, {2951.6129032258054, 1877.419354838712}}</string>
+		<string>{{288.64583333333417, 8492.4583333333248}, {2859.375, 1818.7500000000036}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Arbeitsfläche 1</string>
-				<real>0.31</real>
+				<real>0.32000000000000001</real>
 				<real>0.5</real>
 			</array>
 		</array>
@@ -9123,9 +8778,9 @@ Key Commands}</string>
 	<key>copyLinkedImagesKey</key>
 	<false/>
 	<key>createSinglePDFKey</key>
-	<false/>
+	<integer>0</integer>
 	<key>exportAreaKey</key>
-	<integer>3</integer>
+	<integer>0</integer>
 	<key>exportQualityKey</key>
 	<real>100</real>
 	<key>exportSizesKey</key>
@@ -9145,8 +8800,6 @@ Key Commands}</string>
 	<integer>0</integer>
 	<key>marginWidthKey</key>
 	<real>0.0</real>
-	<key>previewTypeKey</key>
-	<integer>0</integer>
 	<key>readOnlyKey</key>
 	<false/>
 	<key>resolutionForBMPKey</key>
