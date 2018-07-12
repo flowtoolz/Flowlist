@@ -15,6 +15,11 @@ class TextField: Label, Observable
         font = Font.text.nsFont
         focusRingType = .none
         
+        if #available(OSX 10.11, *)
+        {
+            allowsDefaultTighteningForTruncation = true
+        }
+        
         set(placeholder: "untitled")
     }
     
