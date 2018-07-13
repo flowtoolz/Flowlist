@@ -15,6 +15,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         constrainCheckBox()
         contrainGroupIcon()
+        constrainEditingBackground()
         constrainTitleField()
         
         setItemBorder()
@@ -132,16 +133,49 @@ class TaskView: LayerBackedView, Observer, Observable
         case .didNothing: break
             
         case .willEdit:
+            editingBackground.isHidden = false
             send(.willEditTitle)
             
         case .didChange(let text):
             task?.title <- String(withNonEmpty: text)
             
         case .didEdit:
+            editingBackground.isHidden = true
             task?.title <- String(withNonEmpty: titleField.stringValue)
             send(.didEditTitle)
         }
     }
+    
+    // MARK: - Editing Background
+    
+    private func constrainEditingBackground()
+    {
+        editingBackground.autoPinEdge(toSuperviewEdge: .top, withInset: 6.5)
+        editingBackground.autoPinEdge(toSuperviewEdge: .bottom, withInset: 6.5)
+        
+        let sidePadding: CGFloat = 3
+        editingBackground.autoPinEdge(.left,
+                                      to: .right,
+                                      of: checkBox,
+                                      withOffset: -sidePadding)
+        editingBackground.autoPinEdge(.right,
+                                      to: .left,
+                                      of: groupIcon,
+                                      withOffset: sidePadding - 10)
+    }
+    
+    private lazy var editingBackground: LayerBackedView =
+    {
+        let view = addForAutoLayout(LayerBackedView())
+        
+        view.backgroundColor = .white
+        view.isHidden = true
+        view.layer?.cornerRadius = Float.cornerRadius.cgFloat
+        view.layer?.borderWidth = 1.0
+        view.layer?.borderColor = Color.flowlistBlue.with(alpha: 0.25).cgColor
+        
+        return view
+    }()
     
     // MARK: - Check Box
 
