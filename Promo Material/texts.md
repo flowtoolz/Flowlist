@@ -1,8 +1,6 @@
 #Flowlist AppStore Description
 
-Flowlist gets you organized. Finally. Then it releases your creativity. Because it is as radically simple and infinitely adaptable as a box of legos.
-
-Flowlist supports your creative thought process as well as your progress towards life goals and is geared to induce a fun flow state.
+Become organized and creative with an app that is as radically simple and as infinitely adaptable as a box of legos. Flowlist supports your thought process as well long term projects and helps you be in a flow state.
 
 Flowlist does not force your stuff into categories like "Project" or "Todo". Instead, items are universal and may contain other items, just like folders on your Mac may contain other folders. You're free to organize yourself in a way that's true to your own unique way of thinking and living.
 
