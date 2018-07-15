@@ -1,21 +1,37 @@
 #Flowlist AppStore Description
 
-Flowlist is an elegant app for capturing ideas and managing tasks. Its editable item hierarchy makes it simple yet powerful. Be in a flow state while organizing your thoughts and your life!
+Flowlist gets you organized. Finally. Then it releases your creativity. Because it is as radically simple and infinitely adaptable as a box of legos.
 
-Flowlist is radically simple yet super flexible. If you're into that, you can use Flowlist to:
+Flowlist supports your creative thought process as well as your progress towards life goals and is geared to induce a fun flow state.
 
-* Quickly capture whatever pops into your head
-* Develop notes into ideas
-* Manage tasks and projects
-* Plan your day and your future
+Flowlist does not force your stuff into categories like "Project" or "Todo". Instead, items are universal and may contain other items, just like folders on your Mac may contain other folders. You're free to organize yourself in a way that's true to your own unique way of thinking and living.
 
-Flowlist helps you to be in a flow state:
+A novel interaction concept combines intuitive key commands, a clean interface and meaningful animations so you can rapidly navigate and edit your item hierarchy in a state of deep focus.
 
-* Evolve your own item hierarchy: Group items together, add subitems to any item, move items to a whole different level. Flowlist does not force your items into categories like project, task, subtask or description.
-* You chose the scope of your focus by navigating your item hierarchy. No matter on what level you are, there's always an overview to the left and details of a selected item to the right.
-* Your hands never have to leave the keyboard for anything. You can do everything via a few intuitive key commands
-* The interface is super clean. No buttons, knobs, alerts, popups and such clutter.
-* Use Flowlist in fullscreen or in monotasking mode to really focus.
+You may use Flowlist to:
+
+✔ Capture whatever pops into your head
+✔ Support your thought process
+✔ Grow a backlog of ideas
+✔ Establish good habits
+✔ Manage tasks and projects
+✔ Keep track of responsibilities
+✔ Plan your day and my future
+
+Flowlist helps you to get into flow:
+
+✔ You evolve your own item hierarchy: group items together, add subitems to any (empty) item, move items to a whole different level.
+✔ Your hands never have to leave the keyboard and your eyes can stay focused on your content. With just a few intellently laid out key commands, you have rapid control over everything.
+✔ The interface is focused. You change focus by navigating your item hierarchy. Overview is always to the left and details are always to the right. 
+✔ The interface is clean. No buttons, knobs, alerts, popups and such clutter.
+✔ Flowlist animates all your navigation and editing, which makes it fun to use and helps keeping track of changes.
+✔ Flowlist is made for fullscreen and also offers a monotasking mode that blends out all other apps, the dock and the menu bar.
+
+This free version has all features, saves all items and will never expire. It is only limited to 100 items, not counting groups, which will be enough in many contexts. Try it for yourself, a progress at bar the bottom keeps track of your item count.
+
+You can support the development of Flowlist by unlocking the full unlimited version from within the app:
+✔ Pay once, then use Flowlist forever. No subscription required.
+✔ Early bird advantage: Owners of the full version get all new features as free updates, even when the full version price rises.
 
 #Flowlist AppStore Preview Video Narration
 
