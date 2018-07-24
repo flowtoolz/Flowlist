@@ -139,10 +139,8 @@ class BrowserView: LayerBackedView, Observer
         addedView.frame.size.width = frame.size.width / 3
         
         NSAnimationContext.beginGrouping()
-        
-        let context = NSAnimationContext.current
-        context.allowsImplicitAnimation = true
-        context.duration = 0.3
+        NSAnimationContext.current.allowsImplicitAnimation = true
+        NSAnimationContext.current.duration = 0.3
         
         constrainListViews()
         layoutSubtreeIfNeeded()
