@@ -66,7 +66,7 @@ You may use Flowlist to:
 Flowlist helps you to get into flow:
 
 • You evolve your own item hierarchy: group items together, add subitems to any (empty) item, move items to a whole different level.
-• Your hands never have to leave the keyboard and your eyes can stay focused on your content. With just a few intellently laid out key commands, you have rapid control over everything.
+• Your hands never have to leave the keyboard and your eyes can stay focused on your content. With just a few intelligently laid out key commands, you have rapid control over everything.
 • The interface is focused. You change focus by navigating your item hierarchy. Overview is always to the left and details are always to the right. 
 • The interface is clean. No buttons, knobs, alerts, popups and such clutter.
 • Flowlist animates all your navigation and editing, which makes it fun to use and helps keeping track of changes.
