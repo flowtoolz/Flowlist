@@ -1,1 +1,1 @@
-let appController = AppController()
+let appController = FlowlistController()

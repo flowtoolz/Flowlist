@@ -1,65 +1,23 @@
 import AppKit
 import FoundationToolz
 
-class AppController: NSObject, NSApplicationDelegate, NSWindowDelegate
+public class AppController: NSObject, NSApplicationDelegate
 {
-    // MARK: - Initialization
-    
-    override init()
+    public init(withMainMenu mainMenu: NSMenu)
     {
         super.init()
-        
-        initApp()
-        runApp()
-    }
     
-    private func initApp() { _ = NSApplication.shared }
+        _ = NSApplication.shared // initializes app
     
-    // MARK: - App Life Cycle
-    
-    private func runApp()
-    {
-        NSApp.mainMenu = menu // must be set before delegate
+        NSApp.mainMenu = mainMenu // must be set before delegate
         NSApp.delegate = self
         NSApp.run()
     }
     
-    func applicationDidFinishLaunching(_ aNotification: Notification)
+    public func applicationDidFinishLaunching(_ aNotification: Notification)
     {
         NSApp.activate(ignoringOtherApps: true)
         
         networkReachability.setup()
-        fullVersionPurchaseController.setup()
-        store.load()
     }
-    
-    func applicationWillBecomeActive(_ notification: Notification)
-    {
-        mainWindow.delegate = self
-        mainWindow.show()
-    }
-    
-    func windowWillEnterFullScreen(_ notification: Notification)
-    {
-        menu.windowChangesFullscreen(to: true)
-    }
-
-    func windowDidExitFullScreen(_ notification: Notification)
-    {
-        menu.windowChangesFullscreen(to: false)
-    }
-    
-    func windowDidResignKey(_ notification: Notification)
-    {
-        store.save()
-    }
-    
-    func applicationWillTerminate(_ notification: Notification)
-    {
-        store.save()
-    }
-    
-    // MARK: - Menu
-    
-    private let menu = Menu()
 }

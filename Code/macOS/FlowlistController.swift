@@ -1,0 +1,49 @@
+import AppKit
+import FoundationToolz
+
+class FlowlistController: AppController, NSWindowDelegate
+{
+    // MARK: - App Delegate
+    
+    override func applicationDidFinishLaunching(_ aNotification: Notification)
+    {
+        super.applicationDidFinishLaunching(aNotification)
+        
+        fullVersionPurchaseController.setup()
+        store.load()
+    }
+    
+    func applicationWillBecomeActive(_ notification: Notification)
+    {
+        mainWindow.delegate = self
+        mainWindow.show()
+    }
+    
+    func applicationWillTerminate(_ notification: Notification)
+    {
+        store.save()
+    }
+    
+    // MARK: - Window Delegate
+    
+    func windowWillEnterFullScreen(_ notification: Notification)
+    {
+        menu.windowChangesFullscreen(to: true)
+    }
+
+    func windowDidExitFullScreen(_ notification: Notification)
+    {
+        menu.windowChangesFullscreen(to: false)
+    }
+    
+    func windowDidResignKey(_ notification: Notification)
+    {
+        store.save()
+    }
+    
+    // MARK: - Initialization
+    
+    init() { super.init(withMainMenu: menu) }
+    
+    private let menu = Menu()
+}
