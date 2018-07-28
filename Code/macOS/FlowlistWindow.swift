@@ -7,7 +7,7 @@ class FlowlistWindow: Window
 {
     // MARK: - Initialization
     
-    init()
+    fileprivate init()
     {
         super.init(with: ViewController())
         

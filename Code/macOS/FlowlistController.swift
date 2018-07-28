@@ -3,6 +3,10 @@ import FoundationToolz
 
 class FlowlistController: AppController, NSWindowDelegate
 {
+    // MARK: - Initialization
+    
+    init() { super.init(withMainMenu: menu) }
+    
     // MARK: - App Delegate
     
     override func applicationDidFinishLaunching(_ aNotification: Notification)
@@ -41,9 +45,7 @@ class FlowlistController: AppController, NSWindowDelegate
         store.save()
     }
     
-    // MARK: - Initialization
-    
-    init() { super.init(withMainMenu: menu) }
+    // MARK: - Menu
     
     private let menu = Menu()
 }
