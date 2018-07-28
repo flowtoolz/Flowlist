@@ -208,7 +208,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-2264.375, -3502.7500000000005}, {9287.4999999999982, 17109.375}}</string>
+				<string>{{-2264.3749999999995, -3502.7500000000005}, {9287.5, 17109.375}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -5885,7 +5885,7 @@
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Unckecked items move back up}</string>
+\f0\fs90 \cf2 Unchecked items move back up}</string>
 					</dict>
 				</dict>
 				<dict>
@@ -5956,9 +5956,9 @@
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs90 \cf2 Check off or unckeck items with 
+\f0\fs90 \cf2 Check off or uncheck items via 
 \f1\b \cf2 \uc0\u8984 
-\f2 \cf2 \uc0\u8592 }</string>
+\f2 \uc0\u8592 }</string>
 					</dict>
 				</dict>
 				<dict>
@@ -8763,7 +8763,7 @@ Key Commands}</string>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{288.64583333333417, 8492.4583333333248}, {2859.375, 1818.7500000000036}}</string>
+		<string>{{126.25000000000024, 2555.0625}, {2859.375, 1818.75}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
