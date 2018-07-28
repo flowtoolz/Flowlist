@@ -336,7 +336,6 @@
 				9E2F83E620C88220003E771E /* SelectionMenu.swift */,
 				9EB6217620C2830200DD3DA5 /* EditMenu.swift */,
 				9E43503E20F350D200014FFF /* WindowMenu.swift */,
-				9E2F83E420C8639F003E771E /* SelectableList+NSPasteboard.swift */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -350,6 +349,7 @@
 				9EAD75401EF6502000DC46FD /* Table.swift */,
 				9EF0A78920B5E26F00E1A23A /* TableContent.swift */,
 				9EA2B9681EF035D900F05F20 /* Row.swift */,
+				9E2F83E420C8639F003E771E /* SelectableList+NSPasteboard.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
