@@ -13,9 +13,9 @@ class TaskView: LayerBackedView, Observer, Observable
         
         identifier = TaskView.uiIdentifier
         
+        constrainEditingBackground()
         constrainCheckBox()
         contrainGroupIcon()
-        constrainEditingBackground()
         constrainTitleField()
         
         setItemBorder()
@@ -128,10 +128,17 @@ class TaskView: LayerBackedView, Observer, Observable
 
     private func constrainTitleField()
     {
-        titleField.autoPinEdge(.top, to: .top, of: editingBackground)
-        titleField.autoPinEdge(.left, to: .left, of: editingBackground)
-        titleField.autoPinEdge(.right, to: .right, of: editingBackground)
-        titleField.autoPinEdge(.bottom, to: .bottom, of: editingBackground)
+        titleField.autoPinEdge(.left,
+                               to: .right,
+                               of: checkBox,
+                               withOffset: 10)
+        titleField.autoPinEdge(.right,
+                               to: .left,
+                               of: groupIcon,
+                               withOffset: -10)
+        
+        titleField.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        titleField.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
     }
     
     private lazy var titleField: TextField =
@@ -150,7 +157,7 @@ class TaskView: LayerBackedView, Observer, Observable
         case .didNothing: break
             
         case .willEdit:
-            set(editingBackgroundOpacity: 1)
+            set(editing: true)
             task?.isBeingEdited = true
             send(.willEditTitle)
             
@@ -159,44 +166,41 @@ class TaskView: LayerBackedView, Observer, Observable
             send(.didChangeTitle)
             
         case .didEdit:
-            set(editingBackgroundOpacity: 0)
+            set(editing: false)
             task?.title <- String(withNonEmpty: titleField.stringValue)
             task?.isBeingEdited = false
             send(.didEditTitle)
         }
     }
     
-    // MARK: - Editing Background
-    
-    private func set(editingBackgroundOpacity opacity: CGFloat)
+    private func set(editing: Bool)
     {
         NSAnimationContext.beginGrouping()
         NSAnimationContext.current.allowsImplicitAnimation = true
         NSAnimationContext.current.duration = 0.2
-        editingBackground.alphaValue = opacity
+        editingBackground.alphaValue = editing ? 1 : 0
+        groupIcon.alphaValue = editing ? 0 : 1
+        groupIcon.isEnabled = !editing
+        checkBox.alphaValue = editing ? 0 : 1
+        checkBox.isEnabled = !editing
         NSAnimationContext.endGrouping()
     }
     
+    // MARK: - Editing Background
+    
     private func constrainEditingBackground()
     {
-        editingBackground.autoPinEdge(toSuperviewEdge: .top, withInset: 9)
-        editingBackground.autoPinEdge(toSuperviewEdge: .bottom, withInset: 9)
-        
-        editingBackground.autoPinEdge(.left,
-                                      to: .right,
-                                      of: checkBox,
-                                      withOffset: 10)
-        editingBackground.autoPinEdge(.right,
-                                      to: .left,
-                                      of: groupIcon,
-                                      withOffset: -10)
+        editingBackground.autoPinEdge(toSuperviewEdge: .top, withInset: 5)
+        editingBackground.autoPinEdge(toSuperviewEdge: .bottom, withInset: 5)
+        editingBackground.autoPinEdge(toSuperviewEdge: .left, withInset: 20)
+        editingBackground.autoPinEdge(toSuperviewEdge: .right, withInset: 20)
     }
     
     private lazy var editingBackground: LayerBackedView =
     {
         let view = addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = .white
+        view.backgroundColor = Color.white
         view.alphaValue = 0
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         view.layer?.borderWidth = 1.0
