@@ -114,7 +114,10 @@ class TaskView: LayerBackedView, Observer, Observable
     
     // MARK: - Title Field
     
-    func editTitle() { titleField.selectText(self) }
+    func editTitle()
+    {
+        titleField.startEditing()
+    }
     
     private func updateTitleField()
     {

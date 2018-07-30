@@ -92,6 +92,28 @@ class TextField: Label, Observable
 
     // MARK: - Editing State
     
+    func startEditing()
+    {
+        guard stringValue != "" else
+        {
+            selectText(self)
+            return
+        }
+        
+        guard let fieldEditor = NSApp.mainWindow?.fieldEditor(true, for: nil) else
+        {
+            return
+        }
+        
+        select(withFrame: bounds,
+               editor: fieldEditor,
+               delegate: self,
+               start: stringValue.count,
+               length:0)
+        
+        willEdit()
+    }
+    
     override func selectText(_ sender: Any?)
     {
         willEdit()
