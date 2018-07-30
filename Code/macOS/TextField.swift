@@ -96,7 +96,9 @@ class TextField: Label, Observable
     {
         guard stringValue != "" else
         {
+            editingStartsOn2ndSelection = true
             selectText(self)
+            
             return
         }
         
@@ -112,13 +114,6 @@ class TextField: Label, Observable
                length:0)
         
         willEdit()
-    }
-    
-    override func selectText(_ sender: Any?)
-    {
-        willEdit()
-        
-        super.selectText(sender)
     }
     
     override func textDidChange(_ notification: Notification)
@@ -140,9 +135,28 @@ class TextField: Label, Observable
     override func textDidEndEditing(_ notification: Notification)
     {
         super.textDidEndEditing(notification)
-
-        didEdit()
+        
+        if !editingStartsOn2ndSelection
+        {
+            didEdit()
+        }
+        else
+        {
+            editingStartsOn2ndSelection = false
+        }
     }
+    
+    override func selectText(_ sender: Any?)
+    {
+        super.selectText(sender)
+        
+        if !editingStartsOn2ndSelection
+        {
+            willEdit()
+        }
+    }
+    
+    private var editingStartsOn2ndSelection = false
     
     private func didEdit()
     {

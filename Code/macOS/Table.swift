@@ -117,7 +117,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         {
             self.scrollAnimatedTo(row: index)
             {
-                self.indexOfNewTask = index
                 self.editTitle(at: index)
             }
         }
@@ -263,54 +262,16 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             
         case .willEditTitle:
             send(event)
-            
-            if index == indexOfNewTask
-            {
-                adjustHeightOfNewTask(afterDelay: 0.25)
-            }
-            else
-            {
-                heightAdjustmentTimer?.invalidate()
-                indexOfNewTask = nil
-                noteHeightOfRows(withIndexesChanged: [index])
-            }
+            noteHeightOfRows(withIndexesChanged: [index])
             
         case .didChangeTitle:
-            heightAdjustmentTimer?.invalidate()
-            indexOfNewTask = nil
             noteHeightOfRows(withIndexesChanged: [index])
             
         case .didEditTitle:
-            heightAdjustmentTimer?.invalidate()
-            indexOfNewTask = nil
             noteHeightOfRows(withIndexesChanged: [index])
             editTitleOfNextSelectedTaskView()
         }
     }
-    
-    // MARK: - Adjust Height After Creating New Task
-    
-    private func adjustHeightOfNewTask(afterDelay delay: Double)
-    {
-        heightAdjustmentTimer = Timer.scheduledTimer(timeInterval: delay,
-                                                     target: self,
-                                                     selector: #selector(actionAdjustHeightOfNewTask),
-                                                     userInfo: nil,
-                                                     repeats: false)
-    }
-    
-    private var heightAdjustmentTimer: Timer?
-    
-    @objc private func actionAdjustHeightOfNewTask()
-    {
-        guard let index = indexOfNewTask else { return }
-        
-        indexOfNewTask = nil
-        
-        noteHeightOfRows(withIndexesChanged: [index])
-    }
-    
-    private var indexOfNewTask: Int?
     
     // MARK: - Edit Titles
     
