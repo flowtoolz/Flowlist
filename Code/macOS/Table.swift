@@ -144,6 +144,8 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         beginUpdates()
         moveRow(at: from, to: to)
         endUpdates()
+        
+        scrollRowToVisible(to)
     }
     
     // MARK: - Content
