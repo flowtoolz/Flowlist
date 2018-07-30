@@ -49,6 +49,8 @@ class TextField: Label, Observable
         let cell = NSCell(textCell: "")
         
         cell.font = TextField.fieldFont
+        cell.focusRingType = .none
+        cell.lineBreakMode = .byWordWrapping
         
         return cell
     }()
