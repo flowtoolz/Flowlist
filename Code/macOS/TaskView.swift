@@ -35,13 +35,13 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         let checkBoxWidth: CGFloat = CheckBox.size.width
         let groupIconWidth: CGFloat = groupIconImage.size.width
-        let iconPadding: CGFloat = 4 * 9.5
+        let iconPadding: CGFloat = 2 * 8 + 2 * 5
         let titleWidth = width - (checkBoxWidth + groupIconWidth + iconPadding)
         
         let titleHeight = TextField.intrinsicSize(with: title,
                                                   width: titleWidth).height
         
-        return titleHeight + 20
+        return titleHeight + 16
     }
     
     // MARK: - Configuration
@@ -132,14 +132,14 @@ class TaskView: LayerBackedView, Observer, Observable
         titleField.autoPinEdge(.left,
                                to: .right,
                                of: checkBox,
-                               withOffset: 9.5)
+                               withOffset: 5)
         titleField.autoPinEdge(.right,
                                to: .left,
                                of: groupIcon,
-                               withOffset: -9.5)
+                               withOffset: -5)
         
-        titleField.autoPinEdge(toSuperviewEdge: .top, withInset: 9)
-        titleField.autoPinEdge(toSuperviewEdge: .bottom, withInset: 11)
+        titleField.autoPinEdge(toSuperviewEdge: .top, withInset: 7)
+        titleField.autoPinEdge(toSuperviewEdge: .bottom, withInset: 9)
     }
     
     private lazy var titleField: TextField =
@@ -214,8 +214,8 @@ class TaskView: LayerBackedView, Observer, Observable
 
     private func constrainCheckBox()
     {
-        checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: 9.5)
-        checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: 9.5)
+        checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
+        checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: 8)
     }
     
     private lazy var checkBox: CheckBox =
@@ -242,8 +242,8 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func contrainGroupIcon()
     {
-        groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 9.5)
-        groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 9.5)
+        groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
+        groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 8)
     }
     
     private lazy var groupIcon: Icon = addForAutoLayout(Icon(with: TaskView.groupIconImage))
