@@ -10,15 +10,14 @@ class TextField: Label, Observable
     {
         super.init(frame: frameRect)
         
-        drawsBackground = false
         isEditable = true
         font = TextField.fieldFont
+        
         focusRingType = .none
         lineBreakMode = .byWordWrapping
         
         if #available(OSX 10.11, *)
         {
-            allowsDefaultTighteningForTruncation = true
             maximumNumberOfLines = 0
         }
         

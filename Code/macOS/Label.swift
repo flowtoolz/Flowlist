@@ -10,6 +10,12 @@ class Label: NSTextField
         setContentCompressionResistancePriority(priority, for: .horizontal)
         lineBreakMode = .byTruncatingTail
         
+        if #available(OSX 10.11, *)
+        {
+            allowsDefaultTighteningForTruncation = true
+        }
+        
+        drawsBackground = true
         backgroundColor = .clear
 
         isBezeled = false

@@ -33,14 +33,27 @@ class TaskView: LayerBackedView, Observer, Observable
     
     static func preferredHeight(for title: String, width: CGFloat) -> CGFloat
     {
-        let checkBoxWidth: CGFloat = 36
-        let groupIconWidth: CGFloat = 26
-        let titleWidth = width - (checkBoxWidth + groupIconWidth)
+        print("task in: " + "\(width)")
+        
+        let checkBoxWidth: CGFloat = CheckBox.size.width
+        let groupIconWidth: CGFloat = groupIconImage.size.width
+        let iconPadding: CGFloat = 4 * 9.5
+        let titleWidth = width - (checkBoxWidth + groupIconWidth + iconPadding)
+        
+        print("title calculated: " + "\(titleWidth)")
         
         let titleHeight = TextField.intrinsicSize(with: title,
                                                   width: titleWidth).height
         
         return titleHeight + 20
+    }
+    
+    override func layout()
+    {
+        super.layout()
+        
+        print("title: " + "\(titleField.frame.size.width)")
+        print("task: " + "\(frame.size.width)")
     }
     
     // MARK: - Configuration
@@ -245,7 +258,9 @@ class TaskView: LayerBackedView, Observer, Observable
         groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 9.5)
     }
     
-    private lazy var groupIcon: Icon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "group_indicator")))
+    private lazy var groupIcon: Icon = addForAutoLayout(Icon(with: TaskView.groupIconImage))
+    
+    private static let groupIconImage = #imageLiteral(resourceName: "group_indicator")
     
     // MARK: - Data
     

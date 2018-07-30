@@ -12,7 +12,6 @@ class CheckBox: NSButton
         imageScaling = .scaleNone
         image = CheckBox.imageEmpty
         isBordered = false
-        layer?.backgroundColor = NSColor.clear.cgColor
     }
     
     required init?(coder: NSCoder) { fatalError() }
@@ -25,6 +24,8 @@ class CheckBox: NSButton
     }
     
     // MARK: - Image
+    
+    static var size = imageEmpty.size
     
     private func image(for state: TaskState?) -> NSImage
     {

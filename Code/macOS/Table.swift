@@ -185,7 +185,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         let title = task.title.value ?? "untitled"
         
         let horizontalGap: CGFloat = 10
-        let tableWidth = (Table.windowWidth - (4 * horizontalGap)) / 3
+        let tableWidth = ((Table.windowWidth - (4 * horizontalGap)) / 3) - 0.5
         
         let editingPadding = task.isBeingEdited ? TextField.heightOfOneLine : 0
         
