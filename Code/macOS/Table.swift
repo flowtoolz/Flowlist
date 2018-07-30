@@ -117,6 +117,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         {
             self.scrollAnimatedTo(row: index)
             {
+                self.indexOfNewTask = index
                 self.editTitle(at: index)
             }
         }
@@ -252,23 +253,64 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     private func didReceive(_ event: TaskView.Event, from taskView: TaskView)
     {
+        let index = row(for: taskView)
+        
+        guard index >= 0 else { return }
+        
         switch event
         {
-        case .didNothing:
-            break
+        case .didNothing: break
             
         case .willEditTitle:
-            noteHeightOfRows(withIndexesChanged: [row(for: taskView)])
             send(event)
             
+            if index == indexOfNewTask
+            {
+                adjustHeightOfNewTask(afterDelay: 0.25)
+            }
+            else
+            {
+                heightAdjustmentTimer?.invalidate()
+                indexOfNewTask = nil
+                noteHeightOfRows(withIndexesChanged: [index])
+            }
+            
         case .didChangeTitle:
-            noteHeightOfRows(withIndexesChanged: [row(for: taskView)])
+            heightAdjustmentTimer?.invalidate()
+            indexOfNewTask = nil
+            noteHeightOfRows(withIndexesChanged: [index])
             
         case .didEditTitle:
-            noteHeightOfRows(withIndexesChanged: [row(for: taskView)])
+            heightAdjustmentTimer?.invalidate()
+            indexOfNewTask = nil
+            noteHeightOfRows(withIndexesChanged: [index])
             editTitleOfNextSelectedTaskView()
         }
     }
+    
+    // MARK: - Adjust Height After Creating New Task
+    
+    private func adjustHeightOfNewTask(afterDelay delay: Double)
+    {
+        heightAdjustmentTimer = Timer.scheduledTimer(timeInterval: delay,
+                                                     target: self,
+                                                     selector: #selector(actionAdjustHeightOfNewTask),
+                                                     userInfo: nil,
+                                                     repeats: false)
+    }
+    
+    private var heightAdjustmentTimer: Timer?
+    
+    @objc private func actionAdjustHeightOfNewTask()
+    {
+        guard let index = indexOfNewTask else { return }
+        
+        indexOfNewTask = nil
+        
+        noteHeightOfRows(withIndexesChanged: [index])
+    }
+    
+    private var indexOfNewTask: Int?
     
     // MARK: - Edit Titles
     
