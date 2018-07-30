@@ -12,18 +12,48 @@ class TextField: Label, Observable
         
         drawsBackground = false
         isEditable = true
-        font = Font.text.nsFont
+        font = TextField.fieldFont
         focusRingType = .none
+        lineBreakMode = .byWordWrapping
         
         if #available(OSX 10.11, *)
         {
             allowsDefaultTighteningForTruncation = true
+            maximumNumberOfLines = 0
         }
         
         set(placeholder: "untitled")
     }
     
     required init?(coder: NSCoder) { fatalError() }
+    
+    // MARK: - Sizing
+    
+    static let heightOfOneLine = intrinsicSize(with: "a",
+                                               width: CGFloat.greatestFiniteMagnitude).height
+    
+    static func intrinsicSize(with text: String, width: CGFloat) -> CGSize
+    {
+        measuringCell.stringValue = text
+        
+        let textBounds = CGRect(x: 0,
+                                y: 0,
+                                width: width,
+                                height: CGFloat.greatestFiniteMagnitude)
+        
+        return measuringCell.cellSize(forBounds: textBounds)
+    }
+    
+    private static let measuringCell: NSCell =
+    {
+        let cell = NSCell(textCell: "")
+        
+        cell.font = TextField.fieldFont
+        
+        return cell
+    }()
+    
+    private static let fieldFont = Font.text.nsFont
     
     // MARK: - Setup Placeholder
     
@@ -32,7 +62,7 @@ class TextField: Label, Observable
         let attributes: [NSAttributedStringKey : Any] =
         [
             .foregroundColor: Color.grayedOut.nsColor,
-            .font: Font.text.nsFont
+            .font: TextField.fieldFont
         ]
         
         let attributedString = NSAttributedString(string: placeholder,

@@ -20,7 +20,7 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     func tableView(_ tableView: NSTableView,
                    heightOfRow row: Int) -> CGFloat
     {
-        return Float.itemHeight.cgFloat
+        return delegate?.taskViewHeight(at: row) ?? Float.itemHeight.cgFloat
     }
     
     // MARK: - Cells
@@ -92,6 +92,10 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     
     private weak var list: SelectableList?
     
+    // MARK: - Delegate
+    
+    var delegate: TableContentDelegate?
+    
     // MARK: - Observability
     
     var latestUpdate: Event { return .didNothing }
@@ -100,4 +104,9 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     {
         case didNothing, didCreate(taskView: TaskView), selectionDidChange
     }
+}
+
+protocol TableContentDelegate
+{
+    func taskViewHeight(at row: Int) -> CGFloat
 }

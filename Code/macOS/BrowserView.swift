@@ -23,6 +23,14 @@ class BrowserView: LayerBackedView, Observer
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
+    func didEndResizing()
+    {
+        for listView in listViews
+        {
+            listView.didEndResizing()
+        }
+    }
+    
     deinit { stopAllObserving() }
     
     // MARK: - Create and Configure List Views

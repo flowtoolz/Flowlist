@@ -18,6 +18,11 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
+    func didEndResizing()
+    {
+        scrollTable.table.didEndResizing()
+    }
+    
     deinit { stopAllObserving() }
     
     // MARK: - Configuration

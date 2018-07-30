@@ -3,7 +3,7 @@ import SwiftObserver
 import SwiftyToolz
 import UIToolz
 
-class Table: AnimatedTableView, Observer, Observable
+class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
 {
     // MARK: - Life Cycle
     
@@ -149,6 +149,8 @@ class Table: AnimatedTableView, Observer, Observable
     {
         let tableContent = TableContent()
         
+        tableContent.delegate = self
+        
         observe(tableContent) { [unowned self] in self.didReceive($0) }
         
         return tableContent
@@ -163,6 +165,32 @@ class Table: AnimatedTableView, Observer, Observable
         case .didNothing: break
         }
     }
+    
+    // MARK: - Sizing the Height
+    
+    func didEndResizing()
+    {
+        let allIndexes = IndexSet(integersIn: 0 ..< numberOfRows)
+        
+        noteHeightOfRows(withIndexesChanged: allIndexes)
+    }
+    
+    func taskViewHeight(at row: Int) -> CGFloat
+    {
+        guard let task = list?[row] else { return Float.itemHeight.cgFloat }
+        
+        let title = task.title.value ?? "untitled"
+        
+        let horizontalGap: CGFloat = 10
+        let tableWidth = (Table.windowWidth - (4 * horizontalGap)) / 3
+        
+        let editingPadding = task.isBeingEdited ? TextField.heightOfOneLine : 0
+        
+        return TaskView.preferredHeight(for: title,
+                                        width: tableWidth) + editingPadding
+    }
+    
+    static var windowWidth: CGFloat = 0
     
     // MARK: - Selection
     
@@ -216,18 +244,29 @@ class Table: AnimatedTableView, Observer, Observable
         {
             [weak self, weak taskView] event in
             
+            guard let taskView = taskView else { return }
+            
             self?.didReceive(event, from: taskView)
         }
     }
     
-    private func didReceive(_ event: TaskView.Event,
-                            from taskView: TaskView?)
+    private func didReceive(_ event: TaskView.Event, from taskView: TaskView)
     {
         switch event
         {
-        case .didNothing: break
-        case .didEditTitle: editTitleOfNextSelectedTaskView()
-        case .willEditTitle: send(event)
+        case .didNothing:
+            break
+            
+        case .willEditTitle:
+            noteHeightOfRows(withIndexesChanged: [row(for: taskView)])
+            send(event)
+            
+        case .didChangeTitle:
+            noteHeightOfRows(withIndexesChanged: [row(for: taskView)])
+            
+        case .didEditTitle:
+            noteHeightOfRows(withIndexesChanged: [row(for: taskView)])
+            editTitleOfNextSelectedTaskView()
         }
     }
     

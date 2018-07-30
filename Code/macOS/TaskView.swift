@@ -29,6 +29,20 @@ class TaskView: LayerBackedView, Observer, Observable
         removeObservers()
     }
     
+    // MARK: - Height
+    
+    static func preferredHeight(for title: String, width: CGFloat) -> CGFloat
+    {
+        let checkBoxWidth: CGFloat = 36
+        let groupIconWidth: CGFloat = 26
+        let titleWidth = width - (checkBoxWidth + groupIconWidth)
+        
+        let titleHeight = TextField.intrinsicSize(with: title,
+                                                  width: titleWidth).height
+        
+        return titleHeight + 20
+    }
+    
     // MARK: - Configuration
     
     func configure(with task: Task?) -> TaskView?
@@ -109,12 +123,10 @@ class TaskView: LayerBackedView, Observer, Observable
 
     private func constrainTitleField()
     {
-        titleField.autoAlignAxis(.horizontal, toSameAxisOf: self)
-        titleField.autoPinEdge(.left, to: .right, of: checkBox)
-        titleField.autoPinEdge(.right,
-                               to: .left,
-                               of: groupIcon,
-                               withOffset: -10)
+        titleField.autoPinEdge(.top, to: .top, of: editingBackground)
+        titleField.autoPinEdge(.left, to: .left, of: editingBackground)
+        titleField.autoPinEdge(.right, to: .right, of: editingBackground)
+        titleField.autoPinEdge(.bottom, to: .bottom, of: editingBackground)
     }
     
     private lazy var titleField: TextField =
@@ -134,14 +146,17 @@ class TaskView: LayerBackedView, Observer, Observable
             
         case .willEdit:
             editingBackground.isHidden = false
+            task?.isBeingEdited = true
             send(.willEditTitle)
             
         case .didChange(let text):
             task?.title <- String(withNonEmpty: text)
+            send(.didChangeTitle)
             
         case .didEdit:
             editingBackground.isHidden = true
             task?.title <- String(withNonEmpty: titleField.stringValue)
+            task?.isBeingEdited = false
             send(.didEditTitle)
         }
     }
@@ -150,18 +165,17 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func constrainEditingBackground()
     {
-        editingBackground.autoPinEdge(toSuperviewEdge: .top, withInset: 6.5)
-        editingBackground.autoPinEdge(toSuperviewEdge: .bottom, withInset: 6.5)
+        editingBackground.autoPinEdge(toSuperviewEdge: .top, withInset: 9)
+        editingBackground.autoPinEdge(toSuperviewEdge: .bottom, withInset: 9)
         
-        let sidePadding: CGFloat = 3
         editingBackground.autoPinEdge(.left,
                                       to: .right,
                                       of: checkBox,
-                                      withOffset: -sidePadding)
+                                      withOffset: 10)
         editingBackground.autoPinEdge(.right,
                                       to: .left,
                                       of: groupIcon,
-                                      withOffset: sidePadding - 10)
+                                      withOffset: -10)
     }
     
     private lazy var editingBackground: LayerBackedView =
@@ -181,9 +195,8 @@ class TaskView: LayerBackedView, Observer, Observable
 
     private func constrainCheckBox()
     {
-        checkBox.autoConstrainAttribute(.width, to: .height, of: checkBox)
-        checkBox.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                              excludingEdge: .right)
+        checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
     }
     
     private lazy var checkBox: CheckBox =
@@ -210,7 +223,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func contrainGroupIcon()
     {
-        groupIcon.autoAlignAxis(toSuperviewAxis: .horizontal)
+        groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
         groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
     }
     
@@ -226,5 +239,5 @@ class TaskView: LayerBackedView, Observer, Observable
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, willEditTitle, didEditTitle }
+    enum Event { case didNothing, willEditTitle, didChangeTitle, didEditTitle }
 }

@@ -36,6 +36,11 @@ class ViewController: NSViewController, Observer
         }
     }
     
+    func didEndResizing()
+    {
+        browserView.didEndResizing()
+    }
+    
     // MARK: - Purchase View
     
     private func didPurchaseFullVersion()

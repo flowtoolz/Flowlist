@@ -30,6 +30,11 @@ class FlowlistController: AppController, NSWindowDelegate
     
     // MARK: - Window Delegate
     
+    func windowDidEndLiveResize(_ notification: Notification)
+    {
+        mainWindow.didEndResizing()
+    }
+    
     func windowWillEnterFullScreen(_ notification: Notification)
     {
         menu.windowChangesFullscreen(to: true)

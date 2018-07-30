@@ -20,6 +20,10 @@ final class Task: Codable, Observable, Tree
     
     deinit { removeObservers() }
     
+    // MARK: - Editing
+    
+    var isBeingEdited = false
+    
     // MARK: - Codable Data
 
     enum CodingKeys: String, CodingKey
