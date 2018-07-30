@@ -131,14 +131,14 @@ class TaskView: LayerBackedView, Observer, Observable
         titleField.autoPinEdge(.left,
                                to: .right,
                                of: checkBox,
-                               withOffset: 10)
+                               withOffset: 9.5)
         titleField.autoPinEdge(.right,
                                to: .left,
                                of: groupIcon,
-                               withOffset: -10)
+                               withOffset: -9.5)
         
-        titleField.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
-        titleField.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+        titleField.autoPinEdge(toSuperviewEdge: .top, withInset: 9)
+        titleField.autoPinEdge(toSuperviewEdge: .bottom, withInset: 11)
     }
     
     private lazy var titleField: TextField =
@@ -213,8 +213,8 @@ class TaskView: LayerBackedView, Observer, Observable
 
     private func constrainCheckBox()
     {
-        checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
-        checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
+        checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: 9.5)
+        checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: 9.5)
     }
     
     private lazy var checkBox: CheckBox =
@@ -241,8 +241,8 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func contrainGroupIcon()
     {
-        groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
-        groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+        groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 9.5)
+        groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 9.5)
     }
     
     private lazy var groupIcon: Icon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "group_indicator")))
