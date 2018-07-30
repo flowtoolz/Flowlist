@@ -33,27 +33,15 @@ class TaskView: LayerBackedView, Observer, Observable
     
     static func preferredHeight(for title: String, width: CGFloat) -> CGFloat
     {
-        print("task in: " + "\(width)")
-        
         let checkBoxWidth: CGFloat = CheckBox.size.width
         let groupIconWidth: CGFloat = groupIconImage.size.width
         let iconPadding: CGFloat = 4 * 9.5
         let titleWidth = width - (checkBoxWidth + groupIconWidth + iconPadding)
         
-        print("title calculated: " + "\(titleWidth)")
-        
         let titleHeight = TextField.intrinsicSize(with: title,
                                                   width: titleWidth).height
         
         return titleHeight + 20
-    }
-    
-    override func layout()
-    {
-        super.layout()
-        
-        print("title: " + "\(titleField.frame.size.width)")
-        print("task: " + "\(frame.size.width)")
     }
     
     // MARK: - Configuration
