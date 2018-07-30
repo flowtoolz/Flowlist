@@ -148,7 +148,8 @@ class TaskView: LayerBackedView, Observer, Observable
         case .didNothing: break
             
         case .willEdit:
-            editingBackground.isHidden = false
+            set(editingBackgroundOpacity: 1)
+            
             task?.isBeingEdited = true
             send(.willEditTitle)
             
@@ -157,7 +158,8 @@ class TaskView: LayerBackedView, Observer, Observable
             send(.didChangeTitle)
             
         case .didEdit:
-            editingBackground.isHidden = true
+            set(editingBackgroundOpacity: 0)
+            
             task?.title <- String(withNonEmpty: titleField.stringValue)
             task?.isBeingEdited = false
             send(.didEditTitle)
@@ -165,6 +167,15 @@ class TaskView: LayerBackedView, Observer, Observable
     }
     
     // MARK: - Editing Background
+    
+    private func set(editingBackgroundOpacity opacity: CGFloat)
+    {
+        NSAnimationContext.beginGrouping()
+        NSAnimationContext.current.allowsImplicitAnimation = true
+        NSAnimationContext.current.duration = 0.2
+        editingBackground.alphaValue = opacity
+        NSAnimationContext.endGrouping()
+    }
     
     private func constrainEditingBackground()
     {
@@ -186,7 +197,7 @@ class TaskView: LayerBackedView, Observer, Observable
         let view = addForAutoLayout(LayerBackedView())
         
         view.backgroundColor = .white
-        view.isHidden = true
+        view.alphaValue = 0
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         view.layer?.borderWidth = 1.0
         view.layer?.borderColor = Color.flowlistBlue.with(alpha: 0.25).cgColor
