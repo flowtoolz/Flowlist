@@ -111,6 +111,8 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     private func didCreate(at index: Int)
     {
+        list?[index]?.isBeingEdited = true
+        
         didInsert(at: [index])
         
         OperationQueue.main.addOperation
