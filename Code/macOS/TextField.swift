@@ -110,6 +110,13 @@ class TextField: Label, Observable
         willEdit()
     }
     
+    override func selectText(_ sender: Any?)
+    {
+        super.selectText(sender)
+        
+        willEdit()
+    }
+    
     override func textDidChange(_ notification: Notification)
     {
         ignoreNextEditingEnd = false
