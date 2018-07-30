@@ -116,7 +116,9 @@ class TaskView: LayerBackedView, Observer, Observable
     
     func editTitle()
     {
-        titleField.startEditing()
+        titleField.startEditing(isNewTask: task?.isNewlyCreated ?? false)
+        
+        task?.isNewlyCreated = false
     }
     
     private func updateTitleField()
@@ -149,7 +151,6 @@ class TaskView: LayerBackedView, Observer, Observable
             
         case .willEdit:
             set(editingBackgroundOpacity: 1)
-            
             task?.isBeingEdited = true
             send(.willEditTitle)
             
@@ -159,7 +160,6 @@ class TaskView: LayerBackedView, Observer, Observable
             
         case .didEdit:
             set(editingBackgroundOpacity: 0)
-            
             task?.title <- String(withNonEmpty: titleField.stringValue)
             task?.isBeingEdited = false
             send(.didEditTitle)

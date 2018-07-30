@@ -112,6 +112,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     private func didCreate(at index: Int)
     {
         list?[index]?.isBeingEdited = true
+        list?[index]?.isNewlyCreated = true
         
         didInsert(at: [index])
         

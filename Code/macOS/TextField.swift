@@ -92,20 +92,14 @@ class TextField: Label, Observable
 
     // MARK: - Editing State
     
-    func startEditing()
+    func startEditing(isNewTask: Bool)
     {
-        guard stringValue != "" else
-        {
-            editingStartsOn2ndSelection = true
-            selectText(self)
-            
-            return
-        }
-        
         guard let fieldEditor = NSApp.mainWindow?.fieldEditor(true, for: nil) else
         {
             return
         }
+        
+        ignoreNextEditingEnd = isNewTask
         
         select(withFrame: bounds,
                editor: fieldEditor,
@@ -118,6 +112,8 @@ class TextField: Label, Observable
     
     override func textDidChange(_ notification: Notification)
     {
+        ignoreNextEditingEnd = false
+        
         super.textDidChange(notification)
         
         send(.didChange(text: stringValue))
@@ -136,27 +132,17 @@ class TextField: Label, Observable
     {
         super.textDidEndEditing(notification)
         
-        if !editingStartsOn2ndSelection
+        if ignoreNextEditingEnd
         {
-            didEdit()
+            ignoreNextEditingEnd = false
         }
         else
         {
-            editingStartsOn2ndSelection = false
+            didEdit()
         }
     }
     
-    override func selectText(_ sender: Any?)
-    {
-        super.selectText(sender)
-        
-        if !editingStartsOn2ndSelection
-        {
-            willEdit()
-        }
-    }
-    
-    private var editingStartsOn2ndSelection = false
+    private var ignoreNextEditingEnd = false
     
     private func didEdit()
     {
