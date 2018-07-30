@@ -232,6 +232,12 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         }
         
         let tableSelection = selection
+        
+        if let firstSelectedRow = tableSelection.first
+        {
+            scrollRowToVisible(firstSelectedRow)
+        }
+        
         let listSelection = list.selection.indexes
         
         guard tableSelection != listSelection else { return }
