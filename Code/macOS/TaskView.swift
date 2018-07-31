@@ -108,7 +108,7 @@ class TaskView: LayerBackedView, Observer, Observable
         stopObserving(task)
     }
     
-    // MARK: - Title Field
+    // MARK: - Title View
     
     func editTitle()
     {
@@ -135,7 +135,7 @@ class TaskView: LayerBackedView, Observer, Observable
         titleField.autoPinEdge(toSuperviewEdge: .bottom, withInset: 11.5)
     }
     
-    private static let titleFieldSideMargin: CGFloat = 9
+    private static let titleFieldSideMargin: CGFloat = 8.5
     
     private lazy var titleField: TextView =
     {
@@ -212,8 +212,8 @@ class TaskView: LayerBackedView, Observer, Observable
 
     private func constrainCheckBox()
     {
-        checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: 11)
-        checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: 11)
+        checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: 10.5)
+        checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: 10.5)
     }
     
     private lazy var checkBox: CheckBox =
@@ -240,8 +240,8 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func contrainGroupIcon()
     {
-        groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 11)
-        groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 11)
+        groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 10.5)
+        groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 10.5)
     }
     
     private lazy var groupIcon: Icon = addForAutoLayout(Icon(with: TaskView.groupIconImage))
