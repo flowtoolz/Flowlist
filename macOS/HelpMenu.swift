@@ -8,8 +8,13 @@ class HelpMenu: NSMenu
     {
         super.init(title: "Help")
         
+        addItem(contactItem)
+        
+        addItem(NSMenuItem.separator())
+        
         addItem(videoItem)
         addItem(keyCommandsItem)
+        addItem(blogItem)
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
@@ -36,12 +41,36 @@ class HelpMenu: NSMenu
     }
     
     private lazy var keyCommandsItem = item("Learn Key Commands",
-                                            action: #selector(learKeyCommands),
+                                            action: #selector(learnKeyCommands),
                                             key: "")
     
-    @objc private func learKeyCommands()
+    @objc private func learnKeyCommands()
     {
         if let url = URL(string: "http://www.flowtoolz.com/flowlist#key-commands")
+        {
+            NSWorkspace.shared.open(url)
+        }
+    }
+    
+    private lazy var blogItem = item("Learn About Flowlist",
+                                     action: #selector(learnFlowlist),
+                                     key: "")
+    
+    @objc private func learnFlowlist()
+    {
+        if let url = URL(string: "http://www.flowtoolz.com/2018/07/13/how-a-minimalist-productivity-app-changed-my-life.html")
+        {
+            NSWorkspace.shared.open(url)
+        }
+    }
+    
+    private lazy var contactItem = item("Contact Me: support@flowlistapp.com",
+                                        action: #selector(contactMe),
+                                        key: "")
+    
+    @objc private func contactMe()
+    {
+        if let url = URL(string: "mailto:support%40flowlistapp.com?SUBJECT=Flowlist")
         {
             NSWorkspace.shared.open(url)
         }
