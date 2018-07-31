@@ -38,7 +38,7 @@ class TaskView: LayerBackedView, Observer, Observable
         let iconPadding: CGFloat = 2 * 11 + 2 * TaskView.titleFieldSideMargin
         let titleWidth = width - (checkBoxWidth + groupIconWidth + iconPadding)
         
-        let titleHeight = TextField.size(with: title,
+        let titleHeight = TextView.size(with: title,
                                                   width: titleWidth).height
         
         return titleHeight + 22
@@ -137,16 +137,16 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private static let titleFieldSideMargin: CGFloat = 9
     
-    private lazy var titleField: TextField =
+    private lazy var titleField: TextView =
     {
-        let textField = addForAutoLayout(TextField())
+        let textField = addForAutoLayout(TextView())
         
         self.observe(textField) { [weak self] in self?.didReceive($0) }
         
         return textField
     }()
     
-    private func didReceive(_ event: TextField.Event)
+    private func didReceive(_ event: TextView.Event)
     {
         switch event
         {

@@ -2,7 +2,7 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class TextField: NSTextView, Observable, NSTextViewDelegate
+class TextView: NSTextView, Observable, NSTextViewDelegate
 {
     // MARK: - Initialization
 
@@ -21,11 +21,11 @@ class TextField: NSTextView, Observable, NSTextViewDelegate
         
         delegate = self
         
-        font = TextField.fieldFont
-        defaultParagraphStyle = TextField.paragraphStyle
-        selectedTextAttributes = TextField.selectionSyle
-        typingAttributes = TextField.typingStyle
-        linkTextAttributes = TextField.linkStyle
+        font = TextView.fieldFont
+        defaultParagraphStyle = TextView.paragraphStyle
+        selectedTextAttributes = TextView.selectionSyle
+        typingAttributes = TextView.typingStyle
+        linkTextAttributes = TextView.linkStyle
         
         set(placeholder: "untitled")
     }
@@ -46,7 +46,7 @@ class TextField: NSTextView, Observable, NSTextViewDelegate
         let attributes: [NSAttributedStringKey : Any] =
         [
             .foregroundColor: Color.grayedOut.nsColor,
-            .font: TextField.fieldFont
+            .font: TextView.fieldFont
         ]
         
         let attributedString = NSAttributedString(string: placeholder,
@@ -73,11 +73,11 @@ class TextField: NSTextView, Observable, NSTextViewDelegate
         let range = NSMakeRange(0, textStorage.length)
         
         textStorage.addAttribute(.font,
-                                 value: TextField.fieldFont,
+                                 value: TextView.fieldFont,
                                  range: range)
         
         textStorage.addAttribute(.paragraphStyle,
-                                 value: TextField.paragraphStyle,
+                                 value: TextView.paragraphStyle,
                                  range: range)
         
         _ = measuringLayoutManager.glyphRange(for: measuringTextContainer)
@@ -114,14 +114,14 @@ class TextField: NSTextView, Observable, NSTextViewDelegate
     
     private static let typingStyle: [NSAttributedStringKey : Any] =
     [
-        .paragraphStyle : TextField.paragraphStyle,
-        .font : TextField.fieldFont
+        .paragraphStyle : TextView.paragraphStyle,
+        .font : TextView.fieldFont
     ]
     
     private static let linkStyle: [NSAttributedStringKey : Any] =
     [
-        .paragraphStyle : TextField.paragraphStyle,
-        .font : TextField.fieldFont,
+        .paragraphStyle : TextView.paragraphStyle,
+        .font : TextView.fieldFont,
         .foregroundColor: NSColor.red
     ]
     
@@ -148,7 +148,7 @@ class TextField: NSTextView, Observable, NSTextViewDelegate
     
     override func performKeyEquivalent(with event: NSEvent) -> Bool
     {
-        if event.key == .enter && TextField.isEditing { return true }
+        if event.key == .enter && TextView.isEditing { return true }
         
         return super.performKeyEquivalent(with: event)
     }
@@ -197,14 +197,14 @@ class TextField: NSTextView, Observable, NSTextViewDelegate
     
     private func didEdit()
     {
-        TextField.isEditing = false
+        TextView.isEditing = false
 
         send(.didEdit)
     }
     
     private func willEdit()
     {
-        TextField.isEditing = true
+        TextView.isEditing = true
         
         send(.willEdit)
     }

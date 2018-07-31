@@ -66,7 +66,7 @@ class EditMenu: NSMenu, Observer
     
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
-        guard !TextField.isEditing else { return false }
+        guard !TextView.isEditing else { return false }
         
         let selected = numberOfSelectedTasks
         let deleted = list?.root?.numberOfRemovedSubtasks ?? 0
@@ -140,7 +140,7 @@ class EditMenu: NSMenu, Observer
                                             modifiers: [])
     @objc private func createAtTop()
     {
-        if !TextField.isEditing && !reachedTaskNumberLimit { list?.create(at: 0) }
+        if !TextView.isEditing && !reachedTaskNumberLimit { list?.create(at: 0) }
     }
     
     private lazy var renameItem = item("Rename Item",

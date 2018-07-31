@@ -52,7 +52,7 @@
 		9ED5C8D920DF83F900EF84CB /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8D820DF83F900EF84CB /* Icon.swift */; };
 		9ED5C8DB20DF88E300EF84CB /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8DA20DF88E300EF84CB /* Label.swift */; };
 		9ED5C8DD20DF970000EF84CB /* PurchaseContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */; };
-		9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextField.swift */; };
+		9EE2EE4B20B4A693007CDC2F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextView.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
 		9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */; };
 		9EE582FF20DA7377004DE407 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE582FE20DA7377004DE407 /* FullVersion.swift */; };
@@ -123,7 +123,7 @@
 		9ED5C8D820DF83F900EF84CB /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Icon.swift; path = ../Code/macOS/Icon.swift; sourceTree = "<group>"; };
 		9ED5C8DA20DF88E300EF84CB /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Label.swift; path = ../Code/macOS/Label.swift; sourceTree = "<group>"; };
 		9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PurchaseContentView.swift; path = ../Code/macOS/PurchaseContentView.swift; sourceTree = "<group>"; };
-		9EE2EE4A20B4A693007CDC2F /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = ../Code/macOS/TextField.swift; sourceTree = "<group>"; };
+		9EE2EE4A20B4A693007CDC2F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextView.swift; path = ../Code/macOS/TextView.swift; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Style.swift"; path = "../Code/Float+Style.swift"; sourceTree = "<group>"; };
 		9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckBox.swift; path = ../Code/macOS/CheckBox.swift; sourceTree = "<group>"; };
 		9EE582FE20DA7377004DE407 /* FullVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FullVersion.swift; path = ../Code/FullVersion.swift; sourceTree = "<group>"; };
@@ -367,7 +367,7 @@
 			children = (
 				9E7651931EEF428100DE2B07 /* TaskView.swift */,
 				9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */,
-				9EE2EE4A20B4A693007CDC2F /* TextField.swift */,
+				9EE2EE4A20B4A693007CDC2F /* TextView.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -574,7 +574,7 @@
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
 				9E2CCE8F20C1EAFF0037D755 /* Task+Copyable.swift in Sources */,
 				9EF6C67D20E22DE10003264A /* SKProduct+FormattedPrice.swift in Sources */,
-				9EE2EE4B20B4A693007CDC2F /* TextField.swift in Sources */,
+				9EE2EE4B20B4A693007CDC2F /* TextView.swift in Sources */,
 				9E72881B1EEF3095003A2F46 /* SelectableListView.swift in Sources */,
 				9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */,
 				9EF0A79320B72B5A00E1A23A /* FlowlistController.swift in Sources */,

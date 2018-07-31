@@ -22,7 +22,7 @@ class SelectionMenu: NSMenu
     
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
-        guard !TextField.isEditing else { return false }
+        guard !TextView.isEditing else { return false }
         
         switch menuItem
         {
