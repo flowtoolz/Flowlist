@@ -144,7 +144,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         moveRow(at: from, to: to)
         endUpdates()
         
-        if list?[to]?.isOpen ?? false
+        if list?.selection.isSelected(list?[to]) ?? false
         {
             scrollRowToVisible(to)
         }

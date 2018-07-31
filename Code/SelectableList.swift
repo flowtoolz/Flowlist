@@ -94,12 +94,12 @@ class SelectableList: List
     {
         guard let task = firstSelectedTask else { return }
         
-        task.state <- !task.isInProgress ? .inProgress : nil
-        
         if selection.count > 1
         {
             selection.remove(tasks: [task])
         }
+        
+        task.state <- !task.isInProgress ? .inProgress : nil
     }
     
     func toggleDoneStateOfFirstSelectedTask()
@@ -111,9 +111,9 @@ class SelectableList: List
         
         let newSelectedTask = nextSelectedTaskAfterCheckingOff(at: selected)
         
-        task.state <- !task.isDone ? .done : nil
+        let newState: TaskState? = !task.isDone ? .done : nil
         
-        if selection.count == 1, task.isDone, let newSelectedTask = newSelectedTask
+        if selection.count == 1, newState == .done, let newSelectedTask = newSelectedTask
         {
             selection.set(with: newSelectedTask)
         }
@@ -121,6 +121,8 @@ class SelectableList: List
         {
             selection.remove(tasks: [task])
         }
+        
+        task.state <- newState
     }
     
     private func nextSelectedTaskAfterCheckingOff(at index: Int) -> Task?
@@ -166,7 +168,7 @@ class SelectableList: List
             selection.count == 1,
             let selectedTask = selection.someTask,
             let selectedIndex = root.index(of: selectedTask)
-            else
+        else
         {
             return false
         }
