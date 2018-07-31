@@ -34,7 +34,7 @@ class HelpMenu: NSMenu
     
     @objc private func watchVideo()
     {
-        if let url = URL(string: "http://www.flowtoolz.com/flowlist#video")
+        if let url = URL(string: "http://www.flowtoolz.com/flowlist?utm_source=Flowlist&utm_medium=referral&utm_content=WatchScreencastVideo#video")
         {
             NSWorkspace.shared.open(url)
         }
@@ -46,7 +46,7 @@ class HelpMenu: NSMenu
     
     @objc private func learnKeyCommands()
     {
-        if let url = URL(string: "http://www.flowtoolz.com/flowlist#key-commands")
+        if let url = URL(string: "http://www.flowtoolz.com/flowlist?utm_source=Flowlist&utm_medium=referral&utm_content=LearnKeyCommands#key-commands")
         {
             NSWorkspace.shared.open(url)
         }
@@ -58,7 +58,7 @@ class HelpMenu: NSMenu
     
     @objc private func learnFlowlist()
     {
-        if let url = URL(string: "http://www.flowtoolz.com/2018/07/13/how-a-minimalist-productivity-app-changed-my-life.html")
+        if let url = URL(string: "http://www.flowtoolz.com/2018/07/13/how-a-minimalist-productivity-app-changed-my-life.html?utm_source=Flowlist&utm_medium=referral&utm_content=LearnFlowlist")
         {
             NSWorkspace.shared.open(url)
         }
