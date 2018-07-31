@@ -201,6 +201,76 @@ class SelectableList: List
         selection.setWithTasksListed(at: Array(0 ..< numberOfTasks))
     }
     
+    var canShiftSelectionUp: Bool
+    {
+        return numberOfTasks > 0 && selection.indexes != [0]
+    }
+    
+    func shiftSelectionUp()
+    {
+        guard let index = selection.indexes.first else { return }
+        
+        if index > 0
+        {
+            selection.setWithTasksListed(at: [index - 1])
+        }
+        else if numberOfTasks > 0 && selection.count != 1
+        {
+            selection.setWithTasksListed(at: [0])
+        }
+    }
+    
+    var canShiftSelectionDown: Bool
+    {
+        return numberOfTasks > 0 && selection.indexes != [numberOfTasks - 1]
+    }
+    
+    func shiftSelectionDown()
+    {
+        guard let index = selection.indexes.last else { return }
+        
+        if index + 1 < numberOfTasks
+        {
+            selection.setWithTasksListed(at: [index + 1])
+        }
+        else if numberOfTasks > 0 && selection.count != 1
+        {
+            selection.setWithTasksListed(at: [numberOfTasks - 1])
+        }
+    }
+    
+    var canExtendSelectionUp: Bool
+    {
+        guard let index = selection.indexes.first,
+            index > 0 else { return false }
+        
+        return true
+    }
+    
+    func extendSelectionUp()
+    {
+        guard let index = selection.indexes.first,
+            index > 0 else { return }
+        
+        selection.add(task: self[index - 1])
+    }
+    
+    var canExtendSelectionDown: Bool
+    {
+        guard let index = selection.indexes.last,
+            index + 1 < numberOfTasks else { return false }
+        
+        return true
+    }
+    
+    func extendSelectionDown()
+    {
+        guard let index = selection.indexes.last,
+            index + 1 < numberOfTasks else { return }
+        
+        selection.add(task: self[index + 1])
+    }
+    
     var firstSelectedTask: Task?
     {
         guard let index = selection.indexes.first else { return nil }

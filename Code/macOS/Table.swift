@@ -16,7 +16,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         backgroundColor = NSColor.clear
         headerView = nil
         intercellSpacing = NSSize(width: 0, height: Float.verticalGap.cgFloat)
-        
         delegate = content
         dataSource = content
     }
@@ -210,19 +209,37 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         }
 
         let listSelection = list?.selection.indexes ?? []
-
-        guard selection != listSelection else { return }
+        let tableViewSelection = selection
+        
+        guard tableViewSelection != listSelection else { return }
 
         let rowNumber = dataSource?.numberOfRows?(in: self) ?? 0
 
-        if let last = listSelection.last, last >= rowNumber
+        let listSelectionLast = listSelection.last
+        
+        if let last = listSelectionLast, last >= rowNumber
         {
             log(error: "List has at least one invalid selection index.")
             return
         }
-
+        
         selectRowIndexes(IndexSet(listSelection),
                          byExtendingSelection: false)
+        
+        // scroll to appropriate row if selection extended
+        let lastSelectionChanged = tableViewSelection.last != listSelectionLast
+        let firstSelectionChanged = tableViewSelection.first != listSelection.first
+        
+        if lastSelectionChanged && !firstSelectionChanged,
+            let last = listSelectionLast
+        {
+            scrollRowToVisible(last)
+        }
+        else if !lastSelectionChanged && firstSelectionChanged,
+            let first = listSelection.first
+        {
+            scrollRowToVisible(first)
+        }
     }
     
     private func didChangeSelection()
@@ -346,17 +363,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
 
     override func keyDown(with event: NSEvent)
     {
-        let key = event.key
-        let useDefaultBehaviour = (key == .up || key == .down) && !event.cmd
-
-        if useDefaultBehaviour
-        {
-            super.keyDown(with: event)
-        }
-        else
-        {
-            nextResponder?.keyDown(with: event)
-        }
+        nextResponder?.keyDown(with: event)
     }
     
     override func mouseDown(with event: NSEvent)
