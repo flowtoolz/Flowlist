@@ -176,7 +176,7 @@ class TextView: NSTextView, Observable, NSTextViewDelegate
     {
         guard replacementString != "\n" else
         {
-            didEdit()
+            send(.wantToEndEditing)
             return false
         }
         
@@ -215,5 +215,8 @@ class TextView: NSTextView, Observable, NSTextViewDelegate
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, willEdit, didChange(text: String), didEdit }
+    enum Event
+    {
+        case didNothing, willEdit, didChange(text: String), wantToEndEditing, didEdit
+    }
 }

@@ -161,6 +161,9 @@ class TaskView: LayerBackedView, Observer, Observable
             send(.didChangeTitle)
             task?.title <- String(withNonEmpty: text)
             
+        case .wantToEndEditing:
+            send(.wantToEndEditingText)
+            
         case .didEdit:
             set(editing: false)
             task?.title <- String(withNonEmpty: titleField.string)
@@ -255,5 +258,8 @@ class TaskView: LayerBackedView, Observer, Observable
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, willEditTitle, didChangeTitle, didEditTitle }
+    enum Event
+    {
+        case didNothing, willEditTitle, didChangeTitle, wantToEndEditingText, didEditTitle
+    }
 }

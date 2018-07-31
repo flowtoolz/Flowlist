@@ -208,20 +208,21 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             // FIXME: why does this happen sometimes when going left?
             //log(warning: "List changed selection but list is nil.")
         }
-        
+
         let listSelection = list?.selection.indexes ?? []
-        
+
         guard selection != listSelection else { return }
-        
+
         let rowNumber = dataSource?.numberOfRows?(in: self) ?? 0
-        
+
         if let last = listSelection.last, last >= rowNumber
         {
             log(error: "List has at least one invalid selection index.")
             return
         }
-        
-        selectRowIndexes(IndexSet(listSelection), byExtendingSelection: false)
+
+        selectRowIndexes(IndexSet(listSelection),
+                         byExtendingSelection: false)
     }
     
     private func didChangeSelection()
@@ -286,10 +287,12 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         case .didChangeTitle:
             noteHeightOfRows(withIndexesChanged: [index])
             
-        case .didEditTitle:
+        case .wantToEndEditingText:
             NSApp.mainWindow?.makeFirstResponder(self)
+            
+        case .didEditTitle:
             noteHeightOfRows(withIndexesChanged: [index])
-            editTitleOfNextSelectedTaskView()
+            //editTitleOfNextSelectedTaskView()
         }
     }
     
@@ -297,19 +300,28 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     private func editTitleOfNextSelectedTaskView()
     {
-        guard list?.selection.count ?? 0 > 1,
-            let firstSelectedIndex = list?.selection.indexes.first else
+        guard list?.selection.count ?? 0 > 1 else
         {
+            nextEditingPosition = 0
             return
         }
         
-        list?.selection.removeTask(at: firstSelectedIndex)
+        nextEditingPosition += 1
         
-        if let nextEditingIndex = list?.selection.indexes.first
+        if let indexes = list?.selection.indexes,
+            nextEditingPosition < indexes.count
         {
-            editTitle(at: nextEditingIndex)
+            editTitle(at: indexes[nextEditingPosition])
         }
+        else
+        {
+            nextEditingPosition = 0
+        }
+        
+       // list?.selection.removeTask(at: firstSelectedIndex)
     }
+    
+    private var nextEditingPosition: Int = 0
     
     private func editTitle(at index: Int)
     {
