@@ -35,7 +35,7 @@ extension SelectableList
                 title.removeFirst()
             }
             
-            while !startCharacters.contains(title.last ?? "a")
+            while title.last == " "
             {
                 title.removeLast()
             }
