@@ -23,7 +23,6 @@ final class Task: Codable, Observable, Tree
     // MARK: - Editing
     
     var isBeingEdited = false
-    var isNewlyCreated = false
     
     // MARK: - Codable Data
 

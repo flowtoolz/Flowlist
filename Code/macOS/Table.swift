@@ -112,7 +112,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     private func didCreate(at index: Int)
     {
         list?[index]?.isBeingEdited = true
-        list?[index]?.isNewlyCreated = true
         
         didInsert(at: [index])
         
@@ -145,7 +144,10 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         moveRow(at: from, to: to)
         endUpdates()
         
-        scrollRowToVisible(to)
+        if list?[to]?.isOpen ?? false
+        {
+            scrollRowToVisible(to)
+        }
     }
     
     // MARK: - Content
@@ -272,6 +274,12 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         case .didNothing: break
             
         case .willEditTitle:
+            if let task = taskView.task,
+                !(list?.selection.isSelected(task) ?? false)
+            {
+                list?.selection.set(with: task)
+            }
+            
             send(event)
             noteHeightOfRows(withIndexesChanged: [index])
             
@@ -279,6 +287,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             noteHeightOfRows(withIndexesChanged: [index])
             
         case .didEditTitle:
+            NSApp.mainWindow?.makeFirstResponder(self)
             noteHeightOfRows(withIndexesChanged: [index])
             editTitleOfNextSelectedTaskView()
         }

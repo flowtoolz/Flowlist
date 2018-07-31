@@ -15,8 +15,7 @@ class Label: NSTextField
             allowsDefaultTighteningForTruncation = true
         }
         
-        drawsBackground = true
-        backgroundColor = .clear
+        drawsBackground = false
 
         isBezeled = false
         isEditable = false

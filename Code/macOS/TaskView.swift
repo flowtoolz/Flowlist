@@ -35,13 +35,13 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         let checkBoxWidth: CGFloat = CheckBox.size.width
         let groupIconWidth: CGFloat = groupIconImage.size.width
-        let iconPadding: CGFloat = 2 * 8 + 2 * 5
+        let iconPadding: CGFloat = 2 * 11 + 2 * TaskView.titleFieldSideMargin
         let titleWidth = width - (checkBoxWidth + groupIconWidth + iconPadding)
         
-        let titleHeight = TextField.intrinsicSize(with: title,
+        let titleHeight = TextField.size(with: title,
                                                   width: titleWidth).height
         
-        return titleHeight + 16
+        return titleHeight + 22
     }
     
     // MARK: - Configuration
@@ -75,11 +75,6 @@ class TaskView: LayerBackedView, Observer, Observable
             guard let task = task else { return }
             
             self?.received(event, from: task)
-        }
-        
-        observe(task.title)
-        {
-            [weak self] _ in self?.updateTitleField()
         }
         
         observe(task.state)
@@ -117,14 +112,12 @@ class TaskView: LayerBackedView, Observer, Observable
     
     func editTitle()
     {
-        titleField.startEditing(isNewTask: task?.isNewlyCreated ?? false)
-        
-        task?.isNewlyCreated = false
+        titleField.startEditing()
     }
     
     private func updateTitleField()
     {
-        titleField.stringValue = task?.title.value ?? ""
+        titleField.string = task?.title.value ?? ""
     }
 
     private func constrainTitleField()
@@ -132,15 +125,17 @@ class TaskView: LayerBackedView, Observer, Observable
         titleField.autoPinEdge(.left,
                                to: .right,
                                of: checkBox,
-                               withOffset: 5)
+                               withOffset: TaskView.titleFieldSideMargin)
         titleField.autoPinEdge(.right,
                                to: .left,
                                of: groupIcon,
-                               withOffset: -5)
+                               withOffset: -TaskView.titleFieldSideMargin)
         
-        titleField.autoPinEdge(toSuperviewEdge: .top, withInset: 7)
-        titleField.autoPinEdge(toSuperviewEdge: .bottom, withInset: 9)
+        titleField.autoPinEdge(toSuperviewEdge: .top, withInset: 10.5)
+        titleField.autoPinEdge(toSuperviewEdge: .bottom, withInset: 11.5)
     }
+    
+    private static let titleFieldSideMargin: CGFloat = 9
     
     private lazy var titleField: TextField =
     {
@@ -163,12 +158,12 @@ class TaskView: LayerBackedView, Observer, Observable
             send(.willEditTitle)
             
         case .didChange(let text):
-            task?.title <- String(withNonEmpty: text)
             send(.didChangeTitle)
+            task?.title <- String(withNonEmpty: text)
             
         case .didEdit:
             set(editing: false)
-            task?.title <- String(withNonEmpty: titleField.stringValue)
+            task?.title <- String(withNonEmpty: titleField.string)
             task?.isBeingEdited = false
             send(.didEditTitle)
         }
@@ -205,7 +200,7 @@ class TaskView: LayerBackedView, Observer, Observable
         view.alphaValue = 0
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         view.layer?.borderWidth = 1.0
-        view.layer?.borderColor = Color.flowlistBlue.with(alpha: 0.25).cgColor
+        view.layer?.borderColor = Color.flowlistBlueVeryTransparent.cgColor
         
         return view
     }()
@@ -214,8 +209,8 @@ class TaskView: LayerBackedView, Observer, Observable
 
     private func constrainCheckBox()
     {
-        checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
-        checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: 8)
+        checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: 11)
+        checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: 11)
     }
     
     private lazy var checkBox: CheckBox =
@@ -242,8 +237,8 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func contrainGroupIcon()
     {
-        groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 8)
-        groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 8)
+        groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 11)
+        groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 11)
     }
     
     private lazy var groupIcon: Icon = addForAutoLayout(Icon(with: TaskView.groupIconImage))

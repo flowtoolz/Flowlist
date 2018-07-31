@@ -2,61 +2,44 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class TextField: Label, Observable
+class TextField: NSTextView, Observable, NSTextViewDelegate
 {
     // MARK: - Initialization
 
-    override init(frame frameRect: NSRect)
+    init()
     {
-        super.init(frame: frameRect)
+        super.init(frame: NSZeroRect)
         
+        isSelectable = true
         isEditable = true
-        font = TextField.fieldFont
-        
         focusRingType = .none
-        lineBreakMode = .byWordWrapping
+        drawsBackground = false
+        textContainerInset = CGSize.zero
+        textContainer?.lineFragmentPadding = 0
+        isAutomaticLinkDetectionEnabled = true
+        isRichText = true
         
-        if #available(OSX 10.11, *)
-        {
-            maximumNumberOfLines = 0
-        }
+        delegate = self
+        
+        font = TextField.fieldFont
+        defaultParagraphStyle = TextField.paragraphStyle
+        selectedTextAttributes = TextField.selectionSyle
+        typingAttributes = TextField.typingStyle
+        linkTextAttributes = TextField.linkStyle
         
         set(placeholder: "untitled")
     }
     
-    required init?(coder: NSCoder) { fatalError() }
-    
-    // MARK: - Sizing
-    
-    static let heightOfOneLine = intrinsicSize(with: "a",
-                                               width: CGFloat.greatestFiniteMagnitude).height
-    
-    static func intrinsicSize(with text: String, width: CGFloat) -> CGSize
+    // needed to avoid crash. seems it's implicitly required, and a bug.
+    private override init(frame frameRect: NSRect,
+                  textContainer container: NSTextContainer?)
     {
-        measuringCell.stringValue = text
-        
-        let textBounds = CGRect(x: 0,
-                                y: 0,
-                                width: width,
-                                height: CGFloat.greatestFiniteMagnitude)
-        
-        return measuringCell.cellSize(forBounds: textBounds)
+        super.init(frame: frameRect, textContainer: container)
     }
     
-    private static let measuringCell: NSCell =
-    {
-        let cell = NSCell(textCell: "")
-        
-        cell.font = TextField.fieldFont
-        cell.focusRingType = .none
-        cell.lineBreakMode = .byWordWrapping
-        
-        return cell
-    }()
+    required init?(coder: NSCoder) { fatalError() }
     
-    private static let fieldFont = Font.text.nsFont
-    
-    // MARK: - Setup Placeholder
+    // MARK: - Placeholder
     
     private func set(placeholder: String)
     {
@@ -71,6 +54,87 @@ class TextField: Label, Observable
         
         placeholderAttributedString = attributedString
     }
+    
+    @objc var placeholderAttributedString: NSAttributedString?
+    
+    // MARK: - Measuring Size
+    
+    static let heightOfOneLine = size(with: "a",
+                                      width: CGFloat.greatestFiniteMagnitude).height
+    
+    static func size(with text: String, width: CGFloat) -> CGSize
+    {
+        measuringTextContainer.containerSize.width = width
+        
+        let textStorage = NSTextStorage(string: text)
+        
+        textStorage.addLayoutManager(measuringLayoutManager)
+        
+        let range = NSMakeRange(0, textStorage.length)
+        
+        textStorage.addAttribute(.font,
+                                 value: TextField.fieldFont,
+                                 range: range)
+        
+        textStorage.addAttribute(.paragraphStyle,
+                                 value: TextField.paragraphStyle,
+                                 range: range)
+        
+        _ = measuringLayoutManager.glyphRange(for: measuringTextContainer)
+        
+        return measuringLayoutManager.usedRect(for: measuringTextContainer).size
+    }
+    
+    private static let measuringLayoutManager: NSLayoutManager =
+    {
+        let manager = NSLayoutManager()
+        
+        manager.addTextContainer(measuringTextContainer)
+        
+        return manager
+    }()
+    
+    private static let measuringTextContainer: NSTextContainer =
+    {
+        let size = NSMakeSize(0, CGFloat.greatestFiniteMagnitude)
+        
+        let container = NSTextContainer(containerSize: size)
+        
+        container.lineFragmentPadding = 0
+        
+        return container
+    }()
+
+    // MARK: - Style
+    
+    private static let selectionSyle: [NSAttributedStringKey : Any] =
+    [
+        .backgroundColor : Color.flowlistBlueVeryTransparent.nsColor
+    ]
+    
+    private static let typingStyle: [NSAttributedStringKey : Any] =
+    [
+        .paragraphStyle : TextField.paragraphStyle,
+        .font : TextField.fieldFont
+    ]
+    
+    private static let linkStyle: [NSAttributedStringKey : Any] =
+    [
+        .paragraphStyle : TextField.paragraphStyle,
+        .font : TextField.fieldFont,
+        .foregroundColor: NSColor.red
+    ]
+    
+    private static let fieldFont = Font.text.nsFont
+    
+    private static let paragraphStyle: NSParagraphStyle =
+    {
+        let style = NSMutableParagraphStyle()
+        
+        style.lineSpacing = 5
+        
+        return style
+    }()
     
     // MARK: - Update
     
@@ -88,67 +152,48 @@ class TextField: Label, Observable
         
         return super.performKeyEquivalent(with: event)
     }
+    
+    // MARK: - Editing
+    
+    func startEditing()
+    {
+        guard NSApp.mainWindow?.makeFirstResponder(self) ?? false else { return }
+        
+        setSelectedRange(NSMakeRange(string.count, 0))
+    }
 
-    // MARK: - Editing State
-    
-    func startEditing(isNewTask: Bool)
+    override func becomeFirstResponder() -> Bool
     {
-        guard let fieldEditor = NSApp.mainWindow?.fieldEditor(true, for: nil) else
-        {
-            return
-        }
+        let willBecomeFirstResponder = super.becomeFirstResponder()
         
-        ignoreNextEditingEnd = isNewTask
+        if willBecomeFirstResponder { willEdit() }
         
-        select(withFrame: bounds,
-               editor: fieldEditor,
-               delegate: self,
-               start: stringValue.count,
-               length:0)
-        
-        willEdit()
+        return willBecomeFirstResponder
     }
     
-    override func selectText(_ sender: Any?)
+    override func shouldChangeText(in affectedCharRange: NSRange,
+                                   replacementString: String?) -> Bool
     {
-        super.selectText(sender)
-        
-        willEdit()
-    }
-    
-    override func textDidChange(_ notification: Notification)
-    {
-        ignoreNextEditingEnd = false
-        
-        super.textDidChange(notification)
-        
-        send(.didChange(text: stringValue))
-    }
-    
-    override func abortEditing() -> Bool
-    {
-        let abort = super.abortEditing()
-        
-        if abort { didEdit() }
-
-        return abort
-    }
-    
-    override func textDidEndEditing(_ notification: Notification)
-    {
-        super.textDidEndEditing(notification)
-        
-        if ignoreNextEditingEnd
-        {
-            ignoreNextEditingEnd = false
-        }
-        else
+        guard replacementString != "\n" else
         {
             didEdit()
+            return false
         }
+        
+        return super.shouldChangeText(in: affectedCharRange,
+                                      replacementString: replacementString)
     }
     
-    private var ignoreNextEditingEnd = false
+    func textDidChange(_ notification: Notification)
+    {
+        send(.didChange(text: string))
+    }
+
+    func textDidEndEditing(_ notification: Notification)
+    {
+        setSelectedRange(NSMakeRange(string.count, 0))
+        didEdit()
+    }
     
     private func didEdit()
     {
