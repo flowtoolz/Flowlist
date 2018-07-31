@@ -40,9 +40,9 @@ class WindowMenu: NSMenu
         NSApp.mainWindow?.toggleFullScreen(self)
     }
     
-    private lazy var fullscreenItem: NSMenuItem = item(fullscreenItemTitle(),
-                                                       action: #selector(toggleFullscreen),
-                                                       key: "f")
+    private lazy var fullscreenItem = item(fullscreenItemTitle(),
+                                           action: #selector(toggleFullscreen),
+                                           key: "f")
     
     private func fullscreenItemTitle(isFullscreen: Bool = false) -> String
     {
@@ -73,9 +73,9 @@ class WindowMenu: NSMenu
         }
     }
     
-    private lazy var focusItem: NSMenuItem = item(focusItemTitle(),
-                                                  action: #selector(toggleFocus),
-                                                  key: "m")
+    private lazy var focusItem = item(focusItemTitle(),
+                                      action: #selector(toggleFocus),
+                                      key: "m")
     
     private func focusItemTitle(isFocused: Bool = false) -> String
     {
@@ -84,9 +84,9 @@ class WindowMenu: NSMenu
     
     // MARK: - Toggle Window Visibility
     
-    private lazy var windowItem: NSMenuItem = item("Close Window",
-                                                   action: #selector(showWindow),
-                                                   key: "w")
+    private lazy var windowItem = item("Close Window",
+                                       action: #selector(showWindow),
+                                       key: "w")
     
     @objc private func showWindow()
     {

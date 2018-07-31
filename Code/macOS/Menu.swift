@@ -12,6 +12,7 @@ class Menu: NSMenu
         addItem(NSMenuItem(with: SelectionMenu()))
         addItem(NSMenuItem(with: EditMenu()))
         addItem(NSMenuItem(with: windowMenu))
+        addItem(NSMenuItem(with: HelpMenu()))
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
