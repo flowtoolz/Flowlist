@@ -29,25 +29,10 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     func configure(with list: SelectableList)
     {
-        // TODO: move this to Header
-        // header
-        stopObserving(self.list?.title)
-        observe(list.title)
-        {
-            [weak self] newTitle in
-            
-            self?.header.set(title: newTitle)
-        }
+        header.configure(with: list)
         
-        header.set(title: list.title.latestUpdate)
-        header.showIcon(list.isRootList)
-        
-        if let root = list.root { header.update(with: root) }
-        
-        // scroll table
         scrollTable.configure(with: list)
         
-        // list
         stopObserving(self.list)
         observe(list) { [weak self] in self?.didReceive($0) }
         

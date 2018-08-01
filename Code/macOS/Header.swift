@@ -1,11 +1,12 @@
 import AppKit
 import PureLayout
 import UIToolz
+import SwiftObserver
 import SwiftyToolz
 
-class Header: LayerBackedView
+class Header: LayerBackedView, Observer
 {
-    // MARK: - Initialization
+    // MARK: - Life Cycle
     
     override init(frame frameRect: NSRect)
     {
@@ -21,6 +22,30 @@ class Header: LayerBackedView
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
+    
+    deinit { stopAllObserving() }
+    
+    // MARK: - Configuration
+    
+    func configure(with list: SelectableList)
+    {
+        stopObserving(self.list?.title)
+        observe(list.title)
+        {
+            [weak self] newTitle in
+            
+            self?.set(title: newTitle)
+        }
+        
+        set(title: list.title.latestUpdate)
+        showIcon(list.isRootList)
+        
+        if let root = list.root { update(with: root) }
+        
+        self.list = list
+    }
+    
+    private weak var list: SelectableList?
     
     // MARK: - Adjust to Root State
     
