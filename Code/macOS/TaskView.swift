@@ -141,12 +141,16 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         let textField = addForAutoLayout(TextView())
         
-        self.observe(textField) { [weak self] in self?.didReceive($0) }
+        // TODO: what do these properties do?
+        textField.isHorizontallyResizable = true
+        textField.isVerticallyResizable = true
+    
+        self.observe(textField.messenger) { [weak self] in self?.didReceive($0) }
         
         return textField
     }()
     
-    private func didReceive(_ event: TextView.Event)
+    private func didReceive(_ event: TextView.Messenger.Event)
     {
         switch event
         {

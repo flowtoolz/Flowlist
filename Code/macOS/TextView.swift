@@ -2,13 +2,24 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class TextView: NSTextView, Observable, NSTextViewDelegate
+class TextView: NSTextView, NSTextViewDelegate
 {
     // MARK: - Initialization
 
-    init()
+    convenience init()
     {
-        super.init(frame: NSZeroRect)
+        self.init(frame: NSZeroRect)
+    }
+    
+    private override init(frame frameRect: NSRect)
+    {
+        super.init(frame: frameRect)
+    }
+    
+    private override init(frame frameRect: NSRect,
+                          textContainer container: NSTextContainer?)
+    {
+        super.init(frame: frameRect, textContainer: container)
         
         isSelectable = true
         isEditable = true
@@ -28,13 +39,6 @@ class TextView: NSTextView, Observable, NSTextViewDelegate
         linkTextAttributes = TextView.linkStyle
         
         set(placeholder: "untitled")
-    }
-    
-    // needed to avoid crash. seems it's implicitly required, and a bug.
-    private override init(frame frameRect: NSRect,
-                  textContainer container: NSTextContainer?)
-    {
-        super.init(frame: frameRect, textContainer: container)
     }
     
     required init?(coder: NSCoder) { fatalError() }
@@ -178,7 +182,7 @@ class TextView: NSTextView, Observable, NSTextViewDelegate
     {
         guard replacementString != "\n" else
         {
-            send(.wantToEndEditing)
+            messenger.send(.wantToEndEditing)
             return false
         }
         
@@ -188,7 +192,7 @@ class TextView: NSTextView, Observable, NSTextViewDelegate
     
     func textDidChange(_ notification: Notification)
     {
-        send(.didChange(text: string))
+        messenger.send(.didChange(text: string))
     }
 
     func textDidEndEditing(_ notification: Notification)
@@ -201,24 +205,29 @@ class TextView: NSTextView, Observable, NSTextViewDelegate
     {
         TextView.isEditing = false
 
-        send(.didEdit)
+        messenger.send(.didEdit)
     }
     
     private func willEdit()
     {
         TextView.isEditing = true
         
-        send(.willEdit)
+        messenger.send(.willEdit)
     }
 
     static var isEditing = false
     
     // MARK: - Observability
     
-    var latestUpdate: Event { return .didNothing }
+    let messenger = Messenger()
     
-    enum Event
+    class Messenger: Observable
     {
-        case didNothing, willEdit, didChange(text: String), wantToEndEditing, didEdit
+        var latestUpdate: Event { return .didNothing }
+        
+        enum Event
+        {
+            case didNothing, willEdit, didChange(text: String), wantToEndEditing, didEdit
+        }
     }
 }
