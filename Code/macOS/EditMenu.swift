@@ -100,7 +100,7 @@ class EditMenu: NSMenu, Observer
         let task = list?.firstSelectedTask
         
         createItem.title = selected > 1 ? "Group \(selected) Items" : "Add New Item"
-        renameItem.title = selected > 1 ? "Rename \(selected) Items" : "Rename Item"
+        renameItem.title = selected > 1 ? "Rename 1st of \(selected) Items" : "Rename Item"
         
         let checkAction = task?.isDone ?? false ? "Uncheck" : "Check Off"
         checkOffItem.title = selected > 1 ? "\(checkAction) 1st of \(selected) Items" : "\(checkAction) Item"
