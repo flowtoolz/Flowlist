@@ -190,16 +190,7 @@ class PurchaseContentView: NSView, Observer
     {
         let label = columns[0].addForAutoLayout(Label())
 
-        // TODO: specify weight in model class Font
-        if #available(OSX 10.11.0, *)
-        {
-            label.font = NSFont.systemFont(ofSize: 26, weight: .bold)
-        }
-        else
-        {
-            label.font = NSFont.systemFont(ofSize: 26)
-        }
-        
+        label.font = Font.title.nsFont
         label.stringValue = "Flowlist Full Version"
         
         return label
