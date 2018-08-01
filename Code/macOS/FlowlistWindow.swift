@@ -1,4 +1,5 @@
 import AppKit
+import UIToolz
 import SwiftyToolz
 
 let mainWindow = FlowlistWindow()

@@ -8,6 +8,7 @@ PODS:
     - SwiftObserver
   - UIToolz (1.0.0):
     - PureLayout (= 3.0.2)
+    - SwiftObserver
     - SwiftyToolz
 
 DEPENDENCIES:
@@ -40,7 +41,7 @@ SPEC CHECKSUMS:
   SwiftObserver: a8d183c0984fa9ffa531069f462b59f061390924
   SwiftyToolz: 461391682260e0c485c4007f60c7cc882b8f7211
   UIObserver: d52d08987839f94e2ca4f4767b233fc53e6837e3
-  UIToolz: e44bb6bbe50f0dd3b0696ef66bc419bc334ab5ec
+  UIToolz: 5cbabd42a7b50f80e8432de4615f41be6345baf3
 
 PODFILE CHECKSUM: decd485108c4fb948784ab3c46dfe1fa65f84639
 

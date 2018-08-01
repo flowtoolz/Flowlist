@@ -18,7 +18,6 @@
 		9E2CCE8F20C1EAFF0037D755 /* Task+Copyable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CCE8E20C1EAFF0037D755 /* Task+Copyable.swift */; };
 		9E2F83E520C8639F003E771E /* SelectableList+NSPasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F83E420C8639F003E771E /* SelectableList+NSPasteboard.swift */; };
 		9E2F83E720C88220003E771E /* SelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F83E620C88220003E771E /* SelectionMenu.swift */; };
-		9E33A74D210A6D1E0073DB51 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33A74C210A6D1E0073DB51 /* Window.swift */; };
 		9E43503F20F350D200014FFF /* WindowMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E43503E20F350D200014FFF /* WindowMenu.swift */; };
 		9E542E951EEEE41C00534981 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E542E941EEEE41C00534981 /* main.swift */; };
 		9E5768BA20C1436500749C0C /* TaskState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768B920C1436500749C0C /* TaskState.swift */; };
@@ -34,7 +33,6 @@
 		9E72881B1EEF3095003A2F46 /* SelectableListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E72881A1EEF3095003A2F46 /* SelectableListView.swift */; };
 		9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651931EEF428100DE2B07 /* TaskView.swift */; };
 		9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* Store.swift */; };
-		9E817D9E210A60F900CFFBCB /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E817D9D210A60F900CFFBCB /* AppController.swift */; };
 		9E82A7A91EF2A558006AEF02 /* SelectableList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* SelectableList.swift */; };
 		9E88F54F20B7761F00A64F7B /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E88F54E20B7761F00A64F7B /* Menu.swift */; };
 		9E8ABF0020B2F0F1001E862B /* SelectableList+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABEFF20B2F0F1001E862B /* SelectableList+Debugging.swift */; };
@@ -48,10 +46,6 @@
 		9EB6217220C27DD500DD3DA5 /* ApplicationMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217120C27DD500DD3DA5 /* ApplicationMenu.swift */; };
 		9EB6217720C2830200DD3DA5 /* EditMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217620C2830200DD3DA5 /* EditMenu.swift */; };
 		9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* Browser.swift */; };
-		9EC8E09620DE8FD500DBF2CD /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC8E09520DE8FD500DBF2CD /* ProgressBar.swift */; };
-		9ECF066B2112207C00FAE3CD /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECF066A2112207C00FAE3CD /* Button.swift */; };
-		9ED5C8D920DF83F900EF84CB /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8D820DF83F900EF84CB /* Icon.swift */; };
-		9ED5C8DB20DF88E300EF84CB /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8DA20DF88E300EF84CB /* Label.swift */; };
 		9ED5C8DD20DF970000EF84CB /* PurchaseContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */; };
 		9EE2EE4B20B4A693007CDC2F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextView.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
@@ -89,7 +83,6 @@
 		9E2CCE8E20C1EAFF0037D755 /* Task+Copyable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Copyable.swift"; path = "../Code/Task+Copyable.swift"; sourceTree = "<group>"; };
 		9E2F83E420C8639F003E771E /* SelectableList+NSPasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SelectableList+NSPasteboard.swift"; path = "../Code/macOS/SelectableList+NSPasteboard.swift"; sourceTree = "<group>"; };
 		9E2F83E620C88220003E771E /* SelectionMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectionMenu.swift; path = ../Code/macOS/SelectionMenu.swift; sourceTree = "<group>"; };
-		9E33A74C210A6D1E0073DB51 /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Window.swift; path = ../Code/macOS/Window.swift; sourceTree = "<group>"; };
 		9E43503E20F350D200014FFF /* WindowMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WindowMenu.swift; path = ../Code/macOS/WindowMenu.swift; sourceTree = "<group>"; };
 		9E542E911EEEE41C00534981 /* Flowlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flowlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E542E941EEEE41C00534981 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../Code/macOS/main.swift; sourceTree = "<group>"; };
@@ -106,7 +99,6 @@
 		9E72881A1EEF3095003A2F46 /* SelectableListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectableListView.swift; path = ../Code/macOS/SelectableListView.swift; sourceTree = "<group>"; };
 		9E7651931EEF428100DE2B07 /* TaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = ../Code/macOS/TaskView.swift; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Store.swift; path = ../Code/Store.swift; sourceTree = "<group>"; };
-		9E817D9D210A60F900CFFBCB /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppController.swift; path = ../Code/macOS/AppController.swift; sourceTree = "<group>"; };
 		9E82A7A81EF2A558006AEF02 /* SelectableList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectableList.swift; path = ../Code/SelectableList.swift; sourceTree = "<group>"; };
 		9E88F54E20B7761F00A64F7B /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Menu.swift; path = ../Code/macOS/Menu.swift; sourceTree = "<group>"; };
 		9E8ABEFF20B2F0F1001E862B /* SelectableList+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SelectableList+Debugging.swift"; path = "../Code/SelectableList+Debugging.swift"; sourceTree = "<group>"; };
@@ -121,10 +113,6 @@
 		9EB6217120C27DD500DD3DA5 /* ApplicationMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ApplicationMenu.swift; path = ../Code/macOS/ApplicationMenu.swift; sourceTree = "<group>"; };
 		9EB6217620C2830200DD3DA5 /* EditMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditMenu.swift; path = ../Code/macOS/EditMenu.swift; sourceTree = "<group>"; };
 		9EBC70282056FD02007A1EA8 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Browser.swift; path = ../Code/Browser.swift; sourceTree = "<group>"; };
-		9EC8E09520DE8FD500DBF2CD /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressBar.swift; path = ../Code/macOS/ProgressBar.swift; sourceTree = "<group>"; };
-		9ECF066A2112207C00FAE3CD /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Button.swift; path = ../Code/macOS/Button.swift; sourceTree = "<group>"; };
-		9ED5C8D820DF83F900EF84CB /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Icon.swift; path = ../Code/macOS/Icon.swift; sourceTree = "<group>"; };
-		9ED5C8DA20DF88E300EF84CB /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Label.swift; path = ../Code/macOS/Label.swift; sourceTree = "<group>"; };
 		9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PurchaseContentView.swift; path = ../Code/macOS/PurchaseContentView.swift; sourceTree = "<group>"; };
 		9EE2EE4A20B4A693007CDC2F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextView.swift; path = ../Code/macOS/TextView.swift; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Style.swift"; path = "../Code/Float+Style.swift"; sourceTree = "<group>"; };
@@ -428,12 +416,6 @@
 		9EFA20DF20BDF94400FB2156 /* Framework Candidates */ = {
 			isa = PBXGroup;
 			children = (
-				9ECF066A2112207C00FAE3CD /* Button.swift */,
-				9E817D9D210A60F900CFFBCB /* AppController.swift */,
-				9E33A74C210A6D1E0073DB51 /* Window.swift */,
-				9EC8E09520DE8FD500DBF2CD /* ProgressBar.swift */,
-				9ED5C8D820DF83F900EF84CB /* Icon.swift */,
-				9ED5C8DA20DF88E300EF84CB /* Label.swift */,
 				9EF6C67C20E22DE10003264A /* SKProduct+FormattedPrice.swift */,
 				9E6C8C7020E3E5D90068EBCF /* NSDecimalNumber+Price.swift */,
 			);
@@ -585,14 +567,11 @@
 				9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */,
 				9EF9BDDA2110EECC009E62AF /* HelpMenu.swift in Sources */,
 				9EF0A79320B72B5A00E1A23A /* FlowlistController.swift in Sources */,
-				9E817D9E210A60F900CFFBCB /* AppController.swift in Sources */,
-				9EC8E09620DE8FD500DBF2CD /* ProgressBar.swift in Sources */,
 				9EB6217220C27DD500DD3DA5 /* ApplicationMenu.swift in Sources */,
 				9E15185E1EEEE97700B35AD5 /* ViewController.swift in Sources */,
 				9E1AAD6E20B595A5001657A7 /* NSView+Style.swift in Sources */,
 				9EA2B9691EF035D900F05F20 /* Row.swift in Sources */,
 				9E6C721020B1E66D001C3D2C /* Task+Debugging.swift in Sources */,
-				9E33A74D210A6D1E0073DB51 /* Window.swift in Sources */,
 				9E5768BA20C1436500749C0C /* TaskState.swift in Sources */,
 				9EF0A78C20B5F8B200E1A23A /* ScrollTable.swift in Sources */,
 				9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */,
@@ -601,11 +580,9 @@
 				9E2F83E520C8639F003E771E /* SelectableList+NSPasteboard.swift in Sources */,
 				9E0D5A9F20C160BA00F0D827 /* Font+Style.swift in Sources */,
 				9ED5C8DD20DF970000EF84CB /* PurchaseContentView.swift in Sources */,
-				9ECF066B2112207C00FAE3CD /* Button.swift in Sources */,
 				9EA5925B20AF7AD200F70CBF /* Selection.swift in Sources */,
 				9E5768C220C15CDF00749C0C /* Task+Hashable.swift in Sources */,
 				9EA2B96B1EF0A80A00F05F20 /* Store+Persistence.swift in Sources */,
-				9ED5C8D920DF83F900EF84CB /* Icon.swift in Sources */,
 				9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */,
 				9EF6C67B20E21D6B0003264A /* PriceTag.swift in Sources */,
 				9E2F83E720C88220003E771E /* SelectionMenu.swift in Sources */,
@@ -615,7 +592,6 @@
 				9EAD75411EF6502000DC46FD /* Table.swift in Sources */,
 				9E88F54F20B7761F00A64F7B /* Menu.swift in Sources */,
 				9E2CCE8D20C1DE030037D755 /* SelectableList+Clipboard.swift in Sources */,
-				9ED5C8DB20DF88E300EF84CB /* Label.swift in Sources */,
 				9EF0A79120B71DA100E1A23A /* FlowlistWindow.swift in Sources */,
 				9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */,
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,

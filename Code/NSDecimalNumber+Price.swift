@@ -1,8 +1,8 @@
 import Foundation
 
-extension NSDecimalNumber
+public extension NSDecimalNumber
 {
-    func formattedPrice(in locale: Locale = Locale.current) -> String?
+    public func formattedPrice(in locale: Locale = Locale.current) -> String?
     {
         let formatter = NumberFormatter()
         
