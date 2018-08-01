@@ -117,6 +117,8 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func updateTitleField()
     {
+        // https://stackoverflow.com/questions/19121367/uitextviews-in-a-uitableview-link-detection-bug-in-ios-7
+        titleField.string = ""
         titleField.string = task?.title.value ?? ""
     }
 
