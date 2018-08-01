@@ -10,8 +10,12 @@ public class Window: NSWindow
                                       .titled,
                                       .miniaturizable,
                                       .closable]
+        
+        let initialFrame = Window.initialFrame
+        
+        Window.intendedMainWindowSize = initialFrame.size
 
-        super.init(contentRect: Window.initialFrame,
+        super.init(contentRect: initialFrame,
                    styleMask: windowStyle,
                    backing: .buffered,
                    defer: false)
@@ -27,7 +31,7 @@ public class Window: NSWindow
         {
             self.contentViewController = viewController
             
-            setFrame(Window.initialFrame, display: false)
+            setFrame(initialFrame, display: false)
         }
     }
     
@@ -41,6 +45,10 @@ public class Window: NSWindow
                       width: screenSize.width * 0.8,
                       height: screenSize.height * 0.8)
     }()
+    
+    // MARK: - Manual Sizing
+    
+    public static var intendedMainWindowSize: CGSize?
     
     // MARK: - Show & Hide
     

@@ -9,8 +9,6 @@ class FlowlistWindow: Window
     
     fileprivate init()
     {
-        Table.windowWidth = Window.initialFrame.size.width
-        
         super.init(with: ViewController())
         
         backgroundColor = Color.background.nsColor
@@ -20,7 +18,9 @@ class FlowlistWindow: Window
     
     func didEndResizing()
     {
-        Table.windowWidth = frame.size.width
+        guard Window.intendedMainWindowSize != frame.size else { return }
+        
+        Window.intendedMainWindowSize = frame.size
         
         (contentViewController as? ViewController)?.didEndResizing()
     }

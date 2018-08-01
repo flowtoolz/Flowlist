@@ -188,15 +188,16 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         let title = task.title.value ?? "untitled"
         
         let horizontalGap: CGFloat = 10
-        let tableWidth = ((Table.windowWidth - (4 * horizontalGap)) / 3) - 0.5
+        
+        let windowWidth = Window.intendedMainWindowSize?.width ?? 1024
+        
+        let tableWidth = ((windowWidth - (4 * horizontalGap)) / 3) - 0.5
         
         let editingPadding = task.isBeingEdited ? TextView.heightOfOneLine + TextView.lineSpacing : 0
         
         return TaskView.preferredHeight(for: title,
                                         width: tableWidth) + editingPadding
     }
-    
-    static var windowWidth: CGFloat = 0
     
     // MARK: - Selection
     
