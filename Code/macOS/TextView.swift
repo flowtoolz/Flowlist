@@ -148,6 +148,11 @@ class TextView: NSTextView, NSTextViewDelegate
         textColor = color.nsColor
     }
     
+    override var string: String
+    {
+        didSet { checkTextInDocument(nil) }
+    }
+    
     // MARK: - Avoid Beep When Return is Dispatched While Some Field Is Editing
     
     override func performKeyEquivalent(with event: NSEvent) -> Bool
