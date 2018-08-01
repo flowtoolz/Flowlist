@@ -8,15 +8,14 @@ class Label: NSTextField
         
         let priority = NSLayoutConstraint.Priority(rawValue: 0.1)
         setContentCompressionResistancePriority(priority, for: .horizontal)
-        lineBreakMode = .byTruncatingTail
         
         if #available(OSX 10.11, *)
         {
             allowsDefaultTighteningForTruncation = true
         }
         
+        lineBreakMode = .byTruncatingTail
         drawsBackground = false
-
         isBezeled = false
         isEditable = false
         isBordered = false

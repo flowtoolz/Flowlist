@@ -189,7 +189,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         
         let horizontalGap: CGFloat = 10
         
-        let windowWidth = Window.intendedMainWindowSize?.width ?? 1024
+        let windowWidth = Window.intendedMainWindowSize.value?.width ?? 1024
         
         let tableWidth = ((windowWidth - (4 * horizontalGap)) / 3) - 0.5
         

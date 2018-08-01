@@ -34,12 +34,14 @@ class ViewController: NSViewController, Observer
                 [weak self] in self?.didPurchaseFullVersion()
             }
         }
+        
+        observe(Window.intendedMainWindowSize)
+        {
+            [weak self] _ in self?.browserView.didEndResizing()
+        }
     }
     
-    func didEndResizing()
-    {
-        browserView.didEndResizing()
-    }
+    deinit { stopAllObserving() }
     
     // MARK: - Purchase View
     

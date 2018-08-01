@@ -13,15 +13,4 @@ class FlowlistWindow: Window
         
         backgroundColor = Color.background.nsColor
     }
-    
-    // MARK: - Sizing
-    
-    func didEndResizing()
-    {
-        guard Window.intendedMainWindowSize != frame.size else { return }
-        
-        Window.intendedMainWindowSize = frame.size
-        
-        (contentViewController as? ViewController)?.didEndResizing()
-    }
 }

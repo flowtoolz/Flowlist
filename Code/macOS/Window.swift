@@ -1,4 +1,5 @@
 import AppKit
+import SwiftObserver
 
 public class Window: NSWindow
 {
@@ -13,7 +14,7 @@ public class Window: NSWindow
         
         let initialFrame = Window.initialFrame
         
-        Window.intendedMainWindowSize = initialFrame.size
+        Window.intendedMainWindowSize <- initialFrame.size
 
         super.init(contentRect: initialFrame,
                    styleMask: windowStyle,
@@ -48,7 +49,14 @@ public class Window: NSWindow
     
     // MARK: - Manual Sizing
     
-    public static var intendedMainWindowSize: CGSize?
+    func didEndLiveResize()
+    {
+        guard Window.intendedMainWindowSize.value != frame.size else { return }
+        
+        Window.intendedMainWindowSize <- frame.size
+    }
+    
+    public static let intendedMainWindowSize = Var<CGSize>()
     
     // MARK: - Show & Hide
     

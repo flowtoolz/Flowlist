@@ -32,7 +32,7 @@ class FlowlistController: AppController, NSWindowDelegate
     
     func windowDidEndLiveResize(_ notification: Notification)
     {
-        mainWindow.didEndResizing()
+        mainWindow.didEndLiveResize()
     }
     
     func windowWillEnterFullScreen(_ notification: Notification)
@@ -42,12 +42,12 @@ class FlowlistController: AppController, NSWindowDelegate
     
     func windowDidEnterFullScreen(_ notification: Notification)
     {
-        mainWindow.didEndResizing()
+        mainWindow.didEndLiveResize()
     }
 
     func windowDidExitFullScreen(_ notification: Notification)
     {
-        mainWindow.didEndResizing()
+        mainWindow.didEndLiveResize()
         menu.windowChangesFullscreen(to: false)
     }
     
