@@ -190,7 +190,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         let horizontalGap: CGFloat = 10
         let tableWidth = ((Table.windowWidth - (4 * horizontalGap)) / 3) - 0.5
         
-        let editingPadding = task.isBeingEdited ? TextView.heightOfOneLine : 0
+        let editingPadding = task.isBeingEdited ? TextView.heightOfOneLine + TextView.lineSpacing : 0
         
         return TaskView.preferredHeight(for: title,
                                         width: tableWidth) + editingPadding

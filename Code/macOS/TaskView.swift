@@ -39,7 +39,7 @@ class TaskView: LayerBackedView, Observer, Observable
         let titleWidth = width - (checkBoxWidth + groupIconWidth + iconPadding)
         
         let titleHeight = TextView.size(with: title,
-                                                  width: titleWidth).height
+                                        width: titleWidth).height
         
         return titleHeight + 22
     }

@@ -131,10 +131,12 @@ class TextView: NSTextView, Observable, NSTextViewDelegate
     {
         let style = NSMutableParagraphStyle()
         
-        style.lineSpacing = 5
+        style.lineSpacing = TextView.lineSpacing
         
         return style
     }()
+    
+    static let lineSpacing: CGFloat = 5.0
     
     // MARK: - Update
     
