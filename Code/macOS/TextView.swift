@@ -124,9 +124,7 @@ class TextView: NSTextView, NSTextViewDelegate
     
     private static let linkStyle: [NSAttributedStringKey : Any] =
     [
-        .paragraphStyle : TextView.paragraphStyle,
-        .font : TextView.fieldFont,
-        .foregroundColor: NSColor.red
+        NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue
     ]
     
     private static let fieldFont = Font.text.nsFont
