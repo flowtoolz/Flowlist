@@ -12,9 +12,7 @@ class Header: LayerBackedView, Observer
     {
         super.init(frame: frameRect)
         
-        setItemBorder()
-        backgroundColor = Color.white
-        
+        backgroundColor = .clear
         constrainTitleLabel()
         
         constrainIcon()
@@ -51,8 +49,6 @@ class Header: LayerBackedView, Observer
     
     func update(with root: Task)
     {
-        backgroundColor = root.backgroundColor
-        
         let isUntitled = String(withNonEmpty: root.title.value) == nil
         let textColor: Color = root.isDone || isUntitled ? .grayedOut : .black
         titleLabel.textColor = textColor.nsColor
@@ -87,9 +83,10 @@ class Header: LayerBackedView, Observer
     
     private func constrainTitleLabel()
     {
+        let gap = Float.verticalGap.cgFloat + 1
         titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: self)
-        titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
-        titleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+        titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: gap)
+        titleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: gap)
     }
     
     private lazy var titleLabel: Label =

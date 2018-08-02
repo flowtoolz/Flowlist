@@ -12,6 +12,6 @@ class FlowlistWindow: Window
     {
         super.init(with: ViewController())
         
-        backgroundColor = Color.background.nsColor
+        backgroundColor = Color.window.nsColor
     }
 }

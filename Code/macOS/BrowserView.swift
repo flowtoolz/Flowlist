@@ -14,7 +14,7 @@ class BrowserView: LayerBackedView, Observer
 
         observeBrowser()
         
-        backgroundColor = Color.black.with(alpha: 0)
+        backgroundColor = .clear
         
         createListViews()
         configureListViews()
@@ -163,6 +163,8 @@ class BrowserView: LayerBackedView, Observer
         removeConstraints(listViewContraints)
         listViewContraints.removeAll()
         
+        let listGap = Float.verticalGap.cgFloat
+        
         for i in 0 ..< listViews.count
         {
             let listView = listViews[i]
@@ -178,7 +180,7 @@ class BrowserView: LayerBackedView, Observer
                 constrain(listView.autoPinEdge(.left,
                                                to: .right,
                                                of: listViews[i - 1],
-                                               withOffset: 10))
+                                               withOffset: listGap))
                 
                 constrain(listView.autoConstrainAttribute(.width,
                                                           to: .width,
@@ -190,8 +192,10 @@ class BrowserView: LayerBackedView, Observer
                 constrain(listView.autoPinEdge(.left, to: .right, of: self))
             }
             
-            constrain(listView.autoPinEdge(toSuperviewEdge: .top))
-            constrain(listView.autoPinEdge(toSuperviewEdge: .bottom))
+            constrain(listView.autoPinEdge(toSuperviewEdge: .top,
+                                           withInset: listGap))
+            constrain(listView.autoPinEdge(toSuperviewEdge: .bottom,
+                                           withInset: listGap))
         }
     }
     

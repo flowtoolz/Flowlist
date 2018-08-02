@@ -12,6 +12,10 @@ class SelectableListView: LayerBackedView, Observer, Observable
     {
         super.init(frame: frameRect)
         
+        backgroundColor = Color.background
+        layer?.cornerRadius = Float.cornerRadius.cgFloat
+        setItemBorder()
+        
         constrainHeader()
         constrainScrollTable()
     }
@@ -81,9 +85,9 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func constrainHeader()
     {
-        header.autoPinEdge(toSuperviewEdge: .left)
-        header.autoPinEdge(toSuperviewEdge: .right, withInset: 0.5)
-        header.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+        header.autoPinEdge(toSuperviewEdge: .left, withInset: 1)
+        header.autoPinEdge(toSuperviewEdge: .right, withInset: 1)
+        header.autoPinEdge(toSuperviewEdge: .top, withInset: 1)
         header.autoSetDimension(.height, toSize: Float.itemHeight.cgFloat)
     }
     
@@ -93,17 +97,14 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func constrainScrollTable()
     {
-        let insets = NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 0.5)
-        
-        scrollTable.autoPinEdgesToSuperviewEdges(with: insets,
-                                                 excludingEdge: .top)
-        
-        let halfVerticalGap = Float.verticalGap.cgFloat / 2
-        
-        scrollTable.autoPinEdge(.top,
-                               to: .bottom,
-                               of: header,
-                               withOffset: 10 - halfVerticalGap)
+        let gap = Float.verticalGap.cgFloat + 1
+        let insets = NSEdgeInsets(top: 0,
+                                  left: gap,
+                                  bottom: gap,
+                                  right: gap)
+
+        scrollTable.autoPinEdgesToSuperviewEdges(with: insets, excludingEdge: .top)
+        scrollTable.autoPinEdge(.top, to: .bottom, of: header)
     }
     
     lazy var scrollTable: ScrollTable =
