@@ -92,7 +92,7 @@ class ViewController: NSViewController, Observer
     {
         purchaseView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                   excludingEdge: .top)
-        purchaseView.autoPinEdge(.top, to: .bottom, of: browserView, withOffset: 17)
+        purchaseView.autoPinEdge(.top, to: .bottom, of: browserView)
         
         
         purchaseViewHeightConstraint = purchaseView.autoSetDimension(.height,
@@ -118,7 +118,7 @@ class ViewController: NSViewController, Observer
         
         if isFullVersion
         {
-            browserView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 17)
+            browserView.autoPinEdge(toSuperviewEdge: .bottom)
         }
     }
     

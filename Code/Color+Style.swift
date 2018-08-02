@@ -3,7 +3,7 @@ import SwiftyToolz
 extension Color
 {
     static let backlog = Color.white
-    static let background = Color.gray(brightness: darkeningFactor).with(alpha: 0.85)
+    static let background = Color.gray(brightness: darkeningFactor)
     static let done = Color.gray(brightness: powf(darkeningFactor, 2))
     
     static let border = Color(0, 0, 0, 0.15)
