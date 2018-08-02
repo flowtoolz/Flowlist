@@ -200,7 +200,9 @@ class TextView: NSTextView, NSTextViewDelegate
 
     func textDidEndEditing(_ notification: Notification)
     {
+        checkTextInDocument(nil)
         setSelectedRange(NSMakeRange(string.count, 0))
+        
         didEdit()
     }
     
