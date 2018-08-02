@@ -104,7 +104,10 @@ class SelectableListView: LayerBackedView, Observer, Observable
                                   right: gap)
 
         scrollTable.autoPinEdgesToSuperviewEdges(with: insets, excludingEdge: .top)
-        scrollTable.autoPinEdge(.top, to: .bottom, of: header)
+        scrollTable.autoPinEdge(.top,
+                                to: .bottom,
+                                of: header,
+                                withOffset: CGFloat(Int(Float.verticalGap) / 2) + 2)
     }
     
     lazy var scrollTable: ScrollTable =
