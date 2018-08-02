@@ -191,7 +191,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         
         let windowWidth = Window.intendedMainWindowSize.value?.width ?? 1024
         
-        let tableWidth = ((windowWidth - (4 * horizontalGap)) / 3) - (2 * (horizontalGap + 1))
+        let tableWidth = ((windowWidth - (2 * horizontalGap - 2)) / 3) - (2 * (horizontalGap + 1))
         
         let editingPadding = task.isBeingEdited ? TextView.heightOfOneLine + TextView.lineSpacing : 0
         
