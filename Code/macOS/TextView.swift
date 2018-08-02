@@ -28,6 +28,7 @@ class TextView: NSTextView, NSTextViewDelegate
         textContainerInset = CGSize.zero
         textContainer?.lineFragmentPadding = 0
         isAutomaticLinkDetectionEnabled = true
+        isAutomaticDataDetectionEnabled = true
         isRichText = true
         
         delegate = self
