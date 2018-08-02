@@ -85,9 +85,9 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func constrainHeader()
     {
-        header.autoPinEdge(toSuperviewEdge: .left, withInset: 1)
-        header.autoPinEdge(toSuperviewEdge: .right, withInset: 1)
-        header.autoPinEdge(toSuperviewEdge: .top, withInset: 1)
+        header.autoPinEdge(toSuperviewEdge: .left)
+        header.autoPinEdge(toSuperviewEdge: .right)
+        header.autoPinEdge(toSuperviewEdge: .top)
         header.autoSetDimension(.height, toSize: Float.itemHeight.cgFloat)
     }
     

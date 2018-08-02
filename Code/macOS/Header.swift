@@ -83,7 +83,7 @@ class Header: LayerBackedView, Observer
     
     private func constrainTitleLabel()
     {
-        let gap = Float.verticalGap.cgFloat + 1
+        let gap = Float.verticalGap.cgFloat + 1 + 8
         titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: self)
         titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: gap)
         titleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: gap)
@@ -94,7 +94,7 @@ class Header: LayerBackedView, Observer
         let label = addForAutoLayout(Label())
         
         label.textColor = NSColor.black
-        label.font = Font.text.nsFont
+        label.font = Font.listTitle.nsFont
         label.alignment = .center
         
         return label
