@@ -13,7 +13,6 @@ class SelectableListView: LayerBackedView, Observer, Observable
         super.init(frame: frameRect)
         
         backgroundColor = Color.background
-        layer?.cornerRadius = Float.cornerRadius.cgFloat
         setItemBorder()
         
         constrainHeader()

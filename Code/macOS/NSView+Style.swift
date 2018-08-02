@@ -4,11 +4,11 @@ import UIToolz
 
 extension NSView
 {
-    func setItemBorder()
+    func setItemBorder(with radius: Float = .cornerRadius)
     {
         layer?.borderColor = Color.border.cgColor
         layer?.borderWidth = 1.0
-        layer?.cornerRadius = Float.cornerRadius.cgFloat
+        layer?.cornerRadius = radius.cgFloat
     }
     
     func drawItemBackground(with color: NSColor, in rect: NSRect)
