@@ -177,14 +177,10 @@ class BrowserView: LayerBackedView, Observer
             }
             else
             {
-                let leavesLeftGap = i < 2 || i > 3
-                
-                let leftGap = leavesLeftGap ? listGap : -1
-                    
                 constrain(listView.autoPinEdge(.left,
                                                to: .right,
                                                of: listViews[i - 1],
-                                               withOffset: leftGap))
+                                               withOffset: listGap))
                 
                 constrain(listView.autoConstrainAttribute(.width,
                                                           to: .width,
