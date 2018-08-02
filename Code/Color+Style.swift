@@ -2,12 +2,13 @@ import SwiftyToolz
 
 extension Color
 {
-    static let backlog = Color.white
-    static let background = Color.gray(brightness: darkeningFactor).with(alpha: 0.9)
-    static let done = Color.gray(brightness: powf(darkeningFactor, 2))
+    static let backlog = Color.white.with(alpha: 0.5)
+    static let background = Color.white.with(alpha: 0.5)
+    static let done = Color.black.with(alpha: 0.075)
     
-    static let border = Color(0, 0, 0, 0.15)
-    static let grayedOut = Color(0, 0, 0, 0.33)
+    static let border = Color.white.with(alpha: 0.25)
+    static let grayedOut = Color.black.with(alpha: 0.5)
+    
     static let flowlistBlueTransparent = flowlistBlue.with(alpha: 0.5)
     static let flowlistBlueVeryTransparent = flowlistBlue.with(alpha: 0.25)
     static let flowlistBlue = Color(36, 145, 241)

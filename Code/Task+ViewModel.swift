@@ -11,7 +11,7 @@ extension Task
         switch state
         {
         case .done, .trashed: return .done
-        case .inProgress: return .white
+        case .inProgress: return .backlog
         }
     }
 }

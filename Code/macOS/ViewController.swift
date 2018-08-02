@@ -10,7 +10,7 @@ class ViewController: NSViewController, Observer
         let visualEffect = NSVisualEffectView()
         visualEffect.blendingMode = .behindWindow
         visualEffect.state = .active
-        visualEffect.material = .selection
+        visualEffect.material = .titlebar
         
         view = visualEffect
         
@@ -92,7 +92,7 @@ class ViewController: NSViewController, Observer
     {
         purchaseView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                   excludingEdge: .top)
-        purchaseView.autoPinEdge(.top, to: .bottom, of: browserView)
+        purchaseView.autoPinEdge(.top, to: .bottom, of: browserView, withOffset: 17)
         
         
         purchaseViewHeightConstraint = purchaseView.autoSetDimension(.height,
@@ -118,7 +118,7 @@ class ViewController: NSViewController, Observer
         
         if isFullVersion
         {
-            browserView.autoPinEdge(toSuperviewEdge: .bottom)
+            browserView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 17)
         }
     }
     

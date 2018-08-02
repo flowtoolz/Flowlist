@@ -11,7 +11,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         super.init(frame: frameRect)
         
-        backgroundColor = .white
+        backgroundColor = Color.white.with(alpha: 0.5)
         layer?.borderColor = Color.border.cgColor
         layer?.borderWidth = 1.0
         
@@ -124,7 +124,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         
         let progress = CGFloat(numberOfUserCreatedTasks.latestUpdate) / CGFloat(maxNumberOfTasksInTrial)
         bar.progress = progress
-        bar.backgroundColor = Color.white
+        bar.backgroundColor = Color.white.with(alpha: 0.5)
         bar.progressColor = Color.flowlistBlueTransparent
         bar.layer?.borderColor = Color.border.cgColor
         bar.layer?.borderWidth = 1.0

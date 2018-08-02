@@ -50,8 +50,9 @@ class TextView: NSTextView, NSTextViewDelegate
     {
         let attributes: [NSAttributedStringKey : Any] =
         [
-            .foregroundColor: Color.grayedOut.nsColor,
-            .font: TextView.fieldFont
+            .foregroundColor : Color.gray(brightness: 0.5).nsColor,
+            .font : TextView.fieldFont,
+            .paragraphStyle : TextView.paragraphStyle
         ]
         
         let attributedString = NSAttributedString(string: placeholder,
