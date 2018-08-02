@@ -10,7 +10,7 @@ class ViewController: NSViewController, Observer
         let visualEffect = NSVisualEffectView()
         visualEffect.blendingMode = .behindWindow
         visualEffect.state = .active
-        visualEffect.material = .dark
+        visualEffect.material = .selection
         
         view = visualEffect
         
