@@ -58,6 +58,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         self.task = task
         
+        titleField.drawsBackground = false
         updateTitleField()
         updateState()
         updateGroupIcon()
