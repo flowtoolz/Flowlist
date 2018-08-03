@@ -111,6 +111,14 @@ class TaskView: LayerBackedView, Observer, Observable
         stopObserving(task)
     }
     
+    // MARK: - Selection
+    
+    func will(select: Bool)
+    {
+        titleField.drawsBackground = select
+        titleField.backgroundColor = .white
+    }
+    
     // MARK: - Title View
     
     func editTitle()

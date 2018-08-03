@@ -25,7 +25,8 @@ class TextView: NSTextView, NSTextViewDelegate
         isEditable = true
         focusRingType = .none
         drawsBackground = false
-        textContainerInset = CGSize.zero
+        backgroundColor = .white
+        textContainerInset = .zero
         textContainer?.lineFragmentPadding = 0
         isAutomaticLinkDetectionEnabled = true
         isAutomaticDataDetectionEnabled = true
