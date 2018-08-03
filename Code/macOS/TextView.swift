@@ -33,8 +33,8 @@ class TextView: NSTextView, NSTextViewDelegate
         
         delegate = self
         
-        font = TextView.fieldFont
         defaultParagraphStyle = TextView.paragraphStyle
+        typingAttributes = TextView.typingSyle
         selectedTextAttributes = TextView.selectionSyle
         linkTextAttributes = TextView.linkStyle
     }
@@ -90,6 +90,12 @@ class TextView: NSTextView, NSTextViewDelegate
     }()
 
     // MARK: - Style
+    
+    private static let typingSyle: [NSAttributedStringKey : Any] =
+    [
+        .font : Font.text.nsFont,
+        .paragraphStyle : TextView.paragraphStyle
+    ]
     
     private static let selectionSyle: [NSAttributedStringKey : Any] =
     [
