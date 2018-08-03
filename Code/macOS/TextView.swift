@@ -93,7 +93,7 @@ class TextView: NSTextView, NSTextViewDelegate
     
     private static let selectionSyle: [NSAttributedStringKey : Any] =
     [
-        .backgroundColor : Color.flowlistBlueVeryTransparent.nsColor
+        .backgroundColor : Color.gray(brightness: 0.9).nsColor
     ]
     
     private static let linkStyle: [NSAttributedStringKey : Any] =

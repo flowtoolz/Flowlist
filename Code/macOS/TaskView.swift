@@ -12,8 +12,7 @@ class TaskView: LayerBackedView, Observer, Observable
         super.init(frame: frameRect)
         
         identifier = TaskView.uiIdentifier
-        
-        constrainEditingBackground()
+    
         constrainCheckBox()
         contrainGroupIcon()
         constrainTitleField()
@@ -180,36 +179,12 @@ class TaskView: LayerBackedView, Observer, Observable
         NSAnimationContext.beginGrouping()
         NSAnimationContext.current.allowsImplicitAnimation = true
         NSAnimationContext.current.duration = 0.2
-        editingBackground.alphaValue = editing ? 1 : 0
         groupIcon.alphaValue = editing ? 0 : 1
         groupIcon.isEnabled = !editing
         checkBox.alphaValue = editing ? 0 : 1
         checkBox.isEnabled = !editing
         NSAnimationContext.endGrouping()
     }
-    
-    // MARK: - Editing Background
-    
-    private func constrainEditingBackground()
-    {
-        editingBackground.autoPinEdge(toSuperviewEdge: .top, withInset: 5)
-        editingBackground.autoPinEdge(toSuperviewEdge: .bottom, withInset: 5)
-        editingBackground.autoPinEdge(toSuperviewEdge: .left, withInset: 20)
-        editingBackground.autoPinEdge(toSuperviewEdge: .right, withInset: 20)
-    }
-    
-    private lazy var editingBackground: LayerBackedView =
-    {
-        let view = addForAutoLayout(LayerBackedView())
-        
-        view.backgroundColor = Color.white
-        view.alphaValue = 0
-        view.layer?.cornerRadius = Float.cornerRadius.cgFloat
-        view.layer?.borderWidth = 1.0
-        view.layer?.borderColor = Color.flowlistBlueVeryTransparent.cgColor
-        
-        return view
-    }()
     
     // MARK: - Check Box
 
