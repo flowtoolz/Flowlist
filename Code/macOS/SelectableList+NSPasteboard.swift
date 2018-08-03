@@ -5,7 +5,8 @@ extension SelectableList
 {
     func pasteFromSystemPasteboard()
     {
-        let tasks = tasksFromPasteboard()
+        guard let tasks = tasksFromPasteboard() else { return }
+        
         let index = newIndexBelowSelection
         
         guard root?.insert(tasks, at: index) ?? false else { return }
@@ -15,37 +16,14 @@ extension SelectableList
         selection.setWithTasksListed(at: pastedIndexes)
     }
     
-    func tasksFromPasteboard() -> [Task]
+    func tasksFromPasteboard() -> [Task]?
     {
-        let pasteboard = NSPasteboard.general
-        
-        guard let string = pasteboard.string(forType: .string) else
+        guard let string = NSPasteboard.general.string(forType: .string) else
         {
-            return []
+            return nil
         }
         
-        var titles = string.components(separatedBy: .newlines)
-        
-        titles = titles.map
-        {
-            var title = $0
-            
-            while !startCharacters.contains(title.first ?? "a")
-            {
-                title.removeFirst()
-            }
-            
-            while title.last == " "
-            {
-                title.removeLast()
-            }
-            
-            return title
-        }
-        
-        titles.remove { $0.count < 2 }
-        
-        return titles.map { Task(title: $0) }
+        return Task.from(pasteboardString: string)
     }
 }
 
@@ -53,11 +31,3 @@ var systemPasteboardHasText: Bool
 {
     return NSPasteboard.general.string(forType: .string) != nil
 }
-
-fileprivate let startCharacters: String =
-{
-    var characters = "abcdefghijklmnopqrstuvwxyzöäü"
-    characters += characters.uppercased()
-    characters += "0123456789"
-    return characters
-}()

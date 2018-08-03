@@ -46,6 +46,7 @@
 		9EB6217220C27DD500DD3DA5 /* ApplicationMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217120C27DD500DD3DA5 /* ApplicationMenu.swift */; };
 		9EB6217720C2830200DD3DA5 /* EditMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB6217620C2830200DD3DA5 /* EditMenu.swift */; };
 		9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* Browser.swift */; };
+		9EC498A621147FE1003636FE /* Task+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC498A521147FE1003636FE /* Task+Pasteboard.swift */; };
 		9ED5C8DD20DF970000EF84CB /* PurchaseContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */; };
 		9EE2EE4B20B4A693007CDC2F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextView.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
@@ -113,6 +114,7 @@
 		9EB6217120C27DD500DD3DA5 /* ApplicationMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ApplicationMenu.swift; path = ../Code/macOS/ApplicationMenu.swift; sourceTree = "<group>"; };
 		9EB6217620C2830200DD3DA5 /* EditMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditMenu.swift; path = ../Code/macOS/EditMenu.swift; sourceTree = "<group>"; };
 		9EBC70282056FD02007A1EA8 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Browser.swift; path = ../Code/Browser.swift; sourceTree = "<group>"; };
+		9EC498A521147FE1003636FE /* Task+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Pasteboard.swift"; path = "../Code/Task+Pasteboard.swift"; sourceTree = "<group>"; };
 		9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PurchaseContentView.swift; path = ../Code/macOS/PurchaseContentView.swift; sourceTree = "<group>"; };
 		9EE2EE4A20B4A693007CDC2F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextView.swift; path = ../Code/macOS/TextView.swift; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Style.swift"; path = "../Code/Float+Style.swift"; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 		9E6C721120B1E75A001C3D2C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9EC498A521147FE1003636FE /* Task+Pasteboard.swift */,
 				9E71503F20D7CBC70061601E /* Task+ViewModel.swift */,
 				9E5768C120C15CDF00749C0C /* Task+Hashable.swift */,
 				9E6C720A20B19C88001C3D2C /* Task+State.swift */,
@@ -551,6 +554,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E6C720B20B19C88001C3D2C /* Task+State.swift in Sources */,
+				9EC498A621147FE1003636FE /* Task+Pasteboard.swift in Sources */,
 				9EF0A78E20B6E6CD00E1A23A /* BrowserView.swift in Sources */,
 				9E43503F20F350D200014FFF /* WindowMenu.swift in Sources */,
 				9E08E6B320DD13E000C32356 /* PurchaseView.swift in Sources */,
