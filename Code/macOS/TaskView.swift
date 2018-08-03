@@ -98,7 +98,8 @@ class TaskView: LayerBackedView, Observer, Observable
         let state = task?.state.value
         
         checkBox.update(with: state)
-        titleField.update(with: state)
+        
+        alphaValue = state == .done ? 0.5 : 1.0
     }
     
     private func stopObserving(task: Task?)

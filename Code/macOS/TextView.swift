@@ -36,32 +36,10 @@ class TextView: NSTextView, NSTextViewDelegate
         font = TextView.fieldFont
         defaultParagraphStyle = TextView.paragraphStyle
         selectedTextAttributes = TextView.selectionSyle
-        typingAttributes = TextView.typingStyle
         linkTextAttributes = TextView.linkStyle
-        
-        set(placeholder: "untitled")
     }
     
     required init?(coder: NSCoder) { fatalError() }
-    
-    // MARK: - Placeholder
-    
-    private func set(placeholder: String)
-    {
-        let attributes: [NSAttributedStringKey : Any] =
-        [
-            .foregroundColor : Color.gray(brightness: 0.5).nsColor,
-            .font : TextView.fieldFont,
-            .paragraphStyle : TextView.paragraphStyle
-        ]
-        
-        let attributedString = NSAttributedString(string: placeholder,
-                                                  attributes: attributes)
-        
-        placeholderAttributedString = attributedString
-    }
-    
-    @objc var placeholderAttributedString: NSAttributedString?
     
     // MARK: - Measuring Size
     
@@ -118,12 +96,6 @@ class TextView: NSTextView, NSTextViewDelegate
         .backgroundColor : Color.flowlistBlueVeryTransparent.nsColor
     ]
     
-    private static let typingStyle: [NSAttributedStringKey : Any] =
-    [
-        .paragraphStyle : TextView.paragraphStyle,
-        .font : TextView.fieldFont
-    ]
-    
     private static let linkStyle: [NSAttributedStringKey : Any] =
     [
         NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue
@@ -143,13 +115,7 @@ class TextView: NSTextView, NSTextViewDelegate
     static let lineSpacing: CGFloat = 5.0
     
     // MARK: - Update
-    
-    func update(with state: TaskState?)
-    {
-        let color: Color = state == .done ? .grayedOut : .black
-        textColor = color.nsColor
-    }
-    
+
     override var string: String
     {
         didSet { checkTextInDocument(nil) }
