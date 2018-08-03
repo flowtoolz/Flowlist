@@ -99,6 +99,9 @@ class TaskView: LayerBackedView, Observer, Observable
         checkBox.update(with: state)
         
         alphaValue = state == .done ? 0.5 : 1.0
+        
+        let borderColor: Color = state == .done ? .done : .border
+        layer?.borderColor = borderColor.cgColor
     }
     
     private func stopObserving(task: Task?)

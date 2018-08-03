@@ -11,5 +11,3 @@ extension Color
 
     static let discountRed = Color(0.75, 0, 0, 0.75)
 }
-
-fileprivate let darkeningFactor: Float = 0.92
