@@ -9,6 +9,7 @@ class HelpMenu: NSMenu
         super.init(title: "Help")
         
         addItem(contactItem)
+        addItem(tourItem)
         
         addItem(NSMenuItem.separator())
         
@@ -23,7 +24,11 @@ class HelpMenu: NSMenu
     
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
-        return true
+        switch menuItem
+        {
+        case tourItem: return !reachedTaskNumberLimit
+        default: return true
+        }
     }
     
     // MARK: - Menu Items
@@ -62,6 +67,17 @@ class HelpMenu: NSMenu
         {
             NSWorkspace.shared.open(url)
         }
+    }
+    
+    private lazy var tourItem = item("Paste Welcome Tour",
+                                     action: #selector(pasteTour),
+                                     key: "")
+    
+    @objc private func pasteTour()
+    {
+        let tour = Task("Welcome Tour")
+        tour.insert(Task.welcomeTour, at: 0)
+        Browser.active?.focusedList.paste([tour])
     }
     
     private lazy var contactItem = item("Contact Me: support@flowlistapp.com",
