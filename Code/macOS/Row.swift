@@ -29,7 +29,8 @@ class Row: NSTableRowView, Observer
     
     override func drawSelection(in dirtyRect: NSRect)
     {
-        drawBackground(with: .white)
+        let color = Color.flowlistBlue.with(alpha: isEmphasized ? 0.5 : 0.25)
+        drawBackground(with: color.nsColor)
     }
     
     override func drawBackground(in dirtyRect: NSRect)

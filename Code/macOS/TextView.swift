@@ -25,7 +25,6 @@ class TextView: NSTextView, NSTextViewDelegate
         isEditable = true
         focusRingType = .none
         drawsBackground = false
-        backgroundColor = .white
         textContainerInset = .zero
         textContainer?.lineFragmentPadding = 0
         isAutomaticLinkDetectionEnabled = true
@@ -125,7 +124,10 @@ class TextView: NSTextView, NSTextViewDelegate
 
     override var string: String
     {
-        didSet { checkTextInDocument(nil) }
+        didSet
+        {
+            checkTextInDocument(nil)
+        }
     }
     
     // MARK: - Avoid Beep When Return is Dispatched While Some Field Is Editing

@@ -7,12 +7,15 @@ class ViewController: NSViewController, Observer
 {
     override func loadView()
     {
-        let visualEffect = NSVisualEffectView()
-        visualEffect.blendingMode = .behindWindow
-        visualEffect.state = .active
-        visualEffect.material = .titlebar
-        
-        view = visualEffect
+//        let visualEffect = NSVisualEffectView()
+//        visualEffect.blendingMode = .behindWindow
+//        visualEffect.state = .active
+//        visualEffect.material = .titlebar
+//        visualEffect.layerContentsRedrawPolicy = .onSetNeedsDisplay
+//        visualEffect.layerContentsPlacement = .scaleAxesIndependently
+//        view = visualEffect
+
+        view = LayerBackedView()
         
         // For making screen shots and screen recordings
 //        #if DEBUG
@@ -92,7 +95,9 @@ class ViewController: NSViewController, Observer
     {
         purchaseView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                   excludingEdge: .top)
-        purchaseView.autoPinEdge(.top, to: .bottom, of: browserView, withOffset: 17)
+        purchaseView.autoPinEdge(.top,
+                                 to: .bottom,
+                                 of: browserView)
         
         
         purchaseViewHeightConstraint = purchaseView.autoSetDimension(.height,
@@ -112,13 +117,12 @@ class ViewController: NSViewController, Observer
     
     private func constrainBrowserView()
     {
-        let insets = NSEdgeInsets(top: 17, left: 0, bottom: 0, right: 0)
-        browserView.autoPinEdgesToSuperviewEdges(with: insets,
+        browserView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                  excludingEdge: .bottom)
         
         if isFullVersion
         {
-            browserView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 17)
+            browserView.autoPinEdge(toSuperviewEdge: .bottom)
         }
     }
     

@@ -12,7 +12,8 @@ class TaskView: LayerBackedView, Observer, Observable
         super.init(frame: frameRect)
         
         identifier = TaskView.uiIdentifier
-    
+        
+        constrainEditingBackground()
         constrainCheckBox()
         contrainGroupIcon()
         constrainTitleField()
@@ -58,7 +59,6 @@ class TaskView: LayerBackedView, Observer, Observable
         
         self.task = task
         
-        titleField.drawsBackground = false
         updateTitleField()
         updateState()
         updateGroupIcon()
@@ -100,9 +100,6 @@ class TaskView: LayerBackedView, Observer, Observable
         checkBox.update(with: state)
         
         alphaValue = state == .done ? 0.5 : 1.0
-        
-        let borderColor: Color = state == .done ? .done : .border
-        layer?.borderColor = borderColor.cgColor
     }
     
     private func stopObserving(task: Task?)
@@ -110,14 +107,6 @@ class TaskView: LayerBackedView, Observer, Observable
         stopObserving(task?.state)
         stopObserving(task?.title)
         stopObserving(task)
-    }
-    
-    // MARK: - Selection
-    
-    func will(select: Bool)
-    {
-        titleField.drawsBackground = select
-        titleField.backgroundColor = .white
     }
     
     // MARK: - Title View
@@ -192,11 +181,32 @@ class TaskView: LayerBackedView, Observer, Observable
         NSAnimationContext.current.allowsImplicitAnimation = true
         NSAnimationContext.current.duration = 0.2
         groupIcon.alphaValue = editing ? 0 : 1
-        groupIcon.isEnabled = !editing
         checkBox.alphaValue = editing ? 0 : 1
         checkBox.isEnabled = !editing
+        editingBackground.alphaValue = editing ? 1 : 0
         NSAnimationContext.endGrouping()
     }
+    
+    // MARK: - Editing Background
+    
+    private func constrainEditingBackground()
+    {
+        let insets = NSEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
+        editingBackground.autoPinEdgesToSuperviewEdges(with: insets)
+    }
+    
+    private lazy var editingBackground: LayerBackedView =
+    {
+        let view = addForAutoLayout(LayerBackedView())
+        
+        view.backgroundColor = .white
+        view.alphaValue = 0
+        view.layer?.cornerRadius = Float.cornerRadius.cgFloat
+        view.layer?.borderColor = Color.flowlistBlue.with(alpha: 0.25).cgColor
+        view.layer?.borderWidth = 1
+        
+        return view
+    }()
     
     // MARK: - Check Box
 

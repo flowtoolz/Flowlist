@@ -224,16 +224,16 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             return
         }
         
-        // TODO: update only those rows that actually where added/removed to/from selection -> selection must send more specific infos
-        
-        for i in 0 ..< numberOfRows
-        {
-            if let view = view(atColumn: 0, row: i, makeIfNecessary: false),
-                let taskView = view as? TaskView
-            {
-                taskView.will(select: listSelection.contains(i))
-            }
-        }
+//        // TODO: update only those rows that actually where added/removed to/from selection -> selection must send more specific infos
+//        
+//        for i in 0 ..< numberOfRows
+//        {
+//            if let view = view(atColumn: 0, row: i, makeIfNecessary: false),
+//                let taskView = view as? TaskView
+//            {
+//                taskView.will(select: listSelection.contains(i))
+//            }
+//        }
         
         selectRowIndexes(IndexSet(listSelection),
                          byExtendingSelection: false)
