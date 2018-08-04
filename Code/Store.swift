@@ -23,6 +23,11 @@ class Store: Observer
             
             stopObserving(oldValue)
             observe(newRoot: root)
+            
+            if !root.hasBranches
+            {
+                root.insert(Task.welcomeTour, at: 0)
+            }
         }
     }
     

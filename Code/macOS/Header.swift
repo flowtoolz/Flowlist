@@ -75,7 +75,7 @@ class Header: LayerBackedView, Observer
     
     func set(title: String?)
     {
-        titleLabel.stringValue = title ?? "untitled"
+        titleLabel.stringValue = (title ?? "untitled").replacingOccurrences(of: "\n", with: " ")
         
         let textColor: Color = title == nil ? .grayedOut : .black
         titleLabel.textColor = textColor.nsColor
@@ -96,6 +96,11 @@ class Header: LayerBackedView, Observer
         label.textColor = NSColor.black
         label.font = Font.listTitle.nsFont
         label.alignment = .center
+        
+        if #available(OSX 10.11, *)
+        {
+            label.maximumNumberOfLines = 1
+        }
         
         return label
     }()

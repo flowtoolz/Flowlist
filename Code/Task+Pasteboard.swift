@@ -23,7 +23,7 @@ extension Task
         
         titles.remove { $0.count < 2 }
         
-        let result = titles.map { Task(title: $0) }
+        let result = titles.map { Task($0) }
         
         return result.isEmpty ? nil : result
     }

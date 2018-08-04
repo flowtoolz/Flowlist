@@ -5,7 +5,7 @@ final class Task: Codable, Observable, Tree
 {
     // MARK: - Life Cycle
     
-    convenience init(title: String? = nil,
+    convenience init(_ title: String? = nil,
                      state: TaskState? = nil,
                      root: Task? = nil,
                      numberOfLeafs: Int = 1)
@@ -104,6 +104,11 @@ final class Task: Codable, Observable, Tree
     let lastRemoved = Clipboard<Task>()
     
     // MARK: - Insert
+    
+    func add(_ task: Task)
+    {
+        insert(task, at: numberOfBranches)
+    }
     
     @discardableResult
     func insert(_ subtask: Task, at index: Int) -> Task?

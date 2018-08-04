@@ -10,7 +10,7 @@ extension Task: Copyable
     
     convenience init(with original: Task, root: Task? = nil)
     {
-        self.init(title: original.title.value,
+        self.init(original.title.value,
                   state: original.state.value,
                   root: root,
                   numberOfLeafs: original.numberOfLeafs)
