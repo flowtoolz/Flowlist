@@ -130,15 +130,6 @@ class TextView: NSTextView, NSTextViewDelegate
         }
     }
     
-    // MARK: - Avoid Beep When Return is Dispatched While Some Field Is Editing
-    
-    override func performKeyEquivalent(with event: NSEvent) -> Bool
-    {
-        if event.key == .enter && TextView.isEditing { return true }
-        
-        return super.performKeyEquivalent(with: event)
-    }
-    
     // MARK: - Editing
     
     func startEditing()
