@@ -11,7 +11,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         super.init(frame: frameRect)
         
-        backgroundColor = Color.white.with(alpha: 0.5)
+        backgroundColor = Color.gray(brightness: 0.92)
         layer?.borderColor = Color.border.cgColor
         layer?.borderWidth = 1.0
         
