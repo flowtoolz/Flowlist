@@ -157,6 +157,15 @@ class TextView: NSTextView, NSTextViewDelegate
         return willBecomeFirstResponder
     }
     
+    override func resignFirstResponder() -> Bool
+    {
+        let willResignFirstResponder = super.resignFirstResponder()
+        
+        if willResignFirstResponder { didEdit() }
+        
+        return willResignFirstResponder
+    }
+    
     override func shouldChangeText(in affectedCharRange: NSRange,
                                    replacementString: String?) -> Bool
     {
@@ -179,8 +188,6 @@ class TextView: NSTextView, NSTextViewDelegate
     {
         checkTextInDocument(nil)
         setSelectedRange(NSMakeRange(string.count, 0))
-        
-        didEdit()
     }
     
     private func didEdit()

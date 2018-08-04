@@ -140,7 +140,10 @@ class EditMenu: NSMenu, Observer
                                             modifiers: [])
     @objc private func createAtTop()
     {
-        if !TextView.isEditing && !reachedTaskNumberLimit { list?.create(at: 0) }
+        if !TextView.isEditing && !reachedTaskNumberLimit
+        {
+            list?.create(at: 0)
+        }
     }
     
     private lazy var renameItem = item("Rename Item",
