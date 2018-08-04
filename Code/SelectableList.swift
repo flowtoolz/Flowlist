@@ -221,13 +221,11 @@ class SelectableList: List
     
     func shiftSelectionUp()
     {
-        guard let index = selection.indexes.first else { return }
-        
-        if index > 0
+        if let firstIndex = selection.indexes.first, firstIndex > 0
         {
-            selection.setWithTasksListed(at: [index - 1])
+            selection.setWithTasksListed(at: [firstIndex - 1])
         }
-        else if numberOfTasks > 0 && selection.count != 1
+        else if numberOfTasks > 0
         {
             selection.setWithTasksListed(at: [0])
         }
@@ -240,13 +238,12 @@ class SelectableList: List
     
     func shiftSelectionDown()
     {
-        guard let index = selection.indexes.last else { return }
-        
-        if index + 1 < numberOfTasks
+        if let lastIndex = selection.indexes.last, lastIndex + 1 < numberOfTasks
         {
-            selection.setWithTasksListed(at: [index + 1])
+            selection.setWithTasksListed(at: [lastIndex + 1])
+            return
         }
-        else if numberOfTasks > 0 && selection.count != 1
+        else if numberOfTasks > 0
         {
             selection.setWithTasksListed(at: [numberOfTasks - 1])
         }
