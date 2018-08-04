@@ -43,6 +43,19 @@ class SelectableList: List
         selection.set(with: newTask)
     }
     
+    // MARK: - Paste
+    
+    func paste(_ tasks: [Task])
+    {
+        let index = newIndexBelowSelection
+        
+        guard root?.insert(tasks, at: index) ?? false else { return }
+        
+        let pastedIndexes = Array(index ..< index + tasks.count)
+        
+        selection.setWithTasksListed(at: pastedIndexes)
+    }
+    
     // MARK: - Remove
     
     @discardableResult
@@ -73,14 +86,14 @@ class SelectableList: List
     
     func undoLastRemoval()
     {
-        let index = newIndexBelowSelection
+        guard let tasks = root?.lastRemoved.copiesOfStoredObjects else
+        {
+            return
+        }
         
-        guard let recovered = root?.insertLastRemoved(at: index),
-            recovered > 0 else { return }
+        paste(tasks)
         
-        let recoveredIndexes = Array(index ..< index + recovered)
-        
-        selection.setWithTasksListed(at: recoveredIndexes)
+        root?.lastRemoved.removeAll()
     }
     
     var newIndexBelowSelection: Int

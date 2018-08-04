@@ -14,12 +14,11 @@ extension SelectableList
     
     func pasteFromClipboard()
     {
-        let index = newIndexBelowSelection
+        guard let tasks = root?.clipboardTasks, !tasks.isEmpty else
+        {
+            return
+        }
         
-        guard let pasted = root?.paste(at: index), pasted > 0 else { return }
-        
-        let pastedIndexes = Array(index ..< index + pasted)
-        
-        selection.setWithTasksListed(at: pastedIndexes)
+        paste(tasks)
     }
 }

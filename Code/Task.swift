@@ -99,18 +99,6 @@ final class Task: Codable, Observable, Tree
         return removedSubtasks
     }
     
-    func insertLastRemoved(at index: Int) -> Int
-    {
-        let lastRemovedObjects = lastRemoved.copiesOfStoredObjects
-        
-        guard lastRemovedObjects.count > 0,
-            insert(lastRemovedObjects, at: index) else { return 0 }
-        
-        lastRemoved.removeAll()
-        
-        return lastRemovedObjects.count
-    }
-    
     var numberOfRemovedSubtasks: Int { return lastRemoved.count }
 
     let lastRemoved = Clipboard<Task>()

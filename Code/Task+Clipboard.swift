@@ -23,13 +23,9 @@ extension Task
         return true
     }
     
-    func paste(at index: Int) -> Int?
+    var clipboardTasks: [Task]
     {
-        let copies = clipboard.copiesOfStoredObjects
-        
-        guard insert(copies, at: index) else { return nil }
-        
-        return copies.count
+        return clipboard.copiesOfStoredObjects
     }
 }
 
