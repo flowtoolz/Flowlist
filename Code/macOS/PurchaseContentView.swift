@@ -295,7 +295,7 @@ class PurchaseContentView: NSView, Observer
         let button = columns[1].addForAutoLayout(Button())
         
         button.layer?.cornerRadius = Float.cornerRadius.cgFloat
-        button.backgroundColor = Color.gray(brightness: 0.5)
+        button.backgroundColor = Color.gray(brightness: 0.6)
         
         button.titleLabel.textColor = .white
         button.titleLabel.font = Font.text.nsFont
@@ -340,9 +340,9 @@ class PurchaseContentView: NSView, Observer
     }()
     
     private let productDescription = """
-        Flowlist is an elegant app for capturing ideas and managing tasks. Its editable item hierarchy makes it simple yet powerful. Be in a flow state while organizing your thoughts and your life!
+        Flowlist is an elegant self-management tool optimized for total creative focus. Hierarchical lists make it as simple and adaptable as a box of legos. Organize your thoughts and your life in a state of flow!
         
-        I have many features planned: A system wide shortcut for adding items, a synced iOS app, filters for search terms / colored tags / due dates, extensions that will make Flowlist a creative writing tool, and more.
+        I have many features planned, including:\nsynced iOS app, system wide shortcut for adding items, dark mode, filters for search terms / colored tags / due dates, exporting items as structured texts to txt, html, markdown and LaTeX ...
         """
     
     // MARK: - Columns
