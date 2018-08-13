@@ -6,14 +6,14 @@ extension Task
         
         tour.append(Task("Welcome to Flowlist!"))
         tour.append(Task("Best select and edit with your keyboard"))
-        tour.append(Task("The menus show the applicable commands in every situation"))
+        tour.append(Task("The menus show all applicable commands in every situation"))
         
         // select
         
         let selectCommands = Task("Move with the arrows: ↑ ↓ ← →")
         
         selectCommands.add(Task("Hold ⇧ (shift) while pressing ↑ or ↓ to select multiple items"))
-        selectCommands.add(Task("Click and ⌘Click also work - best click right next to the text where some items have an arrow"))
+        selectCommands.add(Task("Click and ⌘Click also work - best click next to the text, for example where some items show the arrow indicator on the right."))
         
         tour.append(selectCommands)
         
@@ -21,7 +21,7 @@ extension Task
         
         let moreCommands = Task("Write")
         
-        moreCommands.add(Task("Hit ↵ (return) to add a new item (paragraph or task). Hit ↵ again to finish typing"))
+        moreCommands.add(Task("Hit ↵ (return) to write a new item, then hit ↵ again to finish typing"))
         moreCommands.add(Task("Hit ⌘↵ to edit the first selected item"))
         moreCommands.add(Task("Hit Space to add an item to the top"))
         moreCommands.add(Task("Hit ⌫ (delete) to remove the selection"))
@@ -32,7 +32,7 @@ extension Task
 
         let taskManagementCommands = Task("Prioritize")
         
-        taskManagementCommands.add(Task("Select a single item and hit ⌘↑ or ⌘↓ to move (prioritize) it up or down"))
+        taskManagementCommands.add(Task("Select a single item and hit ⌘↑ or ⌘↓ to move it up or down"))
         taskManagementCommands.add(Task("Hit ⌘← to check off or uncheck an item"))
         taskManagementCommands.add(Task("Hit ⌘→ to set an item in progress or to pause it"))
         
@@ -42,10 +42,10 @@ extension Task
         
         let hierarchyCommands = Task("Organize")
         
-        hierarchyCommands.add(Task("Items (headings) that have an arrow on the right (like the \"Organize\" item) contain other items"))
-        hierarchyCommands.add(Task("You can also move into empty items (paragraphs) and start adding other items into them"))
-        hierarchyCommands.add(Task("Select multiple items and hit ↵ to group them and write their heading"))
-        hierarchyCommands.add(Task("You can move items between levels: Select them, cut via ⌘C, move to any other list via the arrow keys and paste via ⌘V"))
+        hierarchyCommands.add(Task("Items that show an arrow on the right (like the \"Organize\" item) contain other items"))
+        hierarchyCommands.add(Task("You can move even into \"empty\" items and add new items into them"))
+        hierarchyCommands.add(Task("Select multiple items (⌘↑ and ⌘↓) and hit ↵ to group them and write their heading"))
+        hierarchyCommands.add(Task("You can move items between levels: Select them, cut via ⌘C, go to any other list via the arrow keys, and paste via ⌘V"))
         
         tour.append(hierarchyCommands)
         
@@ -63,8 +63,9 @@ extension Task
         
         let supportItem = Task("support@flowlistapp.com")
         
-        supportItem.add(Task("Tell me what features you miss, what you don't like or what you like about Flowlist"))
-        supportItem.add(Task("The Help menu offers some web links that may be interesting"))
+        supportItem.add(Task("What features do you miss? What do or don't you like about Flowlist?"))
+        supportItem.add(Task("The \"Help\" menu offers some web links that may be interesting"))
+        supportItem.add(Task("You may delete this welcome tour, the \"Help\" menu lets you create it again at any time."))
         
         tour.append(supportItem)
         
