@@ -15,7 +15,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         allowsMultipleSelection = true
         backgroundColor = NSColor.clear
         headerView = nil
-        intercellSpacing = NSSize(width: 0, height: Float.verticalGap.cgFloat)
+        intercellSpacing = NSSize(width: 0, height: Float.listGap.cgFloat)
         delegate = content
         dataSource = content
     }
@@ -187,7 +187,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         
         let title = task.title.value ?? "untitled"
         
-        let horizontalGap = Float.verticalGap.cgFloat
+        let horizontalGap = Float.listGap.cgFloat
         
         let windowWidth = Window.intendedMainWindowSize.value?.width ?? 1024
         

@@ -44,7 +44,7 @@ class Row: NSTableRowView, Observer
     {
         var drawRect = bounds
         
-        let verticalGap = Float.verticalGap.cgFloat
+        let verticalGap = Float.listGap.cgFloat
         drawRect.origin.y = CGFloat(Int(verticalGap) / 2)
         drawRect.size.height -= verticalGap
         

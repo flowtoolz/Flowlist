@@ -33,15 +33,15 @@ class TaskView: LayerBackedView, Observer, Observable
     
     static func preferredHeight(for title: String, width: CGFloat) -> CGFloat
     {
-        let checkBoxWidth: CGFloat = CheckBox.size.width
-        let groupIconWidth: CGFloat = groupIconImage.size.width
-        let iconPadding: CGFloat = 2 * 11 + 2 * TaskView.titleFieldSideMargin
+        let checkBoxWidth = CheckBox.size.width
+        let groupIconWidth = groupIconImage.size.width
+        let iconPadding = 2 * (Float.itemPadding + Float.itemTextSideMargin).cgFloat
         let titleWidth = width - (checkBoxWidth + groupIconWidth + iconPadding)
         
         let titleHeight = TextView.size(with: title,
                                         width: titleWidth).height
         
-        return titleHeight + 22
+        return titleHeight + (2 * Float.itemPadding.cgFloat)
     }
     
     // MARK: - Configuration
@@ -128,17 +128,20 @@ class TaskView: LayerBackedView, Observer, Observable
         titleField.autoPinEdge(.left,
                                to: .right,
                                of: checkBox,
-                               withOffset: TaskView.titleFieldSideMargin)
+                               withOffset: Float.itemTextSideMargin.cgFloat)
         titleField.autoPinEdge(.right,
                                to: .left,
                                of: groupIcon,
-                               withOffset: -TaskView.titleFieldSideMargin)
+                               withOffset: -Float.itemTextSideMargin.cgFloat)
         
-        titleField.autoPinEdge(toSuperviewEdge: .top, withInset: 10.5)
-        titleField.autoPinEdge(toSuperviewEdge: .bottom, withInset: 11.5)
+        let textOffset = Float.itemTextOffset.cgFloat
+        let padding = Float.itemPadding.cgFloat
+        
+        titleField.autoPinEdge(toSuperviewEdge: .top,
+                               withInset: padding + textOffset )
+        titleField.autoPinEdge(toSuperviewEdge: .bottom,
+                               withInset: padding - textOffset)
     }
-    
-    private static let titleFieldSideMargin: CGFloat = 8.5
     
     private lazy var titleField: TextView =
     {
@@ -212,8 +215,10 @@ class TaskView: LayerBackedView, Observer, Observable
 
     private func constrainCheckBox()
     {
-        checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: 10.5)
-        checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: 10.5)
+        let padding = (TaskView.heightWithOneLine - CheckBox.size.height) / 2
+
+        checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: padding)
+        checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: padding)
     }
     
     private lazy var checkBox: CheckBox =
@@ -240,13 +245,17 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func contrainGroupIcon()
     {
-        groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: 10.5)
-        groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 10.5)
+        let padding = (TaskView.heightWithOneLine - TaskView.groupIconImage.size.height) / 2
+        
+        groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: padding)
+        groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: padding)
     }
     
     private lazy var groupIcon: Icon = addForAutoLayout(Icon(with: TaskView.groupIconImage))
     
     private static let groupIconImage = #imageLiteral(resourceName: "group_indicator")
+    
+    private static let heightWithOneLine: CGFloat = TextView.heightOfOneLine + (2 * Float.itemPadding).cgFloat
     
     // MARK: - Data
     
