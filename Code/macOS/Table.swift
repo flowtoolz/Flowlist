@@ -15,7 +15,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         allowsMultipleSelection = true
         backgroundColor = NSColor.clear
         headerView = nil
-        intercellSpacing = NSSize(width: 0, height: Float.listGap.cgFloat)
+        intercellSpacing = NSSize(width: 0, height: TextView.itemSpacing)
         delegate = content
         dataSource = content
     }
@@ -183,17 +183,17 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     func taskViewHeight(at row: Int) -> CGFloat
     {
-        guard let task = list?[row] else { return Float.itemHeight.cgFloat }
+        guard let task = list?[row] else { return TextView.itemHeight }
         
         let title = task.title.value ?? "untitled"
         
-        let horizontalGap = Float.listGap.cgFloat
+        let horizontalGap = TextView.itemSpacing
         
         let windowWidth = Window.intendedMainWindowSize.value?.width ?? 1024
         
         let tableWidth = ((windowWidth - (4 * horizontalGap)) / 3) - (2 * (horizontalGap + 1))
         
-        let editingPadding = task.isBeingEdited ? TextView.heightOfOneLine + TextView.lineSpacing : 0
+        let editingPadding = task.isBeingEdited ? TextView.lineHeight + TextView.itemLineSpacing : 0
         
         return TaskView.preferredHeight(for: title,
                                         width: tableWidth) + editingPadding

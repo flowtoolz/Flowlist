@@ -20,7 +20,7 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     func tableView(_ tableView: NSTableView,
                    heightOfRow row: Int) -> CGFloat
     {
-        return delegate?.taskViewHeight(at: row) ?? Float.itemHeight.cgFloat
+        return delegate?.taskViewHeight(at: row) ?? TextView.itemHeight
     }
     
     // MARK: - Cells

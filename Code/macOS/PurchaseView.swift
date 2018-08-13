@@ -136,15 +136,15 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainContent()
     {
-        let insets = NSEdgeInsets(top: CGFloat(Float.itemHeight),
-                                  left: CGFloat(Float.itemHeight),
-                                  bottom: CGFloat(Float.itemHeight),
-                                  right: CGFloat(Float.itemHeight))
+        let insets = NSEdgeInsets(top: TextView.itemHeight,
+                                  left: TextView.itemHeight,
+                                  bottom: TextView.itemHeight,
+                                  right: TextView.itemHeight)
         
         content.autoPinEdgesToSuperviewEdges(with: insets)
     }
     
-    let collapsedHeight = CGFloat(Float.itemHeight + Float.progressBarHeight)
+    let collapsedHeight = TextView.itemHeight + Float.progressBarHeight.cgFloat
     
     private lazy var content: PurchaseContentView =
     {
@@ -163,7 +163,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         buttonOverlay.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                   excludingEdge: .bottom)
         
-        let height = CGFloat(Float.itemHeight + Float.progressBarHeight)
+        let height = TextView.itemHeight + Float.progressBarHeight.cgFloat
         buttonOverlay.autoSetDimension(.height, toSize: height)
     }
     

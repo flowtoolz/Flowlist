@@ -35,13 +35,13 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         let checkBoxWidth = CheckBox.size.width
         let groupIconWidth = groupIconImage.size.width
-        let iconPadding = 2 * (Float.itemPadding + Float.itemTextSideMargin).cgFloat
+        let iconPadding = 2 * (TextView.itemPadding + Float.itemTextSideMargin.cgFloat)
         let titleWidth = width - (checkBoxWidth + groupIconWidth + iconPadding)
         
         let titleHeight = TextView.size(with: title,
                                         width: titleWidth).height
         
-        return titleHeight + (2 * Float.itemPadding.cgFloat)
+        return titleHeight + (2 * TextView.itemPadding)
     }
     
     // MARK: - Configuration
@@ -135,7 +135,7 @@ class TaskView: LayerBackedView, Observer, Observable
                                withOffset: -Float.itemTextSideMargin.cgFloat)
         
         let textOffset = Float.itemTextOffset.cgFloat
-        let padding = Float.itemPadding.cgFloat
+        let padding = TextView.itemPadding
         
         titleField.autoPinEdge(toSuperviewEdge: .top,
                                withInset: padding + textOffset )
@@ -255,7 +255,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private static let groupIconImage = #imageLiteral(resourceName: "group_indicator")
     
-    private static let heightWithOneLine: CGFloat = TextView.heightOfOneLine + (2 * Float.itemPadding).cgFloat
+    private static let heightWithOneLine: CGFloat = TextView.lineHeight + (2 * TextView.itemPadding)
     
     // MARK: - Data
     

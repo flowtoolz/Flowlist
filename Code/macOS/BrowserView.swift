@@ -163,7 +163,7 @@ class BrowserView: LayerBackedView, Observer
         removeConstraints(listViewContraints)
         listViewContraints.removeAll()
         
-        let listGap = Float.listGap.cgFloat
+        let listGap = TextView.itemSpacing
         
         for i in 0 ..< listViews.count
         {

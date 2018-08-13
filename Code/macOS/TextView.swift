@@ -41,10 +41,28 @@ class TextView: NSTextView, NSTextViewDelegate
     
     required init?(coder: NSCoder) { fatalError() }
     
+    // MARK: - Layout Dependent On Line Height
+    
+    static let itemHeight: CGFloat =
+    {
+        return 2 * itemPadding + lineHeight
+    }()
+    
+    static let itemSpacing = itemLineSpacing
+    
+    static let itemLineSpacing: CGFloat =
+    {
+        return 2 * itemPadding - lineHeight
+    }()
+    
+    static let itemPadding: CGFloat =
+    {
+        return CGFloat(Int(lineHeight * 0.647 + 0.5))
+    }()
+
     // MARK: - Measuring Size
     
-    static let heightOfOneLine = size(with: "a",
-                                      width: CGFloat.greatestFiniteMagnitude).height
+    static let lineHeight = measuringLayoutManager.defaultLineHeight(for: Font.text.nsFont)
     
     static func size(with text: String, width: CGFloat) -> CGSize
     {
@@ -113,12 +131,10 @@ class TextView: NSTextView, NSTextViewDelegate
     {
         let style = NSMutableParagraphStyle()
         
-        style.lineSpacing = TextView.lineSpacing
+        style.lineSpacing = TextView.itemLineSpacing
         
         return style
     }()
-    
-    static let lineSpacing: CGFloat = 5.0
     
     // MARK: - Update
 
