@@ -16,12 +16,21 @@ The 1st Hierarchical Task List
 
 #Flowlist AppStore Update Text
 
-Updated meta data for better discovery on the App Store.
-If you already have version 1.0.8, you won't need this update.
+• Multi line items allow to write structured texts. Empty items now correspond as paragraphs and non-empty items to headings
+• Web URLs and email adresses are now hyperlinked and clickable
+• The UI is updated, hopefully improved, in particular related to legibility, item editing and list headers
+• A "Help" menu now offers links to documentation, the welcome tour and a contact email for your feature requests, bug reports and questions
+• The "Select" menu now shows all applicable selection options and their key commands
+• A welcome tour now explains the app to new users and whenever the app is launched with no existing items
+• Editing (renaming) an item does not select its whole text anymore
+• Lists follow moves of undone items through animated scrolling
+• Up and down arrow keys now select the top and bottom item when the focused list has no selection
+• Bug fix: When pasting content from web pages or documents, item detection does not trim special characters from the end of texts anymore
+• As always: Many technical improvements under the hood to ensure development will never slow down
 
 #Flowlist AppStore Promo Text
 
-In-app purchase is 50% off during Summer
+In-app purchase is 50% off during summer
 
 #Flowlist AppStore Keywords
 
