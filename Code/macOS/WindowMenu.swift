@@ -1,4 +1,5 @@
 import AppKit
+import UIToolz
 
 class WindowMenu: NSMenu
 {
@@ -90,11 +91,20 @@ class WindowMenu: NSMenu
     
     @objc private func showWindow()
     {
-        mainWindow.toggle()
+        window?.toggle()
     }
     
     private var windowItemTitle: String
     {
-        return mainWindow.isVisible ? "Close Window" : "Show Window"
+        return (window?.isVisible ?? true) ? "Close Window" : "Show Window"
     }
+    
+    // MARK: - Window
+    
+    func set(window: Window)
+    {
+        self.window = window
+    }
+    
+    private weak var window: Window?
 }

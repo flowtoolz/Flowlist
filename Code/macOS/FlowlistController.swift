@@ -1,6 +1,7 @@
 import AppKit
 import UIToolz
 import FoundationToolz
+import SwiftyToolz
 
 class FlowlistController: AppController, NSWindowDelegate
 {
@@ -13,13 +14,14 @@ class FlowlistController: AppController, NSWindowDelegate
     override func applicationDidFinishLaunching(_ aNotification: Notification)
     {
         super.applicationDidFinishLaunching(aNotification)
-        
+
         fullVersionPurchaseController.setup()
         store.load()
     }
     
     func applicationWillBecomeActive(_ notification: Notification)
     {
+        menu.set(window: mainWindow)
         mainWindow.delegate = self
         mainWindow.show()
     }
@@ -57,7 +59,10 @@ class FlowlistController: AppController, NSWindowDelegate
         store.save()
     }
     
-    // MARK: - Menu
+    // MARK: - Menu & Mindow
     
     private let menu = Menu()
+    
+    private lazy var mainWindow: Window = Window(with: ViewController(),
+                                                 color: Color.gray(brightness: 0.92 * 0.92).nsColor)
 }

@@ -1,4 +1,5 @@
 import AppKit
+import UIToolz
 
 class Menu: NSMenu
 {
@@ -16,6 +17,10 @@ class Menu: NSMenu
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
+    
+    // MARK: - Window
+    
+    func set(window: Window) { windowMenu.set(window: window) }
     
     // MARK: - Switch Fullscreen
     

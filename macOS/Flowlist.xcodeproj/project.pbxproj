@@ -34,7 +34,6 @@
 		9E72881B1EEF3095003A2F46 /* SelectableListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E72881A1EEF3095003A2F46 /* SelectableListView.swift */; };
 		9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651931EEF428100DE2B07 /* TaskView.swift */; };
 		9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* Store.swift */; };
-		9E7CFC5C2114E01300962BF2 /* mainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7CFC5B2114E01300962BF2 /* mainWindow.swift */; };
 		9E82A7A91EF2A558006AEF02 /* SelectableList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* SelectableList.swift */; };
 		9E88F54F20B7761F00A64F7B /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E88F54E20B7761F00A64F7B /* Menu.swift */; };
 		9E8ABF0020B2F0F1001E862B /* SelectableList+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABEFF20B2F0F1001E862B /* SelectableList+Debugging.swift */; };
@@ -102,7 +101,6 @@
 		9E72881A1EEF3095003A2F46 /* SelectableListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectableListView.swift; path = ../Code/macOS/SelectableListView.swift; sourceTree = "<group>"; };
 		9E7651931EEF428100DE2B07 /* TaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = ../Code/macOS/TaskView.swift; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Store.swift; path = ../Code/Store.swift; sourceTree = "<group>"; };
-		9E7CFC5B2114E01300962BF2 /* mainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = mainWindow.swift; path = ../Code/macOS/mainWindow.swift; sourceTree = "<group>"; };
 		9E82A7A81EF2A558006AEF02 /* SelectableList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectableList.swift; path = ../Code/SelectableList.swift; sourceTree = "<group>"; };
 		9E88F54E20B7761F00A64F7B /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Menu.swift; path = ../Code/macOS/Menu.swift; sourceTree = "<group>"; };
 		9E8ABEFF20B2F0F1001E862B /* SelectableList+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SelectableList+Debugging.swift"; path = "../Code/SelectableList+Debugging.swift"; sourceTree = "<group>"; };
@@ -414,7 +412,6 @@
 				9EF0A79220B72B5A00E1A23A /* FlowlistController.swift */,
 				9EB6217520C2823000DD3DA5 /* Menu */,
 				9E15185D1EEEE97700B35AD5 /* ViewController.swift */,
-				9E7CFC5B2114E01300962BF2 /* mainWindow.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -603,7 +600,6 @@
 				9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */,
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,
 				9E5768BC20C14B9300749C0C /* Direction.swift in Sources */,
-				9E7CFC5C2114E01300962BF2 /* mainWindow.swift in Sources */,
 				9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */,
 				9E71504020D7CBC70061601E /* Task+ViewModel.swift in Sources */,
 				9EE582FF20DA7377004DE407 /* FullVersion.swift in Sources */,
