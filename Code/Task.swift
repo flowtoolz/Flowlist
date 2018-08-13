@@ -251,6 +251,5 @@ final class Task: Codable, Observable, Tree
     
     var latestUpdate: Event { return .didNothing }
     
-    // TODO: consider making number of leafs a Var<Int> instead of sending it via this event
     enum Event { case didNothing, did(Edit), didChange(numberOfLeafs: Int) }
 }

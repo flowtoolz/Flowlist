@@ -1,8 +1,6 @@
 enum TaskState: Int, Codable
 {
-    case inProgress = 0, done = 2, trashed = 3
-    
-    // FIXME: make "undone" an explicit state (raw value 1) instead of using nil for it. then remove this function and just use rawValue
+    case inProgress = 0, done = 2, trashed = 3 // do not change this! it's how the user's json gets decoded.
     
     static func priority(of state: TaskState?) -> Int
     {
