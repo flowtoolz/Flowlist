@@ -84,7 +84,9 @@ class Header: LayerBackedView, Observer
     private func constrainTitleLabel()
     {
         let gap = TextView.itemSpacing + 1 + 8
-        titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: self)
+        titleLabel.autoAlignAxis(.horizontal,
+                                 toSameAxisOf: self,
+                                 withOffset: Float.itemTextOffset.cgFloat)
         titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: gap)
         titleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: gap)
     }

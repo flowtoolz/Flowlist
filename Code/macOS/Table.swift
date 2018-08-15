@@ -13,9 +13,9 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
 
         addTableColumn(NSTableColumn(identifier: TaskView.uiIdentifier))
         allowsMultipleSelection = true
-        backgroundColor = NSColor.clear
+        backgroundColor = .clear
         headerView = nil
-        intercellSpacing = NSSize(width: 0, height: TextView.itemSpacing)
+        intercellSpacing = NSSize(width: 0.0, height: TextView.itemSpacing)
         delegate = content
         dataSource = content
     }

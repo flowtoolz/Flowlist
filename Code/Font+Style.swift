@@ -2,7 +2,9 @@ import SwiftyToolz
 
 extension Font
 {
-    static let text = Font.system(size: 14, weight: .system)
-    static let listTitle = Font.system(size: 14, weight: .semibold)
-    static let title = Font.system(size: 26, weight: .bold)
+    static let text = Font.system(size: baseFontSize, weight: .system)
+    static let listTitle = Font.system(size: baseFontSize, weight: .semibold)
+    static let title = Font.system(size: 2 * baseFontSize, weight: .bold)
+    
+    static let baseFontSize = 30
 }
