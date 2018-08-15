@@ -4,70 +4,96 @@ import UIObserver
 import SwiftObserver
 import SwiftyToolz
 
-class BrowserView: LayerBackedView, Observer
+class BrowserView: NSView, Observer
 {
     // MARK: - Life Cycle
     
     override init(frame frameRect: NSRect)
     {
         super.init(frame: frameRect)
-
+        
+        constrainListLayoutGuides()
+        
+        for index in 0 ..< browser.numberOfLists
+        {
+            guard let list = browser[index] else { continue }
+                
+            pushListView(for: list)
+        }
+        
         observeBrowser()
-        
-        backgroundColor = .clear
-        
-        createListViews()
-        configureListViews()
-        constrainListViews()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
-    func didEndResizing()
-    {
-        for listView in listViews
-        {
-            listView.didEndResizing()
-        }
-    }
-    
     deinit { stopAllObserving() }
     
-    // MARK: - Create and Configure List Views
+    // MARK: - Browser
     
-    private func configureListViews()
+    private func observeBrowser()
     {
-        for index in 0 ..< browser.numberOfLists
+        observe(browser)
         {
-            guard let list = browser[index],
-                listViews.isValid(index: index)
-            else
-            {
-                log(error: "Couldn't find list or list view at index \(index).")
-                continue
-            }
+            [unowned self] event in
             
-            listViews[index].configure(with: list)
+            switch event
+            {
+            case .didNothing: break
+            
+            case .didPush(let newList):
+                self.pushListView(for: newList)
+                
+            case .didMove(let direction):
+                self.browserDidMove(direction)
+            }
         }
     }
     
-    private func createListViews()
+    private func browserDidMove(_ direction: Direction)
     {
-        listViews.removeAll()
+        guard makeFocusedTableFirstResponder() else { return }
         
-        for _ in 0 ..< browser.numberOfLists { addListView() }
+        moveToFocusedList()
+    }
+    
+    private let browser = Browser()
+    
+    // MARK: - Manage First Responder Status
+    
+    override var acceptsFirstResponder: Bool { return true }
+    
+    override func becomeFirstResponder() -> Bool
+    {
+        return makeFocusedTableFirstResponder()
     }
     
     @discardableResult
-    private func addListView(prepend: Bool = false) -> SelectableListView
+    private func makeFocusedTableFirstResponder() -> Bool
     {
-        let listView = addForAutoLayout(SelectableListView())
+        let index = browser.focusedListIndex
         
-        listViews.insert(listView, at: prepend ? 0 : listViews.count)
+        guard listViews.isValid(index: index), listViews[index].scrollTable.table.makeFirstResponder() else
+        {
+            log(error: "Could not make table view at index \(index) first responder.")
+            return false
+        }
         
-        observe(listView: listView)
+        return true
+    }
+    
+    // MARK: - List Views
+    
+    private func pushListView(for list: SelectableList)
+    {
+        let newListView = addForAutoLayout(SelectableListView())
         
-        return listView
+        newListView.configure(with: list)
+        
+        listViews.append(newListView)
+        
+        constrainLastListView()
+        
+        observe(listView: newListView)
     }
     
     private func observe(listView: SelectableListView)
@@ -84,161 +110,123 @@ class BrowserView: LayerBackedView, Observer
     
     private func listViewReceivedUserInput(_ listView: SelectableListView)
     {
-        switch listViews.index(where: { $0 === listView })
+        guard let listIndex = listViews.index(where: { $0 === listView }) else
         {
-        case 1: browser.move(.left)
-        case 3: browser.move(.right)
-        default: break
-        }
-    }
-    
-    // MARK: - React to Browser
-    
-    private func observeBrowser()
-    {
-        observe(browser)
-        {
-            [unowned self] event in
-            
-            if case .didMove(let direction) = event
-            {
-                self.browserDidMove(direction)
-            }
-        }
-    }
-    
-    private func browserDidMove(_ direction: Direction)
-    {
-        let movedLeft = direction == .left
-        let newListIndex = movedLeft ? 0 : browser.numberOfLists - 1
-        
-        guard let newList = browser[newListIndex] else
-        {
-            log(error: "Couldn't get new list from browser.")
+            log(error: "Couldn't get index of list view that received user input")
             return
         }
         
-        let newListView = moveListViews(direction.reverse)
+        browser.focusedListIndex = listIndex
         
-        newListView.configure(with: newList)
-        
-        makeFocusedTableFirstResponder()
-        
-        relayoutAnimated(with: newListView, direction: direction)
+        moveToFocusedList()
     }
     
-    private func moveListViews(_ direction: Direction) -> SelectableListView
+    // TODO: do we even need this method? why not re-use list views and just leave them hanging in memory?
+    private func popListView()
     {
-        let left = direction == .left
-    
-        removeListView(at: left ? 0 : listViews.count - 1)
+        guard let listView = listViews.popLast() else { return }
         
-        return addListView(prepend: !left)
+        stopObserving(listView)
+        
+        listView.removeFromSuperview()
     }
     
-    private func relayoutAnimated(with addedView: SelectableListView,
-                                  direction: Direction)
+    private func constrainLastListView()
     {
-        let moveLeft = direction == .left
-        
-        addedView.frame.origin.x = frame.size.width * (moveLeft ? -1.3333 : 2)
-        addedView.frame.origin.y = 0
-        addedView.frame.size.height = frame.size.height
-        addedView.frame.size.width = frame.size.width / 3
-        
-        NSAnimationContext.beginGrouping()
-        NSAnimationContext.current.allowsImplicitAnimation = true
-        NSAnimationContext.current.duration = 0.3
-        
-        constrainListViews()
-        layoutSubtreeIfNeeded()
-        
-        NSAnimationContext.endGrouping()
-    }
-    
-    // MARK: - Layout List Views
-    
-    private func constrainListViews()
-    {
-        removeConstraints(listViewContraints)
-        listViewContraints.removeAll()
+        guard let listView = listViews.last else { return }
         
         let listGap = TextView.itemSpacing
         
-        for i in 0 ..< listViews.count
+        if listViews.count == 1
         {
-            let listView = listViews[i]
-            
-            if i == 0
-            {
-                constrain(listView.autoPinEdge(.right,
-                                               to: .left,
-                                               of: self))
-            }
-            else
-            {
-                constrain(listView.autoPinEdge(.left,
-                                               to: .right,
-                                               of: listViews[i - 1],
-                                               withOffset: listGap))
-                
-                constrain(listView.autoConstrainAttribute(.width,
-                                                          to: .width,
-                                                          of: listViews[i - 1]))
-            }
-            
-            if i == listViews.count - 1
-            {
-                constrain(listView.autoPinEdge(.left, to: .right, of: self))
-            }
-            
-            constrain(listView.autoPinEdge(toSuperviewEdge: .top,
-                                           withInset: listGap))
-            constrain(listView.autoPinEdge(toSuperviewEdge: .bottom,
-                                           withInset: listGap))
+            listView.autoAlignAxis(toSuperviewAxis: .vertical)
+        }
+        else
+        {
+            listView.autoPinEdge(.left,
+                                 to: .right,
+                                 of: listViews[listViews.count - 2],
+                                 withOffset: listGap)
+        }
+        
+        listView.autoMatch(.width, to: .width, of: listLayoutGuides[0])
+        listView.autoPinEdge(toSuperviewEdge: .top, withInset: listGap)
+        listView.autoPinEdge(toSuperviewEdge: .bottom, withInset: listGap)
+    }
+    
+    func didResize()
+    {
+        moveToFocusedList(animated: false)
+    }
+    
+    func didEndResizing()
+    {
+        for listView in listViews
+        {
+            listView.didEndResizing()
         }
     }
     
-    private func constrain(_ constraint: NSLayoutConstraint)
+    private func moveToFocusedList(animated: Bool = true)
     {
-        listViewContraints.append(constraint)
-    }
-    
-    private var listViewContraints = [NSLayoutConstraint]()
-    
-    // MARK: - Manage First Responder Status
-    
-    override var acceptsFirstResponder: Bool { return true }
-    
-    override func becomeFirstResponder() -> Bool
-    {
-        return makeFocusedTableFirstResponder()
-    }
-    
-    @discardableResult
-    private func makeFocusedTableFirstResponder() -> Bool
-    {
-        guard listViews.isValid(index: 2), listViews[2].scrollTable.table.makeFirstResponder() else
+        guard listViews.isValid(index: browser.focusedListIndex) else { return }
+        
+        let focusedListView = listViews[browser.focusedListIndex]
+        let listOffset = focusedListView.frame.size.width + 2 * TextView.itemSpacing
+        let targetPosition = focusedListView.frame.origin.x - listOffset
+        
+        if animated
         {
-            log(error: "Could not make table view first responder.")
-            return false
+            NSAnimationContext.beginGrouping()
+            NSAnimationContext.current.duration = 0.3
+            
+            animator().bounds.origin.x = targetPosition
+            
+            NSAnimationContext.endGrouping()
         }
-        
-        return true
-    }
-    
-    // MARK: - Basics
-    
-    private func removeListView(at index: Int)
-    {
-        guard listViews.isValid(index: index) else { return }
-        
-        let removedListView = listViews.remove(at: index)
-        stopObserving(removedListView)
-        removedListView.removeFromSuperview()
+        else
+        {
+            bounds.origin.x = targetPosition
+        }
     }
     
     private var listViews = [SelectableListView]()
     
-    private let browser = Browser()
+    // MARK: - Layout Guides For List Width
+    
+    private func constrainListLayoutGuides()
+    {
+        for guide in listLayoutGuides
+        {
+            guide.autoPinEdge(toSuperviewEdge: .top,
+                              withInset: TextView.itemSpacing)
+            
+            guide.autoPinEdge(toSuperviewEdge: .bottom,
+                              withInset: TextView.itemSpacing)
+        }
+        
+        listLayoutGuides[0].autoPinEdge(toSuperviewEdge: .left,
+                                        withInset: TextView.itemSpacing)
+        listLayoutGuides[1].autoPinEdge(.left,
+                                        to: .right,
+                                        of: listLayoutGuides[0],
+                                        withOffset: TextView.itemSpacing)
+        listLayoutGuides[1].autoMatch(.width, to: .width, of: listLayoutGuides[0])
+        listLayoutGuides[2].autoPinEdge(.left,
+                                        to: .right,
+                                        of: listLayoutGuides[1],
+                                        withOffset: TextView.itemSpacing)
+        listLayoutGuides[2].autoPinEdge(toSuperviewEdge: .right,
+                                        withInset: TextView.itemSpacing)
+        listLayoutGuides[2].autoMatch(.width, to: .width, of: listLayoutGuides[0])
+    }
+    
+    private lazy var listLayoutGuides: [NSView] =
+    {
+        let guides = [addForAutoLayout(NSView()),
+                      addForAutoLayout(NSView()),
+                      addForAutoLayout(NSView())]
+        
+        return guides
+    }()
 }

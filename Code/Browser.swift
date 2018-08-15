@@ -7,7 +7,9 @@ class Browser: Observer, Observable
     
     init()
     {
-        for _ in 0 ..< 5 { addTaskList() }
+        pushList()
+        pushList()
+        pushList()
         
         guard lists.isValid(index: focusedListIndex) else { fatalError() }
         
@@ -27,51 +29,41 @@ class Browser: Observer, Observable
     {
         guard canMove(direction) else { return }
         
-        let moveLeft = direction == .left
-        let removalIndex = moveLeft ? lists.count - 1 : 0
-        
-        observeSelection(in: lists.remove(at: removalIndex), start: false)
-        
-        let newList = addTaskList(prepend: moveLeft)
-        
-        defer { send(.didMove(direction: direction)) }
-        
-        if moveLeft
+        if direction == .right
         {
-            guard lists.count > 1,
-                let sublistRoot = self[focusedListIndex - 1]?.root,
-                let firstRoot = sublistRoot.root else { return }
-            
-            newList.set(root: firstRoot)
-            newList.selection.set(with: sublistRoot)
+            while focusedListIndex >= numberOfLists - 3 { pushList() }
         }
-        else
-        {
-            updateRootOfList(at: lists.count - 1)
-            
-            focusedList.select()
-        }
+        
+        focusedListIndex += direction == .left ? -1 : 1
+        
+        focusedList.select()
+        
+        send(.didMove(direction: direction))
     }
     
     func canMove(_ direction: Direction) -> Bool
     {
-        let indexOffset = direction == .left ? -1 : 1
+        if direction == .left { return focusedListIndex > 0 }
         
-        return lists[focusedListIndex + indexOffset].root != nil
+        return focusedList.selection.count == 1
     }
     
-    // MARK: - Create Task Lists
+    // MARK: - Create Lists
     
     @discardableResult
-    private func addTaskList(prepend: Bool = false) -> SelectableList
+    private func pushList() -> SelectableList
     {
-        let list = SelectableList()
+        let newList = SelectableList()
         
-        observeSelection(in: list)
+        observeSelection(in: newList)
         
-        lists.insert(list, at: prepend ? 0 : lists.count)
+        lists.append(newList)
         
-        return list
+        updateRootOfList(at: lists.count - 1)
+        
+        send(.didPush(list: newList))
+        
+        return newList
     }
     
     // MARK: - Observe Selections in Lists
@@ -109,8 +101,11 @@ class Browser: Observer, Observable
             log(error: "Received update from unmanaged list.")
             return
         }
-        
-        if index < lists.count - 1 { updateRootOfList(at: index + 1) }
+    
+        if index < lists.count - 1
+        {
+            updateRootOfList(at: index + 1)
+        }
     }
     
     // MARK: - Lists
@@ -137,15 +132,20 @@ class Browser: Observer, Observable
         return lists[index]
     }
     
-    var numberOfLists: Int { return lists.count }
-    
     var focusedList: SelectableList { return lists[focusedListIndex] }
-    private let focusedListIndex = 2
+    var focusedListIndex = 0
+    
+    var numberOfLists: Int { return lists.count }
     private var lists = [SelectableList]()
     
     // MARK: - Observability
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, didMove(direction: Direction) }
+    enum Event
+    {
+        case didNothing
+        case didPush(list: SelectableList)
+        case didMove(direction: Direction)
+    }
 }

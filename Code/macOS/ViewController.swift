@@ -115,6 +115,11 @@ class ViewController: NSViewController, Observer
     
     // MARK: - Browser View
     
+    func didResize()
+    {
+        browserView.didResize()
+    }
+    
     private func constrainBrowserView()
     {
         browserView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,

@@ -33,6 +33,11 @@ class FlowlistController: AppController, NSWindowDelegate
     
     // MARK: - Window Delegate
     
+    func windowDidResize(_ notification: Notification)
+    {
+        mainViewController.didResize()
+    }
+    
     func windowDidEndLiveResize(_ notification: Notification)
     {
         mainWindow.didEndLiveResize()
@@ -63,6 +68,8 @@ class FlowlistController: AppController, NSWindowDelegate
     
     private let menu = Menu()
     
-    private lazy var mainWindow: Window = Window(with: ViewController(),
+    private lazy var mainWindow: Window = Window(with: mainViewController,
                                                  color: Color.gray(brightness: 0.92 * 0.92).nsColor)
+    
+    private let mainViewController = ViewController()
 }
