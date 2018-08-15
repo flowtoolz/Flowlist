@@ -9,7 +9,7 @@ class CheckBox: NSButton
         super.init(frame: frameRect)
         
         bezelStyle = .regularSquare
-        imageScaling = .scaleNone
+        imageScaling = .scaleProportionallyUpOrDown
         image = CheckBox.imageEmpty
         isBordered = false
     }
@@ -38,7 +38,7 @@ class CheckBox: NSButton
         }
     }
     
-    private static let imageEmpty = #imageLiteral(resourceName: "checkbox_unchecked")
-    private static let imageChecked = #imageLiteral(resourceName: "checkbox_checked")
-    private static let imageInProgress = #imageLiteral(resourceName: "play")
+    private static let imageEmpty = #imageLiteral(resourceName: "checkbox_unchecked_pdf")
+    private static let imageChecked = #imageLiteral(resourceName: "checkbox_checked_pdf")
+    private static let imageInProgress = #imageLiteral(resourceName: "play_pdf")
 }

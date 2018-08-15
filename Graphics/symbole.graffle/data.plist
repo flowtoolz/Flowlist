@@ -127,7 +127,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-08-02 21:02:18 +0000</string>
+	<string>2018-08-15 18:41:34 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -190,7 +190,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-340.47619047619031, -368.45238095238091}, {1870.8333333333333, 1578.5714285714287}}</string>
+				<string>{{-958.33333333333326, -606.25000000000011}, {3106.25, 2054.1666666666665}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -2315,7 +2315,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{360, 360}, {72, 72}}</string>
+					<string>{{72, 446.625}, {79.875, 78.75}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
@@ -2337,7 +2337,7 @@
 						<key>stroke</key>
 						<dict>
 							<key>CornerRadius</key>
-							<real>4</real>
+							<real>6</real>
 							<key>Width</key>
 							<real>4</real>
 						</dict>
@@ -2534,9 +2534,9 @@
 					<integer>48</integer>
 					<key>Points</key>
 					<array>
-						<string>{252, 432}</string>
-						<string>{288, 396}</string>
-						<string>{252, 360}</string>
+						<string>{180, 432}</string>
+						<string>{216, 396}</string>
+						<string>{180, 360}</string>
 					</array>
 					<key>Style</key>
 					<dict>
@@ -3305,9 +3305,9 @@
 			<key>GridInfo</key>
 			<dict>
 				<key>GridSpacing</key>
-				<real>4.5</real>
+				<real>1.125</real>
 				<key>MajorGridSpacing</key>
-				<integer>16</integer>
+				<integer>64</integer>
 				<key>ShowsGrid</key>
 				<string>YES</string>
 				<key>SnapsToGrid</key>
@@ -3382,7 +3382,7 @@
 		<key>CurrentSheet</key>
 		<integer>0</integer>
 		<key>Frame</key>
-		<string>{{9, -0}, {889, 777}}</string>
+		<string>{{0, 0}, {1237, 740}}</string>
 		<key>ShowInfo</key>
 		<true/>
 		<key>ShowRuler</key>
@@ -3394,12 +3394,12 @@
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{488.69047619047632, 45.833333333333371}, {340.47619047619042, 368.45238095238091}}</string>
+		<string>{{-202.20418968692559, -24.168393186004465}, {958.33333333333326, 606.24999999999989}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Arbeitsfläche 1</string>
-				<real>1.6800000000000002</real>
+				<real>0.95999999999999996</real>
 				<real>1</real>
 			</array>
 		</array>
@@ -3428,7 +3428,7 @@
 	<key>includeNonPrintingLayersKey</key>
 	<false/>
 	<key>lastExportTypeKey</key>
-	<integer>0</integer>
+	<integer>8</integer>
 	<key>marginWidthKey</key>
 	<real>0.0</real>
 	<key>readOnlyKey</key>

@@ -52,7 +52,9 @@ class BulletpointList: NSView
         
         for _ in bulletpoints
         {
-            icons.append(addForAutoLayout(Icon(with: #imageLiteral(resourceName: "checkbox_checked"))))
+            let icon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "checkbox_checked_pdf")))
+            icon.imageScaling = .scaleProportionallyUpOrDown
+            icons.append(icon)
         }
         
         return icons

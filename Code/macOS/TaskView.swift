@@ -33,8 +33,8 @@ class TaskView: LayerBackedView, Observer, Observable
     
     static func preferredHeight(for title: String, width: CGFloat) -> CGFloat
     {
-        let checkBoxWidth = CheckBox.size.width
-        let groupIconWidth = groupIconImage.size.width
+        let checkBoxWidth = TaskView.iconSize
+        let groupIconWidth = TaskView.groupIconWidth
         let iconPadding = 2 * (TextView.itemPadding + Float.itemTextSideMargin.cgFloat)
         let titleWidth = width - (checkBoxWidth + groupIconWidth + iconPadding)
         
@@ -109,7 +109,7 @@ class TaskView: LayerBackedView, Observer, Observable
         stopObserving(task)
     }
     
-    // MARK: - Title View
+    // MARK: - Text View
     
     func editTitle()
     {
@@ -215,11 +215,16 @@ class TaskView: LayerBackedView, Observer, Observable
 
     private func constrainCheckBox()
     {
-        let padding = (TaskView.heightWithOneLine - CheckBox.size.height) / 2
+        checkBox.autoSetDimensions(to: CGSize(width: TaskView.iconSize,
+                                              height: TaskView.iconSize))
+        
+        let padding = (TaskView.heightWithOneLine - TaskView.iconSize) / 2
 
         checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: padding)
         checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: padding)
     }
+    
+    private static let iconSize = TextView.lineHeight
     
     private lazy var checkBox: CheckBox =
     {
@@ -245,15 +250,30 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func contrainGroupIcon()
     {
-        let padding = (TaskView.heightWithOneLine - TaskView.groupIconImage.size.height) / 2
+        let padding = (TaskView.heightWithOneLine - TaskView.iconSize) / 2
         
         groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: padding)
         groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: padding)
+        
+        groupIcon.autoSetDimensions(to: CGSize(width: TaskView.groupIconWidth,
+                                               height: TaskView.iconSize))
     }
     
-    private lazy var groupIcon: Icon = addForAutoLayout(Icon(with: TaskView.groupIconImage))
+    private static let groupIconWidth = TaskView.iconSize * TaskView.groupIconAspectRatio
+    private static let groupIconAspectRatio: CGFloat = 19.0 / 36.0
     
-    private static let groupIconImage = #imageLiteral(resourceName: "group_indicator")
+    private lazy var groupIcon: Icon =
+    {
+        let icon = addForAutoLayout(Icon(with: TaskView.groupIconImage))
+        
+        icon.imageScaling = .scaleProportionallyUpOrDown
+        
+        return icon
+    }()
+    
+//    private static let groupIconImage = #imageLiteral(resourceName: "group_indicator")
+    
+    private static let groupIconImage = #imageLiteral(resourceName: "container_indicator_pdf")
     
     private static let heightWithOneLine: CGFloat = TextView.lineHeight + (2 * TextView.itemPadding)
     

@@ -64,12 +64,21 @@ class Header: LayerBackedView, Observer
     
     private func constrainIcon()
     {
+        let size = TextView.lineHeight * 1.4
+        icon.autoSetDimensions(to: CGSize(width: size, height: size))
         icon.autoCenterInSuperview()
     }
     
-    private lazy var icon: Icon = addForAutoLayout(Icon(with: Header.iconImage))
+    private lazy var icon: Icon =
+    {
+        let icon = addForAutoLayout(Icon(with: Header.iconImage))
+        
+        icon.imageScaling = .scaleProportionallyUpOrDown
+        
+        return icon
+    }()
     
-    private static let iconImage = #imageLiteral(resourceName: "home")
+    private static let iconImage = #imageLiteral(resourceName: "home_pdf")
     
     // MARK: - Title
     
@@ -84,11 +93,15 @@ class Header: LayerBackedView, Observer
     private func constrainTitleLabel()
     {
         let gap = TextView.itemSpacing + 1 + 8
-        titleLabel.autoAlignAxis(.horizontal,
-                                 toSameAxisOf: self,
-                                 withOffset: Float.itemTextOffset.cgFloat)
+
         titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: gap)
         titleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: gap)
+        
+        let textOffset = Float.itemTextOffset.cgFloat - 0.5
+        
+        titleLabel.autoAlignAxis(.horizontal,
+                                 toSameAxisOf: self,
+                                 withOffset: textOffset)
     }
     
     private lazy var titleLabel: Label =

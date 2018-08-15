@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "checkbox_unchecked.pdf",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "checkbox_unchecked.png",
       "scale" : "2x"
     },
     {
