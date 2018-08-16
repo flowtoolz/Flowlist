@@ -64,20 +64,12 @@ class Header: LayerBackedView, Observer
     
     private func constrainIcon()
     {
-        let size = TextView.lineHeight * 1.4
-        icon.autoSetDimensions(to: CGSize(width: size, height: size))
+        let size = TextView.lineHeight * 1.235
+        icon.autoSetDimension(.height, toSize: size)
         icon.autoCenterInSuperview()
     }
     
-    private lazy var icon: Icon =
-    {
-        let icon = addForAutoLayout(Icon(with: Header.iconImage))
-        
-        icon.imageScaling = .scaleProportionallyUpOrDown
-        
-        return icon
-    }()
-    
+    private lazy var icon: Icon = addForAutoLayout(Icon(with: Header.iconImage))
     private static let iconImage = #imageLiteral(resourceName: "home_pdf")
     
     // MARK: - Title

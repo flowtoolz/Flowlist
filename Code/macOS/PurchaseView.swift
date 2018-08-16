@@ -53,7 +53,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
             
             content.alphaValue = isExpanded ? 1 : 0
             itemLabel.alphaValue = isExpanded ? 0 : 1
-            expandIcon.image = isExpanded ? #imageLiteral(resourceName: "close_indicator") : #imageLiteral(resourceName: "expand_indicator")
+            expandIcon.image = isExpanded ? #imageLiteral(resourceName: "close_indicator_pdf") : #imageLiteral(resourceName: "expand_indicator_pdf")
             progressBar.alphaValue = isExpanded ? 0 : 1
             
             NSAnimationContext.endGrouping()
@@ -101,10 +101,11 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         expandIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
         expandIcon.autoAlignAxis(.horizontal, toSameAxisOf: itemLabel)
-        expandIcon.autoSetDimensions(to: CGSize(width: 18, height: 18))
+        expandIcon.autoSetDimensions(to: CGSize(width: TaskView.iconSize,
+                                                height: TaskView.iconSize))
     }
     
-    private lazy var expandIcon: Icon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "expand_indicator")))
+    private lazy var expandIcon: Icon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "expand_indicator_pdf")))
     
     // MARK: - Progress Bar
     

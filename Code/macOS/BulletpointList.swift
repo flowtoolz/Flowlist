@@ -19,6 +19,8 @@ class BulletpointList: NSView
         {
             let icon = bulletpointIcons[index]
             icon.autoPinEdge(toSuperviewEdge: .left)
+            icon.autoSetDimensions(to: CGSize(width: TaskView.iconSize,
+                                              height: TaskView.iconSize))
             
             let label = bulletpointLabels[index]
             label.autoPinEdge(toSuperviewEdge: .right)
@@ -52,9 +54,7 @@ class BulletpointList: NSView
         
         for _ in bulletpoints
         {
-            let icon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "checkbox_checked_pdf")))
-            icon.imageScaling = .scaleProportionallyUpOrDown
-            icons.append(icon)
+            icons.append(addForAutoLayout(Icon(with: #imageLiteral(resourceName: "checkbox_checked_pdf"))))
         }
         
         return icons
