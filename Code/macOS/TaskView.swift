@@ -16,7 +16,7 @@ class TaskView: LayerBackedView, Observer, Observable
         constrainEditingBackground()
         constrainCheckBox()
         contrainGroupIcon()
-        constrainTitleField()
+        constrainTextView()
         
         setItemBorder()
     }
@@ -44,7 +44,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         self.task = task
         
-        updateTitleField()
+        updateTextView()
         updateState()
         updateGroupIcon()
         
@@ -96,45 +96,42 @@ class TaskView: LayerBackedView, Observer, Observable
     
     // MARK: - Text View
     
-    func editTitle()
+    func editText()
     {
-        titleField.startEditing()
+        textView.startEditing()
     }
     
-    private func updateTitleField()
+    private func updateTextView()
     {
         // https://stackoverflow.com/questions/19121367/uitextviews-in-a-uitableview-link-detection-bug-in-ios-7
-        titleField.string = ""
-        titleField.string = task?.title.value ?? ""
+        textView.string = ""
+        textView.string = task?.title.value ?? ""
     }
 
-    private func constrainTitleField()
+    private func constrainTextView()
     {
-        titleField.autoPinEdge(.left,
-                               to: .right,
-                               of: checkBox,
-                               withOffset: Float.itemTextSideMargin.cgFloat)
-        titleField.autoPinEdge(.right,
-                               to: .left,
-                               of: groupIcon,
-                               withOffset: -Float.itemTextSideMargin.cgFloat)
+        textView.autoPinEdge(toSuperviewEdge: .left,
+                               withInset: TaskView.leftTextInset)
+        
+        textView.autoPinEdge(toSuperviewEdge: .right,
+                               withInset: TaskView.rightTextInset)
         
         let textOffset = Float.itemTextOffset.cgFloat
         let padding = TextView.itemPadding
         
-        titleField.autoPinEdge(toSuperviewEdge: .top,
+        textView.autoPinEdge(toSuperviewEdge: .top,
                                withInset: padding + textOffset )
-        titleField.autoPinEdge(toSuperviewEdge: .bottom,
+        textView.autoPinEdge(toSuperviewEdge: .bottom,
                                withInset: padding - textOffset)
     }
     
-    private lazy var titleField: TextView =
+    private lazy var textView: TextView =
     {
-        let textField = addForAutoLayout(TextView())
+        let view = addForAutoLayout(TextView())
     
-        self.observe(textField.messenger) { [weak self] in self?.didReceive($0) }
+        self.observe(view.messenger) { [weak self] in self?.didReceive($0) }
         
-        return textField
+        return view
     }()
     
     private func didReceive(_ event: TextView.Messenger.Event)
@@ -157,7 +154,7 @@ class TaskView: LayerBackedView, Observer, Observable
             
         case .didEdit:
             set(editing: false)
-            task?.title <- String(withNonEmpty: titleField.string)
+            task?.title <- String(withNonEmpty: textView.string)
             task?.isBeingEdited = false
             send(.didEditTitle)
         }
@@ -203,7 +200,7 @@ class TaskView: LayerBackedView, Observer, Observable
         checkBox.autoSetDimensions(to: CGSize(width: TaskView.iconSize,
                                               height: TaskView.iconSize))
         
-        let padding = (TaskView.heightWithOneLine - TaskView.iconSize) / 2
+        let padding = (TextView.itemHeight - TaskView.iconSize) / 2
 
         checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: padding)
         checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: padding)
@@ -233,38 +230,39 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func contrainGroupIcon()
     {
-        let padding = (TaskView.heightWithOneLine - TaskView.iconSize) / 2
+        let padding = (TextView.itemHeight - TaskView.iconSize) / 2
         
         groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: padding)
         groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: padding)
         
-        groupIcon.autoSetDimensions(to: CGSize(width: TaskView.groupIconWidth,
-                                               height: TaskView.iconSize))
+        groupIcon.autoSetDimension(.height, toSize: TaskView.iconSize)
     }
     
-    private lazy var groupIcon: Icon = addForAutoLayout(Icon(with: TaskView.groupIconImage))
+    private lazy var groupIcon: Icon =
+    {
+        let icon = addForAutoLayout(Icon(with: TaskView.groupIconImage))
         
+        icon.imageAlignment = .alignRight
+        
+        return icon
+    }()
+    
     private static let groupIconImage = #imageLiteral(resourceName: "container_indicator_pdf")
     
     // MARK: - Measuring Size
     
     static func preferredHeight(for title: String, width: CGFloat) -> CGFloat
     {
-        let checkBoxWidth = TaskView.iconSize
-        let groupIconWidth = TaskView.groupIconWidth
-        let iconPadding = 2 * (TextView.itemPadding + Float.itemTextSideMargin.cgFloat)
-        let titleWidth = width - (checkBoxWidth + groupIconWidth + iconPadding)
+        let textWidth = width - (TaskView.leftTextInset + TaskView.rightTextInset)
         
-        let titleHeight = TextView.size(with: title,
-                                        width: titleWidth).height
+        let textHeight = TextView.size(with: title, width: textWidth).height
         
-        return titleHeight + (2 * TextView.itemPadding)
+        return textHeight + (2 * TextView.itemPadding)
     }
     
-    private static let heightWithOneLine: CGFloat = TextView.lineHeight + (2 * TextView.itemPadding)
-    private static let groupIconWidth = iconSize * groupIconAspectRatio
-    private static let groupIconAspectRatio: CGFloat = 19.0 / 36.0
     static let iconSize = TextView.lineHeight
+    private static let leftTextInset = TextView.itemHeight * 0.9
+    private static let rightTextInset = TextView.itemHeight * 0.8
     
     // MARK: - Data
     

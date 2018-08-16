@@ -368,7 +368,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             return
         }
         
-        taskView.editTitle()
+        taskView.editText()
     }
     
     // MARK: - Input
