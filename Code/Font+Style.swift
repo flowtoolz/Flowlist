@@ -1,10 +1,27 @@
+import SwiftObserver
 import SwiftyToolz
 
 extension Font
 {
-    static let text = Font.system(size: baseFontSize, weight: .system)
-    static let listTitle = Font.system(size: baseFontSize, weight: .semibold)
-    static let title = Font.system(size: 2 * baseFontSize, weight: .bold)
+    static var text: Font
+    {
+        return Font.system(size: baseSize.latestUpdate,
+                           weight: .system)
+    }
     
-    static let baseFontSize = 14
+    static var listTitle: Font
+    {
+        return Font.system(size: baseSize.latestUpdate,
+                           weight: .semibold)
+    }
+    
+    static var title: Font
+    {
+        return Font.system(size: 2 * baseSize.latestUpdate,
+                           weight: .bold)
+    }
+    
+    static let baseSize = baseSizeVar.new().filter({ $0 != nil }).unwrap(defaultSize)
+    static let baseSizeVar = Var(defaultSize)
+    private static let defaultSize = 14
 }

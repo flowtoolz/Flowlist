@@ -11,7 +11,11 @@ var isFullVersion: Bool
 {
     get
     {
-        #if BETA
+        #if DEBUG
+        
+        return true
+        
+        #elseif BETA
         
         return true
         

@@ -21,11 +21,6 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
-    func didEndResizing()
-    {
-        scrollTable.table.didEndResizing()
-    }
-    
     deinit { stopAllObserving() }
     
     // MARK: - Configuration
@@ -87,7 +82,8 @@ class SelectableListView: LayerBackedView, Observer, Observable
         header.autoPinEdge(toSuperviewEdge: .left)
         header.autoPinEdge(toSuperviewEdge: .right)
         header.autoPinEdge(toSuperviewEdge: .top)
-        header.autoSetDimension(.height, toSize: TextView.itemHeight)
+        headerHeightConstraint = header.autoSetDimension(.height,
+                                                         toSize: TextView.itemHeight)
     }
     
     private lazy var header: Header = addForAutoLayout(Header())
@@ -102,18 +98,22 @@ class SelectableListView: LayerBackedView, Observer, Observable
                                   bottom: gap,
                                   right: gap)
 
-        scrollTable.autoPinEdgesToSuperviewEdges(with: insets, excludingEdge: .top)
+        let constraints = scrollTable.autoPinEdgesToSuperviewEdges(with: insets,
+                                                                   excludingEdge: .top)
+        scrollTableInsetConstraints = constraints
         
-        let smallHalfItemSpacing = CGFloat(Int(TextView.itemSpacing / 2))
-        let bigHalfSpacing = TextView.itemSpacing - smallHalfItemSpacing
-        
-        scrollTable.autoPinEdge(.top,
-                                to: .bottom,
-                                of: header,
-                                withOffset: bigHalfSpacing)
+        scrollTableTopConstraint = scrollTable.autoPinEdge(.top,
+                                                           to: .bottom,
+                                                           of: header,
+                                                           withOffset: scrollTableTopOffset)
     }
     
-    lazy var scrollTable: ScrollTable =
+    func didEndResizing()
+    {
+        scrollTable.table.didEndResizing()
+    }
+    
+    private(set) lazy var scrollTable: ScrollTable =
     {
         let scrollView = addForAutoLayout(ScrollTable())
         
@@ -124,6 +124,32 @@ class SelectableListView: LayerBackedView, Observer, Observable
         
         return scrollView
     }()
+    
+    // MARK: - Dynamic Layout Constants
+    
+    func updateLayoutConstants()
+    {
+        headerHeightConstraint?.constant = TextView.itemHeight
+        
+        let inset = TextView.itemSpacing + 1
+        
+        for constraint in scrollTableInsetConstraints
+        {
+            constraint.constant = constraint.constant < 0 ? -inset : inset
+        }
+        
+        scrollTableTopConstraint?.constant = scrollTableTopOffset
+    }
+    
+    private var headerHeightConstraint: NSLayoutConstraint?
+    private var scrollTableTopConstraint: NSLayoutConstraint?
+    private var scrollTableInsetConstraints = [NSLayoutConstraint]()
+    
+    private var scrollTableTopOffset: CGFloat
+    {
+        let smallHalfItemSpacing = CGFloat(Int(TextView.itemSpacing / 2))
+        return TextView.itemSpacing - smallHalfItemSpacing
+    }
     
     // MARK: - List
     

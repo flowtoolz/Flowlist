@@ -2,7 +2,7 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class TextView: NSTextView, NSTextViewDelegate
+class TextView: NSTextView, NSTextViewDelegate, Observer
 {
     // MARK: - Initialization
 
@@ -37,32 +37,46 @@ class TextView: NSTextView, NSTextViewDelegate
         typingAttributes = TextView.typingSyle
         selectedTextAttributes = TextView.selectionSyle
         linkTextAttributes = TextView.linkStyle
+        
+        observe(Font.baseSize)
+        {
+            [weak self] _ in
+            
+            self?.defaultParagraphStyle = TextView.paragraphStyle
+            self?.typingAttributes = TextView.typingSyle
+            self?.textStorage?.font = Font.text.nsFont
+        }
     }
     
     required init?(coder: NSCoder) { fatalError() }
     
+    deinit { stopAllObserving() }
+    
     // MARK: - Layout Dependent On Line Height
     
-    static let itemHeight: CGFloat =
+    static var itemHeight: CGFloat
     {
         return 2 * itemPadding + lineHeight
-    }()
+    }
     
-    static let itemSpacing = itemLineSpacing
+    static var itemSpacing: CGFloat { return itemLineSpacing }
     
-    static let itemLineSpacing: CGFloat =
+    static var itemLineSpacing: CGFloat
     {
         return 2 * itemPadding - lineHeight
-    }()
+    }
     
-    static let itemPadding: CGFloat =
+    static var itemPadding: CGFloat
     {
         return CGFloat(Int(lineHeight * 0.647 + 0.5))
-    }()
+    }
 
     // MARK: - Measuring Size
     
-    static let lineHeight = measuringLayoutManager.defaultLineHeight(for: Font.text.nsFont)
+    static var lineHeight: CGFloat
+    {
+        return measuringLayoutManager.defaultLineHeight(for: Font.text.nsFont)
+    }
     
     static func size(with text: String, width: CGFloat) -> CGSize
     {
@@ -109,11 +123,11 @@ class TextView: NSTextView, NSTextViewDelegate
 
     // MARK: - Style
     
-    private static let typingSyle: [NSAttributedStringKey : Any] =
-    [
-        .font : Font.text.nsFont,
-        .paragraphStyle : TextView.paragraphStyle
-    ]
+    private static var typingSyle: [NSAttributedStringKey : Any]
+    {
+        return [.font : Font.text.nsFont,
+                .paragraphStyle : TextView.paragraphStyle]
+    }
     
     private static let selectionSyle: [NSAttributedStringKey : Any] =
     [
@@ -125,16 +139,19 @@ class TextView: NSTextView, NSTextViewDelegate
         NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue
     ]
     
-    private static let fieldFont = Font.text.nsFont
+    private static var fieldFont: NSFont
+    {
+        return Font.text.nsFont
+    }
     
-    private static let paragraphStyle: NSParagraphStyle =
+    private static var paragraphStyle: NSParagraphStyle
     {
         let style = NSMutableParagraphStyle()
         
         style.lineSpacing = TextView.itemLineSpacing
         
         return style
-    }()
+    }
     
     // MARK: - Update
 

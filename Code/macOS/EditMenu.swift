@@ -50,6 +50,11 @@ class EditMenu: NSMenu, Observer
                 case "l": self.list?.debug()
                 case "t": store.root.debug()
                 case "n": print("number of items in store: \(store.numberOfUserCreatedLeafs.value ?? 0)")
+                case "1":
+                    if !TextView.isEditing
+                    {
+                        Font.baseSizeVar <- 20
+                    }
                 default: break
                 }
                 

@@ -17,11 +17,28 @@ class BrowserView: NSView, Observer
         for index in 0 ..< browser.numberOfLists
         {
             guard let list = browser[index] else { continue }
-                
+
             pushListView(for: list)
         }
         
         observeBrowser()
+        
+        observe(Font.baseSize)
+        {
+            [weak self] _ in
+
+            guard let me = self else { return }
+            
+            me.updateSpacings()
+            me.moveToFocusedList(animated: false)
+            
+            for listView in me.listViews
+            {
+                listView.updateLayoutConstants()
+            }
+            
+            me.didEndResizing()
+        }
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -135,23 +152,25 @@ class BrowserView: NSView, Observer
     {
         guard let listView = listViews.last else { return }
         
-        let listGap = TextView.itemSpacing
+        let spacing = TextView.itemSpacing
         
         if listViews.count == 1
         {
             listView.autoAlignAxis(toSuperviewAxis: .vertical)
+            
         }
         else
         {
-            listView.autoPinEdge(.left,
-                                 to: .right,
-                                 of: listViews[listViews.count - 2],
-                                 withOffset: listGap)
+            rememberSpacing(listView.autoPinEdge(.left,
+                                                 to: .right,
+                                                 of: listViews[listViews.count - 2],
+                                                 withOffset: spacing))
         }
         
         listView.autoMatch(.width, to: .width, of: listLayoutGuides[0])
-        listView.autoPinEdge(toSuperviewEdge: .top, withInset: listGap)
-        listView.autoPinEdge(toSuperviewEdge: .bottom, withInset: listGap)
+        
+        rememberSpacing(listView.autoPinEdge(toSuperviewEdge: .top, withInset: spacing))
+        rememberSpacing(listView.autoPinEdge(toSuperviewEdge: .bottom, withInset: spacing))
     }
     
     func didResize()
@@ -198,35 +217,53 @@ class BrowserView: NSView, Observer
     {
         for guide in listLayoutGuides
         {
-            guide.autoPinEdge(toSuperviewEdge: .top,
-                              withInset: TextView.itemSpacing)
+            rememberSpacing(guide.autoPinEdge(toSuperviewEdge: .top,
+                                              withInset: TextView.itemSpacing))
             
-            guide.autoPinEdge(toSuperviewEdge: .bottom,
-                              withInset: TextView.itemSpacing)
+            rememberSpacing(guide.autoPinEdge(toSuperviewEdge: .bottom,
+                                              withInset: TextView.itemSpacing))
         }
         
-        listLayoutGuides[0].autoPinEdge(toSuperviewEdge: .left,
-                                        withInset: TextView.itemSpacing)
-        listLayoutGuides[1].autoPinEdge(.left,
-                                        to: .right,
-                                        of: listLayoutGuides[0],
-                                        withOffset: TextView.itemSpacing)
+        constraintsWithSpacingConstant.append(contentsOf:
+        [
+            listLayoutGuides[0].autoPinEdge(toSuperviewEdge: .left,
+                                            withInset: TextView.itemSpacing),
+            listLayoutGuides[1].autoPinEdge(.left,
+                                            to: .right,
+                                            of: listLayoutGuides[0],
+                                            withOffset: TextView.itemSpacing),
+            listLayoutGuides[2].autoPinEdge(.left,
+                                            to: .right,
+                                            of: listLayoutGuides[1],
+                                            withOffset: TextView.itemSpacing),
+            listLayoutGuides[2].autoPinEdge(toSuperviewEdge: .right,
+                                            withInset: TextView.itemSpacing)
+        ])
+        
         listLayoutGuides[1].autoMatch(.width, to: .width, of: listLayoutGuides[0])
-        listLayoutGuides[2].autoPinEdge(.left,
-                                        to: .right,
-                                        of: listLayoutGuides[1],
-                                        withOffset: TextView.itemSpacing)
-        listLayoutGuides[2].autoPinEdge(toSuperviewEdge: .right,
-                                        withInset: TextView.itemSpacing)
         listLayoutGuides[2].autoMatch(.width, to: .width, of: listLayoutGuides[0])
     }
     
-    private lazy var listLayoutGuides: [NSView] =
+    private lazy var listLayoutGuides: [NSView] = [addForAutoLayout(NSView()),
+                                                   addForAutoLayout(NSView()),
+                                                   addForAutoLayout(NSView())]
+    
+    // MARK: - Dynamic Spacings
+    
+    private func updateSpacings()
     {
-        let guides = [addForAutoLayout(NSView()),
-                      addForAutoLayout(NSView()),
-                      addForAutoLayout(NSView())]
+        let spacing = TextView.itemSpacing
         
-        return guides
-    }()
+        for constraint in constraintsWithSpacingConstant
+        {
+            constraint.constant = constraint.constant < 0 ? -spacing : spacing
+        }
+    }
+    
+    private func rememberSpacing(_ constraint: NSLayoutConstraint)
+    {
+        constraintsWithSpacingConstant.append(constraint)
+    }
+    
+    private var constraintsWithSpacingConstant = [NSLayoutConstraint]()
 }

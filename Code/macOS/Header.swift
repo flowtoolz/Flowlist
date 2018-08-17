@@ -17,6 +17,13 @@ class Header: LayerBackedView, Observer
         
         constrainIcon()
         icon.isHidden = true
+        
+        observe(Font.baseSize)
+        {
+            [weak self] _ in
+            
+            self?.titleLabel.font = Font.listTitle.nsFont
+        }
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -64,8 +71,10 @@ class Header: LayerBackedView, Observer
     
     private func constrainIcon()
     {
-        let size = TextView.lineHeight * 1.235
-        icon.autoSetDimension(.height, toSize: size)
+        icon.autoConstrainAttribute(.height,
+                                    to: .height,
+                                    of: self,
+                                    withMultiplier: 0.55)
         icon.autoCenterInSuperview()
     }
     

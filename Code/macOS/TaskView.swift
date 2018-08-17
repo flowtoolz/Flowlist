@@ -264,6 +264,13 @@ class TaskView: LayerBackedView, Observer, Observable
     private static let leftTextInset = TextView.itemHeight * 0.9
     private static let rightTextInset = TextView.itemHeight * 0.8
     
+    private lazy var layoutGuide: NSView =
+    {
+        let guide = addForAutoLayout(NSView())
+        
+        return guide
+    }()
+    
     // MARK: - Data
     
     static let uiIdentifier = NSUserInterfaceItemIdentifier(rawValue: "TaskViewID")
