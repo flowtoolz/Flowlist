@@ -13,12 +13,21 @@ class TaskView: LayerBackedView, Observer, Observable
         
         identifier = TaskView.uiIdentifier
         
+        constrainLayoutGuide()
         constrainEditingBackground()
         constrainCheckBox()
         contrainGroupIcon()
         constrainTextView()
         
         setItemBorder()
+        
+        observe(Font.baseSize)
+        {
+            [weak self] _ in
+            
+            self?.layoutGuideHeightConstraint?.constant = TextView.itemHeight
+            self?.layoutGuideWidthConstraint?.constant = TextView.itemHeight
+        }
     }
     
     required init?(coder: NSCoder) { fatalError() }
@@ -110,19 +119,21 @@ class TaskView: LayerBackedView, Observer, Observable
 
     private func constrainTextView()
     {
-        textView.autoPinEdge(toSuperviewEdge: .left,
-                               withInset: TaskView.leftTextInset)
+        textView.autoConstrainAttribute(.left,
+                                        to: .right,
+                                        of: layoutGuide,
+                                        withMultiplier: 0.9)
         
-        textView.autoPinEdge(toSuperviewEdge: .right,
-                               withInset: TaskView.rightTextInset)
+        textView.autoConstrainAttribute(.right,
+                                        to: .left,
+                                        of: groupIcon)
         
-        let textOffset = Float.itemTextOffset.cgFloat
-        let padding = TextView.itemPadding
+        textView.autoConstrainAttribute(.top,
+                                        to: .bottom,
+                                        of: layoutGuide,
+                                        withMultiplier: 0.27)
         
-        textView.autoPinEdge(toSuperviewEdge: .top,
-                               withInset: padding + textOffset )
-        textView.autoPinEdge(toSuperviewEdge: .bottom,
-                               withInset: padding - textOffset)
+        textView.autoPinEdge(toSuperviewEdge: .bottom)
     }
     
     private lazy var textView: TextView =
@@ -197,13 +208,14 @@ class TaskView: LayerBackedView, Observer, Observable
 
     private func constrainCheckBox()
     {
-        checkBox.autoSetDimensions(to: CGSize(width: TaskView.iconSize,
-                                              height: TaskView.iconSize))
+        checkBox.autoMatch(.height,
+                           to: .height,
+                           of: layoutGuide,
+                           withMultiplier: 0.5)
+        checkBox.autoMatch(.width, to: .height, of: self)
         
-        let padding = (TextView.itemHeight - TaskView.iconSize) / 2
-
-        checkBox.autoPinEdge(toSuperviewEdge: .top, withInset: padding)
-        checkBox.autoPinEdge(toSuperviewEdge: .left, withInset: padding)
+        checkBox.autoAlignAxis(.horizontal, toSameAxisOf: layoutGuide)
+        checkBox.autoAlignAxis(.vertical, toSameAxisOf: layoutGuide)
     }
     
     private lazy var checkBox: CheckBox =
@@ -263,6 +275,23 @@ class TaskView: LayerBackedView, Observer, Observable
     static let iconSize = TextView.lineHeight
     private static let leftTextInset = TextView.itemHeight * 0.9
     private static let rightTextInset = TextView.itemHeight * 0.8
+    
+    // MARK: - Layout Guide
+    
+    private func constrainLayoutGuide()
+    {
+        layoutGuide.autoPinEdge(toSuperviewEdge: .left)
+        layoutGuide.autoPinEdge(toSuperviewEdge: .top)
+        
+        layoutGuideHeightConstraint = layoutGuide.autoSetDimension(.height,
+                                                                   toSize: TextView.itemHeight)
+        
+        layoutGuideWidthConstraint = layoutGuide.autoSetDimension(.width,
+                                                                  toSize: TextView.itemHeight)
+    }
+    
+    private var layoutGuideHeightConstraint: NSLayoutConstraint?
+    private var layoutGuideWidthConstraint: NSLayoutConstraint?
     
     private lazy var layoutGuide: NSView =
     {
