@@ -131,7 +131,7 @@ class TaskView: LayerBackedView, Observer, Observable
         textView.autoConstrainAttribute(.top,
                                         to: .bottom,
                                         of: layoutGuide,
-                                        withMultiplier: 0.27)
+                                        withMultiplier: 0.28)
         
         textView.autoPinEdge(toSuperviewEdge: .bottom)
     }

@@ -105,7 +105,7 @@ class Header: LayerBackedView, Observer
         titleLabel.autoConstrainAttribute(.top,
                                           to: .bottom,
                                           of: self,
-                                          withMultiplier: 0.25)
+                                          withMultiplier: 0.26)
     }
     
     private func updateTitleInsets()
