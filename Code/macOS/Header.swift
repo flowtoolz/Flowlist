@@ -22,6 +22,7 @@ class Header: LayerBackedView, Observer
         {
             [weak self] _ in
             
+            self?.updateTitleInsets()
             self?.titleLabel.font = Font.listTitle.nsFont
         }
     }
@@ -93,17 +94,36 @@ class Header: LayerBackedView, Observer
     
     private func constrainTitleLabel()
     {
-        let inset = TextView.itemSpacing + TextView.itemPadding - 2
+        let inset = titleSideInset
 
-        titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: inset)
-        titleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: inset)
+        titleSideInsetConstraints =
+        [
+            titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: inset),
+            titleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: inset)
+        ]
         
-        let textOffset = Float.itemTextOffset.cgFloat - 0.5
-        
-        titleLabel.autoAlignAxis(.horizontal,
-                                 toSameAxisOf: self,
-                                 withOffset: textOffset)
+        titleLabel.autoConstrainAttribute(.top,
+                                          to: .bottom,
+                                          of: self,
+                                          withMultiplier: 0.25)
     }
+    
+    private func updateTitleInsets()
+    {
+        let inset = titleSideInset
+        
+        for constraint in titleSideInsetConstraints
+        {
+            constraint.constant = constraint.constant < 0 ? -inset : inset
+        }
+    }
+    
+    private var titleSideInset: CGFloat
+    {
+        return TextView.itemSpacing + TextView.itemPadding - 2
+    }
+    
+    private var titleSideInsetConstraints = [NSLayoutConstraint]()
     
     private lazy var titleLabel: Label =
     {
