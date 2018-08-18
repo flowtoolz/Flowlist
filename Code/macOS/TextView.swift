@@ -4,7 +4,7 @@ import SwiftyToolz
 
 class TextView: NSTextView, NSTextViewDelegate, Observer
 {
-    // MARK: - Initialization
+    // MARK: - Life Cycle
 
     convenience init()
     {
@@ -40,11 +40,7 @@ class TextView: NSTextView, NSTextViewDelegate, Observer
         
         observe(Font.baseSize)
         {
-            [weak self] _ in
-            
-            self?.defaultParagraphStyle = TextView.paragraphStyle
-            self?.typingAttributes = TextView.typingSyle
-            self?.textStorage?.font = Font.text.nsFont
+            [weak self] _ in self?.fontSizeDidChange()
         }
     }
     
@@ -53,6 +49,22 @@ class TextView: NSTextView, NSTextViewDelegate, Observer
     deinit { stopAllObserving() }
     
     // MARK: - Layout Dependent On Line Height
+    
+    private func fontSizeDidChange()
+    {
+        let paragraphStyle = TextView.paragraphStyle
+        
+        defaultParagraphStyle = paragraphStyle
+
+        typingAttributes = TextView.typingSyle
+
+        textStorage?.font = Font.text.nsFont
+        
+        let range = NSRange(location: 0, length: textStorage?.length ?? 0)
+        textStorage?.addAttribute(.paragraphStyle,
+                                  value: paragraphStyle,
+                                  range: range)
+    }
     
     static var itemHeight: CGFloat
     {
@@ -240,7 +252,11 @@ class TextView: NSTextView, NSTextViewDelegate, Observer
         
         enum Event
         {
-            case didNothing, willEdit, didChange(text: String), wantToEndEditing, didEdit
+            case didNothing
+            case willEdit
+            case didChange(text: String)
+            case wantToEndEditing
+            case didEdit
         }
     }
 }
