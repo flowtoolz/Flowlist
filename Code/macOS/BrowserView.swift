@@ -38,13 +38,27 @@ class BrowserView: NSView, Observer
     private func fontSizeDidChange()
     {
         updateSpacings()
-        moveToFocusedList(animated: false)
+        
+        moveToFocusedListAfterNextLayout = true
         
         for listView in listViews
         {
             listView.fontSizeDidChange()
         }
     }
+    
+    override func layout()
+    {
+        super.layout()
+        
+        if moveToFocusedListAfterNextLayout
+        {
+            moveToFocusedList(animated: false)
+            moveToFocusedListAfterNextLayout = false
+        }
+    }
+    
+    private var moveToFocusedListAfterNextLayout = false
     
     // MARK: - Browser
     
