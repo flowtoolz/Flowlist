@@ -1,3 +1,4 @@
+import AppKit
 import SwiftObserver
 import SwiftyToolz
 
@@ -23,5 +24,13 @@ extension Font
     
     static let baseSize = baseSizeVar.new().filter({ $0 != nil }).unwrap(defaultSize)
     static let baseSizeVar = Var(defaultSize)
-    private static let defaultSize = 14
+    private static let defaultSize: Int =
+    {
+        guard let screenSize = NSScreen.main?.frame.size else
+        {
+            return 14
+        }
+        
+        return Int(screenSize.width * 0.011)
+    }()
 }
