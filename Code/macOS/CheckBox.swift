@@ -9,6 +9,7 @@ class CheckBox: NSButton
         super.init(frame: frameRect)
         
         bezelStyle = .regularSquare
+        imagePosition = .imageOnly
         imageScaling = .scaleProportionallyUpOrDown
         image = CheckBox.imageEmpty
         isBordered = false
