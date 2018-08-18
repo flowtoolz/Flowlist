@@ -122,7 +122,7 @@ class TaskView: LayerBackedView, Observer, Observable
         textView.autoConstrainAttribute(.left,
                                         to: .right,
                                         of: layoutGuide,
-                                        withMultiplier: 0.9)
+                                        withMultiplier: TaskView.textLeftMultiplier)
         
         textView.autoConstrainAttribute(.right,
                                         to: .left,
@@ -135,6 +135,8 @@ class TaskView: LayerBackedView, Observer, Observable
         
         textView.autoPinEdge(toSuperviewEdge: .bottom)
     }
+    
+    private static let textLeftMultiplier: CGFloat = 0.9
     
     private lazy var textView: TextView =
     {
@@ -211,7 +213,7 @@ class TaskView: LayerBackedView, Observer, Observable
         checkBox.autoMatch(.height,
                            to: .height,
                            of: layoutGuide,
-                           withMultiplier: 0.5)
+                           withMultiplier: 0.45)
         checkBox.autoMatch(.width, to: .height, of: self)
         
         checkBox.autoAlignAxis(.horizontal, toSameAxisOf: layoutGuide)
@@ -242,19 +244,24 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func contrainGroupIcon()
     {
-        let padding = (TextView.itemHeight - TaskView.iconSize) / 2
+        groupIcon.autoPinEdge(toSuperviewEdge: .right)
+        groupIcon.autoAlignAxis(.horizontal, toSameAxisOf: checkBox)
         
-        groupIcon.autoPinEdge(toSuperviewEdge: .top, withInset: padding)
-        groupIcon.autoPinEdge(toSuperviewEdge: .right, withInset: padding)
+        groupIcon.autoMatch(.height, to: .height, of: checkBox)
         
-        groupIcon.autoSetDimension(.height, toSize: TaskView.iconSize)
+        groupIcon.autoMatch(.width,
+                            to: .width,
+                            of: layoutGuide,
+                            withMultiplier: TaskView.groupIconWidthMultiplier)
     }
+    
+    private static let groupIconWidthMultiplier: CGFloat = 0.75
     
     private lazy var groupIcon: Icon =
     {
         let icon = addForAutoLayout(Icon(with: TaskView.groupIconImage))
         
-        icon.imageAlignment = .alignRight
+        icon.imageAlignment = .alignCenter
         
         return icon
     }()
@@ -263,18 +270,19 @@ class TaskView: LayerBackedView, Observer, Observable
     
     // MARK: - Measuring Size
     
-    static func preferredHeight(for title: String, width: CGFloat) -> CGFloat
+    static func preferredHeight(for text: String, width: CGFloat) -> CGFloat
     {
-        let textWidth = width - (TaskView.leftTextInset + TaskView.rightTextInset)
+        let itemHeight = TextView.itemHeight
+        let leftInset  = itemHeight * TaskView.textLeftMultiplier
+        let rightInset = itemHeight * TaskView.groupIconWidthMultiplier
         
-        let textHeight = TextView.size(with: title, width: textWidth).height
+        let textWidth = width - (leftInset + rightInset)
+        let textHeight = TextView.size(with: text, width: textWidth).height
         
         return textHeight + (2 * TextView.itemPadding)
     }
     
     static let iconSize = TextView.lineHeight
-    private static let leftTextInset = TextView.itemHeight * 0.9
-    private static let rightTextInset = TextView.itemHeight * 0.8
     
     // MARK: - Layout Guide
     

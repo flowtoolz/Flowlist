@@ -74,7 +74,7 @@ class Header: LayerBackedView, Observer
         icon.autoConstrainAttribute(.height,
                                     to: .height,
                                     of: self,
-                                    withMultiplier: 0.55)
+                                    withMultiplier: 0.557)
         icon.autoCenterInSuperview()
     }
     
