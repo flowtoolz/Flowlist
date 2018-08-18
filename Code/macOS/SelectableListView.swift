@@ -90,6 +90,13 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     // MARK: - Scroll Table
     
+    func fontSizeDidChange()
+    {
+        updateLayoutConstants()
+        
+        scrollTable.table.fontSizeDidChange()
+    }
+    
     private func constrainScrollTable()
     {
         let gap = TextView.itemSpacing + 1
@@ -127,7 +134,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     // MARK: - Dynamic Layout Constants
     
-    func updateLayoutConstants()
+    private func updateLayoutConstants()
     {
         headerHeightConstraint?.constant = TextView.itemHeight
         

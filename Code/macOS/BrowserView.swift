@@ -25,25 +25,26 @@ class BrowserView: NSView, Observer
         
         observe(Font.baseSize)
         {
-            [weak self] _ in
-
-            guard let me = self else { return }
-            
-            me.updateSpacings()
-            me.moveToFocusedList(animated: false)
-            
-            for listView in me.listViews
-            {
-                listView.updateLayoutConstants()
-            }
-            
-            me.didEndResizing()
+            [weak self] _ in self?.fontSizeDidChange()
         }
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
     deinit { stopAllObserving() }
+    
+    // MARK: - Adapt to Font Size Changes
+    
+    private func fontSizeDidChange()
+    {
+        updateSpacings()
+        moveToFocusedList(animated: false)
+        
+        for listView in listViews
+        {
+            listView.fontSizeDidChange()
+        }
+    }
     
     // MARK: - Browser
     

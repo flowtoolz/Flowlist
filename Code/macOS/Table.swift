@@ -15,7 +15,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         allowsMultipleSelection = true
         backgroundColor = .clear
         headerView = nil
-        intercellSpacing = NSSize(width: 0.0, height: TextView.itemSpacing)
+        intercellSpacing = cellSpacing
         delegate = content
         dataSource = content
     }
@@ -23,6 +23,19 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     required init?(coder: NSCoder) { fatalError() }
     
     deinit { stopAllObserving() }
+    
+    // MARK: - Adapt to Font Size Changes
+    
+    func fontSizeDidChange()
+    {
+        intercellSpacing = cellSpacing
+        reloadData()
+    }
+    
+    private var cellSpacing: CGSize
+    {
+        return NSSize(width: 0, height: TextView.itemSpacing)
+    }
     
     // MARK: - Configuration
     
