@@ -77,6 +77,9 @@ class BrowserView: NSView, Observer
                 
             case .didMove(let direction):
                 self.browserDidMove(direction)
+            
+            case .listDidChangeSelection(let index):
+                self.selectionDidChangeInList(at: index)
             }
         }
     }
@@ -114,6 +117,17 @@ class BrowserView: NSView, Observer
     }
     
     // MARK: - List Views
+    
+    private func selectionDidChangeInList(at index: Int)
+    {
+        guard listViews.isValid(index: index) else
+        {
+            log(error: "Selection changed in list view at invalid index \(index).")
+            return
+        }
+        
+        listViews[index].scrollTable.table.listDidChangeSelection()
+    }
     
     private func pushListView(for list: SelectableList)
     {

@@ -74,11 +74,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             case .wantToEditTitle(let index): self?.editTitle(at: index)
             }
         }
-        
-        observe(list.selection, select: .didChange)
-        {
-            [weak self] in self?.listDidChangeSelection()
-        }
     }
     
     private weak var list: SelectableList?
@@ -214,7 +209,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     // MARK: - Selection
     
-    private func listDidChangeSelection()
+    func listDidChangeSelection()
     {
         if list == nil
         {

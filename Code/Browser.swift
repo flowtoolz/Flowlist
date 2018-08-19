@@ -59,6 +59,7 @@ class Browser: Observer, Observable
         
         lists.append(newList)
         
+        // TODO: avoid animation when list is pushed to end of stack
         updateRootOfList(at: lists.count - 1)
         
         send(.didPush(list: newList))
@@ -101,6 +102,8 @@ class Browser: Observer, Observable
             log(error: "Received update from unmanaged list.")
             return
         }
+        
+        send(.listDidChangeSelection(at: index))
     
         if index < lists.count - 1
         {
@@ -147,5 +150,6 @@ class Browser: Observer, Observable
         case didNothing
         case didPush(list: SelectableList)
         case didMove(direction: Direction)
+        case listDidChangeSelection(at: Int)
     }
 }
