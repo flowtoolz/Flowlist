@@ -31,9 +31,13 @@ class ApplicationMenu: NSMenu
     {
         switch menuItem
         {
-        case increaseFontSizeItem: return true
-        case decreaseFontSizeItem: return Font.baseSize.latestUpdate > 12
-        default: return false
+        case increaseFontSizeItem:
+            return !TextView.isEditing
+            
+        case decreaseFontSizeItem:
+            return !TextView.isEditing && Font.baseSize.latestUpdate > 12
+            
+        default: return true
         }
     }
     
