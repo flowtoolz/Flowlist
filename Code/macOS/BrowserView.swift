@@ -167,16 +167,6 @@ class BrowserView: LayerBackedView, Observer
         moveToFocusedList()
     }
     
-    // TODO: do we even need this method? why not re-use list views and just leave them hanging in memory?
-    private func popListView()
-    {
-        guard let listView = listViews.popLast() else { return }
-        
-        stopObserving(listView)
-        
-        listView.removeFromSuperview()
-    }
-    
     private func constrainLastListView()
     {
         guard let listView = listViews.last else { return }
