@@ -189,38 +189,6 @@ class List: Observable, Observer
         title.observable = new?.title
         
         send(.did(.changeRoot(from: old, to: new)))
-        
-        // TODO: do this as reaction to the event .didChangeRoot
-        sendDidRemoveTasksOf(oldRoot: old)
-        sendDidInsertTasksOf(newRoot: new)
-    }
-    
-    private func sendDidRemoveTasksOf(oldRoot old: Task?)
-    {
-        guard let old = old, old.hasBranches else { return }
-
-        var subtasks = [Task]()
-        var indexes = [Int]()
-        
-        for index in 0 ..< old.numberOfBranches
-        {
-            if let subtask = old[index]
-            {
-                subtasks.append(subtask)
-                indexes.append(index)
-            }
-        }
-        
-        send(.did(.remove(subtasks: subtasks, from: indexes)))
-    }
-    
-    private func sendDidInsertTasksOf(newRoot new: Task?)
-    {
-        guard let new = new, new.hasBranches else { return }
-        
-        let indexes = Array(0 ..< new.numberOfBranches)
-
-        send(.did(.insert(at: indexes)))
     }
     
     // MARK: - Observability

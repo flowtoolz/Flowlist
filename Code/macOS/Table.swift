@@ -107,13 +107,39 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         switch edit
         {
+        case .nothing: break
         case .create(let index): didCreate(at: index)
         case .insert(let indexes): didInsert(at: indexes)
         case .remove(_, let indexes): didRemove(from: indexes)
         case .move(let from, let to): didMove(from: from, to: to)
-        case .nothing, .changeRoot: break
-            // TODO: consider processing .didChangeRoot here
+        case .changeRoot(let old, let new): didChangeRoot(from: old, to: new)
         }
+    }
+    
+    private func didChangeRoot(from old: Task?, to new: Task?)
+    {
+        guard isVisible else
+        {
+            reloadData()
+            return
+        }
+        
+        if let old = old, old.hasBranches
+        {
+            didRemove(from: Array(0 ..< old.numberOfBranches))
+        }
+        
+        if let new = new, new.hasBranches
+        {
+            didInsert(at: Array(0 ..< new.numberOfBranches))
+        }
+    }
+    
+    private var isVisible: Bool
+    {
+        let visibleSize = visibleRect.size
+        
+        return visibleSize.width > 0 && visibleSize.height > 0
     }
     
     private func didCreate(at index: Int)

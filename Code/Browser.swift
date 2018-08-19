@@ -59,7 +59,6 @@ class Browser: Observer, Observable
         
         lists.append(newList)
         
-        // TODO: avoid animation when list is pushed to end of stack
         updateRootOfList(at: lists.count - 1)
         
         send(.didPush(list: newList))
