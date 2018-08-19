@@ -29,6 +29,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     func fontSizeDidChange()
     {
         intercellSpacing = cellSpacing
+        itemHeightCash.removeAll()
         reloadData()
     }
     
@@ -204,6 +205,8 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     func didEndResizing()
     {
+        itemHeightCash.removeAll()
+        
         let allIndexes = IndexSet(integersIn: 0 ..< numberOfRows)
         
         noteHeightOfRows(withIndexesChanged: allIndexes)
@@ -213,19 +216,50 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         guard let task = list?[row] else { return TextView.itemHeight }
         
+        var height = viewHeight(for: task)
+        
+        if task.isBeingEdited { height += TextView.lineHeight }
+        
+        return height
+    }
+    
+    private func viewHeight(for task: Task) -> CGFloat
+    {
+        if let height = itemHeightCash[task] { return height }
+        
         let title = task.title.value ?? "untitled"
+        
+        let height = TaskView.preferredHeight(for: title, width: width)
+        
+        itemHeightCash[task] = height
+        
+        return height
+    }
+    
+    private var width: CGFloat
+    {
+        if let cashedWidth = cashedWidth { return cashedWidth }
         
         let horizontalGap = TextView.itemSpacing
         
         let windowWidth = Window.intendedMainWindowSize.value?.width ?? 1024
         
-        let tableWidth = ((windowWidth - (4 * horizontalGap)) / 3) - (2 * (horizontalGap + 1))
+        let calculatedWidth = ((windowWidth - (4 * horizontalGap)) / 3) - (2 * (horizontalGap + 1))
         
-        let editingPadding = task.isBeingEdited ? TextView.lineHeight + TextView.itemLineSpacing : 0
+        cashedWidth = calculatedWidth
         
-        return TaskView.preferredHeight(for: title,
-                                        width: tableWidth) + editingPadding
+        return calculatedWidth
     }
+    
+    override func layout()
+    {
+        super.layout()
+        
+        cashedWidth = frame.size.width
+    }
+    
+    private var cashedWidth: CGFloat?
+    private var itemHeightCash = [Task : CGFloat]()
     
     // MARK: - Selection
     
@@ -331,13 +365,21 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             noteHeightOfRows(withIndexesChanged: [index])
             
         case .didChangeTitle:
-            noteHeightOfRows(withIndexesChanged: [index])
+            if let task = taskView.task
+            {
+                itemHeightCash[task] = nil
+                noteHeightOfRows(withIndexesChanged: [index])
+            }
             
         case .wantToEndEditingText:
             NSApp.mainWindow?.makeFirstResponder(self)
             
         case .didEditTitle:
-            noteHeightOfRows(withIndexesChanged: [index])
+            if let task = taskView.task
+            {
+                itemHeightCash[task] = nil
+                noteHeightOfRows(withIndexesChanged: [index])
+            }
             //editTitleOfNextSelectedTaskView()
         }
     }
