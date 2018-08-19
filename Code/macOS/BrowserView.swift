@@ -4,7 +4,7 @@ import UIObserver
 import SwiftObserver
 import SwiftyToolz
 
-class BrowserView: NSView, Observer
+class BrowserView: LayerBackedView, Observer
 {
     // MARK: - Life Cycle
     
