@@ -133,23 +133,17 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     private func didRemove(from indexes: [Int])
     {
-        beginUpdates()
         removeRows(at: IndexSet(indexes), withAnimation: .slideUp)
-        endUpdates()
     }
     
     private func didInsert(at indexes: [Int])
     {
-        beginUpdates()
         insertRows(at: IndexSet(indexes), withAnimation: .slideDown)
-        endUpdates()
     }
     
     private func didMove(from: Int, to: Int)
     {
-        beginUpdates()
         moveRow(at: from, to: to)
-        endUpdates()
         
         if list?.selection.isSelected(list?[to]) ?? false
         {
