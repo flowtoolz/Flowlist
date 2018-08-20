@@ -31,6 +31,10 @@ class TextView: NSTextView, NSTextViewDelegate
         isAutomaticDataDetectionEnabled = true
         isRichText = true
         
+        let lowestPriority = NSLayoutConstraint.Priority(rawValue: 0.1)
+        setContentHuggingPriority(lowestPriority, for: .vertical)
+        setContentHuggingPriority(lowestPriority, for: .horizontal)
+        
         delegate = self
         
         defaultParagraphStyle = TextView.paragraphStyle

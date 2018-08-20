@@ -39,8 +39,11 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func fontSizeDidChange()
     {
-        layoutGuideHeightConstraint?.constant = TextView.itemHeight
-        layoutGuideWidthConstraint?.constant = TextView.itemHeight
+        let itemHeight = TextView.itemHeight
+        
+        layoutGuideHeightConstraint?.constant = itemHeight
+        layoutGuideWidthConstraint?.constant = itemHeight
+        
         textView.fontSizeDidChange()
     }
     
@@ -129,16 +132,8 @@ class TaskView: LayerBackedView, Observer, Observable
                                         to: .right,
                                         of: layoutGuide,
                                         withMultiplier: TaskView.textLeftMultiplier)
-        
-        textView.autoConstrainAttribute(.right,
-                                        to: .left,
-                                        of: groupIcon)
-        
-        textView.autoConstrainAttribute(.top,
-                                        to: .bottom,
-                                        of: layoutGuide,
-                                        withMultiplier: 0.28)
-        
+        textView.autoConstrainAttribute(.right, to: .left, of: groupIcon)
+        textView.autoConstrainAttribute(.top, to: .top, of: checkBox)
         textView.autoPinEdge(toSuperviewEdge: .bottom)
     }
     
@@ -307,9 +302,11 @@ class TaskView: LayerBackedView, Observer, Observable
     private var layoutGuideHeightConstraint: NSLayoutConstraint?
     private var layoutGuideWidthConstraint: NSLayoutConstraint?
     
-    private lazy var layoutGuide: NSView =
+    private lazy var layoutGuide: LayerBackedView =
     {
-        let guide = addForAutoLayout(NSView())
+        let guide = addForAutoLayout(LayerBackedView())
+        
+        guide.backgroundColor = Color(0, 1.0, 0)
         
         return guide
     }()
