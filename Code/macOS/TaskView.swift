@@ -23,10 +23,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         observe(Font.baseSize)
         {
-            [weak self] _ in
-            
-            self?.layoutGuideHeightConstraint?.constant = TextView.itemHeight
-            self?.layoutGuideWidthConstraint?.constant = TextView.itemHeight
+            [weak self] _ in self?.fontSizeDidChange()
         }
     }
     
@@ -36,6 +33,15 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         stopAllObserving()
         removeObservers()
+    }
+    
+    // MARK: - Adapt to Font Size Changes
+    
+    private func fontSizeDidChange()
+    {
+        layoutGuideHeightConstraint?.constant = TextView.itemHeight
+        layoutGuideWidthConstraint?.constant = TextView.itemHeight
+        textView.fontSizeDidChange()
     }
     
     // MARK: - Configuration

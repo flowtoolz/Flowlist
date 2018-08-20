@@ -2,7 +2,7 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class TextView: NSTextView, NSTextViewDelegate, Observer
+class TextView: NSTextView, NSTextViewDelegate
 {
     // MARK: - Life Cycle
 
@@ -37,20 +37,13 @@ class TextView: NSTextView, NSTextViewDelegate, Observer
         typingAttributes = TextView.typingSyle
         selectedTextAttributes = TextView.selectionSyle
         linkTextAttributes = TextView.linkStyle
-        
-        observe(Font.baseSize)
-        {
-            [weak self] _ in self?.fontSizeDidChange()
-        }
     }
     
     required init?(coder: NSCoder) { fatalError() }
     
-    deinit { stopAllObserving() }
-    
     // MARK: - Layout Dependent On Line Height
     
-    private func fontSizeDidChange()
+    func fontSizeDidChange()
     {
         let paragraphStyle = TextView.paragraphStyle
         
