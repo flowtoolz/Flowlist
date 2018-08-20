@@ -302,14 +302,7 @@ class TaskView: LayerBackedView, Observer, Observable
     private var layoutGuideHeightConstraint: NSLayoutConstraint?
     private var layoutGuideWidthConstraint: NSLayoutConstraint?
     
-    private lazy var layoutGuide: LayerBackedView =
-    {
-        let guide = addForAutoLayout(LayerBackedView())
-        
-        guide.backgroundColor = Color(0, 1.0, 0)
-        
-        return guide
-    }()
+    private lazy var layoutGuide: NSView = addForAutoLayout(NSView())
     
     // MARK: - Data
     
