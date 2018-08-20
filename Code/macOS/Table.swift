@@ -77,6 +77,19 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         }
     }
     
+    private func did(_ edit: Edit)
+    {
+        switch edit
+        {
+        case .nothing: break
+        case .create(let index): didCreate(at: index)
+        case .insert(let indexes): didInsert(at: indexes)
+        case .remove(_, let indexes): didRemove(from: indexes)
+        case .move(let from, let to): didMove(from: from, to: to)
+        case .changeRoot(let old, let new): didChangeRoot(from: old, to: new)
+        }
+    }
+    
     private weak var list: SelectableList?
     {
         didSet
@@ -103,19 +116,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     }
     
     // MARK: - Animation
-    
-    private func did(_ edit: Edit)
-    {
-        switch edit
-        {
-        case .nothing: break
-        case .create(let index): didCreate(at: index)
-        case .insert(let indexes): didInsert(at: indexes)
-        case .remove(_, let indexes): didRemove(from: indexes)
-        case .move(let from, let to): didMove(from: from, to: to)
-        case .changeRoot(let old, let new): didChangeRoot(from: old, to: new)
-        }
-    }
     
     private func didChangeRoot(from old: Task?, to new: Task?)
     {

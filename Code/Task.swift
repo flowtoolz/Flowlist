@@ -88,7 +88,11 @@ final class Task: Codable, Observable, Tree
     @discardableResult
     func removeSubtasks(at indexes: [Int]) -> [Task]?
     {
-        guard let removedSubtasks = removeBranches(at: indexes) else { return nil }
+        guard let removedSubtasks = removeBranches(at: indexes) else
+        {
+            log(warning: "Couldn't remove branches at \(indexes).")
+            return nil
+        }
         
         updateNumberOfLeafs()
         
