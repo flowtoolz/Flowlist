@@ -218,7 +218,10 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         
         var height = viewHeight(for: task)
         
-        if task.isBeingEdited { height += TextView.lineHeight }
+        if task.isBeingEdited
+        {
+            height += TextView.lineHeight + TextView.itemLineSpacing
+        }
         
         return height
     }
