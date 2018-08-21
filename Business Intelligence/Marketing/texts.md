@@ -19,7 +19,7 @@ The 1st Hierarchical Task List
 ## 1.2.0
 
 • You can now make the font bigger and smaller, via menu or key command. The whole layout will adjust to the font size you choose, including the size of icons.
-• The navigation animation is now flawless and smooth. After the last update required new technology which made the animation slower and exposed its pre-existing flaws, I rebuilt huge parts of the app, implementing a much better approach.
+• The navigation animation is now flawless and smooth. After the previous update (1.1.0) required new technology which made the animation slower and exposed its pre-existing flaws, I rebuilt huge parts of the app, implementing a much better approach.
 • Further performance improvements
 • Minor UI improvements
 • As always: Many technical improvements under the hood to ensure development will never slow down
