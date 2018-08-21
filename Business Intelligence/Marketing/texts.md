@@ -16,6 +16,17 @@ The 1st Hierarchical Task List
 
 #Flowlist AppStore Update Text
 
+## 1.2.0
+
+• You can now make the font bigger and smaller, via menu or key command. The whole layout will adjust to the font size you choose, including the size of icons.
+• The navigation animation is now flawless and smooth. After the last update required new technology which made the animation slower and exposed its pre-existing flaws, I rebuilt huge parts of the app, implementing a much better approach.
+• Further performance improvements
+• Minor UI improvements
+• As always: Many technical improvements under the hood to ensure development will never slow down
+
+
+## 1.1.0
+
 • Multi line items allow to write structured texts. Empty items now correspond as paragraphs and non-empty items to headings
 • Web URLs and email adresses are now hyperlinked and clickable
 • The UI is updated, hopefully improved, in particular related to legibility, item editing and list headers
@@ -31,24 +42,6 @@ The 1st Hierarchical Task List
 #Flowlist AppStore Promo Text
 
 In-app purchase is 50% off during summer
-
-#Flowlist AppStore Keywords
-
-[100 characters max!](http://www.charactercountonline.com)
-
-1.0.8
-> task, project, todo, list, management, flow, agile, notes, brainstorming, focus, process, kanban
-
-1.0.9:
-
-primary:
-free,list,to,do,note,notes,taking,task,manager,business,today,todo,workflow,project,quick,management
-
-secondary:
-easy,progress,notebook,focus,daily,simple,ideas,school,tracker,college,creative,things,personal,done
-
-Relevant later:
-> organizer, calendar, schedule, plan, planner, write, writer, author, agenda, reminder
 
 #Flowlist AppStore Description
 
