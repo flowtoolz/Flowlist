@@ -244,7 +244,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainC2aButton()
     {
-        c2aButton.autoSetDimension(.height, toSize: TextView.itemHeight)
+        c2aButton.autoSetDimension(.height, toSize: TaskView.heightWithSingleLine)
         c2aButton.autoPinEdge(.bottom,
                               to: .top,
                               of: restoreButton,
@@ -284,7 +284,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainRestoreButton()
     {
-        restoreButton.autoSetDimension(.height, toSize: TextView.itemHeight)
+        restoreButton.autoSetDimension(.height, toSize: TaskView.heightWithSingleLine)
         restoreButton.autoPinEdge(toSuperviewEdge: .bottom)
         restoreButton.autoAlignAxis(toSuperviewAxis: .vertical)
         restoreButton.autoSetDimension(.width, toSize: 200)
@@ -355,7 +355,7 @@ class PurchaseContentView: NSView, Observer
             column.autoPinEdge(toSuperviewEdge: .bottom)
         }
         
-        let gap = TextView.itemHeight
+        let gap = TaskView.heightWithSingleLine
         
         columns[0].autoPinEdge(toSuperviewEdge: .left)
         

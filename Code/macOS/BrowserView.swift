@@ -171,7 +171,7 @@ class BrowserView: LayerBackedView, Observer
     {
         guard let listView = listViews.last else { return }
         
-        let spacing = TextView.itemSpacing
+        let spacing = TaskView.spacing
         
         if listViews.count == 1
         {
@@ -210,7 +210,7 @@ class BrowserView: LayerBackedView, Observer
         guard listViews.isValid(index: browser.focusedListIndex) else { return }
         
         let focusedListView = listViews[browser.focusedListIndex]
-        let listOffset = focusedListView.frame.size.width + 2 * TextView.itemSpacing
+        let listOffset = focusedListView.frame.size.width + 2 * TaskView.spacing
         let targetPosition = focusedListView.frame.origin.x - listOffset
         
         if animated
@@ -237,26 +237,26 @@ class BrowserView: LayerBackedView, Observer
         for guide in listLayoutGuides
         {
             rememberSpacing(guide.autoPinEdge(toSuperviewEdge: .top,
-                                              withInset: TextView.itemSpacing))
+                                              withInset: TaskView.spacing))
             
             rememberSpacing(guide.autoPinEdge(toSuperviewEdge: .bottom,
-                                              withInset: TextView.itemSpacing))
+                                              withInset: TaskView.spacing))
         }
         
         constraintsWithSpacingConstant.append(contentsOf:
         [
             listLayoutGuides[0].autoPinEdge(toSuperviewEdge: .left,
-                                            withInset: TextView.itemSpacing),
+                                            withInset: TaskView.spacing),
             listLayoutGuides[1].autoPinEdge(.left,
                                             to: .right,
                                             of: listLayoutGuides[0],
-                                            withOffset: TextView.itemSpacing),
+                                            withOffset: TaskView.spacing),
             listLayoutGuides[2].autoPinEdge(.left,
                                             to: .right,
                                             of: listLayoutGuides[1],
-                                            withOffset: TextView.itemSpacing),
+                                            withOffset: TaskView.spacing),
             listLayoutGuides[2].autoPinEdge(toSuperviewEdge: .right,
-                                            withInset: TextView.itemSpacing)
+                                            withInset: TaskView.spacing)
         ])
         
         listLayoutGuides[1].autoMatch(.width, to: .width, of: listLayoutGuides[0])
@@ -271,7 +271,7 @@ class BrowserView: LayerBackedView, Observer
     
     private func updateSpacings()
     {
-        let spacing = TextView.itemSpacing
+        let spacing = TaskView.spacing
         
         for constraint in constraintsWithSpacingConstant
         {

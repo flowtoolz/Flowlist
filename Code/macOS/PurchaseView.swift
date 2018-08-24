@@ -101,9 +101,11 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         expandIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
         expandIcon.autoAlignAxis(.horizontal, toSameAxisOf: itemLabel)
-        expandIcon.autoSetDimensions(to: CGSize(width: TaskView.iconSize,
-                                                height: TaskView.iconSize))
+        expandIcon.autoSetDimensions(to: CGSize(width: defaultIconSize,
+                                                height: defaultIconSize))
     }
+    
+    private let defaultIconSize = TextView.lineHeight
     
     private lazy var expandIcon: Icon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "expand_indicator_pdf")))
     
@@ -137,15 +139,15 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainContent()
     {
-        let insets = NSEdgeInsets(top: TextView.itemHeight,
-                                  left: TextView.itemHeight,
-                                  bottom: TextView.itemHeight,
-                                  right: TextView.itemHeight)
+        let insets = NSEdgeInsets(top: TaskView.heightWithSingleLine,
+                                  left: TaskView.heightWithSingleLine,
+                                  bottom: TaskView.heightWithSingleLine,
+                                  right: TaskView.heightWithSingleLine)
         
         content.autoPinEdgesToSuperviewEdges(with: insets)
     }
     
-    let collapsedHeight = TextView.itemHeight + Float.progressBarHeight.cgFloat
+    let collapsedHeight = TaskView.heightWithSingleLine + Float.progressBarHeight.cgFloat
     
     private lazy var content: PurchaseContentView =
     {
@@ -164,7 +166,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         buttonOverlay.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                   excludingEdge: .bottom)
         
-        let height = TextView.itemHeight + Float.progressBarHeight.cgFloat
+        let height = TaskView.heightWithSingleLine + Float.progressBarHeight.cgFloat
         buttonOverlay.autoSetDimension(.height, toSize: height)
     }
     

@@ -120,7 +120,7 @@ class Header: LayerBackedView, Observer
     
     private var titleSideInset: CGFloat
     {
-        return TextView.itemSpacing + TextView.itemPadding - 2
+        return TaskView.spacing + TaskView.padding - 2
     }
     
     private var titleSideInsetConstraints = [NSLayoutConstraint]()

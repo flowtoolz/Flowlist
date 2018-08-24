@@ -35,7 +35,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     private var cellSpacing: CGSize
     {
-        return NSSize(width: 0, height: TextView.itemSpacing)
+        return NSSize(width: 0, height: TaskView.spacing)
     }
     
     // MARK: - Configuration
@@ -214,13 +214,13 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     func taskViewHeight(at row: Int) -> CGFloat
     {
-        guard let task = list?[row] else { return TextView.itemHeight }
+        guard let task = list?[row] else { return TaskView.heightWithSingleLine }
         
         var height = viewHeight(for: task)
         
         if task.isBeingEdited
         {
-            height += TextView.lineHeight + TextView.itemLineSpacing
+            height += TextView.lineHeight + TextView.lineSpacing
         }
         
         return height
@@ -243,7 +243,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         if let cashedWidth = cashedWidth { return cashedWidth }
         
-        let horizontalGap = TextView.itemSpacing
+        let horizontalGap = TaskView.spacing
         
         let windowWidth = Window.intendedMainWindowSize.value?.width ?? 1024
         

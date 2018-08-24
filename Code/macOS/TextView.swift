@@ -45,7 +45,7 @@ class TextView: NSTextView, NSTextViewDelegate
     
     required init?(coder: NSCoder) { fatalError() }
     
-    // MARK: - Layout Dependent On Line Height
+    // MARK: - Adapt to Font Size
     
     func fontSizeDidChange()
     {
@@ -63,24 +63,44 @@ class TextView: NSTextView, NSTextViewDelegate
                                   range: range)
     }
     
-    static var itemHeight: CGFloat
+    // MARK: - Style
+    
+    private static var typingSyle: [NSAttributedStringKey : Any]
     {
-        return 2 * itemPadding + lineHeight
+        return [.font : Font.text.nsFont,
+                .paragraphStyle : TextView.paragraphStyle]
     }
     
-    static var itemSpacing: CGFloat { return itemLineSpacing }
+    private static let selectionSyle: [NSAttributedStringKey : Any] =
+    [
+        .backgroundColor : Color.gray(brightness: 0.9).nsColor
+    ]
     
-    static var itemLineSpacing: CGFloat
+    private static let linkStyle: [NSAttributedStringKey : Any] =
+    [
+        NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue
+    ]
+    
+    private static var textFont: NSFont
     {
-        return 2 * itemPadding - lineHeight
+        return Font.text.nsFont
     }
     
-    static var itemPadding: CGFloat
+    private static var paragraphStyle: NSParagraphStyle
     {
-        return CGFloat(Int(lineHeight * 0.647 + 0.5))
+        let style = NSMutableParagraphStyle()
+        
+        style.lineSpacing = TextView.lineSpacing
+        
+        return style
     }
-
-    // MARK: - Measuring Size
+    
+    static var lineSpacing: CGFloat
+    {
+        return Float.lineSpacing(for: Float(TextView.lineHeight)).cgFloat
+    }
+    
+    // MARK: - Measure Height
     
     static var lineHeight: CGFloat
     {
@@ -98,7 +118,7 @@ class TextView: NSTextView, NSTextViewDelegate
         let range = NSMakeRange(0, textStorage.length)
         
         textStorage.addAttribute(.font,
-                                 value: TextView.fieldFont,
+                                 value: TextView.textFont,
                                  range: range)
         
         textStorage.addAttribute(.paragraphStyle,
@@ -129,38 +149,6 @@ class TextView: NSTextView, NSTextViewDelegate
         
         return container
     }()
-
-    // MARK: - Style
-    
-    private static var typingSyle: [NSAttributedStringKey : Any]
-    {
-        return [.font : Font.text.nsFont,
-                .paragraphStyle : TextView.paragraphStyle]
-    }
-    
-    private static let selectionSyle: [NSAttributedStringKey : Any] =
-    [
-        .backgroundColor : Color.gray(brightness: 0.9).nsColor
-    ]
-    
-    private static let linkStyle: [NSAttributedStringKey : Any] =
-    [
-        NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue
-    ]
-    
-    private static var fieldFont: NSFont
-    {
-        return Font.text.nsFont
-    }
-    
-    private static var paragraphStyle: NSParagraphStyle
-    {
-        let style = NSMutableParagraphStyle()
-        
-        style.lineSpacing = TextView.itemLineSpacing
-        
-        return style
-    }
     
     // MARK: - Update
 

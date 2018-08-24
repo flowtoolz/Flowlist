@@ -39,7 +39,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func fontSizeDidChange()
     {
-        let itemHeight = TextView.itemHeight
+        let itemHeight = TaskView.heightWithSingleLine
         
         layoutGuideHeightConstraint?.constant = itemHeight
         layoutGuideWidthConstraint?.constant = itemHeight
@@ -269,22 +269,6 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private static let groupIconImage = #imageLiteral(resourceName: "container_indicator_pdf")
     
-    // MARK: - Measuring Size
-    
-    static func preferredHeight(for text: String, width: CGFloat) -> CGFloat
-    {
-        let itemHeight = TextView.itemHeight
-        let leftInset  = itemHeight * TaskView.textLeftMultiplier
-        let rightInset = itemHeight * TaskView.groupIconWidthMultiplier
-        
-        let textWidth = width - (leftInset + rightInset)
-        let textHeight = TextView.size(with: text, width: textWidth).height
-        
-        return textHeight + (2 * TextView.itemPadding)
-    }
-    
-    static let iconSize = TextView.lineHeight
-    
     // MARK: - Layout Guide
     
     private func constrainLayoutGuide()
@@ -293,16 +277,45 @@ class TaskView: LayerBackedView, Observer, Observable
         layoutGuide.autoPinEdge(toSuperviewEdge: .top)
         
         layoutGuideHeightConstraint = layoutGuide.autoSetDimension(.height,
-                                                                   toSize: TextView.itemHeight)
+                                                                   toSize: TaskView.heightWithSingleLine)
         
         layoutGuideWidthConstraint = layoutGuide.autoSetDimension(.width,
-                                                                  toSize: TextView.itemHeight)
+                                                                  toSize: TaskView.heightWithSingleLine)
     }
     
     private var layoutGuideHeightConstraint: NSLayoutConstraint?
     private var layoutGuideWidthConstraint: NSLayoutConstraint?
     
     private lazy var layoutGuide: NSView = addForAutoLayout(NSView())
+    
+    // MARK: - Measuring Size
+    
+    static func preferredHeight(for text: String, width: CGFloat) -> CGFloat
+    {
+        let referenceHeight = heightWithSingleLine
+        let leftInset  = referenceHeight * textLeftMultiplier
+        let rightInset = referenceHeight * groupIconWidthMultiplier
+        
+        let textWidth = width - (leftInset + rightInset)
+        let textHeight = TextView.size(with: text, width: textWidth).height
+        
+        return textHeight + (2 * padding)
+    }
+    
+    static var heightWithSingleLine: CGFloat
+    {
+        return 2 * padding + TextView.lineHeight
+    }
+    
+    static var padding: CGFloat
+    {
+        return Float.itemPadding(for: Float(TextView.lineHeight)).cgFloat
+    }
+    
+    static var spacing: CGFloat
+    {
+        return TextView.lineSpacing
+    }
     
     // MARK: - Data
     

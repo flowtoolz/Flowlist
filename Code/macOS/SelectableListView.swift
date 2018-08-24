@@ -83,7 +83,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
         header.autoPinEdge(toSuperviewEdge: .right)
         header.autoPinEdge(toSuperviewEdge: .top)
         headerHeightConstraint = header.autoSetDimension(.height,
-                                                         toSize: TextView.itemHeight)
+                                                         toSize: TaskView.heightWithSingleLine)
     }
     
     private lazy var header: Header = addForAutoLayout(Header())
@@ -99,7 +99,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func constrainScrollTable()
     {
-        let gap = TextView.itemSpacing + 1
+        let gap = TaskView.spacing + 1
         let insets = NSEdgeInsets(top: 0,
                                   left: gap,
                                   bottom: gap,
@@ -136,9 +136,9 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func updateLayoutConstants()
     {
-        headerHeightConstraint?.constant = TextView.itemHeight
+        headerHeightConstraint?.constant = TaskView.heightWithSingleLine
         
-        let inset = TextView.itemSpacing + 1
+        let inset = TaskView.spacing + 1
         
         for constraint in scrollTableInsetConstraints
         {
@@ -154,8 +154,9 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private var scrollTableTopOffset: CGFloat
     {
-        let smallHalfItemSpacing = CGFloat(Int(TextView.itemSpacing / 2))
-        return TextView.itemSpacing - smallHalfItemSpacing
+        let spacing = TaskView.spacing
+        let smallHalfItemSpacing = CGFloat(Int(spacing / 2))
+        return spacing - smallHalfItemSpacing
     }
     
     // MARK: - List

@@ -19,8 +19,8 @@ class BulletpointList: NSView
         {
             let icon = bulletpointIcons[index]
             icon.autoPinEdge(toSuperviewEdge: .left)
-            icon.autoSetDimensions(to: CGSize(width: TaskView.iconSize,
-                                              height: TaskView.iconSize))
+            icon.autoSetDimensions(to: CGSize(width: defaultIconSize,
+                                              height: defaultIconSize))
             
             let label = bulletpointLabels[index]
             label.autoPinEdge(toSuperviewEdge: .right)
@@ -47,6 +47,8 @@ class BulletpointList: NSView
             icon.autoConstrainAttribute(.top, to: .top, of: label)
         }
     }
+    
+    private let defaultIconSize = TextView.lineHeight
     
     private lazy var bulletpointIcons: [Icon] =
     {
