@@ -29,7 +29,7 @@ class TextView: NSTextView, NSTextViewDelegate
         textContainer?.lineFragmentPadding = 0
         isAutomaticLinkDetectionEnabled = true
         isAutomaticDataDetectionEnabled = true
-        isRichText = true
+        isRichText = false
         
         let lowestPriority = NSLayoutConstraint.Priority(rawValue: 0.1)
         setContentHuggingPriority(lowestPriority, for: .vertical)
