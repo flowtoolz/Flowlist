@@ -37,6 +37,8 @@ class BrowserView: LayerBackedView, Observer
     
     private func fontSizeDidChange()
     {
+        TextView.cashedLineHeight = nil
+        
         updateSpacings()
         
         moveToFocusedListAfterNextLayout = true

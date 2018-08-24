@@ -104,8 +104,19 @@ class TextView: NSTextView, NSTextViewDelegate
     
     static var lineHeight: CGFloat
     {
-        return measuringLayoutManager.defaultLineHeight(for: Font.text.nsFont)
+        if let cashedLineHeight = cashedLineHeight
+        {
+            return cashedLineHeight
+        }
+        
+        let measuredLineHeight = measuringLayoutManager.defaultLineHeight(for: Font.text.nsFont)
+        
+        cashedLineHeight = measuredLineHeight
+        
+        return measuredLineHeight
     }
+    
+    static var cashedLineHeight: CGFloat?
     
     static func size(with text: String, width: CGFloat) -> CGSize
     {
