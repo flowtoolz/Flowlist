@@ -18,8 +18,12 @@ extension Font
     
     static var title: Font
     {
-        return Font.system(size: 2 * baseSize.latestUpdate,
-                           weight: .bold)
+        return Font.system(size: 28, weight: .bold)
+    }
+    
+    static var purchasePanel: Font
+    {
+        return Font.system(size: 14, weight: .system)
     }
     
     static let baseSize = baseSizeVar.new().filter({ $0 != nil }).unwrap(defaultSize)
@@ -30,7 +34,7 @@ extension Font
         {
             return 14
         }
-        
+
         return Int(screenSize.width * 0.011)
     }()
 }

@@ -110,7 +110,7 @@ class PriceTag: NSView, Observer
     {
         let label = addForAutoLayout(Label())
         
-        label.font = Font.text.nsFont
+        label.font = Font.purchasePanel.nsFont
         label.alignment = .center
         label.textColor = color.nsColor
         

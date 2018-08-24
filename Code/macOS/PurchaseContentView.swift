@@ -126,7 +126,7 @@ class PurchaseContentView: NSView, Observer
         
         label.lineBreakMode = .byWordWrapping
         label.textColor = .white
-        label.font = Font.text.nsFont
+        label.font = Font.purchasePanel.nsFont
         
         return label
     }()
@@ -172,7 +172,7 @@ class PurchaseContentView: NSView, Observer
         let label = loadingIndicator.addForAutoLayout(Label())
         
         label.stringValue = "Loading infos from AppStore ..."
-        label.font = Font.text.nsFont
+        label.font = Font.purchasePanel.nsFont
         label.alignment = .center
         
         return label
@@ -255,7 +255,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainC2aButton()
     {
-        c2aButton.autoSetDimension(.height, toSize: TaskView.heightWithSingleLine)
+        c2aButton.autoSetDimension(.height, toSize: 39)
         c2aButton.autoPinEdge(.bottom,
                               to: .top,
                               of: restoreButton,
@@ -273,7 +273,7 @@ class PurchaseContentView: NSView, Observer
         button.isHidden = true
         
         button.titleLabel.textColor = .white
-        button.titleLabel.font = Font.text.nsFont
+        button.titleLabel.font = Font.purchasePanel.nsFont
         
         button.title = "Purchase the Full Version"
         button.action =
@@ -296,7 +296,7 @@ class PurchaseContentView: NSView, Observer
     private func constrainRestoreButton()
     {
         restoreButton.autoSetDimension(.height,
-                                       toSize: TaskView.heightWithSingleLine)
+                                       toSize: 39)
         restoreButton.autoPinEdge(toSuperviewEdge: .bottom)
         restoreButton.autoAlignAxis(toSuperviewAxis: .vertical)
         restoreButton.autoSetDimension(.width, toSize: 200)
@@ -310,7 +310,7 @@ class PurchaseContentView: NSView, Observer
         button.backgroundColor = Color.gray(brightness: 0.6)
         
         button.titleLabel.textColor = .white
-        button.titleLabel.font = Font.text.nsFont
+        button.titleLabel.font = Font.purchasePanel.nsFont
         
         button.title = "Restore Previous Purchase"
         button.action =
@@ -337,7 +337,7 @@ class PurchaseContentView: NSView, Observer
         descriptionLabel.autoConstrainAttribute(.top,
                                                 to: .bottom,
                                                 of: titleLabel,
-                                                withOffset: CGFloat(Font.defaultSize))
+                                                withOffset: 14.0)
     }
     
     private lazy var descriptionLabel: Label =
@@ -345,7 +345,7 @@ class PurchaseContentView: NSView, Observer
         let label = columns[0].addForAutoLayout(Label())
         
         label.lineBreakMode = .byWordWrapping
-        label.font = Font.text.nsFont
+        label.font = Font.purchasePanel.nsFont
         label.stringValue = productDescription
         
         return label
@@ -367,7 +367,7 @@ class PurchaseContentView: NSView, Observer
             column.autoPinEdge(toSuperviewEdge: .bottom)
         }
         
-        let gap = TaskView.heightWithSingleLine
+        let gap: CGFloat = 39
         
         columns[0].autoPinEdge(toSuperviewEdge: .left)
         

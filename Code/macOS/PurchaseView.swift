@@ -75,7 +75,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         let field = addForAutoLayout(Label())
         
-        field.font = Font.text.nsFont
+        field.font = Font.purchasePanel.nsFont
         let color = labelColor(for: numberOfUserCreatedTasks.latestUpdate)
         field.textColor = color.nsColor
         
@@ -105,7 +105,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
                                                 height: defaultIconSize))
     }
     
-    private let defaultIconSize = TextView.lineHeight
+    private let defaultIconSize: CGFloat = 17.0
     
     private lazy var expandIcon: Icon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "expand_indicator_pdf")))
     
@@ -157,7 +157,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
                                        withMultiplier: 0.9)
     }
     
-    let collapsedHeight = TaskView.heightWithSingleLine + Float.progressBarHeight.cgFloat
+    let collapsedHeight: CGFloat = 39 + Float.progressBarHeight.cgFloat
     
     private lazy var content: PurchaseContentView =
     {
@@ -176,7 +176,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         buttonOverlay.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
                                                   excludingEdge: .bottom)
         
-        let height = TaskView.heightWithSingleLine + Float.progressBarHeight.cgFloat
+        let height = 39 + Float.progressBarHeight.cgFloat
         buttonOverlay.autoSetDimension(.height, toSize: height)
     }
     
@@ -185,7 +185,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         let button = addForAutoLayout(NSButton())
         
         button.title = ""
-        button.font = Font.text.nsFont
+        button.font = Font.purchasePanel.nsFont
         button.isBordered = false
         button.bezelStyle = .regularSquare
         button.target = self

@@ -48,7 +48,7 @@ class BulletpointList: NSView
         }
     }
     
-    private let defaultIconSize = TextView.lineHeight
+    private let defaultIconSize: CGFloat = 17
     
     private lazy var bulletpointIcons: [Icon] =
     {
@@ -69,7 +69,7 @@ class BulletpointList: NSView
         for bulletpoint in bulletpoints
         {
             let label = addForAutoLayout(Label())
-            label.font = Font.text.nsFont
+            label.font = Font.purchasePanel.nsFont
             label.stringValue = bulletpoint
             label.lineBreakMode = .byWordWrapping
             labels.append(label)
