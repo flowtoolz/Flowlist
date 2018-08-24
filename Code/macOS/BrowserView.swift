@@ -118,6 +118,21 @@ class BrowserView: LayerBackedView, Observer
         return true
     }
     
+    // MARK: - Resizing
+    
+    func didResize()
+    {
+        moveToFocusedList(animated: false)
+    }
+    
+    func didEndResizing()
+    {
+        for listView in listViews
+        {
+            listView.didEndResizing()
+        }
+    }
+    
     // MARK: - List Views
     
     private func selectionDidChangeInList(at index: Int)
@@ -192,19 +207,6 @@ class BrowserView: LayerBackedView, Observer
         
         rememberSpacing(listView.autoPinEdge(toSuperviewEdge: .top, withInset: spacing))
         rememberSpacing(listView.autoPinEdge(toSuperviewEdge: .bottom, withInset: spacing))
-    }
-    
-    func didResize()
-    {
-        moveToFocusedList(animated: false)
-    }
-    
-    func didEndResizing()
-    {
-        for listView in listViews
-        {
-            listView.didEndResizing()
-        }
     }
     
     private func moveToFocusedList(animated: Bool = true)
