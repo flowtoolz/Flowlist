@@ -247,8 +247,13 @@ class BrowserView: LayerBackedView, Observer
                                               withInset: TaskView.spacing))
         }
         
+        let minimumWidth = TaskView.heightWithSingleLine * 3
+        
         constraintsWithSpacingConstant.append(contentsOf:
         [
+            listLayoutGuides[0].autoSetDimension(.width,
+                                                 toSize: minimumWidth,
+                                                 relation: .greaterThanOrEqual),
             listLayoutGuides[0].autoPinEdge(toSuperviewEdge: .left,
                                             withInset: TaskView.spacing),
             listLayoutGuides[1].autoPinEdge(.left,

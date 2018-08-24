@@ -139,12 +139,22 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainContent()
     {
-        let insets = NSEdgeInsets(top: TaskView.heightWithSingleLine,
-                                  left: TaskView.heightWithSingleLine,
-                                  bottom: TaskView.heightWithSingleLine,
-                                  right: TaskView.heightWithSingleLine)
-        
-        content.autoPinEdgesToSuperviewEdges(with: insets)
+        content.autoConstrainAttribute(.left,
+                                       to: .right,
+                                       of: self,
+                                       withMultiplier: 0.05)
+        content.autoConstrainAttribute(.right,
+                                       to: .right,
+                                       of: self,
+                                       withMultiplier: 0.95)
+        content.autoConstrainAttribute(.top,
+                                       to: .bottom,
+                                       of: self,
+                                       withMultiplier: 0.1)
+        content.autoConstrainAttribute(.bottom,
+                                       to: .bottom,
+                                       of: self,
+                                       withMultiplier: 0.9)
     }
     
     let collapsedHeight = TaskView.heightWithSingleLine + Float.progressBarHeight.cgFloat

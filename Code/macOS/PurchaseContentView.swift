@@ -13,7 +13,7 @@ class PurchaseContentView: NSView, Observer
         super.init(frame: frameRect)
         
         constrainColumns()
-        
+
         constrainTitleLabel()
         constrainDescriptionLabel()
         
@@ -23,7 +23,7 @@ class PurchaseContentView: NSView, Observer
         constrainRestoreButton()
         constrainLoadingIndicator()
         constrainErrorView()
-        
+
         constrainBulletpointList()
         
         observe(fullVersionPurchaseController)
@@ -104,11 +104,20 @@ class PurchaseContentView: NSView, Observer
         errorView.autoPinEdge(toSuperviewEdge: .left)
         errorView.autoPinEdge(toSuperviewEdge: .right)
         errorView.autoPinEdge(toSuperviewEdge: .bottom)
-        errorView.autoPinEdge(.top, to: .bottom, of: icon, withOffset: 30)
+        errorView.autoMatch(.height,
+                            to: .height,
+                            of: columns[1],
+                            withMultiplier: 0.4)
         
-        let insets = NSEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
-        errorLabel.autoPinEdgesToSuperviewEdges(with: insets,
-                                                excludingEdge: .bottom)
+        errorLabel.autoMatch(.height,
+                             to: .height,
+                             of: errorView,
+                             withMultiplier: 0.9)
+        errorLabel.autoMatch(.width,
+                             to: .width,
+                             of: errorView,
+                             withMultiplier: 0.9)
+        errorLabel.autoCenterInSuperview()
     }
     
     private lazy var errorLabel: Label =
@@ -132,7 +141,7 @@ class PurchaseContentView: NSView, Observer
         
         view.backgroundColor = Color.discountRed
         view.isHidden = true
-        view.layer?.cornerRadius = CGFloat(Float.cornerRadius)
+        view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         
         return view
     }()
@@ -143,11 +152,14 @@ class PurchaseContentView: NSView, Observer
     {
         loadingIndicator.autoPinEdge(toSuperviewEdge: .left)
         loadingIndicator.autoPinEdge(toSuperviewEdge: .right)
-        loadingIndicator.autoPinEdge(.bottom, to: .top, of: restoreButton)
         loadingIndicator.autoPinEdge(.top,
                                      to: .bottom,
                                      of: icon,
-                                     withOffset: 20)
+                                     withOffset: 10)
+        loadingIndicator.autoMatch(.height,
+                                   to: .height,
+                                   of: columns[1],
+                                   withMultiplier: 0.4)
         let insets = NSEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
         loadingLabel.autoPinEdgesToSuperviewEdges(with: insets,
                                                   excludingEdge: .bottom)
@@ -202,7 +214,7 @@ class PurchaseContentView: NSView, Observer
     {
         bulletpointList.autoPinEdge(toSuperviewEdge: .left)
         bulletpointList.autoPinEdge(toSuperviewEdge: .right)
-        bulletpointList.autoPinEdge(toSuperviewEdge: .top, withInset: 11)
+        bulletpointList.autoPinEdge(toSuperviewEdge: .top, withInset: 12)
     }
     
     private lazy var bulletpointList: BulletpointList = columns[2].addForAutoLayout(BulletpointList())
@@ -211,11 +223,13 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainIcon()
     {
-        icon.autoPinEdge(toSuperviewEdge: .top, withInset: 12)
+        icon.autoPinEdge(toSuperviewEdge: .top, withInset: 0)
         icon.autoPinEdge(toSuperviewEdge: .left)
         icon.autoPinEdge(toSuperviewEdge: .right)
-        
-        icon.autoPinEdge(.bottom, to: .top, of: priceTag)
+        icon.autoMatch(.height,
+                       to: .height,
+                       of: columns[1],
+                       withMultiplier: 0.35)
     }
     
     private lazy var icon: NSImageView =
@@ -230,10 +244,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainPriceTag()
     {
-        priceTag.autoPinEdge(.bottom,
-                             to: .top,
-                             of: c2aButton,
-                             withOffset: -10)
+        priceTag.autoPinEdge(.top, to: .bottom, of: icon)
         priceTag.autoPinEdge(toSuperviewEdge: .left)
         priceTag.autoPinEdge(toSuperviewEdge: .right)
     }
@@ -284,7 +295,8 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainRestoreButton()
     {
-        restoreButton.autoSetDimension(.height, toSize: TaskView.heightWithSingleLine)
+        restoreButton.autoSetDimension(.height,
+                                       toSize: TaskView.heightWithSingleLine)
         restoreButton.autoPinEdge(toSuperviewEdge: .bottom)
         restoreButton.autoAlignAxis(toSuperviewAxis: .vertical)
         restoreButton.autoSetDimension(.width, toSize: 200)
@@ -320,12 +332,12 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainDescriptionLabel()
     {
-        descriptionLabel.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                      excludingEdge: .top)
-        descriptionLabel.autoPinEdge(.top,
-                                     to: .bottom,
-                                     of: titleLabel,
-                                     withOffset: 10)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .left)
+        descriptionLabel.autoPinEdge(toSuperviewEdge: .right)
+        descriptionLabel.autoConstrainAttribute(.top,
+                                                to: .bottom,
+                                                of: titleLabel,
+                                                withOffset: CGFloat(Font.defaultSize))
     }
     
     private lazy var descriptionLabel: Label =

@@ -24,7 +24,7 @@ extension Font
     
     static let baseSize = baseSizeVar.new().filter({ $0 != nil }).unwrap(defaultSize)
     static let baseSizeVar = Var(defaultSize)
-    private static let defaultSize: Int =
+    static let defaultSize: Int =
     {
         guard let screenSize = NSScreen.main?.frame.size else
         {
