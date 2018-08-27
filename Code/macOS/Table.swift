@@ -30,6 +30,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         intercellSpacing = cellSpacing
         itemHeightCash.removeAll()
+        cashedWidth = nil
         reloadData()
     }
     
