@@ -23,11 +23,6 @@ class Store: Observer
             
             stopObserving(oldValue)
             observe(newRoot: root)
-            
-            if !root.hasBranches
-            {
-                root.insert(Task.welcomeTour, at: 0)
-            }
         }
     }
     
@@ -40,6 +35,16 @@ class Store: Observer
             guard let newRoot = newRoot else { return }
             
             self?.didReceive(event, from: newRoot)
+        }
+    }
+    
+    // MARK: - Welcome Tour
+    
+    func pasteWelcomeTourIfRootIsEmpty()
+    {
+        if !root.hasBranches
+        {
+            root.insert(Task.welcomeTour, at: 0)
         }
     }
     

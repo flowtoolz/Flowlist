@@ -14,6 +14,7 @@ extension Store
         guard FileManager.default.fileExists(atPath: fileUrl.path) else
         {
             createFile()
+            pasteWelcomeTourIfRootIsEmpty()
             
             return
         }
@@ -38,6 +39,8 @@ extension Store
         loadedRoot.title <- NSFullUserName()
         
         root = loadedRoot
+        
+        pasteWelcomeTourIfRootIsEmpty()
     }
     
     private func createFile()
