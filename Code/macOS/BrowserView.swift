@@ -37,7 +37,7 @@ class BrowserView: LayerBackedView, Observer
     
     private func fontSizeDidChange()
     {
-        TextView.cashedLineHeight = nil
+        TextView.fontSizeDidChange()
         
         updateSpacings()
         

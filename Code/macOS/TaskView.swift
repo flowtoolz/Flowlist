@@ -21,7 +21,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         setItemBorder()
         
-        observe(Font.baseSize)
+        observe(TextView.lineHeightVariable)
         {
             [weak self] _ in self?.fontSizeDidChange()
         }
