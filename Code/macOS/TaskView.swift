@@ -292,12 +292,16 @@ class TaskView: LayerBackedView, Observer, Observable
     
     static func preferredHeight(for text: String, width: CGFloat) -> CGFloat
     {
-        let referenceHeight = heightWithSingleLine
-        let leftInset  = CGFloat(Int(referenceHeight * textLeftMultiplier))
-        let rightInset = CGFloat(Int(referenceHeight * groupIconWidthMultiplier))
+        let pixelsPerPoint = NSApp.mainWindow?.backingScaleFactor ?? 2
         
-        let textWidth = CGFloat(Int((width - (leftInset + rightInset)) + 0.5))
+        let referenceHeight = heightWithSingleLine * pixelsPerPoint
+
+        let leftInset  = CGFloat(Int(referenceHeight * textLeftMultiplier + 0.5))
         
+        let rightInset = CGFloat(Int(referenceHeight * groupIconWidthMultiplier + 0.49999))
+        
+        let textWidth = ((pixelsPerPoint * width) - (leftInset + rightInset)) / pixelsPerPoint
+
         let textHeight = TextView.size(with: text, width: textWidth).height
         
         return textHeight + (2 * padding)
