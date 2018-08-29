@@ -13,7 +13,7 @@ extension Task
         let selectCommands = Task("Move with the arrows: ↑ ↓ ← →")
         
         selectCommands.add(Task("Hold ⇧ (shift) while pressing ↑ or ↓ to select multiple items"))
-        selectCommands.add(Task("Click and ⌘Click also work - best click next to the text, for example where some items show the arrow indicator on the right."))
+        selectCommands.add(Task("Click and ⌘Click also work - best click next to the text, for example where some items show the arrow indicator on the right"))
         
         tour.append(selectCommands)
         
@@ -65,7 +65,7 @@ extension Task
         
         supportItem.add(Task("What features do you miss? What do or don't you like about Flowlist?"))
         supportItem.add(Task("The \"Help\" menu offers some web links that may be interesting"))
-        supportItem.add(Task("You may delete this welcome tour, the \"Help\" menu lets you create it again at any time."))
+        supportItem.add(Task("You may delete this welcome tour, the \"Help\" menu lets you create it again at any time"))
         
         tour.append(supportItem)
         
