@@ -245,7 +245,7 @@ class BrowserView: LayerBackedView, Observer
         }
         
         listLayoutGuides[0].autoSetDimension(.width,
-                                             toSize: 100,
+                                             toSize: 150,
                                              relation: .greaterThanOrEqual)
         
         constraintsWithSpacingConstant.append(contentsOf:
