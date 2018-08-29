@@ -16,6 +16,16 @@ The 1st Hierarchical Task List
 
 #Flowlist AppStore Update Text
 
+## 1.2.1
+
+This update brings minor fixes and performance improvements:
+• Fix: The welcome tour now properly appears on the very first launch.
+• Fix: The panel for purchasing the full version now has a consistent font size, independent of screen size. Also its layout is more robust and adaptive.
+• Fix: Item heights were occasionally incorrect, which is now fixed.
+• Items load and layout quicker.
+• Other minor adjustments
+• As always: Some technical improvements under the hood to ensure development will never slow down
+
 ## 1.2.0
 
 • You can now make the font bigger and smaller, via menu or key command. The whole layout will adjust to the font size you choose, including the size of icons.
