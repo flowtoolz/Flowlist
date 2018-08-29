@@ -38,7 +38,7 @@ class Browser: Observer, Observable
         
         focusedList.select()
         
-        send(.didMove(direction: direction))
+        send(.didMove)
     }
     
     func canMove(_ direction: Direction) -> Bool
@@ -148,7 +148,7 @@ class Browser: Observer, Observable
     {
         case didNothing
         case didPush(list: SelectableList)
-        case didMove(direction: Direction)
+        case didMove
         case listDidChangeSelection(at: Int)
     }
 }

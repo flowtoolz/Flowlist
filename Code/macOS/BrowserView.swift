@@ -68,25 +68,22 @@ class BrowserView: LayerBackedView, Observer
     {
         observe(browser)
         {
-            [unowned self] event in
-            
-            switch event
-            {
-            case .didNothing: break
-            
-            case .didPush(let newList):
-                self.pushListView(for: newList)
-                
-            case .didMove(let direction):
-                self.browserDidMove(direction)
-            
-            case .listDidChangeSelection(let index):
-                self.selectionDidChangeInList(at: index)
-            }
+            [unowned self] event in self.did(receive: event)
         }
     }
     
-    private func browserDidMove(_ direction: Direction)
+    private func did(receive event: Browser.Event)
+    {
+        switch event
+        {
+        case .didNothing: break
+        case .didPush(let newList): pushListView(for: newList)
+        case .didMove: browserDidMove()
+        case .listDidChangeSelection(let index): selectionDidChangeInList(at: index)
+        }
+    }
+    
+    private func browserDidMove()
     {
         guard makeFocusedTableFirstResponder() else { return }
         
