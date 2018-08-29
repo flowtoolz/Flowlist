@@ -53,6 +53,8 @@ This update brings minor fixes and performance improvements:
 
 In-app purchase is 50% off during summer
 
+Version 1.2.1 is the last version to support Yosemite (macOS 10.10). Please update your system to keep benefiting from updates.
+
 #Flowlist AppStore Description
 
 ## Version 1.0.9

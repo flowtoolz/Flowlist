@@ -132,11 +132,7 @@ class Header: LayerBackedView, Observer
         label.textColor = NSColor.black
         label.font = Font.listTitle.nsFont
         label.alignment = .center
-        
-        if #available(OSX 10.11, *)
-        {
-            label.maximumNumberOfLines = 1
-        }
+        label.maximumNumberOfLines = 1
         
         return label
     }()
