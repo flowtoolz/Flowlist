@@ -19,6 +19,7 @@ class Browser: Observer, Observable
         Browser.active = self
     }
     
+    // TODO: make Browser a proper singleton
     static var active: Browser?
     
     deinit { stopAllObserving() }
