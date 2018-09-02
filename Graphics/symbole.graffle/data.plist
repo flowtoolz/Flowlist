@@ -127,7 +127,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-08-17 09:42:01 +0000</string>
+	<string>2018-09-02 10:20:39 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -190,7 +190,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-1008.7912087912092, -639.5604395604397}, {3206.5934065934066, 2120.8791208791213}}</string>
+				<string>{{-1005.4945054945057, -639.5604395604397}, {3200, 2120.8791208791213}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -225,6 +225,32 @@
 			<string>1 in = 1.00000 in</string>
 			<key>GraphicsList</key>
 			<array>
+				<dict>
+					<key>Bounds</key>
+					<string>{{774, 63}, {120, 120}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>71</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Color</key>
+							<dict>
+								<key>catalog</key>
+								<string>System</string>
+								<key>name</key>
+								<string>alternateSelectedControlTextColor</string>
+							</dict>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
 				<dict>
 					<key>Bounds</key>
 					<string>{{841.5, 450}, {45, 45}}</string>
@@ -3043,7 +3069,7 @@
 		<key>CurrentSheet</key>
 		<integer>0</integer>
 		<key>Frame</key>
-		<string>{{0, 0}, {1235, 740}}</string>
+		<string>{{0, 0}, {1232, 740}}</string>
 		<key>ShowInfo</key>
 		<true/>
 		<key>ShowRuler</key>
@@ -3055,7 +3081,7 @@
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{-188.87552758536609, -43.394498309536587}, {1008.791208791209, 639.56043956043982}}</string>
+		<string>{{24.725274725274485, -3.2967032967030447}, {1005.4945054945055, 639.5604395604397}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
