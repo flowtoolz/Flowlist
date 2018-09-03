@@ -11,10 +11,9 @@ class SelectableListView: LayerBackedView, Observer, Observable
     override init(frame frameRect: NSRect)
     {
         super.init(frame: frameRect)
-        
-        backgroundColor = Color.background
+    
+        backgroundColor = .background
         setItemBorder()
-        
         constrainHeader()
         constrainScrollTable()
     }

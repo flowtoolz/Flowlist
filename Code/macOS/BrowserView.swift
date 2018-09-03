@@ -202,8 +202,10 @@ class BrowserView: LayerBackedView, Observer
         
         listView.autoMatch(.width, to: .width, of: listLayoutGuides[0])
         
-        rememberSpacing(listView.autoPinEdge(toSuperviewEdge: .top, withInset: spacing))
-        rememberSpacing(listView.autoPinEdge(toSuperviewEdge: .bottom, withInset: spacing))
+        rememberSpacing(listView.autoPinEdge(toSuperviewEdge: .top,
+                                             withInset: spacing))
+        rememberSpacing(listView.autoPinEdge(toSuperviewEdge: .bottom,
+                                             withInset: spacing))
     }
     
     private func moveToFocusedList(animated: Bool = true)
