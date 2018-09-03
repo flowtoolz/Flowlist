@@ -153,6 +153,9 @@ class BrowserView: LayerBackedView, Observer
         
         constrainLastListView()
         
+        needsLayout = true
+        newListView.needsDisplay = true
+        
         observe(listView: newListView)
     }
     
