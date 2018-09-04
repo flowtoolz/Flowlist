@@ -4,8 +4,6 @@ Primary: English (US), English (UK), English (Canada)
 
 All other languages get the secondary keyword list
 
-Secondary: German, Spanish (Mexico), French (Canada), Japanese, Korean, Russian, Spanish (Spain), Norwegian
-
 #Flowlist AppStore Name & Subtitle
 
 [30 characters max!](http://www.charactercountonline.com)
@@ -15,6 +13,12 @@ Flowlist – Manage Life in Flow
 The 1st Hierarchical Task List
 
 #Flowlist AppStore Update Text
+
+## 1.2.2
+
+This update fixes a bug that occurred when navigating via mouse.
+
+Apparently, some users did navigate exclusively via mouse. However, Flowlist is much more rapid, intuitive and fun when controlled via keyboard like a game! Flowlist is supposed to be controlled via keyboard, and only that way does it unfold its charme ;)
 
 ## 1.2.1
 
@@ -34,7 +38,6 @@ This update brings minor fixes and performance improvements:
 • Minor UI improvements
 • As always: Many technical improvements under the hood to ensure development will never slow down
 
-
 ## 1.1.0
 
 • Multi line items allow to write structured texts. Empty items now correspond as paragraphs and non-empty items to headings
@@ -51,9 +54,9 @@ This update brings minor fixes and performance improvements:
 
 #Flowlist AppStore Promo Text
 
-In-app purchase is 50% off during summer
+In-app purchase is 50% off during summer.
 
-Version 1.2.1 is the last version to support Yosemite (macOS 10.10). Please update your system to keep benefiting from updates.
+Version 1.2.1 was the last to support Yosemite (macOS 10.10).
 
 #Flowlist AppStore Description
 
