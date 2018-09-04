@@ -179,9 +179,7 @@ class BrowserView: LayerBackedView, Observer
             return
         }
         
-        browser.focusedListIndex = listIndex
-        
-        moveToFocusedList()
+        browser.move(to: listIndex)
     }
     
     private func constrainLastListView()

@@ -49,6 +49,19 @@ class Browser: Observer, Observable
         return focusedList.selection.count == 1
     }
     
+    func move(to index: Int)
+    {
+        guard lists.isValid(index: index) else { return }
+        
+        focusedListIndex = index
+        
+        while focusedListIndex >= numberOfLists - 2 { pushList() }
+        
+        focusedList.select()
+        
+        send(.didMove)
+    }
+    
     // MARK: - Create Lists
     
     @discardableResult
@@ -136,7 +149,7 @@ class Browser: Observer, Observable
     }
     
     var focusedList: SelectableList { return lists[focusedListIndex] }
-    var focusedListIndex = 0
+    private(set) var focusedListIndex = 0
     
     var numberOfLists: Int { return lists.count }
     private var lists = [SelectableList]()
