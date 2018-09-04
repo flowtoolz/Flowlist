@@ -51,7 +51,10 @@ class Browser: Observer, Observable
     
     func move(to index: Int)
     {
-        guard lists.isValid(index: index) else { return }
+        guard index != focusedListIndex, lists.isValid(index: index) else
+        {
+            return
+        }
         
         focusedListIndex = index
         
