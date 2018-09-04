@@ -30,16 +30,7 @@ class Browser: Observer, Observable
     {
         guard canMove(direction) else { return }
         
-        if direction == .right
-        {
-            while focusedListIndex >= numberOfLists - 3 { pushList() }
-        }
-        
-        focusedListIndex += direction == .left ? -1 : 1
-        
-        focusedList.select()
-        
-        send(.didMove)
+        move(to: focusedListIndex + (direction == .left ? -1 : 1))
     }
     
     func canMove(_ direction: Direction) -> Bool
