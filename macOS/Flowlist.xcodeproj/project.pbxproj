@@ -40,7 +40,6 @@
 		9E8ABF0020B2F0F1001E862B /* SelectableList+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABEFF20B2F0F1001E862B /* SelectableList+Debugging.swift */; };
 		9E8ABF0220B32A3B001E862B /* Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABF0120B32A3B001E862B /* Edit.swift */; };
 		9E91651520551E5600A438FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E91651320551E5500A438FB /* Assets.xcassets */; };
-		9EA2B9691EF035D900F05F20 /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B9681EF035D900F05F20 /* Row.swift */; };
 		9EA2B96B1EF0A80A00F05F20 /* Store+Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B96A1EF0A80A00F05F20 /* Store+Persistence.swift */; };
 		9EA5925B20AF7AD200F70CBF /* Selection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5925A20AF7AD200F70CBF /* Selection.swift */; };
 		9EA7F99C20C19B210059166B /* Task+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7F99B20C19B210059166B /* Task+Clipboard.swift */; };
@@ -108,7 +107,6 @@
 		9E8ABF0120B32A3B001E862B /* Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Edit.swift; path = ../Code/Edit.swift; sourceTree = "<group>"; };
 		9E91651320551E5500A438FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		9E916518205520B800A438FB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
-		9EA2B9681EF035D900F05F20 /* Row.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Row.swift; path = ../Code/macOS/Row.swift; sourceTree = "<group>"; };
 		9EA2B96A1EF0A80A00F05F20 /* Store+Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Store+Persistence.swift"; path = "../Code/Store+Persistence.swift"; sourceTree = "<group>"; };
 		9EA5925A20AF7AD200F70CBF /* Selection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Selection.swift; path = ../Code/Selection.swift; sourceTree = "<group>"; };
 		9EA7F99B20C19B210059166B /* Task+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Clipboard.swift"; path = "../Code/Task+Clipboard.swift"; sourceTree = "<group>"; };
@@ -346,7 +344,6 @@
 				9EF0A78B20B5F8B200E1A23A /* ScrollTable.swift */,
 				9EAD75401EF6502000DC46FD /* Table.swift */,
 				9EF0A78920B5E26F00E1A23A /* TableContent.swift */,
-				9EA2B9681EF035D900F05F20 /* Row.swift */,
 				9E2F83E420C8639F003E771E /* SelectableList+NSPasteboard.swift */,
 			);
 			name = UI;
@@ -573,7 +570,6 @@
 				9EF0A79320B72B5A00E1A23A /* FlowlistController.swift in Sources */,
 				9EB6217220C27DD500DD3DA5 /* ApplicationMenu.swift in Sources */,
 				9E15185E1EEEE97700B35AD5 /* ViewController.swift in Sources */,
-				9EA2B9691EF035D900F05F20 /* Row.swift in Sources */,
 				9E61FB4A21241BF400C2EDF7 /* BrowserView.swift in Sources */,
 				9E6C721020B1E66D001C3D2C /* Task+Debugging.swift in Sources */,
 				9E5768BA20C1436500749C0C /* TaskState.swift in Sources */,
