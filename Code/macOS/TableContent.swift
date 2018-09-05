@@ -35,14 +35,11 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
             return nil
         }
         
-        let isSelected = list?.selection.isSelected(task) ?? false
+        let taskView = retrieveTaskView(from: tableView).configure(with: task)
         
-        if isSelected
-        {
-            tableView.selectRowIndexes([row], byExtendingSelection: true)
-        }
+        taskView?.isSelected = list?.selection.isSelected(task) ?? false
         
-        return retrieveTaskView(from: tableView).configure(with: task)
+        return taskView
     }
     
     private func retrieveTaskView(from tableView: NSTableView) -> TaskView

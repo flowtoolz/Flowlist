@@ -13,6 +13,8 @@ class TaskView: LayerBackedView, Observer, Observable
         
         identifier = TaskView.uiIdentifier
         
+        backgroundColor = .white
+        
         constrainLayoutGuide()
         constrainEditingBackground()
         constrainCheckBox()
@@ -62,6 +64,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         self.task = task
         
+        isSelected = false
         updateTextView()
         updateState()
         updateGroupIcon()
@@ -110,6 +113,16 @@ class TaskView: LayerBackedView, Observer, Observable
         stopObserving(task?.state)
         stopObserving(task?.title)
         stopObserving(task)
+    }
+    
+    // MARK: - Selection
+    
+    var isSelected = false
+    {
+        didSet
+        {
+            layer?.borderColor = isSelected ? NSColor.red.cgColor : Color.border.cgColor
+        }
     }
     
     // MARK: - Text View

@@ -281,9 +281,19 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         }
 
         let listSelection = list?.selection.indexes ?? []
-        let tableViewSelection = selection
         
-        guard tableViewSelection != listSelection else { return }
+        // TODO: better differentiate which indexes changed selection so we don't need to iterate over all views here
+        for index in 0 ..< numberOfRows
+        {
+            guard let view = view(atColumn: 0, row: index, makeIfNecessary: false),
+                let taskView = view as? TaskView
+            else
+            {
+                continue
+            }
+            
+            taskView.isSelected = list?.selection.isSelected(taskView.task) ?? false
+        }
 
         let rowNumber = dataSource?.numberOfRows?(in: self) ?? 0
 
@@ -295,24 +305,22 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             return
         }
         
+        // FIXME: rebuild this scrolling based on more granular infos from selection update
         // scroll to appropriate row if selection extended
-        let lastSelectionChanged = tableViewSelection.last != listSelectionLast
-        let firstSelectionChanged = tableViewSelection.first != listSelection.first
-        
-        if lastSelectionChanged && !firstSelectionChanged,
-            let last = listSelectionLast
-        {
-            scrollRowToVisible(last)
-        }
-        else if !lastSelectionChanged && firstSelectionChanged,
-            let first = listSelection.first
-        {
-            scrollRowToVisible(first)
-        }
+//        let lastSelectionChanged = tableViewSelection.last != listSelectionLast
+//        let firstSelectionChanged = tableViewSelection.first != listSelection.first
+//
+//        if lastSelectionChanged && !firstSelectionChanged,
+//            let last = listSelectionLast
+//        {
+//            scrollRowToVisible(last)
+//        }
+//        else if !lastSelectionChanged && firstSelectionChanged,
+//            let first = listSelection.first
+//        {
+//            scrollRowToVisible(first)
+//        }
     }
-    
-    
-    private var selection: [Int] { return Array(selectedRowIndexes).sorted() }
     
     // MARK: - Observe Task Views
     
