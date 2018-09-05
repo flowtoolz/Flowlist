@@ -307,16 +307,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
                 }
             }
         }
-
-        let rowNumber = dataSource?.numberOfRows?(in: self) ?? 0
-
-        let listSelectionLast = listSelection.last
-        
-        if let last = listSelectionLast, last >= rowNumber
-        {
-            log(error: "List has at least one invalid selection index.")
-            return
-        }
         
         if let indexToScrollTo = indexOf1stNewSelection
         {
