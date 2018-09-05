@@ -14,7 +14,7 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     func tableView(_ tableView: NSTableView,
                    rowViewForRow row: Int) -> NSTableRowView?
     {
-        return NSTableRowView(frame: .zero)
+        return Row()
     }
     
     func tableView(_ tableView: NSTableView,
