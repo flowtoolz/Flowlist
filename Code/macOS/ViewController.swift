@@ -7,14 +7,6 @@ class ViewController: NSViewController, Observer
 {
     override func loadView()
     {
-//        let visualEffect = NSVisualEffectView()
-//        visualEffect.blendingMode = .behindWindow
-//        visualEffect.state = .active
-//        visualEffect.material = .titlebar
-//        visualEffect.layerContentsRedrawPolicy = .onSetNeedsDisplay
-//        visualEffect.layerContentsPlacement = .scaleAxesIndependently
-//        view = visualEffect
-
         view = LayerBackedView()
         
         // For making screen shots and screen recordings
