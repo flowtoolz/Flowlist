@@ -274,13 +274,12 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     func listDidChangeSelection()
     {
-        if list == nil
+        guard let list = list else
         {
             // FIXME: why does this happen sometimes when going left?
-            //log(warning: "List changed selection but list is nil.")
+            log(error: "List changed selection but list is nil.")
+            return
         }
-
-        let listSelection = list?.selection.indexes ?? []
         
         // TODO: better differentiate which indexes changed selection so we don't need to iterate over all views here
         
@@ -294,8 +293,8 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             {
                 continue
             }
-            
-            let isSelected = list?.selection.isSelected(taskView.task) ?? false
+        
+            let isSelected = list.selection.isSelected(taskView.task)
             
             if taskView.isSelected != isSelected
             {
