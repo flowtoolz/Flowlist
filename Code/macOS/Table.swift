@@ -197,7 +197,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         switch event
         {
         case .didCreate(let taskView): observe(taskView: taskView)
-        case .selectionDidChange: didChangeSelection()
         case .didNothing: break
         }
     }
@@ -296,9 +295,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             return
         }
         
-        selectRowIndexes(IndexSet(listSelection),
-                         byExtendingSelection: false)
-        
         // scroll to appropriate row if selection extended
         let lastSelectionChanged = tableViewSelection.last != listSelectionLast
         let firstSelectionChanged = tableViewSelection.first != listSelection.first
@@ -315,28 +311,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         }
     }
     
-    private func didChangeSelection()
-    {
-        guard let list = list else
-        {
-            // FIXME: why does this happen sometimes when going left?
-            //log(warning: "Selection changed and list is nil.")
-            return
-        }
-        
-        let tableSelection = selection
-        
-        if let firstSelectedRow = tableSelection.first
-        {
-            scrollRowToVisible(firstSelectedRow)
-        }
-        
-        let listSelection = list.selection.indexes
-        
-        guard tableSelection != listSelection else { return }
-        
-        list.selection.setWithTasksListed(at: tableSelection)
-    }
     
     private var selection: [Int] { return Array(selectedRowIndexes).sorted() }
     

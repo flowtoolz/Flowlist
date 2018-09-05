@@ -76,11 +76,11 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
         return taskView
     }
     
-    // MARK: - Selection
+    // MARK: - Disable NSTableView Selection
     
-    func tableViewSelectionDidChange(_ notification: Notification)
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool
     {
-        send(.selectionDidChange)
+        return false
     }
     
     // MARK: - List
@@ -102,7 +102,7 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     
     enum Event
     {
-        case didNothing, didCreate(taskView: TaskView), selectionDidChange
+        case didNothing, didCreate(taskView: TaskView)
     }
 }
 
