@@ -283,6 +283,9 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         let listSelection = list?.selection.indexes ?? []
         
         // TODO: better differentiate which indexes changed selection so we don't need to iterate over all views here
+        
+        var indexOf1stNewSelection: Int?
+        
         for index in 0 ..< numberOfRows
         {
             guard let view = view(atColumn: 0, row: index, makeIfNecessary: false),
@@ -292,7 +295,17 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
                 continue
             }
             
-            taskView.isSelected = list?.selection.isSelected(taskView.task) ?? false
+            let isSelected = list?.selection.isSelected(taskView.task) ?? false
+            
+            if taskView.isSelected != isSelected
+            {
+                taskView.isSelected = isSelected
+                
+                if indexOf1stNewSelection == nil && isSelected
+                {
+                    indexOf1stNewSelection = index
+                }
+            }
         }
 
         let rowNumber = dataSource?.numberOfRows?(in: self) ?? 0
@@ -305,21 +318,10 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             return
         }
         
-        // FIXME: rebuild this scrolling based on more granular infos from selection update
-        // scroll to appropriate row if selection extended
-//        let lastSelectionChanged = tableViewSelection.last != listSelectionLast
-//        let firstSelectionChanged = tableViewSelection.first != listSelection.first
-//
-//        if lastSelectionChanged && !firstSelectionChanged,
-//            let last = listSelectionLast
-//        {
-//            scrollRowToVisible(last)
-//        }
-//        else if !lastSelectionChanged && firstSelectionChanged,
-//            let first = listSelection.first
-//        {
-//            scrollRowToVisible(first)
-//        }
+        if let indexToScrollTo = indexOf1stNewSelection
+        {
+            scrollRowToVisible(indexToScrollTo)
+        }
     }
     
     // MARK: - Observe Task Views
