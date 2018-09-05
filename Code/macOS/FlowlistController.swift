@@ -21,9 +21,9 @@ class FlowlistController: AppController, NSWindowDelegate
     
     func applicationWillBecomeActive(_ notification: Notification)
     {
-        menu.set(window: mainWindow)
-        mainWindow.delegate = self
-        mainWindow.show()
+        menu.set(window: window)
+        window.delegate = self
+        window.show()
     }
     
     func applicationWillTerminate(_ notification: Notification)
@@ -35,12 +35,12 @@ class FlowlistController: AppController, NSWindowDelegate
     
     func windowDidResize(_ notification: Notification)
     {
-        mainViewController.didResize()
+        viewController.didResize()
     }
     
     func windowDidEndLiveResize(_ notification: Notification)
     {
-        mainWindow.didEndLiveResize()
+        window.didEndLiveResize()
     }
     
     func windowWillEnterFullScreen(_ notification: Notification)
@@ -50,12 +50,12 @@ class FlowlistController: AppController, NSWindowDelegate
     
     func windowDidEnterFullScreen(_ notification: Notification)
     {
-        mainWindow.didEndLiveResize()
+        window.didEndLiveResize()
     }
 
     func windowDidExitFullScreen(_ notification: Notification)
     {
-        mainWindow.didEndLiveResize()
+        window.didEndLiveResize()
         menu.windowChangesFullscreen(to: false)
     }
     
@@ -68,8 +68,8 @@ class FlowlistController: AppController, NSWindowDelegate
     
     private let menu = Menu()
     
-    private lazy var mainWindow: Window = Window(with: mainViewController,
-                                                 color: Color.gray(brightness: 0.92 * 0.92).nsColor)
+    private lazy var window: Window = Window(with: viewController,
+                                             color: Color.gray(brightness: 0.92 * 0.92).nsColor)
     
-    private let mainViewController = ViewController()
+    private let viewController = ViewController()
 }
