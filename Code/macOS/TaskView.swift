@@ -117,6 +117,11 @@ class TaskView: LayerBackedView, Observer, Observable
     
     // MARK: - Selection
     
+    override func mouseDown(with event: NSEvent)
+    {
+        send(.wasClicked(withCmd: event.cmd))
+    }
+    
     var isSelected = false
     {
         didSet
@@ -271,13 +276,18 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private static let groupIconWidthMultiplier: CGFloat = 0.75
     
-    private lazy var groupIcon: Icon =
+    private lazy var groupIcon: NSButton =
     {
-        let icon = addForAutoLayout(Icon(with: TaskView.groupIconImage))
+        let button = addForAutoLayout(NSButton())
         
-        icon.imageAlignment = .alignCenter
+        button.image = TaskView.groupIconImage
+        button.bezelStyle = .regularSquare
+        button.imagePosition = .imageOnly
+        button.imageScaling = .scaleProportionallyUpOrDown
+        button.isBordered = false
+        button.isEnabled = false
         
-        return icon
+        return button
     }()
     
     private static let groupIconImage = #imageLiteral(resourceName: "container_indicator_pdf")
@@ -345,8 +355,13 @@ class TaskView: LayerBackedView, Observer, Observable
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event
+    enum Event: Equatable
     {
-        case didNothing, willEditTitle, didChangeTitle, wantToEndEditingText, didEditTitle
+        case didNothing
+        case willEditTitle
+        case didChangeTitle
+        case wantToEndEditingText
+        case didEditTitle
+        case wasClicked(withCmd: Bool)
     }
 }

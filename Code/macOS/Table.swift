@@ -348,22 +348,33 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             noteHeightOfRows(withIndexesChanged: [index])
             
         case .didChangeTitle:
-            if let task = taskView.task
-            {
-                itemHeightCash[task] = nil
-                noteHeightOfRows(withIndexesChanged: [index])
-            }
+            guard let task = taskView.task else { break }
+            
+            itemHeightCash[task] = nil
+            noteHeightOfRows(withIndexesChanged: [index])
             
         case .wantToEndEditingText:
             NSApp.mainWindow?.makeFirstResponder(self)
             
         case .didEditTitle:
-            if let task = taskView.task
-            {
-                itemHeightCash[task] = nil
-                noteHeightOfRows(withIndexesChanged: [index])
-            }
+            guard let task = taskView.task else { break }
+            
+            itemHeightCash[task] = nil
+            noteHeightOfRows(withIndexesChanged: [index])
+            
             //editTitleOfNextSelectedTaskView()
+            
+        case .wasClicked(let cmdKeyIsDown):
+            guard let task = taskView.task, let list = list else { break }
+            
+            if cmdKeyIsDown
+            {
+                list.selection.toggle(task)
+            }
+            else
+            {
+                list.selection.set(with: task)
+            }
         }
     }
     

@@ -40,17 +40,32 @@ class Selection: Observable
         send(.didChange)
     }
     
+    func toggle(_ task: Task)
+    {
+        if isSelected(task)
+        {
+            selectedTasks[task] = nil
+        }
+        else
+        {
+            selectedTasks[task] = task
+        }
+        
+        send(.didChange)
+    }
+    
     func set(with task: Task)
     {
         guard let root = root else
         {
-            log(warning: "Tried to select tasks while selection has no root.")
+            log(error: "Tried to set selection while selection has no root.")
             return
         }
         
-        guard let _ = root.index(of: task), !isSelected(task) else
+        guard let _ = root.index(of: task),
+            !isSelected(task) || selectedTasks.count > 1
+        else
         {
-            log(warning: "Tried invalid selection.")
             return
         }
         
