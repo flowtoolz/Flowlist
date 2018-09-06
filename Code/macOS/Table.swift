@@ -424,19 +424,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         taskView.editText()
     }
     
-    // MARK: - Input
-
-    override func keyDown(with event: NSEvent)
-    {
-        nextResponder?.keyDown(with: event)
-    }
-    
-    override func mouseDown(with event: NSEvent)
-    {
-        super.mouseDown(with: event)
-        nextResponder?.mouseDown(with: event)
-    }
-    
     // MARK: - Observability
     
     var latestUpdate: TaskView.Event { return .didNothing }
