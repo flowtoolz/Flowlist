@@ -65,6 +65,11 @@ class TextView: NSTextView, NSTextViewDelegate
     
     // MARK: - Style
     
+    func set(textColor: Color)
+    {
+        self.textColor = textColor.nsColor
+    }
+    
     private static var typingSyle: [NSAttributedStringKey : Any]
     {
         return [.font : Font.text.nsFont,
@@ -176,7 +181,10 @@ class TextView: NSTextView, NSTextViewDelegate
     
     func startEditing()
     {
-        guard NSApp.mainWindow?.makeFirstResponder(self) ?? false else { return }
+        guard NSApp.mainWindow?.makeFirstResponder(self) ?? false else
+        {
+            return
+        }
         
         setSelectedRange(NSMakeRange(string.count, 0))
     }

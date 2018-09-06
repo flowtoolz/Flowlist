@@ -13,8 +13,6 @@ class TaskView: LayerBackedView, Observer, Observable
         
         identifier = TaskView.uiIdentifier
         
-        backgroundColor = .white
-        
         constrainLayoutGuide()
         constrainEditingBackground()
         constrainCheckBox()
@@ -126,7 +124,8 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         didSet
         {
-            layer?.borderColor = isSelected ? NSColor.red.cgColor : Color.border.cgColor
+            backgroundColor = isSelected ? .black : .white
+            textView.set(textColor: isSelected ? .white : .black)
         }
     }
     
