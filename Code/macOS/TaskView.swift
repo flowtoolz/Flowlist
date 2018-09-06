@@ -19,7 +19,8 @@ class TaskView: LayerBackedView, Observer, Observable
         contrainGroupIcon()
         constrainTextView()
         
-        setItemBorder()
+        layer?.borderWidth = 1.0
+        layer?.cornerRadius = Float.cornerRadius.cgFloat
         
         observe(TextView.lineHeightVariable)
         {
