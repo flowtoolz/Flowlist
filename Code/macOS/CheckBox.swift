@@ -11,35 +11,66 @@ class CheckBox: NSButton
         bezelStyle = .regularSquare
         imagePosition = .imageOnly
         imageScaling = .scaleProportionallyUpOrDown
-        image = CheckBox.imageEmpty
         isBordered = false
     }
     
     required init?(coder: NSCoder) { fatalError() }
     
-    // MARK: - Update
+    // MARK: - Configuration
+    
+    func configure(with state: TaskState?, whiteColorMode white: Bool)
+    {
+        taskState = state
+        isWhite = white
+        updateImage()
+    }
+    
+    func setColorMode(white: Bool)
+    {
+        isWhite = white
+        updateImage()
+    }
     
     func update(with state: TaskState?)
     {
-        image = image(for: state)
+        taskState = state
+        updateImage()
     }
     
-    // MARK: - Image
+    // MARK: - Update Image
     
-    static var size = imageEmpty.size
-    
-    private func image(for state: TaskState?) -> NSImage
+    private func updateImage()
     {
-        guard let state = state else { return CheckBox.imageEmpty }
+        image = CheckBox.image(for: taskState, white: isWhite)
+    }
+    
+    private var taskState: TaskState?
+    private var isWhite = false
+    
+    // MARK: - Get Image
+    
+    private static func image(for state: TaskState?,
+                              white: Bool) -> NSImage
+    {
+        guard let state = state else
+        {
+            return white ? imageEmptyWhite : imageEmpty
+        }
         
         switch state
         {
-        case .inProgress: return CheckBox.imageInProgress
-        case .done, .trashed: return CheckBox.imageChecked
+        case .inProgress:
+            return white ? imageInProgressWhite : imageInProgress
+            
+        case .done, .trashed:
+            return white ? imageCheckedWhite : imageChecked
         }
     }
     
     private static let imageEmpty = #imageLiteral(resourceName: "checkbox_unchecked_pdf")
+    private static let imageEmptyWhite = #imageLiteral(resourceName: "checkbox_unchecked_white")
     private static let imageChecked = #imageLiteral(resourceName: "checkbox_checked_pdf")
+    private static let imageCheckedWhite = #imageLiteral(resourceName: "checkbox_checked_white")
     private static let imageInProgress = #imageLiteral(resourceName: "play_pdf")
+    private static let imageInProgressWhite = #imageLiteral(resourceName: "play_white")
 }

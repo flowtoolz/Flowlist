@@ -59,12 +59,13 @@ class TaskView: LayerBackedView, Observer, Observable
         
         stopObserving(task: self.task)
         observe(task: task)
-        
         self.task = task
         
         isSelected = false
+        
+        checkBox.configure(with: task.state.value,
+                           whiteColorMode: isSelected)
         updateTextView()
-        updateState()
         updateGroupIcon()
         
         return self
@@ -97,20 +98,26 @@ class TaskView: LayerBackedView, Observer, Observable
         }
     }
     
-    private func updateState()
-    {
-        let state = task?.state.value
-        
-        checkBox.update(with: state)
-        
-        alphaValue = state == .done ? 0.5 : 1.0
-    }
-    
     private func stopObserving(task: Task?)
     {
         stopObserving(task?.state)
         stopObserving(task?.title)
         stopObserving(task)
+    }
+    
+    // MARK: - Task State
+    
+    private func updateState()
+    {
+        let state = task?.state.value
+        
+        setAlpha(with: state)
+        checkBox.update(with: state)
+    }
+    
+    private func setAlpha(with state: TaskState?)
+    {
+        alphaValue = state == .done ? 0.5 : 1.0
     }
     
     // MARK: - Selection
@@ -126,6 +133,8 @@ class TaskView: LayerBackedView, Observer, Observable
         {
             backgroundColor = isSelected ? .black : .white
             textView.set(textColor: isSelected ? .white : .black)
+            groupIcon.image = isSelected ? TaskView.groupIconImageWhite : TaskView.groupIconImage
+            checkBox.setColorMode(white: isSelected)
         }
     }
     
@@ -193,13 +202,28 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func set(editing: Bool)
     {
-        NSAnimationContext.beginGrouping()
-        NSAnimationContext.current.allowsImplicitAnimation = true
-        NSAnimationContext.current.duration = 0.2
-        groupIcon.alphaValue = editing ? 0 : 1
-        checkBox.alphaValue = editing ? 0 : 1
-        checkBox.isEnabled = !editing
+        textView.textColor = editing ? .black : .white
         editingBackground.alphaValue = editing ? 1 : 0
+        
+        if !editing
+        {
+            checkBox.isEnabled = true
+        }
+        
+        NSAnimationContext.beginGrouping()
+        NSAnimationContext.current.allowsImplicitAnimation = false
+        NSAnimationContext.current.duration = 0.2
+        NSAnimationContext.current.completionHandler =
+        {
+            if editing
+            {
+                self.checkBox.isEnabled = false
+            }
+        }
+        
+        groupIcon.animator().alphaValue = editing ? 0 : 1
+        checkBox.animator().alphaValue = editing ? 0 : 1
+        
         NSAnimationContext.endGrouping()
     }
     
@@ -218,7 +242,7 @@ class TaskView: LayerBackedView, Observer, Observable
         view.backgroundColor = .white
         view.alphaValue = 0
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
-        view.layer?.borderColor = Color.flowlistBlue.with(alpha: 0.25).cgColor
+        view.layer?.borderColor = Color.gray(brightness: 0.5).cgColor
         view.layer?.borderWidth = 1
         
         return view
@@ -284,12 +308,13 @@ class TaskView: LayerBackedView, Observer, Observable
         button.imagePosition = .imageOnly
         button.imageScaling = .scaleProportionallyUpOrDown
         button.isBordered = false
-        button.isEnabled = false
+        button.isEnabled = true
         
         return button
     }()
     
     private static let groupIconImage = #imageLiteral(resourceName: "container_indicator_pdf")
+    private static let groupIconImageWhite = #imageLiteral(resourceName: "container_indicator_white")
     
     // MARK: - Layout Guide
     
