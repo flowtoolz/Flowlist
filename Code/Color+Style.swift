@@ -5,6 +5,7 @@ extension Color
     static let backlog = Color.white
     static let background = Color.gray(brightness: 0.92)
     static let done = Color.gray(brightness: 0.92 * 0.92)
+    static let windowBackground = Color.gray(brightness: 0.92 * 0.92)
     
     static let border = Color.black.with(alpha: 0.15)
     static let borderLight = Color.white.with(alpha: 0.5)

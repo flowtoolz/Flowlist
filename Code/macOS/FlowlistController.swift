@@ -69,7 +69,7 @@ class FlowlistController: AppController, NSWindowDelegate
     private let menu = Menu()
     
     private lazy var window: Window = Window(with: viewController,
-                                             color: Color.gray(brightness: 0.92 * 0.92).nsColor)
+                                             color: Color.windowBackground.nsColor)
     
     private let viewController = ViewController()
 }
