@@ -365,6 +365,8 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             //editTitleOfNextSelectedTaskView()
             
         case .wasClicked(let cmdKeyIsDown):
+            NSApp.mainWindow?.makeFirstResponder(self)
+            
             guard let task = taskView.task, let list = list else { break }
             
             if cmdKeyIsDown
