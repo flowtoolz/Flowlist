@@ -117,9 +117,11 @@ class Browser: Observer, Observable
         send(.listDidChangeSelection(listIndex: index,
                                      selectionIndexes: indexes))
     
-        if index < lists.count - 1
+        for i in index + 1 ..< lists.count
         {
-            updateRootOfList(at: index + 1)
+            updateRootOfList(at: i)
+            
+            if self[i + 1]?.root == nil { break }
         }
     }
     
