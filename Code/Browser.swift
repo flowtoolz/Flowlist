@@ -92,17 +92,21 @@ class Browser: Observer, Observable
             return
         }
         
-        observe(list.selection, select: .didChange)
+        observe(list.selection)
         {
-            [weak self, weak list] in
+            [weak self, weak list] event in
             
             guard let list = list else { return }
             
-            self?.listChangedSelection(list)
+            if case .didChange(let indexes) = event
+            {
+                self?.listChangedSelection(list, at: indexes)
+            }
         }
     }
     
-    private func listChangedSelection(_ list: SelectableList)
+    private func listChangedSelection(_ list: SelectableList,
+                                      at indexes: [Int])
     {
         guard let index = lists.index(where: { $0 === list }) else
         {
@@ -110,7 +114,8 @@ class Browser: Observer, Observable
             return
         }
         
-        send(.listDidChangeSelection(at: index))
+        send(.listDidChangeSelection(listIndex: index,
+                                     selectionIndexes: indexes))
     
         if index < lists.count - 1
         {
@@ -157,6 +162,6 @@ class Browser: Observer, Observable
         case didNothing
         case didPush(list: SelectableList)
         case didMove
-        case listDidChangeSelection(at: Int)
+        case listDidChangeSelection(listIndex: Int, selectionIndexes: [Int])
     }
 }

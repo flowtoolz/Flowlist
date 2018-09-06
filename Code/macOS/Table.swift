@@ -102,7 +102,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             }
             
             content.configure(with: list)
-            listDidChangeSelection()
             
             if let oldNumber = oldValue?.numberOfTasks, oldNumber > 0
             {
@@ -272,20 +271,17 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     // MARK: - Selection
     
-    func listDidChangeSelection()
+    func listDidChangeSelection(at indexes: [Int])
     {
         guard let list = list else
         {
-            // FIXME: why does this happen sometimes when going left?
             log(error: "List changed selection but list is nil.")
             return
         }
         
-        // TODO: better differentiate which indexes changed selection so we don't need to iterate over all views here
-        
         var indexOf1stNewSelection: Int?
         
-        for index in 0 ..< numberOfRows
+        for index in indexes
         {
             guard let view = view(atColumn: 0, row: index, makeIfNecessary: false),
                 let taskView = view as? TaskView
@@ -378,6 +374,11 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
                 list.selection.set(with: task)
             }
         }
+    }
+    
+    override var acceptsFirstResponder: Bool
+    {
+        return true
     }
     
     // MARK: - Edit Titles
