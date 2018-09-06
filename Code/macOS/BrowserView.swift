@@ -85,35 +85,10 @@ class BrowserView: LayerBackedView, Observer
     
     private func browserDidMove()
     {
-        guard makeFocusedTableFirstResponder() else { return }
-        
         moveToFocusedList()
     }
     
     private let browser = Browser()
-    
-    // MARK: - Manage First Responder Status
-    
-    override var acceptsFirstResponder: Bool { return true }
-    
-    override func becomeFirstResponder() -> Bool
-    {
-        return makeFocusedTableFirstResponder()
-    }
-    
-    @discardableResult
-    private func makeFocusedTableFirstResponder() -> Bool
-    {
-        let index = browser.focusedListIndex
-        
-        guard listViews.isValid(index: index), listViews[index].scrollTable.table.makeFirstResponder() else
-        {
-            log(error: "Could not make table view at index \(index) first responder.")
-            return false
-        }
-        
-        return true
-    }
     
     // MARK: - Resizing
     
