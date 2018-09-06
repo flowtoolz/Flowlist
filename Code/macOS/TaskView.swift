@@ -135,6 +135,9 @@ class TaskView: LayerBackedView, Observer, Observable
             textView.set(textColor: isSelected ? .white : .black)
             groupIcon.image = isSelected ? TaskView.groupIconImageWhite : TaskView.groupIconImage
             checkBox.setColorMode(white: isSelected)
+            
+            let borderColor: Color = isSelected ? .borderLight : .border
+            layer?.borderColor = borderColor.cgColor
         }
     }
     
