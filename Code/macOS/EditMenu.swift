@@ -50,7 +50,13 @@ class EditMenu: NSMenu, Observer
                 case "l": self.list?.debug()
                 case "t": store.root.debug()
                 case "n": print("number of items in store: \(store.numberOfUserCreatedLeafs.value ?? 0)")
-                case "1": self.list?.toggleTags()
+                case "1": self.list?.set(tag: .red)
+                case "2": self.list?.set(tag: .orange)
+                case "3": self.list?.set(tag: .yellow)
+                case "4": self.list?.set(tag: .green)
+                case "5": self.list?.set(tag: .blue)
+                case "6": self.list?.set(tag: .purple)
+                case "0": self.list?.set(tag: nil)
                 default: break
                 }
                 

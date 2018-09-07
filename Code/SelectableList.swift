@@ -5,13 +5,22 @@ import SwiftyToolz
 
 extension SelectableList
 {
-    func toggleTags()
+    func set(tag: Task.Tag?)
     {
         let selectedTasks = selection.tasks
         
-        for selectedTask in selectedTasks
+        guard !selectedTasks.isEmpty else { return }
+        
+        if selectedTasks.count == 1
         {
-            selectedTask.toggleTag()
+            selectedTasks[0].tag <- selectedTasks[0].tag.value != tag ? tag : nil
+        }
+        else
+        {
+            for selectedTask in selectedTasks
+            {
+                selectedTask.tag <- tag
+            }
         }
     }
 }

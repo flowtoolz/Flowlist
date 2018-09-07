@@ -92,7 +92,7 @@ class TaskView: LayerBackedView, Observer, Observable
             [weak self] _ in self?.updateState()
         }
         
-        observe(task.isTagged)
+        observe(task.tag)
         {
             [weak self] _ in self?.updateTags()
         }
@@ -157,14 +157,21 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func updateTags()
     {
-        let isTagged = task?.isTagged.value ?? false
-        
-        let tagColor = TaskView.tagColors[0]
-        
-        let borderColor: Color = isTagged ? tagColor.with(alpha: 0.5) : .border
-        layer?.borderColor = borderColor.cgColor
-        
-        tagView.backgroundColor = isTagged ? tagColor : .clear
+        if let tag = task?.tag.value
+        {
+            let tagColor = TaskView.tagColors[tag.rawValue]
+            
+            layer?.borderColor = tagColor.with(alpha: 0.5).cgColor
+            
+            tagView.isHidden = false
+            tagView.backgroundColor = tagColor
+        }
+        else
+        {
+            layer?.borderColor = Color.border.cgColor
+            
+            tagView.isHidden = true
+        }
     }
     
     private func constrainTagView()

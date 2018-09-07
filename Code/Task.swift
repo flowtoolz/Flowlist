@@ -34,15 +34,12 @@ final class Task: Codable, Observable, Tree
     
     private(set) var title = Var<String>()
     private(set) var state = Var<TaskState>()
+    private(set) var tag = Var<Tag>()
     
-    // MARK: - Tags
-    
-    func toggleTag()
+    enum Tag: Int, Codable
     {
-        isTagged <- !(isTagged.value ?? false)
+        case red, orange, yellow, green, blue, purple
     }
-    
-    private(set) var isTagged = Var(false)
     
     // MARK: - Group
     
