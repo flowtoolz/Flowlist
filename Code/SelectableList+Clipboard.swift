@@ -10,7 +10,10 @@ extension SelectableList
         selectAfterRemoval(from: firstSelectedIndex)
     }
     
-    func copy() { root?.copy(at: selection.indexes) }
+    func copy()
+    {
+        root?.copy(selection.tasks)
+    }
     
     func pasteFromClipboard()
     {

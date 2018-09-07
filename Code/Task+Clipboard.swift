@@ -14,8 +14,12 @@ extension Task
     @discardableResult
     func copy(at indexes: [Int]) -> Bool
     {
-        let tasks = self[indexes]
-        
+        return copy(self[indexes])
+    }
+    
+    @discardableResult
+    func copy(_ tasks: [Task]) -> Bool
+    {
         guard !tasks.isEmpty else { return false }
         
         clipboard.storeCopies(of: tasks)
