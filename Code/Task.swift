@@ -18,6 +18,34 @@ final class Task: Codable, Observable, Tree
         self.numberOfLeafs = numberOfLeafs
     }
     
+    init() {}
+    
+    init(from decoder: Decoder) throws
+    {
+        guard let container = try? decoder.container(keyedBy: CodingKeys.self) else
+        {
+            return
+        }
+        
+        if let title = try? container.decode(Var<String>.self,
+                                             forKey: .title)
+        {
+            self.title = title
+        }
+        
+        if let state = try? container.decode(Var<TaskState>.self,
+                                             forKey: .state)
+        {
+            self.state = state
+        }
+        
+        if let branches = try? container.decode([Task].self,
+                                                forKey: .branches)
+        {
+            self.branches = branches
+        }
+    }
+    
     deinit { removeObservers() }
     
     // MARK: - Editing
@@ -26,7 +54,7 @@ final class Task: Codable, Observable, Tree
     var isBeingEdited = false
     
     // MARK: - Codable Data
-
+    
     enum CodingKeys: String, CodingKey
     {
         case title, state, branches = "subtasks"
