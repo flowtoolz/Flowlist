@@ -44,7 +44,7 @@ extension Task
         
         hierarchyCommands.add(Task("Items that show an arrow on the right (like the \"Organize\" item) contain other items"))
         hierarchyCommands.add(Task("You can move even into \"empty\" items and add new items into them"))
-        hierarchyCommands.add(Task("Select multiple items (⌘↑ and ⌘↓) and hit ↵ to group them and write their heading"))
+        hierarchyCommands.add(Task("Select multiple items (⇧↑ and ⇧↓) and hit ↵ to group them and write their heading"))
         hierarchyCommands.add(Task("You can move items between levels: Select them, cut via ⌘C, go to any other list via the arrow keys, and paste via ⌘V"))
         
         tour.append(hierarchyCommands)
