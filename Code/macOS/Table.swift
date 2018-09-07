@@ -12,7 +12,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         super.init(frame: frameRect)
 
         addTableColumn(NSTableColumn(identifier: TaskView.uiIdentifier))
-        allowsMultipleSelection = true
+        selectionHighlightStyle = .none
         backgroundColor = .clear
         headerView = nil
         intercellSpacing = cellSpacing
@@ -376,10 +376,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         }
     }
     
-    override var acceptsFirstResponder: Bool
-    {
-        return true
-    }
+    override var acceptsFirstResponder: Bool { return true }
     
     // MARK: - Edit Titles
     

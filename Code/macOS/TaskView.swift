@@ -303,19 +303,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private static let groupIconWidthMultiplier: CGFloat = 0.75
     
-    private lazy var groupIcon: NSButton =
-    {
-        let button = addForAutoLayout(NSButton())
-        
-        button.image = TaskView.groupIconImage
-        button.bezelStyle = .regularSquare
-        button.imagePosition = .imageOnly
-        button.imageScaling = .scaleProportionallyUpOrDown
-        button.isBordered = false
-        button.isEnabled = true
-        
-        return button
-    }()
+    private lazy var groupIcon = addForAutoLayout(Icon(with: TaskView.groupIconImage))
     
     private static let groupIconImage = #imageLiteral(resourceName: "container_indicator_pdf")
     private static let groupIconImageWhite = #imageLiteral(resourceName: "container_indicator_white")
