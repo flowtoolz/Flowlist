@@ -79,11 +79,7 @@ class SelectableList: List
     
     func selectAfterRemoval(from index: Int)
     {
-        guard root?.hasBranches ?? false else
-        {
-            log(warning: "Could not select different item after removal.")
-            return
-        }
+        guard root?.hasBranches ?? false else { return }
         
         selection.setWithTasksListed(at: [max(index - 1, 0)])
     }

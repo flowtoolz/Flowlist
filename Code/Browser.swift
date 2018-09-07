@@ -114,8 +114,11 @@ class Browser: Observer, Observable
             return
         }
         
-        send(.listDidChangeSelection(listIndex: index,
-                                     selectionIndexes: indexes))
+        if !indexes.isEmpty
+        {
+            send(.listDidChangeSelection(listIndex: index,
+                                         selectionIndexes: indexes))
+        }
     
         for i in index + 1 ..< lists.count
         {

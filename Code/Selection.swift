@@ -114,10 +114,11 @@ class Selection: Observable
         }
         
         var changedIndexes = [Int]()
+        var selectionChanged = false
         
         for task in tasks
         {
-            guard isSelected(task), let index = root.index(of: task) else
+            guard isSelected(task) else
             {
                 log(warning: "Tried to deselect task that is not selected.")
                 continue
@@ -125,10 +126,15 @@ class Selection: Observable
             
             selectedTasks[task] = nil
             
-            changedIndexes.append(index)
+            selectionChanged = true
+            
+            if let index = root.index(of: task)
+            {
+                changedIndexes.append(index)
+            }
         }
         
-        if !changedIndexes.isEmpty
+        if selectionChanged
         {
             send(.didChange(atIndexes: changedIndexes))
         }
