@@ -64,8 +64,11 @@ class TaskView: LayerBackedView, Observer, Observable
         
         isSelected = false
         
-        checkBox.configure(with: task.state.value,
-                           whiteColorMode: isSelected)
+        let state = task.state.value
+        
+        setAlpha(with: state)
+        
+        checkBox.configure(with: state, whiteColorMode: isSelected)
         updateTextView()
         updateGroupIcon()
         
