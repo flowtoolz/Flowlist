@@ -22,25 +22,31 @@ final class Task: Codable, Observable, Tree
     
     init(from decoder: Decoder) throws
     {
+        // TODO: only store raw values, not the whole variables (effects decoder and coder)
+        // TODO: only store non-nil values (effects only coder)
+        // TODO: be careful to detect legacy formats (decoder)
+        
         guard let container = try? decoder.container(keyedBy: CodingKeys.self) else
         {
             return
         }
         
-        if let title = try? container.decode(Var<String>.self,
-                                             forKey: .title)
+        if let title = try? container.decode(Var<String>.self, forKey: .title)
         {
             self.title = title
         }
         
-        if let state = try? container.decode(Var<TaskState>.self,
-                                             forKey: .state)
+        if let state = try? container.decode(Var<TaskState>.self, forKey: .state)
         {
             self.state = state
         }
         
-        if let branches = try? container.decode([Task].self,
-                                                forKey: .branches)
+        if let tag = try? container.decode(Var<Task.Tag>.self, forKey: .tag)
+        {
+            self.tag = tag
+        }
+        
+        if let branches = try? container.decode([Task].self, forKey: .branches)
         {
             self.branches = branches
         }
@@ -57,7 +63,7 @@ final class Task: Codable, Observable, Tree
     
     enum CodingKeys: String, CodingKey
     {
-        case title, state, branches = "subtasks"
+        case title, state, tag, branches = "subtasks"
     }
     
     private(set) var title = Var<String>()
