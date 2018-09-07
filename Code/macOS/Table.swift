@@ -373,7 +373,14 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             {
                 list.selection.set(with: task)
             }
+            
+            send(event)
         }
+    }
+    
+    override func mouseDown(with event: NSEvent)
+    {
+        send(.wasClicked(withCmd: false))
     }
     
     override var acceptsFirstResponder: Bool { return true }

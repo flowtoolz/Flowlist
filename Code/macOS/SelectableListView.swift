@@ -123,9 +123,17 @@ class SelectableListView: LayerBackedView, Observer, Observable
     {
         let scrollView = addForAutoLayout(ScrollTable())
         
-        observe(scrollView.table, select: .willEditTitle)
+        observe(scrollView.table)
         {
-            [weak self] in self?.send(.didReceiveUserInput)
+            [weak self] event in
+            
+            switch event
+            {
+            case .willEditTitle, .wasClicked:
+                self?.send(.didReceiveUserInput)
+                
+            default: break
+            }
         }
         
         return scrollView
