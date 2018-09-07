@@ -35,6 +35,15 @@ final class Task: Codable, Observable, Tree
     private(set) var title = Var<String>()
     private(set) var state = Var<TaskState>()
     
+    // MARK: - Tags
+    
+    func toggleTag()
+    {
+        isTagged <- !(isTagged.value ?? false)
+    }
+    
+    private(set) var isTagged = Var(false)
+    
     // MARK: - Group
     
     @discardableResult

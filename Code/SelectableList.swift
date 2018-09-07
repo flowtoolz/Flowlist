@@ -1,6 +1,23 @@
 import SwiftObserver
 import SwiftyToolz
 
+// MARK: - Tags
+
+extension SelectableList
+{
+    func toggleTags()
+    {
+        let selectedTasks = selection.tasks
+        
+        for selectedTask in selectedTasks
+        {
+            selectedTask.toggleTag()
+        }
+    }
+}
+
+// MARK: -
+
 class SelectableList: List
 {
     // MARK: - Create

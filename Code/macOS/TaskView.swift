@@ -68,7 +68,7 @@ class TaskView: LayerBackedView, Observer, Observable
         let state = task.state.value
         
         setAlpha(with: state)
-        
+        updateTags()
         checkBox.configure(with: state, whiteColorMode: isSelected)
         updateTextView()
         updateGroupIcon()
@@ -90,6 +90,11 @@ class TaskView: LayerBackedView, Observer, Observable
         observe(task.state)
         {
             [weak self] _ in self?.updateState()
+        }
+        
+        observe(task.isTagged)
+        {
+            [weak self] _ in self?.updateTags()
         }
     }
     
@@ -145,13 +150,22 @@ class TaskView: LayerBackedView, Observer, Observable
             
             groupIcon.image = isSelected ? TaskView.groupIconImageWhite : TaskView.groupIconImage
             checkBox.setColorMode(white: isSelected)
-            
-            let borderColor: Color = isSelected ? .borderLight : .border
-            layer?.borderColor = borderColor.cgColor
         }
     }
     
     // MARK: - Tag View
+    
+    private func updateTags()
+    {
+        let isTagged = task?.isTagged.value ?? false
+        
+        let tagColor = TaskView.tagColors[0]
+        
+        let borderColor: Color = isTagged ? tagColor.with(alpha: 0.5) : .border
+        layer?.borderColor = borderColor.cgColor
+        
+        tagView.backgroundColor = isTagged ? tagColor : .clear
+    }
     
     private func constrainTagView()
     {
@@ -163,13 +177,6 @@ class TaskView: LayerBackedView, Observer, Observable
         let view = addForAutoLayout(LayerBackedView())
         
         view.alphaValue = Float.tagAlpha.cgFloat
-        
-        if randomNumber(max: 1) == 1
-        {
-            let colorIndex = randomNumber(max: TaskView.tagColors.count - 1)
-            
-            view.backgroundColor = TaskView.tagColors[colorIndex]
-        }
         
         return view
     }()
@@ -183,11 +190,6 @@ class TaskView: LayerBackedView, Observer, Observable
         Color(63, 169, 242),
         Color(197, 112, 219)
     ]
-    
-    private func randomNumber(max: Int) -> Int
-    {
-        return Int(arc4random_uniform(UInt32(max + 1)))
-    }
     
     // MARK: - Text View
     
