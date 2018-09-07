@@ -231,6 +231,7 @@ class Selection: Observable
     
     var count: Int { return selectedTasks.count }
     var someTask: Task? { return selectedTasks.values.first }
+    var tasks: [Task] { return Array(selectedTasks.values) }
     
     private var selectedTasks = [Task : Task]()
     
