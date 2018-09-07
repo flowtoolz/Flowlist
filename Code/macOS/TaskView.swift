@@ -136,7 +136,12 @@ class TaskView: LayerBackedView, Observer, Observable
         didSet
         {
             backgroundColor = isSelected ? .black : .white
-            textView.set(textColor: isSelected ? .white : .black)
+            
+            if !textView.isEditing
+            {
+                textView.set(textColor: isSelected ? .white : .black)
+            }
+            
             groupIcon.image = isSelected ? TaskView.groupIconImageWhite : TaskView.groupIconImage
             checkBox.setColorMode(white: isSelected)
             

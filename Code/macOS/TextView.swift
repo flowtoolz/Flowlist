@@ -233,6 +233,7 @@ class TextView: NSTextView, NSTextViewDelegate
     
     private func didEdit()
     {
+        isEditing = false
         TextView.isEditing = false
 
         messenger.send(.didEdit)
@@ -240,10 +241,13 @@ class TextView: NSTextView, NSTextViewDelegate
     
     private func willEdit()
     {
+        isEditing = true
         TextView.isEditing = true
         
         messenger.send(.willEdit)
     }
+    
+    private(set) var isEditing = false
 
     static var isEditing = false
     
