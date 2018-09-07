@@ -77,9 +77,9 @@ class List: Observable, Observer
         case .create(let index):
             observeTasksListed(in: root, at: [index])
         
-        case .nothing, .move: break
+        case .move: break
             
-        case .changeRoot: return
+        case .nothing, .changeRoot: return
         }
         
         send(.did(edit))
