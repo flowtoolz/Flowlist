@@ -13,6 +13,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         identifier = TaskView.uiIdentifier
         
+        constrainTagView()
         constrainLayoutGuide()
         constrainEditingBackground()
         constrainCheckBox()
@@ -135,7 +136,7 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         didSet
         {
-            backgroundColor = isSelected ? .black : .white
+            backgroundColor = isSelected ? .selection : .white
             
             if !textView.isEditing
             {
@@ -148,6 +149,44 @@ class TaskView: LayerBackedView, Observer, Observable
             let borderColor: Color = isSelected ? .borderLight : .border
             layer?.borderColor = borderColor.cgColor
         }
+    }
+    
+    // MARK: - Tag View
+    
+    private func constrainTagView()
+    {
+        tagView.autoPinEdgesToSuperviewEdges()
+    }
+    
+    private lazy var tagView: LayerBackedView =
+    {
+        let view = addForAutoLayout(LayerBackedView())
+        
+        view.alphaValue = Float.tagAlpha.cgFloat
+        
+        if randomNumber(max: 1) == 1
+        {
+            let colorIndex = randomNumber(max: TaskView.tagColors.count - 1)
+            
+            view.backgroundColor = TaskView.tagColors[colorIndex]
+        }
+        
+        return view
+    }()
+    
+    private static let tagColors: [Color] =
+    [
+        Color(253, 74, 75),
+        Color(253, 154, 57),
+        Color(254, 207, 60),
+        Color(95, 197, 64),
+        Color(63, 169, 242),
+        Color(197, 112, 219)
+    ]
+    
+    private func randomNumber(max: Int) -> Int
+    {
+        return Int(arc4random_uniform(UInt32(max + 1)))
     }
     
     // MARK: - Text View
