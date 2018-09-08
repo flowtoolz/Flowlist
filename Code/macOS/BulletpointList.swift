@@ -83,7 +83,7 @@ class BulletpointList: NSView
         "Infinite items, no more trial version info bar",
         "Pay once, use it forever - no subscription",
         "Support the development of more features",
-        "Users can soon vote on which features come next",
+        "Users vote on which features come next. The link is in the Help menu.",
         "Early bird advantage: Get new features as free updates, even when the full version price rises"
     ]
 }

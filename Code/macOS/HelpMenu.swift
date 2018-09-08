@@ -9,13 +9,17 @@ class HelpMenu: NSMenu
         super.init(title: "Help")
         
         addItem(contactItem)
-        addItem(tourItem)
         
         addItem(NSMenuItem.separator())
         
+        addItem(tourItem)
         addItem(videoItem)
         addItem(keyCommandsItem)
         addItem(blogItem)
+        
+        addItem(NSMenuItem.separator())
+        
+        addItem(voteItem)
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
@@ -87,6 +91,18 @@ class HelpMenu: NSMenu
     @objc private func contactMe()
     {
         if let url = URL(string: "mailto:support%40flowlistapp.com?SUBJECT=Flowlist")
+        {
+            NSWorkspace.shared.open(url)
+        }
+    }
+    
+    private lazy var voteItem = item("Vote on the Next Features",
+                                     action: #selector(vote),
+                                     key: "")
+    
+    @objc private func vote()
+    {
+        if let url = URL(string: "https://flowtoolz.typeform.com/to/R5lp8b")
         {
             NSWorkspace.shared.open(url)
         }
