@@ -1,3 +1,5 @@
+import SwiftObserver
+
 extension Task
 {
     static var welcomeTour: [Task]
@@ -12,6 +14,8 @@ extension Task
         
         let selectCommands = Task("Move with the arrows: ↑ ↓ ← →")
         
+        selectCommands.tag <- .red
+        
         selectCommands.add(Task("Hold ⇧ (shift) while pressing ↑ or ↓ to select multiple items"))
         selectCommands.add(Task("Click and ⌘Click also work - best click next to the text, for example where some items show the arrow indicator on the right"))
         
@@ -20,6 +24,8 @@ extension Task
         // writing
         
         let moreCommands = Task("Write")
+        
+        moreCommands.tag <- .orange
         
         moreCommands.add(Task("Hit ↵ (return) to write a new item, then hit ↵ again to finish typing"))
         moreCommands.add(Task("Hit ⌘↵ to edit the first selected item"))
@@ -32,6 +38,8 @@ extension Task
 
         let taskManagementCommands = Task("Prioritize")
         
+        taskManagementCommands.tag <- .yellow
+        
         taskManagementCommands.add(Task("Select a single item and hit ⌘↑ or ⌘↓ to move it up or down"))
         taskManagementCommands.add(Task("Hit ⌘← to check off or uncheck an item"))
         taskManagementCommands.add(Task("Hit ⌘→ to set an item in progress or to pause it"))
@@ -42,6 +50,8 @@ extension Task
         
         let hierarchyCommands = Task("Organize")
         
+        hierarchyCommands.tag <- .green
+        
         hierarchyCommands.add(Task("Items that show an arrow on the right (like the \"Organize\" item) contain other items"))
         hierarchyCommands.add(Task("You can move even into \"empty\" items and add new items into them"))
         hierarchyCommands.add(Task("Select multiple items (⇧↑ and ⇧↓) and hit ↵ to group them and write their heading"))
@@ -49,9 +59,19 @@ extension Task
         
         tour.append(hierarchyCommands)
         
+        // tagging
+        
+        let taggingCommands = Task("Press 1-6 or 0 to add or remove colors")
+        
+        taggingCommands.tag <- .blue
+        
+        tour.append(taggingCommands)
+        
         // window
         
         let windowCommands = Task("Monotasking and Fullscreen")
+        
+        windowCommands.tag <- .purple
         
         windowCommands.add(Task("Switch between mono- and multitasking via ⌘M"))
         windowCommands.add(Task("Toggle fullscreen via ⌘F"))
