@@ -14,6 +14,15 @@ The 1st Hierarchical Task List
 
 #Flowlist AppStore Update Text
 
+## 1.3.0
+
+This update introduces colors!
+
+• Now you can tag every item with a color by pressing a number or via menu option.
+• Aside from color tags, the interface has finally reached a cool monochrome look, which I aimed for all along, and which prepares Flowlist for its dark mode (coming soon).
+• You can now vote on which features I'll implement after the dark mode. The link is on the website and in the Help menu.
+• As always: Some technical improvements under the hood to ensure development will never slow down
+
 ## 1.2.2
 
 This update fixes a bug that occurred when navigating via mouse.
