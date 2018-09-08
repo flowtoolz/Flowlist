@@ -67,7 +67,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         let state = task.state.value
         
-        setAlpha(with: state)
+        updateColors(with: state)
         updateTags()
         checkBox.configure(with: state, whiteColorMode: isSelected)
         updateTextView()
@@ -121,13 +121,19 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         let state = task?.state.value
         
-        setAlpha(with: state)
+        updateColors(with: state)
         checkBox.update(with: state)
     }
     
-    private func setAlpha(with state: TaskState?)
+    private func updateColors(with state: TaskState?)
     {
-        alphaValue = state == .done ? 0.5 : 1.0
+        let isDone = state == .done
+        
+        alphaValue = isDone ? 0.5 : 1.0
+        
+        tagView.isHidden = isDone
+        
+        layer?.borderWidth = isDone ? 0 : 1
     }
     
     // MARK: - Selection
@@ -163,8 +169,8 @@ class TaskView: LayerBackedView, Observer, Observable
             
             layer?.borderColor = tagColor.with(alpha: 0.5).cgColor
             
-            tagView.isHidden = false
             tagView.backgroundColor = tagColor
+            tagView.isHidden = task?.state.value == .done
         }
         else
         {
