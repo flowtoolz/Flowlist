@@ -23,6 +23,7 @@ final class Task: Codable, Observable, Tree
     
     convenience init(_ title: String? = nil,
                      state: TaskState? = nil,
+                     tag: Task.Tag? = nil,
                      root: Task? = nil,
                      numberOfLeafs: Int = 1)
     {
@@ -30,6 +31,7 @@ final class Task: Codable, Observable, Tree
         
         self.title = Var(title)
         self.state = Var(state)
+        self.tag = Var(tag)
         self.root = root
         self.numberOfLeafs = numberOfLeafs
     }

@@ -12,6 +12,7 @@ extension Task: Copyable
     {
         self.init(original.title.value,
                   state: original.state.value,
+                  tag: original.tag.value,
                   root: root,
                   numberOfLeafs: original.numberOfLeafs)
         
