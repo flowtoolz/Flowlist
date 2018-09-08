@@ -2,7 +2,7 @@ import SwiftyToolz
 
 extension Float
 {
-    static let tagAlpha: Float = 0.35
+    static let tagAlpha: Float = 0.5
     static let cornerRadius: Float = 6
     static let progressBarHeight: Float = 10
     
