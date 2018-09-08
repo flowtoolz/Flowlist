@@ -1,6 +1,22 @@
 import SwiftObserver
 import SwiftyToolz
 
+extension Task.Tag
+{
+    var string: String
+    {
+        switch self
+        {
+        case .red: return "Red"
+        case .orange: return "Orange"
+        case .yellow: return "Yellow"
+        case .green: return "Green"
+        case .blue: return "Blue"
+        case .purple: return "Purple"
+        }
+    }
+}
+
 final class Task: Codable, Observable, Tree
 {
     // MARK: - Life Cycle

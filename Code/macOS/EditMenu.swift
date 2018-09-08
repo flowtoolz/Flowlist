@@ -33,6 +33,10 @@ class EditMenu: NSMenu, Observer
         addItem(cutItem)
         addItem(pasteItem)
         
+        addItem(NSMenuItem.separator())
+        
+        addItem(tagItem)
+        
         observe(keyboard)
         {
             [unowned self] in
@@ -50,13 +54,6 @@ class EditMenu: NSMenu, Observer
                 case "l": self.list?.debug()
                 case "t": store.root.debug()
                 case "n": print("number of items in store: \(store.numberOfUserCreatedLeafs.value ?? 0)")
-                case "1": self.list?.set(tag: .red)
-                case "2": self.list?.set(tag: .orange)
-                case "3": self.list?.set(tag: .yellow)
-                case "4": self.list?.set(tag: .green)
-                case "5": self.list?.set(tag: .blue)
-                case "6": self.list?.set(tag: .purple)
-                case "0": self.list?.set(tag: nil)
                 default: break
                 }
                 
@@ -84,15 +81,29 @@ class EditMenu: NSMenu, Observer
         
         switch menuItem
         {
-        case createItem, createAtTopItem: return !reachedTaskNumberLimit
-        case renameItem, checkOffItem, deleteItem, cutItem, inProgressItem: return selected > 0
-        case copyItem: return selected > 0 && !reachedTaskNumberLimit
-        case moveUpItem: return list?.canMoveItems(up: true) ?? false
-        case moveDownItem: return list?.canMoveItems(up: false) ?? false
+        case createItem, createAtTopItem:
+            return !reachedTaskNumberLimit
+            
+        case renameItem, checkOffItem, deleteItem, cutItem, inProgressItem, tagItem:
+            return selected > 0
+            
+        case copyItem:
+            return selected > 0 && !reachedTaskNumberLimit
+            
+        case moveUpItem:
+            return list?.canMoveItems(up: true) ?? false
+            
+        case moveDownItem:
+            return list?.canMoveItems(up: false) ?? false
+            
         case pasteItem:
             return !reachedTaskNumberLimit && (clipboard.count > 0 || systemPasteboard)
-        case undoItem: return deleted > 0 && !reachedTaskNumberLimit
-        default: return list != nil
+            
+        case undoItem:
+            return deleted > 0 && !reachedTaskNumberLimit
+            
+        default:
+            return list != nil
         }
     }
     
@@ -133,6 +144,8 @@ class EditMenu: NSMenu, Observer
         }
         
         undoItem.title = deleted > 1 ? "Paste \(deleted) Deleted Items" : "Paste Deleted Item"
+        
+        tagItem.title = selected > 1 ? "Tag \(selected) Items" : "Tag Item"
     }
     
     private lazy var createItem = item("Add New Item",
@@ -222,6 +235,62 @@ class EditMenu: NSMenu, Observer
                                      action: #selector(undo),
                                      key: "z")
     @objc private func undo() { list?.undoLastRemoval() }
+    
+    private lazy var tagItem: NSMenuItem =
+    {
+        // TODO: create custom NSMenuItem class that takes closure instead of selector and clean up all item creation code
+        
+        let selectors =
+        [
+            #selector(tagRed),
+            #selector(tagOrange),
+            #selector(tagYellow),
+            #selector(tagGreen),
+            #selector(tagBlue),
+            #selector(tagPurple)
+        ]
+        
+        let subMenu = NSMenu()
+        
+        for i in 0 ..< 6
+        {
+            guard let name = Task.Tag(rawValue: i)?.string else
+            {
+                log(error: "Couldn't infer tag name from tag index \(i)")
+                continue
+            }
+            
+            let subitem = item(name,
+                               action: selectors[i],
+                               key: "\(i + 1)",
+                               modifiers: [])
+            
+            subMenu.addItem(subitem)
+        }
+        
+        subMenu.addItem(item("None",
+                             action: #selector(tagNil),
+                             key: "0",
+                             modifiers: []))
+        
+        let mainItem = NSMenuItem()
+        mainItem.title = "Tag Item"
+        mainItem.target = self
+        mainItem.action = #selector(dummyAction)
+        mainItem.submenu = subMenu
+        
+        return mainItem
+    }()
+    
+    @objc private func dummyAction() {}
+    
+    @objc private func tagRed() { list?.set(tag: .red) }
+    @objc private func tagOrange() { list?.set(tag: .orange) }
+    @objc private func tagYellow() { list?.set(tag: .yellow) }
+    @objc private func tagGreen() { list?.set(tag: .green) }
+    @objc private func tagBlue() { list?.set(tag: .blue) }
+    @objc private func tagPurple() { list?.set(tag: .purple) }
+    @objc private func tagNil() { list?.set(tag: nil) }
     
     private var list: SelectableList? { return Browser.active?.focusedList }
 }
