@@ -302,8 +302,6 @@ class TaskView: LayerBackedView, Observer, Observable
         view.backgroundColor = .white
         view.alphaValue = 0
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
-        view.layer?.borderColor = Color.gray(brightness: 0.5).cgColor
-        view.layer?.borderWidth = 1
         
         return view
     }()

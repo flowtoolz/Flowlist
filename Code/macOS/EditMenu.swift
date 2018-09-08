@@ -250,6 +250,8 @@ class EditMenu: NSMenu, Observer
             #selector(tagPurple)
         ]
         
+        let images = [#imageLiteral(resourceName: "tag_red"), #imageLiteral(resourceName: "tag_orange"), #imageLiteral(resourceName: "tag_yellow"), #imageLiteral(resourceName: "tag_green"), #imageLiteral(resourceName: "tag_blue"), #imageLiteral(resourceName: "tag_purple")]
+        
         let subMenu = NSMenu()
         
         for i in 0 ..< 6
@@ -265,13 +267,19 @@ class EditMenu: NSMenu, Observer
                                key: "\(i + 1)",
                                modifiers: [])
             
+            subitem.image = images[i]
+            
             subMenu.addItem(subitem)
         }
         
-        subMenu.addItem(item("None",
-                             action: #selector(tagNil),
-                             key: "0",
-                             modifiers: []))
+        let subitem = item("None",
+                           action: #selector(tagNil),
+                           key: "0",
+                           modifiers: [])
+        
+        subitem.image = #imageLiteral(resourceName: "tag_none")
+        
+        subMenu.addItem(subitem)
         
         let mainItem = NSMenuItem()
         mainItem.title = "Tag Item"
