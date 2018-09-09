@@ -109,9 +109,10 @@
 	<key>GuidesVisible</key>
 	<string>NO</string>
 	<key>ImageCounter</key>
-	<integer>51</integer>
+	<integer>53</integer>
 	<key>ImageLinkBack</key>
 	<array>
+		<dict/>
 		<dict/>
 		<dict/>
 		<dict/>
@@ -121,6 +122,7 @@
 	</array>
 	<key>ImageList</key>
 	<array>
+		<string>image52.png</string>
 		<string>image50.png</string>
 		<string>image49.png</string>
 		<string>image44.png</string>
@@ -135,7 +137,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-09-09 10:51:15 +0000</string>
+	<string>2018-09-09 12:57:43 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -198,7 +200,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-1453.9361702127658, -1404.2553191489362}, {7072.3404255319147, 7859.5744680851049}}</string>
+				<string>{{-1293.2352941176478, -1294.1176470588239}, {6750.9803921568628, 7639.2156862745105}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -393,7 +395,7 @@
 					<key>ID</key>
 					<integer>231</integer>
 					<key>ImageID</key>
-					<integer>38</integer>
+					<integer>52</integer>
 					<key>ManualSizeImage</key>
 					<string>YES</string>
 					<key>StretchImage</key>
@@ -1631,12 +1633,12 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{551.2445921194701, 3911.340249781676}, {2048.9361702127653, 1404.2553191489351}}</string>
+		<string>{{612.44609399681724, 1980.2388730607777}, {1888.2352941176473, 1294.1176470588234}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Arbeitsfläche 1</string>
-				<real>0.47000000000000003</real>
+				<real>0.51000000000000001</real>
 				<real>0.5</real>
 			</array>
 		</array>
