@@ -109,9 +109,10 @@
 	<key>GuidesVisible</key>
 	<string>NO</string>
 	<key>ImageCounter</key>
-	<integer>53</integer>
+	<integer>54</integer>
 	<key>ImageLinkBack</key>
 	<array>
+		<dict/>
 		<dict/>
 		<dict/>
 		<dict/>
@@ -122,6 +123,7 @@
 	</array>
 	<key>ImageList</key>
 	<array>
+		<string>image53.png</string>
 		<string>image52.png</string>
 		<string>image50.png</string>
 		<string>image49.png</string>
@@ -137,7 +139,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-09-09 12:57:43 +0000</string>
+	<string>2018-09-09 14:22:48 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -635,7 +637,7 @@
 					<key>ID</key>
 					<integer>230</integer>
 					<key>ImageID</key>
-					<integer>38</integer>
+					<integer>53</integer>
 					<key>ManualSizeImage</key>
 					<string>YES</string>
 					<key>StretchImage</key>
@@ -1280,8 +1282,8 @@ set them in progress, review what you have acomplished.}</string>
 
 \f0\b\fs80 \cf2 Edit lists rapidly.
 \f1\b0  
-\f0 Write &amp; delete items like paragraphs in a text.\
-Hit the space bar to add a new item to the top of a list.}</string>
+\f0 \cf2 Write &amp; delete items like paragraphs in a text.\
+Quickly add items to the top. Tag items with colors.}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -1633,7 +1635,7 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{612.44609399681724, 1980.2388730607777}, {1888.2352941176473, 1294.1176470588234}}</string>
+		<string>{{473.23040772230769, 933.18004953136563}, {1888.2352941176475, 1294.1176470588239}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
