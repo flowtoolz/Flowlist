@@ -13,7 +13,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         identifier = TaskView.uiIdentifier
         
-        constrainTagView()
+        constrainColorOverlay()
         constrainLayoutGuide()
         constrainEditingBackground()
         constrainCheckBox()
@@ -68,7 +68,6 @@ class TaskView: LayerBackedView, Observer, Observable
         let state = task.state.value
         
         updateColors(with: state)
-        updateTags()
         checkBox.configure(with: state, whiteColorMode: isSelected)
         updateTextView()
         updateGroupIcon()
@@ -89,12 +88,12 @@ class TaskView: LayerBackedView, Observer, Observable
         
         observe(task.state)
         {
-            [weak self] _ in self?.updateState()
+            [weak self] _ in self?.taskStateDidChange()
         }
         
         observe(task.tag)
         {
-            [weak self] _ in self?.updateTags()
+            [weak self] _ in self?.updateColors(with: self?.task?.state.value)
         }
     }
     
@@ -115,9 +114,9 @@ class TaskView: LayerBackedView, Observer, Observable
         stopObserving(task)
     }
     
-    // MARK: - Task State
+    // MARK: - Task State & Colors
     
-    private func updateState()
+    private func taskStateDidChange()
     {
         let state = task?.state.value
         
@@ -127,13 +126,36 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func updateColors(with state: TaskState?)
     {
-        let isDone = state == .done
+        guard let task = task else { return }
         
-        alphaValue = isDone ? 0.5 : 1.0
-        
-        tagView.isHidden = isDone
-        
-        layer?.borderWidth = isDone ? 0 : 1
+        if task.isDone
+        {
+            colorOverlay.backgroundColor = Color.gray(brightness: 0.6)
+            colorOverlay.isHidden = false
+            
+            layer?.borderColor = Color.border.cgColor
+            
+            alphaValue = 0.5
+        }
+        else if let tag = task.tag.value
+        {
+            let tagColor = Color.tags[tag.rawValue]
+            
+            colorOverlay.backgroundColor = tagColor
+            colorOverlay.isHidden = false
+            
+            layer?.borderColor = tagColor.with(alpha: 0.5).cgColor
+            
+            alphaValue = 1
+        }
+        else
+        {
+            colorOverlay.isHidden = true
+            
+            layer?.borderColor = Color.border.cgColor
+            
+            alphaValue = 1
+        }
     }
     
     // MARK: - Selection
@@ -159,50 +181,21 @@ class TaskView: LayerBackedView, Observer, Observable
         }
     }
     
-    // MARK: - Tag View
+    // MARK: - Color Overlay
     
-    private func updateTags()
+    private func constrainColorOverlay()
     {
-        if let tag = task?.tag.value
-        {
-            let tagColor = TaskView.tagColors[tag.rawValue]
-            
-            layer?.borderColor = tagColor.with(alpha: 0.5).cgColor
-            
-            tagView.backgroundColor = tagColor
-            tagView.isHidden = task?.state.value == .done
-        }
-        else
-        {
-            layer?.borderColor = Color.border.cgColor
-            
-            tagView.isHidden = true
-        }
+        colorOverlay.autoPinEdgesToSuperviewEdges()
     }
     
-    private func constrainTagView()
-    {
-        tagView.autoPinEdgesToSuperviewEdges()
-    }
-    
-    private lazy var tagView: LayerBackedView =
+    private lazy var colorOverlay: LayerBackedView =
     {
         let view = addForAutoLayout(LayerBackedView())
         
-        view.alphaValue = Float.tagAlpha.cgFloat
+        view.alphaValue = Float.colorOverlayAlpha.cgFloat
         
         return view
     }()
-    
-    private static let tagColors: [Color] =
-    [
-        Color(253, 74, 75),
-        Color(253, 154, 57),
-        Color(254, 207, 60),
-        Color(95, 197, 64),
-        Color(63, 169, 242),
-        Color(197, 112, 219)
-    ]
     
     // MARK: - Text View
     
