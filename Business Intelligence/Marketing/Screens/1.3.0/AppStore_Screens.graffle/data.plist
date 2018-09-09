@@ -109,9 +109,10 @@
 	<key>GuidesVisible</key>
 	<string>NO</string>
 	<key>ImageCounter</key>
-	<integer>48</integer>
+	<integer>51</integer>
 	<key>ImageLinkBack</key>
 	<array>
+		<dict/>
 		<dict/>
 		<dict/>
 		<dict/>
@@ -120,7 +121,8 @@
 	</array>
 	<key>ImageList</key>
 	<array>
-		<string>image47.png</string>
+		<string>image50.png</string>
+		<string>image49.png</string>
 		<string>image44.png</string>
 		<string>image43.png</string>
 		<string>image42.png</string>
@@ -133,7 +135,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-09-09 08:46:11 +0000</string>
+	<string>2018-09-09 10:51:15 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -355,7 +357,7 @@
 					<key>ID</key>
 					<integer>233</integer>
 					<key>ImageID</key>
-					<integer>47</integer>
+					<integer>50</integer>
 					<key>ManualSizeImage</key>
 					<string>YES</string>
 					<key>StretchImage</key>
@@ -889,7 +891,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{989.99899291992188, 3554.9963836669922}, {434.99955749511719, 374.99961853027344}}</string>
+					<string>{{989.99899291992188, 3509.9964294433594}, {434.99955749511719, 374.99961853027344}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -958,8 +960,9 @@
 \f1\b0  
 \f0 Controll everything\
 via intuitive shortcuts.\
-Activate fullscreen\
-or monotasking mode. Everything\'92s animated.}</string>
+Zoom in and out.\
+Activate fullscreen or monotasking mode.\
+All navigation and editing is animated.}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -1454,13 +1457,13 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1364.9986114501953, 3119.996826171875}, {1034.9989471435547, 899.99908447265625}}</string>
+					<string>{{1364.9986114501953, 3194.9967498779297}, {1034.9989471435547, 824.99916076660156}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
 					<integer>232</integer>
 					<key>ImageID</key>
-					<integer>38</integer>
+					<integer>49</integer>
 					<key>ManualSizeImage</key>
 					<string>YES</string>
 					<key>StretchImage</key>
@@ -1548,6 +1551,8 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 				<integer>16</integer>
 				<key>ShowsGrid</key>
 				<string>YES</string>
+				<key>SnapsToGrid</key>
+				<string>YES</string>
 			</dict>
 			<key>HPages</key>
 			<integer>4</integer>
@@ -1626,7 +1631,7 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{588.47863467266143, 3823.042377441247}, {2048.9361702127662, 1404.2553191489365}}</string>
+		<string>{{551.2445921194701, 3911.340249781676}, {2048.9361702127653, 1404.2553191489351}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
