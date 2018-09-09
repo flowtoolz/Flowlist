@@ -109,9 +109,10 @@
 	<key>GuidesVisible</key>
 	<string>NO</string>
 	<key>ImageCounter</key>
-	<integer>39</integer>
+	<integer>48</integer>
 	<key>ImageLinkBack</key>
 	<array>
+		<dict/>
 		<dict/>
 		<dict/>
 		<dict/>
@@ -119,10 +120,11 @@
 	</array>
 	<key>ImageList</key>
 	<array>
+		<string>image47.png</string>
+		<string>image44.png</string>
+		<string>image43.png</string>
+		<string>image42.png</string>
 		<string>image38.png</string>
-		<string>image35.png</string>
-		<string>image30.png</string>
-		<string>image29.png</string>
 	</array>
 	<key>LinksVisible</key>
 	<string>NO</string>
@@ -131,7 +133,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-09-08 14:41:54 +0000</string>
+	<string>2018-09-09 08:46:11 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -194,7 +196,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-1447.1052631578941, -1531.578947368421}, {7057.894736842105, 8113.1578947368416}}</string>
+				<string>{{-1453.9361702127658, -1404.2553191489362}, {7072.3404255319147, 7859.5744680851049}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -231,17 +233,13 @@
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1709.9982604980469, 4214.9957122802734}, {1004.9989776611328, 764.99922180175781}}</string>
+					<string>{{730.93833861375128, 4319.99560546875}, {867, 540}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>233</integer>
+					<integer>241</integer>
 					<key>ImageID</key>
-					<integer>38</integer>
-					<key>ManualSizeImage</key>
-					<string>YES</string>
-					<key>StretchImage</key>
-					<false/>
+					<integer>44</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -267,13 +265,97 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1364.9986114501953, 3119.996826171875}, {1034.9989471435547, 899.99908447265625}}</string>
+					<string>{{1825.99755859375, 3119.996826171875}, {574, 51}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
-					<integer>232</integer>
+					<integer>240</integer>
 					<key>ImageID</key>
-					<integer>38</integer>
+					<integer>43</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{1379.9985961914062, 3119.996826171875}, {574, 51}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>239</integer>
+					<key>ImageID</key>
+					<integer>43</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{959.9990234375, 3119.996826171875}, {435, 353}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>238</integer>
+					<key>ImageID</key>
+					<integer>42</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{1708.2741225670122, 4217.6505795369103}, {1004.9989776611328, 764.99922180175781}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>233</integer>
+					<key>ImageID</key>
+					<integer>47</integer>
 					<key>ManualSizeImage</key>
 					<string>YES</string>
 					<key>StretchImage</key>
@@ -807,38 +889,6 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{780.92950576898943, 4292.0975594546053}, {853, 612.02154657223582}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>ID</key>
-					<integer>226</integer>
-					<key>ImageID</key>
-					<integer>35</integer>
-					<key>ManualSizeImage</key>
-					<string>YES</string>
-					<key>StretchImage</key>
-					<false/>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Bounds</key>
 					<string>{{989.99899291992188, 3554.9963836669922}, {434.99955749511719, 374.99961853027344}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
@@ -913,94 +963,6 @@ or monotasking mode. Everything\'92s animated.}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
-				</dict>
-				<dict>
-					<key>Bounds</key>
-					<string>{{959.9990234375, 3119.996826171875}, {436, 317}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>ID</key>
-					<integer>222</integer>
-					<key>ImageID</key>
-					<integer>30</integer>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Bounds</key>
-					<string>{{1896.99755859375, 3119.996826171875}, {503, 60}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>ID</key>
-					<integer>221</integer>
-					<key>ImageID</key>
-					<integer>29</integer>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Bounds</key>
-					<string>{{1394.9985809326172, 3119.996826171875}, {503, 59.99993896484375}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>ID</key>
-					<integer>220</integer>
-					<key>ImageID</key>
-					<integer>29</integer>
-					<key>ManualSizeImage</key>
-					<string>YES</string>
-					<key>StretchImage</key>
-					<false/>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
 				</dict>
 				<dict>
 					<key>Bounds</key>
@@ -1230,55 +1192,6 @@ set them in progress, review what you have acomplished.}</string>
 								<real>0.89411764705882357</real>
 								<key>r</key>
 								<real>0.71764705882352942</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Bounds</key>
-					<string>{{959.9990234375, 3119.996826171875}, {1439.99853515625, 899.99907970428467}}</string>
-					<key>Class</key>
-					<string>ShapedGraphic</string>
-					<key>FontInfo</key>
-					<dict>
-						<key>Color</key>
-						<dict>
-							<key>space</key>
-							<string>gg22</string>
-							<key>w</key>
-							<string>0</string>
-						</dict>
-						<key>Font</key>
-						<string>HelveticaNeue-Thin</string>
-						<key>Size</key>
-						<real>33</real>
-					</dict>
-					<key>ID</key>
-					<integer>210</integer>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>0.97254901960784312</real>
-								<key>g</key>
-								<real>0.86274509803921573</real>
-								<key>r</key>
-								<real>0.6588235294117647</real>
 								<key>space</key>
 								<string>srgb</string>
 							</dict>
@@ -1539,6 +1452,91 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 						</dict>
 					</dict>
 				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{1364.9986114501953, 3119.996826171875}, {1034.9989471435547, 899.99908447265625}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>232</integer>
+					<key>ImageID</key>
+					<integer>38</integer>
+					<key>ManualSizeImage</key>
+					<string>YES</string>
+					<key>StretchImage</key>
+					<false/>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Beneath</key>
+							<string>YES</string>
+							<key>Fuzziness</key>
+							<real>50</real>
+							<key>ShadowVector</key>
+							<string>{0, 20.000159740447998}</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{959.9990234375, 3119.996826171875}, {1439.99853515625, 899.99907970428467}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>FontInfo</key>
+					<dict>
+						<key>Color</key>
+						<dict>
+							<key>space</key>
+							<string>gg22</string>
+							<key>w</key>
+							<string>0</string>
+						</dict>
+						<key>Font</key>
+						<string>HelveticaNeue-Thin</string>
+						<key>Size</key>
+						<real>33</real>
+					</dict>
+					<key>ID</key>
+					<integer>210</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Color</key>
+							<dict>
+								<key>b</key>
+								<real>0.97254901960784312</real>
+								<key>g</key>
+								<real>0.8784313725490196</real>
+								<key>r</key>
+								<real>0.6588235294117647</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
 			</array>
 			<key>GridInfo</key>
 			<dict>
@@ -1549,8 +1547,6 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 				<key>MajorGridSpacing</key>
 				<integer>16</integer>
 				<key>ShowsGrid</key>
-				<string>YES</string>
-				<key>SnapsToGrid</key>
 				<string>YES</string>
 			</dict>
 			<key>HPages</key>
@@ -1618,7 +1614,7 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 		<key>CurrentSheet</key>
 		<integer>0</integer>
 		<key>Frame</key>
-		<string>{{77, 37}, {1093, 740}}</string>
+		<string>{{0, 0}, {1280, 740}}</string>
 		<key>ShowInfo</key>
 		<true/>
 		<key>ShowRuler</key>
@@ -1630,12 +1626,12 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{577.86043829666903, 3284.1826814350343}, {2042.105263157895, 1531.5789473684217}}</string>
+		<string>{{588.47863467266143, 3823.042377441247}, {2048.9361702127662, 1404.2553191489365}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Arbeitsfläche 1</string>
-				<real>0.38</real>
+				<real>0.47000000000000003</real>
 				<real>0.5</real>
 			</array>
 		</array>
