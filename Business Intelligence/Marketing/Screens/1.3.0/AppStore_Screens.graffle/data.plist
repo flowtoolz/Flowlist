@@ -109,7 +109,7 @@
 	<key>GuidesVisible</key>
 	<string>NO</string>
 	<key>ImageCounter</key>
-	<integer>54</integer>
+	<integer>57</integer>
 	<key>ImageLinkBack</key>
 	<array>
 		<dict/>
@@ -123,6 +123,7 @@
 	</array>
 	<key>ImageList</key>
 	<array>
+		<string>image56.png</string>
 		<string>image53.png</string>
 		<string>image52.png</string>
 		<string>image50.png</string>
@@ -130,7 +131,6 @@
 		<string>image44.png</string>
 		<string>image43.png</string>
 		<string>image42.png</string>
-		<string>image38.png</string>
 	</array>
 	<key>LinksVisible</key>
 	<string>NO</string>
@@ -139,7 +139,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-09-09 14:22:48 +0000</string>
+	<string>2018-09-09 14:44:03 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -673,7 +673,7 @@
 					<key>ID</key>
 					<integer>229</integer>
 					<key>ImageID</key>
-					<integer>38</integer>
+					<integer>56</integer>
 					<key>ManualSizeImage</key>
 					<string>YES</string>
 					<key>StretchImage</key>
@@ -1635,7 +1635,7 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{473.23040772230769, 933.18004953136563}, {1888.2352941176475, 1294.1176470588239}}</string>
+		<string>{{826.17158419289592, 134.16044168822819}, {1888.2352941176464, 1294.1176470588239}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
