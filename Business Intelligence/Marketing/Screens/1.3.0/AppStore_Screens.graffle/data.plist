@@ -1160,8 +1160,8 @@ and paste it into one of your lists. Flowlist recognizes distinct items.}</strin
 
 \f0\b\fs80 \cf2 Prioritize at all levels.
 \f1\b0  
-\f0 Move items up or down, check them off,\
-set them in progress, review what you have acomplished.}</string>
+\f0 \cf2 Move items up or down, check them off,\
+set them in progress, review what you have accomplished.}</string>
 					</dict>
 					<key>TextPlacement</key>
 					<integer>0</integer>
@@ -1635,7 +1635,7 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{826.17158419289592, 134.16044168822819}, {1888.2352941176464, 1294.1176470588239}}</string>
+		<string>{{788.91668223211138, 1885.1408338450913}, {1888.2352941176473, 1294.1176470588236}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
