@@ -49,7 +49,6 @@
 		9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* Browser.swift */; };
 		9EC2C76D213FF26800823632 /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC2C76C213FF26800823632 /* Row.swift */; };
 		9EC498A621147FE1003636FE /* Task+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC498A521147FE1003636FE /* Task+Pasteboard.swift */; };
-		9ED2F082214798F300D89AA5 /* SwiftConstrainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED2F081214798F300D89AA5 /* SwiftConstrainer.swift */; };
 		9ED5C8DD20DF970000EF84CB /* PurchaseContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */; };
 		9EE2EE4B20B4A693007CDC2F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextView.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
@@ -118,7 +117,6 @@
 		9EBC70282056FD02007A1EA8 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Browser.swift; path = ../Code/Browser.swift; sourceTree = "<group>"; };
 		9EC2C76C213FF26800823632 /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Row.swift; path = ../Code/macOS/Row.swift; sourceTree = "<group>"; };
 		9EC498A521147FE1003636FE /* Task+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Pasteboard.swift"; path = "../Code/Task+Pasteboard.swift"; sourceTree = "<group>"; };
-		9ED2F081214798F300D89AA5 /* SwiftConstrainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwiftConstrainer.swift; path = ../Code/macOS/SwiftConstrainer.swift; sourceTree = "<group>"; };
 		9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PurchaseContentView.swift; path = ../Code/macOS/PurchaseContentView.swift; sourceTree = "<group>"; };
 		9EE2EE4A20B4A693007CDC2F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextView.swift; path = ../Code/macOS/TextView.swift; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Style.swift"; path = "../Code/Float+Style.swift"; sourceTree = "<group>"; };
@@ -366,7 +364,6 @@
 			isa = PBXGroup;
 			children = (
 				9E7651931EEF428100DE2B07 /* TaskView.swift */,
-				9ED2F081214798F300D89AA5 /* SwiftConstrainer.swift */,
 				9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */,
 				9EE2EE4A20B4A693007CDC2F /* TextView.swift */,
 			);
@@ -586,7 +583,6 @@
 				9E2F83E520C8639F003E771E /* SelectableList+NSPasteboard.swift in Sources */,
 				9ED5C8DD20DF970000EF84CB /* PurchaseContentView.swift in Sources */,
 				9E60275B21282F91005FFACD /* NSView+Style.swift in Sources */,
-				9ED2F082214798F300D89AA5 /* SwiftConstrainer.swift in Sources */,
 				9E3F69332115ADE2002D595D /* Task+WelcomeTour.swift in Sources */,
 				9EA5925B20AF7AD200F70CBF /* Selection.swift in Sources */,
 				9E5768C220C15CDF00749C0C /* Task+Hashable.swift in Sources */,
