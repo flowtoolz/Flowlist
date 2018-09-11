@@ -18,33 +18,29 @@ class BulletpointList: NSView
         for index in 0 ..< bulletpointLabels.count
         {
             let icon = bulletpointIcons[index]
-            icon.autoPinEdge(toSuperviewEdge: .left)
-            icon.autoSetDimensions(to: CGSize(width: defaultIconSize,
-                                              height: defaultIconSize))
+            icon.constrainLeft(to: self)
+            icon.constrainSize(to: defaultIconSize, defaultIconSize)
             
             let label = bulletpointLabels[index]
-            label.autoPinEdge(toSuperviewEdge: .right)
-            label.autoPinEdge(toSuperviewEdge: .left, withInset: 27)
+            label.constrainRight(to: self)
+            label.constrainLeft(to: self, offset: 27)
             
             if index == 0
             {
-                label.autoPinEdge(toSuperviewEdge: .top)
+                label.constrainTop(to: self)
             }
             
             if index == bulletpoints.count - 1
             {
-                label.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
+                label.constrainBottom(to: self, offset: -10)
             }
             
             if index > 0
             {
-                label.autoPinEdge(.top,
-                                  to: .bottom,
-                                  of: bulletpointLabels[index - 1],
-                                  withOffset: 20)
+                label.constrain(below: bulletpointLabels[index - 1], offset: 20)
             }
             
-            icon.autoConstrainAttribute(.top, to: .top, of: label)
+            icon.constrainTop(to: label)
         }
     }
     
