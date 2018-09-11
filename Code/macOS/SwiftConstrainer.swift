@@ -99,12 +99,69 @@ extension LayoutItem
         return constraint
     }
     
-    // MARK: Size
+    // MARK: Width
+    
+    @discardableResult
+    func constrainWidth(to width: CGFloat) -> NSLayoutConstraint
+    {
+        return constrain(.width, to: width)
+    }
     
     @discardableResult
     func constrainWidth(toMinimum minimum: CGFloat) -> NSLayoutConstraint
     {
-        let constraint = widthAnchor.constraint(greaterThanOrEqualToConstant: minimum)
+        return constrain(.width, toMinimum: minimum)
+    }
+
+    @discardableResult
+    func constrainWidth<Target: LayoutItem>(to target: Target) -> NSLayoutConstraint
+    {
+        return constrain(.width, to: target)
+    }
+    
+    @discardableResult
+    func constrainWidth<Target: LayoutItem>(to relativeSize: CGFloat,
+                                            of target: Target) -> NSLayoutConstraint
+    {
+        return constrain(.width, to: relativeSize, of: target)
+    }
+    
+    // MARK: Height
+    
+    @discardableResult
+    func constrainHeight(to height: CGFloat) -> NSLayoutConstraint
+    {
+        return constrain(.height, to: height)
+    }
+    
+    @discardableResult
+    func constrainHeight(toMinimum minimum: CGFloat) -> NSLayoutConstraint
+    {
+        return constrain(.height, toMinimum: minimum)
+    }
+    
+    @discardableResult
+    func constrainHeight<Target: LayoutItem>(to target: Target) -> NSLayoutConstraint
+    {
+        return constrain(.height, to: target)
+    }
+    
+    @discardableResult
+    func constrainHeight<Target: LayoutItem>(to relativeSize: CGFloat,
+                                             of target: Target) -> NSLayoutConstraint
+    {
+        return constrain(.height, to: relativeSize, of: target)
+    }
+    
+    // MARK: Size
+    
+    @discardableResult
+    private func constrain(_ dimension: Dimension,
+                           to size: CGFloat) -> NSLayoutConstraint
+    {
+        let myAnchor = anchor(for: dimension)
+        
+        let constraint = myAnchor.constraint(equalToConstant: size)
         
         constraint.isActive = true
         
@@ -112,9 +169,51 @@ extension LayoutItem
     }
     
     @discardableResult
-    func constrainWidth<LayoutObject: LayoutItem>(to target: LayoutObject) -> NSLayoutConstraint
+    private func constrain(_ dimension: Dimension,
+                           toMinimum minimum: CGFloat) -> NSLayoutConstraint
     {
-        let constraint = widthAnchor.constraint(equalTo: target.widthAnchor)
+        let myAnchor = anchor(for: dimension)
+        
+        let constraint = myAnchor.constraint(greaterThanOrEqualToConstant: minimum)
+        
+        constraint.isActive = true
+        
+        return constraint
+    }
+    
+    @discardableResult
+    private func constrain<Target: LayoutItem>(_ dimension: Dimension,
+                                               to target: Target) -> NSLayoutConstraint
+    {
+        let myAnchor = anchor(for: dimension)
+        let targetAnchor = target.anchor(for: dimension)
+        
+        let constraint = myAnchor.constraint(equalTo: targetAnchor)
+        
+        constraint.isActive = true
+        
+        return constraint
+    }
+    
+    private func anchor(for dimension: Dimension) -> NSLayoutDimension
+    {
+        return dimension == .width ? widthAnchor : heightAnchor
+    }
+    
+    @discardableResult
+    private func constrain<Target: LayoutItem>(_ dimension: Dimension,
+                                               to relativeSize: CGFloat,
+                                               of target: Target) -> NSLayoutConstraint
+    {
+        let attribute = dimension.attribute
+        
+        let constraint = NSLayoutConstraint(item: self,
+                                            attribute: attribute,
+                                            relatedBy: .equal,
+                                            toItem: target,
+                                            attribute: attribute,
+                                            multiplier: relativeSize,
+                                            constant: 0)
         
         constraint.isActive = true
         
@@ -136,7 +235,6 @@ enum Dimension
         return self == .width ? .width : .height
     }
 }
-
 
 // MARK: -
 
