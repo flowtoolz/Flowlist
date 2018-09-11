@@ -82,8 +82,23 @@ extension LayoutItem
     func constrainLeft<Target: LayoutItem>(to relativePosition: CGFloat,
                                            of target: Target) -> NSLayoutConstraint
     {
+        return constrain(.left, to: relativePosition, of: target)
+    }
+    
+    @discardableResult
+    func constrainRight<Target: LayoutItem>(to relativePosition: CGFloat,
+                                            of target: Target) -> NSLayoutConstraint
+    {
+        return constrain(.right, to: relativePosition, of: target)
+    }
+    
+    @discardableResult
+    private func constrain<Target: LayoutItem>(_ position: XPosition,
+                                               to relativePosition: CGFloat,
+                                               of target: Target) -> NSLayoutConstraint
+    {
         let constraint = NSLayoutConstraint(item: self,
-                                            attribute: .left,
+                                            attribute: position.attribute,
                                             relatedBy: .equal,
                                             toItem: target,
                                             attribute: .right,
@@ -162,8 +177,23 @@ extension LayoutItem
     func constrainTop<Target: LayoutItem>(to relativePosition: CGFloat,
                                           of target: Target) -> NSLayoutConstraint
     {
+        return constrain(.top, to: relativePosition, of: target)
+    }
+    
+    @discardableResult
+    func constrainBottom<Target: LayoutItem>(to relativePosition: CGFloat,
+                                             of target: Target) -> NSLayoutConstraint
+    {
+        return constrain(.bottom, to: relativePosition, of: target)
+    }
+    
+    @discardableResult
+    private func constrain<Target: LayoutItem>(_ position: YPosition,
+                                               to relativePosition: CGFloat,
+                                               of target: Target) -> NSLayoutConstraint
+    {
         let constraint = NSLayoutConstraint(item: self,
-                                            attribute: .top,
+                                            attribute: position.attribute,
                                             relatedBy: .equal,
                                             toItem: target,
                                             attribute: .bottom,
@@ -299,8 +329,35 @@ extension LayoutItem
 
 // MARK: -
 
-enum XPosition { case left, centerX, right }
-enum YPosition { case top, centerY, bottom }
+enum XPosition
+{
+    case left, centerX, right
+    
+    var attribute: NSLayoutConstraint.Attribute
+    {
+        switch self
+        {
+        case .left: return .left
+        case .centerX: return .centerX
+        case .right: return .right
+        }
+    }
+}
+
+enum YPosition
+{
+    case top, centerY, bottom
+    
+    var attribute: NSLayoutConstraint.Attribute
+    {
+        switch self
+        {
+        case .top: return .top
+        case .centerY: return .centerY
+        case .bottom: return .bottom
+        }
+    }
+}
 
 enum Dimension
 {

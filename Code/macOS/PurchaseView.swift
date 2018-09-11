@@ -64,11 +64,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainItemLabel()
     {
-        itemLabel.autoPinEdge(toSuperviewEdge: .left, withInset: 10)
-        itemLabel.autoPinEdge(.right, to: .left, of: expandIcon, withOffset: -10)
-        itemLabel.autoAlignAxis(.horizontal,
-                                toSameAxisOf: buttonOverlay,
-                                withOffset: -CGFloat(Float.progressBarHeight / 2))
+        itemLabel.constrainLeft(to: self, offset: 10)
+        itemLabel.constrainRight(toLeftOf: expandIcon, offset: -10)
+        itemLabel.constrainCenterY(to: buttonOverlay,
+                                   offset: -CGFloat(Float.progressBarHeight / 2))
     }
     
     private lazy var itemLabel: Label =
@@ -99,10 +98,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainExpandIcon()
     {
-        expandIcon.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
-        expandIcon.autoAlignAxis(.horizontal, toSameAxisOf: itemLabel)
-        expandIcon.autoSetDimensions(to: CGSize(width: defaultIconSize,
-                                                height: defaultIconSize))
+        expandIcon.constrainRight(to: self, offset: -10)
+        expandIcon.constrainCenterY(to: itemLabel)
+        expandIcon.constrainWidth(to: defaultIconSize)
+        expandIcon.constrainHeight(to: defaultIconSize)
     }
     
     private let defaultIconSize: CGFloat = 17.0
@@ -113,11 +112,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainProgressBar()
     {
-        progressBar.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                 excludingEdge: .top)
-        
-        let height = CGFloat(Float.progressBarHeight)
-        progressBar.autoSetDimension(.height, toSize: height)
+        progressBar.constrainLeft(to: self)
+        progressBar.constrainRight(to: self)
+        progressBar.constrainBottom(to: self)
+        progressBar.constrainHeight(to: Float.progressBarHeight.cgFloat)
     }
     
     private lazy var progressBar: ProgressBar =
@@ -139,22 +137,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainContent()
     {
-        content.autoConstrainAttribute(.left,
-                                       to: .right,
-                                       of: self,
-                                       withMultiplier: 0.05)
-        content.autoConstrainAttribute(.right,
-                                       to: .right,
-                                       of: self,
-                                       withMultiplier: 0.95)
-        content.autoConstrainAttribute(.top,
-                                       to: .bottom,
-                                       of: self,
-                                       withMultiplier: 0.1)
-        content.autoConstrainAttribute(.bottom,
-                                       to: .bottom,
-                                       of: self,
-                                       withMultiplier: 0.9)
+        content.constrainLeft(to: 0.05, of: self)
+        content.constrainRight(to: 0.95, of: self)
+        content.constrainTop(to: 0.1, of: self)
+        content.constrainBottom(to: 0.9, of: self)
     }
     
     let collapsedHeight: CGFloat = 39 + Float.progressBarHeight.cgFloat
@@ -173,11 +159,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainButtonOverlay()
     {
-        buttonOverlay.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                  excludingEdge: .bottom)
-        
-        let height = 39 + Float.progressBarHeight.cgFloat
-        buttonOverlay.autoSetDimension(.height, toSize: height)
+        buttonOverlay.constrainTop(to: self)
+        buttonOverlay.constrainLeft(to: self)
+        buttonOverlay.constrainRight(to: self)
+        buttonOverlay.constrainHeight(to: 39 + Float.progressBarHeight.cgFloat)
     }
     
     private lazy var buttonOverlay: NSButton =
