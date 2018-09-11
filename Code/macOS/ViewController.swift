@@ -13,8 +13,9 @@ class ViewController: NSViewController, Observer
 //        #if DEBUG
 //        isFullVersion = true
 //        view.layer?.backgroundColor = NSColor.black.cgColor
-//        browserView.autoSetDimensions(to: CGSize(width: 960, height: 540))
-//        browserView.autoCenterInSuperview()
+//        browserView.constrainWidth(to: 960)
+//        browserView.constrainHeight(to: 540)
+//        browserView.constrainCenter(to: view)
 //        return
 //        #endif
         
@@ -85,15 +86,11 @@ class ViewController: NSViewController, Observer
     
     private func constrainPurchaseView()
     {
-        purchaseView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                  excludingEdge: .top)
-        purchaseView.autoPinEdge(.top,
-                                 to: .bottom,
-                                 of: browserView)
-        
-        
-        purchaseViewHeightConstraint = purchaseView.autoSetDimension(.height,
-                                                                     toSize: purchaseViewHeight)
+        purchaseView.constrainLeft(to: view)
+        purchaseView.constrainRight(to: view)
+        purchaseView.constrainBottom(to: view)
+        purchaseView.constrainTop(toBottomOf: browserView)
+        purchaseViewHeightConstraint = purchaseView.constrainHeight(to: purchaseViewHeight)
     }
     
     private var purchaseViewHeight: CGFloat
@@ -114,12 +111,13 @@ class ViewController: NSViewController, Observer
     
     private func constrainBrowserView()
     {
-        browserView.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                 excludingEdge: .bottom)
+        browserView.constrainTop(to: view)
+        browserView.constrainLeft(to: view)
+        browserView.constrainRight(to: view)
         
         if isFullVersion
         {
-            browserView.autoPinEdge(toSuperviewEdge: .bottom)
+            browserView.constrainBottom(to: view)
         }
     }
     
