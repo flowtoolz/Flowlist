@@ -183,7 +183,7 @@ class BrowserView: LayerBackedView, Observer
                                                  withOffset: spacing))
         }
         
-        listView.autoMatch(.width, to: .width, of: listLayoutGuides[0])
+        listView.constrainWidth(to: listLayoutGuides[0])
         
         rememberSpacing(listView.autoPinEdge(toSuperviewEdge: .top,
                                              withInset: spacing))
@@ -222,40 +222,27 @@ class BrowserView: LayerBackedView, Observer
     {
         for guide in listLayoutGuides
         {
-            rememberSpacing(guide.autoPinEdge(toSuperviewEdge: .top,
-                                              withInset: TaskView.spacing))
-            
-            rememberSpacing(guide.autoPinEdge(toSuperviewEdge: .bottom,
-                                              withInset: TaskView.spacing))
+            rememberSpacing(guide.constrainTop(to: self, offset: TaskView.spacing))
+            rememberSpacing(guide.constrainBottom(to: self, offset: -TaskView.spacing))
         }
         
-        listLayoutGuides[0].autoSetDimension(.width,
-                                             toSize: 150,
-                                             relation: .greaterThanOrEqual)
+        listLayoutGuides[0].constrainWidth(toMinimum: 150)
         
         constraintsWithSpacingConstant.append(contentsOf:
         [
-            listLayoutGuides[0].autoPinEdge(toSuperviewEdge: .left,
-                                            withInset: TaskView.spacing),
-            listLayoutGuides[1].autoPinEdge(.left,
-                                            to: .right,
-                                            of: listLayoutGuides[0],
-                                            withOffset: TaskView.spacing),
-            listLayoutGuides[2].autoPinEdge(.left,
-                                            to: .right,
-                                            of: listLayoutGuides[1],
-                                            withOffset: TaskView.spacing),
-            listLayoutGuides[2].autoPinEdge(toSuperviewEdge: .right,
-                                            withInset: TaskView.spacing)
+            listLayoutGuides[0].constrainLeft(to: self, offset: TaskView.spacing),
+            listLayoutGuides[1].constrainLeft(toRightOf: listLayoutGuides[0],
+                                              offset: TaskView.spacing),
+            listLayoutGuides[2].constrainLeft(toRightOf: listLayoutGuides[1],
+                                              offset: TaskView.spacing),
+            listLayoutGuides[2].constrainRight(to: self, offset: -TaskView.spacing)
         ])
         
-        listLayoutGuides[1].autoMatch(.width, to: .width, of: listLayoutGuides[0])
-        listLayoutGuides[2].autoMatch(.width, to: .width, of: listLayoutGuides[0])
+        listLayoutGuides[1].constrainWidth(to: listLayoutGuides[0])
+        listLayoutGuides[2].constrainWidth(to: listLayoutGuides[0])
     }
     
-    private lazy var listLayoutGuides: [NSView] = [addForAutoLayout(NSView()),
-                                                   addForAutoLayout(NSView()),
-                                                   addForAutoLayout(NSView())]
+    private lazy var listLayoutGuides: [NSLayoutGuide] = addLayoutGuides(3)
     
     // MARK: - Dynamic Spacings
     
