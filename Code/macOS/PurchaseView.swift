@@ -119,7 +119,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private lazy var progressBar: ProgressBar =
     {
-        let bar = ProgressBar.newAutoLayout()
+        let bar = ProgressBar()
+        bar.translatesAutoresizingMaskIntoConstraints = false
         addSubview(bar, positioned: .below, relativeTo: buttonOverlay)
         
         let progress = CGFloat(numberOfUserCreatedTasks.latestUpdate) / CGFloat(maxNumberOfTasksInTrial)
@@ -146,7 +147,9 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private lazy var content: PurchaseContentView =
     {
-        let view = PurchaseContentView.newAutoLayout()
+        let view = PurchaseContentView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
         addSubview(view, positioned: .below, relativeTo: buttonOverlay)
         
         view.alphaValue = 0

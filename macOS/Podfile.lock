@@ -1,13 +1,11 @@
 PODS:
   - FoundationToolz (1.0.0)
-  - PureLayout (3.0.2)
   - SwiftObserver (1.3.2):
     - SwiftyToolz (= 1.1.0)
   - SwiftyToolz (1.1.0)
   - UIObserver (0.1.0):
     - SwiftObserver
   - UIToolz (1.0.0):
-    - PureLayout (= 3.0.2)
     - SwiftObserver
     - SwiftyToolz
 
@@ -17,10 +15,6 @@ DEPENDENCIES:
   - SwiftyToolz (from `../../Github Repos/SwiftyToolz`)
   - UIObserver (from `../../Github Repos/UIObserver`)
   - UIToolz (from `../../Github Repos/UIToolz`)
-
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - PureLayout
 
 EXTERNAL SOURCES:
   FoundationToolz:
@@ -36,11 +30,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FoundationToolz: e40cc7cc969480357a44eaafd9bab4b75a3f0c7a
-  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SwiftObserver: a8d183c0984fa9ffa531069f462b59f061390924
   SwiftyToolz: 461391682260e0c485c4007f60c7cc882b8f7211
   UIObserver: d52d08987839f94e2ca4f4767b233fc53e6837e3
-  UIToolz: 5cbabd42a7b50f80e8432de4615f41be6345baf3
+  UIToolz: 56fff254bbf605998d3bea280130093b5a5092d7
 
 PODFILE CHECKSUM: f8385f83e0ce4238865beff2534363ddc17b78bc
 

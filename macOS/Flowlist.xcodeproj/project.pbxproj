@@ -526,7 +526,6 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/FoundationToolz/FoundationToolz.framework",
-				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftObserver/SwiftObserver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyToolz/SwiftyToolz.framework",
 				"${BUILT_PRODUCTS_DIR}/UIObserver/UIObserver.framework",
@@ -535,7 +534,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FoundationToolz.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftObserver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyToolz.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIObserver.framework",
