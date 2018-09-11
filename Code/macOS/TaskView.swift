@@ -210,10 +210,13 @@ class TaskView: LayerBackedView, Observer, Observable
         textView.string = ""
         textView.string = task?.title.value ?? ""
     }
-
+    
     private func constrainTextView()
     {
-        textView.constrainLeft(to: TaskView.textLeftMultiplier, of: layoutGuide)
+        textView.autoConstrainAttribute(.left,
+                                        to: .right,
+                                        of: layoutGuide,
+                                        withMultiplier: TaskView.textLeftMultiplier)
         textView.autoConstrainAttribute(.right, to: .left, of: groupIcon)
         textView.autoConstrainAttribute(.top, to: .top, of: checkBox)
         textView.autoPinEdge(toSuperviewEdge: .bottom)
@@ -224,7 +227,7 @@ class TaskView: LayerBackedView, Observer, Observable
     private lazy var textView: TextView =
     {
         let view = addForAutoLayout(TextView())
-    
+        
         self.observe(view.messenger) { [weak self] in self?.didReceive($0) }
         
         return view
@@ -270,11 +273,11 @@ class TaskView: LayerBackedView, Observer, Observable
         NSAnimationContext.current.allowsImplicitAnimation = false
         NSAnimationContext.current.duration = 0.2
         NSAnimationContext.current.completionHandler =
-        {
-            if editing
             {
-                self.checkBox.isEnabled = false
-            }
+                if editing
+                {
+                    self.checkBox.isEnabled = false
+                }
         }
         
         groupIcon.animator().alphaValue = editing ? 0 : 1
@@ -303,18 +306,23 @@ class TaskView: LayerBackedView, Observer, Observable
     }()
     
     // MARK: - Check Box
-
+    
     private func constrainCheckBox()
     {
-        checkBox.constrainHeight(to: 0.45, of: layoutGuide)
+        checkBox.autoMatch(.height,
+                           to: .height,
+                           of: layoutGuide,
+                           withMultiplier: 0.45)
         checkBox.autoMatch(.width, to: .height, of: self)
-        checkBox.constrainCenter(to: layoutGuide)
+        
+        checkBox.autoAlignAxis(.horizontal, toSameAxisOf: layoutGuide)
+        checkBox.autoAlignAxis(.vertical, toSameAxisOf: layoutGuide)
     }
     
     private lazy var checkBox: CheckBox =
     {
         let button = addForAutoLayout(CheckBox())
-
+        
         button.action = #selector(didClickCheckBox)
         button.target = self
         
@@ -337,8 +345,13 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         groupIcon.autoPinEdge(toSuperviewEdge: .right)
         groupIcon.autoAlignAxis(.horizontal, toSameAxisOf: checkBox)
+        
         groupIcon.autoMatch(.height, to: .height, of: checkBox)
-        groupIcon.constrainWidth(to: TaskView.groupIconWidthMultiplier, of: layoutGuide)
+        
+        groupIcon.autoMatch(.width,
+                            to: .width,
+                            of: layoutGuide,
+                            withMultiplier: TaskView.groupIconWidthMultiplier)
     }
     
     private static let groupIconWidthMultiplier: CGFloat = 0.75
@@ -352,19 +365,20 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func constrainLayoutGuide()
     {
-        layoutGuide.constrainLeft(to: self)
-        layoutGuide.constrainTop(to: self)
+        layoutGuide.autoPinEdge(toSuperviewEdge: .left)
+        layoutGuide.autoPinEdge(toSuperviewEdge: .top)
         
-        let size = TaskView.heightWithSingleLine
+        layoutGuideHeightConstraint = layoutGuide.autoSetDimension(.height,
+                                                                   toSize: TaskView.heightWithSingleLine)
         
-        layoutGuideHeightConstraint = layoutGuide.constrainHeight(to: size)
-        layoutGuideWidthConstraint = layoutGuide.constrainWidth(to: size)
+        layoutGuideWidthConstraint = layoutGuide.autoSetDimension(.width,
+                                                                  toSize: TaskView.heightWithSingleLine)
     }
     
     private var layoutGuideHeightConstraint: NSLayoutConstraint?
     private var layoutGuideWidthConstraint: NSLayoutConstraint?
     
-    private lazy var layoutGuide = addLayoutGuide()
+    private lazy var layoutGuide: NSView = addForAutoLayout(NSView())
     
     // MARK: - Measuring Size
     
@@ -373,13 +387,13 @@ class TaskView: LayerBackedView, Observer, Observable
         let pixelsPerPoint = NSApp.mainWindow?.backingScaleFactor ?? 2
         
         let referenceHeight = heightWithSingleLine * pixelsPerPoint
-
+        
         let leftInset  = CGFloat(Int(referenceHeight * textLeftMultiplier + 0.5))
         
         let rightInset = CGFloat(Int(referenceHeight * groupIconWidthMultiplier + 0.49999))
         
         let textWidth = ((pixelsPerPoint * width) - (leftInset + rightInset)) / pixelsPerPoint
-
+        
         let textHeight = TextView.size(with: text, width: textWidth).height
         
         return textHeight + (2 * padding)
