@@ -15,6 +15,19 @@ extension LayoutItem
         return [constrainCenterX(to: target), constrainCenterY(to: target)]
     }
     
+    @discardableResult
+    func constrain<Target: LayoutItem>(to target: Target,
+                                       with insets: NSEdgeInsets = NSEdgeInsetsZero) -> [NSLayoutConstraint]
+    {
+        return
+        [
+            constrainTop(to: target, offset: insets.top),
+            constrainBottom(to: target, offset: -insets.bottom),
+            constrainLeft(to: target, offset: insets.left),
+            constrainRight(to: target, offset: -insets.right)
+        ]
+    }
+    
     // MARK: Horizontal Position
     
     @discardableResult

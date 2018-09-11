@@ -185,7 +185,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func constrainColorOverlay()
     {
-        colorOverlay.autoPinEdgesToSuperviewEdges()
+        colorOverlay.constrain(to: self)
     }
     
     private lazy var colorOverlay: LayerBackedView =
@@ -214,9 +214,9 @@ class TaskView: LayerBackedView, Observer, Observable
     private func constrainTextView()
     {
         textView.constrainLeft(to: TaskView.textLeftMultiplier, of: layoutGuide)
-        textView.autoConstrainAttribute(.right, to: .left, of: groupIcon)
-        textView.autoConstrainAttribute(.top, to: .top, of: checkBox)
-        textView.autoPinEdge(toSuperviewEdge: .bottom)
+        textView.constrain(toTheLeftOf: groupIcon)
+        textView.constrainTop(to: checkBox)
+        textView.constrainBottom(to: self)
     }
     
     private static let textLeftMultiplier: CGFloat = 0.9
@@ -288,7 +288,7 @@ class TaskView: LayerBackedView, Observer, Observable
     private func constrainEditingBackground()
     {
         let insets = NSEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
-        editingBackground.autoPinEdgesToSuperviewEdges(with: insets)
+        editingBackground.constrain(to: self, with: insets)
     }
     
     private lazy var editingBackground: LayerBackedView =
@@ -306,19 +306,18 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func constrainCheckBox()
     {
-        checkBox.constrainHeight(to: 0.45, of: layoutGuide)
-        checkBox.autoMatch(.width, to: .height, of: self)
+        checkBox.constrainSize(to: 0.45, 0.45, of: layoutGuide)
         checkBox.constrainCenter(to: layoutGuide)
     }
     
     private lazy var checkBox: CheckBox =
     {
-        let button = addForAutoLayout(CheckBox())
+        let box = addForAutoLayout(CheckBox())
         
-        button.action = #selector(didClickCheckBox)
-        button.target = self
+        box.action = #selector(didClickCheckBox)
+        box.target = self
         
-        return button
+        return box
     }()
     
     @objc private func didClickCheckBox()
@@ -335,9 +334,9 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func contrainGroupIcon()
     {
-        groupIcon.autoPinEdge(toSuperviewEdge: .right)
-        groupIcon.autoAlignAxis(.horizontal, toSameAxisOf: checkBox)
-        groupIcon.autoMatch(.height, to: .height, of: checkBox)
+        groupIcon.constrainRight(to: self)
+        groupIcon.constrainCenterY(to: layoutGuide)
+        groupIcon.constrainHeight(to: checkBox)
         groupIcon.constrainWidth(to: TaskView.groupIconWidthMultiplier, of: layoutGuide)
     }
     
