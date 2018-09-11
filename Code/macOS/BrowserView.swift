@@ -168,27 +168,22 @@ class BrowserView: LayerBackedView, Observer
     {
         guard let listView = listViews.last else { return }
         
-        let spacing = TaskView.spacing
+        let gap = TaskView.spacing
         
         if listViews.count == 1
         {
-            listView.autoAlignAxis(toSuperviewAxis: .vertical)
-            
+            listView.constrainCenterX(to: self)
         }
         else
         {
-            rememberSpacing(listView.autoPinEdge(.left,
-                                                 to: .right,
-                                                 of: listViews[listViews.count - 2],
-                                                 withOffset: spacing))
+            let leftView = listViews[listViews.count - 2]
+            rememberSpacing(listView.constrain(toTheRightOf: leftView, offset: gap))
         }
         
         listView.constrainWidth(to: listLayoutGuides[0])
         
-        rememberSpacing(listView.autoPinEdge(toSuperviewEdge: .top,
-                                             withInset: spacing))
-        rememberSpacing(listView.autoPinEdge(toSuperviewEdge: .bottom,
-                                             withInset: spacing))
+        rememberSpacing(listView.constrainTop(to: self, offset: gap))
+        rememberSpacing(listView.constrainBottom(to: self, offset: -gap))
     }
     
     private func moveToFocusedList(animated: Bool = true)
