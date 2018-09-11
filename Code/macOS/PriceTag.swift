@@ -14,8 +14,7 @@ class PriceTag: NSView, Observer
         
         constrainDiscountPriceLabel()
         constrainPriceLabel()
-        
-        autoSetDimension(.height, toSize: 90)
+        constrainHeight(to: 90)
         
         update()
         
@@ -71,15 +70,12 @@ class PriceTag: NSView, Observer
     
     private func constrainPriceLabel()
     {
-        priceLabel.autoConstrainAttribute(.baseline, to: .horizontal, of: self)
-        priceLabel.autoAlignAxis(toSuperviewAxis: .vertical)
+        priceLabel.constrainCenterY(to: self, offset: -10)
+        priceLabel.constrainCenterX(to: self)
         
-        stroke.autoConstrainAttribute(.horizontal,
-                                      to: .horizontal,
-                                      of: priceLabel,
-                                      withOffset: 1)
-        stroke.autoPinEdge(.left, to: .left, of: priceLabel, withOffset: -3)
-        stroke.autoPinEdge(.right, to: .right, of: priceLabel, withOffset: 3)
+        stroke.constrainCenterY(to: priceLabel, offset: 1)
+        stroke.constrainLeft(to: priceLabel, offset: -3)
+        stroke.constrainRight(to: priceLabel, offset: 3)
     }
     
     private lazy var stroke: LayerBackedView =
@@ -87,7 +83,7 @@ class PriceTag: NSView, Observer
         let view = addForAutoLayout(LayerBackedView())
         
         view.backgroundColor = .discountRed
-        view.autoSetDimension(.height, toSize: 1.5)
+        view.constrainHeight(to: 1.5)
         
         return view
     }()
@@ -98,10 +94,9 @@ class PriceTag: NSView, Observer
     
     private func constrainDiscountPriceLabel()
     {
-        discountPriceLabel.autoPinEdge(toSuperviewEdge: .left)
-        discountPriceLabel.autoPinEdge(toSuperviewEdge: .right)
-        
-        discountPriceLabel.autoPinEdge(.top, to: .bottom, of: priceLabel)
+        discountPriceLabel.constrainLeft(to: self)
+        discountPriceLabel.constrainRight(to: self)
+        discountPriceLabel.constrain(below: priceLabel)
     }
     
     lazy var discountPriceLabel: Label = addPriceLabel(color: .discountRed)
