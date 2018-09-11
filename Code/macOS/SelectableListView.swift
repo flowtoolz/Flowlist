@@ -78,11 +78,10 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func constrainHeader()
     {
-        header.autoPinEdge(toSuperviewEdge: .left)
-        header.autoPinEdge(toSuperviewEdge: .right)
-        header.autoPinEdge(toSuperviewEdge: .top)
-        headerHeightConstraint = header.autoSetDimension(.height,
-                                                         toSize: TaskView.heightWithSingleLine)
+        header.constrainLeft(to: self)
+        header.constrainRight(to: self)
+        header.constrainTop(to: self)
+        headerHeightConstraint = header.constrainHeight(to: TaskView.heightWithSingleLine)
     }
     
     private lazy var header: Header = addForAutoLayout(Header())
@@ -99,19 +98,17 @@ class SelectableListView: LayerBackedView, Observer, Observable
     private func constrainScrollTable()
     {
         let gap = TaskView.spacing + 1
-        let insets = NSEdgeInsets(top: 0,
-                                  left: gap,
-                                  bottom: gap,
-                                  right: gap)
 
-        let constraints = scrollTable.autoPinEdgesToSuperviewEdges(with: insets,
-                                                                   excludingEdge: .top)
-        scrollTableInsetConstraints = constraints
+        scrollTableInsetConstraints.removeAll()
+        scrollTableInsetConstraints.append(scrollTable.constrainLeft(to: self,
+                                                                     offset: gap))
+        scrollTableInsetConstraints.append(scrollTable.constrainRight(to: self,
+                                                                      offset: -gap))
+        scrollTableInsetConstraints.append(scrollTable.constrainBottom(to: self,
+                                                                       offset: -gap))
         
-        scrollTableTopConstraint = scrollTable.autoPinEdge(.top,
-                                                           to: .bottom,
-                                                           of: header,
-                                                           withOffset: scrollTableTopOffset)
+        scrollTableTopConstraint = scrollTable.constrain(below: header,
+                                                         offset: scrollTableTopOffset)
     }
     
     func didEndResizing()
