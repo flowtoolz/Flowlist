@@ -18,6 +18,20 @@ extension LayoutItem
     // MARK: Horizontal Position
     
     @discardableResult
+    func constrain<Target: LayoutItem>(toTheLeftOf target: Target,
+                                       offset: CGFloat = 0) -> NSLayoutConstraint
+    {
+        return constrain(.right, to: .left, of: target, offset: offset)
+    }
+    
+    @discardableResult
+    func constrain<Target: LayoutItem>(toTheRightOf target: Target,
+                                       offset: CGFloat = 0) -> NSLayoutConstraint
+    {
+        return constrain(.left, to: .right, of: target, offset: offset)
+    }
+    
+    @discardableResult
     func constrainLeft<Target: LayoutItem>(to target: Target,
                                            offset: CGFloat = 0) -> NSLayoutConstraint
     {
@@ -25,24 +39,10 @@ extension LayoutItem
     }
     
     @discardableResult
-    func constrainLeft<Target: LayoutItem>(toRightOf target: Target,
-                                           offset: CGFloat = 0) -> NSLayoutConstraint
-    {
-        return constrain(.left, to: .right, of: target, offset: offset)
-    }
-    
-    @discardableResult
     func constrainRight<Target: LayoutItem>(to target: Target,
                                             offset: CGFloat = 0) -> NSLayoutConstraint
     {
         return constrain(.right, to: .right, of: target, offset: offset)
-    }
-    
-    @discardableResult
-    func constrainRight<Target: LayoutItem>(toLeftOf target: Target,
-                                            offset: CGFloat = 0) -> NSLayoutConstraint
-    {
-        return constrain(.right, to: .left, of: target, offset: offset)
     }
     
     @discardableResult
@@ -113,6 +113,20 @@ extension LayoutItem
     // MARK: Vertical Position
     
     @discardableResult
+    func constrain<Target: LayoutItem>(above target: Target,
+                                       offset: CGFloat = 0) -> NSLayoutConstraint
+    {
+        return constrain(.bottom, to: .top, of: target, offset: offset)
+    }
+    
+    @discardableResult
+    func constrain<Target: LayoutItem>(below target: Target,
+                                       offset: CGFloat = 0) -> NSLayoutConstraint
+    {
+        return constrain(.top, to: .bottom, of: target, offset: offset)
+    }
+    
+    @discardableResult
     func constrainTop<Target: LayoutItem>(to target: Target,
                                           offset: CGFloat = 0) -> NSLayoutConstraint
     {
@@ -120,24 +134,10 @@ extension LayoutItem
     }
     
     @discardableResult
-    func constrainTop<Target: LayoutItem>(toBottomOf target: Target,
-                                          offset: CGFloat = 0) -> NSLayoutConstraint
-    {
-        return constrain(.top, to: .bottom, of: target, offset: offset)
-    }
-    
-    @discardableResult
     func constrainBottom<Target: LayoutItem>(to target: Target,
                                              offset: CGFloat = 0) -> NSLayoutConstraint
     {
         return constrain(.bottom, to: .bottom, of: target, offset: offset)
-    }
-    
-    @discardableResult
-    func constrainBottom<Target: LayoutItem>(toTopOf target: Target,
-                                             offset: CGFloat = 0) -> NSLayoutConstraint
-    {
-        return constrain(.bottom, to: .top, of: target, offset: offset)
     }
     
     @discardableResult
@@ -203,6 +203,26 @@ extension LayoutItem
         constraint.isActive = true
         
         return constraint
+    }
+    
+    // MARK: Size
+    
+    @discardableResult
+    func constrainSize(to width: CGFloat, _ height: CGFloat) -> [NSLayoutConstraint]
+    {
+        return [constrainWidth(to: width), constrainHeight(to: height)]
+    }
+    
+    @discardableResult
+    func constrainSize<Target: LayoutItem>(to relativeWidth: CGFloat,
+                                           _ relativeHeight: CGFloat,
+                                           of target: Target) -> [NSLayoutConstraint]
+    {
+        return
+        [
+            constrain(.width, to: relativeWidth, of: target),
+            constrain(.height, to: relativeHeight, of: target)
+        ]
     }
     
     // MARK: Width

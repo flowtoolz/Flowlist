@@ -89,7 +89,7 @@ class ViewController: NSViewController, Observer
         purchaseView.constrainLeft(to: view)
         purchaseView.constrainRight(to: view)
         purchaseView.constrainBottom(to: view)
-        purchaseView.constrainTop(toBottomOf: browserView)
+        purchaseView.constrain(below: browserView)
         purchaseViewHeightConstraint = purchaseView.constrainHeight(to: purchaseViewHeight)
     }
     

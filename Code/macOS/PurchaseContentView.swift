@@ -101,23 +101,15 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainErrorView()
     {
-        errorView.autoPinEdge(toSuperviewEdge: .left)
-        errorView.autoPinEdge(toSuperviewEdge: .right)
-        errorView.autoPinEdge(toSuperviewEdge: .bottom)
-        errorView.autoMatch(.height,
-                            to: .height,
-                            of: columns[1],
-                            withMultiplier: 0.4)
+        guard let errorSuperView = errorView.superview else { return }
         
-        errorLabel.autoMatch(.height,
-                             to: .height,
-                             of: errorView,
-                             withMultiplier: 0.9)
-        errorLabel.autoMatch(.width,
-                             to: .width,
-                             of: errorView,
-                             withMultiplier: 0.9)
-        errorLabel.autoCenterInSuperview()
+        errorView.constrainLeft(to: errorSuperView)
+        errorView.constrainRight(to: errorSuperView)
+        errorView.constrainBottom(to: errorSuperView)
+        errorView.constrainHeight(to: 0.4, of: errorSuperView)
+        
+        errorLabel.constrainSize(to: 0.9, 0.9, of: errorView)
+        errorLabel.constrainCenter(to: errorView)
     }
     
     private lazy var errorLabel: Label =
@@ -150,21 +142,19 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainLoadingIndicator()
     {
-        loadingIndicator.autoPinEdge(toSuperviewEdge: .left)
-        loadingIndicator.autoPinEdge(toSuperviewEdge: .right)
-        loadingIndicator.autoPinEdge(.top,
-                                     to: .bottom,
-                                     of: icon,
-                                     withOffset: 10)
-        loadingIndicator.autoMatch(.height,
-                                   to: .height,
-                                   of: columns[1],
-                                   withMultiplier: 0.4)
-        let insets = NSEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
-        loadingLabel.autoPinEdgesToSuperviewEdges(with: insets,
-                                                  excludingEdge: .bottom)
-        spinner.autoAlignAxis(toSuperviewAxis: .vertical)
-        spinner.autoPinEdge(.top, to: .bottom, of: loadingLabel, withOffset: 20)
+        guard let column = loadingIndicator.superview else { return }
+        
+        loadingIndicator.constrainLeft(to: column)
+        loadingIndicator.constrainRight(to: column)
+        loadingIndicator.constrain(below: icon, offset: 10)
+        loadingIndicator.constrainHeight(to: 0.4, of: column)
+
+        loadingLabel.constrainTop(to: loadingIndicator, offset: 10)
+        loadingLabel.constrainLeft(to: loadingIndicator, offset: 10)
+        loadingLabel.constrainRight(to: loadingIndicator, offset: -10)
+        
+        spinner.constrainCenterX(to: loadingIndicator)
+        spinner.constrain(below: loadingLabel, offset: 20)
     }
     
     private lazy var loadingLabel: Label =
@@ -194,8 +184,11 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainTitleLabel()
     {
-        titleLabel.autoPinEdgesToSuperviewEdges(with: NSEdgeInsetsZero,
-                                                excludingEdge: .bottom)
+        guard let column = titleLabel.superview else { return }
+        
+        titleLabel.constrainTop(to: column)
+        titleLabel.constrainLeft(to: column)
+        titleLabel.constrainRight(to: column)
     }
     
     private lazy var titleLabel: Label =
@@ -212,9 +205,11 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainBulletpointList()
     {
-        bulletpointList.autoPinEdge(toSuperviewEdge: .left)
-        bulletpointList.autoPinEdge(toSuperviewEdge: .right)
-        bulletpointList.autoPinEdge(toSuperviewEdge: .top, withInset: 12)
+        guard let column = bulletpointList.superview else { return }
+        
+        bulletpointList.constrainLeft(to: column)
+        bulletpointList.constrainRight(to: column)
+        bulletpointList.constrainTop(to: column, offset: 12)
     }
     
     private lazy var bulletpointList: BulletpointList = columns[2].addForAutoLayout(BulletpointList())
@@ -223,13 +218,12 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainIcon()
     {
-        icon.autoPinEdge(toSuperviewEdge: .top, withInset: 0)
-        icon.autoPinEdge(toSuperviewEdge: .left)
-        icon.autoPinEdge(toSuperviewEdge: .right)
-        icon.autoMatch(.height,
-                       to: .height,
-                       of: columns[1],
-                       withMultiplier: 0.35)
+        guard let column = icon.superview else { return }
+        
+        icon.constrainTop(to: column)
+        icon.constrainLeft(to: column)
+        icon.constrainRight(to: column)
+        icon.constrainHeight(to: 0.35, of: column)
     }
     
     private lazy var icon: NSImageView =
@@ -244,9 +238,11 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainPriceTag()
     {
-        priceTag.autoPinEdge(.top, to: .bottom, of: icon)
-        priceTag.autoPinEdge(toSuperviewEdge: .left)
-        priceTag.autoPinEdge(toSuperviewEdge: .right)
+        guard let column = priceTag.superview else { return }
+        
+        priceTag.constrain(below: icon)
+        priceTag.constrainLeft(to: column)
+        priceTag.constrainRight(to: column)
     }
     
     private lazy var priceTag: PriceTag = columns[1].addForAutoLayout(PriceTag())
@@ -255,13 +251,11 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainC2aButton()
     {
-        c2aButton.autoSetDimension(.height, toSize: 39)
-        c2aButton.autoPinEdge(.bottom,
-                              to: .top,
-                              of: restoreButton,
-                              withOffset: -20)
-        c2aButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        c2aButton.autoSetDimension(.width, toSize: 200)
+        guard let column = c2aButton.superview else { return }
+        
+        c2aButton.constrainCenterX(to: column)
+        c2aButton.constrainSize(to: 200, 39)
+        c2aButton.constrain(above: restoreButton, offset: -20)
     }
     
     private lazy var c2aButton: Button =
@@ -295,11 +289,11 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainRestoreButton()
     {
-        restoreButton.autoSetDimension(.height,
-                                       toSize: 39)
-        restoreButton.autoPinEdge(toSuperviewEdge: .bottom)
-        restoreButton.autoAlignAxis(toSuperviewAxis: .vertical)
-        restoreButton.autoSetDimension(.width, toSize: 200)
+        guard let column = restoreButton.superview else { return }
+        
+        restoreButton.constrainCenterX(to: column)
+        restoreButton.constrainBottom(to: column)
+        restoreButton.constrainSize(to: 200, 39)
     }
     
     private lazy var restoreButton: Button =
@@ -332,12 +326,11 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainDescriptionLabel()
     {
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .left)
-        descriptionLabel.autoPinEdge(toSuperviewEdge: .right)
-        descriptionLabel.autoConstrainAttribute(.top,
-                                                to: .bottom,
-                                                of: titleLabel,
-                                                withOffset: 14.0)
+        guard let column = descriptionLabel.superview else { return }
+        
+        descriptionLabel.constrainLeft(to: column)
+        descriptionLabel.constrainRight(to: column)
+        descriptionLabel.constrain(below: titleLabel, offset: 14)
     }
     
     private lazy var descriptionLabel: Label =
@@ -363,26 +356,20 @@ class PurchaseContentView: NSView, Observer
     {
         for column in columns
         {
-            column.autoPinEdge(toSuperviewEdge: .top)
-            column.autoPinEdge(toSuperviewEdge: .bottom)
+            column.constrainTop(to: self)
+            column.constrainBottom(to: self)
         }
         
         let gap: CGFloat = 39
         
-        columns[0].autoPinEdge(toSuperviewEdge: .left)
+        columns[0].constrainLeft(to: self)
         
-        columns[1].autoPinEdge(.left,
-                               to: .right,
-                               of: columns[0],
-                               withOffset: gap)
-        columns[1].autoMatch(.width, to: .width, of: columns[0])
+        columns[1].constrain(toTheRightOf: columns[0], offset: gap)
+        columns[1].constrainWidth(to: columns[0])
         
-        columns[2].autoPinEdge(.left,
-                               to: .right,
-                               of: columns[1],
-                               withOffset: gap)
-        columns[2].autoMatch(.width, to: .width, of: columns[1])
-        columns[2].autoPinEdge(toSuperviewEdge: .right)
+        columns[2].constrain(toTheRightOf: columns[1], offset: gap)
+        columns[2].constrainWidth(to: columns[1])
+        columns[2].constrainRight(to: self)
     }
     
     private lazy var columns: [NSView] = [addForAutoLayout(NSView()),

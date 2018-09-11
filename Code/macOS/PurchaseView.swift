@@ -65,7 +65,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     private func constrainItemLabel()
     {
         itemLabel.constrainLeft(to: self, offset: 10)
-        itemLabel.constrainRight(toLeftOf: expandIcon, offset: -10)
+        itemLabel.constrain(toTheLeftOf: expandIcon, offset: -10)
         itemLabel.constrainCenterY(to: buttonOverlay,
                                    offset: -CGFloat(Float.progressBarHeight / 2))
     }
@@ -100,8 +100,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         expandIcon.constrainRight(to: self, offset: -10)
         expandIcon.constrainCenterY(to: itemLabel)
-        expandIcon.constrainWidth(to: defaultIconSize)
-        expandIcon.constrainHeight(to: defaultIconSize)
+        expandIcon.constrainSize(to: defaultIconSize, defaultIconSize)
     }
     
     private let defaultIconSize: CGFloat = 17.0

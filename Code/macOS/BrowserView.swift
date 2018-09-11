@@ -231,10 +231,10 @@ class BrowserView: LayerBackedView, Observer
         constraintsWithSpacingConstant.append(contentsOf:
         [
             listLayoutGuides[0].constrainLeft(to: self, offset: TaskView.spacing),
-            listLayoutGuides[1].constrainLeft(toRightOf: listLayoutGuides[0],
-                                              offset: TaskView.spacing),
-            listLayoutGuides[2].constrainLeft(toRightOf: listLayoutGuides[1],
-                                              offset: TaskView.spacing),
+            listLayoutGuides[1].constrain(toTheRightOf: listLayoutGuides[0],
+                                          offset: TaskView.spacing),
+            listLayoutGuides[2].constrain(toTheRightOf: listLayoutGuides[1],
+                                          offset: TaskView.spacing),
             listLayoutGuides[2].constrainRight(to: self, offset: -TaskView.spacing)
         ])
         
