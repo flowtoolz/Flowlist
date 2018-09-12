@@ -3,7 +3,8 @@ use_frameworks!
 platform :osx, '10.11'
 
 target 'Flowlist' do
-  
+
+    pod 'GetLaid', :path=> '../../Github Repos/GetLaid'
     pod 'UIObserver', :path=> '../../Github Repos/UIObserver'
     pod 'UIToolz', :path=> '../../Github Repos/UIToolz'
     pod 'FoundationToolz', :path=> '../../Github Repos/FoundationToolz'
