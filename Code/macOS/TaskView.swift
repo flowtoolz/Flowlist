@@ -2,6 +2,7 @@ import AppKit
 import UIToolz
 import SwiftObserver
 import SwiftyToolz
+import GetLaid
 
 class TaskView: LayerBackedView, Observer, Observable
 {
@@ -287,8 +288,8 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func constrainEditingBackground()
     {
-        let insets = NSEdgeInsets(top: 5, left: 20, bottom: 5, right: 20)
-        editingBackground.constrain(to: self, with: insets)
+        let insets = Insets(top: 5, left: 20, bottom: 5, right: 20)
+        editingBackground.constrainToParent(insets: insets)
     }
     
     private lazy var editingBackground: LayerBackedView =
