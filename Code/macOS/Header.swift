@@ -71,7 +71,7 @@ class Header: LayerBackedView, Observer
     
     private func constrainIcon()
     {
-        icon.constrainHeight(to: 0.557, of: self)
+        icon.constrainHeightToParent(with: 0.557)
         icon.constrainCenterToParent()
     }
     
@@ -98,7 +98,7 @@ class Header: LayerBackedView, Observer
             titleLabel.constrainRight(to: self, offset: -inset)
         ]
         
-        titleLabel.constrainTop(to: 0.26, of: self)
+        titleLabel.constrainTopToParent(at: 0.26)
     }
     
     private func updateTitleInsets()

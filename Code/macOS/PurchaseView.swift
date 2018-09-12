@@ -137,10 +137,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainContent()
     {
-        content.constrainLeft(to: 0.05, of: self)
-        content.constrainRight(to: 0.95, of: self)
-        content.constrainTop(to: 0.1, of: self)
-        content.constrainBottom(to: 0.9, of: self)
+        content.constrainLeftToParent(at: 0.05)
+        content.constrainRightToParent(at: 0.95)
+        content.constrainTopToParent(at: 0.1)
+        content.constrainBottomToParent(at: 0.9)
     }
     
     let collapsedHeight: CGFloat = 39 + Float.progressBarHeight.cgFloat
