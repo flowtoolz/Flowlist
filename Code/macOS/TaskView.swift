@@ -216,7 +216,7 @@ class TaskView: LayerBackedView, Observer, Observable
         textView.constrainLeft(to: TaskView.textLeftMultiplier, of: layoutGuide)
         textView.constrain(toTheLeftOf: groupIcon)
         textView.constrainTop(to: checkBox)
-        textView.constrainBottom(to: self)
+        textView.constrainBottomToParent()
     }
     
     private static let textLeftMultiplier: CGFloat = 0.9
@@ -334,7 +334,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func contrainGroupIcon()
     {
-        groupIcon.constrainRight(to: self)
+        groupIcon.constrainRightToParent()
         groupIcon.constrainCenterY(to: layoutGuide)
         groupIcon.constrainHeight(to: checkBox)
         groupIcon.constrainWidth(to: TaskView.groupIconWidthMultiplier, of: layoutGuide)

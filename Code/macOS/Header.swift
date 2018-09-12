@@ -72,7 +72,7 @@ class Header: LayerBackedView, Observer
     private func constrainIcon()
     {
         icon.constrainHeight(to: 0.557, of: self)
-        icon.constrainCenter(to: self)
+        icon.constrainCenterToParent()
     }
     
     private lazy var icon: Icon = addForAutoLayout(Icon(with: Header.iconImage))
@@ -94,7 +94,7 @@ class Header: LayerBackedView, Observer
 
         titleSideInsetConstraints =
         [
-            titleLabel.constrainLeft(to:self, offset: inset),
+            titleLabel.constrainLeft(to: self, offset: inset),
             titleLabel.constrainRight(to: self, offset: -inset)
         ]
         

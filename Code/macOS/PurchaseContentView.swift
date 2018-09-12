@@ -101,15 +101,13 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainErrorView()
     {
-        guard let errorSuperView = errorView.superview else { return }
+        errorView.constrainLeftToParent()
+        errorView.constrainRightToParent()
+        errorView.constrainBottomToParent()
+        errorView.constrainHeightToParent(with: 0.4)
         
-        errorView.constrainLeft(to: errorSuperView)
-        errorView.constrainRight(to: errorSuperView)
-        errorView.constrainBottom(to: errorSuperView)
-        errorView.constrainHeight(to: 0.4, of: errorSuperView)
-        
-        errorLabel.constrainSize(to: 0.9, 0.9, of: errorView)
-        errorLabel.constrainCenter(to: errorView)
+        errorLabel.constrainSizeToParent(with: 0.9, 0.9)
+        errorLabel.constrainCenterToParent()
     }
     
     private lazy var errorLabel: Label =
@@ -142,19 +140,17 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainLoadingIndicator()
     {
-        guard let column = loadingIndicator.superview else { return }
-        
-        loadingIndicator.constrainLeft(to: column)
-        loadingIndicator.constrainRight(to: column)
-        loadingIndicator.constrain(below: icon, offset: 10)
-        loadingIndicator.constrainHeight(to: 0.4, of: column)
+        loadingIndicator.constrainLeftToParent()
+        loadingIndicator.constrainRightToParent()
+        loadingIndicator.constrain(below: icon, gap: 10)
+        loadingIndicator.constrainHeightToParent(with: 0.4)
 
-        loadingLabel.constrainTop(to: loadingIndicator, offset: 10)
-        loadingLabel.constrainLeft(to: loadingIndicator, offset: 10)
-        loadingLabel.constrainRight(to: loadingIndicator, offset: -10)
+        loadingLabel.constrainTopToParent(inset: 10)
+        loadingLabel.constrainLeftToParent(inset: 10)
+        loadingLabel.constrainRightToParent(inset: 10)
         
-        spinner.constrainCenterX(to: loadingIndicator)
-        spinner.constrain(below: loadingLabel, offset: 20)
+        spinner.constrainCenterXToParent()
+        spinner.constrain(below: loadingLabel, gap: 20)
     }
     
     private lazy var loadingLabel: Label =
@@ -184,11 +180,9 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainTitleLabel()
     {
-        guard let column = titleLabel.superview else { return }
-        
-        titleLabel.constrainTop(to: column)
-        titleLabel.constrainLeft(to: column)
-        titleLabel.constrainRight(to: column)
+        titleLabel.constrainTopToParent()
+        titleLabel.constrainLeftToParent()
+        titleLabel.constrainRightToParent()
     }
     
     private lazy var titleLabel: Label =
@@ -205,11 +199,9 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainBulletpointList()
     {
-        guard let column = bulletpointList.superview else { return }
-        
-        bulletpointList.constrainLeft(to: column)
-        bulletpointList.constrainRight(to: column)
-        bulletpointList.constrainTop(to: column, offset: 12)
+        bulletpointList.constrainLeftToParent()
+        bulletpointList.constrainRightToParent()
+        bulletpointList.constrainTopToParent(inset: 12)
     }
     
     private lazy var bulletpointList: BulletpointList = columns[2].addForAutoLayout(BulletpointList())
@@ -218,12 +210,10 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainIcon()
     {
-        guard let column = icon.superview else { return }
-        
-        icon.constrainTop(to: column)
-        icon.constrainLeft(to: column)
-        icon.constrainRight(to: column)
-        icon.constrainHeight(to: 0.35, of: column)
+        icon.constrainTopToParent()
+        icon.constrainLeftToParent()
+        icon.constrainRightToParent()
+        icon.constrainHeightToParent(with: 0.35)
     }
     
     private lazy var icon: NSImageView =
@@ -238,11 +228,9 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainPriceTag()
     {
-        guard let column = priceTag.superview else { return }
-        
         priceTag.constrain(below: icon)
-        priceTag.constrainLeft(to: column)
-        priceTag.constrainRight(to: column)
+        priceTag.constrainLeftToParent()
+        priceTag.constrainRightToParent()
     }
     
     private lazy var priceTag: PriceTag = columns[1].addForAutoLayout(PriceTag())
@@ -251,11 +239,9 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainC2aButton()
     {
-        guard let column = c2aButton.superview else { return }
-        
-        c2aButton.constrainCenterX(to: column)
+        c2aButton.constrainCenterXToParent()
         c2aButton.constrainSize(to: 200, 39)
-        c2aButton.constrain(above: restoreButton, offset: -20)
+        c2aButton.constrain(above: restoreButton, gap: 20)
     }
     
     private lazy var c2aButton: Button =
@@ -289,10 +275,8 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainRestoreButton()
     {
-        guard let column = restoreButton.superview else { return }
-        
-        restoreButton.constrainCenterX(to: column)
-        restoreButton.constrainBottom(to: column)
+        restoreButton.constrainCenterXToParent()
+        restoreButton.constrainBottomToParent()
         restoreButton.constrainSize(to: 200, 39)
     }
     
@@ -326,11 +310,9 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainDescriptionLabel()
     {
-        guard let column = descriptionLabel.superview else { return }
-        
-        descriptionLabel.constrainLeft(to: column)
-        descriptionLabel.constrainRight(to: column)
-        descriptionLabel.constrain(below: titleLabel, offset: 14)
+        descriptionLabel.constrainLeftToParent()
+        descriptionLabel.constrainRightToParent()
+        descriptionLabel.constrain(below: titleLabel, gap: 14)
     }
     
     private lazy var descriptionLabel: Label =
@@ -356,20 +338,20 @@ class PurchaseContentView: NSView, Observer
     {
         for column in columns
         {
-            column.constrainTop(to: self)
-            column.constrainBottom(to: self)
+            column.constrainTopToParent()
+            column.constrainBottomToParent()
         }
         
         let gap: CGFloat = 39
         
-        columns[0].constrainLeft(to: self)
+        columns[0].constrainLeftToParent()
         
-        columns[1].constrain(toTheRightOf: columns[0], offset: gap)
+        columns[1].constrain(toTheRightOf: columns[0], gap: gap)
         columns[1].constrainWidth(to: columns[0])
         
-        columns[2].constrain(toTheRightOf: columns[1], offset: gap)
+        columns[2].constrain(toTheRightOf: columns[1], gap: gap)
         columns[2].constrainWidth(to: columns[1])
-        columns[2].constrainRight(to: self)
+        columns[2].constrainRightToParent()
     }
     
     private lazy var columns: [NSView] = [addForAutoLayout(NSView()),

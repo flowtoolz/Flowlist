@@ -86,9 +86,9 @@ class ViewController: NSViewController, Observer
     
     private func constrainPurchaseView()
     {
-        purchaseView.constrainLeft(to: view)
-        purchaseView.constrainRight(to: view)
-        purchaseView.constrainBottom(to: view)
+        purchaseView.constrainLeftToParent()
+        purchaseView.constrainRightToParent()
+        purchaseView.constrainBottomToParent()
         purchaseView.constrain(below: browserView)
         purchaseViewHeightConstraint = purchaseView.constrainHeight(to: purchaseViewHeight)
     }
@@ -111,13 +111,13 @@ class ViewController: NSViewController, Observer
     
     private func constrainBrowserView()
     {
-        browserView.constrainTop(to: view)
-        browserView.constrainLeft(to: view)
-        browserView.constrainRight(to: view)
+        browserView.constrainTopToParent()
+        browserView.constrainLeftToParent()
+        browserView.constrainRightToParent()
         
         if isFullVersion
         {
-            browserView.constrainBottom(to: view)
+            browserView.constrainBottomToParent()
         }
     }
     

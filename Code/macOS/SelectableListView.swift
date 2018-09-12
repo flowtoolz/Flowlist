@@ -77,9 +77,9 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func constrainHeader()
     {
-        header.constrainLeft(to: self)
-        header.constrainRight(to: self)
-        header.constrainTop(to: self)
+        header.constrainLeftToParent()
+        header.constrainRightToParent()
+        header.constrainTopToParent()
         headerHeightConstraint = header.constrainHeight(to: TaskView.heightWithSingleLine)
     }
     
@@ -99,15 +99,18 @@ class SelectableListView: LayerBackedView, Observer, Observable
         let gap = TaskView.spacing + 1
 
         scrollTableInsetConstraints.removeAll()
-        scrollTableInsetConstraints.append(scrollTable.constrainLeft(to: self,
-                                                                     offset: gap))
-        scrollTableInsetConstraints.append(scrollTable.constrainRight(to: self,
-                                                                      offset: -gap))
-        scrollTableInsetConstraints.append(scrollTable.constrainBottom(to: self,
-                                                                       offset: -gap))
+       
+        if let constraint1 = scrollTable.constrainLeftToParent(inset: gap),
+            let constraint2 = scrollTable.constrainRightToParent(inset: gap),
+            let constraint3 = scrollTable.constrainBottomToParent(inset: gap)
+        {
+            scrollTableInsetConstraints.append(constraint1)
+            scrollTableInsetConstraints.append(constraint2)
+            scrollTableInsetConstraints.append(constraint3)
+        }
         
         scrollTableTopConstraint = scrollTable.constrain(below: header,
-                                                         offset: scrollTableTopOffset)
+                                                         gap: scrollTableTopOffset)
     }
     
     func didEndResizing()

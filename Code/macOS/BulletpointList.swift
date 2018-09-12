@@ -18,26 +18,26 @@ class BulletpointList: NSView
         for index in 0 ..< bulletpointLabels.count
         {
             let icon = bulletpointIcons[index]
-            icon.constrainLeft(to: self)
+            icon.constrainLeftToParent()
             icon.constrainSize(to: defaultIconSize, defaultIconSize)
             
             let label = bulletpointLabels[index]
-            label.constrainRight(to: self)
-            label.constrainLeft(to: self, offset: 27)
+            label.constrainRightToParent()
+            label.constrainLeftToParent(inset: 27)
             
             if index == 0
             {
-                label.constrainTop(to: self)
+                label.constrainTopToParent()
             }
             
             if index == bulletpoints.count - 1
             {
-                label.constrainBottom(to: self, offset: -10)
+                label.constrainBottomToParent(inset: 10)
             }
             
             if index > 0
             {
-                label.constrain(below: bulletpointLabels[index - 1], offset: 20)
+                label.constrain(below: bulletpointLabels[index - 1], gap: 20)
             }
             
             icon.constrainTop(to: label)

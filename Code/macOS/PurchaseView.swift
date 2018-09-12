@@ -64,8 +64,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainItemLabel()
     {
-        itemLabel.constrainLeft(to: self, offset: 10)
-        itemLabel.constrain(toTheLeftOf: expandIcon, offset: -10)
+        itemLabel.constrainLeftToParent(inset: 10)
+        itemLabel.constrain(toTheLeftOf: expandIcon, gap: 10)
         itemLabel.constrainCenterY(to: buttonOverlay,
                                    offset: -CGFloat(Float.progressBarHeight / 2))
     }
@@ -98,7 +98,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainExpandIcon()
     {
-        expandIcon.constrainRight(to: self, offset: -10)
+        expandIcon.constrainRightToParent(inset: 10)
         expandIcon.constrainCenterY(to: itemLabel)
         expandIcon.constrainSize(to: defaultIconSize, defaultIconSize)
     }
@@ -111,9 +111,9 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainProgressBar()
     {
-        progressBar.constrainLeft(to: self)
-        progressBar.constrainRight(to: self)
-        progressBar.constrainBottom(to: self)
+        progressBar.constrainLeftToParent()
+        progressBar.constrainRightToParent()
+        progressBar.constrainBottomToParent()
         progressBar.constrainHeight(to: Float.progressBarHeight.cgFloat)
     }
     
@@ -161,9 +161,9 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainButtonOverlay()
     {
-        buttonOverlay.constrainTop(to: self)
-        buttonOverlay.constrainLeft(to: self)
-        buttonOverlay.constrainRight(to: self)
+        buttonOverlay.constrainTopToParent()
+        buttonOverlay.constrainLeftToParent()
+        buttonOverlay.constrainRightToParent()
         buttonOverlay.constrainHeight(to: 39 + Float.progressBarHeight.cgFloat)
     }
     

@@ -172,18 +172,18 @@ class BrowserView: LayerBackedView, Observer
         
         if listViews.count == 1
         {
-            listView.constrainCenterX(to: self)
+            listView.constrainCenterXToParent()
         }
         else
         {
             let leftView = listViews[listViews.count - 2]
-            rememberSpacing(listView.constrain(toTheRightOf: leftView, offset: gap))
+            rememberSpacing(listView.constrain(toTheRightOf: leftView, gap: gap))
         }
         
         listView.constrainWidth(to: listLayoutGuides[0])
         
-        rememberSpacing(listView.constrainTop(to: self, offset: gap))
-        rememberSpacing(listView.constrainBottom(to: self, offset: -gap))
+        rememberSpacing(listView.constrainTopToParent(inset: gap))
+        rememberSpacing(listView.constrainBottomToParent(inset: gap))
     }
     
     private func moveToFocusedList(animated: Bool = true)
@@ -217,20 +217,24 @@ class BrowserView: LayerBackedView, Observer
     {
         for guide in listLayoutGuides
         {
-            rememberSpacing(guide.constrainTop(to: self, offset: TaskView.spacing))
-            rememberSpacing(guide.constrainBottom(to: self, offset: -TaskView.spacing))
+            rememberSpacing(guide.constrainTop(to: self,
+                                               offset: TaskView.spacing))
+            rememberSpacing(guide.constrainBottom(to: self,
+                                                  offset: -TaskView.spacing))
         }
         
         listLayoutGuides[0].constrainWidth(toMinimum: 150)
         
         constraintsWithSpacingConstant.append(contentsOf:
         [
-            listLayoutGuides[0].constrainLeft(to: self, offset: TaskView.spacing),
+            listLayoutGuides[0].constrainLeft(to: self,
+                                              offset: TaskView.spacing),
             listLayoutGuides[1].constrain(toTheRightOf: listLayoutGuides[0],
-                                          offset: TaskView.spacing),
+                                          gap: TaskView.spacing),
             listLayoutGuides[2].constrain(toTheRightOf: listLayoutGuides[1],
-                                          offset: TaskView.spacing),
-            listLayoutGuides[2].constrainRight(to: self, offset: -TaskView.spacing)
+                                          gap: TaskView.spacing),
+            listLayoutGuides[2].constrainRight(to: self,
+                                               offset: -TaskView.spacing)
         ])
         
         listLayoutGuides[1].constrainWidth(to: listLayoutGuides[0])
@@ -251,8 +255,10 @@ class BrowserView: LayerBackedView, Observer
         }
     }
     
-    private func rememberSpacing(_ constraint: NSLayoutConstraint)
+    private func rememberSpacing(_ constraint: NSLayoutConstraint?)
     {
+        guard let constraint = constraint else { return }
+        
         constraintsWithSpacingConstant.append(constraint)
     }
     
