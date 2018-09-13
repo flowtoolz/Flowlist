@@ -288,8 +288,10 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func constrainEditingBackground()
     {
-        let insets = Insets(top: 5, left: 20, bottom: 5, right: 20)
-        editingBackground.constrainToParent(insets: insets)
+        editingBackground.constrainToParent(insetTop: 5,
+                                            insetLeft: 20,
+                                            insetBottom: 5,
+                                            insetRight: 20)
     }
     
     private lazy var editingBackground: LayerBackedView =

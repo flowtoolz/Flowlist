@@ -1,6 +1,6 @@
 PODS:
   - FoundationToolz (1.0.0)
-  - GetLaid (0.1.0)
+  - GetLaid (0.2.0)
   - SwiftObserver (1.3.2):
     - SwiftyToolz (= 1.1.0)
   - SwiftyToolz (1.1.0)
@@ -35,7 +35,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FoundationToolz: e40cc7cc969480357a44eaafd9bab4b75a3f0c7a
-  GetLaid: 77be01dcb18a74b83cfbed656f97cbf9f3ab7336
+  GetLaid: 03bd5257e09ad06bd55f7ffbe035a700af9af45f
   SwiftObserver: a8d183c0984fa9ffa531069f462b59f061390924
   SwiftyToolz: 461391682260e0c485c4007f60c7cc882b8f7211
   UIObserver: d52d08987839f94e2ca4f4767b233fc53e6837e3
