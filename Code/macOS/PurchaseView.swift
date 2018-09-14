@@ -111,9 +111,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainProgressBar()
     {
-        progressBar.constrainLeftToParent()
-        progressBar.constrainRightToParent()
-        progressBar.constrainBottomToParent()
+        progressBar.constrainToParentExcludingTop()
         progressBar.constrainHeight(to: Float.progressBarHeight.cgFloat)
     }
     
@@ -161,9 +159,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainButtonOverlay()
     {
-        buttonOverlay.constrainTopToParent()
-        buttonOverlay.constrainLeftToParent()
-        buttonOverlay.constrainRightToParent()
+        buttonOverlay.constrainToParentExcludingBottom()
         buttonOverlay.constrainHeight(to: 39 + Float.progressBarHeight.cgFloat)
     }
     

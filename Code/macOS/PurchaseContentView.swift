@@ -101,9 +101,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainErrorView()
     {
-        errorView.constrainLeftToParent()
-        errorView.constrainRightToParent()
-        errorView.constrainBottomToParent()
+        errorView.constrainToParentExcludingTop()
         errorView.constrainHeightToParent(with: 0.4)
         
         errorLabel.constrainSizeToParent(with: 0.9, 0.9)
@@ -145,9 +143,9 @@ class PurchaseContentView: NSView, Observer
         loadingIndicator.constrain(below: icon, gap: 10)
         loadingIndicator.constrainHeightToParent(with: 0.4)
 
-        loadingLabel.constrainTopToParent(inset: 10)
-        loadingLabel.constrainLeftToParent(inset: 10)
-        loadingLabel.constrainRightToParent(inset: 10)
+        loadingLabel.constrainToParentExcludingBottom(insetTop: 10,
+                                                      insetLeft: 10,
+                                                      insetRight: 10)
         
         spinner.constrainCenterXToParent()
         spinner.constrain(below: loadingLabel, gap: 20)
@@ -180,9 +178,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainTitleLabel()
     {
-        titleLabel.constrainTopToParent()
-        titleLabel.constrainLeftToParent()
-        titleLabel.constrainRightToParent()
+        titleLabel.constrainToParentExcludingBottom()
     }
     
     private lazy var titleLabel: Label =
@@ -199,9 +195,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainBulletpointList()
     {
-        bulletpointList.constrainLeftToParent()
-        bulletpointList.constrainRightToParent()
-        bulletpointList.constrainTopToParent(inset: 12)
+        bulletpointList.constrainToParentExcludingBottom(insetTop: 12)
     }
     
     private lazy var bulletpointList: BulletpointList = columns[2].addForAutoLayout(BulletpointList())
@@ -210,9 +204,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainIcon()
     {
-        icon.constrainTopToParent()
-        icon.constrainLeftToParent()
-        icon.constrainRightToParent()
+        icon.constrainToParentExcludingBottom()
         icon.constrainHeightToParent(with: 0.35)
     }
     
