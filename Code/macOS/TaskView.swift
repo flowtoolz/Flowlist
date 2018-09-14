@@ -44,8 +44,10 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         let itemHeight = TaskView.heightWithSingleLine
         
-        layoutGuideHeightConstraint?.constant = itemHeight
-        layoutGuideWidthConstraint?.constant = itemHeight
+        for constraint in layoutGuideSizeConstraints
+        {
+            constraint.constant = itemHeight
+        }
         
         textView.fontSizeDidChange()
     }
@@ -186,7 +188,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func constrainColorOverlay()
     {
-        colorOverlay.constrain(to: self)
+        colorOverlay.constrainToParent()
     }
     
     private lazy var colorOverlay: LayerBackedView =
@@ -340,7 +342,8 @@ class TaskView: LayerBackedView, Observer, Observable
         groupIcon.constrainRightToParent()
         groupIcon.constrainCenterY(to: layoutGuide)
         groupIcon.constrainHeight(to: checkBox)
-        groupIcon.constrainWidth(to: TaskView.groupIconWidthMultiplier, of: layoutGuide)
+        groupIcon.constrainWidth(to: TaskView.groupIconWidthMultiplier,
+                                 of: layoutGuide)
     }
     
     private static let groupIconWidthMultiplier: CGFloat = 0.75
@@ -359,12 +362,10 @@ class TaskView: LayerBackedView, Observer, Observable
         
         let size = TaskView.heightWithSingleLine
         
-        layoutGuideHeightConstraint = layoutGuide.constrainHeight(to: size)
-        layoutGuideWidthConstraint = layoutGuide.constrainWidth(to: size)
+        layoutGuideSizeConstraints = layoutGuide.constrainSize(to: size, size)
     }
     
-    private var layoutGuideHeightConstraint: NSLayoutConstraint?
-    private var layoutGuideWidthConstraint: NSLayoutConstraint?
+    private var layoutGuideSizeConstraints = [NSLayoutConstraint]()
     
     private lazy var layoutGuide = addLayoutGuide()
     
