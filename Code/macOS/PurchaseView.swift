@@ -105,7 +105,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private let defaultIconSize: CGFloat = 17.0
     
-    private lazy var expandIcon: Icon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "expand_indicator_pdf")))
+    private lazy var expandIcon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "expand_indicator_pdf")))
     
     // MARK: - Progress Bar
     

@@ -172,7 +172,7 @@ class PurchaseContentView: NSView, Observer
         return view
     }()
     
-    private lazy var loadingIndicator: NSView = columns[1].addForAutoLayout(NSView())
+    private lazy var loadingIndicator = columns[1].addForAutoLayout(NSView())
     
     // MARK: - Title Label
     
@@ -198,7 +198,7 @@ class PurchaseContentView: NSView, Observer
         bulletpointList.constrainToParentExcludingBottom(insetTop: 12)
     }
     
-    private lazy var bulletpointList: BulletpointList = columns[2].addForAutoLayout(BulletpointList())
+    private lazy var bulletpointList = columns[2].addForAutoLayout(BulletpointList())
     
     // MARK: - App Icon
     
@@ -225,7 +225,7 @@ class PurchaseContentView: NSView, Observer
         priceTag.constrainRightToParent()
     }
     
-    private lazy var priceTag: PriceTag = columns[1].addForAutoLayout(PriceTag())
+    private lazy var priceTag = columns[1].addForAutoLayout(PriceTag())
     
     // MARK: - C2A Button
     
@@ -346,7 +346,7 @@ class PurchaseContentView: NSView, Observer
         columns[2].constrainRightToParent()
     }
     
-    private lazy var columns: [NSView] = [addForAutoLayout(NSView()),
-                                          addForAutoLayout(NSView()),
-                                          addForAutoLayout(NSView())]
+    private lazy var columns = [addForAutoLayout(NSView()),
+                                addForAutoLayout(NSView()),
+                                addForAutoLayout(NSView())]
 }

@@ -75,7 +75,7 @@ class Header: LayerBackedView, Observer
         icon.constrainCenterToParent()
     }
     
-    private lazy var icon: Icon = addForAutoLayout(Icon(with: Header.iconImage))
+    private lazy var icon = addForAutoLayout(Icon(with: Header.iconImage))
     private static let iconImage = #imageLiteral(resourceName: "home_pdf")
     
     // MARK: - Title

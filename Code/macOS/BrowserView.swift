@@ -241,7 +241,7 @@ class BrowserView: LayerBackedView, Observer
         listLayoutGuides[2].constrainWidth(to: listLayoutGuides[0])
     }
     
-    private lazy var listLayoutGuides: [NSLayoutGuide] = addLayoutGuides(3)
+    private lazy var listLayoutGuides = addLayoutGuides(3)
     
     // MARK: - Dynamic Spacings
     

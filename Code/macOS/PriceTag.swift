@@ -88,7 +88,7 @@ class PriceTag: NSView, Observer
         return view
     }()
     
-    lazy var priceLabel: Label = addPriceLabel()
+    lazy var priceLabel = addPriceLabel()
     
     // MARK: - Discount Price Label
     

@@ -81,7 +81,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
         headerHeightConstraint = header.constrainHeight(to: TaskView.heightWithSingleLine)
     }
     
-    private lazy var header: Header = addForAutoLayout(Header())
+    private lazy var header = addForAutoLayout(Header())
     
     // MARK: - Scroll Table
     
