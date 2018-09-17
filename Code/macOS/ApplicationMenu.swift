@@ -41,13 +41,13 @@ class ApplicationMenu: NSMenu
         }
     }
     
-    private lazy var increaseFontSizeItem = item("Bigger Font",
-                                        action: #selector(makeFontBigger),
-                                        key: "+")
-    @objc private func makeFontBigger() { Font.baseSizeVar += 1 }
+    private lazy var increaseFontSizeItem = MenuItem("Bigger Font",
+                                                     key: "+",
+                                                     validator: self)
+    { Font.baseSizeVar += 1 }
     
-    private lazy var decreaseFontSizeItem = item("Smaller Font",
-                                                 action: #selector(makeFontSmaller),
-                                                 key: "-")
-    @objc private func makeFontSmaller() { Font.baseSizeVar -= 1 }
+    private lazy var decreaseFontSizeItem = MenuItem("Smaller Font",
+                                                     key: "-",
+                                                     validator: self)
+    { Font.baseSizeVar -= 1 }
 }

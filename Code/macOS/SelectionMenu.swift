@@ -64,46 +64,60 @@ class SelectionMenu: NSMenu
     
     // MARK: - Items
     
-    private lazy var goRightItem = item("Go to Details",
-                                        action: #selector(goRight),
-                                        key: String(unicode: NSRightArrowFunctionKey),
-                                        modifiers: [])
-    @objc private func goRight() { Browser.active?.move(.right) }
+    private lazy var goRightItem = MenuItem("Go to Details",
+                                            key: String(unicode: NSRightArrowFunctionKey),
+                                            modifiers: [],
+                                            validator: self)
+    {
+        [weak self] in Browser.active?.move(.right)
+    }
     
-    private lazy var goLeftItem = item("Go to Overview",
-                                       action: #selector(goLeft),
-                                       key: String(unicode: NSLeftArrowFunctionKey),
-                                       modifiers: [])
-    @objc private func goLeft() { Browser.active?.move(.left) }
+    private lazy var goLeftItem = MenuItem("Go to Overview",
+                                           key: String(unicode: NSLeftArrowFunctionKey),
+                                           modifiers: [],
+                                           validator: self)
+    {
+        Browser.active?.move(.left)
+    }
     
-    private lazy var goUpItem = item("Go Up",
-                                     action: #selector(goUp),
-                                     key: String(unicode: NSUpArrowFunctionKey),
-                                     modifiers: [])
-    @objc private func goUp() { list?.shiftSelectionUp() }
+    private lazy var goUpItem = MenuItem("Go Up",
+                                         key: String(unicode: NSUpArrowFunctionKey),
+                                         modifiers: [],
+                                         validator: self)
+    {
+        [weak self] in self?.list?.shiftSelectionUp()
+    }
     
-    private lazy var goDownItem = item("Go Down",
-                                       action: #selector(goDown),
-                                       key: String(unicode: NSDownArrowFunctionKey),
-                                       modifiers: [])
-    @objc private func goDown() { list?.shiftSelectionDown() }
+    private lazy var goDownItem = MenuItem("Go Down",
+                                           key: String(unicode: NSDownArrowFunctionKey),
+                                           modifiers: [],
+                                           validator: self)
+    {
+        [weak self] in self?.list?.shiftSelectionDown()
+    }
     
-    private lazy var selectUpItem = item("Extend Selection Up",
-                                       action: #selector(selectUp),
-                                       key: String(unicode: NSUpArrowFunctionKey),
-                                       modifiers: [.shift])
-    @objc private func selectUp() { list?.extendSelectionUp() }
+    private lazy var selectUpItem = MenuItem("Extend Selection Up",
+                                             key: String(unicode: NSUpArrowFunctionKey),
+                                             modifiers: [.shift],
+                                             validator: self)
+    {
+        [weak self] in self?.list?.extendSelectionUp()
+    }
     
-    private lazy var selectDownItem = item("Extend Selection Down",
-                                         action: #selector(selectDown),
-                                         key: String(unicode: NSDownArrowFunctionKey),
-                                         modifiers: [.shift])
-    @objc private func selectDown() { list?.extendSelectionDown() }
+    private lazy var selectDownItem = MenuItem("Extend Selection Down",
+                                               key: String(unicode: NSDownArrowFunctionKey),
+                                               modifiers: [.shift],
+                                               validator: self)
+    {
+        [weak self] in self?.list?.extendSelectionDown()
+    }
     
-    private lazy var selectAllItem = item("Select All",
-                                          action: #selector(selectAll),
-                                          key: "a")
-    @objc private func selectAll() { list?.selectAll() }
+    private lazy var selectAllItem = MenuItem("Select All",
+                                              key: "a",
+                                              validator: self)
+    {
+        [weak self] in self?.list?.selectAll()
+    }
     
     private var list: SelectableList? { return Browser.active?.focusedList }
 }
