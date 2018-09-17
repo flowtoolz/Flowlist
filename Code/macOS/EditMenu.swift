@@ -264,8 +264,13 @@ class EditMenu: NSMenu, Observer
         
         mainItem.submenu = subMenu
         
+        mainItem.target = self
+        mainItem.action = #selector(dummyAction)
+        
         return mainItem
     }()
     
+    @objc private func dummyAction() {}
+
     private var list: SelectableList? { return Browser.active?.focusedList }
 }
