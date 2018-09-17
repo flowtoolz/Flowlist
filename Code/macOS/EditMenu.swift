@@ -148,17 +148,23 @@ class EditMenu: NSMenu, Observer
         tagItem.title = selected > 1 ? "Tag \(selected) Items" : "Tag Item"
     }
     
-    private lazy var createItem = item("Add New Item",
-                                       action: #selector(create),
-                                       key: "\n",
-                                       modifiers: [])
-    @objc private func create() { list?.createTask() }
+    private lazy var createItem = MenuItem("Add New Item",
+                                           key: "\n",
+                                           modifiers: [],
+                                           validator: self)
+    {
+        [weak self] in self?.list?.createTask()
+    }
     
-    private lazy var createAtTopItem = item("Add New Item on Top",
-                                            action: #selector(createAtTop),
-                                            key: " ",
-                                            modifiers: [])
-    @objc private func createAtTop()
+    private lazy var createAtTopItem = MenuItem("Add New Item on Top",
+                                                key: " ",
+                                                modifiers: [],
+                                                validator: self)
+    {
+        [weak self] in self?.createAtTop()
+    }
+    
+    private func createAtTop()
     {
         if !TextView.isEditing && !reachedTaskNumberLimit
         {
@@ -166,75 +172,89 @@ class EditMenu: NSMenu, Observer
         }
     }
     
-    private lazy var renameItem = item("Rename Item",
-                                       action: #selector(rename),
-                                       key: "\n")
-    @objc private func rename() { list?.editTitle() }
-    
-    private lazy var checkOffItem = item("Check Off Item",
-                                         action: #selector(checkOff),
-                                         key: String(unicode: NSLeftArrowFunctionKey))
-    @objc private func checkOff() { list?.toggleDoneStateOfFirstSelectedTask() }
-    
-    private lazy var inProgressItem = item("Start Item",
-                                           action: #selector(startProgress),
-                                           key: String(unicode: NSRightArrowFunctionKey))
-    @objc private func startProgress() { list?.toggleInProgressStateOfFirstSelectedTask() }
-    
-    private lazy var deleteItem = item("Delete Item",
-                                       action: #selector(delete),
-                                       key: String(unicode: NSBackspaceCharacter),
-                                       modifiers: [])
-    @objc private func delete() { list?.removeSelectedTasks() }
-    
-    private lazy var moveUpItem = item("Move Item Up",
-                                       action: #selector(moveUp),
-                                       key: String(unicode: NSUpArrowFunctionKey))
-    @objc private func moveUp() { list?.moveSelectedTask(-1) }
-    
-    private lazy var moveDownItem = item("Move Item Down",
-                                         action: #selector(moveDown),
-                                         key: String(unicode: NSDownArrowFunctionKey))
-    @objc private func moveDown() { list?.moveSelectedTask(1) }
-    
-    private lazy var copyItem = item("Copy Item",
-                                     action: #selector(copyTasks),
-                                     key: "c")
-    @objc private func copyTasks()
+    private lazy var renameItem = MenuItem("Rename Item",
+                                           key: "\n",
+                                           validator: self)
     {
-        list?.copy()
+        [weak self] in self?.list?.editTitle()
+    }
+    
+    private lazy var checkOffItem = MenuItem("Check Off Item",
+                                             key: String(unicode: NSLeftArrowFunctionKey),
+                                             validator: self)
+    {
+        [weak self] in self?.list?.toggleDoneStateOfFirstSelectedTask()
+    }
+    
+    private lazy var inProgressItem = MenuItem("Start Item",
+                                               key: String(unicode: NSRightArrowFunctionKey),
+                                               validator: self)
+    {
+        [weak self] in self?.list?.toggleInProgressStateOfFirstSelectedTask()
+    }
+    
+    private lazy var deleteItem = MenuItem("Delete Item",
+                                           key: String(unicode: NSBackspaceCharacter),
+                                           modifiers: [],
+                                           validator: self)
+    {
+        [weak self] in self?.list?.removeSelectedTasks()
+    }
+    
+    private lazy var moveUpItem = MenuItem("Move Item Up",
+                                           key: String(unicode: NSUpArrowFunctionKey),
+                                           validator: self)
+    {
+        [weak self] in self?.list?.moveSelectedTask(-1)
+    }
+    
+    private lazy var moveDownItem = MenuItem("Move Item Down",
+                                             key: String(unicode: NSDownArrowFunctionKey),
+                                             validator: self)
+    {
+        [weak self] in self?.list?.moveSelectedTask(1)
+    }
+    
+    
+    private lazy var copyItem = MenuItem("Copy Item", key: "c", validator: self)
+    {
+        [weak self] in
+        
+        self?.list?.copy()
         NSPasteboard.general.clearContents()
     }
     
-    private lazy var cutItem = item("Cut Item",
-                                    action: #selector(cut),
-                                    key: "x")
-    @objc private func cut()
+    private lazy var cutItem = MenuItem("Cut Item", key: "x", validator: self)
     {
-        list?.cut()
+        [weak self] in
+        
+        self?.list?.cut()
         NSPasteboard.general.clearContents()
     }
     
-    private lazy var pasteItem = item("Paste Item",
-                                      action: #selector(paste),
-                                      key: "v")
-    @objc private func paste()
+    private lazy var pasteItem = MenuItem("Paste Item",
+                                          key: "v",
+                                          validator: self)
     {
+        [weak self] in
+        
         if systemPasteboardHasText
         {
-            list?.pasteFromSystemPasteboard()
+            self?.list?.pasteFromSystemPasteboard()
             NSPasteboard.general.clearContents()
         }
         else if clipboard.count > 0
         {
-            list?.pasteFromClipboard()
+            self?.list?.pasteFromClipboard()
         }
     }
     
-    private lazy var undoItem = item("Paste Deleted Item",
-                                     action: #selector(undo),
-                                     key: "z")
-    @objc private func undo() { list?.undoLastRemoval() }
+    private lazy var undoItem = MenuItem("Paste Deleted Item",
+                                         key: "z",
+                                         validator: self)
+    {
+        [weak self] in self?.list?.undoLastRemoval()
+    }
     
     private lazy var tagItem: NSMenuItem =
     {
@@ -260,17 +280,12 @@ class EditMenu: NSMenu, Observer
             subMenu.addItem(subitem)
         }
         
-        let mainItem = MenuItem("Tag Item") {}
+        let mainItem = MenuItem("Tag Item", validator: self) {}
         
         mainItem.submenu = subMenu
         
-        mainItem.target = self
-        mainItem.action = #selector(dummyAction)
-        
         return mainItem
     }()
-    
-    @objc private func dummyAction() {}
 
     private var list: SelectableList? { return Browser.active?.focusedList }
 }
