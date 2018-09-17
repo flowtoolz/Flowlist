@@ -240,65 +240,32 @@ class EditMenu: NSMenu, Observer
     {
         // TODO: create custom NSMenuItem class that takes closure instead of selector and clean up all item creation code
         
-        let selectors =
-        [
-            #selector(tagRed),
-            #selector(tagOrange),
-            #selector(tagYellow),
-            #selector(tagGreen),
-            #selector(tagBlue),
-            #selector(tagPurple)
-        ]
-        
-        let images = [#imageLiteral(resourceName: "tag_red"), #imageLiteral(resourceName: "tag_orange"), #imageLiteral(resourceName: "tag_yellow"), #imageLiteral(resourceName: "tag_green"), #imageLiteral(resourceName: "tag_blue"), #imageLiteral(resourceName: "tag_purple")]
+        let images = [#imageLiteral(resourceName: "tag_red"), #imageLiteral(resourceName: "tag_orange"), #imageLiteral(resourceName: "tag_yellow"), #imageLiteral(resourceName: "tag_green"), #imageLiteral(resourceName: "tag_blue"), #imageLiteral(resourceName: "tag_purple"), #imageLiteral(resourceName: "tag_none")]
         
         let subMenu = NSMenu()
         
-        for i in 0 ..< 6
+        for i in 0 ..< 7
         {
-            guard let name = Task.Tag(rawValue: i)?.string else
-            {
-                log(error: "Couldn't infer tag name from tag index \(i)")
-                continue
-            }
+            let tag = Task.Tag(rawValue: i)
             
-            let subitem = item(name,
-                               action: selectors[i],
-                               key: "\(i + 1)",
-                               modifiers: [])
+            let name = tag?.string ?? "None"
+            
+            let subitem = MenuItem(name, key: "\((i + 1) % 7)", modifiers: [])
+            {
+                [weak self] in self?.list?.set(tag: tag)
+            }
             
             subitem.image = images[i]
             
             subMenu.addItem(subitem)
         }
         
-        let subitem = item("None",
-                           action: #selector(tagNil),
-                           key: "0",
-                           modifiers: [])
+        let mainItem = MenuItem("Tag Item") {}
         
-        subitem.image = #imageLiteral(resourceName: "tag_none")
-        
-        subMenu.addItem(subitem)
-        
-        let mainItem = NSMenuItem()
-        mainItem.title = "Tag Item"
-        mainItem.target = self
-        mainItem.action = #selector(dummyAction)
         mainItem.submenu = subMenu
         
         return mainItem
     }()
-    
-    @objc private func dummyAction() {}
-    
-    @objc private func tagRed() { list?.set(tag: .red) }
-    @objc private func tagOrange() { list?.set(tag: .orange) }
-    @objc private func tagYellow() { list?.set(tag: .yellow) }
-    @objc private func tagGreen() { list?.set(tag: .green) }
-    @objc private func tagBlue() { list?.set(tag: .blue) }
-    @objc private func tagPurple() { list?.set(tag: .purple) }
-    @objc private func tagNil() { list?.set(tag: nil) }
     
     private var list: SelectableList? { return Browser.active?.focusedList }
 }
