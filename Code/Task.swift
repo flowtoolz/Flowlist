@@ -40,9 +40,7 @@ final class Task: Codable, Observable, Tree
     
     init(from decoder: Decoder) throws
     {
-        // TODO: only store raw values, not the whole variables (effects decoder and coder)
-        // TODO: only store non-nil values (effects only coder)
-        // TODO: be careful to detect legacy formats (decoder)
+        // TODO: only store raw values, not the whole variables (effects decoder and coder). only store non-nil values (effects only coder). be careful to detect legacy formats (decoder)
         
         guard let container = try? decoder.container(keyedBy: CodingKeys.self) else
         {
