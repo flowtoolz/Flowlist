@@ -88,8 +88,31 @@ final class Task: Codable, Observable, Tree
         }
     }
     
-    // TODO: custom Coder: only store raw values, not the whole variables. only store non-nil values.
-    
+    func encode(to encoder: Encoder) throws
+    {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        if let titleString = title.value
+        {
+            try? container.encode(titleString, forKey: .title)
+        }
+        
+        if let stateInteger = state.value?.rawValue
+        {
+            try? container.encode(stateInteger, forKey: .state)
+        }
+        
+        if let tagInteger = tag.value?.rawValue
+        {
+            try? container.encode(tagInteger, forKey: .tag)
+        }
+        
+        if !branches.isEmpty
+        {
+            try? container.encode(branches, forKey: .branches)
+        }
+    }
+
     enum CodingKeys: String, CodingKey
     {
         case title, state, tag, branches = "subtasks"
