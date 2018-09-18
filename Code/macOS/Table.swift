@@ -145,7 +145,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     private func didCreate(at index: Int)
     {
-        list?[index]?.isBeingEdited = true
+        rowBeingEdited = index
         
         didInsert(at: [index])
         
@@ -217,7 +217,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         
         var height = viewHeight(for: task)
         
-        if task.isBeingEdited
+        if row == rowBeingEdited
         {
             height += TextView.lineHeight + TextView.lineSpacing
         }
@@ -334,6 +334,8 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         case .didNothing: break
             
         case .willEditTitle:
+            rowBeingEdited = index
+            
             if let task = taskView.task,
                 !(list?.selection.isSelected(task) ?? false)
             {
@@ -353,6 +355,8 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             NSApp.mainWindow?.makeFirstResponder(self)
             
         case .didEditTitle:
+            rowBeingEdited = nil
+            
             guard let task = taskView.task else { break }
             
             itemHeightCash[task] = nil
@@ -386,6 +390,8 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     override var acceptsFirstResponder: Bool { return true }
     
     // MARK: - Edit Titles
+    
+    private var rowBeingEdited: Int?
     
     private func editTitleOfNextSelectedTaskView()
     {

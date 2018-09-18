@@ -241,7 +241,6 @@ class TaskView: LayerBackedView, Observer, Observable
             
         case .willEdit:
             set(editing: true)
-            task?.isBeingEdited = true
             send(.willEditTitle)
             
         case .didChange(let text):
@@ -254,7 +253,6 @@ class TaskView: LayerBackedView, Observer, Observable
         case .didEdit:
             set(editing: false)
             task?.title <- String(withNonEmpty: textView.string)
-            task?.isBeingEdited = false
             send(.didEditTitle)
         }
     }

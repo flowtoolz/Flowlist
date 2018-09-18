@@ -40,11 +40,6 @@ final class Task: Codable, Observable, Tree
     
     deinit { removeObservers() }
     
-    // MARK: - Editing
-    
-    // TODO: instead of storing this information here, just remember the index at which a task is being edited in the Table
-    var isBeingEdited = false
-    
     // MARK: - Coding
     
     init(from decoder: Decoder) throws
