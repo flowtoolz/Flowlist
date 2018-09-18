@@ -22,67 +22,67 @@ class WindowMenu: NSMenu, Observer
     
     deinit { stopAllObserving() }
     
-    // MARK: - Update Titles
+    // MARK: - Validate Items
     
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
-        return true
+        switch menuItem
+        {
+        case fullscreenItem: return !isMonotasking
+        case focusItem: return !(window?.isFullscreen ?? false)
+        default: return true
+        }
     }
     
     // MARK: - Toggle Fullscreen
     
     func windowChangesFullscreen(to fullscreen: Bool)
     {
-        focusItem.target = fullscreen ? nil : self
-        fullscreenItem.title = fullscreenItemTitle(isFullscreen: fullscreen)
+        fullscreenItem.title = (fullscreen ? "Leave " : "") + "Fullscreen"
     }
     
-    @objc private func toggleFullscreen()
+    private lazy var fullscreenItem = MenuItem("Fullscreen",
+                                               key: "f",
+                                               validator: self)
     {
-        NSApp.mainWindow?.toggleFullScreen(self)
-    }
-    
-    private lazy var fullscreenItem = item(fullscreenItemTitle(),
-                                           action: #selector(toggleFullscreen),
-                                           key: "f")
-    
-    private func fullscreenItemTitle(isFullscreen: Bool = false) -> String
-    {
-        return isFullscreen ? "Leave Fullscreen" : "Fullscreen"
+        [weak self] in
+        
+        guard let window = self?.window else { return }
+        
+        if !window.isFullscreen { window.show() }
+        
+        window.toggleFullScreen(self)
     }
     
     // MARK: - Toggle Focus
     
-    @objc private func toggleFocus()
+    private lazy var focusItem = MenuItem("Monotasking",
+                                          key: "m",
+                                          validator: self)
     {
+        [weak self] in
+        
+        guard let me = self else { return }
+        
         let options: NSApplication.PresentationOptions = [.autoHideMenuBar,
                                                           .autoHideDock]
-        
-        let gonnaFocus = !NSApp.currentSystemPresentationOptions.contains(options)
-        
-        fullscreenItem.target = gonnaFocus ? nil : self
-        focusItem.title = focusItemTitle(isFocused: gonnaFocus)
-        
-        if gonnaFocus
-        {
-            NSApp.presentationOptions.insert(options)
-            NSApp.hideOtherApplications(self)
-        }
-        else
+    
+        if me.isMonotasking
         {
             NSApp.unhideAllApplications(self)
             NSApp.presentationOptions.remove(options)
         }
+        else
+        {
+            NSApp.presentationOptions.insert(options)
+            NSApp.hideOtherApplications(self)
+        }
+        
+        me.isMonotasking = !me.isMonotasking
+        me.focusItem.title = "\(me.isMonotasking ? "Multi" : "Mono")tasking"
     }
     
-    private lazy var focusItem = item(focusItemTitle(),
-                                      action: #selector(toggleFocus),
-                                      key: "m")
-    
-    private func focusItemTitle(isFocused: Bool = false) -> String
-    {
-        return isFocused ? "Multitasking" : "Monotasking"
-    }
+    private var isMonotasking = false
     
     // MARK: - Window Visibility
     
