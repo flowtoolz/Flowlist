@@ -1,7 +1,8 @@
 import AppKit
 import UIToolz
+import SwiftObserver
 
-class WindowMenu: NSMenu
+class WindowMenu: NSMenu, Observer
 {
     // MARK: - Initialization
     
@@ -19,12 +20,12 @@ class WindowMenu: NSMenu
     
     required init(coder decoder: NSCoder) { fatalError() }
     
+    deinit { stopAllObserving() }
+    
     // MARK: - Update Titles
     
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
-        windowItem.title = windowItemTitle
-        
         return true
     }
     
@@ -83,27 +84,35 @@ class WindowMenu: NSMenu
         return isFocused ? "Multitasking" : "Monotasking"
     }
     
-    // MARK: - Toggle Window Visibility
-    
-    private lazy var windowItem = item("Close Window",
-                                       action: #selector(showWindow),
-                                       key: "w")
-    
-    @objc private func showWindow()
-    {
-        window?.toggle()
-    }
-    
-    private var windowItemTitle: String
-    {
-        return (window?.isVisible ?? true) ? "Close Window" : "Show Window"
-    }
-    
-    // MARK: - Window
+    // MARK: - Window Visibility
     
     func set(window: Window)
     {
+        stopObserving(self.window)
+        
+        observe(window)
+        {
+            [weak self] event in
+            
+            switch event
+            {
+            case .didNothing: break
+            case .didChangeVisibility(let visible):
+                self?.updateWindowItemTitle(isOpen: visible)
+            }
+        }
+        
         self.window = window
+    }
+    
+    private func updateWindowItemTitle(isOpen open: Bool)
+    {
+        windowItem.title = open ? "Close Window" : "Show Window"
+    }
+    
+    private lazy var windowItem = MenuItem("Close Window", key: "w")
+    {
+        [weak self] in self?.window?.toggle()
     }
     
     private weak var window: Window?

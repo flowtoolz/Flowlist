@@ -18,11 +18,9 @@ class Menu: NSMenu
     
     required init(coder decoder: NSCoder) { fatalError() }
     
-    // MARK: - Window
+    // MARK: - Window Menu
     
     func set(window: Window) { windowMenu.set(window: window) }
-    
-    // MARK: - Switch Fullscreen
     
     func windowChangesFullscreen(to fullscreen: Bool)
     {
