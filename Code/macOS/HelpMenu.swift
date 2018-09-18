@@ -67,7 +67,7 @@ class HelpMenu: NSMenu
     {
         let tour = Task("Welcome Tour")
         tour.insert(Task.welcomeTour, at: 0)
-        Browser.active?.focusedList.paste([tour])
+        browser.focusedList.paste([tour])
     }
     
     private let contactItem = MenuItem("Contact Me: support@flowlistapp.com",

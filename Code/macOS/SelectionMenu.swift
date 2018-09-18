@@ -37,25 +37,25 @@ class SelectionMenu: NSMenu
         switch menuItem
         {
         case goRightItem:
-            return Browser.active?.canMove(.right) ?? false
+            return browser.canMove(.right)
             
         case goLeftItem:
-            return Browser.active?.canMove(.left) ?? false
+            return browser.canMove(.left)
             
         case selectAllItem:
-            return list?.numberOfTasks ?? 0 > 0
+            return browser.focusedList.numberOfTasks > 0
             
         case goUpItem:
-            return list?.canShiftSelectionUp ?? false
+            return browser.focusedList.canShiftSelectionUp
             
         case goDownItem:
-            return list?.canShiftSelectionDown ?? false
+            return browser.focusedList.canShiftSelectionDown
             
         case selectUpItem:
-            return list?.canExtendSelectionUp ?? false
+            return browser.focusedList.canExtendSelectionUp
             
         case selectDownItem:
-            return list?.canExtendSelectionDown ?? false
+            return browser.focusedList.canExtendSelectionDown
             
         default:
             return true
@@ -69,7 +69,7 @@ class SelectionMenu: NSMenu
                                             modifiers: [],
                                             validator: self)
     {
-        [weak self] in Browser.active?.move(.right)
+        browser.move(.right)
     }
     
     private lazy var goLeftItem = MenuItem("Go to Overview",
@@ -77,7 +77,7 @@ class SelectionMenu: NSMenu
                                            modifiers: [],
                                            validator: self)
     {
-        Browser.active?.move(.left)
+        browser.move(.left)
     }
     
     private lazy var goUpItem = MenuItem("Go Up",
@@ -85,7 +85,7 @@ class SelectionMenu: NSMenu
                                          modifiers: [],
                                          validator: self)
     {
-        [weak self] in self?.list?.shiftSelectionUp()
+        browser.focusedList.shiftSelectionUp()
     }
     
     private lazy var goDownItem = MenuItem("Go Down",
@@ -93,7 +93,7 @@ class SelectionMenu: NSMenu
                                            modifiers: [],
                                            validator: self)
     {
-        [weak self] in self?.list?.shiftSelectionDown()
+        browser.focusedList.shiftSelectionDown()
     }
     
     private lazy var selectUpItem = MenuItem("Extend Selection Up",
@@ -101,7 +101,7 @@ class SelectionMenu: NSMenu
                                              modifiers: [.shift],
                                              validator: self)
     {
-        [weak self] in self?.list?.extendSelectionUp()
+        browser.focusedList.extendSelectionUp()
     }
     
     private lazy var selectDownItem = MenuItem("Extend Selection Down",
@@ -109,15 +109,13 @@ class SelectionMenu: NSMenu
                                                modifiers: [.shift],
                                                validator: self)
     {
-        [weak self] in self?.list?.extendSelectionDown()
+        browser.focusedList.extendSelectionDown()
     }
     
     private lazy var selectAllItem = MenuItem("Select All",
                                               key: "a",
                                               validator: self)
     {
-        [weak self] in self?.list?.selectAll()
+        browser.focusedList.selectAll()
     }
-    
-    private var list: SelectableList? { return Browser.active?.focusedList }
 }

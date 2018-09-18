@@ -55,10 +55,8 @@ class EditMenu: NSMenu, Observer
     {
         guard !TextView.isEditing else { return false }
         
-        let list = Browser.active?.focusedList
-        
         let selected = numberOfSelectedTasks
-        let deleted = list?.root?.numberOfRemovedSubtasks ?? 0
+        let deleted = browser.focusedList.root?.numberOfRemovedSubtasks ?? 0
         let systemPasteboard = systemPasteboardHasText
         updateTitles(numberOfDeletedItems: deleted,
                      numberOfSelectedItems: selected,
@@ -76,10 +74,10 @@ class EditMenu: NSMenu, Observer
             return selected > 0 && !reachedTaskNumberLimit
             
         case moveUpItem:
-            return list?.canMoveItems(up: true) ?? false
+            return browser.focusedList.canMoveItems(up: true)
             
         case moveDownItem:
-            return list?.canMoveItems(up: false) ?? false
+            return browser.focusedList.canMoveItems(up: false)
             
         case pasteItem:
             return !reachedTaskNumberLimit && (clipboard.count > 0 || systemPasteboard)
@@ -87,14 +85,13 @@ class EditMenu: NSMenu, Observer
         case undoItem:
             return deleted > 0 && !reachedTaskNumberLimit
             
-        default:
-            return list != nil
+        default: return true
         }
     }
     
     private var numberOfSelectedTasks: Int
     {
-        return Browser.active?.focusedList.selection.count ?? 0
+        return browser.focusedList.selection.count
     }
     
     // MARK: - Items
@@ -103,7 +100,7 @@ class EditMenu: NSMenu, Observer
                               numberOfSelectedItems selected: Int,
                               systemPasteboardHasText systemPasteboard: Bool)
     {
-        let task = Browser.active?.focusedList.firstSelectedTask
+        let task = browser.focusedList.firstSelectedTask
         
         createItem.title = selected > 1 ? "Group \(selected) Items" : "Add New Item"
         renameItem.title = selected > 1 ? "Rename 1st of \(selected) Items" : "Rename Item"
@@ -141,7 +138,7 @@ class EditMenu: NSMenu, Observer
                                            modifiers: [],
                                            validator: self)
     {
-        Browser.active?.focusedList.createTask()
+        browser.focusedList.createTask()
     }
     
     private lazy var createAtTopItem = MenuItem("Add New Item on Top",
@@ -156,7 +153,7 @@ class EditMenu: NSMenu, Observer
     {
         if !TextView.isEditing && !reachedTaskNumberLimit
         {
-            Browser.active?.focusedList.create(at: 0)
+            browser.focusedList.create(at: 0)
         }
     }
     
@@ -164,21 +161,21 @@ class EditMenu: NSMenu, Observer
                                            key: "\n",
                                            validator: self)
     {
-        Browser.active?.focusedList.editTitle()
+        browser.focusedList.editTitle()
     }
     
     private lazy var checkOffItem = MenuItem("Check Off Item",
                                              key: String(unicode: NSLeftArrowFunctionKey),
                                              validator: self)
     {
-        Browser.active?.focusedList.toggleDoneStateOfFirstSelectedTask()
+        browser.focusedList.toggleDoneStateOfFirstSelectedTask()
     }
     
     private lazy var inProgressItem = MenuItem("Start Item",
                                                key: String(unicode: NSRightArrowFunctionKey),
                                                validator: self)
     {
-        Browser.active?.focusedList.toggleInProgressStateOfFirstSelectedTask()
+        browser.focusedList.toggleInProgressStateOfFirstSelectedTask()
     }
     
     private lazy var deleteItem = MenuItem("Delete Item",
@@ -186,21 +183,21 @@ class EditMenu: NSMenu, Observer
                                            modifiers: [],
                                            validator: self)
     {
-        Browser.active?.focusedList.removeSelectedTasks()
+        browser.focusedList.removeSelectedTasks()
     }
     
     private lazy var moveUpItem = MenuItem("Move Item Up",
                                            key: String(unicode: NSUpArrowFunctionKey),
                                            validator: self)
     {
-        Browser.active?.focusedList.moveSelectedTask(-1)
+        browser.focusedList.moveSelectedTask(-1)
     }
     
     private lazy var moveDownItem = MenuItem("Move Item Down",
                                              key: String(unicode: NSDownArrowFunctionKey),
                                              validator: self)
     {
-        Browser.active?.focusedList.moveSelectedTask(1)
+        browser.focusedList.moveSelectedTask(1)
     }
     
     
@@ -208,7 +205,7 @@ class EditMenu: NSMenu, Observer
                                          key: "c",
                                          validator: self)
     {
-        Browser.active?.focusedList.copy()
+        browser.focusedList.copy()
         NSPasteboard.general.clearContents()
     }
     
@@ -216,7 +213,7 @@ class EditMenu: NSMenu, Observer
                                         key: "x",
                                         validator: self)
     {
-        Browser.active?.focusedList.cut()
+        browser.focusedList.cut()
         NSPasteboard.general.clearContents()
     }
     
@@ -226,12 +223,12 @@ class EditMenu: NSMenu, Observer
     {
         if systemPasteboardHasText
         {
-            Browser.active?.focusedList.pasteFromSystemPasteboard()
+            browser.focusedList.pasteFromSystemPasteboard()
             NSPasteboard.general.clearContents()
         }
         else if clipboard.count > 0
         {
-            Browser.active?.focusedList.pasteFromClipboard()
+            browser.focusedList.pasteFromClipboard()
         }
     }
     
@@ -239,7 +236,7 @@ class EditMenu: NSMenu, Observer
                                          key: "z",
                                          validator: self)
     {
-        Browser.active?.focusedList.undoLastRemoval()
+        browser.focusedList.undoLastRemoval()
     }
     
     private lazy var tagItem: NSMenuItem =
@@ -256,7 +253,7 @@ class EditMenu: NSMenu, Observer
             
             let item = MenuItem(name, key: "\((i + 1) % 7)", modifiers: [])
             {
-                Browser.active?.focusedList.set(tag: tag)
+                browser.focusedList.set(tag: tag)
             }
             
             item.image = images[i]

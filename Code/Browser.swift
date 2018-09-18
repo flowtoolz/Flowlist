@@ -1,11 +1,13 @@
 import SwiftObserver
 import SwiftyToolz
 
+let browser = Browser()
+
 class Browser: Observer, Observable
 {
     // MARK: - Life Cycle
     
-    init()
+    fileprivate init()
     {
         pushList()
         pushList()
@@ -15,12 +17,7 @@ class Browser: Observer, Observable
         
         focusedList.set(root: store.root)
         focusedList.select()
-        
-        Browser.active = self
     }
-    
-    // TODO: make Browser a proper singleton
-    static var active: Browser?
     
     deinit { stopAllObserving() }
     

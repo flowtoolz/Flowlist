@@ -95,8 +95,6 @@ class BrowserView: LayerBackedView, Observer
         moveToFocusedList()
     }
     
-    private let browser = Browser()
-    
     // MARK: - Resizing
     
     func didResize()
