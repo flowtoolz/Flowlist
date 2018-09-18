@@ -38,26 +38,46 @@ final class Task: Codable, Observable, Tree
     
     init() {}
     
+    deinit { removeObservers() }
+    
+    // MARK: - Editing
+    
+    // TODO: instead of storing this information here, just remember the index at which a task is being edited in the Table
+    var isBeingEdited = false
+    
+    // MARK: - Coding
+    
     init(from decoder: Decoder) throws
     {
-        // TODO: only store raw values, not the whole variables (effects decoder and coder). only store non-nil values (effects only coder). be careful to detect legacy formats (decoder)
-        
         guard let container = try? decoder.container(keyedBy: CodingKeys.self) else
         {
             return
         }
         
-        if let title = try? container.decode(Var<String>.self, forKey: .title)
+        if let titleString = try? container.decode(String.self, forKey: .title)
+        {
+            title <- titleString
+        }
+        else if let title = try? container.decode(Var<String>.self, forKey: .title)
         {
             self.title = title
         }
         
-        if let state = try? container.decode(Var<TaskState>.self, forKey: .state)
+        if let integer = try? container.decode(Int.self, forKey: .state)
+        {
+            state <- TaskState(rawValue: integer)
+        }
+        else if let state = try? container.decode(Var<TaskState>.self,
+                                                  forKey: .state)
         {
             self.state = state
         }
         
-        if let tag = try? container.decode(Var<Task.Tag>.self, forKey: .tag)
+        if let integer = try? container.decode(Int.self, forKey: .tag)
+        {
+            tag <- Task.Tag(rawValue: integer)
+        }
+        else if let tag = try? container.decode(Var<Task.Tag>.self, forKey: .tag)
         {
             self.tag = tag
         }
@@ -68,19 +88,14 @@ final class Task: Codable, Observable, Tree
         }
     }
     
-    deinit { removeObservers() }
-    
-    // MARK: - Editing
-    
-    // TODO: instead of storing this information here, just remember the index at which a task is being edited in the Table
-    var isBeingEdited = false
-    
-    // MARK: - Codable Data
+    // TODO: custom Coder: only store raw values, not the whole variables. only store non-nil values.
     
     enum CodingKeys: String, CodingKey
     {
         case title, state, tag, branches = "subtasks"
     }
+    
+    // MARK: - Data
     
     private(set) var title = Var<String>()
     private(set) var state = Var<TaskState>()
