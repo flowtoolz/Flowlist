@@ -30,7 +30,6 @@
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
 		9E6C721020B1E66D001C3D2C /* Task+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720F20B1E66D001C3D2C /* Task+Debugging.swift */; };
 		9E6C8C7120E3E5D90068EBCF /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C8C7020E3E5D90068EBCF /* NSDecimalNumber+Price.swift */; };
-		9E71504020D7CBC70061601E /* Task+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71503F20D7CBC70061601E /* Task+ViewModel.swift */; };
 		9E71504520D7D80F0061601E /* FullVersionPurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71504420D7D80F0061601E /* FullVersionPurchaseController.swift */; };
 		9E72881B1EEF3095003A2F46 /* SelectableListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E72881A1EEF3095003A2F46 /* SelectableListView.swift */; };
 		9E7651941EEF428100DE2B07 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651931EEF428100DE2B07 /* TaskView.swift */; };
@@ -98,7 +97,6 @@
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = List.swift; path = ../Code/List.swift; sourceTree = "<group>"; };
 		9E6C720F20B1E66D001C3D2C /* Task+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Debugging.swift"; path = "../Code/Task+Debugging.swift"; sourceTree = "<group>"; };
 		9E6C8C7020E3E5D90068EBCF /* NSDecimalNumber+Price.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSDecimalNumber+Price.swift"; path = "../Code/NSDecimalNumber+Price.swift"; sourceTree = "<group>"; };
-		9E71503F20D7CBC70061601E /* Task+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+ViewModel.swift"; path = "../Code/Task+ViewModel.swift"; sourceTree = "<group>"; };
 		9E71504420D7D80F0061601E /* FullVersionPurchaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FullVersionPurchaseController.swift; path = ../Code/macOS/FullVersionPurchaseController.swift; sourceTree = "<group>"; };
 		9E72881A1EEF3095003A2F46 /* SelectableListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectableListView.swift; path = ../Code/macOS/SelectableListView.swift; sourceTree = "<group>"; };
 		9E7651931EEF428100DE2B07 /* TaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskView.swift; path = ../Code/macOS/TaskView.swift; sourceTree = "<group>"; };
@@ -223,7 +221,6 @@
 			children = (
 				9EC498A521147FE1003636FE /* Task+Pasteboard.swift */,
 				9E3F69322115ADE2002D595D /* Task+WelcomeTour.swift */,
-				9E71503F20D7CBC70061601E /* Task+ViewModel.swift */,
 				9E5768C120C15CDF00749C0C /* Task+Hashable.swift */,
 				9E6C720A20B19C88001C3D2C /* Task+State.swift */,
 				9E6C720F20B1E66D001C3D2C /* Task+Debugging.swift */,
@@ -604,7 +601,6 @@
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,
 				9E5768BC20C14B9300749C0C /* Direction.swift in Sources */,
 				9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */,
-				9E71504020D7CBC70061601E /* Task+ViewModel.swift in Sources */,
 				9EE582FF20DA7377004DE407 /* FullVersion.swift in Sources */,
 				9EF6C67F20E272340003264A /* BulletpointList.swift in Sources */,
 				9ECD2953214FBE44000472B1 /* MenuItem.swift in Sources */,
