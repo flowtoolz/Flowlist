@@ -21,6 +21,11 @@ class TaskView: LayerBackedView, Observer, Observable
         contrainGroupIcon()
         constrainTextView()
         
+        observe(darkMode)
+        {
+            [weak self] _ in self?.adjustToColorMode()
+        }
+        
         layer?.borderWidth = 1.0
         layer?.cornerRadius = Float.cornerRadius.cgFloat
         
@@ -36,6 +41,18 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         stopAllObserving()
         removeObservers()
+    }
+    
+    // MARK: - Dark Mode
+    
+    private func adjustToColorMode()
+    {
+        backgroundColor = isSelected ? .itemBackgroundSelected : .itemBackground
+        editingBackground.backgroundColor = .editingBackground
+        checkBox.setColorMode(white: checkBoxShouldBeWhite(selected: isSelected))
+        textView.set(textColor: currentTextColor)
+        textView.insertionPointColor = Color.text.nsColor
+        groupIcon.image = isSelected ? TaskView.groupIconImageSelected : TaskView.groupIconImage
     }
     
     // MARK: - Adapt to Font Size Changes
@@ -71,7 +88,8 @@ class TaskView: LayerBackedView, Observer, Observable
         let state = task.state.value
         
         updateColors(with: state)
-        checkBox.configure(with: state, whiteColorMode: isSelected)
+        checkBox.configure(with: state,
+                           whiteColorMode: checkBoxShouldBeWhite(selected: isSelected))
         updateTextView()
         updateGroupIcon()
         
@@ -176,7 +194,7 @@ class TaskView: LayerBackedView, Observer, Observable
             
             if !textView.isEditing
             {
-                textView.set(textColor: isSelected ? .itemBackground : .itemBackgroundSelected)
+                textView.set(textColor: isSelected ? .textSelected : .text)
             }
             
             groupIcon.image = isSelected ? TaskView.groupIconImageSelected : TaskView.groupIconImage
@@ -241,6 +259,7 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         let view = addForAutoLayout(TextView())
         
+        view.insertionPointColor = Color.text.nsColor
         self.observe(view.messenger) { [weak self] in self?.didReceive($0) }
         
         return view
@@ -272,7 +291,10 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func set(editing: Bool)
     {
-        textView.textColor = textColor(isEditing: editing).nsColor
+        isEditing = editing
+        
+        textView.textColor = currentTextColor.nsColor
+        
         editingBackground.alphaValue = editing ? 1 : 0
         
         if !editing
@@ -297,17 +319,19 @@ class TaskView: LayerBackedView, Observer, Observable
         NSAnimationContext.endGrouping()
     }
     
-    private func textColor(isEditing: Bool) -> Color
+    private var currentTextColor: Color
     {
         if Color.isInDarkMode
         {
-            return isEditing ? .white : .black
+            return isEditing || !isSelected ? .white : .black
         }
         else
         {
-            return isEditing ? .black : .white
+            return isEditing || !isSelected ? .black : .white
         }
     }
+    
+    private var isEditing = false
     
     // MARK: - Editing Background
     
@@ -323,7 +347,7 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         let view = addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = Color.isInDarkMode ? .black : .white
+        view.backgroundColor = .editingBackground
         view.alphaValue = 0
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         

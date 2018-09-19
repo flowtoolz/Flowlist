@@ -15,6 +15,11 @@ extension Color
         Color(197, 112, 219)
     ]
     
+    static var editingBackground: Color
+    {
+        return isInDarkMode ? .black : .white
+    }
+    
     static var itemBackground: Color
     {
         return isInDarkMode ? .black : .white
@@ -40,6 +45,11 @@ extension Color
     static var text: Color
     {
         return isInDarkMode ? .white : .black
+    }
+    
+    static var textSelected: Color
+    {
+        return isInDarkMode ? .black : .white
     }
     
     static var textFaded: Color
