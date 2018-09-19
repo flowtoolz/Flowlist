@@ -40,7 +40,13 @@ class PurchaseContentView: NSView, Observer
     
     func adjustToColorMode()
     {
-        
+        let textColor = Color.text.nsColor
+        titleLabel.textColor = textColor
+        descriptionLabel.textColor = textColor
+        priceTag.priceLabel.textColor = textColor
+        priceTag.discountPriceLabel.textColor = Color.textDiscount.nsColor
+        loadingLabel.textColor = textColor
+        bulletpointList.adjustToColorMode()
     }
     
     // MARK: - Load Data From AppStore

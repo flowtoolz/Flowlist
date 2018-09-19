@@ -62,6 +62,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
         progressBar.layer?.borderColor = borderColor
         
         expandIcon.image = isExpanded ? closeImage : expandImage
+        
+        content.adjustToColorMode()
     }
     
     // MARK: - Expand / Collapse

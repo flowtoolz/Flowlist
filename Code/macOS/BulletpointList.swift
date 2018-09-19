@@ -13,6 +13,27 @@ class BulletpointList: NSView
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
+    // MARK: - Dark Mode
+    
+    func adjustToColorMode()
+    {
+        let image = checkImage
+        
+        for icon in bulletpointIcons
+        {
+            icon.image = image
+        }
+        
+        let textColor = Color.text.nsColor
+        
+        for label in bulletpointLabels
+        {
+            label.textColor = textColor
+        }
+    }
+    
+    // MARK: - Bullet Points
+    
     private func constrainBulletpoints()
     {
         for index in 0 ..< bulletpointLabels.count
