@@ -4,10 +4,6 @@ import SwiftyToolz
 extension Color
 {
     static let done = Color.gray(brightness: brightness2)
-    static let backlog = Color.white
-    static let selection = Color.black
-    
-    
     
     static let tags: [Color] =
     [
@@ -19,9 +15,15 @@ extension Color
         Color(197, 112, 219)
     ]
     
-    private static let brightness1 = brightnessFactor
-    private static let brightness2 = pow(brightnessFactor, 2)
-    private static let brightnessFactor: Float = 0.92
+    static var itemBackground: Color
+    {
+        return isInDarkMode ? .black : .white
+    }
+    
+    static var itemBackgroundSelected: Color
+    {
+        return isInDarkMode ? .white : .black
+    }
     
     static var border: Color
     {
@@ -84,6 +86,10 @@ extension Color
         get { return darkMode.latestUpdate }
         set { darkModeVar <- newValue }
     }
+    
+    private static let brightness1 = brightnessFactor
+    private static let brightness2 = pow(brightnessFactor, 2)
+    private static let brightnessFactor: Float = 0.92
 }
 
 let darkMode = darkModeVar.new().filter({ $0 != nil }).unwrap(false)

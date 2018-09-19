@@ -172,15 +172,28 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         didSet
         {
-            backgroundColor = isSelected ? .selection : .white
+            backgroundColor = isSelected ? .itemBackgroundSelected : .itemBackground
             
             if !textView.isEditing
             {
-                textView.set(textColor: isSelected ? .white : .black)
+                textView.set(textColor: isSelected ? .itemBackground : .itemBackgroundSelected)
             }
             
-            groupIcon.image = isSelected ? TaskView.groupIconImageWhite : TaskView.groupIconImage
-            checkBox.setColorMode(white: isSelected)
+            groupIcon.image = isSelected ? TaskView.groupIconImageSelected : TaskView.groupIconImage
+            
+            checkBox.setColorMode(white: checkBoxShouldBeWhite(selected: isSelected))
+        }
+    }
+    
+    private func checkBoxShouldBeWhite(selected: Bool) -> Bool
+    {
+        if Color.isInDarkMode
+        {
+            return selected ? false : true
+        }
+        else
+        {
+            return selected ? true : false
         }
     }
     
@@ -259,7 +272,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func set(editing: Bool)
     {
-        textView.textColor = editing ? .black : .white
+        textView.textColor = textColor(isEditing: editing).nsColor
         editingBackground.alphaValue = editing ? 1 : 0
         
         if !editing
@@ -271,17 +284,29 @@ class TaskView: LayerBackedView, Observer, Observable
         NSAnimationContext.current.allowsImplicitAnimation = false
         NSAnimationContext.current.duration = 0.2
         NSAnimationContext.current.completionHandler =
+        {
+            if editing
             {
-                if editing
-                {
-                    self.checkBox.isEnabled = false
-                }
+                self.checkBox.isEnabled = false
+            }
         }
         
         groupIcon.animator().alphaValue = editing ? 0 : 1
         checkBox.animator().alphaValue = editing ? 0 : 1
         
         NSAnimationContext.endGrouping()
+    }
+    
+    private func textColor(isEditing: Bool) -> Color
+    {
+        if Color.isInDarkMode
+        {
+            return isEditing ? .white : .black
+        }
+        else
+        {
+            return isEditing ? .black : .white
+        }
     }
     
     // MARK: - Editing Background
@@ -298,7 +323,7 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         let view = addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = .white
+        view.backgroundColor = Color.isInDarkMode ? .black : .white
         view.alphaValue = 0
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         
@@ -348,7 +373,17 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private lazy var groupIcon = addForAutoLayout(Icon(with: TaskView.groupIconImage))
     
-    private static let groupIconImage = #imageLiteral(resourceName: "container_indicator_pdf")
+    private static var groupIconImage: NSImage
+    {
+        return Color.isInDarkMode ? groupIconImageWhite : groupIconImageBlack
+    }
+    
+    private static var groupIconImageSelected: NSImage
+    {
+        return Color.isInDarkMode ? groupIconImageBlack : groupIconImageWhite
+    }
+    
+    private static let groupIconImageBlack = #imageLiteral(resourceName: "container_indicator_pdf")
     private static let groupIconImageWhite = #imageLiteral(resourceName: "container_indicator_white")
     
     // MARK: - Layout Guide
