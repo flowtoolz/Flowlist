@@ -82,7 +82,7 @@ class PriceTag: NSView, Observer
     {
         let view = addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = .discountRed
+        view.backgroundColor = .textDiscount
         view.constrainHeight(to: 1.5)
         
         return view
@@ -99,9 +99,9 @@ class PriceTag: NSView, Observer
         discountPriceLabel.constrain(below: priceLabel)
     }
     
-    lazy var discountPriceLabel = addPriceLabel(color: .discountRed)
+    lazy var discountPriceLabel = addPriceLabel(color: .textDiscount)
     
-    private func addPriceLabel(color: Color = .black) -> Label
+    private func addPriceLabel(color: Color = .text) -> Label
     {
         let label = addForAutoLayout(Label())
         

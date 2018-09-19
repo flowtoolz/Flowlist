@@ -13,6 +13,15 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
         backgroundColor = .background
         setItemBorder()
+        
+        observe(darkMode)
+        {
+            [weak self] _ in
+            
+            self?.backgroundColor = .background
+            self?.layer?.borderColor = Color.border.cgColor
+        }
+        
         constrainHeader()
         constrainScrollTable()
     }

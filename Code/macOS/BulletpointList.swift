@@ -52,11 +52,19 @@ class BulletpointList: NSView
         
         for _ in bulletpoints
         {
-            icons.append(addForAutoLayout(Icon(with: #imageLiteral(resourceName: "checkbox_checked_pdf"))))
+            icons.append(addForAutoLayout(Icon(with: checkImage)))
         }
         
         return icons
     }()
+    
+    private var checkImage: NSImage
+    {
+        return Color.isInDarkMode ? checkImageWhite : checkImageBlack
+    }
+    
+    private let checkImageBlack = #imageLiteral(resourceName: "checkbox_checked_pdf")
+    private let checkImageWhite = #imageLiteral(resourceName: "checkbox_checked_white")
     
     private lazy var bulletpointLabels: [Label] =
     {
@@ -65,6 +73,7 @@ class BulletpointList: NSView
         for bulletpoint in bulletpoints
         {
             let label = addForAutoLayout(Label())
+            label.textColor = Color.text.nsColor
             label.font = Font.purchasePanel.nsFont
             label.stringValue = bulletpoint
             label.lineBreakMode = .byWordWrapping

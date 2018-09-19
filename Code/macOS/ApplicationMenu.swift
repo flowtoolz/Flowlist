@@ -12,6 +12,7 @@ class ApplicationMenu: NSMenu
         
         addItem(increaseFontSizeItem)
         addItem(decreaseFontSizeItem)
+        addItem(darkModeItem)
         
         addItem(NSMenuItem.separator())
  
@@ -50,4 +51,11 @@ class ApplicationMenu: NSMenu
                                                      key: "-",
                                                      validator: self)
     { Font.baseSizeVar -= 1 }
+    
+    // MARK: - Dark Mode
+    
+    private lazy var darkModeItem = MenuItem("Toggle Dark Mode",
+                                             key: "d",
+                                             validator: self)
+    { Color.isInDarkMode = !Color.isInDarkMode }
 }

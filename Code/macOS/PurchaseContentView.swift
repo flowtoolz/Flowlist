@@ -36,6 +36,13 @@ class PurchaseContentView: NSView, Observer
     
     deinit { stopAllObserving() }
     
+    // MARK: - Dark Mode
+    
+    func adjustToColorMode()
+    {
+        
+    }
+    
     // MARK: - Load Data From AppStore
     
     private func didReceive(_ event: FullVersionPurchaseController.Event)
@@ -127,7 +134,7 @@ class PurchaseContentView: NSView, Observer
     {
         let view = columns[1].addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = Color.discountRed
+        view.backgroundColor = Color.textDiscount
         view.isHidden = true
         view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         
@@ -155,6 +162,7 @@ class PurchaseContentView: NSView, Observer
     {
         let label = loadingIndicator.addForAutoLayout(Label())
         
+        label.textColor = Color.text.nsColor
         label.stringValue = "Loading infos from AppStore ..."
         label.font = Font.purchasePanel.nsFont
         label.alignment = .center
@@ -185,6 +193,7 @@ class PurchaseContentView: NSView, Observer
     {
         let label = columns[0].addForAutoLayout(Label())
 
+        label.textColor = Color.text.nsColor
         label.font = Font.title.nsFont
         label.stringValue = "Flowlist Full Version"
         
@@ -311,6 +320,7 @@ class PurchaseContentView: NSView, Observer
     {
         let label = columns[0].addForAutoLayout(Label())
         
+        label.textColor = Color.text.nsColor
         label.lineBreakMode = .byWordWrapping
         label.font = Font.purchasePanel.nsFont
         label.stringValue = productDescription

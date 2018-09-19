@@ -1,9 +1,10 @@
 import AppKit
 import UIToolz
 import FoundationToolz
+import SwiftObserver
 import SwiftyToolz
 
-class FlowlistController: AppController, NSWindowDelegate
+class FlowlistController: AppController, Observer, NSWindowDelegate
 {
     // MARK: - Initialization
     
@@ -17,6 +18,13 @@ class FlowlistController: AppController, NSWindowDelegate
 
         fullVersionPurchaseController.setup()
         store.load()
+        
+        observe(darkMode)
+        {
+            [weak self] _ in
+            
+            self?.window.backgroundColor = Color.windowBackground.nsColor
+        }
     }
     
     func applicationWillBecomeActive(_ notification: Notification)

@@ -11,6 +11,14 @@ class Header: LayerBackedView, Observer
     {
         super.init(frame: frameRect)
         
+        observe(darkMode)
+        {
+            [weak self] _ in
+            
+            self?.titleLabel.textColor = Color.text.nsColor
+            self?.icon.image = Header.iconImage
+        }
+        
         backgroundColor = .clear
         constrainTitleLabel()
         
@@ -57,7 +65,7 @@ class Header: LayerBackedView, Observer
     func update(with root: Task)
     {
         let isUntitled = String(withNonEmpty: root.title.value) == nil
-        let textColor: Color = root.isDone || isUntitled ? .grayedOut : .black
+        let textColor: Color = root.isDone || isUntitled ? .textFaded : .text
         titleLabel.textColor = textColor.nsColor
     }
     
@@ -76,7 +84,14 @@ class Header: LayerBackedView, Observer
     }
     
     private lazy var icon = addForAutoLayout(Icon(with: Header.iconImage))
-    private static let iconImage = #imageLiteral(resourceName: "home_pdf")
+    
+    private static var iconImage: NSImage
+    {
+        return Color.isInDarkMode ? iconImageWhite : iconImageBlack
+    }
+    
+    private static let iconImageBlack = #imageLiteral(resourceName: "home_pdf")
+    private static let iconImageWhite = #imageLiteral(resourceName: "home_white")
     
     // MARK: - Title
     
@@ -84,7 +99,7 @@ class Header: LayerBackedView, Observer
     {
         titleLabel.stringValue = (title ?? "untitled").replacingOccurrences(of: "\n", with: " ")
         
-        let textColor: Color = title == nil ? .grayedOut : .black
+        let textColor: Color = title == nil ? .textFaded : .black
         titleLabel.textColor = textColor.nsColor
     }
     
@@ -122,7 +137,7 @@ class Header: LayerBackedView, Observer
     {
         let label = addForAutoLayout(Label())
         
-        label.textColor = NSColor.black
+        label.textColor = Color.text.nsColor
         label.font = Font.listTitle.nsFont
         label.alignment = .center
         label.maximumNumberOfLines = 1

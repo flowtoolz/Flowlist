@@ -11,9 +11,12 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         super.init(frame: frameRect)
         
-        backgroundColor = Color.gray(brightness: 0.92)
+        backgroundColor = .background
+        
         layer?.borderColor = Color.border.cgColor
         layer?.borderWidth = 1.0
+        
+        observe(darkMode) { [weak self] _ in self?.adjustToColorMode() }
         
         constrainItemLabel()
         constrainProgressBar()
@@ -37,6 +40,30 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
+    deinit
+    {
+        stopAllObserving()
+        removeObservers()
+    }
+    
+    // MARK: - Dark Mode
+    
+    private func adjustToColorMode()
+    {
+        backgroundColor = .background
+        progressBar.backgroundColor = .background
+        progressBar.progressColor = .progressBar
+        
+        let taskNumber = numberOfUserCreatedTasks.latestUpdate
+        itemLabel.textColor = labelColor(for: taskNumber).nsColor
+        
+        let borderColor = Color.border.cgColor
+        layer?.borderColor = borderColor
+        progressBar.layer?.borderColor = borderColor
+        
+        expandIcon.image = isExpanded ? closeImage : expandImage
+    }
+    
     // MARK: - Expand / Collapse
     
     var isExpanded: Bool = false
@@ -53,7 +80,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
             
             content.alphaValue = isExpanded ? 1 : 0
             itemLabel.alphaValue = isExpanded ? 0 : 1
-            expandIcon.image = isExpanded ? #imageLiteral(resourceName: "close_indicator_pdf") : #imageLiteral(resourceName: "expand_indicator_pdf")
+            expandIcon.image = isExpanded ? closeImage : expandImage
             progressBar.alphaValue = isExpanded ? 0 : 1
             
             NSAnimationContext.endGrouping()
@@ -86,7 +113,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func labelColor(for itemNumber: Int) -> Color
     {
-        return itemNumber >= 90 ? .black : .grayedOut
+        return itemNumber >= 90 ? .text : .textFaded
     }
     
     private func labelText(for itemNumber: Int) -> String
@@ -105,7 +132,23 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private let defaultIconSize: CGFloat = 17.0
     
-    private lazy var expandIcon = addForAutoLayout(Icon(with: #imageLiteral(resourceName: "expand_indicator_pdf")))
+    private lazy var expandIcon = addForAutoLayout(Icon(with: expandImage))
+    
+    private var closeImage: NSImage
+    {
+        return Color.isInDarkMode ? closeImageWhite : closeImageBlack
+    }
+    
+    private let closeImageBlack = #imageLiteral(resourceName: "close_indicator_pdf")
+    private let closeImageWhite = #imageLiteral(resourceName: "close_indicator_white")
+    
+    private var expandImage: NSImage
+    {
+        return Color.isInDarkMode ? expandImageWhite : expandImageBlack
+    }
+    
+    private let expandImageBlack = #imageLiteral(resourceName: "expand_indicator_pdf")
+    private let expandImageWhite = #imageLiteral(resourceName: "expand_indicator_white")
     
     // MARK: - Progress Bar
     
@@ -124,7 +167,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         let progress = CGFloat(numberOfUserCreatedTasks.latestUpdate) / CGFloat(maxNumberOfTasksInTrial)
         bar.progress = progress
         bar.backgroundColor = .background
-        bar.progressColor = .white
+        bar.progressColor = .progressBar
         bar.layer?.borderColor = Color.border.cgColor
         bar.layer?.borderWidth = 1.0
         

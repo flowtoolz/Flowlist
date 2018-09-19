@@ -1,15 +1,13 @@
+import SwiftObserver
 import SwiftyToolz
 
 extension Color
 {
+    static let done = Color.gray(brightness: brightness2)
     static let backlog = Color.white
-    static let background = Color.gray(brightness: 0.92)
-    static let done = Color.gray(brightness: 0.92 * 0.92)
-    static let windowBackground = Color.gray(brightness: 0.92 * 0.92)
     static let selection = Color.black
-    static let border = Color.black.with(alpha: 0.15)
-    static let grayedOut = Color.black.with(alpha: 0.5)
-    static let discountRed = Color(0.75, 0, 0, 0.75)
+    
+    
     
     static let tags: [Color] =
     [
@@ -20,4 +18,74 @@ extension Color
         Color(63, 169, 242),
         Color(197, 112, 219)
     ]
+    
+    private static let brightness1 = brightnessFactor
+    private static let brightness2 = pow(brightnessFactor, 2)
+    private static let brightnessFactor: Float = 0.92
+    
+    static var border: Color
+    {
+        if isInDarkMode
+        {
+            return Color.white.with(alpha: 0.25)
+        }
+        else
+        {
+            return Color.black.with(alpha: 0.15)
+        }
+    }
+    
+    static var text: Color
+    {
+        return isInDarkMode ? .white : .black
+    }
+    
+    static var textFaded: Color
+    {
+        if isInDarkMode
+        {
+            return Color.white.with(alpha: 0.5)
+        }
+        else
+        {
+            return Color.black.with(alpha: 0.5)
+        }
+    }
+    
+    static var textDiscount: Color
+    {
+        if isInDarkMode
+        {
+            return Color(1, 0.35, 0.35, 0.75)
+        }
+        else
+        {
+            return Color(0.75, 0, 0, 0.75)
+        }
+    }
+    
+    static var progressBar: Color
+    {
+        return isInDarkMode ? .gray(brightness: 0.4) : .white
+    }
+    
+    static var background: Color
+    {
+        return .gray(brightness: isInDarkMode ? 0.25 : brightness1)
+    }
+    
+    static var windowBackground: Color
+    {
+        return .gray(brightness: isInDarkMode ? 0.35 : brightness2)
+    }
+    
+    static var isInDarkMode: Bool
+    {
+        get { return darkMode.latestUpdate }
+        set { darkModeVar <- newValue }
+    }
 }
+
+let darkMode = darkModeVar.new().filter({ $0 != nil }).unwrap(false)
+
+fileprivate let darkModeVar = Var(true)
