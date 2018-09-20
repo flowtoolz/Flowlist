@@ -47,7 +47,6 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func adjustToColorMode()
     {
-        backgroundColor = isSelected ? .itemBackgroundSelected : .itemBackground
         editingBackground.backgroundColor = .editingBackground
         checkBox.setColorMode(white: checkBoxShouldBeWhite(selected: isSelected))
         textView.set(textColor: currentTextColor)
@@ -61,7 +60,11 @@ class TaskView: LayerBackedView, Observer, Observable
         
         if task?.isDone ?? false
         {
-            colorOverlay.backgroundColor = .itemBackgroundDone
+            backgroundColor = .itemBackgroundDone
+        }
+        else
+        {
+            backgroundColor = isSelected ? .itemBackgroundSelected : .itemBackground
         }
         
         textView.selectedTextAttributes = TextView.selectionSyle
@@ -163,15 +166,19 @@ class TaskView: LayerBackedView, Observer, Observable
         
         if task.isDone
         {
-            colorOverlay.backgroundColor = Color.itemBackgroundDone
-            colorOverlay.isHidden = false
+            backgroundColor = .itemBackgroundDone
+            colorOverlay.isHidden = true
             
             layer?.borderColor = Color.itemBorder.cgColor
             
-            alphaValue = 0.5
+            textView.alphaValue = 0.5
+            checkBox.alphaValue = 0.5
+            groupIcon.alphaValue = 0.5
         }
         else if let tag = task.tag.value
         {
+            backgroundColor = .itemBackground
+            
             let tagColor = Color.tags[tag.rawValue]
             
             colorOverlay.backgroundColor = tagColor
@@ -179,15 +186,21 @@ class TaskView: LayerBackedView, Observer, Observable
             
             layer?.borderColor = tagColor.with(alpha: 0.5).cgColor
             
-            alphaValue = 1
+            textView.alphaValue = 1
+            checkBox.alphaValue = 1
+            groupIcon.alphaValue = 1
         }
         else
         {
+            backgroundColor = .itemBackground
+            
             colorOverlay.isHidden = true
             
             layer?.borderColor = Color.itemBorder.cgColor
             
-            alphaValue = 1
+            textView.alphaValue = 1
+            checkBox.alphaValue = 1
+            groupIcon.alphaValue = 1
         }
     }
     
@@ -202,7 +215,9 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         didSet
         {
-            backgroundColor = isSelected ? .itemBackgroundSelected : .itemBackground
+            let isDone = task?.isDone ?? false
+            
+            backgroundColor = isSelected ? .itemBackgroundSelected : (isDone ? .itemBackgroundDone : .itemBackground)
             
             if !textView.isEditing
             {

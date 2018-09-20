@@ -12,6 +12,9 @@ class ApplicationMenu: NSMenu
         
         addItem(increaseFontSizeItem)
         addItem(decreaseFontSizeItem)
+        
+        addItem(NSMenuItem.separator())
+        
         addItem(darkModeItem)
         
         addItem(NSMenuItem.separator())

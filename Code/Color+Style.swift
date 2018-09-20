@@ -22,7 +22,7 @@ extension Color
     
     static var itemBackground: Color
     {
-        return isInDarkMode ? .gray(brightness: 0.3) : .white
+        return isInDarkMode ? .gray(brightness: 0.2) : .white
     }
     
     static var itemBackgroundSelected: Color
@@ -32,14 +32,14 @@ extension Color
     
     static var itemBackgroundDone: Color
     {
-        return .gray(brightness: isInDarkMode ? 0.9 : 0.6)
+        return .gray(brightness: isInDarkMode ? 0 : brightness2)
     }
     
     static var itemBorder: Color
     {
         if isInDarkMode
         {
-            return Color.white.with(alpha: 0.15)
+            return Color.white.with(alpha: 0.1)
         }
         else
         {
@@ -51,7 +51,7 @@ extension Color
     {
         if isInDarkMode
         {
-            return Color.white.with(alpha: 0.15)
+            return Color.white.with(alpha: 0.1)
         }
         else
         {
@@ -78,7 +78,7 @@ extension Color
     {
         if isInDarkMode
         {
-            return Color.white.with(alpha: 0.6)
+            return Color.white.with(alpha: 0.4)
         }
         else
         {
@@ -100,12 +100,12 @@ extension Color
     
     static var progressBar: Color
     {
-        return isInDarkMode ? .gray(brightness: 0.4) : .white
+        return isInDarkMode ? .gray(brightness: 0.25) : .white
     }
     
     static var background: Color
     {
-        return .gray(brightness: isInDarkMode ? 0.15 : brightness1)
+        return .gray(brightness: isInDarkMode ? 0.1 : brightness1)
     }
     
     static var windowBackground: Color

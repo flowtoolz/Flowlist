@@ -292,7 +292,7 @@ class PurchaseContentView: NSView, Observer
         let button = columns[1].addForAutoLayout(Button())
         
         button.layer?.cornerRadius = Float.cornerRadius.cgFloat
-        button.backgroundColor = Color.gray(brightness: 0.6)
+        button.backgroundColor = Color.gray(brightness: 0.5)
         
         button.titleLabel.textColor = .white
         button.titleLabel.font = Font.purchasePanel.nsFont
