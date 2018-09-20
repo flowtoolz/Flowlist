@@ -337,7 +337,7 @@ class PurchaseContentView: NSView, Observer
     private let productDescription = """
         Flowlist is an elegant self-management tool optimized for total creative focus. Hierarchical lists make it as simple and adaptable as a box of legos. Organize your thoughts and your life in a state of flow!
         
-        I have many features planned, including:\nsynced iOS app, system wide shortcut for adding items, dark mode, filters for search terms / colored tags / due dates, exporting items as structured texts to txt, html, markdown and LaTeX ...
+        I have many features planned, including:\nsynced iOS app, system wide shortcut for adding items, filters for search terms / colored tags / due dates, exporting items as structured texts to txt, html, markdown and LaTeX ...
         """
     
     // MARK: - Columns
