@@ -59,6 +59,11 @@ class TaskView: LayerBackedView, Observer, Observable
             layer?.borderColor = Color.itemBorder.cgColor
         }
         
+        if task?.isDone ?? false
+        {
+            colorOverlay.backgroundColor = .itemBackgroundDone
+        }
+        
         textView.selectedTextAttributes = TextView.selectionSyle
     }
     
@@ -158,7 +163,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         if task.isDone
         {
-            colorOverlay.backgroundColor = Color.gray(brightness: 0.6)
+            colorOverlay.backgroundColor = Color.itemBackgroundDone
             colorOverlay.isHidden = false
             
             layer?.borderColor = Color.itemBorder.cgColor

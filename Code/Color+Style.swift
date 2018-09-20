@@ -30,6 +30,11 @@ extension Color
         return isInDarkMode ? .white : .black
     }
     
+    static var itemBackgroundDone: Color
+    {
+        return .gray(brightness: isInDarkMode ? 0.9 : 0.6)
+    }
+    
     static var itemBorder: Color
     {
         if isInDarkMode
