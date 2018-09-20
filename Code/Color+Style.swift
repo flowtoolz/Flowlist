@@ -30,7 +30,19 @@ extension Color
         return isInDarkMode ? .white : .black
     }
     
-    static var border: Color
+    static var itemBorder: Color
+    {
+        if isInDarkMode
+        {
+            return Color.white.with(alpha: 0.45)
+        }
+        else
+        {
+            return Color.black.with(alpha: 0.15)
+        }
+    }
+    
+    static var listBorder: Color
     {
         if isInDarkMode
         {

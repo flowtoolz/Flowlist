@@ -13,7 +13,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         
         backgroundColor = .background
         
-        layer?.borderColor = Color.border.cgColor
+        layer?.borderColor = Color.listBorder.cgColor
         layer?.borderWidth = 1.0
         
         observe(darkMode) { [weak self] _ in self?.adjustToColorMode() }
@@ -57,7 +57,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         let taskNumber = numberOfUserCreatedTasks.latestUpdate
         itemLabel.textColor = labelColor(for: taskNumber).nsColor
         
-        let borderColor = Color.border.cgColor
+        let borderColor = Color.listBorder.cgColor
         layer?.borderColor = borderColor
         progressBar.layer?.borderColor = borderColor
         
@@ -170,7 +170,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         bar.progress = progress
         bar.backgroundColor = .background
         bar.progressColor = .progressBar
-        bar.layer?.borderColor = Color.border.cgColor
+        bar.layer?.borderColor = Color.listBorder.cgColor
         bar.layer?.borderWidth = 1.0
         
         return bar

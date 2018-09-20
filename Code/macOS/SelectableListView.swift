@@ -19,7 +19,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
             [weak self] _ in
             
             self?.backgroundColor = .background
-            self?.layer?.borderColor = Color.border.cgColor
+            self?.layer?.borderColor = Color.listBorder.cgColor
         }
         
         constrainHeader()

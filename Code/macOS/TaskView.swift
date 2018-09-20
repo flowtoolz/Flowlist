@@ -53,6 +53,11 @@ class TaskView: LayerBackedView, Observer, Observable
         textView.set(textColor: currentTextColor)
         textView.insertionPointColor = Color.text.nsColor
         groupIcon.image = isSelected ? TaskView.groupIconImageSelected : TaskView.groupIconImage
+        
+        if task?.tag.value == nil
+        {
+            layer?.borderColor = Color.itemBorder.cgColor
+        }
     }
     
     // MARK: - Adapt to Font Size Changes
@@ -154,7 +159,7 @@ class TaskView: LayerBackedView, Observer, Observable
             colorOverlay.backgroundColor = Color.gray(brightness: 0.6)
             colorOverlay.isHidden = false
             
-            layer?.borderColor = Color.border.cgColor
+            layer?.borderColor = Color.itemBorder.cgColor
             
             alphaValue = 0.5
         }
@@ -173,7 +178,7 @@ class TaskView: LayerBackedView, Observer, Observable
         {
             colorOverlay.isHidden = true
             
-            layer?.borderColor = Color.border.cgColor
+            layer?.borderColor = Color.itemBorder.cgColor
             
             alphaValue = 1
         }
