@@ -76,14 +76,14 @@ class TextView: NSTextView, NSTextViewDelegate
                 .paragraphStyle : TextView.paragraphStyle]
     }
     
-    private static let selectionSyle: [NSAttributedStringKey : Any] =
-    [
-        .backgroundColor : Color.gray(brightness: 0.9).nsColor
-    ]
+    static var selectionSyle: [NSAttributedStringKey : Any]
+    {
+        return [.backgroundColor : Color.textSelectedBackground.nsColor]
+    }
     
     private static let linkStyle: [NSAttributedStringKey : Any] =
     [
-        NSAttributedStringKey.underlineStyle : NSUnderlineStyle.styleSingle.rawValue
+        .underlineStyle : NSUnderlineStyle.styleSingle.rawValue
     ]
     
     private static var textFont: NSFont

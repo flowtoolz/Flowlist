@@ -58,6 +58,8 @@ class TaskView: LayerBackedView, Observer, Observable
         {
             layer?.borderColor = Color.itemBorder.cgColor
         }
+        
+        textView.selectedTextAttributes = TextView.selectionSyle
     }
     
     // MARK: - Adapt to Font Size Changes

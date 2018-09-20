@@ -64,6 +64,11 @@ extension Color
         return isInDarkMode ? .black : .white
     }
     
+    static var textSelectedBackground: Color
+    {
+        return .gray(brightness: isInDarkMode ? 0.4 : 0.85)
+    }
+    
     static var textFaded: Color
     {
         if isInDarkMode
