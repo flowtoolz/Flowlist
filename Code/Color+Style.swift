@@ -120,7 +120,7 @@ extension Color
         {
             if selected
             {
-                return .black
+                return .gray(brightness: done || !tagged ? 0.4 : 0.3)
             }
             else
             {
