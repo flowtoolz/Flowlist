@@ -47,6 +47,7 @@ class PurchaseContentView: NSView, Observer
         priceTag.discountPriceLabel.textColor = Color.textDiscount.nsColor
         loadingLabel.textColor = textColor
         bulletpointList.adjustToColorMode()
+        icon.image = Color.isInDarkMode ? iconImageDark : iconImageLight
     }
     
     // MARK: - Load Data From AppStore
@@ -225,11 +226,14 @@ class PurchaseContentView: NSView, Observer
     
     private lazy var icon: NSImageView =
     {
-        let image = NSImage(named: .applicationIcon)
+        let image = Color.isInDarkMode ? iconImageDark : iconImageLight
         let imageView = NSImageView(withAspectFillImage: image)
         
         return columns[1].addForAutoLayout(imageView)
     }()
+    
+    private let iconImageLight = #imageLiteral(resourceName: "icon_pdf_black_border")
+    private let iconImageDark = #imageLiteral(resourceName: "icon_pdf_white_border")
     
     // MARK: - Price Tag
     
