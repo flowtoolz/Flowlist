@@ -81,22 +81,22 @@ extension Color
         {
             if selected
             {
-                return .black
+                return Color.black.with(alpha: done ? 0.5 : 1)
             }
             else
             {
-                return Color.white.with(alpha: done ? 0.4 : 1)
+                return Color.white.with(alpha: done ? 0.5 : 1)
             }
         }
         else
         {
             if selected
             {
-                return .white
+                return Color.white.with(alpha: done ? 0.5 : 1)
             }
             else
             {
-                return Color.black.with(alpha: done ? 0.4 : 1)
+                return Color.black.with(alpha: done ? 0.5 : 1)
             }
         }
     }

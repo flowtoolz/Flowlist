@@ -81,7 +81,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         // text color
         
-        textView.set(color: currentTextColor)
+        textView.set(color: .itemText(isDone: isDone, isSelected: isSelected))
         
         // icon alphas
         
@@ -155,7 +155,10 @@ class TaskView: LayerBackedView, Observer, Observable
         
         editingBackground.backgroundColor = .editingBackground
         
-        textView.set(color: currentTextColor)
+        let isDone = task?.isDone ?? false
+        
+        textView.set(color: .itemText(isDone: isDone, isSelected: isSelected))
+        
         textView.insertionPointColor = Color.text.nsColor
         
         if task?.tag.value == nil
@@ -163,8 +166,8 @@ class TaskView: LayerBackedView, Observer, Observable
             layer?.borderColor = Color.itemBorder.cgColor
         }
         
-        backgroundColor = Color.itemBackground(isDone: true,
-                                               isSelected: isSelected)
+        backgroundColor = .itemBackground(isDone: isDone,
+                                          isSelected: isSelected)
         
         textView.selectedTextAttributes = TextView.selectionSyle
     }
@@ -253,7 +256,8 @@ class TaskView: LayerBackedView, Observer, Observable
         
         if !textView.isEditing
         {
-            textView.set(color: currentTextColor)
+            textView.set(color: .itemText(isDone: isDone,
+                                          isSelected: isSelected))
         }
         
         let lightContent = Color.itemContentIsLight(isSelected: isSelected)
@@ -342,7 +346,7 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         isEditing = editing
         
-        textView.set(color: currentTextColor)
+        textView.set(color: .text)
         
         editingBackground.alphaValue = editing ? 1 : 0
         
@@ -366,12 +370,6 @@ class TaskView: LayerBackedView, Observer, Observable
         checkBox.animator().alphaValue = editing ? 0 : 1
         
         NSAnimationContext.endGrouping()
-    }
-    
-    private var currentTextColor: Color
-    {
-        return .itemText(isDone: task?.isDone ?? false,
-                         isSelected: isSelected)
     }
     
     private var isEditing = false
