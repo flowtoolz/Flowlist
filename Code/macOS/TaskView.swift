@@ -53,18 +53,15 @@ class TaskView: LayerBackedView, Observer, Observable
         
         isSelected = selected
         
-        // background color
-        
-        let isDone = task.isDone
-        
-        backgroundColor = Color.itemBackground(isDone: isDone,
-                                               isSelected: isSelected)
-        
         // color overlay & border color
         
+        let isDone = task.isDone
         let isTagged = task.tag.value != nil
         
         colorOverlay.isHidden = !isTagged || isDone
+        
+        let regularBorderColor = Color.itemBorder(isDone: isDone,
+                                                 isSelected: isSelected)
         
         if let tag = task.tag.value
         {
@@ -72,14 +69,20 @@ class TaskView: LayerBackedView, Observer, Observable
             
             colorOverlay.backgroundColor = tagColor
             
-            let border: Color = isDone ? .itemBorder : tagColor.with(alpha: 0.5)
+            let border: Color = isDone ? regularBorderColor : tagColor.with(alpha: Color.tagBorderAlpha)
             
             layer?.borderColor = border.cgColor
         }
         else
         {
-            layer?.borderColor = Color.itemBorder.cgColor
+            layer?.borderColor = regularBorderColor.cgColor
         }
+        
+        // background color
+        
+        backgroundColor = .itemBackground(isDone: isDone,
+                                          isSelected: isSelected,
+                                          isTagged: isTagged)
         
         // text color
         
@@ -87,8 +90,8 @@ class TaskView: LayerBackedView, Observer, Observable
         
         // icon alphas
         
-        checkBox.alphaValue = isDone ? Float.doneItemIconAlpha.cgFloat : 1
-        groupIcon.alphaValue = isDone ? Float.doneItemIconAlpha.cgFloat : 1
+        checkBox.alphaValue = isDone ? Color.doneItemIconAlpha.cgFloat : 1
+        groupIcon.alphaValue = isDone ? Color.doneItemIconAlpha.cgFloat : 1
         
         // check box image
         
@@ -151,9 +154,11 @@ class TaskView: LayerBackedView, Observer, Observable
     private func colorModeDidChange()
     {
         let isDone = task?.isDone ?? false
+        let isTagged = task?.tag.value != nil
         
         backgroundColor = .itemBackground(isDone: isDone,
-                                          isSelected: isSelected)
+                                          isSelected: isSelected,
+                                          isTagged: isTagged)
         editingBackground.backgroundColor = .editingBackground
         
         let lightContent = Color.itemContentIsLight(isSelected: isSelected)
@@ -167,9 +172,10 @@ class TaskView: LayerBackedView, Observer, Observable
         textView.insertionPointColor = Color.text.nsColor
         textView.selectedTextAttributes = TextView.selectionSyle
         
-        if isDone || task?.tag.value == nil
+        if isDone || !isTagged
         {
-            layer?.borderColor = Color.itemBorder.cgColor
+            layer?.borderColor = Color.itemBorder(isDone: isDone,
+                                                  isSelected: isSelected).cgColor
         }
     }
     
@@ -178,13 +184,15 @@ class TaskView: LayerBackedView, Observer, Observable
         guard let task = task else { return }
         
         let isDone = task.isDone
+        let isTagged = task.tag.value != nil
         
-        backgroundColor = Color.itemBackground(isDone: isDone,
-                                               isSelected: isSelected)
+        backgroundColor = .itemBackground(isDone: isDone,
+                                          isSelected: isSelected,
+                                          isTagged: isTagged)
         
         checkBox.set(state: task.state.value)
-        checkBox.alphaValue = isDone ? Float.doneItemIconAlpha.cgFloat : 1
-        groupIcon.alphaValue = isDone ? Float.doneItemIconAlpha.cgFloat : 1
+        checkBox.alphaValue = isDone ? Color.doneItemIconAlpha.cgFloat : 1
+        groupIcon.alphaValue = isDone ? Color.doneItemIconAlpha.cgFloat : 1
         
         textView.set(color: .itemText(isDone: isDone, isSelected: isSelected))
         
@@ -194,7 +202,10 @@ class TaskView: LayerBackedView, Observer, Observable
         {
             let tagColor = Color.tags[tag.rawValue]
             
-            let border: Color = isDone ? .itemBorder : tagColor.with(alpha: 0.5)
+            let regularBorderColor = Color.itemBorder(isDone: isDone,
+                                                      isSelected: isSelected)
+            
+            let border = isDone ? regularBorderColor : tagColor.with(alpha: Color.tagBorderAlpha)
             
             layer?.borderColor = border.cgColor
         }
@@ -217,12 +228,13 @@ class TaskView: LayerBackedView, Observer, Observable
             
             if !isDone
             {
-                layer?.borderColor = tagColor.with(alpha: 0.5).cgColor
+                layer?.borderColor = tagColor.with(alpha: Color.tagBorderAlpha).cgColor
             }
         }
         else
         {
-            layer?.borderColor = Color.itemBorder.cgColor
+            layer?.borderColor = Color.itemBorder(isDone: isDone,
+                                                  isSelected: isSelected).cgColor
         }
     }
     
@@ -238,9 +250,11 @@ class TaskView: LayerBackedView, Observer, Observable
         isSelected = selected
         
         let isDone = task?.isDone ?? false
+        let isTagged = task?.tag.value != nil
         
-        backgroundColor = Color.itemBackground(isDone: isDone,
-                                               isSelected: isSelected)
+        backgroundColor = .itemBackground(isDone: isDone,
+                                          isSelected: isSelected,
+                                          isTagged: isTagged)
         
         if !textView.isEditing
         {
@@ -252,6 +266,12 @@ class TaskView: LayerBackedView, Observer, Observable
         updateGroupIconColor(light: lightContent)
         
         checkBox.set(white: lightContent)
+        
+        if !isTagged || isDone
+        {
+            layer?.borderColor = Color.itemBorder(isDone: isDone,
+                                                  isSelected: isSelected).cgColor
+        }
     }
     
     private(set) var isSelected = false
@@ -281,7 +301,7 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         let view = addForAutoLayout(LayerBackedView())
         
-        view.alphaValue = Float.colorOverlayAlpha.cgFloat
+        view.alphaValue = Color.colorOverlayAlpha.cgFloat
         
         return view
     }()
@@ -361,7 +381,7 @@ class TaskView: LayerBackedView, Observer, Observable
             checkBox.isEnabled = true
         }
         
-        let iconAlpha: CGFloat = isDone ? Float.doneItemIconAlpha.cgFloat : 1
+        let iconAlpha: CGFloat = isDone ? Color.doneItemIconAlpha.cgFloat : 1
         
         NSAnimationContext.beginGrouping()
         NSAnimationContext.current.allowsImplicitAnimation = false

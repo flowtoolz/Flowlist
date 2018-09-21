@@ -3,6 +3,11 @@ import SwiftyToolz
 
 extension Color
 {
+    // MARK: - Color Tags
+    
+    static let colorOverlayAlpha: Float = 0.25
+    static let tagBorderAlpha: Float = 0.35
+    
     static let tags: [Color] =
     [
         Color(253, 74, 75),
@@ -13,61 +18,7 @@ extension Color
         Color(197, 112, 219)
     ]
     
-    static var editingBackground: Color
-    {
-        return isInDarkMode ? .black : .white
-    }
-    
-    static func itemBackground(isDone done: Bool,
-                               isSelected selected: Bool) -> Color
-    {
-        if isInDarkMode
-        {
-            if selected
-            {
-                return .white
-            }
-            else
-            {
-                return done ? .black : .gray(brightness: 0.2)
-            }
-        }
-        else
-        {
-            if selected
-            {
-                return .black
-            }
-            else
-            {
-                return done ? .gray(brightness: brightness2) : .white
-            }
-        }
-    }
-    
-    static var itemBorder: Color
-    {
-        if isInDarkMode
-        {
-            return Color.white.with(alpha: 0.1)
-        }
-        else
-        {
-            return Color.black.with(alpha: 0.15)
-        }
-    }
-    
-    static var listBorder: Color
-    {
-        if isInDarkMode
-        {
-            return Color.white.with(alpha: 0.1)
-        }
-        else
-        {
-            return Color.black.with(alpha: 0.15)
-        }
-    }
+    // MARK: - Item Text
     
     static func itemText(isDone done: Bool,
                          isSelected selected: Bool,
@@ -104,11 +55,6 @@ extension Color
         return isInDarkMode ? .white : .black
     }
     
-    static func itemContentIsLight(isSelected selected: Bool) -> Bool
-    {
-        return isInDarkMode ? !selected : selected
-    }
-    
     static var textSelectedBackground: Color
     {
         return .gray(brightness: isInDarkMode ? 0.4 : 0.85)
@@ -126,20 +72,93 @@ extension Color
         }
     }
     
+    // MARK: - Item Content
+    
+    static let doneItemIconAlpha: Float = 0.5
+    
+    static func itemContentIsLight(isSelected selected: Bool) -> Bool
+    {
+        return isInDarkMode ? !selected : selected
+    }
+    
+    static var editingBackground: Color
+    {
+        return isInDarkMode ? .black : .white
+    }
+    
+    // MARK: - Items
+    
+    static func itemBorder(isDone done: Bool,
+                           isSelected selected: Bool) -> Color
+    {
+        if isInDarkMode
+        {
+            return Color.white.with(alpha: selected ? 1 : done ? 0.11 : 0.06)
+        }
+        else
+        {
+            return Color.black.with(alpha: 0.15)
+        }
+    }
+    
+    static func itemBackground(isDone done: Bool,
+                               isSelected selected: Bool,
+                               isTagged tagged: Bool) -> Color
+    {
+        if isInDarkMode
+        {
+            if selected
+            {
+                return tagged && !done ? .white : .gray(brightness: 0.8)
+            }
+            else
+            {
+                return done || tagged ? .black : .gray(brightness: 0.12)
+            }
+        }
+        else
+        {
+            if selected
+            {
+                return .black
+            }
+            else
+            {
+                return done ? .gray(brightness: brightness2) : .white
+            }
+        }
+    }
+    
+    // MARK: - General Views
+    
     static var progressBar: Color
     {
-        return isInDarkMode ? .gray(brightness: 0.25) : .white
+        return isInDarkMode ? .gray(brightness: 0.12) : .white
+    }
+    
+    static var listBorder: Color
+    {
+        if isInDarkMode
+        {
+            return Color.white.with(alpha: 0.03)
+        }
+        else
+        {
+            return Color.black.with(alpha: 0.15)
+        }
     }
     
     static var background: Color
     {
-        return .gray(brightness: isInDarkMode ? 0.1 : brightness1)
+        return .gray(brightness: isInDarkMode ? 0.06 : brightness1)
     }
     
     static var windowBackground: Color
     {
         return .gray(brightness: isInDarkMode ? 0 : brightness2)
     }
+    
+    // MARK: - Basics
     
     static var isInDarkMode: Bool
     {
