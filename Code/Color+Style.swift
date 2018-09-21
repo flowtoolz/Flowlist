@@ -30,7 +30,7 @@ extension Color
         {
             if selected
             {
-                return Color.black.with(alpha: done ? 0.5 : 1)
+                return Color.black.with(alpha: done ? 0.6 : 1)
             }
             else
             {
