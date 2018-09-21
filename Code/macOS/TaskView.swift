@@ -357,7 +357,9 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         isEditing = editing
         
-        textView.set(color: .text)
+        textView.set(color: .itemText(isDone: task?.isDone ?? false,
+                                      isSelected: isSelected,
+                                      isEditing: editing))
         
         editingBackground.alphaValue = editing ? 1 : 0
         
