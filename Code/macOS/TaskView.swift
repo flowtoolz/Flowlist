@@ -185,12 +185,24 @@ class TaskView: LayerBackedView, Observer, Observable
         textView.fontSizeDidChange()
     }
     
-    // MARK: - Task State & Colors
+    // MARK: - Task State
     
     private func taskStateDidChange()
     {
-        updateColors()
-        checkBox.set(state: task?.state.value)
+        guard let task = task else { return }
+        
+        let isDone = task.isDone
+        
+        backgroundColor = Color.itemBackground(isDone: isDone,
+                                               isSelected: isSelected)
+        
+        checkBox.set(state: task.state.value)
+        checkBox.alphaValue = isDone ? 0.5 : 1
+        groupIcon.alphaValue = isDone ? 0.5 : 1
+        
+        textView.set(color: .itemText(isDone: isDone, isSelected: isSelected))
+        
+        colorOverlay.isHidden = task.tag.value == nil || isDone
     }
     
     private func updateColors()
