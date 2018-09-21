@@ -6,7 +6,7 @@ extension NSView
 {
     func setItemBorder(with radius: Float = .cornerRadius)
     {
-        layer?.borderColor = Color.listBorder.cgColor
+        layer?.borderColor = Color.border.cgColor
         layer?.borderWidth = 1.0
         layer?.cornerRadius = radius.cgFloat
     }

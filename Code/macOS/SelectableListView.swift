@@ -11,16 +11,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
     {
         super.init(frame: frameRect)
     
-        backgroundColor = .background
-        setItemBorder()
-        
-        observe(darkMode)
-        {
-            [weak self] _ in
-            
-            self?.backgroundColor = .background
-            self?.layer?.borderColor = Color.listBorder.cgColor
-        }
+        backgroundColor = .clear
         
         constrainHeader()
         constrainScrollTable()

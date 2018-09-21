@@ -11,9 +11,11 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         super.init(frame: frameRect)
         
-        backgroundColor = .background
+        backgroundColor = .itemBackground(isDone: false,
+                                          isSelected: false,
+                                          isTagged: false)
         
-        layer?.borderColor = Color.listBorder.cgColor
+        layer?.borderColor = Color.border.cgColor
         layer?.borderWidth = 1.0
         
         observe(darkMode) { [weak self] _ in self?.adjustToColorMode() }
@@ -50,14 +52,17 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func adjustToColorMode()
     {
-        backgroundColor = .background
-        progressBar.backgroundColor = .background
+        let itemBackroundColor = Color.itemBackground(isDone: false,
+                                                      isSelected: false,
+                                                      isTagged: false)
+        backgroundColor = itemBackroundColor
+        progressBar.backgroundColor = itemBackroundColor
         progressBar.progressColor = .progressBar
         
         let taskNumber = numberOfUserCreatedTasks.latestUpdate
         itemLabel.textColor = labelColor(for: taskNumber).nsColor
         
-        let borderColor = Color.listBorder.cgColor
+        let borderColor = Color.border.cgColor
         layer?.borderColor = borderColor
         progressBar.layer?.borderColor = borderColor
         
@@ -168,9 +173,11 @@ class PurchaseView: LayerBackedView, Observable, Observer
         
         let progress = CGFloat(numberOfUserCreatedTasks.latestUpdate) / CGFloat(maxNumberOfTasksInTrial)
         bar.progress = progress
-        bar.backgroundColor = .background
+        bar.backgroundColor = .itemBackground(isDone: false,
+                                              isSelected: false,
+                                              isTagged: false)
         bar.progressColor = .progressBar
-        bar.layer?.borderColor = Color.listBorder.cgColor
+        bar.layer?.borderColor = Color.border.cgColor
         bar.layer?.borderWidth = 1.0
         
         return bar

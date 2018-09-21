@@ -5,8 +5,8 @@ extension Color
 {
     // MARK: - Color Tags
     
-    static let colorOverlayAlpha: Float = 0.25
-    static let tagBorderAlpha: Float = 0.35
+    static let colorOverlayAlpha: Float = 0.3
+    static let tagBorderAlpha: Float = 0.5
     
     static let tags: [Color] =
     [
@@ -93,7 +93,7 @@ extension Color
     {
         if isInDarkMode
         {
-            return Color.white.with(alpha: selected ? 1 : done ? 0.11 : 0.06)
+            return Color.white.with(alpha: selected ? 1 : done ? 0.16 : 0.1)
         }
         else
         {
@@ -113,7 +113,7 @@ extension Color
             }
             else
             {
-                return done || tagged ? .black : .gray(brightness: 0.12)
+                return done || tagged ? .black : .gray(brightness: 0.1)
             }
         }
         else
@@ -133,10 +133,10 @@ extension Color
     
     static var progressBar: Color
     {
-        return isInDarkMode ? .gray(brightness: 0.12) : .white
+        return isInDarkMode ? .gray(brightness: 0.25) : .white
     }
     
-    static var listBorder: Color
+    static var border: Color
     {
         if isInDarkMode
         {
@@ -148,14 +148,9 @@ extension Color
         }
     }
     
-    static var background: Color
-    {
-        return .gray(brightness: isInDarkMode ? 0.06 : brightness1)
-    }
-    
     static var windowBackground: Color
     {
-        return .gray(brightness: isInDarkMode ? 0 : brightness2)
+        return .gray(brightness: isInDarkMode ? 0 : brightness1)
     }
     
     // MARK: - Basics
@@ -168,7 +163,7 @@ extension Color
     
     private static let brightness1 = brightnessFactor
     private static let brightness2 = pow(brightnessFactor, 2)
-    private static let brightnessFactor: Float = 0.92
+    private static let brightnessFactor: Float = 0.91
 }
 
 let darkMode = darkModeVar.new().filter({ $0 != nil }).unwrap(false)
