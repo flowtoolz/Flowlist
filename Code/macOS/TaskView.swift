@@ -23,7 +23,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         observe(darkMode)
         {
-            [weak self] _ in self?.adjustToColorMode()
+            [weak self] _ in self?.colorModeDidChange()
         }
         
         layer?.borderWidth = 1.0
@@ -144,32 +144,31 @@ class TaskView: LayerBackedView, Observer, Observable
         stopObserving(task)
     }
     
-    // MARK: - Dark Mode
+    // MARK: - Color Modes
     
-    private func adjustToColorMode()
+    private func colorModeDidChange()
     {
-        let lightContent = Color.itemContentIsLight(isSelected: isSelected)
+        let isDone = task?.isDone ?? false
         
+        backgroundColor = .itemBackground(isDone: isDone,
+                                          isSelected: isSelected)
+        editingBackground.backgroundColor = .editingBackground
+        
+        let lightContent = Color.itemContentIsLight(isSelected: isSelected)
         checkBox.set(white: lightContent)
         updateGroupIconColor(light: lightContent)
         
-        editingBackground.backgroundColor = .editingBackground
-        
-        let isDone = task?.isDone ?? false
-        
-        textView.set(color: .itemText(isDone: isDone, isSelected: isSelected))
+        textView.set(color: .itemText(isDone: isDone,
+                                      isSelected: isSelected,
+                                      isEditing: isEditing))
         
         textView.insertionPointColor = Color.text.nsColor
+        textView.selectedTextAttributes = TextView.selectionSyle
         
         if task?.tag.value == nil
         {
             layer?.borderColor = Color.itemBorder.cgColor
         }
-        
-        backgroundColor = .itemBackground(isDone: isDone,
-                                          isSelected: isSelected)
-        
-        textView.selectedTextAttributes = TextView.selectionSyle
     }
     
     // MARK: - Adapt to Font Size Changes

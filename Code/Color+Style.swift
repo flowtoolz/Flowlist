@@ -69,14 +69,12 @@ extension Color
         }
     }
     
-    static var text: Color
-    {
-        return isInDarkMode ? .white : .black
-    }
-    
     static func itemText(isDone done: Bool,
-                         isSelected selected: Bool) -> Color
+                         isSelected selected: Bool,
+                         isEditing editing: Bool = false) -> Color
     {
+        if editing { return .text }
+        
         if isInDarkMode
         {
             if selected
@@ -99,6 +97,11 @@ extension Color
                 return Color.black.with(alpha: done ? 0.5 : 1)
             }
         }
+    }
+    
+    static var text: Color
+    {
+        return isInDarkMode ? .white : .black
     }
     
     static func itemContentIsLight(isSelected selected: Bool) -> Bool
