@@ -167,7 +167,7 @@ class TaskView: LayerBackedView, Observer, Observable
         textView.insertionPointColor = Color.text.nsColor
         textView.selectedTextAttributes = TextView.selectionSyle
         
-        if task?.tag.value == nil
+        if isDone || task?.tag.value == nil
         {
             layer?.borderColor = Color.itemBorder.cgColor
         }
