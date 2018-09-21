@@ -168,4 +168,4 @@ extension Color
 
 let darkMode = darkModeVar.new().filter({ $0 != nil }).unwrap(false)
 
-fileprivate let darkModeVar = Var(true)
+fileprivate let darkModeVar = Var(false)
