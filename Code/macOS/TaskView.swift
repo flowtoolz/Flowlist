@@ -85,8 +85,8 @@ class TaskView: LayerBackedView, Observer, Observable
         
         // icon alphas
         
-        checkBox.alphaValue = isDone ? 0.5 : 1
-        groupIcon.alphaValue = isDone ? 0.5 : 1
+        checkBox.alphaValue = isDone ? Float.doneItemIconAlpha.cgFloat : 1
+        groupIcon.alphaValue = isDone ? Float.doneItemIconAlpha.cgFloat : 1
         
         // check box image
         
@@ -197,8 +197,8 @@ class TaskView: LayerBackedView, Observer, Observable
                                                isSelected: isSelected)
         
         checkBox.set(state: task.state.value)
-        checkBox.alphaValue = isDone ? 0.5 : 1
-        groupIcon.alphaValue = isDone ? 0.5 : 1
+        checkBox.alphaValue = isDone ? Float.doneItemIconAlpha.cgFloat : 1
+        groupIcon.alphaValue = isDone ? Float.doneItemIconAlpha.cgFloat : 1
         
         textView.set(color: .itemText(isDone: isDone, isSelected: isSelected))
         
@@ -219,8 +219,8 @@ class TaskView: LayerBackedView, Observer, Observable
             layer?.borderColor = Color.itemBorder.cgColor
             
             textView.set(color: .gray(brightness: 0.4))
-            checkBox.alphaValue = 0.5
-            groupIcon.alphaValue = 0.5
+            checkBox.alphaValue = Float.doneItemIconAlpha.cgFloat
+            groupIcon.alphaValue = Float.doneItemIconAlpha.cgFloat
         }
         else if let tag = task.tag.value
         {
@@ -357,7 +357,9 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         isEditing = editing
         
-        textView.set(color: .itemText(isDone: task?.isDone ?? false,
+        let isDone = task?.isDone ?? false
+        
+        textView.set(color: .itemText(isDone: isDone,
                                       isSelected: isSelected,
                                       isEditing: editing))
         
@@ -367,6 +369,8 @@ class TaskView: LayerBackedView, Observer, Observable
         {
             checkBox.isEnabled = true
         }
+        
+        let iconAlpha: CGFloat = isDone ? Float.doneItemIconAlpha.cgFloat : 1
         
         NSAnimationContext.beginGrouping()
         NSAnimationContext.current.allowsImplicitAnimation = false
@@ -379,8 +383,8 @@ class TaskView: LayerBackedView, Observer, Observable
             }
         }
         
-        groupIcon.animator().alphaValue = editing ? 0 : 1
-        checkBox.animator().alphaValue = editing ? 0 : 1
+        groupIcon.animator().alphaValue = editing ? 0 : iconAlpha
+        checkBox.animator().alphaValue = editing ? 0 : iconAlpha
         
         NSAnimationContext.endGrouping()
     }

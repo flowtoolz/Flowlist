@@ -2,6 +2,7 @@ import SwiftyToolz
 
 extension Float
 {
+    static let doneItemIconAlpha: Float = 0.5
     static let colorOverlayAlpha: Float = 0.5
     static let cornerRadius: Float = 6
     static let progressBarHeight: Float = 10
