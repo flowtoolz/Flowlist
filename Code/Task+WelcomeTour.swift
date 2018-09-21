@@ -69,12 +69,12 @@ extension Task
         
         // window
         
-        let windowCommands = Task("Zoom, Monotasking, Fullscreen")
+        let windowCommands = Task("Font Size (Zoom), Dark Mode, Monotasking and Fullscreen")
         
         windowCommands.tag <- .purple
         
-        windowCommands.add(Task("Make the font bigger or smaller via ⌘+ or ⌘-"))
-        
+        windowCommands.add(Task("Make the font (and everything) bigger or smaller via ⌘+ or ⌘-"))
+        windowCommands.add(Task("Switch between daylight mode and dark mode via ⌘D"))
         windowCommands.add(Task("Switch between mono- and multitasking via ⌘M"))
         windowCommands.add(Task("Toggle fullscreen via ⌘F"))
         windowCommands.add(Task("Deactivate monotasking / fullscreen mode before activating the other mode"))
