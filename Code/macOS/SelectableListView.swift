@@ -94,15 +94,18 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func constrainScrollTable()
     {
+        scrollTable.constrainBottomToParent()
+        
         let gap = TaskView.spacing + 1
 
         scrollTableInsetConstraints.removeAll()
        
-        let STIC = scrollTable.constrainToParentExcludingTop(insetLeft: gap,
-                                                             insetBottom: gap,
-                                                             insetRight: gap)
-
-        scrollTableInsetConstraints = STIC
+        if let leftConstraint = scrollTable.constrainLeftToParent(inset: gap),
+            let rightConstraint = scrollTable.constrainRightToParent(inset: gap)
+        {
+            scrollTableInsetConstraints.append(leftConstraint)
+            scrollTableInsetConstraints.append(rightConstraint)
+        }
         
         scrollTableTopConstraint = scrollTable.constrain(below: header,
                                                          gap: scrollTableTopOffset)
