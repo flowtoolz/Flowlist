@@ -57,8 +57,21 @@ class ApplicationMenu: NSMenu
     
     // MARK: - Dark Mode
     
-    private lazy var darkModeItem = MenuItem("Toggle Dark Mode",
+    private lazy var darkModeItem = MenuItem(self.darkModeOptionTitle,
                                              key: "d",
                                              validator: self)
-    { Color.isInDarkMode = !Color.isInDarkMode }
+    {
+        [weak self] in
+        
+        guard let me = self else { return }
+        
+        Color.isInDarkMode = !Color.isInDarkMode
+        
+        me.darkModeItem.title = me.darkModeOptionTitle
+    }
+    
+    private var darkModeOptionTitle: String
+    {
+        return "\(Color.isInDarkMode ? "Daylight" : "Dark") Mode"
+    }
 }
