@@ -146,7 +146,7 @@ class TaskView: LayerBackedView, Observer, Observable
         stopObserving(task)
     }
     
-    // MARK: - Color Modes
+    // MARK: - Adapt Colors to State, Tag, Dark Mode & Selection
     
     private func colorModeDidChange()
     {
@@ -172,22 +172,6 @@ class TaskView: LayerBackedView, Observer, Observable
             layer?.borderColor = Color.itemBorder.cgColor
         }
     }
-    
-    // MARK: - Adapt to Font Size Changes
-    
-    private func fontSizeDidChange()
-    {
-        let itemHeight = TaskView.heightWithSingleLine
-        
-        for constraint in layoutGuideSizeConstraints
-        {
-            constraint.constant = itemHeight
-        }
-        
-        textView.fontSizeDidChange()
-    }
-    
-    // MARK: - Task State
     
     private func taskStateDidChange()
     {
@@ -242,8 +226,6 @@ class TaskView: LayerBackedView, Observer, Observable
         }
     }
     
-    // MARK: - Selection
-    
     override func mouseDown(with event: NSEvent)
     {
         send(.wasClicked(withCmd: event.cmd))
@@ -273,6 +255,20 @@ class TaskView: LayerBackedView, Observer, Observable
     }
     
     private(set) var isSelected = false
+    
+    // MARK: - Adapt to Font Size Changes
+    
+    private func fontSizeDidChange()
+    {
+        let itemHeight = TaskView.heightWithSingleLine
+        
+        for constraint in layoutGuideSizeConstraints
+        {
+            constraint.constant = itemHeight
+        }
+        
+        textView.fontSizeDidChange()
+    }
     
     // MARK: - Color Overlay
     
