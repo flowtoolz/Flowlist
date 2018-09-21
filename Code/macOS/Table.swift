@@ -294,7 +294,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             
             if taskView.isSelected != isSelected
             {
-                taskView.isSelected = isSelected
+                taskView.set(selected: isSelected)
                 
                 if indexOf1stNewSelection == nil && isSelected
                 {

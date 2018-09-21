@@ -65,9 +65,9 @@ class TextView: NSTextView, NSTextViewDelegate
     
     // MARK: - Style
     
-    func set(textColor: Color)
+    func set(color: Color)
     {
-        self.textColor = textColor.nsColor
+        self.textColor = color.nsColor
     }
     
     private static var typingSyle: [NSAttributedStringKey : Any]

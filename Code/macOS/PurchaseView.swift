@@ -115,7 +115,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func labelColor(for itemNumber: Int) -> Color
     {
-        return itemNumber >= 90 ? .text : .textFaded
+        return .itemText(isDone: itemNumber < 90, isSelected: false)
     }
     
     private func labelText(for itemNumber: Int) -> String

@@ -18,20 +18,20 @@ class CheckBox: NSButton
     
     // MARK: - Configuration
     
-    func configure(with state: TaskState?, whiteColorMode white: Bool)
+    func configure(with state: TaskState?, white: Bool)
     {
         taskState = state
         isWhite = white
         updateImage()
     }
     
-    func setColorMode(white: Bool)
+    func set(white: Bool)
     {
         isWhite = white
         updateImage()
     }
     
-    func update(with state: TaskState?)
+    func set(state: TaskState?)
     {
         taskState = state
         updateImage()

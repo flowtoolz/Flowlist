@@ -35,9 +35,11 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
             return nil
         }
         
-        let taskView = retrieveTaskView(from: tableView).configure(with: task)
+        let taskView = retrieveTaskView(from: tableView)
         
-        taskView?.isSelected = list?.selection.isSelected(task) ?? false
+        let isSelected = list?.selection.isSelected(task) ?? false
+        
+        taskView.configure(with: task, selected: isSelected)
         
         return taskView
     }

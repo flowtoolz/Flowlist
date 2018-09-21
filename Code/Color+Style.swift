@@ -3,8 +3,6 @@ import SwiftyToolz
 
 extension Color
 {
-    static let done = Color.gray(brightness: brightness2)
-    
     static let tags: [Color] =
     [
         Color(253, 74, 75),
@@ -20,19 +18,31 @@ extension Color
         return isInDarkMode ? .black : .white
     }
     
-    static var itemBackground: Color
+    static func itemBackground(isDone done: Bool,
+                               isSelected selected: Bool) -> Color
     {
-        return isInDarkMode ? .gray(brightness: 0.2) : .white
-    }
-    
-    static var itemBackgroundSelected: Color
-    {
-        return isInDarkMode ? .white : .black
-    }
-    
-    static var itemBackgroundDone: Color
-    {
-        return .gray(brightness: isInDarkMode ? 0 : brightness2)
+        if isInDarkMode
+        {
+            if selected
+            {
+                return .white
+            }
+            else
+            {
+                return done ? .black : .gray(brightness: 0.2)
+            }
+        }
+        else
+        {
+            if selected
+            {
+                return .black
+            }
+            else
+            {
+                return done ? .gray(brightness: brightness2) : .white
+            }
+        }
     }
     
     static var itemBorder: Color
@@ -64,26 +74,41 @@ extension Color
         return isInDarkMode ? .white : .black
     }
     
-    static var textSelected: Color
+    static func itemText(isDone done: Bool,
+                         isSelected selected: Bool) -> Color
     {
-        return isInDarkMode ? .black : .white
+        if isInDarkMode
+        {
+            if selected
+            {
+                return .black
+            }
+            else
+            {
+                return Color.white.with(alpha: done ? 0.4 : 1)
+            }
+        }
+        else
+        {
+            if selected
+            {
+                return .white
+            }
+            else
+            {
+                return Color.black.with(alpha: done ? 0.4 : 1)
+            }
+        }
+    }
+    
+    static func itemContentIsLight(isSelected selected: Bool) -> Bool
+    {
+        return isInDarkMode ? !selected : selected
     }
     
     static var textSelectedBackground: Color
     {
         return .gray(brightness: isInDarkMode ? 0.4 : 0.85)
-    }
-    
-    static var textFaded: Color
-    {
-        if isInDarkMode
-        {
-            return Color.white.with(alpha: 0.4)
-        }
-        else
-        {
-            return Color.black.with(alpha: 0.4)
-        }
     }
     
     static var textDiscount: Color

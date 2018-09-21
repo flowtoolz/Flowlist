@@ -65,7 +65,10 @@ class Header: LayerBackedView, Observer
     func update(with root: Task)
     {
         let isUntitled = String(withNonEmpty: root.title.value) == nil
-        let textColor: Color = root.isDone || isUntitled ? .textFaded : .text
+        
+        let textColor = Color.itemText(isDone: root.isDone || isUntitled,
+                                       isSelected: false)
+        
         titleLabel.textColor = textColor.nsColor
     }
     
@@ -99,7 +102,9 @@ class Header: LayerBackedView, Observer
     {
         titleLabel.stringValue = (title ?? "untitled").replacingOccurrences(of: "\n", with: " ")
         
-        let textColor: Color = title == nil ? .textFaded : .black
+        let textColor = Color.itemText(isDone: title == nil,
+                                       isSelected: false)
+        
         titleLabel.textColor = textColor.nsColor
     }
     

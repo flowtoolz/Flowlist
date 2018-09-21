@@ -43,73 +43,67 @@ class TaskView: LayerBackedView, Observer, Observable
         removeObservers()
     }
     
-    // MARK: - Dark Mode
-    
-    private func adjustToColorMode()
-    {
-        editingBackground.backgroundColor = .editingBackground
-        checkBox.setColorMode(white: checkBoxShouldBeWhite(selected: isSelected))
-        textView.set(textColor: currentTextColor)
-        textView.insertionPointColor = Color.text.nsColor
-        groupIcon.image = isSelected ? TaskView.groupIconImageSelected : TaskView.groupIconImage
-        
-        if task?.tag.value == nil
-        {
-            layer?.borderColor = Color.itemBorder.cgColor
-        }
-        
-        if task?.isDone ?? false
-        {
-            backgroundColor = .itemBackgroundDone
-        }
-        else
-        {
-            backgroundColor = isSelected ? .itemBackgroundSelected : .itemBackground
-        }
-        
-        textView.selectedTextAttributes = TextView.selectionSyle
-    }
-    
-    // MARK: - Adapt to Font Size Changes
-    
-    private func fontSizeDidChange()
-    {
-        let itemHeight = TaskView.heightWithSingleLine
-        
-        for constraint in layoutGuideSizeConstraints
-        {
-            constraint.constant = itemHeight
-        }
-        
-        textView.fontSizeDidChange()
-    }
-    
     // MARK: - Configuration
     
-    func configure(with task: Task?) -> TaskView?
-    {
-        guard let task = task else
-        {
-            log(error: "Cannot configure \(typeName(self)) with nil task.")
-            return nil
-        }
-        
+    func configure(with task: Task, selected: Bool)
+    {   
         stopObserving(task: self.task)
         observe(task: task)
         self.task = task
         
-        isSelected = false
+        isSelected = selected
         
-        let state = task.state.value
+        // background color
         
-        updateColors(with: state)
-        checkBox.configure(with: state,
-                           whiteColorMode: checkBoxShouldBeWhite(selected: isSelected))
+        let isDone = task.isDone
+        
+        backgroundColor = Color.itemBackground(isDone: isDone,
+                                               isSelected: isSelected)
+        
+        // color overlay & border color
+        
+        let isTagged = task.tag.value != nil
+        
+        colorOverlay.isHidden = !isTagged || isDone
+        
+        if let tag = task.tag.value
+        {
+            let tagColor = Color.tags[tag.rawValue]
+            
+            colorOverlay.backgroundColor = tagColor
+            
+            layer?.borderColor = tagColor.with(alpha: 0.5).cgColor
+        }
+        else
+        {
+            layer?.borderColor = Color.itemBorder.cgColor
+        }
+        
+        // text color
+        
+        textView.set(color: currentTextColor)
+        
+        // icon alphas
+        
+        checkBox.alphaValue = isDone ? 0.5 : 1
+        groupIcon.alphaValue = isDone ? 0.5 : 1
+        
+        // check box image
+        
+        let lightContent = Color.itemContentIsLight(isSelected: selected)
+        checkBox.configure(with: task.state.value, white: lightContent)
+        
+        // group icon image
+        
+        updateGroupIconColor(light: lightContent)
+        
+        // other
+        
         updateTextView()
         updateGroupIcon()
-        
-        return self
     }
+    
+    // MARK: - Observing the Task
     
     private func observe(task: Task)
     {
@@ -129,7 +123,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         observe(task.tag)
         {
-            [weak self] _ in self?.updateColors(with: self?.task?.state.value)
+            [weak self] _ in self?.updateColors()
         }
     }
     
@@ -150,35 +144,72 @@ class TaskView: LayerBackedView, Observer, Observable
         stopObserving(task)
     }
     
+    // MARK: - Dark Mode
+    
+    private func adjustToColorMode()
+    {
+        let lightContent = Color.itemContentIsLight(isSelected: isSelected)
+        
+        checkBox.set(white: lightContent)
+        updateGroupIconColor(light: lightContent)
+        
+        editingBackground.backgroundColor = .editingBackground
+        
+        textView.set(color: currentTextColor)
+        textView.insertionPointColor = Color.text.nsColor
+        
+        if task?.tag.value == nil
+        {
+            layer?.borderColor = Color.itemBorder.cgColor
+        }
+        
+        backgroundColor = Color.itemBackground(isDone: true,
+                                               isSelected: isSelected)
+        
+        textView.selectedTextAttributes = TextView.selectionSyle
+    }
+    
+    // MARK: - Adapt to Font Size Changes
+    
+    private func fontSizeDidChange()
+    {
+        let itemHeight = TaskView.heightWithSingleLine
+        
+        for constraint in layoutGuideSizeConstraints
+        {
+            constraint.constant = itemHeight
+        }
+        
+        textView.fontSizeDidChange()
+    }
+    
     // MARK: - Task State & Colors
     
     private func taskStateDidChange()
     {
-        let state = task?.state.value
-        
-        updateColors(with: state)
-        checkBox.update(with: state)
+        updateColors()
+        checkBox.set(state: task?.state.value)
     }
     
-    private func updateColors(with state: TaskState?)
+    private func updateColors()
     {
         guard let task = task else { return }
         
+        backgroundColor = Color.itemBackground(isDone: task.isDone,
+                                               isSelected: isSelected)
+        
         if task.isDone
         {
-            backgroundColor = .itemBackgroundDone
             colorOverlay.isHidden = true
             
             layer?.borderColor = Color.itemBorder.cgColor
             
-            textView.alphaValue = 0.5
+            textView.set(color: .gray(brightness: 0.4))
             checkBox.alphaValue = 0.5
             groupIcon.alphaValue = 0.5
         }
         else if let tag = task.tag.value
         {
-            backgroundColor = .itemBackground
-            
             let tagColor = Color.tags[tag.rawValue]
             
             colorOverlay.backgroundColor = tagColor
@@ -186,19 +217,17 @@ class TaskView: LayerBackedView, Observer, Observable
             
             layer?.borderColor = tagColor.with(alpha: 0.5).cgColor
             
-            textView.alphaValue = 1
+            textView.set(color: .white)
             checkBox.alphaValue = 1
             groupIcon.alphaValue = 1
         }
         else
         {
-            backgroundColor = .itemBackground
-            
             colorOverlay.isHidden = true
             
             layer?.borderColor = Color.itemBorder.cgColor
             
-            textView.alphaValue = 1
+            textView.set(color: .white)
             checkBox.alphaValue = 1
             groupIcon.alphaValue = 1
         }
@@ -211,36 +240,29 @@ class TaskView: LayerBackedView, Observer, Observable
         send(.wasClicked(withCmd: event.cmd))
     }
     
-    var isSelected = false
+    func set(selected: Bool)
     {
-        didSet
+        guard isSelected != selected else { return }
+        
+        isSelected = selected
+        
+        let isDone = task?.isDone ?? false
+        
+        backgroundColor = Color.itemBackground(isDone: isDone,
+                                               isSelected: isSelected)
+        
+        if !textView.isEditing
         {
-            let isDone = task?.isDone ?? false
-            
-            backgroundColor = isSelected ? .itemBackgroundSelected : (isDone ? .itemBackgroundDone : .itemBackground)
-            
-            if !textView.isEditing
-            {
-                textView.set(textColor: isSelected ? .textSelected : .text)
-            }
-            
-            groupIcon.image = isSelected ? TaskView.groupIconImageSelected : TaskView.groupIconImage
-            
-            checkBox.setColorMode(white: checkBoxShouldBeWhite(selected: isSelected))
+            textView.set(color: currentTextColor)
         }
+        
+        let lightContent = Color.itemContentIsLight(isSelected: isSelected)
+        updateGroupIconColor(light: lightContent)
+        
+        checkBox.set(white: lightContent)
     }
     
-    private func checkBoxShouldBeWhite(selected: Bool) -> Bool
-    {
-        if Color.isInDarkMode
-        {
-            return selected ? false : true
-        }
-        else
-        {
-            return selected ? true : false
-        }
-    }
+    private(set) var isSelected = false
     
     // MARK: - Color Overlay
     
@@ -320,7 +342,7 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         isEditing = editing
         
-        textView.textColor = currentTextColor.nsColor
+        textView.set(color: currentTextColor)
         
         editingBackground.alphaValue = editing ? 1 : 0
         
@@ -348,14 +370,8 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private var currentTextColor: Color
     {
-        if Color.isInDarkMode
-        {
-            return isEditing || !isSelected ? .white : .black
-        }
-        else
-        {
-            return isEditing || !isSelected ? .black : .white
-        }
+        return .itemText(isDone: task?.isDone ?? false,
+                         isSelected: isSelected)
     }
     
     private var isEditing = false
@@ -422,20 +438,20 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private static let groupIconWidthMultiplier: CGFloat = 0.75
     
-    private lazy var groupIcon = addForAutoLayout(Icon(with: TaskView.groupIconImage))
-    
-    private static var groupIconImage: NSImage
+    private func updateGroupIconColor(light: Bool)
     {
-        return Color.isInDarkMode ? groupIconImageWhite : groupIconImageBlack
+        groupIcon.image = TaskView.groupIconImage(light: light)
     }
     
-    private static var groupIconImageSelected: NSImage
+    private static func groupIconImage(light: Bool) -> NSImage
     {
-        return Color.isInDarkMode ? groupIconImageBlack : groupIconImageWhite
+        return light ? groupIconImageWhite : groupIconImageBlack
     }
     
     private static let groupIconImageBlack = #imageLiteral(resourceName: "container_indicator_pdf")
     private static let groupIconImageWhite = #imageLiteral(resourceName: "container_indicator_white")
+    
+    private lazy var groupIcon = addForAutoLayout(Icon())
     
     // MARK: - Layout Guide
     
