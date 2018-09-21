@@ -260,7 +260,9 @@ class PurchaseContentView: NSView, Observer
         let button = columns[1].addForAutoLayout(Button())
         
         button.layer?.cornerRadius = Float.cornerRadius.cgFloat
-        button.backgroundColor = Color(0.3, 0.6, 0.15)
+        button.backgroundColor = Color(Int(95 * 0.8),
+                                       Int(197 * 0.8),
+                                       Int(64 * 0.8))
         button.isHidden = true
         
         button.titleLabel.textColor = .white
@@ -296,7 +298,7 @@ class PurchaseContentView: NSView, Observer
         let button = columns[1].addForAutoLayout(Button())
         
         button.layer?.cornerRadius = Float.cornerRadius.cgFloat
-        button.backgroundColor = Color.gray(brightness: 0.5)
+        button.backgroundColor = Color.gray(brightness: 0.3).with(alpha: 0.5)
         
         button.titleLabel.textColor = .white
         button.titleLabel.font = Font.purchasePanel.nsFont
