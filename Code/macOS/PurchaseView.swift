@@ -56,7 +56,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
                                                       isSelected: false,
                                                       isTagged: false)
         backgroundColor = itemBackroundColor
-        progressBar.backgroundColor = itemBackroundColor
+        progressBar.backgroundColor = .progressBackground
         progressBar.progressColor = .progressBar
         
         let taskNumber = numberOfUserCreatedTasks.latestUpdate
@@ -173,9 +173,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         
         let progress = CGFloat(numberOfUserCreatedTasks.latestUpdate) / CGFloat(maxNumberOfTasksInTrial)
         bar.progress = progress
-        bar.backgroundColor = .itemBackground(isDone: false,
-                                              isSelected: false,
-                                              isTagged: false)
+        bar.backgroundColor = .progressBackground
         bar.progressColor = .progressBar
         bar.layer?.borderColor = Color.border.cgColor
         bar.layer?.borderWidth = 1.0

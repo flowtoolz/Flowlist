@@ -136,6 +136,11 @@ extension Color
         return isInDarkMode ? .gray(brightness: 0.25) : .white
     }
     
+    static var progressBackground: Color
+    {
+        return isInDarkMode ? .clear : .gray(brightness: brightness2)
+    }
+    
     static var border: Color
     {
         if isInDarkMode
