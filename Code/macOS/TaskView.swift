@@ -72,7 +72,9 @@ class TaskView: LayerBackedView, Observer, Observable
             
             colorOverlay.backgroundColor = tagColor
             
-            layer?.borderColor = tagColor.with(alpha: 0.5).cgColor
+            let border: Color = isDone ? .itemBorder : tagColor.with(alpha: 0.5)
+            
+            layer?.borderColor = border.cgColor
         }
         else
         {
@@ -123,7 +125,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         observe(task.tag)
         {
-            [weak self] _ in self?.updateColors()
+            [weak self] _ in self?.tagDidChange()
         }
     }
     
@@ -203,47 +205,40 @@ class TaskView: LayerBackedView, Observer, Observable
         textView.set(color: .itemText(isDone: isDone, isSelected: isSelected))
         
         colorOverlay.isHidden = task.tag.value == nil || isDone
+        
+        if let tag = task.tag.value
+        {
+            let tagColor = Color.tags[tag.rawValue]
+            
+            let border: Color = isDone ? .itemBorder : tagColor.with(alpha: 0.5)
+            
+            layer?.borderColor = border.cgColor
+        }
     }
     
-    private func updateColors()
+    private func tagDidChange()
     {
         guard let task = task else { return }
         
-        backgroundColor = Color.itemBackground(isDone: task.isDone,
-                                               isSelected: isSelected)
+        let isTagged = task.tag.value != nil
+        let isDone = task.isDone
         
-        if task.isDone
-        {
-            colorOverlay.isHidden = true
-            
-            layer?.borderColor = Color.itemBorder.cgColor
-            
-            textView.set(color: .gray(brightness: 0.4))
-            checkBox.alphaValue = Float.doneItemIconAlpha.cgFloat
-            groupIcon.alphaValue = Float.doneItemIconAlpha.cgFloat
-        }
-        else if let tag = task.tag.value
+        colorOverlay.isHidden = !isTagged || isDone
+        
+        if let tag = task.tag.value
         {
             let tagColor = Color.tags[tag.rawValue]
             
             colorOverlay.backgroundColor = tagColor
-            colorOverlay.isHidden = false
             
-            layer?.borderColor = tagColor.with(alpha: 0.5).cgColor
-            
-            textView.set(color: .white)
-            checkBox.alphaValue = 1
-            groupIcon.alphaValue = 1
+            if !isDone
+            {
+                layer?.borderColor = tagColor.with(alpha: 0.5).cgColor
+            }
         }
         else
         {
-            colorOverlay.isHidden = true
-            
             layer?.borderColor = Color.itemBorder.cgColor
-            
-            textView.set(color: .white)
-            checkBox.alphaValue = 1
-            groupIcon.alphaValue = 1
         }
     }
     
