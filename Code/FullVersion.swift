@@ -15,9 +15,9 @@ var isFullVersion: Bool
         
         return true
         
-//        #elseif DEBUG
-//        
-//        return true
+        #elseif DEBUG
+        
+        return true
         
         #endif
         

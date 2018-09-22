@@ -5,7 +5,7 @@
 	<key>ApplicationVersion</key>
 	<array>
 		<string>com.omnigroup.OmniGraffle7</string>
-		<string>191.13.0.314553</string>
+		<string>191.28.0.317117</string>
 	</array>
 	<key>ColorProfiles</key>
 	<array>
@@ -103,13 +103,13 @@
 	<key>Creator</key>
 	<string>Sebastian Fichtner</string>
 	<key>GraphDocumentVersion</key>
-	<integer>15</integer>
+	<integer>16</integer>
 	<key>GuidesLocked</key>
 	<string>NO</string>
 	<key>GuidesVisible</key>
 	<string>NO</string>
 	<key>ImageCounter</key>
-	<integer>57</integer>
+	<integer>63</integer>
 	<key>ImageLinkBack</key>
 	<array>
 		<dict/>
@@ -123,11 +123,11 @@
 	</array>
 	<key>ImageList</key>
 	<array>
-		<string>image56.png</string>
-		<string>image53.png</string>
-		<string>image52.png</string>
-		<string>image50.png</string>
-		<string>image49.png</string>
+		<string>image62.png</string>
+		<string>image61.png</string>
+		<string>image59.png</string>
+		<string>image58.png</string>
+		<string>image57.png</string>
 		<string>image44.png</string>
 		<string>image43.png</string>
 		<string>image42.png</string>
@@ -139,7 +139,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-09-09 14:44:03 +0000</string>
+	<string>2018-09-22 12:40:37 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -202,7 +202,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-1293.2352941176478, -1294.1176470588239}, {6750.9803921568628, 7639.2156862745105}}</string>
+				<string>{{-1203.0392156862742, -1141.1764705882351}, {6570.588235294118, 7333.3333333333339}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -361,7 +361,7 @@
 					<key>ID</key>
 					<integer>233</integer>
 					<key>ImageID</key>
-					<integer>50</integer>
+					<integer>61</integer>
 					<key>ManualSizeImage</key>
 					<string>YES</string>
 					<key>StretchImage</key>
@@ -391,13 +391,13 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{959.9990234375, 2264.9976959228516}, {1439.99853515625, 794.99919128417969}}</string>
+					<string>{{959.9990234375, 2294.9976654052734}, {1439.99853515625, 764.99922180175781}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
 					<integer>231</integer>
 					<key>ImageID</key>
-					<integer>52</integer>
+					<integer>59</integer>
 					<key>ManualSizeImage</key>
 					<string>YES</string>
 					<key>StretchImage</key>
@@ -484,7 +484,7 @@
 						<key>Pad</key>
 						<real>0.0</real>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
 {\fonttbl\f0\fnil\fcharset0 SFProDisplay-Light;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
@@ -552,7 +552,7 @@
 						<key>Pad</key>
 						<real>0.0</real>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
 {\fonttbl\f0\fnil\fcharset0 SFProDisplay-Light;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
@@ -620,7 +620,7 @@
 						<key>Pad</key>
 						<real>0.0</real>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
 {\fonttbl\f0\fnil\fcharset0 SFProDisplay-Light;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
@@ -631,13 +631,13 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{959.9990234375, 1304.9986724853516}, {1439.99853515625, 794.99919128417969}}</string>
+					<string>{{959.9990234375, 1334.9986419677734}, {1439.99853515625, 764.99922180175781}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
 					<integer>230</integer>
 					<key>ImageID</key>
-					<integer>53</integer>
+					<integer>58</integer>
 					<key>ManualSizeImage</key>
 					<string>YES</string>
 					<key>StretchImage</key>
@@ -673,7 +673,7 @@
 					<key>ID</key>
 					<integer>229</integer>
 					<key>ImageID</key>
-					<integer>56</integer>
+					<integer>57</integer>
 					<key>ManualSizeImage</key>
 					<string>YES</string>
 					<key>StretchImage</key>
@@ -731,6 +731,24 @@
 							</dict>
 							<key>ID</key>
 							<integer>40</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{1694.9982757568359, 4440.439139025515}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{1724.9982452392578, 4410.4391695430932}</string>
+									</dict>
+								</array>
+							</dict>
 							<key>Points</key>
 							<array>
 								<string>{1694.9982757568359, 4440.439139025515}</string>
@@ -786,6 +804,24 @@
 							</dict>
 							<key>ID</key>
 							<integer>41</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{1694.9982757568359, 4380.4392000606713}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{1724.9982452392578, 4410.4391695430932}</string>
+									</dict>
+								</array>
+							</dict>
 							<key>Points</key>
 							<array>
 								<string>{1694.9982757568359, 4380.4392000606713}</string>
@@ -841,6 +877,24 @@
 							</dict>
 							<key>ID</key>
 							<integer>42</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{1634.9983367919922, 4410.4391695430932}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{1724.9982452392578, 4410.4391695430932}</string>
+									</dict>
+								</array>
+							</dict>
 							<key>Points</key>
 							<array>
 								<string>{1634.9983367919922, 4410.4391695430932}</string>
@@ -954,7 +1008,7 @@
 						<key>Pad</key>
 						<real>30</real>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
 {\fonttbl\f0\fnil\fcharset0 SFProDisplay-Light;\f1\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
@@ -965,7 +1019,8 @@
 \f0 Controll everything\
 via intuitive shortcuts.\
 Zoom in and out.\
-Activate fullscreen or monotasking mode.\
+Enter monotasking-\
+and dark mode.\
 All navigation and editing is animated.}</string>
 					</dict>
 					<key>TextPlacement</key>
@@ -1030,7 +1085,7 @@ All navigation and editing is animated.}</string>
 						<key>Pad</key>
 						<real>30</real>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
 {\fonttbl\f0\fnil\fcharset0 SFProDisplay-Light;\f1\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
@@ -1038,7 +1093,7 @@ All navigation and editing is animated.}</string>
 
 \f0\b\fs80 \cf2 Import from anywhere.
 \f1\b0  
-\f0 Copy content from a document or website\
+\f0 \cf2 Copy content from a document or website\
 and paste it into one of your lists. Flowlist recognizes distinct items.}</string>
 					</dict>
 					<key>TextPlacement</key>
@@ -1152,7 +1207,7 @@ and paste it into one of your lists. Flowlist recognizes distinct items.}</strin
 						<key>Pad</key>
 						<real>30</real>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
 {\fonttbl\f0\fnil\fcharset0 SFProDisplay-Light;\f1\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
@@ -1274,7 +1329,7 @@ set them in progress, review what you have accomplished.}</string>
 						<key>Pad</key>
 						<real>30</real>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
 {\fonttbl\f0\fnil\fcharset0 SFProDisplay-Light;\f1\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
@@ -1347,7 +1402,7 @@ Quickly add items to the top. Tag items with colors.}</string>
 						<key>Pad</key>
 						<real>30</real>
 						<key>Text</key>
-						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf400
+						<string>{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
 {\fonttbl\f0\fnil\fcharset0 SFProDisplay-Light;\f1\fnil\fcharset0 SFProText-Regular;}
 {\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
 {\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
@@ -1355,7 +1410,7 @@ Quickly add items to the top. Tag items with colors.}</string>
 
 \f0\b\fs80 \cf2 Create your own structure.
 \f1\b0  
-\f0 Group items, add subitems,\
+\f0 \cf2 Group items, add subitems,\
 move items between levels. Focus and edit subitem lists at any level.}</string>
 					</dict>
 					<key>TextPlacement</key>
@@ -1461,13 +1516,13 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1364.9986114501953, 3194.9967498779297}, {1034.9989471435547, 824.99916076660156}}</string>
+					<string>{{1364.9986114501953, 3209.9967346191406}, {1034.9989471435547, 809.99917602539062}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
 					<integer>232</integer>
 					<key>ImageID</key>
-					<integer>49</integer>
+					<integer>62</integer>
 					<key>ManualSizeImage</key>
 					<string>YES</string>
 					<key>StretchImage</key>
@@ -1623,7 +1678,7 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 		<key>CurrentSheet</key>
 		<integer>0</integer>
 		<key>Frame</key>
-		<string>{{0, 0}, {1280, 740}}</string>
+		<string>{{0, 0}, {1234, 740}}</string>
 		<key>ShowInfo</key>
 		<true/>
 		<key>ShowRuler</key>
@@ -1635,7 +1690,7 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{788.91668223211138, 1885.1408338450913}, {1888.2352941176473, 1294.1176470588236}}</string>
+		<string>{{749.90196078431541, 3916.6666666666706}, {1798.0392156862742, 1141.1764705882351}}</string>
 		<key>ZoomValues</key>
 		<array>
 			<array>
