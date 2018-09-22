@@ -11,8 +11,6 @@ class SelectableListView: LayerBackedView, Observer, Observable
     {
         super.init(frame: frameRect)
     
-        backgroundColor = .clear
-        
         constrainHeader()
         constrainScrollTable()
     }
@@ -77,8 +75,12 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func constrainHeader()
     {
-        header.constrainToParentExcludingBottom()
-        headerHeightConstraint = header.constrainHeight(to: TaskView.heightWithSingleLine)
+        let height = TaskView.heightWithSingleLine
+        headerHeightConstraint = header.constrainHeight(to: height)
+        headerTopConstraint = header.constrainTopToParent(inset: TaskView.spacing)
+        
+        header.constrainLeftToParent()
+        header.constrainRightToParent()
     }
     
     private lazy var header = addForAutoLayout(Header())
@@ -94,18 +96,13 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func constrainScrollTable()
     {
-        scrollTable.constrainBottomToParent()
-        
-        let gap = TaskView.spacing + 1
+        let gap = TaskView.spacing
 
-        scrollTableInsetConstraints.removeAll()
-       
-        if let leftConstraint = scrollTable.constrainLeftToParent(inset: gap),
-            let rightConstraint = scrollTable.constrainRightToParent(inset: gap)
-        {
-            scrollTableInsetConstraints.append(leftConstraint)
-            scrollTableInsetConstraints.append(rightConstraint)
-        }
+        let stic = scrollTable.constrainToParentExcludingTop(insetLeft: gap,
+                                                             insetBottom: gap,
+                                                             insetRight: gap)
+        
+        scrollTableInsetConstraints = stic
         
         scrollTableTopConstraint = scrollTable.constrain(below: header,
                                                          gap: scrollTableTopOffset)
@@ -140,18 +137,20 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func updateLayoutConstants()
     {
-        headerHeightConstraint?.constant = TaskView.heightWithSingleLine
+        let spacing = TaskView.spacing
         
-        let inset = TaskView.spacing + 1
+        headerTopConstraint?.constant = spacing
+        headerHeightConstraint?.constant = TaskView.heightWithSingleLine
         
         for constraint in scrollTableInsetConstraints
         {
-            constraint.constant = constraint.constant < 0 ? -inset : inset
+            constraint.constant = constraint.constant < 0 ? -spacing : spacing
         }
         
         scrollTableTopConstraint?.constant = scrollTableTopOffset
     }
     
+    private var headerTopConstraint: NSLayoutConstraint?
     private var headerHeightConstraint: NSLayoutConstraint?
     private var scrollTableTopConstraint: NSLayoutConstraint?
     private var scrollTableInsetConstraints = [NSLayoutConstraint]()

@@ -39,28 +39,11 @@ class BrowserView: LayerBackedView, Observer
     {
         TextView.fontSizeDidChange()
         
-        updateSpacings()
-        
-        moveToFocusedListAfterNextLayout = true
-        
         for listView in listViews
         {
             listView.fontSizeDidChange()
         }
     }
-    
-    override func layout()
-    {
-        super.layout()
-        
-        if moveToFocusedListAfterNextLayout
-        {
-            moveToFocusedList(animated: false)
-            moveToFocusedListAfterNextLayout = false
-        }
-    }
-    
-    private var moveToFocusedListAfterNextLayout = false
     
     // MARK: - Browser
     
@@ -166,8 +149,6 @@ class BrowserView: LayerBackedView, Observer
     {
         guard let listView = listViews.last else { return }
         
-        let gap = TaskView.spacing
-        
         if listViews.count == 1
         {
             listView.constrainCenterXToParent()
@@ -175,13 +156,13 @@ class BrowserView: LayerBackedView, Observer
         else
         {
             let leftView = listViews[listViews.count - 2]
-            rememberSpacing(listView.constrain(toTheRightOf: leftView, gap: gap))
+            listView.constrain(toTheRightOf: leftView)
         }
         
         listView.constrainWidth(to: listLayoutGuides[0])
         
-        rememberSpacing(listView.constrainTopToParent(inset: gap))
-        rememberSpacing(listView.constrainBottomToParent(inset: gap))
+        listView.constrainTopToParent()
+        listView.constrainBottomToParent()
     }
     
     private func moveToFocusedList(animated: Bool = true)
@@ -189,8 +170,8 @@ class BrowserView: LayerBackedView, Observer
         guard listViews.isValid(index: browser.focusedListIndex) else { return }
         
         let focusedListView = listViews[browser.focusedListIndex]
-        let listOffset = focusedListView.frame.size.width + 2 * TaskView.spacing
-        let targetPosition = focusedListView.frame.origin.x - listOffset
+        let listWidth = focusedListView.frame.size.width
+        let targetPosition = focusedListView.frame.origin.x - listWidth
         
         if animated
         {
@@ -215,50 +196,20 @@ class BrowserView: LayerBackedView, Observer
     {
         for guide in listLayoutGuides
         {
-            rememberSpacing(guide.constrainTop(to: self,
-                                               offset: TaskView.spacing))
-            rememberSpacing(guide.constrainBottom(to: self,
-                                                  offset: -TaskView.spacing))
+            guide.constrainTop(to: self)
+            guide.constrainBottom(to: self)
         }
         
         listLayoutGuides[0].constrainWidth(toMinimum: 150)
+        listLayoutGuides[0].constrainLeft(to: self)
         
-        constraintsWithSpacingConstant.append(contentsOf:
-        [
-            listLayoutGuides[0].constrainLeft(to: self,
-                                              offset: TaskView.spacing),
-            listLayoutGuides[1].constrain(toTheRightOf: listLayoutGuides[0],
-                                          gap: TaskView.spacing),
-            listLayoutGuides[2].constrain(toTheRightOf: listLayoutGuides[1],
-                                          gap: TaskView.spacing),
-            listLayoutGuides[2].constrainRight(to: self,
-                                               offset: -TaskView.spacing)
-        ])
-        
+        listLayoutGuides[1].constrain(toTheRightOf: listLayoutGuides[0])
         listLayoutGuides[1].constrainWidth(to: listLayoutGuides[0])
+        
+        listLayoutGuides[2].constrain(toTheRightOf: listLayoutGuides[1])
+        listLayoutGuides[2].constrainRight(to: self)
         listLayoutGuides[2].constrainWidth(to: listLayoutGuides[0])
     }
     
     private lazy var listLayoutGuides = addLayoutGuides(3)
-    
-    // MARK: - Dynamic Spacings
-    
-    private func updateSpacings()
-    {
-        let spacing = TaskView.spacing
-        
-        for constraint in constraintsWithSpacingConstant
-        {
-            constraint.constant = constraint.constant < 0 ? -spacing : spacing
-        }
-    }
-    
-    private func rememberSpacing(_ constraint: NSLayoutConstraint?)
-    {
-        guard let constraint = constraint else { return }
-        
-        constraintsWithSpacingConstant.append(constraint)
-    }
-    
-    private var constraintsWithSpacingConstant = [NSLayoutConstraint]()
 }
