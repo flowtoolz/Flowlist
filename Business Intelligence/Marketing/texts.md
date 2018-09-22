@@ -14,6 +14,16 @@ The 1st Hierarchical Task List
 
 #Flowlist AppStore Update Text
 
+## 1.4.0
+
+This update simplifies the visual design and introduces Dark Mode.
+
+• Now you can switch between Dark Mode and Daylight Mode via menu option or Cmd+D.
+• The user interface went back to its roots a bit and looks cleaner. Also, I toned down the high contrast selection.
+• A bunch of little performance improvements
+• The JSON format got much more compact and humanly readable in preparation for syncing with iOS (and for those who fiddle around with their flowlist.json file manually).
+• As always: Several technical improvements under the hood to ensure development will never slow down
+
 ## 1.3.0
 
 This update introduces colors!
