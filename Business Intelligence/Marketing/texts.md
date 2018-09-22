@@ -61,12 +61,6 @@ This update brings minor fixes and performance improvements:
 • Bug fix: When pasting content from web pages or documents, item detection does not trim special characters from the end of texts anymore
 • As always: Many technical improvements under the hood to ensure development will never slow down
 
-#Flowlist AppStore Promo Text
-
-In-app purchase is 50% off during summer.
-
-Version 1.2.1 was the last to support Yosemite (macOS 10.10).
-
 #Flowlist AppStore Description
 
 ## Version 1.0.9
