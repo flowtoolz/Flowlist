@@ -151,7 +151,7 @@ You can support the development of Flowlist by unlocking the full unlimited vers
 • Pay once, then use Flowlist forever. No subscription required.
 • Early bird advantage: Owners of the full version get all new features as free updates, even when the full version price rises.
 
-## Old Version 1.0.8
+## Version 1.0.8
 
 Flowlist is an elegant app for capturing ideas and managing tasks. Its editable item hierarchy makes Flowlist radically simple but powerful. Be in a flow state while organizing your thoughts and your life!
 
