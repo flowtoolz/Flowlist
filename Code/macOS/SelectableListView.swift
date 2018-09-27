@@ -15,19 +15,19 @@ class SelectableListView: LayerBackedView, Observer, Observable
         
         shadow = NSShadow()
         layer?.shadowColor = Color.gray(brightness: 0.5).cgColor
-        layer?.shadowOffset = CGSize(width: 0,
+        layer?.shadowOffset = CGSize(width: Color.isInDarkMode ? 0 : 1,
                                      height: Color.isInDarkMode ? 1 : -1)
         layer?.shadowRadius = 0
-        layer?.shadowOpacity = Color.isInDarkMode ? 0.35 : 0.4
+        layer?.shadowOpacity = Color.isInDarkMode ? 0.35 : 0.2
         
         observe(darkMode)
         {
             [weak self] isDark in
             
             self?.backgroundColor = .listBackground
-            self?.layer?.shadowOffset = CGSize(width: 0,
+            self?.layer?.shadowOffset = CGSize(width: isDark ? 0 : 1,
                                                height: isDark ? 1 : -1)
-            self?.layer?.shadowOpacity = Color.isInDarkMode ? 0.35 : 0.4
+            self?.layer?.shadowOpacity = Color.isInDarkMode ? 0.35 : 0.2
         }
         
         constrainHeader()
