@@ -31,7 +31,7 @@ extension Color
         {
             if selected
             {
-                return Color.white.with(alpha: done ? doneAlpha + 0.25 : 1)
+                return Color.white.with(alpha: done ? doneAlpha : 1)
             }
             else
             {
@@ -42,7 +42,7 @@ extension Color
         {
             if selected && focused
             {
-                return Color.white.with(alpha: done ? doneAlpha + 0.25 : 1)
+                return Color.white.with(alpha: done ? doneAlpha : 1)
             }
             else
             {
@@ -75,7 +75,7 @@ extension Color
     
     // MARK: - Item Content
     
-    static let doneAlpha: Float = 0.3
+    static let doneAlpha: Float = 0.25
     
     static func itemContentIsLight(isSelected selected: Bool,
                                    isFocused focused: Bool) -> Bool
