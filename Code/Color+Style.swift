@@ -132,7 +132,7 @@ extension Color
     
     static var windowBackground: Color
     {
-        return isInDarkMode ? .black : .gray(brightness: 0.92)
+        return isInDarkMode ? .black : .gray(brightness: 0.91)
     }
     
     // MARK: - Basics
