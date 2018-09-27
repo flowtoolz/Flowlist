@@ -5,7 +5,7 @@ extension Color
 {
     // MARK: - Color Tags
     
-    static let colorOverlayAlpha: Float = 0.3
+    static let colorOverlayAlpha: Float = 1
     static let tagBorderAlpha: Float = 0.5
     
     static let tags: [Color] =
@@ -22,6 +22,7 @@ extension Color
     
     static func itemText(isDone done: Bool,
                          isSelected selected: Bool,
+                         isFocused focused: Bool,
                          isEditing editing: Bool = false) -> Color
     {
         if editing { return .text }
@@ -30,22 +31,22 @@ extension Color
         {
             if selected
             {
-                return Color.black.with(alpha: done ? 0.6 : 1)
+                return Color.white.with(alpha: done ? doneAlpha + 0.25 : 1)
             }
             else
             {
-                return Color.white.with(alpha: done ? 0.5 : 1)
+                return Color.white.with(alpha: done ? doneAlpha : 1)
             }
         }
         else
         {
-            if selected
+            if selected && focused
             {
-                return Color.white.with(alpha: done ? 0.6 : 1)
+                return Color.white.with(alpha: done ? doneAlpha + 0.25 : 1)
             }
             else
             {
-                return Color.black.with(alpha: done ? 0.4 : 1)
+                return Color.black.with(alpha: done ? doneAlpha : 1)
             }
         }
     }
@@ -74,11 +75,12 @@ extension Color
     
     // MARK: - Item Content
     
-    static let doneItemIconAlpha: Float = 0.5
+    static let doneAlpha: Float = 0.3
     
-    static func itemContentIsLight(isSelected selected: Bool) -> Bool
+    static func itemContentIsLight(isSelected selected: Bool,
+                                   isFocused focused: Bool) -> Bool
     {
-        return isInDarkMode ? !selected : selected
+        return isInDarkMode ? true : selected && focused
     }
     
     static var editingBackground: Color
@@ -86,76 +88,51 @@ extension Color
         return isInDarkMode ? .black : .white
     }
     
-    // MARK: - Items
-    
-    static func itemBorder(isDone done: Bool,
-                           isSelected selected: Bool) -> Color
-    {
-        if isInDarkMode
-        {
-            return Color.white.with(alpha: selected ? 1 : done ? 0.16 : 0.1)
-        }
-        else
-        {
-            return Color.black.with(alpha: 0.15)
-        }
-    }
-    
-    static func itemBackground(isDone done: Bool,
-                               isSelected selected: Bool,
-                               isTagged tagged: Bool) -> Color
-    {
-        if isInDarkMode
-        {
-            if selected
-            {
-                return tagged && !done ? .white : .gray(brightness: 0.8)
-            }
-            else
-            {
-                return done || tagged ? .black : .gray(brightness: 0.1)
-            }
-        }
-        else
-        {
-            if selected
-            {
-                return .gray(brightness: done || !tagged ? 0.4 : 0.3)
-            }
-            else
-            {
-                return done ? .gray(brightness: brightness2) : .white
-            }
-        }
-    }
-    
-    // MARK: - General Views
+    // MARK: - Purchase Panel Views
     
     static var progressBar: Color
     {
-        return isInDarkMode ? .gray(brightness: 0.25) : .white
+        return .gray(brightness: isInDarkMode ? 0.18 : 1)
     }
     
     static var progressBackground: Color
     {
-        return isInDarkMode ? .clear : .gray(brightness: brightness2)
+        return isInDarkMode ? .listBackground : .gray(brightness: 0.9)
     }
     
-    static var border: Color
+    static var purchasePanelBackground: Color
     {
-        if isInDarkMode
+        return itemBackground(isDone: false,
+                              isSelected: false,
+                              isTagged: false,
+                              isFocusedList: true)
+    }
+    
+    // MARK: - Browser Backgrounds
+    
+    static func itemBackground(isDone done: Bool,
+                               isSelected selected: Bool,
+                               isTagged tagged: Bool,
+                               isFocusedList: Bool) -> Color
+    {
+        guard selected else
         {
-            return Color.white.with(alpha: 0.03)
+            return .gray(brightness: isInDarkMode ? 0.09 : 1)
         }
-        else
-        {
-            return Color.black.with(alpha: 0.15)
-        }
+        
+        let brightness: Float = isInDarkMode ? 1.0 / (isFocusedList ? 3 : 6) : isFocusedList ? 0.5 : 0.75
+        
+        return Color.gray(brightness: brightness)
+    }
+
+    static var listBackground: Color
+    {
+        return .clear
     }
     
     static var windowBackground: Color
     {
-        return .gray(brightness: isInDarkMode ? 0 : brightness1)
+        return isInDarkMode ? .black : .gray(brightness: 0.8)
     }
     
     // MARK: - Basics
@@ -165,10 +142,6 @@ extension Color
         get { return darkMode.latestUpdate }
         set { darkModeVar <- newValue }
     }
-    
-    private static let brightness1 = brightnessFactor
-    private static let brightness2 = pow(brightnessFactor, 2)
-    private static let brightnessFactor: Float = 0.91
 }
 
 let darkMode = darkModeVar.new().filter({ $0 != nil }).unwrap(false)

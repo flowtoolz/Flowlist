@@ -15,7 +15,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         selectionHighlightStyle = .none
         backgroundColor = .clear
         headerView = nil
-        intercellSpacing = cellSpacing
+        intercellSpacing = NSZeroSize
         delegate = content
         dataSource = content
     }
@@ -28,15 +28,9 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     func fontSizeDidChange()
     {
-        intercellSpacing = cellSpacing
         itemHeightCash.removeAll()
         cashedWidth = nil
         reloadData()
-    }
-    
-    private var cellSpacing: CGSize
-    {
-        return NSSize(width: 0, height: TaskView.spacing)
     }
     
     // MARK: - Configuration
@@ -180,6 +174,11 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     // MARK: - Content
     
+    var isFocused = false
+    {
+        didSet { content.isFocused = isFocused }
+    }
+    
     private lazy var content: TableContent =
     {
         let tableContent = TableContent()
@@ -242,15 +241,11 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         if let cashedWidth = cashedWidth { return cashedWidth }
         
-        let horizontalGap = TaskView.spacing
-        
         let windowWidth = Window.intendedMainWindowSize.value?.width ?? 1024
         
         let pixelsPerPoint = NSApp.mainWindow?.backingScaleFactor ?? 2
         
-        let listViewWidth = CGFloat(Int((pixelsPerPoint * windowWidth) / 3 + 0.5)) / pixelsPerPoint
-        
-        let calculatedWidth = listViewWidth - (2 * horizontalGap)
+        let calculatedWidth = CGFloat(Int((pixelsPerPoint * (windowWidth - 2)) / 3 + 0.5)) / pixelsPerPoint
         
         cashedWidth = calculatedWidth
         

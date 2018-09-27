@@ -11,15 +11,17 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         super.init(frame: frameRect)
         
-        backgroundColor = .itemBackground(isDone: false,
-                                          isSelected: false,
-                                          isTagged: false)
+        shadow = NSShadow()
+        layer?.shadowColor = Color.black.cgColor
+        layer?.shadowOffset = CGSize(width: 0, height: 5)
+        layer?.shadowRadius = 5
+        layer?.shadowOpacity = Color.isInDarkMode ? 1.0 : 0.1
         
-        layer?.borderColor = Color.border.cgColor
-        layer?.borderWidth = 1.0
+        backgroundColor = .purchasePanelBackground
         
         observe(darkMode) { [weak self] _ in self?.adjustToColorMode() }
         
+        constrainLightEdge()
         constrainItemLabel()
         constrainProgressBar()
         constrainExpandIcon()
@@ -52,19 +54,19 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func adjustToColorMode()
     {
-        let itemBackroundColor = Color.itemBackground(isDone: false,
-                                                      isSelected: false,
-                                                      isTagged: false)
-        backgroundColor = itemBackroundColor
+        backgroundColor = .purchasePanelBackground
+        
+        lightEdge.isHidden = !Color.isInDarkMode
+        
+        layer?.shadowOpacity = Color.isInDarkMode ? 1.0 : 0.1
+        
         progressBar.backgroundColor = .progressBackground
         progressBar.progressColor = .progressBar
         
         let taskNumber = numberOfUserCreatedTasks.latestUpdate
         itemLabel.textColor = labelColor(for: taskNumber).nsColor
         
-        let borderColor = Color.border.cgColor
-        layer?.borderColor = borderColor
-        progressBar.layer?.borderColor = borderColor
+        progressBar.layer?.borderColor = Color.windowBackground.cgColor
         
         expandIcon.image = isExpanded ? closeImage : expandImage
         
@@ -94,6 +96,25 @@ class PurchaseView: LayerBackedView, Observable, Observer
         }
     }
     
+    // MARK: - Light Top Edge
+    
+    private func constrainLightEdge()
+    {
+        lightEdge.constrainToParentExcludingBottom()
+        lightEdge.constrainHeight(to: 1)
+    }
+    
+    private lazy var lightEdge: LayerBackedView =
+    {
+        let edge = addForAutoLayout(LayerBackedView())
+        
+        edge.backgroundColor = Color.gray(brightness: 0.5).with(alpha: 0.2)
+        
+        edge.isHidden = !Color.isInDarkMode
+        
+        return edge
+    }()
+    
     // MARK: - Item Label
     
     private func constrainItemLabel()
@@ -120,7 +141,9 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func labelColor(for itemNumber: Int) -> Color
     {
-        return .itemText(isDone: itemNumber < 90, isSelected: false)
+        return .itemText(isDone: itemNumber < 90,
+                         isSelected: false,
+                         isFocused: true)
     }
     
     private func labelText(for itemNumber: Int) -> String
@@ -175,7 +198,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         bar.progress = progress
         bar.backgroundColor = .progressBackground
         bar.progressColor = .progressBar
-        bar.layer?.borderColor = Color.border.cgColor
+        bar.layer?.borderColor = Color.windowBackground.cgColor
         bar.layer?.borderWidth = 1.0
         
         return bar
@@ -190,8 +213,6 @@ class PurchaseView: LayerBackedView, Observable, Observer
         content.constrainTopToParent(at: 0.1)
         content.constrainBottomToParent(at: 0.9)
     }
-    
-    let collapsedHeight: CGFloat = 39 + Float.progressBarHeight.cgFloat
     
     private lazy var content: PurchaseContentView =
     {
@@ -210,8 +231,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
     private func constrainButtonOverlay()
     {
         buttonOverlay.constrainToParentExcludingBottom()
-        buttonOverlay.constrainHeight(to: 39 + Float.progressBarHeight.cgFloat)
+        buttonOverlay.constrainHeight(to: collapsedHeight)
     }
+    
+    let collapsedHeight = (2 * Float.itemPadding(for: 17) + 17 + Float.progressBarHeight).cgFloat
     
     private lazy var buttonOverlay: NSButton =
     {

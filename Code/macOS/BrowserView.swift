@@ -53,6 +53,15 @@ class BrowserView: LayerBackedView, Observer
         {
             [unowned self] event in self.did(receive: event)
         }
+        
+        observe(browser.focusedIndexVariable)
+        {
+            [unowned self] indexUpdate in
+            
+            self.moveToFocusedList(from: indexUpdate.old,
+                                   to: indexUpdate.new,
+                                   animated: true)
+        }
     }
     
     private func did(receive event: Browser.Event)
@@ -64,18 +73,10 @@ class BrowserView: LayerBackedView, Observer
         case .didPush(let newList):
             pushListView(for: newList)
             
-        case .didMove:
-            browserDidMove()
-            
         case .listDidChangeSelection(let listIndex, let selectionIndexes):
             selectionDidChangeInList(at: listIndex,
                                      selectionIndexes: selectionIndexes)
         }
-    }
-    
-    private func browserDidMove()
-    {
-        moveToFocusedList()
     }
     
     // MARK: - Resizing
@@ -117,6 +118,8 @@ class BrowserView: LayerBackedView, Observer
         
         listViews.append(newListView)
         
+        if listViews.count == 1 { newListView.set(focused: true) }
+        
         constrainLastListView()
         
         observe(listView: newListView)
@@ -156,25 +159,36 @@ class BrowserView: LayerBackedView, Observer
         else
         {
             let leftView = listViews[listViews.count - 2]
-            listView.constrain(toTheRightOf: leftView)
+            listView.constrain(toTheRightOf: leftView, gap: 1)
         }
         
         listView.constrainWidth(to: listLayoutGuides[0])
         
-        listView.constrainTopToParent()
+        listView.constrainTopToParent(inset: 1)
         listView.constrainBottomToParent()
     }
     
-    private func moveToFocusedList(animated: Bool = true)
+    private func moveToFocusedList(from: Int? = nil,
+                                   to: Int? = nil,
+                                   animated: Bool = true)
     {
-        guard listViews.isValid(index: browser.focusedListIndex) else { return }
+        let newIndex = to ?? browser.focusedIndex
         
-        let focusedListView = listViews[browser.focusedListIndex]
+        guard listViews.isValid(index: newIndex) else { return }
+        
+        let focusedListView = listViews[newIndex]
         let listWidth = focusedListView.frame.size.width
         let targetPosition = focusedListView.frame.origin.x - listWidth
         
         if animated
         {
+            focusedListView.set(focused: true)
+            
+            if let from = from, listViews.isValid(index: from)
+            {
+                listViews[from].set(focused: false)
+            }
+            
             NSAnimationContext.beginGrouping()
             NSAnimationContext.current.duration = 0.3
             
@@ -196,17 +210,17 @@ class BrowserView: LayerBackedView, Observer
     {
         for guide in listLayoutGuides
         {
-            guide.constrainTop(to: self)
+            guide.constrainTop(to: self, offset: 1)
             guide.constrainBottom(to: self)
         }
         
         listLayoutGuides[0].constrainWidth(toMinimum: 150)
         listLayoutGuides[0].constrainLeft(to: self)
         
-        listLayoutGuides[1].constrain(toTheRightOf: listLayoutGuides[0])
+        listLayoutGuides[1].constrain(toTheRightOf: listLayoutGuides[0], gap: 1)
         listLayoutGuides[1].constrainWidth(to: listLayoutGuides[0])
         
-        listLayoutGuides[2].constrain(toTheRightOf: listLayoutGuides[1])
+        listLayoutGuides[2].constrain(toTheRightOf: listLayoutGuides[1], gap: 1)
         listLayoutGuides[2].constrainRight(to: self)
         listLayoutGuides[2].constrainWidth(to: listLayoutGuides[0])
     }

@@ -2,7 +2,7 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class ApplicationMenu: NSMenu
+class ApplicationMenu: NSMenu, Observer
 {
     // MARK: - Initialization
     
@@ -25,6 +25,8 @@ class ApplicationMenu: NSMenu
         addItem(withTitle: "Quit Flowlist",
                 action: #selector(NSApplication.terminate(_:)),
                 keyEquivalent: "q")
+        
+        observeDarkMode()
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
@@ -57,17 +59,23 @@ class ApplicationMenu: NSMenu
     
     // MARK: - Dark Mode
     
+    private func observeDarkMode()
+    {
+        observe(darkMode)
+        {
+            [weak self] _ in
+            
+            guard let me = self else { return }
+            
+            me.darkModeItem.title = me.darkModeOptionTitle
+        }
+    }
+    
     private lazy var darkModeItem = MenuItem(self.darkModeOptionTitle,
                                              key: "d",
                                              validator: self)
     {
-        [weak self] in
-        
-        guard let me = self else { return }
-        
         Color.isInDarkMode = !Color.isInDarkMode
-        
-        me.darkModeItem.title = me.darkModeOptionTitle
     }
     
     private var darkModeOptionTitle: String

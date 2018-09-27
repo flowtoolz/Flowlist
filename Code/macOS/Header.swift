@@ -17,9 +17,17 @@ class Header: LayerBackedView, Observer
             
             self?.titleLabel.textColor = Color.text.nsColor
             self?.icon.image = Header.iconImage
+            self?.backgroundColor = .itemBackground(isDone: false,
+                                                    isSelected: false,
+                                                    isTagged: false,
+                                                    isFocusedList: false)
         }
         
-        backgroundColor = .clear
+        backgroundColor = .itemBackground(isDone: false,
+                                          isSelected: false,
+                                          isTagged: false,
+                                          isFocusedList: false)
+        
         constrainTitleLabel()
         
         constrainIcon()
@@ -67,7 +75,8 @@ class Header: LayerBackedView, Observer
         let isUntitled = String(withNonEmpty: root.title.value) == nil
         
         let textColor = Color.itemText(isDone: root.isDone || isUntitled,
-                                       isSelected: false)
+                                       isSelected: false,
+                                       isFocused: true)
         
         titleLabel.textColor = textColor.nsColor
     }
@@ -82,7 +91,7 @@ class Header: LayerBackedView, Observer
     
     private func constrainIcon()
     {
-        icon.constrainHeightToParent(with: 0.557)
+        icon.constrainHeightToParent(with: 0.5)
         icon.constrainCenterToParent()
     }
     
@@ -103,7 +112,8 @@ class Header: LayerBackedView, Observer
         titleLabel.stringValue = (title ?? "untitled").replacingOccurrences(of: "\n", with: " ")
         
         let textColor = Color.itemText(isDone: title == nil,
-                                       isSelected: false)
+                                       isSelected: false,
+                                       isFocused: true)
         
         titleLabel.textColor = textColor.nsColor
     }

@@ -13,7 +13,10 @@ class Browser: Observer, Observable
         pushList()
         pushList()
         
-        guard lists.isValid(index: focusedListIndex) else { fatalError() }
+        guard lists.isValid(index: focusedIndex) else
+        {
+            fatalError()
+        }
         
         focusedList.set(root: store.root)
         focusedList.select()
@@ -27,30 +30,28 @@ class Browser: Observer, Observable
     {
         guard canMove(direction) else { return }
         
-        move(to: focusedListIndex + (direction == .left ? -1 : 1))
+        move(to: focusedIndex + (direction == .left ? -1 : 1))
     }
     
     func canMove(_ direction: Direction) -> Bool
     {
-        if direction == .left { return focusedListIndex > 0 }
+        if direction == .left { return focusedIndex > 0 }
         
         return focusedList.selection.count == 1
     }
     
     func move(to index: Int)
     {
-        guard index != focusedListIndex, lists.isValid(index: index) else
+        guard index != focusedIndexVariable.value, lists.isValid(index: index) else
         {
             return
         }
         
-        focusedListIndex = index
+        while index >= numberOfLists - 2 { pushList() }
         
-        while focusedListIndex >= numberOfLists - 2 { pushList() }
+        focusedIndexVariable <- index
         
         focusedList.select()
-        
-        send(.didMove)
     }
     
     // MARK: - Create Lists
@@ -149,8 +150,9 @@ class Browser: Observer, Observable
         return lists[index]
     }
     
-    var focusedList: SelectableList { return lists[focusedListIndex] }
-    private(set) var focusedListIndex = 0
+    var focusedList: SelectableList { return lists[focusedIndex] }
+    var focusedIndex: Int { return focusedIndexVariable.value ?? 0 }
+    let focusedIndexVariable = Var(0)
     
     var numberOfLists: Int { return lists.count }
     private var lists = [SelectableList]()
@@ -163,7 +165,6 @@ class Browser: Observer, Observable
     {
         case didNothing
         case didPush(list: SelectableList)
-        case didMove
         case listDidChangeSelection(listIndex: Int, selectionIndexes: [Int])
     }
 }

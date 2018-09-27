@@ -23,7 +23,6 @@
 		9E5768BC20C14B9300749C0C /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768BB20C14B9300749C0C /* Direction.swift */; };
 		9E5768C020C15B6300749C0C /* Browser+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768BF20C15B6300749C0C /* Browser+Debugging.swift */; };
 		9E5768C220C15CDF00749C0C /* Task+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768C120C15CDF00749C0C /* Task+Hashable.swift */; };
-		9E60275B21282F91005FFACD /* NSView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E60275921282F91005FFACD /* NSView+Style.swift */; };
 		9E60275C21282F91005FFACD /* Font+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E60275A21282F91005FFACD /* Font+Style.swift */; };
 		9E61FB4A21241BF400C2EDF7 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E61FB4921241BF400C2EDF7 /* BrowserView.swift */; };
 		9E6C720B20B19C88001C3D2C /* Task+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Task+State.swift */; };
@@ -90,7 +89,6 @@
 		9E5768BB20C14B9300749C0C /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Direction.swift; path = ../Code/Direction.swift; sourceTree = "<group>"; };
 		9E5768BF20C15B6300749C0C /* Browser+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Browser+Debugging.swift"; path = "../Code/Browser+Debugging.swift"; sourceTree = "<group>"; };
 		9E5768C120C15CDF00749C0C /* Task+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Hashable.swift"; path = "../Code/Task+Hashable.swift"; sourceTree = "<group>"; };
-		9E60275921282F91005FFACD /* NSView+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSView+Style.swift"; path = "../Code/macOS/NSView+Style.swift"; sourceTree = "<group>"; };
 		9E60275A21282F91005FFACD /* Font+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Font+Style.swift"; path = "../Code/macOS/Font+Style.swift"; sourceTree = "<group>"; };
 		9E61FB4921241BF400C2EDF7 /* BrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowserView.swift; path = ../Code/macOS/BrowserView.swift; sourceTree = "<group>"; };
 		9E6C720A20B19C88001C3D2C /* Task+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+State.swift"; path = "../Code/Task+State.swift"; sourceTree = "<group>"; };
@@ -180,7 +178,6 @@
 			isa = PBXGroup;
 			children = (
 				9E60275A21282F91005FFACD /* Font+Style.swift */,
-				9E60275921282F91005FFACD /* NSView+Style.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -582,7 +579,6 @@
 				9E8ABF0020B2F0F1001E862B /* SelectableList+Debugging.swift in Sources */,
 				9E2F83E520C8639F003E771E /* SelectableList+NSPasteboard.swift in Sources */,
 				9ED5C8DD20DF970000EF84CB /* PurchaseContentView.swift in Sources */,
-				9E60275B21282F91005FFACD /* NSView+Style.swift in Sources */,
 				9E3F69332115ADE2002D595D /* Task+WelcomeTour.swift in Sources */,
 				9EA5925B20AF7AD200F70CBF /* Selection.swift in Sources */,
 				9E5768C220C15CDF00749C0C /* Task+Hashable.swift in Sources */,

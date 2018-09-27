@@ -19,6 +19,8 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
         fullVersionPurchaseController.setup()
         store.load()
         
+        observeSystemAppearance()
+        
         observe(darkMode)
         {
             [weak self] _ in
@@ -71,6 +73,28 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     {
         store.save()
     }
+    
+    // MARK: - Adjust to OSX Dark Mode Setting
+    
+    private func observeSystemAppearance()
+    {
+        guard #available(OSX 10.14, *) else { return }
+        
+        adjustToSystemAppearance()
+        
+        appearanceObservation = NSApp.observe(\.effectiveAppearance)
+        {
+            [weak self] _, _ in self?.adjustToSystemAppearance()
+        }
+    }
+    
+    @available(OSX 10.14, *)
+    private func adjustToSystemAppearance()
+    {
+        Color.isInDarkMode = NSApp.effectiveAppearance.name == .darkAqua
+    }
+    
+    private var appearanceObservation: NSKeyValueObservation?
     
     // MARK: - Menu & Mindow
     

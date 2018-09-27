@@ -39,10 +39,14 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
         
         let isSelected = list?.selection.isSelected(task) ?? false
         
-        taskView.configure(with: task, selected: isSelected)
+        taskView.configure(with: task,
+                           selected: isSelected,
+                           focused: isFocused)
         
         return taskView
     }
+    
+    var isFocused = false
     
     private func retrieveTaskView(from tableView: NSTableView) -> TaskView
     {

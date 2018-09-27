@@ -10,7 +10,26 @@ class SelectableListView: LayerBackedView, Observer, Observable
     override init(frame frameRect: NSRect)
     {
         super.init(frame: frameRect)
-    
+        
+        backgroundColor = .listBackground
+        
+        shadow = NSShadow()
+        layer?.shadowColor = Color.gray(brightness: 0.5).cgColor
+        layer?.shadowOffset = CGSize(width: 0,
+                                     height: Color.isInDarkMode ? 1 : -1)
+        layer?.shadowRadius = 0
+        layer?.shadowOpacity = Color.isInDarkMode ? 0.35 : 0.4
+        
+        observe(darkMode)
+        {
+            [weak self] isDark in
+            
+            self?.backgroundColor = .listBackground
+            self?.layer?.shadowOffset = CGSize(width: 0,
+                                               height: isDark ? 1 : -1)
+            self?.layer?.shadowOpacity = Color.isInDarkMode ? 0.35 : 0.4
+        }
+        
         constrainHeader()
         constrainScrollTable()
     }
@@ -18,6 +37,23 @@ class SelectableListView: LayerBackedView, Observer, Observable
     required init?(coder decoder: NSCoder) { fatalError() }
     
     deinit { stopAllObserving() }
+    
+    // MARK: - Focus
+    
+    func set(focused: Bool)
+    {
+        scrollTable.table.isFocused = focused
+        
+        for index in 0 ..< scrollTable.table.numberOfRows
+        {
+            if let view = scrollTable.table.view(atColumn: 0,
+                                                 row: index,
+                                                 makeIfNecessary: false) as? TaskView
+            {
+                view.set(focused: focused)
+            }
+        }
+    }
     
     // MARK: - Configuration
     
@@ -77,10 +113,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
     {
         let height = TaskView.heightWithSingleLine
         headerHeightConstraint = header.constrainHeight(to: height)
-        headerTopConstraint = header.constrainTopToParent(inset: TaskView.spacing)
-        
-        header.constrainLeftToParent()
-        header.constrainRightToParent()
+        header.constrainToParentExcludingBottom()
     }
     
     private lazy var header = addForAutoLayout(Header())
@@ -96,16 +129,9 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func constrainScrollTable()
     {
-        let gap = TaskView.spacing
-
-        let stic = scrollTable.constrainToParentExcludingTop(insetLeft: gap,
-                                                             insetBottom: gap,
-                                                             insetRight: gap)
+        scrollTable.constrainToParentExcludingTop()
         
-        scrollTableInsetConstraints = stic
-        
-        scrollTableTopConstraint = scrollTable.constrain(below: header,
-                                                         gap: scrollTableTopOffset)
+        scrollTable.constrain(below: header)
     }
     
     func didEndResizing()
@@ -137,30 +163,10 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func updateLayoutConstants()
     {
-        let spacing = TaskView.spacing
-        
-        headerTopConstraint?.constant = spacing
         headerHeightConstraint?.constant = TaskView.heightWithSingleLine
-        
-        for constraint in scrollTableInsetConstraints
-        {
-            constraint.constant = constraint.constant < 0 ? -spacing : spacing
-        }
-        
-        scrollTableTopConstraint?.constant = scrollTableTopOffset
     }
-    
-    private var headerTopConstraint: NSLayoutConstraint?
+
     private var headerHeightConstraint: NSLayoutConstraint?
-    private var scrollTableTopConstraint: NSLayoutConstraint?
-    private var scrollTableInsetConstraints = [NSLayoutConstraint]()
-    
-    private var scrollTableTopOffset: CGFloat
-    {
-        let spacing = TaskView.spacing
-        let smallHalfItemSpacing = CGFloat(Int(spacing / 2))
-        return spacing - smallHalfItemSpacing
-    }
     
     // MARK: - List
     

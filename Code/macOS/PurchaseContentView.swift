@@ -48,6 +48,10 @@ class PurchaseContentView: NSView, Observer
         loadingLabel.textColor = textColor
         bulletpointList.adjustToColorMode()
         icon.image = Color.isInDarkMode ? iconImageDark : iconImageLight
+        if #available(OSX 10.14, *)
+        {
+            spinner.appearance = NSAppearance(named: Color.isInDarkMode ? .darkAqua : .aqua)
+        }
     }
     
     // MARK: - Load Data From AppStore
@@ -143,7 +147,6 @@ class PurchaseContentView: NSView, Observer
         
         view.backgroundColor = Color.textDiscount
         view.isHidden = true
-        view.layer?.cornerRadius = Float.cornerRadius.cgFloat
         
         return view
     }()
@@ -181,6 +184,12 @@ class PurchaseContentView: NSView, Observer
     {
         let view = loadingIndicator.addForAutoLayout(NSProgressIndicator())
         
+        if #available(OSX 10.14, *)
+        {
+            view.appearance = NSAppearance(named: Color.isInDarkMode ? .darkAqua : .aqua)
+        }
+        
+        view.controlTint = .graphiteControlTint
         view.style = .spinning
         view.startAnimation(self)
         
