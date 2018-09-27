@@ -6,14 +6,12 @@ extension Font
 {
     static var text: Font
     {
-        return Font.system(size: baseSize.latestUpdate,
-                           weight: .system)
+        return Font.system(size: baseSize.latestUpdate, weight: .system)
     }
     
     static var listTitle: Font
     {
-        return Font.system(size: baseSize.latestUpdate,
-                           weight: .semibold)
+        return Font.system(size: baseSize.latestUpdate, weight: .bold)
     }
     
     static var title: Font
@@ -30,10 +28,7 @@ extension Font
     static let baseSizeVar = Var(defaultSize)
     static let defaultSize: Int =
     {
-        guard let screenSize = NSScreen.main?.frame.size else
-        {
-            return 14
-        }
+        guard let screenSize = NSScreen.main?.frame.size else { return 14 }
 
         return Int(screenSize.width * 0.011)
     }()
