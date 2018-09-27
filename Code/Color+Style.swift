@@ -92,7 +92,7 @@ extension Color
     
     static var progressBar: Color
     {
-        return .gray(brightness: isInDarkMode ? 0.18 : 1)
+        return .gray(brightness: isInDarkMode ? 0.25 : 1)
     }
     
     static var progressBackground: Color
