@@ -2,6 +2,7 @@ import SwiftyToolz
 
 extension Float
 {
+    static let listGap: Float = 10
     static let cornerRadius: Float = 3
     static let progressBarHeight: Float = 10
     

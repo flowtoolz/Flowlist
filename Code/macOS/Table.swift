@@ -243,9 +243,11 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         
         let windowWidth = Window.intendedMainWindowSize.value?.width ?? 1024
         
+        let widthForLists = windowWidth - 4 * Float.listGap.cgFloat
+        
         let pixelsPerPoint = NSApp.mainWindow?.backingScaleFactor ?? 2
         
-        let calculatedWidth = CGFloat(Int((pixelsPerPoint * (windowWidth - 2)) / 3 + 0.5)) / pixelsPerPoint
+        let calculatedWidth = CGFloat(Int((pixelsPerPoint * widthForLists) / 3 + 0.5)) / pixelsPerPoint
         
         cashedWidth = calculatedWidth
         
