@@ -11,7 +11,8 @@ extension Font
     
     static var listTitle: Font
     {
-        return Font.system(size: baseSize.latestUpdate, weight: .bold)
+        return Font.system(size: Int(1.7 * Float(baseSize.latestUpdate)),
+                           weight: .thin)
     }
     
     static var title: Font

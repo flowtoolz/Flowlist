@@ -19,6 +19,7 @@ class Header: LayerBackedView, Observer
         icon.isHidden = true
         
         constrainLayoutGuides()
+        constrainTitleContainer()
         constrainTitleLabel()
         constrainIcon()
         
@@ -92,12 +93,12 @@ class Header: LayerBackedView, Observer
     
     private func constrainIcon()
     {
-        icon.constrainCenterY(to: layoutGuideLeft)
+        icon.constrainCenterYToParent(at: 0.403)
         icon.constrainCenterXToParent()
-        icon.constrainWidth(to: 0.57, of: layoutGuideLeft)
+        icon.constrainSize(to: 0.57, 0.57, of: layoutGuideLeft)
     }
     
-    private lazy var icon = addForAutoLayout(Icon(with: Header.iconImage))
+    private lazy var icon = titleContainer.addForAutoLayout(Icon(with: Header.iconImage))
     
     private static var iconImage: NSImage
     {
@@ -124,14 +125,14 @@ class Header: LayerBackedView, Observer
     {
         titleLabel.constrain(toTheLeftOf: layoutGuideRight)
         titleLabel.constrainLeft(to: relativeTitleInset, of: layoutGuideLeft)
-        titleLabel.constrainCenterY(to: layoutGuideLeft)
+        titleLabel.constrainCenterYToParent(at: 0.42)
     }
     
     private var titleSideInsetConstraints = [NSLayoutConstraint]()
     
     private lazy var titleLabel: Label =
     {
-        let label = addForAutoLayout(Label())
+        let label = titleContainer.addForAutoLayout(Label())
         
         label.textColor = Color.text.nsColor
         label.font = Font.listTitle.nsFont
@@ -140,6 +141,16 @@ class Header: LayerBackedView, Observer
         
         return label
     }()
+    
+    // MARK: - Title Container
+    
+    private func constrainTitleContainer()
+    {
+        titleContainer.constrainToParentExcludingTop()
+        titleContainer.constrainTop(to: layoutGuideLeft)
+    }
+    
+    private lazy var titleContainer = addForAutoLayout(NSView())
     
     // MARK: - Layout Guides
     
@@ -156,6 +167,7 @@ class Header: LayerBackedView, Observer
     private func constrainLayoutGuides()
     {
         let size = layouGuideSize
+        
         layoutGuideSizeConstraints = layoutGuideLeft.constrainSize(to: size, size)
         layoutGuideLeft.constrainLeft(to: self)
         layoutGuideLeft.constrainBottom(to: self)

@@ -111,7 +111,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func constrainHeader()
     {
-        let height = 1.5 * TaskView.heightWithSingleLine
+        let height = relativeHeaderHeight * TaskView.heightWithSingleLine
         headerHeightConstraint = header.constrainHeight(to: height)
         header.constrainToParentExcludingBottom()
     }
@@ -163,9 +163,11 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func updateLayoutConstants()
     {
-        headerHeightConstraint?.constant = 1.5 * TaskView.heightWithSingleLine
+        headerHeightConstraint?.constant = relativeHeaderHeight * TaskView.heightWithSingleLine
     }
 
+    private let relativeHeaderHeight: CGFloat = 1.6
+    
     private var headerHeightConstraint: NSLayoutConstraint?
     
     // MARK: - List
