@@ -81,8 +81,12 @@ class TaskView: LayerBackedView, Observer, Observable
         
         // icon alphas
         
-        checkBox.alphaValue = isDone ? Color.doneAlpha.cgFloat : 1
-        groupIcon.alphaValue = isDone ? Color.doneAlpha.cgFloat : 1
+        checkBox.alphaValue = Color.iconAlpha(isInProgress: task.isInProgress,
+                                              isDone: isDone,
+                                              isSelected: isSelected).cgFloat
+        groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
+                                               isDone: isDone,
+                                               isSelected: isSelected).cgFloat
         
         // check box image
         
@@ -167,6 +171,14 @@ class TaskView: LayerBackedView, Observer, Observable
         
         textView.insertionPointColor = Color.text.nsColor
         textView.selectedTextAttributes = TextView.selectionSyle
+        
+        let isInProgress = task?.isInProgress ?? false
+        checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
+                                              isDone: isDone,
+                                              isSelected: isSelected).cgFloat
+        groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
+                                               isDone: isDone,
+                                               isSelected: isSelected).cgFloat
     }
     
     private func taskStateDidChange()
@@ -182,8 +194,13 @@ class TaskView: LayerBackedView, Observer, Observable
                                           isFocusedList: isFocused)
         
         checkBox.set(state: task.state.value)
-        checkBox.alphaValue = isDone ? Color.doneAlpha.cgFloat : 1
-        groupIcon.alphaValue = isDone ? Color.doneAlpha.cgFloat : 1
+        
+        checkBox.alphaValue = Color.iconAlpha(isInProgress: task.isInProgress,
+                                              isDone: isDone,
+                                              isSelected: isSelected).cgFloat
+        groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
+                                               isDone: isDone,
+                                               isSelected: isSelected).cgFloat
         
         textView.set(color: .itemText(isDone: isDone,
                                       isSelected: isSelected,
@@ -228,7 +245,7 @@ class TaskView: LayerBackedView, Observer, Observable
                                           isTagged: isTagged,
                                           isFocusedList: isFocused)
         
-        if !textView.isEditing && !Color.isInDarkMode
+        if !textView.isEditing
         {
             textView.set(color: .itemText(isDone: isDone,
                                           isSelected: isSelected,
@@ -243,6 +260,14 @@ class TaskView: LayerBackedView, Observer, Observable
             
             checkBox.set(white: lightContent)
         }
+        
+        let isInProgress = task?.isInProgress ?? false
+        checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
+                                              isDone: isDone,
+                                              isSelected: isSelected).cgFloat
+        groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
+                                               isDone: isDone,
+                                               isSelected: isSelected).cgFloat
     }
     
     private(set) var isSelected = false
@@ -319,6 +344,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func updateTextView()
     {
+        // TODO: is this still needed from El Capitan onwards?
         // https://stackoverflow.com/questions/19121367/uitextviews-in-a-uitableview-link-detection-bug-in-ios-7
         textView.string = ""
         textView.string = task?.title.value ?? ""
@@ -386,7 +412,13 @@ class TaskView: LayerBackedView, Observer, Observable
             checkBox.isEnabled = true
         }
         
-        let iconAlpha: CGFloat = isDone ? Color.doneAlpha.cgFloat : 1
+        let isInProgress = task?.isInProgress ?? false
+        let checkBoxAlpha = Color.iconAlpha(isInProgress: isInProgress,
+                                            isDone: isDone,
+                                            isSelected: isSelected).cgFloat
+        let groupIconAlpha = Color.iconAlpha(isInProgress: false,
+                                             isDone: isDone,
+                                             isSelected: isSelected).cgFloat
         
         NSAnimationContext.beginGrouping()
         NSAnimationContext.current.allowsImplicitAnimation = false
@@ -399,8 +431,8 @@ class TaskView: LayerBackedView, Observer, Observable
             }
         }
         
-        groupIcon.animator().alphaValue = editing ? 0 : iconAlpha
-        checkBox.animator().alphaValue = editing ? 0 : iconAlpha
+        groupIcon.animator().alphaValue = editing ? 0 : groupIconAlpha
+        checkBox.animator().alphaValue = editing ? 0 : checkBoxAlpha
         
         NSAnimationContext.endGrouping()
     }

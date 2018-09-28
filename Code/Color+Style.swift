@@ -31,22 +31,24 @@ extension Color
         {
             if selected
             {
-                return Color.white.with(alpha: done ? doneAlpha : 1)
+                return Color.white.with(alpha: done ? 0.5 : 1)
             }
             else
             {
-                return Color.white.with(alpha: done ? doneAlpha : 1)
+                return Color.white.with(alpha: done ? grayedOutAlphaDark : 1)
             }
         }
         else
         {
-            if selected && focused
+            if selected
             {
-                return Color.white.with(alpha: done ? doneAlpha : 1)
+                let color: Color = focused ? .white : .black
+                
+                return color.with(alpha: done ? 0.5 : 1)
             }
             else
             {
-                return Color.black.with(alpha: done ? doneAlpha : 1)
+                return Color.black.with(alpha: done ? grayedOutAlphaLight : 1)
             }
         }
     }
@@ -75,7 +77,26 @@ extension Color
     
     // MARK: - Item Content
     
-    static let doneAlpha: Float = 0.25
+    static func iconAlpha(isInProgress inProgress: Bool,
+                          isDone done: Bool,
+                          isSelected selected: Bool) -> Float
+    {
+        if selected
+        {
+            return done ? 0.5 : 1.0
+        }
+        else if inProgress
+        {
+            return 1
+        }
+        else
+        {
+            return isInDarkMode ? grayedOutAlphaDark : grayedOutAlphaLight
+        }
+    }
+    
+    private static let grayedOutAlphaLight: Float = 0.35
+    private static let grayedOutAlphaDark: Float = 0.2
     
     static func itemContentIsLight(isSelected selected: Bool,
                                    isFocused focused: Bool) -> Bool
