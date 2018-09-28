@@ -18,7 +18,7 @@ class Header: LayerBackedView, Observer
         
         icon.isHidden = true
         
-        constrainLayoutGuide()
+        constrainLayoutGuides()
         constrainTitleLabel()
         constrainIcon()
         
@@ -92,9 +92,9 @@ class Header: LayerBackedView, Observer
     
     private func constrainIcon()
     {
-        icon.constrainCenterY(to: layoutGuide)
+        icon.constrainCenterY(to: layoutGuideLeft)
         icon.constrainCenterXToParent()
-        icon.constrainWidth(to: 0.57, of: layoutGuide)
+        icon.constrainWidth(to: 0.57, of: layoutGuideLeft)
     }
     
     private lazy var icon = addForAutoLayout(Icon(with: Header.iconImage))
@@ -122,9 +122,9 @@ class Header: LayerBackedView, Observer
     
     private func constrainTitleLabel()
     {
-        titleLabel.constrainRightToParent()
-        titleLabel.constrainLeft(to: 0.3, of: layoutGuide)
-        titleLabel.constrainTopToParent(at: 0.26)
+        titleLabel.constrain(toTheLeftOf: layoutGuideRight)
+        titleLabel.constrainLeft(to: relativeTitleInset, of: layoutGuideLeft)
+        titleLabel.constrainCenterY(to: layoutGuideLeft)
     }
     
     private var titleSideInsetConstraints = [NSLayoutConstraint]()
@@ -141,7 +141,7 @@ class Header: LayerBackedView, Observer
         return label
     }()
     
-    // MARK: - Layout Guide
+    // MARK: - Layout Guides
     
     private func updateLayoutConstants()
     {
@@ -153,15 +153,21 @@ class Header: LayerBackedView, Observer
         }
     }
     
-    private func constrainLayoutGuide()
+    private func constrainLayoutGuides()
     {
-        layoutGuide.constrainLeft(to: self)
-        layoutGuide.constrainBottom(to: self)
-        
         let size = layouGuideSize
+        layoutGuideSizeConstraints = layoutGuideLeft.constrainSize(to: size, size)
+        layoutGuideLeft.constrainLeft(to: self)
+        layoutGuideLeft.constrainBottom(to: self)
         
-        layoutGuideSizeConstraints = layoutGuide.constrainSize(to: size, size)
+        layoutGuideRight.constrainHeight(to: layoutGuideLeft)
+        layoutGuideRight.constrainWidth(to: relativeTitleInset,
+                                        of: layoutGuideLeft)
+        layoutGuideRight.constrainBottom(to: self)
+        layoutGuideRight.constrainRight(to: self)
     }
+    
+    private let relativeTitleInset: CGFloat = 0.3
     
     private var layouGuideSize: CGFloat
     {
@@ -170,5 +176,6 @@ class Header: LayerBackedView, Observer
     
     private var layoutGuideSizeConstraints = [NSLayoutConstraint]()
     
-    private lazy var layoutGuide = addLayoutGuide()
+    private lazy var layoutGuideLeft = addLayoutGuide()
+    private lazy var layoutGuideRight = addLayoutGuide()
 }
