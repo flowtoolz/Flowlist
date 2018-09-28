@@ -423,6 +423,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         view.backgroundColor = .editingBackground
         view.alphaValue = 0
+        view.layer?.cornerRadius = Float.listCornerRadius.cgFloat
         
         return view
     }()
