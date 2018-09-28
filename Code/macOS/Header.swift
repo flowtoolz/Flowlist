@@ -11,10 +11,7 @@ class Header: LayerBackedView, Observer
     {
         super.init(frame: frameRect)
         
-        backgroundColor = .itemBackground(isDone: false,
-                                          isSelected: false,
-                                          isTagged: false,
-                                          isFocusedList: false)
+        backgroundColor = .listBackground
         
         icon.isHidden = true
         
@@ -29,10 +26,7 @@ class Header: LayerBackedView, Observer
             
             self?.titleLabel.textColor = Color.text.nsColor
             self?.icon.image = Header.iconImage
-            self?.backgroundColor = .itemBackground(isDone: false,
-                                                    isSelected: false,
-                                                    isTagged: false,
-                                                    isFocusedList: false)
+            self?.backgroundColor = .listBackground
         }
         
         observe(Font.baseSize)

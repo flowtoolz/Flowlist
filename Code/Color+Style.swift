@@ -110,6 +110,14 @@ extension Color
     
     // MARK: - Browser Backgrounds
     
+    static var listBackground: Color
+    {
+        return .itemBackground(isDone: false,
+                               isSelected: false,
+                               isTagged: false,
+                               isFocusedList: false)
+    }
+    
     static func itemBackground(isDone done: Bool,
                                isSelected selected: Bool,
                                isTagged tagged: Bool,
@@ -123,11 +131,6 @@ extension Color
         let brightness: Float = isInDarkMode ? 1.0 / (isFocusedList ? 3 : 6) : isFocusedList ? 0.5 : 0.75
         
         return Color.gray(brightness: brightness)
-    }
-
-    static var listBackground: Color
-    {
-        return .clear
     }
     
     static var windowBackground: Color

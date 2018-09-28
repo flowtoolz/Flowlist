@@ -1,4 +1,5 @@
 import AppKit
+import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
@@ -8,7 +9,7 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     
     func numberOfRows(in tableView: NSTableView) -> Int
     {
-        return list?.numberOfTasks ?? 0
+        return (list?.numberOfTasks ?? 0) + 1
     }
     
     func tableView(_ tableView: NSTableView,
@@ -20,6 +21,11 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     func tableView(_ tableView: NSTableView,
                    heightOfRow row: Int) -> CGFloat
     {
+        if row >= (list?.numberOfTasks ?? 0)
+        {
+            return TaskView.heightWithSingleLine / 2
+        }
+        
         return delegate?.taskViewHeight(at: row) ?? TaskView.heightWithSingleLine
     }
     
@@ -29,15 +35,23 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
                    viewFor tableColumn: NSTableColumn?,
                    row: Int) -> NSView?
     {
-        guard let task = list?[row] else
+        guard let list = list else { return nil }
+        
+        guard row < list.numberOfTasks else
         {
-            log(error: "Couldn't find task for row \(row) in list \(list?.title.observable?.value ?? "nil").")
+            return tableView.makeView(withIdentifier: Spacer.uiIdentifier,
+                                      owner: nil) ?? Spacer()
+        }
+        
+        guard let task = list[row] else
+        {
+            log(error: "Couldn't find task for row \(row) in list \(list.title.observable?.value ?? "nil").")
             return nil
         }
         
         let taskView = retrieveTaskView(from: tableView)
         
-        let isSelected = list?.selection.isSelected(task) ?? false
+        let isSelected = list.selection.isSelected(task)
         
         taskView.configure(with: task,
                            selected: isSelected,

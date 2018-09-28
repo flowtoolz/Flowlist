@@ -119,15 +119,13 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             return
         }
         
-        if let old = old, old.hasBranches
-        {
-            didRemove(from: Array(0 ..< old.numberOfBranches))
-        }
+        let numberToRemove = (old?.numberOfBranches ?? 0) + 1
+        let numberToInsertBack = (new?.numberOfBranches ?? 0) + 1
         
-        if let new = new, new.hasBranches
-        {
-            didInsert(at: Array(0 ..< new.numberOfBranches))
-        }
+        if numberToRemove == 1 && numberToInsertBack == 1 { return }
+        
+        didRemove(from: Array(0 ..< numberToRemove))
+        didInsert(at: Array(0 ..< numberToInsertBack))
     }
     
     private var isVisible: Bool

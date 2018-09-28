@@ -11,8 +11,6 @@ class SelectableListView: LayerBackedView, Observer, Observable
     {
         super.init(frame: frameRect)
         
-        backgroundColor = .listBackground
-        
         shadow = NSShadow()
         layer?.shadowColor = Color.gray(brightness: 0.5).cgColor
         layer?.shadowOffset = CGSize(width: Color.isInDarkMode ? -1 : 1,
@@ -24,7 +22,6 @@ class SelectableListView: LayerBackedView, Observer, Observable
         {
             [weak self] isDark in
             
-            self?.backgroundColor = .listBackground
             self?.layer?.shadowOffset = CGSize(width: isDark ? -1 : 1,
                                                height: isDark ? 1 : -1)
             self?.layer?.shadowOpacity = Color.isInDarkMode ? 0.35 : 0.2
