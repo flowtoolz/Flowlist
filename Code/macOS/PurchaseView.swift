@@ -60,11 +60,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
         
         progressBar.backgroundColor = .progressBackground
         progressBar.progressColor = .progressBar
+        progressBarSeparator.backgroundColor = .progressBarSeparator
         
         let taskNumber = numberOfUserCreatedTasks.latestUpdate
         itemLabel.textColor = labelColor(for: taskNumber).nsColor
-        
-        progressBar.layer?.borderColor = Color.windowBackground.cgColor
         
         expandIcon.image = isExpanded ? closeImage : expandImage
         
@@ -182,7 +181,18 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         progressBar.constrainToParentExcludingTop()
         progressBar.constrainHeight(to: Float.progressBarHeight.cgFloat)
+        
+        progressBarSeparator.constrainToParentExcludingBottom()
+        progressBarSeparator.constrainHeight(to: 1)
     }
+    
+    private lazy var progressBarSeparator: LayerBackedView =
+    {
+        let view = progressBar.addForAutoLayout(LayerBackedView())
+        view.backgroundColor = .progressBarSeparator
+        
+        return view
+    }()
     
     private lazy var progressBar: ProgressBar =
     {
@@ -194,8 +204,6 @@ class PurchaseView: LayerBackedView, Observable, Observer
         bar.progress = progress
         bar.backgroundColor = .progressBackground
         bar.progressColor = .progressBar
-        bar.layer?.borderColor = Color.windowBackground.cgColor
-        bar.layer?.borderWidth = 1.0
         
         return bar
     }()

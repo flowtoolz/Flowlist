@@ -90,14 +90,24 @@ extension Color
     
     // MARK: - Purchase Panel Views
     
+    static var progressBarSeparator: Color
+    {
+        if isInDarkMode { return .black }
+        
+        return .progressBar
+    }
+    
     static var progressBar: Color
     {
-        return .gray(brightness: isInDarkMode ? 0.25 : 1)
+        return itemBackground(isDone: false,
+                              isSelected: true,
+                              isTagged: false,
+                              isFocusedList: isInDarkMode)
     }
     
     static var progressBackground: Color
     {
-        return isInDarkMode ? .listBackground : .gray(brightness: 0.9)
+        return .listBackground
     }
     
     static var purchasePanelBackground: Color
@@ -128,7 +138,7 @@ extension Color
             return .gray(brightness: isInDarkMode ? 0.09 : 1)
         }
         
-        let brightness: Float = isInDarkMode ? 1.0 / (isFocusedList ? 3 : 6) : isFocusedList ? 0.5 : 0.75
+        let brightness: Float = isInDarkMode ? (isFocusedList ? 0.333 : 0.16) : isFocusedList ? 0.5 : 0.83
         
         return Color.gray(brightness: brightness)
     }
