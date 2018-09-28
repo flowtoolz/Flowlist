@@ -14,6 +14,7 @@ class Header: LayerBackedView, Observer
         constrainLayoutGuides()
         constrainTopSpacer()
         constrainTitleContainer()
+        constrainColorView()
         constrainTitleLabel()
         constrainIcon()
         
@@ -63,6 +64,7 @@ class Header: LayerBackedView, Observer
         }
         
         set(title: list.title.latestUpdate)
+        
         showIcon(list.isRootList)
         
         if let root = list.root { update(with: root) }
@@ -83,6 +85,14 @@ class Header: LayerBackedView, Observer
                                        isFocused: true)
         
         titleLabel.textColor = textColor.nsColor
+        
+        updateColorView(with: root.tag.value)
+        
+        stopObserving(self.list?.root?.tag)
+        observe(root.tag)
+        {
+            [weak self] update in self?.updateColorView(with: update.new)
+        }
     }
     
     // MARK: - Icon
@@ -140,6 +150,36 @@ class Header: LayerBackedView, Observer
         label.maximumNumberOfLines = 1
         
         return label
+    }()
+    
+    // MARK: - Color View
+    
+    private func updateColorView(with tag: Task.Tag?)
+    {
+        if let tagValue = tag?.rawValue
+        {
+            colorView.backgroundColor = Color.tags[tagValue]
+            colorView.isHidden = false
+        }
+        else
+        {
+            colorView.isHidden = true
+        }
+    }
+    
+    private func constrainColorView()
+    {
+        colorView.constrainToParentExcludingBottom()
+        colorView.constrainHeight(to: 0.25, of: layoutGuideLeft)
+    }
+    
+    private lazy var colorView: LayerBackedView =
+    {
+        let view = topSpacer.addForAutoLayout(LayerBackedView())
+        
+        view.alphaValue = 0.5
+        
+        return view
     }()
     
     // MARK: - Top Spacer
