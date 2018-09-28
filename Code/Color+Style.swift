@@ -94,7 +94,7 @@ extension Color
     {
         if isInDarkMode { return .black }
         
-        return .progressBar
+        return .gray(brightness: 0.8)
     }
     
     static var progressBar: Color
@@ -102,7 +102,7 @@ extension Color
         return itemBackground(isDone: false,
                               isSelected: true,
                               isTagged: false,
-                              isFocusedList: isInDarkMode)
+                              isFocusedList: true)
     }
     
     static var progressBackground: Color

@@ -105,7 +105,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         let edge = addForAutoLayout(LayerBackedView())
         
-        edge.backgroundColor = Color.gray(brightness: 0.3).with(alpha: 0.25)
+        edge.backgroundColor = Color.gray(brightness: 0.25).with(alpha: 0.17)
         
         return edge
     }()
