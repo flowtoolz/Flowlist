@@ -161,7 +161,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
         headerHeightConstraint?.constant = relativeHeaderHeight * TaskView.heightWithSingleLine
     }
 
-    private let relativeHeaderHeight: CGFloat = 1.6
+    private let relativeHeaderHeight: CGFloat = 1.5
     
     private var headerHeightConstraint: NSLayoutConstraint?
     
