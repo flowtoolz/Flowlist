@@ -12,12 +12,12 @@ extension Font
     static var listTitle: Font
     {
         return Font.system(size: Int(1.6 * Float(baseSize.latestUpdate)),
-                           weight: .light)
+                           weight: .semibold)
     }
     
     static var title: Font
     {
-        return Font.system(size: 28, weight: .light)
+        return Font.system(size: 28, weight: .semibold)
     }
     
     static var purchasePanel: Font
