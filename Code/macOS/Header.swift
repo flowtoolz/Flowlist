@@ -11,14 +11,18 @@ class Header: LayerBackedView, Observer
     {
         super.init(frame: frameRect)
         
-        backgroundColor = .listBackground
-        
-        icon.isHidden = true
-        
         constrainLayoutGuides()
+        constrainTopSpacer()
         constrainTitleContainer()
         constrainTitleLabel()
         constrainIcon()
+        
+        topSpacer.layer?.cornerRadius = Float.listCornerRadius.cgFloat
+        
+        topSpacer.backgroundColor = .listBackground
+        titleContainer.backgroundColor = .listBackground
+        
+        icon.isHidden = true
         
         observe(darkMode)
         {
@@ -26,7 +30,11 @@ class Header: LayerBackedView, Observer
             
             self?.titleLabel.textColor = Color.text.nsColor
             self?.icon.image = Header.iconImage
-            self?.backgroundColor = .listBackground
+            
+            let bgColor = Color.listBackground
+            
+            self?.topSpacer.backgroundColor = bgColor
+            self?.titleContainer.backgroundColor = bgColor
         }
         
         observe(Font.baseSize)
@@ -134,6 +142,15 @@ class Header: LayerBackedView, Observer
         return label
     }()
     
+    // MARK: - Top Spacer
+    
+    private func constrainTopSpacer()
+    {
+        topSpacer.constrainToParent()
+    }
+    
+    private lazy var topSpacer = addForAutoLayout(LayerBackedView())
+    
     // MARK: - Title Container
     
     private func constrainTitleContainer()
@@ -142,7 +159,7 @@ class Header: LayerBackedView, Observer
         titleContainer.constrainTop(to: layoutGuideLeft)
     }
     
-    private lazy var titleContainer = addForAutoLayout(NSView())
+    private lazy var titleContainer = addForAutoLayout(LayerBackedView())
     
     // MARK: - Layout Guides
     
