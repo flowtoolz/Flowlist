@@ -15,7 +15,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         layer?.shadowColor = Color.black.cgColor
         layer?.shadowOffset = CGSize(width: 0, height: 5)
         layer?.shadowRadius = 5
-        layer?.shadowOpacity = Color.isInDarkMode ? 1.0 : 0.1
+        layer?.shadowOpacity = Color.isInDarkMode ? 0.5 : 0.05
         
         backgroundColor = .purchasePanelBackground
         
@@ -56,9 +56,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         backgroundColor = .purchasePanelBackground
         
-        //lightEdge.isHidden = !Color.isInDarkMode
-        
-        layer?.shadowOpacity = Color.isInDarkMode ? 1.0 : 0.1
+        layer?.shadowOpacity = Color.isInDarkMode ? 0.5 : 0.05
         
         progressBar.backgroundColor = .progressBackground
         progressBar.progressColor = .progressBar
