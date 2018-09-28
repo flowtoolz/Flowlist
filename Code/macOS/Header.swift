@@ -88,7 +88,7 @@ class Header: LayerBackedView, Observer
     private func constrainIcon()
     {
         icon.constrainCenterYToParent(at: 0.403)
-        icon.constrainCenterXToParent()
+        icon.constrainLeft(to: 0.87, of: layoutGuideLeft)
         icon.constrainSize(to: 0.57, 0.57, of: layoutGuideLeft)
     }
     
@@ -119,10 +119,8 @@ class Header: LayerBackedView, Observer
     {
         titleLabel.constrain(toTheLeftOf: layoutGuideRight)
         titleLabel.constrainLeft(to: relativeTitleInset, of: layoutGuideLeft)
-        titleLabel.constrainCenterYToParent(at: 0.42)
+        titleLabel.constrainCenterYToParent(at: 0.436)
     }
-    
-    private var titleSideInsetConstraints = [NSLayoutConstraint]()
     
     private lazy var titleLabel: Label =
     {
@@ -130,7 +128,7 @@ class Header: LayerBackedView, Observer
         
         label.textColor = Color.text.nsColor
         label.font = Font.listTitle.nsFont
-        label.alignment = .center
+        label.alignment = .left
         label.maximumNumberOfLines = 1
         
         return label
@@ -173,7 +171,7 @@ class Header: LayerBackedView, Observer
         layoutGuideRight.constrainRight(to: self)
     }
     
-    private let relativeTitleInset: CGFloat = 0.3
+    private let relativeTitleInset: CGFloat = 0.833
     
     private var layouGuideSize: CGFloat
     {
