@@ -21,7 +21,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         
         observe(darkMode) { [weak self] _ in self?.adjustToColorMode() }
         
-        constrainLightEdge()
+        constrainTopSeparator()
         constrainItemLabel()
         constrainProgressBar()
         constrainExpandIcon()
@@ -56,7 +56,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         backgroundColor = .purchasePanelBackground
         
-        lightEdge.isHidden = !Color.isInDarkMode
+        //lightEdge.isHidden = !Color.isInDarkMode
         
         layer?.shadowOpacity = Color.isInDarkMode ? 1.0 : 0.1
         
@@ -96,21 +96,19 @@ class PurchaseView: LayerBackedView, Observable, Observer
         }
     }
     
-    // MARK: - Light Top Edge
+    // MARK: - Top Separator
     
-    private func constrainLightEdge()
+    private func constrainTopSeparator()
     {
-        lightEdge.constrainToParentExcludingBottom()
-        lightEdge.constrainHeight(to: 1)
+        topSeparator.constrainToParentExcludingBottom()
+        topSeparator.constrainHeight(to: 1)
     }
     
-    private lazy var lightEdge: LayerBackedView =
+    private lazy var topSeparator: LayerBackedView =
     {
         let edge = addForAutoLayout(LayerBackedView())
         
-        edge.backgroundColor = Color.gray(brightness: 0.5).with(alpha: 0.2)
-        
-        edge.isHidden = !Color.isInDarkMode
+        edge.backgroundColor = Color.gray(brightness: 0.3).with(alpha: 0.25)
         
         return edge
     }()
