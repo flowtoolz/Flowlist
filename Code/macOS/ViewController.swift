@@ -87,7 +87,7 @@ class ViewController: NSViewController, Observer
     private func constrainPurchaseView()
     {
         purchaseView.constrainToParentExcludingTop()
-        purchaseView.constrain(below: browserView, gap: 0)
+        purchaseView.constrain(below: browserView)
         purchaseViewHeightConstraint = purchaseView.constrainHeight(to: purchaseViewHeight)
     }
     
