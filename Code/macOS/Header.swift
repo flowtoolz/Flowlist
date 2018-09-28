@@ -11,6 +11,17 @@ class Header: LayerBackedView, Observer
     {
         super.init(frame: frameRect)
         
+        backgroundColor = .itemBackground(isDone: false,
+                                          isSelected: false,
+                                          isTagged: false,
+                                          isFocusedList: false)
+        
+        icon.isHidden = true
+        
+        constrainLayoutGuide()
+        constrainTitleLabel()
+        constrainIcon()
+        
         observe(darkMode)
         {
             [weak self] _ in
@@ -23,21 +34,11 @@ class Header: LayerBackedView, Observer
                                                     isFocusedList: false)
         }
         
-        backgroundColor = .itemBackground(isDone: false,
-                                          isSelected: false,
-                                          isTagged: false,
-                                          isFocusedList: false)
-        
-        constrainTitleLabel()
-        
-        constrainIcon()
-        icon.isHidden = true
-        
         observe(Font.baseSize)
         {
             [weak self] _ in
             
-            self?.updateTitleInsets()
+            self?.updateLayoutConstants()
             self?.titleLabel.font = Font.listTitle.nsFont
         }
     }
@@ -91,8 +92,9 @@ class Header: LayerBackedView, Observer
     
     private func constrainIcon()
     {
-        icon.constrainHeightToParent(with: 0.5)
-        icon.constrainCenterToParent()
+        icon.constrainCenterY(to: layoutGuide)
+        icon.constrainCenterXToParent()
+        icon.constrainWidth(to: 0.57, of: layoutGuide)
     }
     
     private lazy var icon = addForAutoLayout(Icon(with: Header.iconImage))
@@ -120,30 +122,9 @@ class Header: LayerBackedView, Observer
     
     private func constrainTitleLabel()
     {
-        let inset = titleSideInset
-
-        titleSideInsetConstraints =
-        [
-            titleLabel.constrainLeft(to: self, offset: inset),
-            titleLabel.constrainRight(to: self, offset: -inset)
-        ]
-        
+        titleLabel.constrainRightToParent()
+        titleLabel.constrainLeft(to: 0.3, of: layoutGuide)
         titleLabel.constrainTopToParent(at: 0.26)
-    }
-    
-    private func updateTitleInsets()
-    {
-        let inset = titleSideInset
-        
-        for constraint in titleSideInsetConstraints
-        {
-            constraint.constant = constraint.constant < 0 ? -inset : inset
-        }
-    }
-    
-    private var titleSideInset: CGFloat
-    {
-        return TaskView.spacing + TaskView.padding - 2
     }
     
     private var titleSideInsetConstraints = [NSLayoutConstraint]()
@@ -154,9 +135,40 @@ class Header: LayerBackedView, Observer
         
         label.textColor = Color.text.nsColor
         label.font = Font.listTitle.nsFont
-        label.alignment = .center
+        label.alignment = .left
         label.maximumNumberOfLines = 1
         
         return label
     }()
+    
+    // MARK: - Layout Guide
+    
+    private func updateLayoutConstants()
+    {
+        let size = layouGuideSize
+        
+        for constraint in layoutGuideSizeConstraints
+        {
+            constraint.constant = size
+        }
+    }
+    
+    private func constrainLayoutGuide()
+    {
+        layoutGuide.constrainLeft(to: self)
+        layoutGuide.constrainBottom(to: self)
+        
+        let size = layouGuideSize
+        
+        layoutGuideSizeConstraints = layoutGuide.constrainSize(to: size, size)
+    }
+    
+    private var layouGuideSize: CGFloat
+    {
+        return TaskView.heightWithSingleLine
+    }
+    
+    private var layoutGuideSizeConstraints = [NSLayoutConstraint]()
+    
+    private lazy var layoutGuide = addLayoutGuide()
 }
