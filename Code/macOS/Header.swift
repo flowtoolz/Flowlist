@@ -95,12 +95,12 @@ class Header: LayerBackedView, Observer
     
     private func constrainIcon()
     {
-        icon.constrainCenterYToParent(at: 0.403)
-        icon.constrainLeft(to: 0.87, of: layoutGuideLeft)
-        icon.constrainSize(to: 0.57, 0.57, of: layoutGuideLeft)
+        icon.constrainCenterXToParent()
+        icon.constrainSize(to: 0.6, 0.6, of: layoutGuideLeft)
+        icon.constrainCenterYToParent(at: 0.616)
     }
     
-    private lazy var icon = titleContainer.addForAutoLayout(Icon(with: Header.iconImage))
+    private lazy var icon = addForAutoLayout(Icon(with: Header.iconImage))
     
     private static var iconImage: NSImage
     {
@@ -136,7 +136,7 @@ class Header: LayerBackedView, Observer
         
         label.textColor = Color.text.nsColor
         label.font = Font.listTitle.nsFont
-        label.alignment = .left
+        label.alignment = .center
         label.maximumNumberOfLines = 1
         
         return label

@@ -12,12 +12,14 @@
 		9E15185C1EEEE8CE00B35AD5 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185B1EEEE8CE00B35AD5 /* Task.swift */; };
 		9E15185E1EEEE97700B35AD5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185D1EEEE97700B35AD5 /* ViewController.swift */; };
 		9E1AAD6C20B58AD1001657A7 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1AAD6B20B58AD0001657A7 /* Header.swift */; };
+		9E2645A9215E4AC000E7982D /* Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2645A8215E4AC000E7982D /* Spacer.swift */; };
 		9E2CCE8D20C1DE030037D755 /* SelectableList+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CCE8C20C1DE030037D755 /* SelectableList+Clipboard.swift */; };
 		9E2CCE8F20C1EAFF0037D755 /* Task+Copyable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CCE8E20C1EAFF0037D755 /* Task+Copyable.swift */; };
 		9E2F83E520C8639F003E771E /* SelectableList+NSPasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F83E420C8639F003E771E /* SelectableList+NSPasteboard.swift */; };
 		9E2F83E720C88220003E771E /* SelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F83E620C88220003E771E /* SelectionMenu.swift */; };
 		9E3F69332115ADE2002D595D /* Task+WelcomeTour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F69322115ADE2002D595D /* Task+WelcomeTour.swift */; };
 		9E43503F20F350D200014FFF /* WindowMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E43503E20F350D200014FFF /* WindowMenu.swift */; };
+		9E48EFD0215D3ED7005AD216 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E48EFCF215D3ED7005AD216 /* ListItem.swift */; };
 		9E542E951EEEE41C00534981 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E542E941EEEE41C00534981 /* main.swift */; };
 		9E5768BA20C1436500749C0C /* TaskState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768B920C1436500749C0C /* TaskState.swift */; };
 		9E5768BC20C14B9300749C0C /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768BB20C14B9300749C0C /* Direction.swift */; };
@@ -77,12 +79,14 @@
 		9E15185B1EEEE8CE00B35AD5 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = ../Code/Task.swift; sourceTree = "<group>"; };
 		9E15185D1EEEE97700B35AD5 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../Code/macOS/ViewController.swift; sourceTree = "<group>"; };
 		9E1AAD6B20B58AD0001657A7 /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Header.swift; path = ../Code/macOS/Header.swift; sourceTree = "<group>"; };
+		9E2645A8215E4AC000E7982D /* Spacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Spacer.swift; path = ../Code/macOS/Spacer.swift; sourceTree = "<group>"; };
 		9E2CCE8C20C1DE030037D755 /* SelectableList+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SelectableList+Clipboard.swift"; path = "../Code/SelectableList+Clipboard.swift"; sourceTree = "<group>"; };
 		9E2CCE8E20C1EAFF0037D755 /* Task+Copyable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+Copyable.swift"; path = "../Code/Task+Copyable.swift"; sourceTree = "<group>"; };
 		9E2F83E420C8639F003E771E /* SelectableList+NSPasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SelectableList+NSPasteboard.swift"; path = "../Code/macOS/SelectableList+NSPasteboard.swift"; sourceTree = "<group>"; };
 		9E2F83E620C88220003E771E /* SelectionMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectionMenu.swift; path = ../Code/macOS/SelectionMenu.swift; sourceTree = "<group>"; };
 		9E3F69322115ADE2002D595D /* Task+WelcomeTour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Task+WelcomeTour.swift"; path = "../Code/Task+WelcomeTour.swift"; sourceTree = "<group>"; };
 		9E43503E20F350D200014FFF /* WindowMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WindowMenu.swift; path = ../Code/macOS/WindowMenu.swift; sourceTree = "<group>"; };
+		9E48EFCF215D3ED7005AD216 /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListItem.swift; path = ../Code/ListItem.swift; sourceTree = "<group>"; };
 		9E542E911EEEE41C00534981 /* Flowlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flowlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E542E941EEEE41C00534981 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../Code/macOS/main.swift; sourceTree = "<group>"; };
 		9E5768B920C1436500749C0C /* TaskState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskState.swift; path = ../Code/TaskState.swift; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 				9E82A7A81EF2A558006AEF02 /* SelectableList.swift */,
 				9EA5925A20AF7AD200F70CBF /* Selection.swift */,
 				9E6C720C20B1DDE2001C3D2C /* List.swift */,
+				9E48EFCF215D3ED7005AD216 /* ListItem.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -342,6 +347,7 @@
 				9EF0A78B20B5F8B200E1A23A /* ScrollTable.swift */,
 				9EAD75401EF6502000DC46FD /* Table.swift */,
 				9EF0A78920B5E26F00E1A23A /* TableContent.swift */,
+				9E2645A8215E4AC000E7982D /* Spacer.swift */,
 				9EC2C76C213FF26800823632 /* Row.swift */,
 				9E2F83E420C8639F003E771E /* SelectableList+NSPasteboard.swift */,
 			);
@@ -592,6 +598,8 @@
 				9E5768C020C15B6300749C0C /* Browser+Debugging.swift in Sources */,
 				9EAD75411EF6502000DC46FD /* Table.swift in Sources */,
 				9E88F54F20B7761F00A64F7B /* Menu.swift in Sources */,
+				9E48EFD0215D3ED7005AD216 /* ListItem.swift in Sources */,
+				9E2645A9215E4AC000E7982D /* Spacer.swift in Sources */,
 				9E2CCE8D20C1DE030037D755 /* SelectableList+Clipboard.swift in Sources */,
 				9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */,
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,

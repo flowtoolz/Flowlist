@@ -5,7 +5,7 @@
 	<key>ApplicationVersion</key>
 	<array>
 		<string>com.omnigroup.OmniGraffle7</string>
-		<string>191.28.0.317117</string>
+		<string>192.8.0.318534</string>
 	</array>
 	<key>ColorProfiles</key>
 	<array>
@@ -125,7 +125,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-09-21 12:35:49 +0000</string>
+	<string>2018-09-28 15:28:44 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -146,7 +146,7 @@
 		<key>NSHorizonalPagination</key>
 		<array>
 			<string>coded</string>
-			<string>BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU051bWJlcgCEhAdOU1ZhbHVlAISECE5TT2JqZWN0AIWEASqEhAFxlwCG</string>
+			<string>YnBsaXN0MDDUAQIDBAUGCQpYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKIHCFUkbnVsbBAAXxAPTlNLZXllZEFyY2hpdmVy0QsMVHJvb3SAAQgRGiMtMjc6QEJUV1wAAAAAAAABAQAAAAAAAAANAAAAAAAAAAAAAAAAAAAAXg==</string>
 		</array>
 		<key>NSLeftMargin</key>
 		<array>
@@ -161,7 +161,7 @@
 		<key>NSPrintReverseOrientation</key>
 		<array>
 			<string>coded</string>
-			<string>BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU051bWJlcgCEhAdOU1ZhbHVlAISECE5TT2JqZWN0AIWEASqEhAFxlwCG</string>
+			<string>YnBsaXN0MDDUAQIDBAUGCQpYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKIHCFUkbnVsbBAAXxAPTlNLZXllZEFyY2hpdmVy0QsMVHJvb3SAAQgRGiMtMjc6QEJUV1wAAAAAAAABAQAAAAAAAAANAAAAAAAAAAAAAAAAAAAAXg==</string>
 		</array>
 		<key>NSRightMargin</key>
 		<array>
@@ -188,7 +188,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-1090.0354609929079, -412.76595744680856}, {2774.4680851063831, 1667.3758865248228}}</string>
+				<string>{{-1820.0000000000002, -1125.0000000000005}, {4233.9285714285716, 3375.0000000000005}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -237,6 +237,467 @@
 			<string>1 in = 1.00000 in</string>
 			<key>GraphicsList</key>
 			<array>
+				<dict>
+					<key>Class</key>
+					<string>Group</string>
+					<key>Graphics</key>
+					<array>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>ID</key>
+							<integer>136</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{405, 540}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{387, 540}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{405, 540}</string>
+								<string>{387, 540}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>Head</key>
+							<dict>
+								<key>ID</key>
+								<integer>136</integer>
+								<key>Info</key>
+								<integer>1</integer>
+							</dict>
+							<key>ID</key>
+							<integer>137</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{387, 576}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{387, 540}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{387, 576}</string>
+								<string>{387, 540}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>Head</key>
+							<dict>
+								<key>ID</key>
+								<integer>136</integer>
+							</dict>
+							<key>ID</key>
+							<integer>138</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{405, 576}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{405, 540}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{405, 576}</string>
+								<string>{405, 540}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>Head</key>
+							<dict>
+								<key>ID</key>
+								<integer>143</integer>
+								<key>Info</key>
+								<integer>1</integer>
+							</dict>
+							<key>ID</key>
+							<integer>139</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{450, 540}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{396, 486}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{450, 540}</string>
+								<string>{396, 486}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>ID</key>
+							<integer>140</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{432, 522}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{432, 576}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{432, 522}</string>
+								<string>{432, 576}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>Head</key>
+							<dict>
+								<key>ID</key>
+								<integer>140</integer>
+								<key>Info</key>
+								<integer>1</integer>
+							</dict>
+							<key>ID</key>
+							<integer>141</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{360, 576}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{432, 576}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{360, 576}</string>
+								<string>{432, 576}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>ID</key>
+							<integer>142</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{360, 522}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{360, 576}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{360, 522}</string>
+								<string>{360, 576}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>ID</key>
+							<integer>143</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{342, 540}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{396, 486}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{342, 540}</string>
+								<string>{396, 486}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
+							</dict>
+						</dict>
+					</array>
+					<key>ID</key>
+					<integer>135</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
 				<dict>
 					<key>Class</key>
 					<string>Group</string>
@@ -868,492 +1329,534 @@
 				</dict>
 				<dict>
 					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>ID</key>
-					<integer>109</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
-							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
-								<string>{405, 396}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
-								<string>{387, 396}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
+					<string>Group</string>
+					<key>Graphics</key>
 					<array>
-						<string>{405, 396}</string>
-						<string>{387, 396}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
 						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Color</key>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>ID</key>
+							<integer>109</integer>
+							<key>LogicalPath</key>
 							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.99999600649999998</real>
-								<key>space</key>
-								<string>srgb</string>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{405, 396}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{387, 396}</string>
+									</dict>
+								</array>
 							</dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>Head</key>
-					<dict>
-						<key>ID</key>
-						<integer>109</integer>
-						<key>Info</key>
-						<integer>1</integer>
-					</dict>
-					<key>ID</key>
-					<integer>108</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
+							<key>Points</key>
+							<array>
+								<string>{405, 396}</string>
+								<string>{387, 396}</string>
+							</array>
+							<key>Style</key>
 							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Color</key>
+									<dict>
+										<key>b</key>
+										<real>1</real>
+										<key>g</key>
+										<real>1</real>
+										<key>r</key>
+										<real>0.99999600649999998</real>
+										<key>space</key>
+										<string>srgb</string>
+									</dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>Head</key>
+							<dict>
+								<key>ID</key>
+								<integer>109</integer>
+								<key>Info</key>
+								<integer>1</integer>
+							</dict>
+							<key>ID</key>
+							<integer>108</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{387, 432}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{387, 396}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
 								<string>{387, 432}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
 								<string>{387, 396}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{387, 432}</string>
-						<string>{387, 396}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Color</key>
+							</array>
+							<key>Style</key>
 							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.99999600649999998</real>
-								<key>space</key>
-								<string>srgb</string>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Color</key>
+									<dict>
+										<key>b</key>
+										<real>1</real>
+										<key>g</key>
+										<real>1</real>
+										<key>r</key>
+										<real>0.99999600649999998</real>
+										<key>space</key>
+										<string>srgb</string>
+									</dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
 							</dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
 						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>Head</key>
-					<dict>
-						<key>ID</key>
-						<integer>109</integer>
-					</dict>
-					<key>ID</key>
-					<integer>107</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>Head</key>
 							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
+								<key>ID</key>
+								<integer>109</integer>
+							</dict>
+							<key>ID</key>
+							<integer>107</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{405, 432}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{405, 396}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
 								<string>{405, 432}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
 								<string>{405, 396}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{405, 432}</string>
-						<string>{405, 396}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Color</key>
+							</array>
+							<key>Style</key>
 							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.99999600649999998</real>
-								<key>space</key>
-								<string>srgb</string>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Color</key>
+									<dict>
+										<key>b</key>
+										<real>1</real>
+										<key>g</key>
+										<real>1</real>
+										<key>r</key>
+										<real>0.99999600649999998</real>
+										<key>space</key>
+										<string>srgb</string>
+									</dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
 							</dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
 						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>Head</key>
-					<dict>
-						<key>ID</key>
-						<integer>102</integer>
-						<key>Info</key>
-						<integer>1</integer>
-					</dict>
-					<key>ID</key>
-					<integer>106</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>Head</key>
 							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
+								<key>ID</key>
+								<integer>102</integer>
+								<key>Info</key>
+								<integer>1</integer>
+							</dict>
+							<key>ID</key>
+							<integer>106</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{450, 396}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{396, 342}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
 								<string>{450, 396}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
 								<string>{396, 342}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{450, 396}</string>
-						<string>{396, 342}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Color</key>
+							</array>
+							<key>Style</key>
 							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.99999600649999998</real>
-								<key>space</key>
-								<string>srgb</string>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Color</key>
+									<dict>
+										<key>b</key>
+										<real>1</real>
+										<key>g</key>
+										<real>1</real>
+										<key>r</key>
+										<real>0.99999600649999998</real>
+										<key>space</key>
+										<string>srgb</string>
+									</dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
 							</dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
 						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>ID</key>
-					<integer>105</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>ID</key>
+							<integer>105</integer>
+							<key>LogicalPath</key>
 							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{432, 378}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{432, 432}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
 								<string>{432, 378}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
 								<string>{432, 432}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{432, 378}</string>
-						<string>{432, 432}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Color</key>
+							</array>
+							<key>Style</key>
 							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.99999600649999998</real>
-								<key>space</key>
-								<string>srgb</string>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Color</key>
+									<dict>
+										<key>b</key>
+										<real>1</real>
+										<key>g</key>
+										<real>1</real>
+										<key>r</key>
+										<real>0.99999600649999998</real>
+										<key>space</key>
+										<string>srgb</string>
+									</dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
 							</dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
 						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>Head</key>
-					<dict>
-						<key>ID</key>
-						<integer>105</integer>
-						<key>Info</key>
-						<integer>1</integer>
-					</dict>
-					<key>ID</key>
-					<integer>104</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>Head</key>
 							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
+								<key>ID</key>
+								<integer>105</integer>
+								<key>Info</key>
+								<integer>1</integer>
+							</dict>
+							<key>ID</key>
+							<integer>104</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{360, 432}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{432, 432}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
 								<string>{360, 432}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
 								<string>{432, 432}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{360, 432}</string>
-						<string>{432, 432}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Color</key>
+							</array>
+							<key>Style</key>
 							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.99999600649999998</real>
-								<key>space</key>
-								<string>srgb</string>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Color</key>
+									<dict>
+										<key>b</key>
+										<real>1</real>
+										<key>g</key>
+										<real>1</real>
+										<key>r</key>
+										<real>0.99999600649999998</real>
+										<key>space</key>
+										<string>srgb</string>
+									</dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
 							</dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
 						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>ID</key>
-					<integer>103</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>ID</key>
+							<integer>103</integer>
+							<key>LogicalPath</key>
 							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{360, 378}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{360, 432}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
 								<string>{360, 378}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
 								<string>{360, 432}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{360, 378}</string>
-						<string>{360, 432}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Color</key>
+							</array>
+							<key>Style</key>
 							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.99999600649999998</real>
-								<key>space</key>
-								<string>srgb</string>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Color</key>
+									<dict>
+										<key>b</key>
+										<real>1</real>
+										<key>g</key>
+										<real>1</real>
+										<key>r</key>
+										<real>0.99999600649999998</real>
+										<key>space</key>
+										<string>srgb</string>
+									</dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
 							</dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
 						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>ID</key>
-					<integer>102</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>ID</key>
+							<integer>102</integer>
+							<key>LogicalPath</key>
 							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{342, 396}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{396, 342}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
 								<string>{342, 396}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
 								<string>{396, 342}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Color</key>
+									<dict>
+										<key>b</key>
+										<real>1</real>
+										<key>g</key>
+										<real>1</real>
+										<key>r</key>
+										<real>0.99999600649999998</real>
+										<key>space</key>
+										<string>srgb</string>
+									</dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>6</real>
+								</dict>
 							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{342, 396}</string>
-						<string>{396, 342}</string>
+						</dict>
 					</array>
+					<key>ID</key>
+					<integer>144</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -1368,23 +1871,8 @@
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>Color</key>
-							<dict>
-								<key>b</key>
-								<real>1</real>
-								<key>g</key>
-								<real>1</real>
-								<key>r</key>
-								<real>0.99999600649999998</real>
-								<key>space</key>
-								<string>srgb</string>
-							</dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
+							<key>Draws</key>
+							<string>NO</string>
 						</dict>
 					</dict>
 				</dict>
@@ -2770,146 +3258,446 @@
 				</dict>
 				<dict>
 					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>ID</key>
-					<integer>29</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
-							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
-								<string>{405, 252}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
-								<string>{387, 252}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
+					<string>Group</string>
+					<key>Graphics</key>
 					<array>
-						<string>{405, 252}</string>
-						<string>{387, 252}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
 						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>Head</key>
-					<dict>
-						<key>ID</key>
-						<integer>29</integer>
-						<key>Info</key>
-						<integer>1</integer>
-					</dict>
-					<key>ID</key>
-					<integer>30</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>ID</key>
+							<integer>29</integer>
+							<key>LogicalPath</key>
 							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{405, 252}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{387, 252}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{405, 252}</string>
+								<string>{387, 252}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>4</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>Head</key>
+							<dict>
+								<key>ID</key>
+								<integer>29</integer>
+								<key>Info</key>
+								<integer>1</integer>
+							</dict>
+							<key>ID</key>
+							<integer>30</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{387, 288}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{387, 252}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
 								<string>{387, 288}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
 								<string>{387, 252}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{387, 288}</string>
-						<string>{387, 252}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>Head</key>
-					<dict>
-						<key>ID</key>
-						<integer>29</integer>
-					</dict>
-					<key>ID</key>
-					<integer>31</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
+							</array>
+							<key>Style</key>
 							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>4</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>Head</key>
+							<dict>
+								<key>ID</key>
+								<integer>29</integer>
+							</dict>
+							<key>ID</key>
+							<integer>31</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{405, 288}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{405, 252}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
 								<string>{405, 288}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
 								<string>{405, 252}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>4</real>
+								</dict>
 							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{405, 288}</string>
-						<string>{405, 252}</string>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>Head</key>
+							<dict>
+								<key>ID</key>
+								<integer>47</integer>
+								<key>Info</key>
+								<integer>1</integer>
+							</dict>
+							<key>ID</key>
+							<integer>43</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{450, 252}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{396, 198}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{450, 252}</string>
+								<string>{396, 198}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>4</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>ID</key>
+							<integer>44</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{432, 234}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{432, 288}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{432, 234}</string>
+								<string>{432, 288}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>4</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>Head</key>
+							<dict>
+								<key>ID</key>
+								<integer>44</integer>
+								<key>Info</key>
+								<integer>1</integer>
+							</dict>
+							<key>ID</key>
+							<integer>45</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{360, 288}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{432, 288}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{360, 288}</string>
+								<string>{432, 288}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>4</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>ID</key>
+							<integer>46</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{360, 234}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{360, 288}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{360, 234}</string>
+								<string>{360, 288}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>4</real>
+								</dict>
+							</dict>
+						</dict>
+						<dict>
+							<key>Class</key>
+							<string>LineGraphic</string>
+							<key>ID</key>
+							<integer>47</integer>
+							<key>LogicalPath</key>
+							<dict>
+								<key>elements</key>
+								<array>
+									<dict>
+										<key>element</key>
+										<string>MOVETO</string>
+										<key>point</key>
+										<string>{342, 252}</string>
+									</dict>
+									<dict>
+										<key>element</key>
+										<string>LINETO</string>
+										<key>point</key>
+										<string>{396, 198}</string>
+									</dict>
+								</array>
+							</dict>
+							<key>Points</key>
+							<array>
+								<string>{342, 252}</string>
+								<string>{396, 198}</string>
+							</array>
+							<key>Style</key>
+							<dict>
+								<key>fill</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>shadow</key>
+								<dict>
+									<key>Draws</key>
+									<string>NO</string>
+								</dict>
+								<key>stroke</key>
+								<dict>
+									<key>Legacy</key>
+									<true/>
+									<key>LineType</key>
+									<integer>1</integer>
+									<key>Width</key>
+									<real>4</real>
+								</dict>
+							</dict>
+						</dict>
 					</array>
+					<key>ID</key>
+					<integer>134</integer>
 					<key>Style</key>
 					<dict>
 						<key>fill</key>
@@ -2924,12 +3712,8 @@
 						</dict>
 						<key>stroke</key>
 						<dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
+							<key>Draws</key>
+							<string>NO</string>
 						</dict>
 					</dict>
 				</dict>
@@ -3025,275 +3809,6 @@
 						<dict>
 							<key>Draws</key>
 							<string>NO</string>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>Head</key>
-					<dict>
-						<key>ID</key>
-						<integer>47</integer>
-						<key>Info</key>
-						<integer>1</integer>
-					</dict>
-					<key>ID</key>
-					<integer>43</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
-							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
-								<string>{450, 252}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
-								<string>{396, 198}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{450, 252}</string>
-						<string>{396, 198}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>ID</key>
-					<integer>44</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
-							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
-								<string>{432, 234}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
-								<string>{432, 288}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{432, 234}</string>
-						<string>{432, 288}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>Head</key>
-					<dict>
-						<key>ID</key>
-						<integer>44</integer>
-						<key>Info</key>
-						<integer>1</integer>
-					</dict>
-					<key>ID</key>
-					<integer>45</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
-							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
-								<string>{360, 288}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
-								<string>{432, 288}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{360, 288}</string>
-						<string>{432, 288}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>ID</key>
-					<integer>46</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
-							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
-								<string>{360, 234}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
-								<string>{360, 288}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{360, 234}</string>
-						<string>{360, 288}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
-						</dict>
-					</dict>
-				</dict>
-				<dict>
-					<key>Class</key>
-					<string>LineGraphic</string>
-					<key>ID</key>
-					<integer>47</integer>
-					<key>LogicalPath</key>
-					<dict>
-						<key>elements</key>
-						<array>
-							<dict>
-								<key>element</key>
-								<string>MOVETO</string>
-								<key>point</key>
-								<string>{342, 252}</string>
-							</dict>
-							<dict>
-								<key>element</key>
-								<string>LINETO</string>
-								<key>point</key>
-								<string>{396, 198}</string>
-							</dict>
-						</array>
-					</dict>
-					<key>Points</key>
-					<array>
-						<string>{342, 252}</string>
-						<string>{396, 198}</string>
-					</array>
-					<key>Style</key>
-					<dict>
-						<key>fill</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>shadow</key>
-						<dict>
-							<key>Draws</key>
-							<string>NO</string>
-						</dict>
-						<key>stroke</key>
-						<dict>
-							<key>Legacy</key>
-							<true/>
-							<key>LineType</key>
-							<integer>1</integer>
-							<key>Width</key>
-							<real>4</real>
 						</dict>
 					</dict>
 				</dict>
@@ -4459,16 +4974,20 @@
 		<key>Sidebar</key>
 		<true/>
 		<key>SidebarWidth</key>
-		<integer>216</integer>
+		<integer>244</integer>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{376.06464498247414, 356.83541208119186}, {495.03546099290776, 412.76595744680856}}</string>
+		<string>{{-234.28571428571428, -12.500000000000416}, {1225.0000000000002, 1125.0000000000002}}</string>
+		<key>WindowInfo_InspectorTab</key>
+		<array>
+			<string>com.omnigroup.OmniGraffle.inspectorGroup.object</string>
+		</array>
 		<key>ZoomValues</key>
 		<array>
 			<array>
 				<string>Arbeitsfläche 1</string>
-				<real>1.4099999999999999</real>
+				<real>0.55999999999999994</real>
 				<real>1</real>
 			</array>
 		</array>
