@@ -37,6 +37,8 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     func set(focused: Bool)
     {
+        header.set(focused: focused)
+        
         scrollTable.table.isFocused = focused
         
         for index in 0 ..< scrollTable.table.numberOfRows

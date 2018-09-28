@@ -5,9 +5,6 @@ extension Color
 {
     // MARK: - Color Tags
     
-    static let colorOverlayAlpha: Float = 1
-    static let tagBorderAlpha: Float = 0.5
-    
     static let tags: [Color] =
     [
         Color(253, 74, 75),

@@ -50,7 +50,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         isSelected = selected
         
-        // color overlay & border color
+        // color overlay
         
         let isDone = task.isDone
         let isTagged = task.tag.value != nil
@@ -59,10 +59,10 @@ class TaskView: LayerBackedView, Observer, Observable
         
         if let tag = task.tag.value
         {
-            let tagColor = Color.tags[tag.rawValue]
-            
-            colorOverlay.backgroundColor = tagColor
+            colorOverlay.backgroundColor = Color.tags[tag.rawValue]
         }
+        
+        colorOverlay.alphaValue = selected ? 1 : 0.5
         
         // background color
         
@@ -268,6 +268,8 @@ class TaskView: LayerBackedView, Observer, Observable
         groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
                                                isDone: isDone,
                                                isSelected: isSelected).cgFloat
+        
+        colorOverlay.alphaValue = selected ? 1 : 0.5
     }
     
     private(set) var isSelected = false
@@ -326,14 +328,7 @@ class TaskView: LayerBackedView, Observer, Observable
         colorOverlay.constrainWidth(to: 0.125, of: layoutGuide)
     }
     
-    private lazy var colorOverlay: LayerBackedView =
-    {
-        let view = addForAutoLayout(LayerBackedView())
-        
-        view.alphaValue = Color.colorOverlayAlpha.cgFloat
-        
-        return view
-    }()
+    private lazy var colorOverlay = addForAutoLayout(LayerBackedView())
     
     // MARK: - Text View
     

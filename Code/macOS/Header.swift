@@ -154,6 +154,11 @@ class Header: LayerBackedView, Observer
     
     // MARK: - Color View
     
+    func set(focused: Bool)
+    {
+        colorView.alphaValue = focused ? 1.0 : 0.5
+    }
+    
     private func updateColorView(with tag: Task.Tag?)
     {
         if let tagValue = tag?.rawValue
