@@ -7,7 +7,9 @@ extension Task
         var tour = [Task]()
         
         tour.append(Task("Welcome to Flowlist!"))
+        tour[0].state <- .inProgress
         tour.append(Task("Best select and edit with your keyboard"))
+        tour[1].state <- .inProgress
         tour.append(Task("The menus show all applicable commands in every situation"))
         
         // select
