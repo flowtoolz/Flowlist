@@ -17,7 +17,7 @@ extension Font
     
     static var title: Font
     {
-        return Font.system(size: 28, weight: .bold)
+        return Font.system(size: 28, weight: .light)
     }
     
     static var purchasePanel: Font
