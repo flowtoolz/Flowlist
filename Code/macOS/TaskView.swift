@@ -14,14 +14,6 @@ class TaskView: LayerBackedView, Observer, Observable
         
         identifier = TaskView.uiIdentifier
         
-//        let separator = addForAutoLayout(LayerBackedView())
-//        separator.backgroundColor = Color.black.with(alpha: 0.1)
-//
-//        separator.constrainTopToParent()
-//        separator.constrainRight(to: groupIcon)
-//        separator.constrainLeft(to: checkBox)
-//        separator.constrainHeight(to: 1)
-        
         constrainColorOverlay()
         constrainLayoutGuide()
         constrainEditingBackground()
@@ -33,9 +25,6 @@ class TaskView: LayerBackedView, Observer, Observable
         {
             [weak self] _ in self?.colorModeDidChange()
         }
-        
-//        layer?.borderWidth = 1.0
-//        layer?.cornerRadius = Float.cornerRadius.cgFloat
         
         observe(TextView.lineHeightVariable)
         {
