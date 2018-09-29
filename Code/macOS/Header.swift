@@ -233,7 +233,7 @@ class Header: LayerBackedView, Observer
         layoutGuideRight.constrainRight(to: self)
     }
     
-    private let relativeTitleInset: CGFloat = 0.833
+    private let relativeTitleInset = Float.relativeTextInset.cgFloat
     
     private var layouGuideSize: CGFloat
     {

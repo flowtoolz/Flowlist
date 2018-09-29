@@ -353,7 +353,7 @@ class TaskView: LayerBackedView, Observer, Observable
         textView.constrainBottomToParent()
     }
     
-    private static let textLeftMultiplier: CGFloat = 0.85
+    private static let textLeftMultiplier = Float.relativeTextInset.cgFloat
     
     private lazy var textView: TextView =
     {
