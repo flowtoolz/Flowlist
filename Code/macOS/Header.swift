@@ -106,8 +106,8 @@ class Header: LayerBackedView, Observer
     private func constrainIcon()
     {
         icon.constrainCenterXToParent()
-        icon.constrainSize(to: 0.572, 0.572, of: layoutGuideLeft)
-        icon.constrainCenterYToParent(at: 0.6)
+        icon.constrainSize(to: 0.64, 0.64, of: layoutGuideLeft)
+        icon.constrainCenterYToParent(at: 0.58)
     }
     
     private lazy var icon = addForAutoLayout(Icon(with: Header.iconImage))

@@ -349,7 +349,7 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         textView.constrainLeft(to: TaskView.textLeftMultiplier, of: layoutGuide)
         textView.constrain(toTheLeftOf: groupIcon)
-        textView.constrainTop(to: checkBox)
+        textView.constrainTop(to: 0.303, of: layoutGuide)
         textView.constrainBottomToParent()
     }
     
@@ -459,7 +459,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func constrainCheckBox()
     {
-        checkBox.constrainSize(to: 0.39, 0.39, of: layoutGuide)
+        checkBox.constrainSize(to: 0.43, 0.43, of: layoutGuide)
         checkBox.constrainCenter(to: layoutGuide)
     }
     
