@@ -1,6 +1,6 @@
 import AppKit
 
-class CheckBox: NSButton
+class CheckBox: NSImageView
 {
     // MARK: - Initialization
     
@@ -8,10 +8,11 @@ class CheckBox: NSButton
     {
         super.init(frame: frameRect)
         
-        bezelStyle = .regularSquare
-        imagePosition = .imageOnly
         imageScaling = .scaleProportionallyUpOrDown
-        isBordered = false
+        imageAlignment = .alignCenter
+        imageFrameStyle = .none
+        
+        button.constrainToParent()
     }
     
     required init?(coder: NSCoder) { fatalError() }
@@ -73,4 +74,18 @@ class CheckBox: NSButton
     private static let imageCheckedWhite = #imageLiteral(resourceName: "checkbox_checked_white")
     private static let imageInProgress = #imageLiteral(resourceName: "play_pdf")
     private static let imageInProgressWhite = #imageLiteral(resourceName: "play_white")
+    
+    // MARK: - Button Overlay
+    
+    lazy var button: NSButton =
+    {
+        let btn = addForAutoLayout(NSButton())
+        
+        btn.bezelStyle = .regularSquare
+        btn.isBordered = false
+        btn.imagePosition = .imageOnly
+        btn.title = ""
+        
+        return btn
+    }()
 }

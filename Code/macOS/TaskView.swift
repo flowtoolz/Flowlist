@@ -404,7 +404,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         if !editing
         {
-            checkBox.isEnabled = true
+            checkBox.button.isEnabled = true
         }
         
         let isInProgress = task?.isInProgress ?? false
@@ -422,7 +422,7 @@ class TaskView: LayerBackedView, Observer, Observable
         {
             if editing
             {
-                self.checkBox.isEnabled = false
+                self.checkBox.button.isEnabled = false
             }
         }
         
@@ -467,8 +467,8 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         let box = addForAutoLayout(CheckBox())
         
-        box.action = #selector(didClickCheckBox)
-        box.target = self
+        box.button.action = #selector(didClickCheckBox)
+        box.button.target = self
         
         return box
     }()
