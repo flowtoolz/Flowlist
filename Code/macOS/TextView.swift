@@ -22,7 +22,7 @@ class TextView: NSTextView, NSTextViewDelegate
         super.init(frame: frameRect, textContainer: container)
         
         isSelectable = true
-        isEditable = false
+        isEditable = true
         focusRingType = .none
         drawsBackground = false
         textContainerInset = .zero
