@@ -22,7 +22,7 @@ class TextView: NSTextView, NSTextViewDelegate
         super.init(frame: frameRect, textContainer: container)
         
         isSelectable = true
-        isEditable = true
+        isEditable = false
         focusRingType = .none
         drawsBackground = false
         textContainerInset = .zero
@@ -235,6 +235,7 @@ class TextView: NSTextView, NSTextViewDelegate
     {
         isEditing = false
         TextView.isEditing = false
+        isEditable = false
 
         messenger.send(.didEdit)
     }
@@ -243,6 +244,7 @@ class TextView: NSTextView, NSTextViewDelegate
     {
         isEditing = true
         TextView.isEditing = true
+        isEditable = true
         
         messenger.send(.willEdit)
     }
