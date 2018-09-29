@@ -154,17 +154,19 @@ class BrowserView: LayerBackedView, Observer
         
         let gap = Float.listGap.cgFloat
         
-        if listViews.count == 1
+        let index = listViews.count - 1
+        
+        if index == 0
         {
             listView.constrainCenterXToParent()
         }
         else
         {
-            let leftView = listViews[listViews.count - 2]
+            let leftView = listViews[index - 1]
             listView.constrain(toTheRightOf: leftView, gap: gap)
         }
         
-        listView.constrainWidth(to: listLayoutGuides[0])
+        listView.constrainWidth(to: listLayoutGuides[index % 3])
         
         listView.constrainTopToParent(inset: gap)
         listView.constrainBottomToParent()
@@ -179,30 +181,68 @@ class BrowserView: LayerBackedView, Observer
         guard listViews.isValid(index: newIndex) else { return }
         
         let focusedListView = listViews[newIndex]
-        let offset = focusedListView.frame.size.width + 2 * Float.listGap.cgFloat
-        let targetPosition = focusedListView.frame.origin.x - offset
         
-        if animated
+        var targetPosition: CGFloat = 0
+        
+        if newIndex > 0
         {
-            focusedListView.set(focused: true)
+            let leftListPosition = listViews[newIndex - 1].frame.origin.x
             
-            if let from = from, listViews.isValid(index: from)
-            {
-                listViews[from].set(focused: false)
-            }
-            
-            NSAnimationContext.beginGrouping()
-            NSAnimationContext.current.duration = 0.3
-            
-            animator().bounds.origin.x = targetPosition
-            
-            NSAnimationContext.endGrouping()
+            targetPosition = leftListPosition - Float.listGap.cgFloat
         }
-        else
+        
+        guard animated else
         {
             bounds.origin.x = targetPosition
+            return
+        }
+        
+        focusedListView.set(focused: true)
+        
+        if let from = from, listViews.isValid(index: from)
+        {
+            listViews[from].set(focused: false)
+        }
+        
+        if listViews.isValid(index: newIndex - 1)
+        {
+            listViews[newIndex - 1].set(visibleForAnimation: true)
+        }
+        
+        if listViews.isValid(index: newIndex + 1)
+        {
+            listViews[newIndex + 1].set(visibleForAnimation: true)
+        }
+        
+        NSAnimationContext.beginGrouping()
+        NSAnimationContext.current.duration = 0.3
+        NSAnimationContext.current.completionHandler =
+        {
+            self.animatioDidEnd()
+        }
+        
+        animator().bounds.origin.x = targetPosition
+        
+        NSAnimationContext.endGrouping()
+        
+        ongoingAnimations += 1
+    }
+    
+    private func animatioDidEnd()
+    {
+        ongoingAnimations -= 1
+        
+        guard ongoingAnimations == 0 else { return }
+        
+        for i in 0 ..< listViews.count
+        {
+            let visible = abs(browser.focusedIndex - i) < 2
+            
+            listViews[i].set(visibleForAnimation: visible)
         }
     }
+    
+    private var ongoingAnimations = 0
     
     private var listViews = [SelectableListView]()
     

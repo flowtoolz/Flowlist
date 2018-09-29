@@ -13,7 +13,8 @@ class SelectableListView: LayerBackedView, Observer, Observable
         
         shadow = NSShadow()
         layer?.shadowColor = Color.gray(brightness: 0.5).cgColor
-        layer?.shadowOffset = CGSize(width: Color.isInDarkMode ? -1 : 1, height: -1)
+        layer?.shadowOffset = CGSize(width: Color.isInDarkMode ? -1 : 1,
+                                     height: -1)
         layer?.shadowRadius = 0
         layer?.shadowOpacity = Color.isInDarkMode ? 0.28 : 0.2
         
@@ -21,7 +22,8 @@ class SelectableListView: LayerBackedView, Observer, Observable
         {
             [weak self] isDark in
             
-            self?.layer?.shadowOffset = CGSize(width: isDark ? -1 : 1, height: -1)
+            self?.layer?.shadowOffset = CGSize(width: isDark ? -1 : 1,
+                                               height: -1)
             self?.layer?.shadowOpacity = Color.isInDarkMode ? 0.28 : 0.2
         }
         
@@ -32,25 +34,6 @@ class SelectableListView: LayerBackedView, Observer, Observable
     required init?(coder decoder: NSCoder) { fatalError() }
     
     deinit { stopAllObserving() }
-    
-    // MARK: - Focus
-    
-    func set(focused: Bool)
-    {
-        header.set(focused: focused)
-        
-        scrollTable.table.isFocused = focused
-        
-        for index in 0 ..< scrollTable.table.numberOfRows
-        {
-            if let view = scrollTable.table.view(atColumn: 0,
-                                                 row: index,
-                                                 makeIfNecessary: false) as? TaskView
-            {
-                view.set(focused: focused)
-            }
-        }
-    }
     
     // MARK: - Configuration
     
@@ -92,6 +75,32 @@ class SelectableListView: LayerBackedView, Observer, Observable
             }
             
             header.update(with: newRoot)
+        }
+    }
+    
+    // MARK: - Change with Browser Moves
+    
+    func set(visibleForAnimation visible: Bool)
+    {
+        let shouldBeVisible = visible && list?.root != nil
+        
+        isHidden = !shouldBeVisible
+    }
+    
+    func set(focused: Bool)
+    {
+        header.set(focused: focused)
+        
+        scrollTable.table.isFocused = focused
+        
+        for index in 0 ..< scrollTable.table.numberOfRows
+        {
+            if let view = scrollTable.table.view(atColumn: 0,
+                                                 row: index,
+                                                 makeIfNecessary: false) as? TaskView
+            {
+                view.set(focused: focused)
+            }
         }
     }
     
