@@ -250,6 +250,14 @@ class TaskView: LayerBackedView, Observer, Observable
             textView.set(color: .itemText(isDone: isDone,
                                           isSelected: isSelected,
                                           isFocused: isFocused))
+            
+            let isInProgress = task?.isInProgress ?? false
+            checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
+                                                  isDone: isDone,
+                                                  isSelected: isSelected).cgFloat
+            groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
+                                                   isDone: isDone,
+                                                   isSelected: isSelected).cgFloat
         }
         
         if !Color.isInDarkMode
@@ -260,14 +268,6 @@ class TaskView: LayerBackedView, Observer, Observable
             
             checkBox.set(white: lightContent)
         }
-        
-        let isInProgress = task?.isInProgress ?? false
-        checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
-                                              isDone: isDone,
-                                              isSelected: isSelected).cgFloat
-        groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
-                                               isDone: isDone,
-                                               isSelected: isSelected).cgFloat
         
         colorOverlay.alphaValue = selected ? 1 : 0.5
     }
