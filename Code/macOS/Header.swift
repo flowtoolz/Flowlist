@@ -146,7 +146,7 @@ class Header: LayerBackedView, Observer
         
         label.textColor = Color.text.nsColor
         label.font = Font.listTitle.nsFont
-        label.alignment = .center
+        label.alignment = .left
         label.maximumNumberOfLines = 1
         
         return label
