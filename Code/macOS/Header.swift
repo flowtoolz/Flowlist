@@ -124,7 +124,7 @@ class Header: LayerBackedView, Observer
     
     func set(title: String?)
     {
-        titleLabel.stringValue = (title ?? "untitled").replacingOccurrences(of: "\n", with: " ")
+        titleLabel.stringValue = (title ?? "Untitled").replacingOccurrences(of: "\n", with: " ")
         
         let textColor = Color.itemText(isDone: title == nil,
                                        isSelected: false,

@@ -226,7 +226,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         if let height = itemHeightCash[task] { return height }
         
-        let title = task.title.value ?? "untitled"
+        let title = task.title.value ?? "Untitled"
         
         let height = TaskView.preferredHeight(for: title, width: width)
         
