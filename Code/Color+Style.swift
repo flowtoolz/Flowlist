@@ -92,7 +92,7 @@ extension Color
         }
     }
     
-    private static let grayedOutAlphaLight: Float = 0.2
+    private static let grayedOutAlphaLight: Float = 0.22
     private static let grayedOutAlphaDark: Float = 0.2
     
     static func itemContentIsLight(isSelected selected: Bool,
