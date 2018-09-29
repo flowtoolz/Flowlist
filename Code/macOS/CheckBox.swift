@@ -1,16 +1,13 @@
 import AppKit
+import UIToolz
 
-class CheckBox: NSImageView
+class CheckBox: Icon
 {
     // MARK: - Initialization
     
-    override init(frame frameRect: NSRect)
+    init()
     {
-        super.init(frame: frameRect)
-        
-        imageScaling = .scaleProportionallyUpOrDown
-        imageAlignment = .alignCenter
-        imageFrameStyle = .none
+        super.init(with: nil)
         
         button.constrainToParent()
     }
