@@ -37,8 +37,6 @@ class BrowserView: LayerBackedView, Observer
     
     private func fontSizeDidChange()
     {
-        TextView.fontSizeDidChange()
-        
         for listView in listViews
         {
             listView.fontSizeDidChange()

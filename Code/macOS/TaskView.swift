@@ -26,7 +26,7 @@ class TaskView: LayerBackedView, Observer, Observable
             [weak self] _ in self?.colorModeDidChange()
         }
         
-        observe(TextView.lineHeightVariable)
+        observe(Font.baseSize)
         {
             [weak self] _ in self?.fontSizeDidChange()
         }

@@ -105,24 +105,27 @@ class TextView: NSTextView, NSTextViewDelegate
         return Float.lineSpacing(for: Float(TextView.lineHeight)).cgFloat
     }
     
-    // MARK: - Measure & Observe Height
+    // MARK: - Measure Height
     
     static var lineHeight: CGFloat
     {
-        return lineHeightVariable.value ?? measuredLineHeight
+        let fontSize = Font.baseSize.latestUpdate
+        
+        if let height = lineHeightCash[fontSize]
+        {
+            return height
+        }
+        else
+        {
+            let height = measuringLayoutManager.defaultLineHeight(for: Font.text.nsFont)
+            
+            lineHeightCash[fontSize] = height
+            
+            return height
+        }
     }
     
-    static func fontSizeDidChange()
-    {
-        lineHeightVariable <- measuredLineHeight
-    }
-    
-    static let lineHeightVariable = Var(measuredLineHeight)
-    
-    private static var measuredLineHeight: CGFloat
-    {
-        return measuringLayoutManager.defaultLineHeight(for: Font.text.nsFont)
-    }
+    private static var lineHeightCash = [Int : CGFloat]()
     
     static func size(with text: String, width: CGFloat) -> CGSize
     {
