@@ -12,7 +12,20 @@ extension SelectableList
     
     func copy()
     {
-        root?.copy(selection.tasks)
+        guard let root = root else { return }
+        
+        let indexes = selection.indexes
+        
+        var tasks = [Task]()
+        
+        for index in indexes
+        {
+            guard let task = root[index] else { continue }
+            
+            tasks.append(task)
+        }
+        
+        root.copy(tasks)
     }
     
     func pasteFromClipboard()
