@@ -12,7 +12,21 @@ Flowlist – Manage Life in Flow
 
 The 1st Hierarchical Task List
 
-#Flowlist AppStore Update Text
+# Flowlist AppStore Update Text
+
+## 1.5.0
+
+This update brings a total new design.  
+
+• Flowlist looks much different, cleaner and more modern.
+• It's easier to recognize which list is in focus, which items are selected, which are in progress, which are done, how lists are titled and how lists are tagged.
+• Dark mode looks better and is more in line with Mojave (macOS 10.14) and Apple's guide lines.
+• Flowlist adjusts when you switch between dark and light mode in the system settings of Mojave. You can still toggle it independent of system settings. 
+• Fix: Icons don't get cut off anymore.
+• Fix: Font size changes are smoother and more accurate.
+• Fix: Copy, cut and paste maintain the item order again.
+• Fixes for issues that came up on macOS Mojave
+• As always: Some technical improvements under the hood to maintain development speed
 
 ## 1.4.0
 
@@ -71,7 +85,7 @@ This update brings minor fixes and performance improvements:
 • Bug fix: When pasting content from web pages or documents, item detection does not trim special characters from the end of texts anymore
 • As always: Many technical improvements under the hood to ensure development will never slow down
 
-#Flowlist AppStore Description
+# Flowlist AppStore Description
 
 ## Version 1.4.0
 
@@ -177,7 +191,7 @@ You can support the development of Flowlist by unlocking the full unlimited vers
 * Pay once, then use Flowlist forever. No subscription required.
 * Early bird advantage: Owners of the full version get all new features as free updates, even when the full version price rises.
 
-#Flowlist AppStore Preview Video Narration
+# Flowlist AppStore Preview Video Narration
 
 * Create
 * Add on top
@@ -192,7 +206,7 @@ You can support the development of Flowlist by unlocking the full unlimited vers
 * Delete and undo
 * Import from anywhere
 
-#Flowlist Promo Video
+# Flowlist Promo Video
 
 * Ever feel overwhelmed by all the things you want to accomplish? your errands? your projects? ideas and big dreams?
 * I certainly felt that way. And I tried all popular task managers to finally get organized.
@@ -228,7 +242,7 @@ You can support the development of Flowlist by unlocking the full unlimited vers
 * Once you have the full version, you get all new features as free updates.
 * Sounds fair? Go to flowlistapp.com and start organizing your thoughts and your life today!
 
-#Flowlist 1.0 Tutorial
+# Flowlist 1.0 Tutorial
 
 * In the next 3 minutes, we'll have a look at Flowlist and see what the app can already do. Unfortunately, I didnt have the time to make a shorter video.
 * After first launch it looks quite deserted. We have a list header here displaying the app's filename. This list contains items stored inside the app, but right now, the app is empty.
