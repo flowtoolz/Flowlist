@@ -282,7 +282,6 @@ class TaskView: LayerBackedView, Observer, Observable
         
         guard isSelected, let task = task else { return }
         
-        
         let isDone = task.isDone
         let isTagged = task.tag.value != nil
         
@@ -293,9 +292,12 @@ class TaskView: LayerBackedView, Observer, Observable
         
         if !Color.isInDarkMode
         {
-            textView.set(color: .itemText(isDone: isDone,
-                                          isSelected: isSelected,
-                                          isFocused: isFocused))
+            if !isEditing
+            {
+                textView.set(color: .itemText(isDone: isDone,
+                                              isSelected: isSelected,
+                                              isFocused: isFocused))
+            }
             
             let lightContent = Color.itemContentIsLight(isSelected: isSelected,
                                                         isFocused: isFocused)
@@ -389,6 +391,8 @@ class TaskView: LayerBackedView, Observer, Observable
         }
     }
     
+    // MARK: - Editing
+    
     private func set(editing: Bool)
     {
         isEditing = editing
@@ -433,8 +437,6 @@ class TaskView: LayerBackedView, Observer, Observable
     }
     
     private var isEditing = false
-    
-    // MARK: - Editing Background
     
     private func constrainEditingBackground()
     {
