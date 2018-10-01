@@ -87,6 +87,50 @@ This update brings minor fixes and performance improvements:
 
 # Flowlist AppStore Description
 
+## Version 1.5.0
+
+Flowlist is an elegant self-management tool optimized for total creative focus. Hierarchical lists make it as simple and adaptable as a box of legos. Organize your thoughts and your life in a state of flow!
+
+Watch a 30 second video at www.flowlistapp.com
+It shows an old version but still illustrates the idea.
+
+Flowlist does not force your stuff into categories like "Project" or "Todo". Instead, items are universal and may contain other items, like folders on your Mac contain other folders. You're free to organize yourself in your own way.
+
+A novel interaction concept combines intuitive key commands, a clean interface and meaningful animations, so you can rapidly navigate and edit your item hierarchy in a state of deep concentration.
+
+You may use Flowlist to:
+
+• Capture whatever pops into your head
+• Support your thought process
+• Grow a backlog of ideas
+• Establish good habits
+• Manage tasks and projects
+• Keep track of responsibilities
+• Plan your day and your future
+
+Features:
+
+• Create your own item hierarchy: Group items together, add subitems to any (empty) item, move items between levels.
+• Tag items with colors.
+• Switch to Dark Mode to give your eyes a break, sleep better, work at night and feel like a pro.
+• Paste content from any document or web page. Flowlist detects distinct items.
+• Adjust the font size and zoom level of the interface to your screen size and way of working.
+• Enter monotasking mode or fullscreen.
+
+Flowlist helps you to get into flow:
+
+• Your hands never have to leave the keyboard and your eyes can stay focused on your content. With just a few intelligently laid out key commands, you have rapid control over everything.
+• The interface is focused. You change focus by navigating your item hierarchy. Overview is always to the left and details are always to the right. 
+• The interface is clean. No buttons, knobs, alerts, popups and such clutter.
+• Flowlist animates all your navigation and editing, which makes it fun to use and helps keeping track of changes.
+
+This free version has all features, saves all items and will never expire. It is only limited to 100 items, not counting groups, which will be enough in many contexts. Try it for yourself, a progress bar at the bottom tracks your item count.
+
+You can support the development of Flowlist by unlocking the full unlimited version from within the app:
+
+• Pay once, then use Flowlist forever. No subscription required.
+• Early bird advantage: Owners of the full version get all new features as free updates, even when the full version price rises.
+
 ## Version 1.4.0
 
 Flowlist is an elegant self-management tool optimized for total creative focus. Hierarchical lists make it as simple and adaptable as a box of legos. Organize your thoughts and your life in a state of flow!
