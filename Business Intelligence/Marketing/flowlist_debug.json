@@ -4,7 +4,7 @@
     {
       "title" : "Projects",
       "state" : 0,
-      "tag" : 4,
+      "tag" : 3,
       "subtasks" : [
         {
           "title" : "Flowtalk",
@@ -21,10 +21,12 @@
                   "state" : 0,
                   "subtasks" : [
                     {
-                      "title" : "add anchor link to website"
+                      "title" : "it already mostly works but playing without subscribing in macOS iTunes does not... so direct streaming without downloading seems to be broken",
+                      "state" : 2
                     },
                     {
-                      "title" : "it already mostly works but playing without subscribing in macOS iTunes does not... so direct streaming without downloading seems to be broken"
+                      "title" : "add anchor link to website",
+                      "state" : 2
                     }
                   ]
                 },
@@ -1047,7 +1049,7 @@
                 {
                   "title" : "Iteration",
                   "state" : 0,
-                  "tag" : 4,
+                  "tag" : 3,
                   "subtasks" : [
                     {
                       "title" : "Step 2: Implement Features",
@@ -1057,9 +1059,10 @@
                         {
                           "title" : "Essential",
                           "state" : 0,
+                          "tag" : 3,
                           "subtasks" : [
                             {
-                              "title" : "Feature Roadmap towards Premium Version",
+                              "title" : "Premium Version",
                               "state" : 0,
                               "tag" : 3,
                               "subtasks" : [
@@ -1257,7 +1260,6 @@
                             },
                             {
                               "title" : "Universal Features",
-                              "tag" : 3,
                               "subtasks" : [
                                 {
                                   "title" : "Consistency \/ Convenience \/ Clarity",
@@ -1733,6 +1735,7 @@
                         },
                         {
                           "title" : "Valuable",
+                          "tag" : 3,
                           "subtasks" : [
                             {
                               "title" : "Ungroup ... mainly for consistency",
@@ -2783,6 +2786,7 @@
                                   "subtasks" : [
                                     {
                                       "title" : "Think and Grow Rich",
+                                      "tag" : 2,
                                       "subtasks" : [
                                         {
                                           "title" : "Author’s Preface",
@@ -2794,6 +2798,7 @@
                                         },
                                         {
                                           "title" : "Chapter 1 — Introduction",
+                                          "tag" : 5,
                                           "subtasks" : [
                                             {
                                               "title" : "The Man Who “Thought” His Way into Partnership with Thomas A. Edison",
@@ -2814,12 +2819,14 @@
                                             },
                                             {
                                               "title" : "A Fifty-Cent Lesson in Persistence",
+                                              "tag" : 5,
                                               "subtasks" : [
                                                 {
                                                   "title" : "Shortly after Mr. Darby received his degree from the “University of Hard Knocks,” and had decided to profit by his experience in the gold mining business, he had the good fortune to be present on an occasion that proved to him that “No” does not necessarily mean no."
                                                 },
                                                 {
-                                                  "title" : "One afternoon he was helping his uncle grind wheat in an old fashioned mill. The uncle operated a large farm on which a number of colored sharecrop farmers lived. Quietly, the door was opened, and a small colored child, the daughter of a tenant, walked in and took her place near the door."
+                                                  "title" : "One afternoon he was helping his uncle grind wheat in an old fashioned mill. The uncle operated a large farm on which a number of colored sharecrop farmers lived. Quietly, the door was opened, and a small colored child, the daughter of a tenant, walked in and took her place near the door.",
+                                                  "tag" : 2
                                                 },
                                                 {
                                                   "title" : "The uncle looked up, saw the child, and barked at her roughly, “what do you want?” Meekly, the child replied, “My mammy say send her fifty cents.” “I’ll not do it,” the uncle retorted, “Now you run on home.” “Yas sah,” the child replied. But she did not move. The uncle went ahead with his work, so busily engaged that he did not pay enough attention to the child to observe that she did not leave. When he looked up and saw her still standing there, he yelled at her, “I told you to go on home! Now go, or I’ll take a switch to you.” The little girl said “yas sah,” but she did not budge an inch. The uncle dropped a sack of grain he was about to pour into the mill hopper, picked up a barrel stave, and started toward the child with an expression on his face that indicated trouble."
@@ -2828,7 +2835,7 @@
                                             },
                                             {
                                               "title" : "You Are “the Master of Your Fate, the Captain of Your Soul,” Because... ",
-                                              "tag" : 5,
+                                              "tag" : 2,
                                               "subtasks" : [
                                                 {
                                                   "title" : "When Henley wrote the prophetic lines, “I am the Master of my Fate, I am the Cap- tain of my Soul,” he should have informed us that we are the Masters of our Fate, the Captains of our Souls, because we have the power to control our thoughts."
@@ -2853,7 +2860,7 @@
                                         },
                                         {
                                           "title" : "Chapter 3 — Faith Visualization of, and Belief in Attainment of Desire",
-                                          "tag" : 5,
+                                          "tag" : 2,
                                           "subtasks" : [
                                             {
                                               "title" : "dummy"
@@ -2862,7 +2869,7 @@
                                         },
                                         {
                                           "title" : "Chapter 4 — Auto-Suggestion the Medium for Influencing the Subconscious Mind",
-                                          "tag" : 5,
+                                          "tag" : 2,
                                           "subtasks" : [
                                             {
                                               "title" : "dummy"
@@ -2871,7 +2878,7 @@
                                         },
                                         {
                                           "title" : "Chapter 5 — Specialized Knowledge, Personal Experiences or Observations",
-                                          "tag" : 2,
+                                          "tag" : 5,
                                           "subtasks" : [
                                             {
                                               "title" : "dummy"
@@ -2880,6 +2887,7 @@
                                         },
                                         {
                                           "title" : "Chapter 6 — Imagination: the Workshop of the Mind",
+                                          "tag" : 2,
                                           "subtasks" : [
                                             {
                                               "title" : "dummy"
@@ -2888,12 +2896,15 @@
                                         },
                                         {
                                           "title" : "Chapter 7 — Organized Planning, the Crystallization of Desire into Action",
-                                          "tag" : 2,
+                                          "tag" : 5,
                                           "subtasks" : [
                                             {
                                               "title" : "dummy"
                                             }
                                           ]
+                                        },
+                                        {
+                                          "title" : "Chapter 8 — Decision: the Mastery of Procrastination"
                                         }
                                       ]
                                     }
@@ -9375,93 +9386,67 @@
     {
       "title" : "Today",
       "state" : 0,
-      "tag" : 1,
+      "tag" : 0,
       "subtasks" : [
         {
-          "title" : "Real Food Recipes",
+          "title" : "08:30 Dentist",
+          "state" : 0,
+          "tag" : 0
+        },
+        {
+          "title" : "09:00 Groceries",
+          "state" : 0,
           "subtasks" : [
             {
-              "title" : "Bread",
-              "subtasks" : [
-                {
-                  "title" : "https:\/\/paleoglutenfree.com\/recipes\/healthy-5-minute-gluten-free-paleo-bread\/"
-                },
-                {
-                  "title" : "1 cup almond flour"
-                },
-                {
-                  "title" : "3\/4 cup arrowroot flour"
-                },
-                {
-                  "title" : "1\/2 cup golden milled flax meal"
-                },
-                {
-                  "title" : "1\/3 cup coconut oil Solid- not melted"
-                },
-                {
-                  "title" : "4 medium eggs"
-                },
-                {
-                  "title" : "1\/4 cup water room temp"
-                },
-                {
-                  "title" : "2 tablespoons maple syrup"
-                },
-                {
-                  "title" : "1 teaspoon apple cider vinegar"
-                },
-                {
-                  "title" : "1\/2 teaspoon sea salt"
-                },
-                {
-                  "title" : "2 teaspoons baking powder"
-                }
-              ]
+              "title" : "Leafy Greens",
+              "tag" : 3
             },
             {
-              "title" : "Pancakes",
-              "tag" : 2
+              "title" : "Grassfed Butter",
+              "tag" : 3
             },
             {
-              "title" : "Banana Coconut Icecream",
-              "tag" : 2
+              "title" : "Dark Chocolate"
             },
             {
-              "title" : "Bulletproof Coffee"
+              "title" : "White Wine",
+              "state" : 2
             },
             {
-              "title" : "Titanium Tea"
+              "title" : "Organic Apple Laptop",
+              "state" : 2
             },
             {
-              "title" : "Cheesecake",
-              "tag" : 2
-            },
-            {
-              "title" : "Tiramisu",
-              "tag" : 5
-            },
-            {
-              "title" : "Malakoff Cake",
-              "tag" : 5
-            },
-            {
-              "title" : "Bone Broth"
-            },
-            {
-              "title" : "The Green Smoothie of Doom"
+              "title" : "Weed",
+              "state" : 2
             }
           ]
         },
         {
-          "title" : "06:00 Work: Release Flowlist 1.4.0"
+          "title" : "10:00 Submit Flowlist 1.5.0",
+          "tag" : 3
         },
         {
-          "title" : "10:00 Workout Routine",
+          "title" : "14:00 Body Routine",
           "tag" : 3,
           "subtasks" : [
             {
+              "title" : "Workout \/ Run \/ HIIT",
+              "state" : 0
+            },
+            {
+              "title" : "Shoulder Recovery"
+            },
+            {
+              "title" : "Black Roll"
+            },
+            {
+              "title" : "Stretch",
+              "state" : 2
+            },
+            {
               "title" : "Supplements",
-              "tag" : 3,
+              "state" : 2,
               "subtasks" : [
                 {
                   "title" : "creatine"
@@ -9476,52 +9461,6 @@
                   "title" : "krill oil"
                 }
               ]
-            },
-            {
-              "title" : "workout \/ run \/ HIIT",
-              "tag" : 3
-            },
-            {
-              "title" : "stretch",
-              "tag" : 3
-            },
-            {
-              "title" : "shoulder",
-              "tag" : 3
-            },
-            {
-              "title" : "roll",
-              "tag" : 3
-            }
-          ]
-        },
-        {
-          "title" : "12:00 Work: Release Flowlist 1.4.0"
-        },
-        {
-          "title" : "15:00 Groceries",
-          "subtasks" : [
-            {
-              "title" : "Leafy Green",
-              "tag" : 3
-            },
-            {
-              "title" : "Dark Chocolate"
-            },
-            {
-              "title" : "Grassfed Butter"
-            },
-            {
-              "title" : "White Wine",
-              "state" : 2
-            },
-            {
-              "title" : "Organic Apple Laptop",
-              "state" : 2
-            },
-            {
-              "title" : "Weed",
-              "state" : 2
             }
           ]
         },
@@ -9786,63 +9725,86 @@
           ]
         },
         {
-          "title" : "16:00: Call mit Jan (Designer)",
+          "title" : "06:00 Morning Routine",
           "state" : 2,
-          "tag" : 0
-        },
-        {
-          "title" : "15:30 prepare agenda for jan",
-          "state" : 2,
-          "tag" : 0
-        },
-        {
-          "title" : "10:00 Work",
-          "state" : 2,
-          "tag" : 4
-        },
-        {
-          "title" : "Body Routine",
-          "state" : 2,
-          "subtasks" : [
-            {
-              "title" : "stretch"
-            },
-            {
-              "title" : "shoulder"
-            },
-            {
-              "title" : "roll"
-            },
-            {
-              "title" : "strength workout",
-              "state" : 2
-            },
-            {
-              "title" : "Supplements",
-              "state" : 2,
-              "subtasks" : [
-                {
-                  "title" : "creatine"
-                },
-                {
-                  "title" : "vitamin D3"
-                },
-                {
-                  "title" : "vitamin C"
-                },
-                {
-                  "title" : "krill oil"
-                }
-              ]
-            }
-          ]
+          "tag" : 3
         }
       ]
     },
     {
       "title" : "Upcoming",
-      "tag" : 1,
+      "tag" : 0,
       "subtasks" : [
+        {
+          "title" : "Real Food Recipes",
+          "tag" : 5,
+          "subtasks" : [
+            {
+              "title" : "Bread",
+              "tag" : 2,
+              "subtasks" : [
+                {
+                  "title" : "1 cup almond flour"
+                },
+                {
+                  "title" : "3\/4 cup arrowroot flour"
+                },
+                {
+                  "title" : "1\/2 cup golden milled flax meal"
+                },
+                {
+                  "title" : "1\/3 cup coconut oil Solid- not melted"
+                },
+                {
+                  "title" : "4 medium eggs"
+                },
+                {
+                  "title" : "1\/4 cup water room temp"
+                },
+                {
+                  "title" : "2 tablespoons maple syrup"
+                },
+                {
+                  "title" : "1 teaspoon apple cider vinegar"
+                },
+                {
+                  "title" : "1\/2 teaspoon sea salt"
+                },
+                {
+                  "title" : "2 teaspoons baking powder"
+                }
+              ]
+            },
+            {
+              "title" : "Tiramisu",
+              "tag" : 5
+            },
+            {
+              "title" : "Malakoff Cake",
+              "tag" : 5
+            },
+            {
+              "title" : "Bulletproof Coffee"
+            },
+            {
+              "title" : "Titanium Tea"
+            },
+            {
+              "title" : "Banana Coconut Icecream",
+              "tag" : 2
+            },
+            {
+              "title" : "Cheesecake",
+              "tag" : 2
+            },
+            {
+              "title" : "Bone Broth"
+            },
+            {
+              "title" : "The Green Smoothie of Doom"
+            }
+          ]
+        },
         {
           "title" : "Sonntag 23.09. 13:00 Flowtalk #3",
           "tag" : 0
@@ -10013,6 +9975,7 @@
     },
     {
       "title" : "Personal Growth",
+      "tag" : 3,
       "subtasks" : [
         {
           "title" : "Skills & Strategy",
@@ -10639,7 +10602,7 @@
     },
     {
       "title" : "Business",
-      "tag" : 4,
+      "tag" : 3,
       "subtasks" : [
         {
           "title" : "Marketing & Deals",
@@ -11839,6 +11802,7 @@
     },
     {
       "title" : "Errands",
+      "tag" : 0,
       "subtasks" : [
         {
           "title" : "WG",
