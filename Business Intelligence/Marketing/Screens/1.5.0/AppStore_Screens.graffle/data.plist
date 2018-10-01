@@ -151,7 +151,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-10-01 12:14:44 +0000</string>
+	<string>2018-10-01 13:48:34 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -214,7 +214,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-2901.428571428572, -2528.5714285714289}, {12346.428571428574, 10107.142857142857}}</string>
+				<string>{{-1680.6097560975616, -1536.5853658536589}, {9904.8780487804888, 8124.3902439024396}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -1042,6 +1042,17 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
+									<key>Color</key>
+									<dict>
+										<key>b</key>
+										<real>1</real>
+										<key>g</key>
+										<real>1</real>
+										<key>r</key>
+										<real>0.99999600649999998</real>
+										<key>space</key>
+										<string>srgb</string>
+									</dict>
 									<key>HeadScale</key>
 									<real>3</real>
 									<key>Join</key>
@@ -1115,6 +1126,17 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
+									<key>Color</key>
+									<dict>
+										<key>b</key>
+										<real>1</real>
+										<key>g</key>
+										<real>1</real>
+										<key>r</key>
+										<real>0.99999600649999998</real>
+										<key>space</key>
+										<string>srgb</string>
+									</dict>
 									<key>HeadScale</key>
 									<real>3</real>
 									<key>Join</key>
@@ -1188,6 +1210,17 @@
 								</dict>
 								<key>stroke</key>
 								<dict>
+									<key>Color</key>
+									<dict>
+										<key>b</key>
+										<real>1</real>
+										<key>g</key>
+										<real>1</real>
+										<key>r</key>
+										<real>0.99999600649999998</real>
+										<key>space</key>
+										<string>srgb</string>
+									</dict>
 									<key>HeadScale</key>
 									<real>3</real>
 									<key>Join</key>
@@ -3168,7 +3201,7 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 		<key>CurrentSheet</key>
 		<integer>0</integer>
 		<key>Frame</key>
-		<string>{{0, 0}, {1280, 740}}</string>
+		<string>{{0, 0}, {1234, 740}}</string>
 		<key>ShowInfo</key>
 		<true/>
 		<key>ShowRuler</key>
@@ -3180,7 +3213,7 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{1812.8571428571427, 2946.4285714285716}, {3496.428571428572, 2528.5714285714284}}</string>
+		<string>{{2742.560975609756, 3675.6097560975609}, {2275.60975609756, 1536.5853658536603}}</string>
 		<key>WindowInfo_InspectorTab</key>
 		<array>
 			<string>com.omnigroup.OmniGraffle.inspectorGroup.object</string>
@@ -3189,7 +3222,7 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 		<array>
 			<array>
 				<string>Arbeitsfläche 1</string>
-				<real>0.27999999999999997</real>
+				<real>0.40999999999999998</real>
 				<real>0.5</real>
 			</array>
 		</array>
