@@ -3213,7 +3213,7 @@ move items between levels. Focus and edit subitem lists at any level.}</string>
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{2742.560975609756, 3675.6097560975609}, {2275.60975609756, 1536.5853658536603}}</string>
+		<string>{{2703.5365853658532, 3556.0975609756101}, {2275.6097560975613, 1536.5853658536585}}</string>
 		<key>WindowInfo_InspectorTab</key>
 		<array>
 			<string>com.omnigroup.OmniGraffle.inspectorGroup.object</string>
