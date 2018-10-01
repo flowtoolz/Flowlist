@@ -21,7 +21,7 @@ This update brings a total new design.
 • Flowlist looks much different, cleaner and more modern.
 • It's easier to recognize which list is in focus, which items are selected, which are in progress, which are done, how lists are titled and how lists are tagged.
 • Dark mode looks better and is more in line with Mojave (macOS 10.14) and Apple's guide lines.
-• Flowlist adjusts when you switch between dark and light mode in the system settings of Mojave. You can still toggle it independent of system settings. 
+• Flowlist adjusts when you switch between dark and light mode in the system settings of Mojave. You can still toggle dark mode independent of system settings. 
 • Fix: Icons don't get cut off anymore.
 • Fix: Font size changes are smoother and more accurate.
 • Fix: Copy, cut and paste maintain the item order again.
