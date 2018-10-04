@@ -1,12 +1,12 @@
 import SwiftObserver
 import SwiftyToolz
 
-// MARK: - Edit Branches
+// MARK: - High-Level Edits
 
 extension NewTree
 {
     @discardableResult
-    func mergeBranches(at indexes: [Int], as mergedBranch: Node) -> [Node]?
+    func mergeNodes(at indexes: [Int], as mergedNode: Node) -> [Node]?
     {
         let sortedIndexes = indexes.sorted()
         
@@ -19,23 +19,40 @@ extension NewTree
             return nil
         }
         
-        guard let removedBranches = removeBranches(from: indexes) else
+        guard let removedNodes = removeNodes(from: indexes) else
         {
             return nil
         }
         
-        insert(mergedBranch, at: firstIndex)
+        insert(mergedNode, at: firstIndex)
         
-        for removedBranch in removedBranches
+        for removedNode in removedNodes
         {
-            mergedBranch.append(removedBranch)
+            mergedNode.append(removedNode)
         }
         
-        return removedBranches
+        return removedNodes
     }
     
     @discardableResult
-    func removeBranches(from indexes: [Int]) -> [Node]?
+    func append(_ node: Node) -> Bool
+    {
+        return insert(node, at: count)
+    }
+    
+    @discardableResult
+    func insert(_ node: Node, at index: Int) -> Bool
+    {
+        return insert([node], at: index)
+    }
+}
+
+// MARK: - Atomic (Observable) Edits
+
+extension NewTree
+{
+    @discardableResult
+    func removeNodes(from indexes: [Int]) -> [Node]?
     {
         var sortedIndexes = indexes.sorted()
         
@@ -47,23 +64,27 @@ extension NewTree
             return nil
         }
         
-        var removedBranches = [Node]()
+        var removedNodes = [Node]()
         
         while let indexToRemove = sortedIndexes.popLast()
         {
-            let removedBranch = branches.remove(at: indexToRemove)
+            let removedNode = branches.remove(at: indexToRemove)
             
-            removedBranch.root = nil
+            removedNode.root = nil
             
-            removedBranches.insert(removedBranch, at: 0)
+            removedNodes.insert(removedNode, at: 0)
         }
         
-        return removedBranches
+        send(.did(.remove(from: indexes)))
+        
+        return removedNodes
     }
     
     @discardableResult
     func insert(_ toInsert: [Node], at index: Int) -> Bool
     {
+        guard toInsert.count > 0 else { return false }
+        
         guard index >= 0, index <= count else
         {
             log(error: "Tried to insert branches at invalid index \(index).")
@@ -72,37 +93,24 @@ extension NewTree
         
         branches.insert(contentsOf: toInsert, at: index)
         
-        for inserted in toInsert { inserted.root = self }
+        for insertedNode in toInsert { insertedNode.root = self }
+        
+        send(.did(.insert(at: Array(index ..< index + toInsert.count))))
         
         return true
     }
     
     @discardableResult
-    func append(_ branch: Node) -> Bool
+    func moveNode(from: Int, to: Int) -> Bool
     {
-        return insert(branch, at: count)
-    }
-    
-    @discardableResult
-    func insert(_ branch: Node, at index: Int) -> Bool
-    {
-        guard index >= 0, index <= branches.count else
+        let ok = branches.moveElement(from: from, to: to)
+        
+        if ok
         {
-            log(error: "Tried to insert branch at invalid index \(index).")
-            return false
+            send(.did(.move(from: from, to: to)))
         }
         
-        branches.insert(branch, at: index)
-        
-        branch.root = self
-        
-        return true
-    }
-    
-    @discardableResult
-    func moveBranch(from: Int, to: Int) -> Bool
-    {
-        return branches.moveElement(from: from, to: to)
+        return ok
     }
 }
 
@@ -165,25 +173,42 @@ extension NewTree
     }
 }
 
-// MARK: - Observing Trees
-
-extension NewTree: Observable
-{
-    var latestUpdate: Event { return Event.didNothing }
-    
-    enum Event { case didNothing, did(edit: Edit) }
-    
-    enum Edit { case move, remove, insert, changeRoot }
-}
-
 // MARK: - Tree
 
-class NewTree<Data>
+class NewTree<Data>: Observable
 {
-    var data: Data?
+    func set(data: Data?)
+    {
+        self.data = data
+    }
+    
+    private(set) var data: Data?
     
     fileprivate var branches = [Node]()
     private(set) weak var root: Node?
+    {
+        didSet
+        {
+            guard oldValue !== root else { return }
+            
+            send(.did(.changeRoot(from: oldValue, to: root)))
+        }
+    }
+    
+    // MARK: - Observability
+    
+    var latestUpdate: Event { return Event.didNothing }
+    
+    enum Event { case didNothing, did(NTEdit) }
+    enum NTEdit // TODO: rename to Edit when old tree has been replaced
+    {
+        case move(from: Int, to: Int)
+        case remove(from: [Int])
+        case insert(at: [Int])
+        case changeRoot(from: Node?, to: Node?)
+    }
+    
+    // MARK: - Node Type
     
     typealias Node = NewTree<Data>
 }
