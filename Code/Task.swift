@@ -276,7 +276,7 @@ final class Task: Codable, Observable, Tree
         return true
     }
     
-    // MARK: - Counting Tasks
+    // MARK: - Counting Leafs
     
     @discardableResult
     func recoverNumberOfLeafs() -> Int
@@ -325,12 +325,14 @@ final class Task: Codable, Observable, Tree
         return subtaskLeafs
     }
     
+    // TODO: this tree metric should be moved to ListItem, the Event value can then be removed
     private(set) var numberOfLeafs = 1
     
     // MARK: - Tree
     
     weak var root: Task? = nil
     {
+        // TODO: this property oberver won't be needed when Lists have ListItems instead of Tasks
         didSet
         {
             guard oldValue !== root else { return }
@@ -344,6 +346,6 @@ final class Task: Codable, Observable, Tree
     // MARK: - Observability
     
     var latestUpdate: Event { return .didNothing }
-    
+
     enum Event { case didNothing, did(Edit), didChange(numberOfLeafs: Int) }
 }
