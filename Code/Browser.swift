@@ -9,6 +9,8 @@ class Browser: Observer, Observable
     
     fileprivate init()
     {
+        rootListItem = ListItem(with: store.root)
+        
         pushList()
         pushList()
         pushList()
@@ -21,6 +23,8 @@ class Browser: Observer, Observable
         focusedList.set(root: store.root)
         focusedList.select()
     }
+    
+    var rootListItem: ListItem
     
     deinit { stopAllObserving() }
     

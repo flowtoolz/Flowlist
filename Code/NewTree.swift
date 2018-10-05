@@ -13,7 +13,7 @@ extension NewTree
         guard let firstIndex = sortedIndexes.first,
             branches.isValid(index: firstIndex),
             branches.isValid(index: sortedIndexes.last)
-            else
+        else
         {
             log(error: "Tried to merge branches at invalid indexes \(indexes).")
             return nil

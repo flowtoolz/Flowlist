@@ -1,17 +1,35 @@
 import SwiftObserver
 import SwiftyToolz
 
+extension NewTree where Data: ListItem.Data
+{
+    // MARK: - Debug
+    
+    func debugPrint(prefix: String = "")
+    {
+        Swift.print(prefix + (data?.item?.title.value ?? "untitled"))
+        
+        for i in 0 ..< count
+        {
+            self[i]?.debugPrint(prefix: prefix + "\t")
+        }
+    }
+}
+
 class ListItem: NewTree<ListItem.Data>, Observer
 {
-    init(with item: Task)
+    init(with item: Task, withBranches: Bool = true)
     {
         super.init()
 
         set(data: Data(with: item))
         
-        for subItem in item.branches
+        if withBranches
         {
-            append(ListItem(with: subItem))
+            for subItem in item.branches
+            {
+                append(ListItem(with: subItem))
+            }
         }
     }
     
@@ -38,8 +56,8 @@ class ListItem: NewTree<ListItem.Data>, Observer
         {
         case .didNothing: break
         case .did(let edit): did(edit)
-        case .didChange(let numberOfLeafs):
-            print("observed item did change number of leafs: \(numberOfLeafs)")
+        case .didChange(let numberOfLeafs): break
+            //Swift.print("observed item did change number of leafs: \(numberOfLeafs)")
         }
     }
     
@@ -53,7 +71,7 @@ class ListItem: NewTree<ListItem.Data>, Observer
             break
             
         case .changeRoot(let from, let to):
-            print("observed item did change root from \(String(describing: from?.title)) to \(to?.title)")
+            Swift.print("observed item did change root from \(String(describing: from?.title)) to \(to?.title)")
             
         case .create(let at):
             guard let newSubItem = item[at] else
@@ -62,7 +80,7 @@ class ListItem: NewTree<ListItem.Data>, Observer
                 return
             }
             
-            insert(ListItem(with: newSubItem), at: at)
+            insert(ListItem(with: newSubItem, withBranches: false), at: at)
             
         case .insert(let at):
             guard at.count > 0 else { return }
