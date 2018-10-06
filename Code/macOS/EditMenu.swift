@@ -42,11 +42,6 @@ class EditMenu: NSMenu, Observer
             [weak self] in
             
             if $0.key == .space { self?.createAtTop() }
-            
-            if $0.characters == "p" && $0.cmd
-            {
-                browser.rootListItem.debugPrint()
-            }
         }
     }
     
