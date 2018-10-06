@@ -78,7 +78,7 @@ class Header: LayerBackedView, Observer
     
     func update(with root: Task)
     {
-        let isUntitled = String(withNonEmpty: root.title.value) == nil
+        let isUntitled = String(withNonEmpty: root.data?.title.value) == nil
         
         let textColor = Color.itemText(isDone: root.isDone || isUntitled,
                                        isSelected: false,
@@ -86,12 +86,16 @@ class Header: LayerBackedView, Observer
         
         titleLabel.textColor = textColor.nsColor
         
-        updateColorView(with: root.tag.value)
+        updateColorView(with: root.data?.tag.value)
         
-        stopObserving(self.list?.root?.tag)
-        observe(root.tag)
+        stopObserving(self.list?.root?.data?.tag)
+        
+        if let rootItem = root.data
         {
-            [weak self] update in self?.updateColorView(with: update.new)
+            observe(rootItem.tag)
+            {
+                [weak self] update in self?.updateColorView(with: update.new)
+            }
         }
     }
     
@@ -159,7 +163,7 @@ class Header: LayerBackedView, Observer
         colorView.alphaValue = focused ? 1.0 : 0.5
     }
     
-    private func updateColorView(with tag: Task.Tag?)
+    private func updateColorView(with tag: Task.TaskData.Tag?)
     {
         if let tagValue = tag?.rawValue
         {

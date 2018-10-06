@@ -215,7 +215,7 @@ class Selection: Observable
         
         for task in selectedTasks.values
         {
-            desc += task.title.value ?? "untitled"
+            desc += task.data?.title.value ?? "untitled"
             desc += ", "
         }
         

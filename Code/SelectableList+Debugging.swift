@@ -13,7 +13,7 @@ extension SelectableList
         {
             guard let task = self[i] else { continue }
             
-            desc += "\n- \(task.title.value ?? "untitled")"
+            desc += "\n- \(task.data?.title.value ?? "untitled")"
         }
         
         desc += "\n\nselection: \(selection.description)"

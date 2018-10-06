@@ -247,7 +247,7 @@ class EditMenu: NSMenu, Observer
         
         for i in 0 ..< 7
         {
-            let tag = Task.Tag(rawValue: i)
+            let tag = Task.TaskData.Tag(rawValue: i)
             
             let name = tag?.string ?? "None"
             

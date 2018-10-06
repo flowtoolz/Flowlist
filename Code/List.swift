@@ -111,14 +111,17 @@ class List: Observable, Observer
     {
         guard start else
         {
-            stopObserving(task.state)
+            stopObserving(task.data?.state)
             
             return
         }
         
-        observe(task.state)
+        if let state = task.data?.state
         {
-            [weak self, weak task] _ in self?.taskDidChangeState(task)
+            observe(state)
+            {
+                [weak self, weak task] _ in self?.taskDidChangeState(task)
+            }
         }
     }
     
@@ -188,7 +191,7 @@ class List: Observable, Observer
     {
         old?.lastRemoved.removeAll()
         
-        title.observable = new?.title
+        title.observable = new?.data?.title
         
         send(.did(.changeRoot(from: old, to: new)))
     }

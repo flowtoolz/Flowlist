@@ -57,8 +57,8 @@ extension Task
         return nil
     }
     
-    var isDone: Bool { return state.value == .done }
+    var isDone: Bool { return data?.state.value == .done }
     var isOpen: Bool { return isInProgress || isUndone }
-    var isInProgress: Bool { return state.value == .inProgress }
-    var isUndone: Bool { return state.value == nil }
+    var isInProgress: Bool { return data?.state.value == .inProgress }
+    var isUndone: Bool { return data?.state.value == nil }
 }

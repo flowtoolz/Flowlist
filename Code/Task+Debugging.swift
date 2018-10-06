@@ -10,7 +10,7 @@ extension Task
     func description(_ prefix: String = "", _ isLast: Bool = true) -> String
     {
         let bullet = isLast ? "└╴" : "├╴"
-        var desc = "\(prefix)\(bullet)" + (title.value ?? "untitled")
+        var desc = "\(prefix)\(bullet)" + (data?.title.value ?? "untitled")
         
         for i in 0 ..< numberOfBranches
         {

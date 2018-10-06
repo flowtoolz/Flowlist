@@ -5,7 +5,7 @@ import SwiftyToolz
 
 extension SelectableList
 {
-    func set(tag: Task.Tag?)
+    func set(tag: Task.TaskData.Tag?)
     {
         let selectedTasks = selection.tasks
         
@@ -13,13 +13,13 @@ extension SelectableList
         
         if selectedTasks.count == 1
         {
-            selectedTasks[0].tag <- selectedTasks[0].tag.value != tag ? tag : nil
+            selectedTasks[0].data?.tag <- selectedTasks[0].data?.tag.value != tag ? tag : nil
         }
         else
         {
             for selectedTask in selectedTasks
             {
-                selectedTask.tag <- tag
+                selectedTask.data?.tag <- tag
             }
         }
     }
@@ -138,7 +138,7 @@ class SelectableList: List
             selection.remove(tasks: [task])
         }
         
-        task.state <- !task.isInProgress ? .inProgress : nil
+        task.data?.state <- !task.isInProgress ? .inProgress : nil
     }
     
     func toggleDoneStateOfFirstSelectedTask()
@@ -161,7 +161,7 @@ class SelectableList: List
             selection.remove(tasks: [task])
         }
         
-        task.state <- newState
+        task.data?.state <- newState
     }
     
     private func nextSelectedTaskAfterCheckingOff(at index: Int) -> Task?

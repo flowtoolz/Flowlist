@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-extension Task.Tag
+extension Task.TaskData.Tag
 {
     var string: String
     {
@@ -23,15 +23,15 @@ final class Task: Codable, Observable, Tree
     
     convenience init(_ title: String? = nil,
                      state: TaskState? = nil,
-                     tag: Task.Tag? = nil,
+                     tag: Task.TaskData.Tag? = nil,
                      root: Task? = nil,
                      numberOfLeafs: Int = 1)
     {
         self.init()
         
-        self.title = Var(title)
-        self.state = Var(state)
-        self.tag = Var(tag)
+        data?.title = Var(title)
+        data?.state = Var(state)
+        data?.tag = Var(tag)
         self.root = root
         self.numberOfLeafs = numberOfLeafs
     }
@@ -51,30 +51,30 @@ final class Task: Codable, Observable, Tree
         
         if let titleString = try? container.decode(String.self, forKey: .title)
         {
-            title <- titleString
+            data?.title <- titleString
         }
         else if let title = try? container.decode(Var<String>.self, forKey: .title)
         {
-            self.title = title
+            data?.title = title
         }
         
         if let integer = try? container.decode(Int.self, forKey: .state)
         {
-            state <- TaskState(rawValue: integer)
+            data?.state <- TaskState(rawValue: integer)
         }
         else if let state = try? container.decode(Var<TaskState>.self,
                                                   forKey: .state)
         {
-            self.state = state
+            data?.state = state
         }
         
         if let integer = try? container.decode(Int.self, forKey: .tag)
         {
-            tag <- Task.Tag(rawValue: integer)
+            data?.tag <- Task.TaskData.Tag(rawValue: integer)
         }
-        else if let tag = try? container.decode(Var<Task.Tag>.self, forKey: .tag)
+        else if let tag = try? container.decode(Var<Task.TaskData.Tag>.self, forKey: .tag)
         {
-            self.tag = tag
+            data?.tag = tag
         }
         
         if let branches = try? container.decode([Task].self, forKey: .branches)
@@ -87,17 +87,17 @@ final class Task: Codable, Observable, Tree
     {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
-        if let titleString = title.value
+        if let titleString = data?.title.value
         {
             try? container.encode(titleString, forKey: .title)
         }
         
-        if let stateInteger = state.value?.rawValue
+        if let stateInteger = data?.state.value?.rawValue
         {
             try? container.encode(stateInteger, forKey: .state)
         }
         
-        if let tagInteger = tag.value?.rawValue
+        if let tagInteger = data?.tag.value?.rawValue
         {
             try? container.encode(tagInteger, forKey: .tag)
         }
@@ -115,13 +115,18 @@ final class Task: Codable, Observable, Tree
     
     // MARK: - Data
     
-    private(set) var title = Var<String>()
-    private(set) var state = Var<TaskState>()
-    private(set) var tag = Var<Tag>()
+    let data: TaskData? = TaskData()
     
-    enum Tag: Int, Codable
+    class TaskData
     {
-        case red, orange, yellow, green, blue, purple
+        var title = Var<String>()
+        var state = Var<TaskState>()
+        var tag = Var<Tag>()
+        
+        enum Tag: Int, Codable
+        {
+            case red, orange, yellow, green, blue, purple
+        }
     }
     
     // MARK: - Group
@@ -160,7 +165,7 @@ final class Task: Codable, Observable, Tree
         {
             guard let subtask = self[index] else { continue }
             
-            let subtaskState = subtask.state.value
+            let subtaskState = subtask.data?.state.value
             let subtaskPriority = TaskState.priority(of: subtaskState)
             let highestPriority = TaskState.priority(of: highestPriorityState)
             

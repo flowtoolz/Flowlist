@@ -61,11 +61,11 @@ class SelectableListView: LayerBackedView, Observer, Observable
         
         isHidden = new == nil
         
-        stopObserving(old?.state)
+        stopObserving(old?.data?.state)
         
-        if let newRoot = new
+        if let newRoot = new, let rootItem = newRoot.data
         {
-            observe(newRoot.state)
+            observe(rootItem.state)
             {
                 [weak self, weak newRoot] _ in
                 

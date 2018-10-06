@@ -53,11 +53,11 @@ class TaskView: LayerBackedView, Observer, Observable
         // color overlay
         
         let isDone = task.isDone
-        let isTagged = task.tag.value != nil
+        let isTagged = task.data?.tag.value != nil
         
         colorOverlay.isHidden = !isTagged || isDone
         
-        if let tag = task.tag.value
+        if let tag = task.data?.tag.value
         {
             colorOverlay.backgroundColor = Color.tags[tag.rawValue]
         }
@@ -92,7 +92,7 @@ class TaskView: LayerBackedView, Observer, Observable
         
         let lightContent = Color.itemContentIsLight(isSelected: selected,
                                                     isFocused: isFocused)
-        checkBox.configure(with: task.state.value, white: lightContent)
+        checkBox.configure(with: task.data?.state.value, white: lightContent)
         
         // group icon image
         
@@ -117,12 +117,14 @@ class TaskView: LayerBackedView, Observer, Observable
             self?.received(event, from: task)
         }
         
-        observe(task.state)
+        guard let item = task.data else { return }
+        
+        observe(item.state)
         {
             [weak self] _ in self?.taskStateDidChange()
         }
         
-        observe(task.tag)
+        observe(item.tag)
         {
             [weak self] _ in self?.tagDidChange()
         }
@@ -140,8 +142,8 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func stopObserving(task: Task?)
     {
-        stopObserving(task?.state)
-        stopObserving(task?.title)
+        stopObserving(task?.data?.state)
+        stopObserving(task?.data?.title)
         stopObserving(task)
     }
     
@@ -150,7 +152,7 @@ class TaskView: LayerBackedView, Observer, Observable
     private func colorModeDidChange()
     {
         let isDone = task?.isDone ?? false
-        let isTagged = task?.tag.value != nil
+        let isTagged = task?.data?.tag.value != nil
         
         backgroundColor = .itemBackground(isDone: isDone,
                                           isSelected: isSelected,
@@ -186,14 +188,14 @@ class TaskView: LayerBackedView, Observer, Observable
         guard let task = task else { return }
         
         let isDone = task.isDone
-        let isTagged = task.tag.value != nil
+        let isTagged = task.data?.tag.value != nil
         
         backgroundColor = .itemBackground(isDone: isDone,
                                           isSelected: isSelected,
                                           isTagged: isTagged,
                                           isFocusedList: isFocused)
         
-        checkBox.set(state: task.state.value)
+        checkBox.set(state: task.data?.state.value)
         
         checkBox.alphaValue = Color.iconAlpha(isInProgress: task.isInProgress,
                                               isDone: isDone,
@@ -206,19 +208,19 @@ class TaskView: LayerBackedView, Observer, Observable
                                       isSelected: isSelected,
                                       isFocused: isFocused))
         
-        colorOverlay.isHidden = task.tag.value == nil || isDone
+        colorOverlay.isHidden = task.data?.tag.value == nil || isDone
     }
     
     private func tagDidChange()
     {
         guard let task = task else { return }
         
-        let isTagged = task.tag.value != nil
+        let isTagged = task.data?.tag.value != nil
         let isDone = task.isDone
         
         colorOverlay.isHidden = !isTagged || isDone
         
-        if let tag = task.tag.value
+        if let tag = task.data?.tag.value
         {
             let tagColor = Color.tags[tag.rawValue]
             
@@ -238,7 +240,7 @@ class TaskView: LayerBackedView, Observer, Observable
         isSelected = selected
         
         let isDone = task?.isDone ?? false
-        let isTagged = task?.tag.value != nil
+        let isTagged = task?.data?.tag.value != nil
         
         backgroundColor = .itemBackground(isDone: isDone,
                                           isSelected: isSelected,
@@ -283,7 +285,7 @@ class TaskView: LayerBackedView, Observer, Observable
         guard isSelected, let task = task else { return }
         
         let isDone = task.isDone
-        let isTagged = task.tag.value != nil
+        let isTagged = task.data?.tag.value != nil
         
         backgroundColor = .itemBackground(isDone: isDone,
                                           isSelected: isSelected,
@@ -344,7 +346,7 @@ class TaskView: LayerBackedView, Observer, Observable
         // TODO: is this still needed from El Capitan onwards?
         // https://stackoverflow.com/questions/19121367/uitextviews-in-a-uitableview-link-detection-bug-in-ios-7
         textView.string = ""
-        textView.string = task?.title.value ?? ""
+        textView.string = task?.data?.title.value ?? ""
     }
     
     private func constrainTextView()
@@ -379,14 +381,14 @@ class TaskView: LayerBackedView, Observer, Observable
             
         case .didChange(let text):
             send(.didChangeTitle)
-            task?.title <- String(withNonEmpty: text)
+            task?.data?.title <- String(withNonEmpty: text)
             
         case .wantToEndEditing:
             send(.wantToEndEditingText)
             
         case .didEdit:
             set(editing: false)
-            task?.title <- String(withNonEmpty: textView.string)
+            task?.data?.title <- String(withNonEmpty: textView.string)
             send(.didEditTitle)
         }
     }
@@ -477,7 +479,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     @objc private func didClickCheckBox()
     {
-        task?.state <- task?.isDone ?? false ? nil : .done
+        task?.data?.state <- task?.isDone ?? false ? nil : .done
     }
     
     // MARK: - Group Icon
