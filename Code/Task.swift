@@ -17,7 +17,7 @@ extension Task.TaskData.Tag
     }
 }
 
-final class Task: Codable, Observable, Tree
+final class Task: NewTree<Task.TaskData>, Codable, Observable, Tree
 {
     // MARK: - Life Cycle
     
@@ -36,7 +36,12 @@ final class Task: Codable, Observable, Tree
         self.numberOfLeafs = numberOfLeafs
     }
     
-    init() {}
+    override init()
+    {
+        super.init()
+        
+        data = TaskData()
+    }
     
     deinit { removeObservers() }
     
@@ -44,6 +49,10 @@ final class Task: Codable, Observable, Tree
     
     init(from decoder: Decoder) throws
     {
+        super.init()
+        
+        data = TaskData()
+        
         guard let container = try? decoder.container(keyedBy: CodingKeys.self) else
         {
             return
@@ -115,7 +124,7 @@ final class Task: Codable, Observable, Tree
     
     // MARK: - Data
     
-    let data: TaskData? = TaskData()
+    //let data: TaskData? = TaskData()
     
     class TaskData
     {
