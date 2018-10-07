@@ -75,7 +75,7 @@ class List: Observable, Observer
         case .remove(let tasks, _):
             for task in tasks { observe(listedTask: task, start: false) }
             
-        case .move, .wantTextInput: break
+        case .move: break
             
         case .nothing, .changeRoot: return
         }
@@ -151,7 +151,7 @@ class List: Observable, Observer
             return
         }
         
-        send(.wantToEditTitle(at: index))
+        self[index]?.data?.send(.wantTextInput)
     }
     
     let title = Var<String>().new()
@@ -203,6 +203,5 @@ class List: Observable, Observer
     {
         case didNothing
         case did(Item.Edit)
-        case wantToEditTitle(at: Int)
     }
 }

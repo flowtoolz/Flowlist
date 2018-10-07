@@ -16,7 +16,7 @@ extension Tree where Data == ItemData
         
         guard insert(item, at: index) else { return nil }
         
-        send(.did(.wantTextInput(at: index)))
+        item.data?.send(.wantTextInput)
         
         return item
     }

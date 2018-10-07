@@ -105,7 +105,7 @@ class ItemView: LayerBackedView, Observer, Observable
         updateGroupIcon()
     }
     
-    // MARK: - Observing the Task
+    // MARK: - Observing the Item
     
     private func observe(task: Item)
     {
@@ -118,14 +118,21 @@ class ItemView: LayerBackedView, Observer, Observable
             self?.received(event, from: task)
         }
         
-        guard let item = task.data else { return }
+        guard let itemData = task.data else { return }
         
-        observe(item.state)
+        observe(itemData)
+        {
+            [weak self] event in
+            
+            if event == .wantTextInput { self?.textView.startEditing() }
+        }
+        
+        observe(itemData.state)
         {
             [weak self] _ in self?.taskStateDidChange()
         }
         
-        observe(item.tag)
+        observe(itemData.tag)
         {
             [weak self] _ in self?.tagDidChange()
         }
@@ -337,11 +344,6 @@ class ItemView: LayerBackedView, Observer, Observable
     private lazy var colorOverlay = addForAutoLayout(LayerBackedView())
     
     // MARK: - Text View
-    
-    func editText()
-    {
-        textView.startEditing()
-    }
     
     private func updateTextView()
     {

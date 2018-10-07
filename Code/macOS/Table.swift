@@ -67,7 +67,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             {
             case .didNothing: break
             case .did(let edit): self?.did(edit)
-            case .wantToEditTitle(let index): self?.editTitle(at: index)
             }
         }
     }
@@ -77,7 +76,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         switch edit
         {
         case .nothing: break
-        case .wantTextInput(let index): editText(at: index)
         case .insert(let indexes): didInsert(at: indexes)
         case .remove(_, let indexes): didRemove(from: indexes)
         case .move(let from, let to): didMove(from: from, to: to)
@@ -136,17 +134,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         return visibleSize.width > 0 && visibleSize.height > 0
     }
     
-    private func editText(at index: Int)
-    {
-        OperationQueue.main.addOperation
-        {
-            self.scrollAnimatedTo(row: index)
-            {
-                self.editTitle(at: index)
-            }
-        }
-    }
-    
     private func didRemove(from indexes: [Int])
     {
         removeRows(at: IndexSet(indexes), withAnimation: .slideUp)
@@ -155,6 +142,14 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     private func didInsert(at indexes: [Int])
     {
         insertRows(at: IndexSet(indexes), withAnimation: .slideDown)
+        
+        if indexes.count == 1, let index = indexes.first
+        {
+            OperationQueue.main.addOperation
+            {
+                self.scrollAnimatedTo(row: index) {}
+            }
+        }
     }
     
     private func didMove(from: Int, to: Int)
@@ -333,6 +328,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             }
             
             send(event)
+            
             noteHeightOfRows(withIndexesChanged: [index])
             
         case .didChangeTitle:
@@ -351,8 +347,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             
             itemHeightCash[task] = nil
             noteHeightOfRows(withIndexesChanged: [index])
-            
-            //editTitleOfNextSelectedTaskView()
             
         case .wasClicked(let cmdKeyIsDown):
             NSApp.mainWindow?.makeFirstResponder(self)
@@ -382,52 +376,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     // MARK: - Edit Titles
     
     private var rowBeingEdited: Int?
-    
-    private func editTitleOfNextSelectedTaskView()
-    {
-        guard list?.selection.count ?? 0 > 1 else
-        {
-            nextEditingPosition = 0
-            return
-        }
-        
-        nextEditingPosition += 1
-        
-        if let indexes = list?.selection.indexes,
-            nextEditingPosition < indexes.count
-        {
-            editTitle(at: indexes[nextEditingPosition])
-        }
-        else
-        {
-            nextEditingPosition = 0
-        }
-        
-       // list?.selection.removeTask(at: firstSelectedIndex)
-    }
-    
-    private var nextEditingPosition: Int = 0
-    
-    private func editTitle(at index: Int)
-    {
-        guard index < numberOfRows else
-        {
-            log(warning: "Tried to edit task title at invalid row \(index)")
-            return
-        }
-        
-        guard let taskView = view(atColumn: 0,
-                                  row: index,
-                                  makeIfNecessary: false) as? ItemView else
-        {
-            log(warning: "Couldn't get task view at row \(index)")
-            return
-        }
-        
-        rowBeingEdited = index
-        
-        taskView.editText()
-    }
     
     // MARK: - Observability
     

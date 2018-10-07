@@ -56,9 +56,10 @@ class SelectableList: List
         
         if let group = root?.groupNodes(at: indexes)
         {
+            selection.set(with: group)
             group.data = ItemData()
             group.data?.state <- groupState
-            selection.set(with: group)
+            group.data?.send(.wantTextInput)
         }
     }
     

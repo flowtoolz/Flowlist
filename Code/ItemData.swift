@@ -1,6 +1,6 @@
 import SwiftObserver
 
-final class ItemData
+final class ItemData: Observable
 {
     var title = Var<String>()
     var state = Var<State>()
@@ -33,4 +33,8 @@ final class ItemData
             return state?.rawValue ?? 1
         }
     }
+    
+    var latestUpdate = Event.nothing
+    
+    enum Event { case nothing, wantTextInput }
 }

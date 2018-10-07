@@ -62,8 +62,6 @@ final class Tree<Data: Copyable>: Copyable, Observable
             group.add(removedNode)
         }
         
-        send(.did(.wantTextInput(at: groupIndex)))
-        
         return group
     }
 
@@ -235,7 +233,6 @@ final class Tree<Data: Copyable>: Copyable, Observable
     {
         case nothing
         case changeRoot(from: Node?, to: Node?)
-        case wantTextInput(at: Int)
         case insert(at: [Int])
         case move(from: Int, to: Int)
         case remove([Node], from: [Int])
