@@ -69,7 +69,7 @@ class SelectableList: List
     
     func create(at index: Int)
     {
-        guard let newTask = root?.create(at: index) else { return }
+        guard let newTask = root?.createSubitem(at: index) else { return }
         
         selection.set(with: newTask)
     }

@@ -6,8 +6,6 @@ extension Tree: Codable where Data == ItemData
     {
         self.init()
         
-        data = ItemData()
-        
         guard let container = try? decoder.container(keyedBy: CodingKeys.self) else
         {
             return

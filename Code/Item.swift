@@ -4,25 +4,10 @@ typealias Item = Tree<ItemData>
 
 extension Tree where Data == ItemData
 {
-    convenience init(_ title: String? = nil,
-                     state: ItemData.State? = nil,
-                     tag: ItemData.Tag? = nil,
-                     root: Node? = nil,
-                     numberOfLeafs: Int = 1)
-    {
-        let newData = ItemData()
-        
-        newData.title = Var(title)
-        newData.state = Var(state)
-        newData.tag = Var(tag)
-        
-        self.init(data: newData, root: root, numberOfLeafs: numberOfLeafs)
-    }
-    
     @discardableResult
-    func create(at index: Int) -> Node?
+    func createSubitem(at index: Int) -> Node?
     {
-        let item = Node(data: ItemData())
+        let item = Node()
         
         let belowIsInProgress = self[index]?.isInProgress ?? false
         let aboveIsInProgress = index == 0 || (self[index - 1]?.isInProgress ?? false)
@@ -34,5 +19,13 @@ extension Tree where Data == ItemData
         send(.did(.wantTextInput(at: index)))
         
         return item
+    }
+    
+    convenience init(_ title: String? = nil)
+    {
+        let newData = ItemData()
+        newData.title = Var(title)
+        
+        self.init(data: newData)
     }
 }
