@@ -151,6 +151,14 @@ final class Tree<Data: Copyable>: Copyable, Observable
     // MARK: - Data
     
     var data: Data?
+    {
+        didSet
+        {
+            guard data !== oldValue else { return }
+            
+            send(.didChangeData(from: oldValue, to: data))
+        }
+    }
     
     // MARK: - Undo History
     
@@ -227,7 +235,13 @@ final class Tree<Data: Copyable>: Copyable, Observable
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, did(Edit), didChange(numberOfLeafs: Int) }
+    enum Event
+    {
+        case didNothing
+        case did(Edit)
+        case didChangeData(from: Data?, to: Data?)
+        case didChange(numberOfLeafs: Int)
+    }
     
     enum Edit
     {

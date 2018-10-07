@@ -59,8 +59,10 @@ class List: Observable, Observer
             switch event
             {
             case .didNothing: break
-            case .didChange(numberOfLeafs: _): break
             case .did(let edit): self?.received(edit, from: root)
+            case .didChangeData(from: _, to: let newItemData):
+                self?.title.observable = newItemData?.title
+            case .didChange(numberOfLeafs: _): break
             }
         }
     }
@@ -104,8 +106,7 @@ class List: Observable, Observer
         }
     }
     
-    private func observe(listedTask task: Item,
-                         start: Bool = true)
+    private func observe(listedTask task: Item, start: Bool = true)
     {
         guard start else
         {
@@ -185,8 +186,7 @@ class List: Observable, Observer
         }
     }
     
-    private func didSwitchRoot(from old: Item?,
-                               to new: Item?)
+    private func didSwitchRoot(from old: Item?, to new: Item?)
     {
         old?.lastRemoved.removeAll()
         

@@ -143,13 +143,13 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         insertRows(at: IndexSet(indexes), withAnimation: .slideDown)
         
-        if indexes.count == 1, let index = indexes.first
-        {
-            OperationQueue.main.addOperation
-            {
-                self.scrollAnimatedTo(row: index) {}
-            }
-        }
+//        if indexes.count == 1, let index = indexes.first
+//        {
+//            OperationQueue.main.addOperation
+//            {
+//                self.scrollAnimatedTo(row: index) {}
+//            }
+//        }
     }
     
     private func didMove(from: Int, to: Int)

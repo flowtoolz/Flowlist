@@ -42,9 +42,8 @@ class ItemView: LayerBackedView, Observer, Observable
     
     // MARK: - Configuration
     
-    func configure(with task: Item,
-                   selected: Bool, focused: Bool)
-    {   
+    func configure(with task: Item, selected: Bool, focused: Bool)
+    {
         stopObserving(task: self.task)
         observe(task: task)
         self.task = task
@@ -118,13 +117,47 @@ class ItemView: LayerBackedView, Observer, Observable
             self?.received(event, from: task)
         }
         
-        guard let itemData = task.data else { return }
+        guard let itemData = task.data else
+        {
+            log(error: "Tried to observe item which has no data object")
+            return
+        }
         
+        observe(itemData: itemData)
+    }
+    
+    private func received(_ event: Item.Event, from task: Item)
+    {
+        switch event
+        {
+        case .didNothing: break
+        
+        case .did(let edit): if edit.modifiesContent { updateGroupIcon() }
+        case .didChangeData(let from, let to): didSwitch(from: from, to: to)
+        case .didChange(numberOfLeafs: _): break
+        }
+    }
+    
+    private func didSwitch(from oldItemData: ItemData?,
+                           to newItemData: ItemData?)
+    {
+        stopObserving(oldItemData)
+        
+        guard let new = newItemData else { return }
+        
+        observe(itemData: new)
+    }
+    
+    private func observe(itemData: ItemData)
+    {
         observe(itemData)
         {
             [weak self] event in
             
-            if event == .wantTextInput { self?.textView.startEditing() }
+            if event == .wantTextInput
+            {
+                self?.textView.startEditing()
+            }
         }
         
         observe(itemData.state)
@@ -135,17 +168,6 @@ class ItemView: LayerBackedView, Observer, Observable
         observe(itemData.tag)
         {
             [weak self] _ in self?.tagDidChange()
-        }
-    }
-    
-    private func received(_ event: Item.Event,
-                          from task: Item)
-    {
-        switch event
-        {
-        case .didNothing: break
-        case .didChange(numberOfLeafs: _): break
-        case .did(let edit): if edit.modifiesContent { updateGroupIcon() }
         }
     }
     
