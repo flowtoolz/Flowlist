@@ -22,32 +22,17 @@ extension Tree where Data == ItemData
     @discardableResult
     func create(at index: Int) -> Node?
     {
-        let taskBelowIsInProgress: Bool =
-        {
-            guard self[index] != nil else { return false }
-            
-            return self[index]?.isInProgress ?? false
-        }()
+        let item = Node(data: ItemData())
         
-        let taskAboveIsInProgress: Bool =
-        {
-            guard index > 0 else { return true }
-            
-            return self[index - 1]?.isInProgress ?? false
-        }()
+        let belowIsInProgress = self[index]?.isInProgress ?? false
+        let aboveIsInProgress = index == 0 || (self[index - 1]?.isInProgress ?? false)
         
-        let shouldBeInProgress = taskBelowIsInProgress && taskAboveIsInProgress
+        item.data?.state <- belowIsInProgress && aboveIsInProgress ? .inProgress : nil
         
-        let newSubtask = Node()
-        newSubtask.data = ItemData()
-        newSubtask.data?.state <- shouldBeInProgress ? .inProgress : nil
-        
-        guard insert(newSubtask, at: index) else { return nil }
-        
-        updateNumberOfLeafs()
+        guard insert(item, at: index) else { return nil }
         
         send(.did(.wantTextInput(at: index)))
         
-        return newSubtask
+        return item
     }
 }
