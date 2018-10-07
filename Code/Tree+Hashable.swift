@@ -1,10 +1,10 @@
 import SwiftyToolz
 
-extension Task: Hashable
+extension Tree: Hashable
 {
     var hashValue: HashValue { return SwiftyToolz.hashValue(self) }
     
-    static func == (lhs: Task, rhs: Task) -> Bool
+    static func == (lhs: Tree, rhs: Tree) -> Bool
     {
         return lhs === rhs
     }

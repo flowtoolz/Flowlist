@@ -11,7 +11,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         super.init(frame: frameRect)
 
-        addTableColumn(NSTableColumn(identifier: TaskView.uiIdentifier))
+        addTableColumn(NSTableColumn(identifier: ItemView.uiIdentifier))
         selectionHighlightStyle = .none
         backgroundColor = .clear
         headerView = nil
@@ -72,12 +72,12 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         }
     }
     
-    private func did(_ edit: Edit)
+    private func did(_ edit: Item.Edit)
     {
         switch edit
         {
         case .nothing: break
-        case .create(let index): didCreate(at: index)
+        case .wantTextInput(let index): editText(at: index)
         case .insert(let indexes): didInsert(at: indexes)
         case .remove(_, let indexes): didRemove(from: indexes)
         case .move(let from, let to): didMove(from: from, to: to)
@@ -111,7 +111,8 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     // MARK: - Animation
     
-    private func didChangeRoot(from old: Task?, to new: Task?)
+    private func didChangeRoot(from old: Item?,
+                               to new: Item?)
     {
         guard isVisible else
         {
@@ -119,8 +120,8 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             return
         }
         
-        let numberToRemove = (old?.numberOfBranches ?? 0) + 1
-        let numberToInsertBack = (new?.numberOfBranches ?? 0) + 1
+        let numberToRemove = (old?.count ?? 0) + 1
+        let numberToInsertBack = (new?.count ?? 0) + 1
         
         if numberToRemove == 1 && numberToInsertBack == 1 { return }
         
@@ -135,12 +136,8 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         return visibleSize.width > 0 && visibleSize.height > 0
     }
     
-    private func didCreate(at index: Int)
+    private func editText(at index: Int)
     {
-        rowBeingEdited = index
-        
-        didInsert(at: [index])
-        
         OperationQueue.main.addOperation
         {
             self.scrollAnimatedTo(row: index)
@@ -210,7 +207,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     func taskViewHeight(at row: Int) -> CGFloat
     {
-        guard let task = list?[row] else { return TaskView.heightWithSingleLine }
+        guard let task = list?[row] else { return ItemView.heightWithSingleLine }
         
         var height = viewHeight(for: task)
         
@@ -222,13 +219,13 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         return height
     }
     
-    private func viewHeight(for task: Task) -> CGFloat
+    private func viewHeight(for task: Item) -> CGFloat
     {
         if let height = itemHeightCash[task] { return height }
         
         let title = task.data?.title.value ?? "Untitled"
         
-        let height = TaskView.preferredHeight(for: title, width: width)
+        let height = ItemView.preferredHeight(for: title, width: width)
         
         itemHeightCash[task] = height
         
@@ -260,7 +257,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     }
     
     private var cashedWidth: CGFloat?
-    private var itemHeightCash = [Task : CGFloat]()
+    private var itemHeightCash = [Item : CGFloat]()
     
     // MARK: - Selection
     
@@ -277,7 +274,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         for index in indexes
         {
             guard let view = view(atColumn: 0, row: index, makeIfNecessary: false),
-                let taskView = view as? TaskView
+                let taskView = view as? ItemView
             else
             {
                 continue
@@ -304,7 +301,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     // MARK: - Observe Task Views
     
-    private func observe(taskView: TaskView)
+    private func observe(taskView: ItemView)
     {
         observe(taskView)
         {
@@ -316,7 +313,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         }
     }
     
-    private func didReceive(_ event: TaskView.Event, from taskView: TaskView)
+    private func didReceive(_ event: ItemView.Event, from taskView: ItemView)
     {
         let index = row(for: taskView)
         
@@ -421,16 +418,18 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         
         guard let taskView = view(atColumn: 0,
                                   row: index,
-                                  makeIfNecessary: false) as? TaskView else
+                                  makeIfNecessary: false) as? ItemView else
         {
             log(warning: "Couldn't get task view at row \(index)")
             return
         }
+        
+        rowBeingEdited = index
         
         taskView.editText()
     }
     
     // MARK: - Observability
     
-    var latestUpdate: TaskView.Event { return .didNothing }
+    var latestUpdate: ItemView.Event { return .didNothing }
 }

@@ -56,7 +56,7 @@ class EditMenu: NSMenu, Observer
         guard !TextView.isEditing else { return false }
         
         let selected = numberOfSelectedTasks
-        let deleted = browser.focusedList.root?.numberOfRemovedSubtasks ?? 0
+        let deleted = browser.focusedList.root?.numberOfRemovedBranches ?? 0
         let systemPasteboard = systemPasteboardHasText
         updateTitles(numberOfDeletedItems: deleted,
                      numberOfSelectedItems: selected,
@@ -247,7 +247,7 @@ class EditMenu: NSMenu, Observer
         
         for i in 0 ..< 7
         {
-            let tag = Task.TaskData.Tag(rawValue: i)
+            let tag = ItemData.Tag(rawValue: i)
             
             let name = tag?.string ?? "None"
             

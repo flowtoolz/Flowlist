@@ -1,12 +1,12 @@
 import SwiftyToolz
 
-extension Task
+extension Tree where Data == ItemData
 {
     func cut(at indexes: [Int]) -> Bool
     {
         guard copy(at: indexes) else { return false }
         
-        removeSubtasks(at: indexes)
+        removeNodes(from: indexes)
         
         return true
     }
@@ -14,11 +14,13 @@ extension Task
     @discardableResult
     func copy(at indexes: [Int]) -> Bool
     {
-        return copy(self[indexes])
+        let nodes = self[indexes]
+        
+        return copy(nodes)
     }
     
     @discardableResult
-    func copy(_ tasks: [Task]) -> Bool
+    func copy(_ tasks: [Item]) -> Bool
     {
         guard !tasks.isEmpty else { return false }
         
@@ -27,10 +29,10 @@ extension Task
         return true
     }
     
-    var clipboardTasks: [Task]
+    var clipboardTasks: [Item]
     {
         return clipboard.copiesOfStoredObjects
     }
 }
 
-let clipboard = Clipboard<Task>()
+let clipboard = Clipboard<Item>()

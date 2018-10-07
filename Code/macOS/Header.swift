@@ -76,7 +76,7 @@ class Header: LayerBackedView, Observer
     
     // MARK: - Adjust to Root State
     
-    func update(with root: Task)
+    func update(with root: Item)
     {
         let isUntitled = String(withNonEmpty: root.data?.title.value) == nil
         
@@ -163,7 +163,7 @@ class Header: LayerBackedView, Observer
         colorView.alphaValue = focused ? 1.0 : 0.5
     }
     
-    private func updateColorView(with tag: Task.TaskData.Tag?)
+    private func updateColorView(with tag: ItemData.Tag?)
     {
         if let tagValue = tag?.rawValue
         {
@@ -241,7 +241,7 @@ class Header: LayerBackedView, Observer
     
     private var layouGuideSize: CGFloat
     {
-        return TaskView.heightWithSingleLine
+        return ItemView.heightWithSingleLine
     }
     
     private var layoutGuideSizeConstraints = [NSLayoutConstraint]()

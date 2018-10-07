@@ -13,7 +13,7 @@ class List: Observable, Observer
     
     // MARK: - Configuration
     
-    func set(root newRoot: Task?)
+    func set(root newRoot: Item?)
     {
         guard newRoot !== root else
         {
@@ -27,7 +27,8 @@ class List: Observable, Observer
         root = newRoot
     }
     
-    private func observeTasks(with root: Task?, start: Bool = true)
+    private func observeTasks(with root: Item?,
+                              start: Bool = true)
     {
         guard let root = root else
         {
@@ -41,7 +42,7 @@ class List: Observable, Observer
     
     // MARK: - Observe Root
     
-    private func observe(root: Task, start: Bool = true)
+    private func observe(root: Item, start: Bool = true)
     {
         guard start else
         {
@@ -64,7 +65,7 @@ class List: Observable, Observer
         }
     }
     
-    func received(_ edit: Edit, from root: Task)
+    func received(_ edit: Item.Edit, from root: Item)
     {
         switch edit
         {
@@ -74,10 +75,7 @@ class List: Observable, Observer
         case .remove(let tasks, _):
             for task in tasks { observe(listedTask: task, start: false) }
             
-        case .create(let index):
-            observeTasksListed(in: root, at: [index])
-        
-        case .move: break
+        case .move, .wantTextInput: break
             
         case .nothing, .changeRoot: return
         }
@@ -87,15 +85,14 @@ class List: Observable, Observer
     
     // MARK: - Observe Listed Tasks
     
-    private func observeTasksListed(in root: Task,
-                                    start: Bool = true)
+    private func observeTasksListed(in root: Item, start: Bool = true)
     {
-        let indexes = Array(0 ..< root.numberOfBranches)
+        let indexes = Array(0 ..< root.count)
         
         observeTasksListed(in: root, at: indexes, start: start)
     }
     
-    private func observeTasksListed(in root: Task,
+    private func observeTasksListed(in root: Item,
                                     at indexes: [Int],
                                     start: Bool = true)
     {
@@ -107,7 +104,8 @@ class List: Observable, Observer
         }
     }
     
-    private func observe(listedTask task: Task, start: Bool = true)
+    private func observe(listedTask task: Item,
+                         start: Bool = true)
     {
         guard start else
         {
@@ -125,7 +123,7 @@ class List: Observable, Observer
         }
     }
     
-    private func taskDidChangeState(_ task: Task?)
+    private func taskDidChangeState(_ task: Item?)
     {
         guard let task = task, let index = task.indexInRoot else { return }
         
@@ -135,7 +133,7 @@ class List: Observable, Observer
         }
         else if task.isInProgress
         {
-            root?.moveSubtask(from: index, to: 0)
+            root?.moveNode(from: index, to: 0)
         }
         else if task.isUndone
         {
@@ -160,7 +158,7 @@ class List: Observable, Observer
     
     // MARK: - Listed Tasks
     
-    subscript(_ index: Int) -> Task?
+    subscript(_ index: Int) -> Item?
     {
         guard let root = root else
         {
@@ -171,13 +169,13 @@ class List: Observable, Observer
         return root[index]
     }
     
-    var numberOfTasks: Int { return root?.numberOfBranches ?? 0 }
+    var numberOfTasks: Int { return root?.count ?? 0 }
     
     // MARK: - Root
     
     var isRootList: Bool { return root != nil && root?.root == nil }
     
-    private(set) weak var root: Task?
+    private(set) weak var root: Item?
     {
         didSet
         {
@@ -187,7 +185,8 @@ class List: Observable, Observer
         }
     }
     
-    private func didSwitchRoot(from old: Task?, to new: Task?)
+    private func didSwitchRoot(from old: Item?,
+                               to new: Item?)
     {
         old?.lastRemoved.removeAll()
         
@@ -200,5 +199,10 @@ class List: Observable, Observer
     
     var latestUpdate: Event { return .didNothing }
     
-    enum Event { case didNothing, did(Edit), wantToEditTitle(at: Int) }
+    enum Event
+    {
+        case didNothing
+        case did(Item.Edit)
+        case wantToEditTitle(at: Int)
+    }
 }

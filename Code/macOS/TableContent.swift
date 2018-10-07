@@ -23,10 +23,10 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     {
         if row >= (list?.numberOfTasks ?? 0)
         {
-            return TaskView.heightWithSingleLine / 2
+            return ItemView.heightWithSingleLine / 2
         }
         
-        return delegate?.taskViewHeight(at: row) ?? TaskView.heightWithSingleLine
+        return delegate?.taskViewHeight(at: row) ?? ItemView.heightWithSingleLine
     }
     
     // MARK: - Cells
@@ -62,16 +62,16 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     
     var isFocused = false
     
-    private func retrieveTaskView(from tableView: NSTableView) -> TaskView
+    private func retrieveTaskView(from tableView: NSTableView) -> ItemView
     {
         guard let dequeuedView = dequeueView(from: tableView) else
         {
             return createTaskView()
         }
         
-        guard let dequeuedTaskView = dequeuedView as? TaskView else
+        guard let dequeuedTaskView = dequeuedView as? ItemView else
         {
-            log(error: "Couldn't cast dequeued view to \(TaskView.self)")
+            log(error: "Couldn't cast dequeued view to \(ItemView.self)")
             return createTaskView()
         }
         
@@ -80,13 +80,13 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     
     private func dequeueView(from tableView: NSTableView) -> NSView?
     {
-        return tableView.makeView(withIdentifier: TaskView.uiIdentifier,
+        return tableView.makeView(withIdentifier: ItemView.uiIdentifier,
                                   owner: nil)
     }
     
-    private func createTaskView() -> TaskView
+    private func createTaskView() -> ItemView
     {
-        let taskView = TaskView()
+        let taskView = ItemView()
         
         send(.didCreate(taskView: taskView))
         
@@ -119,7 +119,7 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     
     enum Event
     {
-        case didNothing, didCreate(taskView: TaskView)
+        case didNothing, didCreate(taskView: ItemView)
     }
 }
 

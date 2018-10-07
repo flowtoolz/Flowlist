@@ -1,6 +1,6 @@
-extension Task
+extension Tree where Data == ItemData
 {
-    static func from(pasteboardString string: String) -> [Task]?
+    static func from(pasteboardString string: String) -> [Item]?
     {
         var titles = string.components(separatedBy: .newlines)
         
@@ -23,7 +23,7 @@ extension Task
         
         titles.remove { $0.count < 2 }
         
-        let result = titles.map { Task($0) }
+        let result = titles.map { Item($0) }
         
         return result.isEmpty ? nil : result
     }

@@ -5,7 +5,7 @@ import SwiftyToolz
 
 extension SelectableList
 {
-    func set(tag: Task.TaskData.Tag?)
+    func set(tag: ItemData.Tag?)
     {
         let selectedTasks = selection.tasks
         
@@ -51,8 +51,13 @@ class SelectableList: List
             return
         }
         
-        if let group = root?.groupSubtasks(at: selection.indexes)
+        let indexes = selection.indexes
+        let groupState = root?.highestPriorityState(at: indexes)
+        
+        if let group = root?.groupNodes(at: indexes)
         {
+            group.data = ItemData()
+            group.data?.state <- groupState
             selection.set(with: group)
         }
     }
@@ -71,7 +76,7 @@ class SelectableList: List
     
     // MARK: - Paste
     
-    func paste(_ tasks: [Task])
+    func paste(_ tasks: [Item])
     {
         let index = newIndexBelowSelection
         
@@ -91,7 +96,7 @@ class SelectableList: List
         
         guard let root = root,
             let firstSelectedIndex = selectedIndexes.first,
-            let removedTasks = root.removeSubtasks(at: selectedIndexes),
+            let removedTasks = root.removeNodes(from: selectedIndexes),
             removedTasks.count > 0
         else
         {
@@ -105,7 +110,7 @@ class SelectableList: List
     
     func selectAfterRemoval(from index: Int)
     {
-        guard root?.hasBranches ?? false else { return }
+        guard !(root?.isLeaf ?? true) else { return }
         
         selection.setWithTasksListed(at: [max(index - 1, 0)])
     }
@@ -150,7 +155,7 @@ class SelectableList: List
         
         let newSelectedTask = nextSelectedTaskAfterCheckingOff(at: selected)
         
-        let newState: TaskState? = !task.isDone ? .done : nil
+        let newState: ItemData.State? = !task.isDone ? .done : nil
         
         if selection.count == 1, newState == .done, let newSelectedTask = newSelectedTask
         {
@@ -164,7 +169,7 @@ class SelectableList: List
         task.data?.state <- newState
     }
     
-    private func nextSelectedTaskAfterCheckingOff(at index: Int) -> Task?
+    private func nextSelectedTaskAfterCheckingOff(at index: Int) -> Item?
     {
         for i in index + 1 ..< numberOfTasks
         {
@@ -212,7 +217,7 @@ class SelectableList: List
             return false
         }
         
-        return root.moveSubtask(from: selectedIndex,
+        return root.moveNode(from: selectedIndex,
                                 to: selectedIndex + positions)
     }
     
@@ -307,21 +312,22 @@ class SelectableList: List
         selection.add(task: self[index + 1])
     }
     
-    var firstSelectedTask: Task?
+    var firstSelectedTask: Item?
     {
         guard let index = selection.indexes.first else { return nil }
         
         return self[index]
     }
     
-    override func set(root newRoot: Task?)
+    override func set(root newRoot: Item?)
     {
         super.set(root: newRoot)
         
         selection.root = newRoot
     }
     
-    override func received(_ edit: Edit, from root: Task)
+    override func received(_ edit: Item.Edit,
+                           from root: Item)
     {
         super.received(edit, from: root)
         

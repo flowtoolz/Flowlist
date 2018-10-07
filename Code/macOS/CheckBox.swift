@@ -16,7 +16,7 @@ class CheckBox: Icon
     
     // MARK: - Configuration
     
-    func configure(with state: TaskState?, white: Bool)
+    func configure(with state: ItemData.State?, white: Bool)
     {
         taskState = state
         isWhite = white
@@ -29,7 +29,7 @@ class CheckBox: Icon
         updateImage()
     }
     
-    func set(state: TaskState?)
+    func set(state: ItemData.State?)
     {
         taskState = state
         updateImage()
@@ -42,12 +42,12 @@ class CheckBox: Icon
         image = CheckBox.image(for: taskState, white: isWhite)
     }
     
-    private var taskState: TaskState?
+    private var taskState: ItemData.State?
     private var isWhite = false
     
     // MARK: - Get Image
     
-    private static func image(for state: TaskState?,
+    private static func image(for state: ItemData.State?,
                               white: Bool) -> NSImage
     {
         guard let state = state else

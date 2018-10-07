@@ -16,7 +16,7 @@ extension SelectableList
         
         let indexes = selection.indexes
         
-        var tasks = [Task]()
+        var tasks = [Item]()
         
         for index in indexes
         {

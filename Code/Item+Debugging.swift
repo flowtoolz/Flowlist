@@ -1,6 +1,6 @@
 import SwiftyToolz
 
-extension Task
+extension Tree where Data == ItemData
 {
     func debug()
     {
@@ -12,11 +12,11 @@ extension Task
         let bullet = isLast ? "└╴" : "├╴"
         var desc = "\(prefix)\(bullet)" + (data?.title.value ?? "untitled")
         
-        for i in 0 ..< numberOfBranches
+        for i in 0 ..< count
         {
             guard let subtask = self[i] else { continue }
             
-            let isLastSubtask = i == numberOfBranches - 1
+            let isLastSubtask = i == count - 1
             let subtaskPrefix = prefix + (isLast ? " " : "│") + " "
 
             desc += "\n\(subtask.description(subtaskPrefix, isLastSubtask))"

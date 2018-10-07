@@ -4,7 +4,7 @@ import SwiftObserver
 import SwiftyToolz
 import GetLaid
 
-class TaskView: LayerBackedView, Observer, Observable
+class ItemView: LayerBackedView, Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -12,7 +12,7 @@ class TaskView: LayerBackedView, Observer, Observable
     {
         super.init(frame: frameRect)
         
-        identifier = TaskView.uiIdentifier
+        identifier = ItemView.uiIdentifier
         
         constrainColorOverlay()
         constrainLayoutGuide()
@@ -42,7 +42,8 @@ class TaskView: LayerBackedView, Observer, Observable
     
     // MARK: - Configuration
     
-    func configure(with task: Task, selected: Bool, focused: Bool)
+    func configure(with task: Item,
+                   selected: Bool, focused: Bool)
     {   
         stopObserving(task: self.task)
         observe(task: task)
@@ -106,7 +107,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     // MARK: - Observing the Task
     
-    private func observe(task: Task)
+    private func observe(task: Item)
     {
         observe(task)
         {
@@ -130,17 +131,18 @@ class TaskView: LayerBackedView, Observer, Observable
         }
     }
     
-    private func received(_ event: Task.Event, from task: Task)
+    private func received(_ event: Item.Event,
+                          from task: Item)
     {
         switch event
         {
         case .didNothing: break
         case .didChange(numberOfLeafs: _): break
-        case .did(let edit): if edit.changesItems { updateGroupIcon() }
+        case .did(let edit): if edit.modifiesContent { updateGroupIcon() }
         }
     }
     
-    private func stopObserving(task: Task?)
+    private func stopObserving(task: Item?)
     {
         stopObserving(task?.data?.state)
         stopObserving(task?.data?.title)
@@ -314,7 +316,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func fontSizeDidChange()
     {
-        let itemHeight = TaskView.heightWithSingleLine
+        let itemHeight = ItemView.heightWithSingleLine
         
         for constraint in layoutGuideSizeConstraints
         {
@@ -351,7 +353,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func constrainTextView()
     {
-        textView.constrainLeft(to: TaskView.textLeftMultiplier, of: layoutGuide)
+        textView.constrainLeft(to: ItemView.textLeftMultiplier, of: layoutGuide)
         textView.constrain(toTheLeftOf: groupIcon)
         textView.constrainTop(to: 0.303, of: layoutGuide)
         textView.constrainBottomToParent()
@@ -486,7 +488,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func updateGroupIcon()
     {
-        groupIcon.isHidden = !(task?.hasBranches ?? false)
+        groupIcon.isHidden = task?.isLeaf ?? true
     }
     
     private func contrainGroupIcon()
@@ -494,7 +496,7 @@ class TaskView: LayerBackedView, Observer, Observable
         groupIcon.constrainRightToParent()
         groupIcon.constrainCenterY(to: layoutGuide)
         groupIcon.constrainHeight(to: checkBox)
-        groupIcon.constrainWidth(to: TaskView.groupIconWidthMultiplier,
+        groupIcon.constrainWidth(to: ItemView.groupIconWidthMultiplier,
                                  of: layoutGuide)
     }
     
@@ -502,7 +504,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     private func updateGroupIconColor(light: Bool)
     {
-        groupIcon.image = TaskView.groupIconImage(light: light)
+        groupIcon.image = ItemView.groupIconImage(light: light)
     }
     
     private static func groupIconImage(light: Bool) -> NSImage
@@ -522,7 +524,7 @@ class TaskView: LayerBackedView, Observer, Observable
         layoutGuide.constrainLeft(to: self)
         layoutGuide.constrainTop(to: self)
         
-        let size = TaskView.heightWithSingleLine
+        let size = ItemView.heightWithSingleLine
         
         layoutGuideSizeConstraints = layoutGuide.constrainSize(to: size, size)
     }
@@ -569,7 +571,7 @@ class TaskView: LayerBackedView, Observer, Observable
     
     static let uiIdentifier = NSUserInterfaceItemIdentifier(rawValue: "TaskViewID")
     
-    private(set) weak var task: Task?
+    private(set) weak var task: Item?
     
     // MARK: - Observability
     

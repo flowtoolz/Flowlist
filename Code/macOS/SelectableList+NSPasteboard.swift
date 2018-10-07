@@ -6,7 +6,7 @@ extension SelectableList
     func pasteFromSystemPasteboard()
     {
         guard let string = NSPasteboard.general.string(forType: .string),
-            let tasks = Task.from(pasteboardString: string)
+            let tasks = Item.from(pasteboardString: string)
         else
         {
             return

@@ -1,4 +1,4 @@
-extension Task
+extension Tree where Data == ItemData
 {
     func moveSubtaskToTopOfDoneList(from index: Int)
     {
@@ -6,12 +6,12 @@ extension Task
         
         let belowUnchecked = unchecked + (unchecked < index ? 1 : 0)
         
-        moveSubtask(from: index, to: belowUnchecked)
+        moveNode(from: index, to: belowUnchecked)
     }
     
     var indexOfLastOpenSubtask: Int?
     {
-        for subtaskIndex in (0 ..< numberOfBranches).reversed()
+        for subtaskIndex in (0 ..< count).reversed()
         {
             if let subtask = self[subtaskIndex], subtask.isOpen
             {
@@ -28,12 +28,12 @@ extension Task
         
         let belowInProgress = lastInProgress + (lastInProgress < index ? 1 : 0)
         
-        moveSubtask(from: index, to: belowInProgress)
+        moveNode(from: index, to: belowInProgress)
     }
     
     var indexOfLastSubtaskInProgress: Int
     {
-        for subtaskIndex in (0 ..< numberOfBranches).reversed()
+        for subtaskIndex in (0 ..< count).reversed()
         {
             if let subtask = self[subtaskIndex], subtask.isInProgress
             {
@@ -46,7 +46,7 @@ extension Task
     
     func indexOfFirstOpenSubtask(from: Int = 0) -> Int?
     {
-        for i in from ..< numberOfBranches
+        for i in from ..< count
         {
             if let subtask = self[i], subtask.isOpen
             {
@@ -55,6 +55,27 @@ extension Task
         }
         
         return nil
+    }
+    
+    func highestPriorityState(at indexes: [Int]) -> ItemData.State?
+    {
+        var highestPriorityState: ItemData.State? = .trashed
+        
+        for index in indexes
+        {
+            guard let subtask = self[index] else { continue }
+            
+            let subtaskState = subtask.data?.state.value
+            let subtaskPriority = ItemData.State.priority(of: subtaskState)
+            let highestPriority = ItemData.State.priority(of: highestPriorityState)
+            
+            if subtaskPriority < highestPriority
+            {
+                highestPriorityState = subtaskState
+            }
+        }
+        
+        return highestPriorityState
     }
     
     var isDone: Bool { return data?.state.value == .done }

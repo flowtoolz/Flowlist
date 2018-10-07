@@ -15,7 +15,7 @@ class Store: Observer
 
     // MARK: - Root
     
-    var root = Task()
+    var root = Item()
     {
         didSet
         {
@@ -26,7 +26,7 @@ class Store: Observer
         }
     }
     
-    private func observe(newRoot: Task)
+    private func observe(newRoot: Item)
     {
         observe(newRoot)
         {
@@ -42,27 +42,28 @@ class Store: Observer
     
     func pasteWelcomeTourIfRootIsEmpty()
     {
-        if !root.hasBranches
+        if root.isLeaf
         {
-            root.insert(Task.welcomeTour, at: 0)
+            root.insert(Item.welcomeTour, at: 0)
         }
     }
     
     // MARK: - Count Leafs Inside Root
     
-    private func didReceive(_ event: Task.Event, from root: Task)
+    private func didReceive(_ event: Item.Event,
+                            from root: Item)
     {
         if case .didChange(_) = event
         {
             updateUserCreatedLeafs(with: root)
         }
-        else if case .did(let edit) = event, edit.changesItems
+        else if case .did(let edit) = event, edit.modifiesContent
         {
             updateUserCreatedLeafs(with: root)
         }
     }
     
-    private func updateUserCreatedLeafs(with root: Task)
+    private func updateUserCreatedLeafs(with root: Item)
     {
         numberOfUserCreatedLeafs <- root.isLeaf ? 0 : root.numberOfLeafs
     }

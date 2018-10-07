@@ -97,7 +97,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
         {
             if let view = scrollTable.table.view(atColumn: 0,
                                                  row: index,
-                                                 makeIfNecessary: false) as? TaskView
+                                                 makeIfNecessary: false) as? ItemView
             {
                 view.set(focused: focused)
             }
@@ -117,7 +117,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func constrainHeader()
     {
-        let height = relativeHeaderHeight * TaskView.heightWithSingleLine
+        let height = relativeHeaderHeight * ItemView.heightWithSingleLine
         headerHeightConstraint = header.constrainHeight(to: height)
         header.constrainToParentExcludingBottom()
     }
@@ -169,7 +169,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     private func updateLayoutConstants()
     {
-        headerHeightConstraint?.constant = relativeHeaderHeight * TaskView.heightWithSingleLine
+        headerHeightConstraint?.constant = relativeHeaderHeight * ItemView.heightWithSingleLine
     }
 
     private let relativeHeaderHeight: CGFloat = 1.5

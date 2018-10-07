@@ -19,7 +19,7 @@ extension Store
             return
         }
         
-        guard let loadedRoot = Task(from: fileUrl) else
+        guard let loadedRoot = Item(from: fileUrl) else
         {
             didLoadTasksSuccessfully = false
             

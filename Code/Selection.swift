@@ -39,7 +39,7 @@ class Selection: Observable
         }
     }
     
-    func toggle(_ task: Task)
+    func toggle(_ task: Item)
     {
         guard let index = root?.index(of: task) else { return }
         
@@ -55,7 +55,7 @@ class Selection: Observable
         send(.didChange(atIndexes: [index]))
     }
     
-    func set(with task: Task)
+    func set(with task: Item)
     {
         guard let root = root else
         {
@@ -78,7 +78,7 @@ class Selection: Observable
         send(.didChange(atIndexes: changedIndexes))
     }
     
-    func add(task: Task?)
+    func add(task: Item?)
     {
         guard let task = task else
         {
@@ -105,7 +105,7 @@ class Selection: Observable
     
     // MARK: - Deselect Tasks
     
-    func remove(tasks: [Task])
+    func remove(tasks: [Item])
     {
         guard let root = root else
         {
@@ -180,7 +180,7 @@ class Selection: Observable
     {
         var result = [Int]()
         
-        for index in 0 ..< (root?.numberOfBranches ?? 0)
+        for index in 0 ..< (root?.count ?? 0)
         {
             if let task = root?[index], isSelected(task)
             {
@@ -191,7 +191,7 @@ class Selection: Observable
         return result
     }
     
-    weak var root: Task?
+    weak var root: Item?
     {
         didSet
         {
@@ -222,7 +222,7 @@ class Selection: Observable
         return desc
     }
     
-    func isSelected(_ task: Task?) -> Bool
+    func isSelected(_ task: Item?) -> Bool
     {
         guard let task = task else { return false }
         
@@ -230,10 +230,10 @@ class Selection: Observable
     }
     
     var count: Int { return selectedTasks.count }
-    var someTask: Task? { return selectedTasks.values.first }
-    var tasks: [Task] { return Array(selectedTasks.values) }
+    var someTask: Item? { return selectedTasks.values.first }
+    var tasks: [Item] { return Array(selectedTasks.values) }
     
-    private var selectedTasks = [Task : Task]()
+    private var selectedTasks = [Item : Item]()
     
     // MARK: - Observability
     
