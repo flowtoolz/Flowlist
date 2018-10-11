@@ -143,6 +143,16 @@ class ItemView: LayerBackedView, Observer, Observable
         }
     }
     
+    private func stopObserving(item: Item?)
+    {
+        guard let item = item else { return }
+        
+        stopObserving(item)
+        stopObserving(itemData: item.data)
+    }
+    
+    // MARK: - Observing the Item Data
+    
     private func didSwitch(from oldItemData: ItemData?,
                            to newItemData: ItemData?)
     {
@@ -188,18 +198,13 @@ class ItemView: LayerBackedView, Observer, Observable
     
     private func stopObserving(itemData: ItemData?)
     {
-        stopObserving(itemData)
-        stopObserving(itemData?.state)
-        stopObserving(itemData?.tag)
-        stopObserving(itemData?.isFocused)
-        stopObserving(itemData?.isSelected)
-    }
-    
-    private func stopObserving(item: Item?)
-    {
-        stopObserving(item?.data?.state)
-        stopObserving(item?.data?.title)
-        stopObserving(item)
+        guard let data = itemData else { return }
+        
+        stopObserving(data)
+        stopObserving(data.state)
+        stopObserving(data.tag)
+        stopObserving(data.isFocused)
+        stopObserving(data.isSelected)
     }
     
     // MARK: - Adapt Colors to State, Tag, Dark Mode & Selection
