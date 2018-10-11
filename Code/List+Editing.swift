@@ -1,10 +1,10 @@
 import SwiftObserver
 import SwiftyToolz
 
-// MARK: - Tags
-
-extension SelectableList
+extension List
 {
+    // MARK: - Tag
+    
     func set(tag: ItemData.Tag?)
     {
         let selected = selectedIndexes
@@ -26,12 +26,7 @@ extension SelectableList
             }
         }
     }
-}
 
-// MARK: -
-
-class SelectableList: List
-{
     // MARK: - Create
     
     func createTask()
@@ -248,10 +243,4 @@ class SelectableList: List
         
         editTitle(at: index)
     }
-    
-    
-    
-    
 }
-
-

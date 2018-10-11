@@ -96,12 +96,12 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     
     // MARK: - List
     
-    func configure(with list: SelectableList?)
+    func configure(with list: List?)
     {
         self.list = list
     }
     
-    private weak var list: SelectableList?
+    private weak var list: List?
     
     // MARK: - Delegate
     

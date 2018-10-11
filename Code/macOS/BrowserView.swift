@@ -87,9 +87,9 @@ class BrowserView: LayerBackedView, Observer
     
     // MARK: - List Views
     
-    private func pushListView(for list: SelectableList)
+    private func pushListView(for list: List)
     {
-        let newListView = addForAutoLayout(SelectableListView())
+        let newListView = addForAutoLayout(ListView())
         
         newListView.configure(with: list)
         
@@ -100,7 +100,7 @@ class BrowserView: LayerBackedView, Observer
         observe(listView: newListView)
     }
     
-    private func observe(listView: SelectableListView)
+    private func observe(listView: ListView)
     {
         observe(listView, select: .didReceiveUserInput)
         {
@@ -112,7 +112,7 @@ class BrowserView: LayerBackedView, Observer
         }
     }
     
-    private func listViewReceivedUserInput(_ listView: SelectableListView)
+    private func listViewReceivedUserInput(_ listView: ListView)
     {
         guard let listIndex = listViews.index(where: { $0 === listView }) else
         {
@@ -212,7 +212,7 @@ class BrowserView: LayerBackedView, Observer
     
     private var ongoingAnimations = 0
     
-    private var listViews = [SelectableListView]()
+    private var listViews = [ListView]()
     
     // MARK: - Layout Guides For List Width
     

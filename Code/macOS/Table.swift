@@ -35,7 +35,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     // MARK: - Configuration
     
-    func configure(with list: SelectableList)
+    func configure(with list: List)
     {
         observe(list: self.list, start: false)
         observe(list: list)
@@ -43,7 +43,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         self.list = list
     }
     
-    private func observe(list: SelectableList?, start: Bool = true)
+    private func observe(list: List?, start: Bool = true)
     {
         guard let list = list else
         {
@@ -81,7 +81,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         }
     }
     
-    private weak var list: SelectableList?
+    private weak var list: List?
     {
         didSet
         {

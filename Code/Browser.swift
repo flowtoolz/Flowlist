@@ -61,9 +61,9 @@ class Browser: Observer, Observable
     // MARK: - Create Lists
     
     @discardableResult
-    private func pushList() -> SelectableList
+    private func pushList() -> List
     {
-        let newList = SelectableList()
+        let newList = List()
         
         observe(list: newList)
         
@@ -78,7 +78,7 @@ class Browser: Observer, Observable
     
     // MARK: - Observe Selections in Lists
     
-    private func observe(list: SelectableList)
+    private func observe(list: List)
     {   
         observe(list)
         {
@@ -93,7 +93,7 @@ class Browser: Observer, Observable
         }
     }
     
-    private func listChangedSelection(_ list: SelectableList)
+    private func listChangedSelection(_ list: List)
     {
         guard let index = lists.index(where: { $0 === list }) else
         {
@@ -135,19 +135,19 @@ class Browser: Observer, Observable
         if newRoot !== list.root { list.set(root: newRoot) }
     }
     
-    subscript(_ index: Int) -> SelectableList?
+    subscript(_ index: Int) -> List?
     {
         guard lists.isValid(index: index) else { return nil }
         
         return lists[index]
     }
     
-    var focusedList: SelectableList { return lists[focusedIndex] }
+    var focusedList: List { return lists[focusedIndex] }
     var focusedIndex: Int { return focusedIndexVariable.value ?? 0 }
     let focusedIndexVariable = Var(0)
     
     var numberOfLists: Int { return lists.count }
-    private var lists = [SelectableList]()
+    private var lists = [List]()
     
     // MARK: - Observability
     
@@ -156,6 +156,6 @@ class Browser: Observer, Observable
     enum Event
     {
         case didNothing
-        case didPush(list: SelectableList)
+        case didPush(list: List)
     }
 }

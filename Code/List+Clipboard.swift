@@ -1,4 +1,4 @@
-extension SelectableList
+extension List
 {
     func cut()
     {

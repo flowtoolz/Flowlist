@@ -20,7 +20,7 @@ class ScrollTable: NSScrollView
     
     // MARK: - Configuration
     
-    func configure(with list: SelectableList)
+    func configure(with list: List)
     {
         self.list = list
     
@@ -31,5 +31,5 @@ class ScrollTable: NSScrollView
     
     let table = Table()
     
-    private weak var list: SelectableList?
+    private weak var list: List?
 }

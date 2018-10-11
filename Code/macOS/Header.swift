@@ -53,7 +53,7 @@ class Header: LayerBackedView, Observer
     
     // MARK: - Configuration
     
-    func configure(with list: SelectableList)
+    func configure(with list: List)
     {
         // title
         
@@ -86,7 +86,7 @@ class Header: LayerBackedView, Observer
         self.list = list
     }
     
-    private weak var list: SelectableList?
+    private weak var list: List?
     
     // MARK: - Adjust to Root State
     

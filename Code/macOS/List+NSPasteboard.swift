@@ -1,7 +1,7 @@
 import AppKit
 import SwiftObserver
 
-extension SelectableList
+extension List
 {
     func pasteFromSystemPasteboard()
     {

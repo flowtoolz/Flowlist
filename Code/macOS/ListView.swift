@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class SelectableListView: LayerBackedView, Observer, Observable
+class ListView: LayerBackedView, Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -37,7 +37,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     // MARK: - Configuration
     
-    func configure(with list: SelectableList)
+    func configure(with list: List)
     {
         header.configure(with: list)
         
@@ -161,7 +161,7 @@ class SelectableListView: LayerBackedView, Observer, Observable
     
     // MARK: - List
     
-    private(set) weak var list: SelectableList?
+    private(set) weak var list: List?
     
     // MARK: - Observability
     
