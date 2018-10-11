@@ -14,12 +14,12 @@ extension Tree where Data == ItemData
         
         for i in 0 ..< count
         {
-            guard let subtask = self[i] else { continue }
+            guard let subitem = self[i] else { continue }
             
             let isLastSubtask = i == count - 1
-            let subtaskPrefix = prefix + (isLast ? " " : "│") + " "
+            let subitemPrefix = prefix + (isLast ? " " : "│") + " "
 
-            desc += "\n\(subtask.description(subtaskPrefix, isLastSubtask))"
+            desc += "\n\(subitem.description(subitemPrefix, isLastSubtask))"
         }
         
         return desc

@@ -18,9 +18,9 @@ final class Tree<Data: Copyable>: Copyable, Observable
                   root: root,
                   numberOfLeafs: original.numberOfLeafs)
         
-        for subtask in original.branches
+        for subitem in original.branches
         {
-            let subCopy = Node(with: subtask, root: self)
+            let subCopy = Node(with: subitem, root: self)
             
             branches.append(subCopy)
         }
@@ -177,14 +177,14 @@ final class Tree<Data: Copyable>: Copyable, Observable
             return numberOfLeafs
         }
         
-        var subtaskLeafs = 0
+        var subitemLeafs = 0
         
-        for subtask in branches
+        for subitem in branches
         {
-            subtaskLeafs += subtask.recoverNumberOfLeafs()
+            subitemLeafs += subitem.recoverNumberOfLeafs()
         }
         
-        numberOfLeafs = subtaskLeafs
+        numberOfLeafs = subitemLeafs
         
         return numberOfLeafs
     }
@@ -205,14 +205,14 @@ final class Tree<Data: Copyable>: Copyable, Observable
     {
         if isLeaf { return 1 }
         
-        var subtaskLeafs = 0
+        var subitemLeafs = 0
         
-        for subtask in branches
+        for subitem in branches
         {
-            subtaskLeafs += subtask.numberOfLeafs
+            subitemLeafs += subitem.numberOfLeafs
         }
         
-        return subtaskLeafs
+        return subitemLeafs
     }
     
     private(set) var numberOfLeafs = 1

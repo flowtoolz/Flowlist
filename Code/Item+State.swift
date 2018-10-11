@@ -11,11 +11,11 @@ extension Tree where Data == ItemData
     
     var indexOfLastOpenSubtask: Int?
     {
-        for subtaskIndex in (0 ..< count).reversed()
+        for subitemIndex in (0 ..< count).reversed()
         {
-            if let subtask = self[subtaskIndex], subtask.isOpen
+            if let subitem = self[subitemIndex], subitem.isOpen
             {
-                return subtaskIndex
+                return subitemIndex
             }
         }
         
@@ -33,11 +33,11 @@ extension Tree where Data == ItemData
     
     var indexOfLastSubtaskInProgress: Int
     {
-        for subtaskIndex in (0 ..< count).reversed()
+        for subitemIndex in (0 ..< count).reversed()
         {
-            if let subtask = self[subtaskIndex], subtask.isInProgress
+            if let subitem = self[subitemIndex], subitem.isInProgress
             {
-                return subtaskIndex
+                return subitemIndex
             }
         }
         
@@ -48,7 +48,7 @@ extension Tree where Data == ItemData
     {
         for i in from ..< count
         {
-            if let subtask = self[i], subtask.isOpen
+            if let subitem = self[i], subitem.isOpen
             {
                 return i
             }
@@ -63,15 +63,15 @@ extension Tree where Data == ItemData
         
         for index in indexes
         {
-            guard let subtask = self[index] else { continue }
+            guard let subitem = self[index] else { continue }
             
-            let subtaskState = subtask.data?.state.value
-            let subtaskPriority = ItemData.State.priority(of: subtaskState)
+            let subitemState = subitem.data?.state.value
+            let subitemPriority = ItemData.State.priority(of: subitemState)
             let highestPriority = ItemData.State.priority(of: highestPriorityState)
             
-            if subtaskPriority < highestPriority
+            if subitemPriority < highestPriority
             {
-                highestPriorityState = subtaskState
+                highestPriorityState = subitemState
             }
         }
         
