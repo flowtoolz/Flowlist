@@ -211,6 +211,7 @@ class List: Observable, Observer
     private func didSwitchRoot(from old: Item?, to new: Item?)
     {
         old?.lastRemoved.removeAll()
+        old?.deselectAll()
         
         title.observable = new?.data?.title
         

@@ -28,4 +28,12 @@ extension Tree where Data == ItemData
         
         self.init(data: newData)
     }
+    
+    func deselectAll()
+    {
+        for item in branches
+        {
+            item.data?.set(isSelected: false)
+        }
+    }
 }
