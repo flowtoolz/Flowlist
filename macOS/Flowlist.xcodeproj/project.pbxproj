@@ -34,7 +34,6 @@
 		9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* Store.swift */; };
 		9E82A7A91EF2A558006AEF02 /* SelectableList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* SelectableList.swift */; };
 		9E88F54F20B7761F00A64F7B /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E88F54E20B7761F00A64F7B /* Menu.swift */; };
-		9E8ABF0020B2F0F1001E862B /* SelectableList+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8ABEFF20B2F0F1001E862B /* SelectableList+Debugging.swift */; };
 		9E91651520551E5600A438FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E91651320551E5500A438FB /* Assets.xcassets */; };
 		9EA2B96B1EF0A80A00F05F20 /* Store+Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA2B96A1EF0A80A00F05F20 /* Store+Persistence.swift */; };
 		9EA5925B20AF7AD200F70CBF /* Selection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA5925A20AF7AD200F70CBF /* Selection.swift */; };
@@ -102,7 +101,6 @@
 		9E7651951EEF4DA200DE2B07 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Store.swift; path = ../Code/Store.swift; sourceTree = "<group>"; };
 		9E82A7A81EF2A558006AEF02 /* SelectableList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectableList.swift; path = ../Code/SelectableList.swift; sourceTree = "<group>"; };
 		9E88F54E20B7761F00A64F7B /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Menu.swift; path = ../Code/macOS/Menu.swift; sourceTree = "<group>"; };
-		9E8ABEFF20B2F0F1001E862B /* SelectableList+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SelectableList+Debugging.swift"; path = "../Code/SelectableList+Debugging.swift"; sourceTree = "<group>"; };
 		9E91651320551E5500A438FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		9E916518205520B800A438FB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		9EA2B96A1EF0A80A00F05F20 /* Store+Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Store+Persistence.swift"; path = "../Code/Store+Persistence.swift"; sourceTree = "<group>"; };
@@ -209,7 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				9E2CCE8C20C1DE030037D755 /* SelectableList+Clipboard.swift */,
-				9E8ABEFF20B2F0F1001E862B /* SelectableList+Debugging.swift */,
 				9E82A7A81EF2A558006AEF02 /* SelectableList.swift */,
 				9EA5925A20AF7AD200F70CBF /* Selection.swift */,
 				9E6C720C20B1DDE2001C3D2C /* List.swift */,
@@ -581,7 +578,6 @@
 				9E6C721020B1E66D001C3D2C /* Item+Debugging.swift in Sources */,
 				9EF0A78C20B5F8B200E1A23A /* ScrollTable.swift in Sources */,
 				9E15185C1EEEE8CE00B35AD5 /* Item+Codable.swift in Sources */,
-				9E8ABF0020B2F0F1001E862B /* SelectableList+Debugging.swift in Sources */,
 				9E2F83E520C8639F003E771E /* SelectableList+NSPasteboard.swift in Sources */,
 				9ED5C8DD20DF970000EF84CB /* PurchaseContentView.swift in Sources */,
 				9E3F69332115ADE2002D595D /* Item+WelcomeTour.swift in Sources */,

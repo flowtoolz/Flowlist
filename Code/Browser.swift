@@ -38,7 +38,7 @@ class Browser: Observer, Observable
     {
         if direction == .left { return focusedIndex > 0 }
         
-        return focusedList.selection.count == 1
+        return focusedList.selectedIndexes.count == 1
     }
     
     func move(to index: Int)
@@ -65,7 +65,7 @@ class Browser: Observer, Observable
     {
         let newList = SelectableList()
         
-        observeSelection(in: newList)
+        observe(list: newList)
         
         lists.append(newList)
         
@@ -78,48 +78,27 @@ class Browser: Observer, Observable
     
     // MARK: - Observe Selections in Lists
     
-    private func observeSelection(in list: SelectableList?,
-                                  start: Bool = true)
-    {
-        guard let list = list else
-        {
-            log(warning: "Tried to \(start ? "start" : "stop") observing selection of nil list.")
-            stopObservingDeadObservables()
-            return
-        }
-        
-        guard start else
-        {
-            stopObserving(list.selection)
-            return
-        }
-        
-        observe(list.selection)
+    private func observe(list: SelectableList)
+    {   
+        observe(list)
         {
             [weak self, weak list] event in
             
             guard let list = list else { return }
             
-            if case .didChange(let indexes) = event
+            if case .didChangeSelection = event
             {
-                self?.listChangedSelection(list, at: indexes)
+                self?.listChangedSelection(list)
             }
         }
     }
     
-    private func listChangedSelection(_ list: SelectableList,
-                                      at indexes: [Int])
+    private func listChangedSelection(_ list: SelectableList)
     {
         guard let index = lists.index(where: { $0 === list }) else
         {
             log(error: "Received update from unmanaged list.")
             return
-        }
-        
-        if !indexes.isEmpty
-        {
-            send(.listDidChangeSelection(listIndex: index,
-                                         selectionIndexes: indexes))
         }
     
         for i in index + 1 ..< lists.count
@@ -140,8 +119,17 @@ class Browser: Observer, Observable
             return
         }
         
-        let superSelection = lists[index - 1].selection
-        let newRoot = superSelection.count == 1 ? superSelection.someTask : nil
+        let superList = lists[index - 1]
+        
+        let superSelection = superList.selectedIndexes
+        
+        let newRoot: Item? =
+        {
+            guard superSelection.count == 1 else { return nil }
+            
+            return superList[superSelection[0]]
+        }()
+        
         let list = lists[index]
         
         if newRoot !== list.root { list.set(root: newRoot) }
@@ -169,6 +157,5 @@ class Browser: Observer, Observable
     {
         case didNothing
         case didPush(list: SelectableList)
-        case listDidChangeSelection(listIndex: Int, selectionIndexes: [Int])
     }
 }

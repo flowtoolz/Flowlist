@@ -225,5 +225,6 @@ class List: Observable, Observer
     {
         case didNothing
         case did(Item.Edit)
+        case didChangeSelection
     }
 }

@@ -42,7 +42,7 @@ class ItemView: LayerBackedView, Observer, Observable
     
     // MARK: - Configuration
     
-    func configure(with task: Item, selected: Bool)
+    func configure(with task: Item)
     {
         stopObserving(task: self.task)
         observe(task: task)
@@ -54,7 +54,7 @@ class ItemView: LayerBackedView, Observer, Observable
             return
         }
         
-        isSelected = selected
+        isSelected = itemData.isSelected.latestUpdate
         isFocused = itemData.isFocused.latestUpdate
         
         // color overlay
@@ -69,7 +69,7 @@ class ItemView: LayerBackedView, Observer, Observable
             colorOverlay.backgroundColor = Color.tags[tag.rawValue]
         }
         
-        colorOverlay.alphaValue = selected ? 1 : 0.5
+        colorOverlay.alphaValue = isSelected ? 1 : 0.5
         
         // background color
         
@@ -95,7 +95,7 @@ class ItemView: LayerBackedView, Observer, Observable
         
         // check box image
         
-        let lightContent = Color.itemContentIsLight(isSelected: selected,
+        let lightContent = Color.itemContentIsLight(isSelected: isSelected,
                                                     isFocused: isFocused)
         checkBox.configure(with: task.data?.state.value, white: lightContent)
         
@@ -179,6 +179,11 @@ class ItemView: LayerBackedView, Observer, Observable
         {
             [weak self] isFocused in self?.set(focused: isFocused)
         }
+        
+        observe(itemData.isSelected)
+        {
+            [weak self] isSelected in self?.set(selected: isSelected)
+        }
     }
     
     private func stopObserving(itemData: ItemData?)
@@ -187,6 +192,7 @@ class ItemView: LayerBackedView, Observer, Observable
         stopObserving(itemData?.state)
         stopObserving(itemData?.tag)
         stopObserving(itemData?.isFocused)
+        stopObserving(itemData?.isSelected)
     }
     
     private func stopObserving(task: Item?)
@@ -282,7 +288,7 @@ class ItemView: LayerBackedView, Observer, Observable
         send(.wasClicked(withCmd: event.cmd))
     }
     
-    func set(selected: Bool)
+    private func set(selected: Bool)
     {
         guard isSelected != selected else { return }
         

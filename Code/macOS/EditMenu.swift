@@ -91,7 +91,7 @@ class EditMenu: NSMenu, Observer
     
     private var numberOfSelectedTasks: Int
     {
-        return browser.focusedList.selection.count
+        return browser.focusedList.selectedIndexes.count
     }
     
     // MARK: - Items

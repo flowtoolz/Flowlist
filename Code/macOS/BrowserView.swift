@@ -64,16 +64,9 @@ class BrowserView: LayerBackedView, Observer
     
     private func did(receive event: Browser.Event)
     {
-        switch event
+        if case .didPush(let newList) = event
         {
-        case .didNothing: break
-            
-        case .didPush(let newList):
             pushListView(for: newList)
-            
-        case .listDidChangeSelection(let listIndex, let selectionIndexes):
-            selectionDidChangeInList(at: listIndex,
-                                     selectionIndexes: selectionIndexes)
         }
     }
     
@@ -93,20 +86,6 @@ class BrowserView: LayerBackedView, Observer
     }
     
     // MARK: - List Views
-    
-    private func selectionDidChangeInList(at index: Int,
-                                          selectionIndexes: [Int])
-    {
-        guard listViews.isValid(index: index) else
-        {
-            log(error: "Selection changed in list view at invalid index \(index).")
-            return
-        }
-        
-        let table = listViews[index].scrollTable.table
-        
-        table.listDidChangeSelection(at: selectionIndexes)
-    }
     
     private func pushListView(for list: SelectableList)
     {

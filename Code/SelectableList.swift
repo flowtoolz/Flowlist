@@ -7,19 +7,22 @@ extension SelectableList
 {
     func set(tag: ItemData.Tag?)
     {
-        let selectedTasks = selection.tasks
+        let selected = selectedIndexes
         
-        guard !selectedTasks.isEmpty else { return }
+        guard !selected.isEmpty else { return }
         
-        if selectedTasks.count == 1
+        if selected.count == 1
         {
-            selectedTasks[0].data?.tag <- selectedTasks[0].data?.tag.value != tag ? tag : nil
+            if let data = self[selected[0]]?.data
+            {
+                data.tag <- data.tag.value != tag ? tag : nil
+            }
         }
         else
         {
-            for selectedTask in selectedTasks
+            for selectedindex in selected
             {
-                selectedTask.data?.tag <- tag
+                self[selectedindex]?.data?.tag <- tag
             }
         }
     }
@@ -33,7 +36,7 @@ class SelectableList: List
     
     func createTask()
     {
-        if selection.count < 2
+        if selectedIndexes.count < 2
         {
             createBelowSelection()
         }
@@ -45,22 +48,23 @@ class SelectableList: List
     
     func groupSelectedTasks()
     {
-        guard selection.count > 1 else
+        let indexes = selectedIndexes
+        
+        guard indexes.count > 1 else
         {
             log(warning: "Tried to group less than 2 selected tasks.")
             return
         }
         
-        let indexes = selection.indexes
         let groupState = root?.highestPriorityState(at: indexes)
         
-        if let group = root?.groupNodes(at: indexes)
+        if let groupIndex = indexes.first,
+            let group = root?.groupNodes(at: indexes)
         {
-            selection.set(with: group)
+            setSelectionWithTasksListed(at: [groupIndex])
             
             let data = ItemData()
             data.state <- groupState
-            
             group.data = data
             group.data?.send(.wantTextInput)
         }
@@ -73,9 +77,9 @@ class SelectableList: List
     
     func create(at index: Int)
     {
-        guard let newTask = root?.createSubitem(at: index) else { return }
+        guard let _ = root?.createSubitem(at: index) else { return }
         
-        selection.set(with: newTask)
+        setSelectionWithTasksListed(at: [index])
     }
     
     // MARK: - Paste
@@ -88,7 +92,7 @@ class SelectableList: List
         
         let pastedIndexes = Array(index ..< index + tasks.count)
         
-        selection.setWithTasksListed(at: pastedIndexes)
+        setSelectionWithTasksListed(at: pastedIndexes)
     }
     
     // MARK: - Remove
@@ -96,11 +100,11 @@ class SelectableList: List
     @discardableResult
     func removeSelectedTasks() -> Bool
     {
-        let selectedIndexes = selection.indexes
+        let indexes = selectedIndexes
         
         guard let root = root,
-            let firstSelectedIndex = selectedIndexes.first,
-            let removedTasks = root.removeNodes(from: selectedIndexes),
+            let firstSelectedIndex = indexes.first,
+            let removedTasks = root.removeNodes(from: indexes),
             removedTasks.count > 0
         else
         {
@@ -116,7 +120,7 @@ class SelectableList: List
     {
         guard !(root?.isLeaf ?? true) else { return }
         
-        selection.setWithTasksListed(at: [max(index - 1, 0)])
+        setSelectionWithTasksListed(at: [max(index - 1, 0)])
     }
     
     func undoLastRemoval()
@@ -133,18 +137,22 @@ class SelectableList: List
     
     var newIndexBelowSelection: Int
     {
-        return (selection.indexes.last ?? -1) + 1
+        return (selectedIndexes.last ?? -1) + 1
     }
     
     // MARK: - Toggle States
     
     func toggleInProgressStateOfFirstSelectedTask()
     {
-        guard let task = firstSelectedTask else { return }
+        let indexes = selectedIndexes
         
-        if selection.count > 1
+        guard let firstSelectedIndex = indexes.first,
+            let task = self[firstSelectedIndex]
+        else { return }
+        
+        if indexes.count > 1
         {
-            selection.remove(tasks: [task])
+            deselectItems(at: [firstSelectedIndex])
         }
         
         task.data?.state <- !task.isInProgress ? .inProgress : nil
@@ -152,41 +160,47 @@ class SelectableList: List
     
     func toggleDoneStateOfFirstSelectedTask()
     {
-        guard let selected = selection.indexes.first, let task = self[selected] else
+        let indexes = selectedIndexes
+        
+        guard let firstSelectedIndex = indexes.first,
+            let task = self[firstSelectedIndex]
+        else
         {
             return
         }
         
-        let newSelectedTask = nextSelectedTaskAfterCheckingOff(at: selected)
+        let newSelectedIndex = nextSelectedIndexAfterCheckingOff(at: firstSelectedIndex)
         
         let newState: ItemData.State? = !task.isDone ? .done : nil
         
-        if selection.count == 1, newState == .done, let newSelectedTask = newSelectedTask
+        if indexes.count == 1,
+            newState == .done,
+            let newSelectedIndex = newSelectedIndex
         {
-            selection.set(with: newSelectedTask)
+            setSelectionWithTasksListed(at: [newSelectedIndex])
         }
-        else if selection.count > 1
+        else if indexes.count > 1
         {
-            selection.remove(tasks: [task])
+            deselectItems(at: [firstSelectedIndex])
         }
         
         task.data?.state <- newState
     }
     
-    private func nextSelectedTaskAfterCheckingOff(at index: Int) -> Item?
+    private func nextSelectedIndexAfterCheckingOff(at index: Int) -> Int?
     {
         for i in index + 1 ..< count
         {
             guard let task = self[i] else { continue }
             
-            if task.isOpen { return task }
+            if task.isOpen { return i }
         }
         
         for i in (0 ..< index).reversed()
         {
             guard let task = self[i] else { continue }
             
-            if task.isOpen { return task }
+            if task.isOpen { return i }
         }
         
         return nil
@@ -196,7 +210,9 @@ class SelectableList: List
     
     func canMoveItems(up: Bool) -> Bool
     {
-        guard selection.count == 1, let selected = selection.indexes.first else
+        let indexes = selectedIndexes
+        
+        guard indexes.count == 1, let selected = indexes.first else
         {
             return false
         }
@@ -211,15 +227,14 @@ class SelectableList: List
     @discardableResult
     func moveSelectedTask(_ positions: Int) -> Bool
     {
-        guard positions != 0,
-            let root = root,
-            selection.count == 1,
-            let selectedTask = selection.someTask,
-            let selectedIndex = root.index(of: selectedTask)
-        else
+        let indexes = selectedIndexes
+        
+        guard positions != 0, let root = root, indexes.count == 1 else
         {
             return false
         }
+        
+        let selectedIndex = indexes[0]
         
         return root.moveNode(from: selectedIndex,
                                 to: selectedIndex + positions)
@@ -229,7 +244,7 @@ class SelectableList: List
     
     func editTitle()
     {
-        guard let index = selection.indexes.first else { return }
+        guard let index = selectedIndexes.first else { return }
         
         editTitle(at: index)
     }
@@ -238,96 +253,97 @@ class SelectableList: List
     
     func select()
     {
-        if count > 0 && selection.count == 0
+        if count > 0 && selectedIndexes.count == 0
         {
-            selection.setWithTasksListed(at: [0])
+            setSelectionWithTasksListed(at: [0])
         }
     }
     
     func selectAll()
     {
-        selection.setWithTasksListed(at: Array(0 ..< count))
+        setSelectionWithTasksListed(at: Array(0 ..< count))
     }
     
     var canShiftSelectionUp: Bool
     {
-        return count > 0 && selection.indexes != [0]
+        return count > 0 && selectedIndexes != [0]
     }
     
     func shiftSelectionUp()
     {
-        if let firstIndex = selection.indexes.first, firstIndex > 0
+        if let firstIndex = selectedIndexes.first, firstIndex > 0
         {
-            selection.setWithTasksListed(at: [firstIndex - 1])
+            setSelectionWithTasksListed(at: [firstIndex - 1])
         }
         else if count > 0
         {
-            selection.setWithTasksListed(at: [0])
+            setSelectionWithTasksListed(at: [0])
         }
     }
     
     var canShiftSelectionDown: Bool
     {
-        return count > 0 && selection.indexes != [count - 1]
+        return count > 0 && selectedIndexes != [count - 1]
     }
     
     func shiftSelectionDown()
     {
-        if let lastIndex = selection.indexes.last, lastIndex + 1 < count
+        if let lastIndex = selectedIndexes.last, lastIndex + 1 < count
         {
-            selection.setWithTasksListed(at: [lastIndex + 1])
+            setSelectionWithTasksListed(at: [lastIndex + 1])
             return
         }
         else if count > 0
         {
-            selection.setWithTasksListed(at: [count - 1])
+            setSelectionWithTasksListed(at: [count - 1])
         }
     }
     
     var canExtendSelectionUp: Bool
     {
-        guard let index = selection.indexes.first,
-            index > 0 else { return false }
+        guard let index = selectedIndexes.first, index > 0 else
+        {
+            return false
+        }
         
         return true
     }
     
     func extendSelectionUp()
     {
-        guard let index = selection.indexes.first,
-            index > 0 else { return }
+        guard let index = selectedIndexes.first, index > 0 else
+        {
+            return
+        }
         
-        selection.add(task: self[index - 1])
+        selectTask(at: index - 1)
     }
     
     var canExtendSelectionDown: Bool
     {
-        guard let index = selection.indexes.last,
-            index + 1 < count else { return false }
+        guard let index = selectedIndexes.last, index + 1 < count else
+        {
+            return false
+        }
         
         return true
     }
     
     func extendSelectionDown()
     {
-        guard let index = selection.indexes.last,
-            index + 1 < count else { return }
+        guard let index = selectedIndexes.last, index + 1 < count else
+        {
+            return
+        }
         
-        selection.add(task: self[index + 1])
+        selectTask(at: index + 1)
     }
     
     var firstSelectedTask: Item?
     {
-        guard let index = selection.indexes.first else { return nil }
+        guard let index = selectedIndexes.first else { return nil }
         
         return self[index]
-    }
-    
-    override func set(root newRoot: Item?)
-    {
-        super.set(root: newRoot)
-        
-        selection.root = newRoot
     }
     
     override func received(_ edit: Item.Edit,
@@ -335,11 +351,77 @@ class SelectableList: List
     {
         super.received(edit, from: root)
         
-        if case .remove(let subtasks, _) = edit
+        if case .remove(_, let indexes) = edit
         {
-            selection.remove(tasks: subtasks)
+            deselectItems(at: indexes)
         }
     }
     
-    let selection = Selection()
+    var selectedIndexes: [Int]
+    {
+        var selected = [Int]()
+        
+        for index in 0 ..< count
+        {
+            if self[index]?.data?.isSelected.latestUpdate ?? false
+            {
+                selected.append(index)
+            }
+        }
+        
+        return selected
+    }
+    
+    // TODO: make selection stuff an extension of list
+    
+    // MARK: - Atomic Selection Operations
+    
+    func setSelectionWithTasksListed(at newIndexes: [Int])
+    {
+        var newSelections = Array<Bool>(repeating: false, count: count)
+        
+        for selectedIndex in newIndexes
+        {
+            newSelections[selectedIndex] = true
+        }
+        
+        for index in 0 ..< count
+        {
+            self[index]?.data?.set(isSelected: newSelections[index])
+        }
+        
+        send(.didChangeSelection)
+    }
+    
+    func selectTask(at index: Int)
+    {
+        guard let data = self[index]?.data, !data.isSelected.latestUpdate else
+        {
+            return
+        }
+        
+        data.set(isSelected: true)
+        
+        send(.didChangeSelection)
+    }
+    
+    func toggleSelection(at index: Int)
+    {
+        guard let data = self[index]?.data else { return }
+        
+        let itemIsSelected = data.isSelected.latestUpdate
+        data.set(isSelected: !itemIsSelected)
+        
+        send(.didChangeSelection)
+    }
+    
+    func deselectItems(at indexes: [Int])
+    {
+        for index in indexes
+        {
+            self[index]?.data?.set(isSelected: false)
+        }
+        
+        send(.didChangeSelection)
+    }
 }

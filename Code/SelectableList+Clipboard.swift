@@ -2,10 +2,10 @@ extension SelectableList
 {
     func cut()
     {
-        let selectedIndexes = selection.indexes
+        let selected = selectedIndexes
         
-        guard let firstSelectedIndex = selectedIndexes.first,
-            root?.cut(at: selectedIndexes) ?? false else { return }
+        guard let firstSelectedIndex = selected.first,
+            root?.cut(at: selected) ?? false else { return }
         
         selectAfterRemoval(from: firstSelectedIndex)
     }
@@ -14,7 +14,7 @@ extension SelectableList
     {
         guard let root = root else { return }
         
-        let indexes = selection.indexes
+        let indexes = selectedIndexes
         
         var tasks = [Item]()
         

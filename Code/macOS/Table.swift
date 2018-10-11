@@ -55,7 +55,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         guard start else
         {
             stopObserving(list)
-            stopObserving(list.selection)
             return
         }
         
@@ -63,10 +62,9 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         {
             [weak self] event in
             
-            switch event
+            if case .did(let edit) = event
             {
-            case .didNothing: break
-            case .did(let edit): self?.did(edit)
+                self?.did(edit)
             }
         }
     }
@@ -89,7 +87,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         {
             guard oldValue !== list else
             {
-                log(warning: "Tried to set identical list:\n\(list?.description ?? "nil")")
+                log(warning: "Tried to set identical list")
                 return
             }
             
@@ -156,7 +154,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         moveRow(at: from, to: to)
         
-        if list?.selection.isSelected(list?[to]) ?? false
+        if list?[to]?.data?.isSelected.latestUpdate ?? false
         {
             scrollRowToVisible(to)
         }
@@ -249,46 +247,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     private var cashedWidth: CGFloat?
     private var itemHeightCash = [Item : CGFloat]()
     
-    // MARK: - Selection
-    
-    func listDidChangeSelection(at indexes: [Int])
-    {
-        guard let list = list else
-        {
-            log(error: "List changed selection but list is nil.")
-            return
-        }
-        
-        var indexOf1stNewSelection: Int?
-        
-        for index in indexes
-        {
-            guard let view = view(atColumn: 0, row: index, makeIfNecessary: false),
-                let taskView = view as? ItemView
-            else
-            {
-                continue
-            }
-        
-            let isSelected = list.selection.isSelected(taskView.task)
-            
-            if taskView.isSelected != isSelected
-            {
-                taskView.set(selected: isSelected)
-                
-                if indexOf1stNewSelection == nil && isSelected
-                {
-                    indexOf1stNewSelection = index
-                }
-            }
-        }
-        
-        if let indexToScrollTo = indexOf1stNewSelection
-        {
-            scrollRowToVisible(indexToScrollTo)
-        }
-    }
-    
     // MARK: - Observe Task Views
     
     private func observe(taskView: ItemView)
@@ -316,10 +274,9 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         case .willEditTitle:
             rowBeingEdited = index
             
-            if let task = taskView.task,
-                !(list?.selection.isSelected(task) ?? false)
+            if !(list?[index]?.data?.isSelected.latestUpdate ?? false)
             {
-                list?.selection.set(with: task)
+                list?.setSelectionWithTasksListed(at: [index])
             }
             
             send(event)
@@ -350,11 +307,11 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             
             if cmdKeyIsDown
             {
-                list.selection.toggle(task)
+                list.toggleSelection(at: index)
             }
             else
             {
-                list.selection.set(with: task)
+                list.setSelectionWithTasksListed(at: [index])
             }
             
             send(event)

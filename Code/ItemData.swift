@@ -2,6 +2,17 @@ import SwiftObserver
 
 final class ItemData: Observable
 {
+    // MARK: - Selection
+    
+    lazy var isSelected = isSelectedVar.new().filter({ $0 != nil }).unwrap(false)
+    
+    func set(isSelected: Bool)
+    {
+        isSelectedVar <- isSelected
+    }
+    
+    private let isSelectedVar = Var(false)
+    
     // MARK: - Focus
     
     lazy var isFocused = isFocusedVar.new().filter({ $0 != nil }).unwrap(false)

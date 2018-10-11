@@ -55,29 +55,6 @@ class Selection: Observable
         send(.didChange(atIndexes: [index]))
     }
     
-    func set(with task: Item)
-    {
-        guard let root = root else
-        {
-            log(error: "Tried to set selection while selection has no root.")
-            return
-        }
-        
-        guard !isSelected(task) || selectedTasks.count > 1,
-            let index = root.index(of: task)
-        else
-        {
-            return
-        }
-        
-        var changedIndexes = indexes
-        changedIndexes.append(index)
-        
-        selectedTasks = [task : task]
-        
-        send(.didChange(atIndexes: changedIndexes))
-    }
-    
     func add(task: Item?)
     {
         guard let task = task else
@@ -139,41 +116,7 @@ class Selection: Observable
             send(.didChange(atIndexes: changedIndexes))
         }
     }
-    
-    func removeTask(at index: Int)
-    {
-        guard let root = root else
-        {
-            log(error: "Tried to deselect task at index \(index) while selection has no root.")
-            return
-        }
-        
-        guard let task = root[index], isSelected(task) else
-        {
-            log(warning: "Tried invalid deselection of index \(index).")
-            return
-        }
-        
-        selectedTasks[task] = nil
-        
-        send(.didChange(atIndexes: [index]))
-    }
-    
-    func removeAll()
-    {
-        guard count > 0 else
-        {
-            log(warning: "Tried to deselect all selected tasks but none are selected.")
-            return
-        }
-        
-        let changedIndexes = indexes
-        
-        selectedTasks.removeAll()
-        
-        send(.didChange(atIndexes: changedIndexes))
-    }
-    
+            
     // MARK: - Root
     
     var indexes: [Int]
