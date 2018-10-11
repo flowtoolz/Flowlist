@@ -82,7 +82,8 @@ class List: Observable, Observer
         case .insert(let indexes):
             observeTasksListed(in: root, at: indexes)
             
-        case .remove(let tasks, _):
+        case .remove(let tasks, let indexes):
+            deselectItems(at: indexes)
             for task in tasks { observe(listedTask: task, start: false) }
             
         case .move: break
@@ -215,6 +216,57 @@ class List: Observable, Observer
         title.observable = new?.data?.title
         
         send(.did(.changeRoot(from: old, to: new)))
+    }
+    
+    // MARK: - Atomic Selection Operations
+    
+    func setSelectionWithTasksListed(at newIndexes: [Int])
+    {
+        var newSelections = Array<Bool>(repeating: false, count: count)
+        
+        for selectedIndex in newIndexes
+        {
+            newSelections[selectedIndex] = true
+        }
+        
+        for index in 0 ..< count
+        {
+            self[index]?.data?.set(isSelected: newSelections[index])
+        }
+        
+        send(.didChangeSelection)
+    }
+    
+    func selectTask(at index: Int)
+    {
+        guard let data = self[index]?.data, !data.isSelected.latestUpdate else
+        {
+            return
+        }
+        
+        data.set(isSelected: true)
+        
+        send(.didChangeSelection)
+    }
+    
+    func toggleSelection(at index: Int)
+    {
+        guard let data = self[index]?.data else { return }
+        
+        let itemIsSelected = data.isSelected.latestUpdate
+        data.set(isSelected: !itemIsSelected)
+        
+        send(.didChangeSelection)
+    }
+    
+    func deselectItems(at indexes: [Int])
+    {
+        for index in indexes
+        {
+            self[index]?.data?.set(isSelected: false)
+        }
+        
+        send(.didChangeSelection)
     }
     
     // MARK: - Observability
