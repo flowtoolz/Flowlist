@@ -21,9 +21,9 @@ extension Store
         
         guard let loadedRoot = Item(from: fileUrl) else
         {
-            didLoadTasksSuccessfully = false
+            didLoadItemsSuccessfully = false
             
-            log(error: "Failed to load tasks from " + fileUrl.absoluteString)
+            log(error: "Failed to load items from " + fileUrl.absoluteString)
             
             let message = "Please ensure that your data file \"\(fileUrl.path)\" is formatted correctly. Then restart Flowlist.\n\n(Be careful to retain the JSON format when editing the file outside of Flowlist.)"
             
@@ -32,7 +32,7 @@ extension Store
             return
         }
         
-        didLoadTasksSuccessfully = true
+        didLoadItemsSuccessfully = true
         
         loadedRoot.recoverRoots()
         loadedRoot.recoverNumberOfLeafs()
@@ -46,19 +46,19 @@ extension Store
     private func createFile()
     {
         root.data?.title <- NSFullUserName()
-        didLoadTasksSuccessfully = true
+        didLoadItemsSuccessfully = true
         save()
     }
     
     func save()
     {
-        guard didLoadTasksSuccessfully,
+        guard didLoadItemsSuccessfully,
             let fileUrl = fileUrl,
             let _ = root.save(to: fileUrl)
         else
         {
             let fileString = self.fileUrl?.absoluteString ?? "file"
-            log(error: "Failed to save tasks to " + fileString)
+            log(error: "Failed to save items to " + fileString)
             return
         }
     }
@@ -80,4 +80,4 @@ extension Store
     }
 }
 
-fileprivate var didLoadTasksSuccessfully = false
+fileprivate var didLoadItemsSuccessfully = false

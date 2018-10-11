@@ -36,17 +36,17 @@ extension Tree where Data == ItemData
         
         tour.append(moreCommands)
         
-        // Manage Tasks
+        // Manage Items
 
-        let taskManagementCommands = Item("Prioritize")
+        let itemManagementCommands = Item("Prioritize")
         
-        taskManagementCommands.data?.tag <- .yellow
+        itemManagementCommands.data?.tag <- .yellow
         
-        taskManagementCommands.add(Item("Select a single item and hit ⌘↑ or ⌘↓ to move it up or down"))
-        taskManagementCommands.add(Item("Hit ⌘← to check off or uncheck an item"))
-        taskManagementCommands.add(Item("Hit ⌘→ to set an item in progress or to pause it"))
+        itemManagementCommands.add(Item("Select a single item and hit ⌘↑ or ⌘↓ to move it up or down"))
+        itemManagementCommands.add(Item("Hit ⌘← to check off or uncheck an item"))
+        itemManagementCommands.add(Item("Hit ⌘→ to set an item in progress or to pause it"))
         
-        tour.append(taskManagementCommands)
+        tour.append(itemManagementCommands)
         
         // hierarchy
         

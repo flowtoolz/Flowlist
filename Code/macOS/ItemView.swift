@@ -42,13 +42,13 @@ class ItemView: LayerBackedView, Observer, Observable
     
     // MARK: - Configuration
     
-    func configure(with task: Item)
+    func configure(with item: Item)
     {
-        stopObserving(task: self.task)
-        observe(task: task)
-        self.task = task
+        stopObserving(item: self.item)
+        observe(item: item)
+        self.item = item
         
-        guard let itemData = task.data else
+        guard let itemData = item.data else
         {
             log(error: "Tried to configure Item which has no data")
             return
@@ -59,7 +59,7 @@ class ItemView: LayerBackedView, Observer, Observable
         
         // color overlay
         
-        let isDone = task.isDone
+        let isDone = item.isDone
         let isTagged = itemData.tag.value != nil
         
         colorOverlay.isHidden = !isTagged || isDone
@@ -86,7 +86,7 @@ class ItemView: LayerBackedView, Observer, Observable
         
         // icon alphas
         
-        checkBox.alphaValue = Color.iconAlpha(isInProgress: task.isInProgress,
+        checkBox.alphaValue = Color.iconAlpha(isInProgress: item.isInProgress,
                                               isDone: isDone,
                                               isSelected: isSelected).cgFloat
         groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
@@ -97,7 +97,7 @@ class ItemView: LayerBackedView, Observer, Observable
         
         let lightContent = Color.itemContentIsLight(isSelected: isSelected,
                                                     isFocused: isFocused)
-        checkBox.configure(with: task.data?.state.value, white: lightContent)
+        checkBox.configure(with: item.data?.state.value, white: lightContent)
         
         // group icon image
         
@@ -111,18 +111,18 @@ class ItemView: LayerBackedView, Observer, Observable
     
     // MARK: - Observing the Item
     
-    private func observe(task: Item)
+    private func observe(item: Item)
     {
-        observe(task)
+        observe(item)
         {
-            [weak self, weak task] event in
+            [weak self, weak item] event in
             
-            guard let task = task else { return }
+            guard let item = item else { return }
             
-            self?.received(event, from: task)
+            self?.received(event, from: item)
         }
         
-        guard let itemData = task.data else
+        guard let itemData = item.data else
         {
             log(error: "Tried to observe item which has no data object")
             return
@@ -131,7 +131,7 @@ class ItemView: LayerBackedView, Observer, Observable
         observe(itemData: itemData)
     }
     
-    private func received(_ event: Item.Event, from task: Item)
+    private func received(_ event: Item.Event, from item: Item)
     {
         switch event
         {
@@ -167,7 +167,7 @@ class ItemView: LayerBackedView, Observer, Observable
         
         observe(itemData.state)
         {
-            [weak self] _ in self?.taskStateDidChange()
+            [weak self] _ in self?.itemStateDidChange()
         }
         
         observe(itemData.tag)
@@ -195,19 +195,19 @@ class ItemView: LayerBackedView, Observer, Observable
         stopObserving(itemData?.isSelected)
     }
     
-    private func stopObserving(task: Item?)
+    private func stopObserving(item: Item?)
     {
-        stopObserving(task?.data?.state)
-        stopObserving(task?.data?.title)
-        stopObserving(task)
+        stopObserving(item?.data?.state)
+        stopObserving(item?.data?.title)
+        stopObserving(item)
     }
     
     // MARK: - Adapt Colors to State, Tag, Dark Mode & Selection
     
     private func colorModeDidChange()
     {
-        let isDone = task?.isDone ?? false
-        let isTagged = task?.data?.tag.value != nil
+        let isDone = item?.isDone ?? false
+        let isTagged = item?.data?.tag.value != nil
         
         backgroundColor = .itemBackground(isDone: isDone,
                                           isSelected: isSelected,
@@ -229,7 +229,7 @@ class ItemView: LayerBackedView, Observer, Observable
         textView.insertionPointColor = Color.text.nsColor
         textView.selectedTextAttributes = TextView.selectionSyle
         
-        let isInProgress = task?.isInProgress ?? false
+        let isInProgress = item?.isInProgress ?? false
         checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
                                               isDone: isDone,
                                               isSelected: isSelected).cgFloat
@@ -238,21 +238,21 @@ class ItemView: LayerBackedView, Observer, Observable
                                                isSelected: isSelected).cgFloat
     }
     
-    private func taskStateDidChange()
+    private func itemStateDidChange()
     {
-        guard let task = task else { return }
+        guard let item = item else { return }
         
-        let isDone = task.isDone
-        let isTagged = task.data?.tag.value != nil
+        let isDone = item.isDone
+        let isTagged = item.data?.tag.value != nil
         
         backgroundColor = .itemBackground(isDone: isDone,
                                           isSelected: isSelected,
                                           isTagged: isTagged,
                                           isFocusedList: isFocused)
         
-        checkBox.set(state: task.data?.state.value)
+        checkBox.set(state: item.data?.state.value)
         
-        checkBox.alphaValue = Color.iconAlpha(isInProgress: task.isInProgress,
+        checkBox.alphaValue = Color.iconAlpha(isInProgress: item.isInProgress,
                                               isDone: isDone,
                                               isSelected: isSelected).cgFloat
         groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
@@ -263,19 +263,19 @@ class ItemView: LayerBackedView, Observer, Observable
                                       isSelected: isSelected,
                                       isFocused: isFocused))
         
-        colorOverlay.isHidden = task.data?.tag.value == nil || isDone
+        colorOverlay.isHidden = item.data?.tag.value == nil || isDone
     }
     
     private func tagDidChange()
     {
-        guard let task = task else { return }
+        guard let item = item else { return }
         
-        let isTagged = task.data?.tag.value != nil
-        let isDone = task.isDone
+        let isTagged = item.data?.tag.value != nil
+        let isDone = item.isDone
         
         colorOverlay.isHidden = !isTagged || isDone
         
-        if let tag = task.data?.tag.value
+        if let tag = item.data?.tag.value
         {
             let tagColor = Color.tags[tag.rawValue]
             
@@ -294,8 +294,8 @@ class ItemView: LayerBackedView, Observer, Observable
         
         isSelected = selected
         
-        let isDone = task?.isDone ?? false
-        let isTagged = task?.data?.tag.value != nil
+        let isDone = item?.isDone ?? false
+        let isTagged = item?.data?.tag.value != nil
         
         backgroundColor = .itemBackground(isDone: isDone,
                                           isSelected: isSelected,
@@ -308,7 +308,7 @@ class ItemView: LayerBackedView, Observer, Observable
                                           isSelected: isSelected,
                                           isFocused: isFocused))
             
-            let isInProgress = task?.isInProgress ?? false
+            let isInProgress = item?.isInProgress ?? false
             checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
                                                   isDone: isDone,
                                                   isSelected: isSelected).cgFloat
@@ -337,10 +337,10 @@ class ItemView: LayerBackedView, Observer, Observable
     {
         isFocused = focused
         
-        guard isSelected, let task = task else { return }
+        guard isSelected, let item = item else { return }
         
-        let isDone = task.isDone
-        let isTagged = task.data?.tag.value != nil
+        let isDone = item.isDone
+        let isTagged = item.data?.tag.value != nil
         
         backgroundColor = .itemBackground(isDone: isDone,
                                           isSelected: isSelected,
@@ -396,7 +396,7 @@ class ItemView: LayerBackedView, Observer, Observable
         // TODO: is this still needed from El Capitan onwards?
         // https://stackoverflow.com/questions/19121367/uitextviews-in-a-uitableview-link-detection-bug-in-ios-7
         textView.string = ""
-        textView.string = task?.data?.title.value ?? ""
+        textView.string = item?.data?.title.value ?? ""
     }
     
     private func constrainTextView()
@@ -431,14 +431,14 @@ class ItemView: LayerBackedView, Observer, Observable
             
         case .didChange(let text):
             send(.didChangeTitle)
-            task?.data?.title <- String(withNonEmpty: text)
+            item?.data?.title <- String(withNonEmpty: text)
             
         case .wantToEndEditing:
             send(.wantToEndEditingText)
             
         case .didEdit:
             set(editing: false)
-            task?.data?.title <- String(withNonEmpty: textView.string)
+            item?.data?.title <- String(withNonEmpty: textView.string)
             send(.didEditTitle)
         }
     }
@@ -449,7 +449,7 @@ class ItemView: LayerBackedView, Observer, Observable
     {
         isEditing = editing
         
-        let isDone = task?.isDone ?? false
+        let isDone = item?.isDone ?? false
         
         textView.set(color: .itemText(isDone: isDone,
                                       isSelected: isSelected,
@@ -463,7 +463,7 @@ class ItemView: LayerBackedView, Observer, Observable
             checkBox.button.isEnabled = true
         }
         
-        let isInProgress = task?.isInProgress ?? false
+        let isInProgress = item?.isInProgress ?? false
         let checkBoxAlpha = Color.iconAlpha(isInProgress: isInProgress,
                                             isDone: isDone,
                                             isSelected: isSelected).cgFloat
@@ -529,14 +529,14 @@ class ItemView: LayerBackedView, Observer, Observable
     
     @objc private func didClickCheckBox()
     {
-        task?.data?.state <- task?.isDone ?? false ? nil : .done
+        item?.data?.state <- item?.isDone ?? false ? nil : .done
     }
     
     // MARK: - Group Icon
     
     private func updateGroupIcon()
     {
-        groupIcon.isHidden = task?.isLeaf ?? true
+        groupIcon.isHidden = item?.isLeaf ?? true
     }
     
     private func contrainGroupIcon()
@@ -617,9 +617,9 @@ class ItemView: LayerBackedView, Observer, Observable
     
     // MARK: - Data
     
-    static let uiIdentifier = NSUserInterfaceItemIdentifier(rawValue: "TaskViewID")
+    static let uiIdentifier = NSUserInterfaceItemIdentifier(rawValue: "ItemViewID")
     
-    private(set) weak var task: Item?
+    private(set) weak var item: Item?
     
     // MARK: - Observability
     

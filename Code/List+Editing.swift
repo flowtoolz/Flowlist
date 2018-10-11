@@ -29,7 +29,7 @@ extension List
 
     // MARK: - Create
     
-    func createTask()
+    func createItem()
     {
         if selectedIndexes.count < 2
         {
@@ -37,17 +37,17 @@ extension List
         }
         else
         {
-            groupSelectedTasks()
+            groupSelectedItems()
         }
     }
     
-    func groupSelectedTasks()
+    func groupSelectedItems()
     {
         let indexes = selectedIndexes
         
         guard indexes.count > 1 else
         {
-            log(warning: "Tried to group less than 2 selected tasks.")
+            log(warning: "Tried to group less than 2 selected items.")
             return
         }
         
@@ -56,7 +56,7 @@ extension List
         if let groupIndex = indexes.first,
             let group = root?.groupNodes(at: indexes)
         {
-            setSelectionWithTasksListed(at: [groupIndex])
+            setSelectionWithItemsListed(at: [groupIndex])
             
             let data = ItemData()
             data.state <- groupState
@@ -74,33 +74,33 @@ extension List
     {
         guard let _ = root?.createSubitem(at: index) else { return }
         
-        setSelectionWithTasksListed(at: [index])
+        setSelectionWithItemsListed(at: [index])
     }
     
     // MARK: - Paste
     
-    func paste(_ tasks: [Item])
+    func paste(_ items: [Item])
     {
         let index = newIndexBelowSelection
         
-        guard root?.insert(tasks, at: index) ?? false else { return }
+        guard root?.insert(items, at: index) ?? false else { return }
         
-        let pastedIndexes = Array(index ..< index + tasks.count)
+        let pastedIndexes = Array(index ..< index + items.count)
         
-        setSelectionWithTasksListed(at: pastedIndexes)
+        setSelectionWithItemsListed(at: pastedIndexes)
     }
     
     // MARK: - Remove
     
     @discardableResult
-    func removeSelectedTasks() -> Bool
+    func removeSelectedItems() -> Bool
     {
         let indexes = selectedIndexes
         
         guard let root = root,
             let firstSelectedIndex = indexes.first,
-            let removedTasks = root.removeNodes(from: indexes),
-            removedTasks.count > 0
+            let removedItems = root.removeNodes(from: indexes),
+            removedItems.count > 0
         else
         {
             return false
@@ -115,17 +115,17 @@ extension List
     {
         guard !(root?.isLeaf ?? true) else { return }
         
-        setSelectionWithTasksListed(at: [max(index - 1, 0)])
+        setSelectionWithItemsListed(at: [max(index - 1, 0)])
     }
     
     func undoLastRemoval()
     {
-        guard let tasks = root?.lastRemoved.copiesOfStoredObjects else
+        guard let items = root?.lastRemoved.copiesOfStoredObjects else
         {
             return
         }
         
-        paste(tasks)
+        paste(items)
         
         root?.lastRemoved.removeAll()
     }
@@ -137,12 +137,12 @@ extension List
     
     // MARK: - Toggle States
     
-    func toggleInProgressStateOfFirstSelectedTask()
+    func toggleInProgressStateOfFirstSelectedItem()
     {
         let indexes = selectedIndexes
         
         guard let firstSelectedIndex = indexes.first,
-            let task = self[firstSelectedIndex]
+            let item = self[firstSelectedIndex]
         else { return }
         
         if indexes.count > 1
@@ -150,15 +150,15 @@ extension List
             deselectItems(at: [firstSelectedIndex])
         }
         
-        task.data?.state <- !task.isInProgress ? .inProgress : nil
+        item.data?.state <- !item.isInProgress ? .inProgress : nil
     }
     
-    func toggleDoneStateOfFirstSelectedTask()
+    func toggleDoneStateOfFirstSelectedItem()
     {
         let indexes = selectedIndexes
         
         guard let firstSelectedIndex = indexes.first,
-            let task = self[firstSelectedIndex]
+            let item = self[firstSelectedIndex]
         else
         {
             return
@@ -166,36 +166,36 @@ extension List
         
         let newSelectedIndex = nextSelectedIndexAfterCheckingOff(at: firstSelectedIndex)
         
-        let newState: ItemData.State? = !task.isDone ? .done : nil
+        let newState: ItemData.State? = !item.isDone ? .done : nil
         
         if indexes.count == 1,
             newState == .done,
             let newSelectedIndex = newSelectedIndex
         {
-            setSelectionWithTasksListed(at: [newSelectedIndex])
+            setSelectionWithItemsListed(at: [newSelectedIndex])
         }
         else if indexes.count > 1
         {
             deselectItems(at: [firstSelectedIndex])
         }
         
-        task.data?.state <- newState
+        item.data?.state <- newState
     }
     
     private func nextSelectedIndexAfterCheckingOff(at index: Int) -> Int?
     {
         for i in index + 1 ..< count
         {
-            guard let task = self[i] else { continue }
+            guard let item = self[i] else { continue }
             
-            if task.isOpen { return i }
+            if item.isOpen { return i }
         }
         
         for i in (0 ..< index).reversed()
         {
-            guard let task = self[i] else { continue }
+            guard let item = self[i] else { continue }
             
-            if task.isOpen { return i }
+            if item.isOpen { return i }
         }
         
         return nil
@@ -220,7 +220,7 @@ extension List
     }
     
     @discardableResult
-    func moveSelectedTask(_ positions: Int) -> Bool
+    func moveSelectedItem(_ positions: Int) -> Bool
     {
         let indexes = selectedIndexes
         

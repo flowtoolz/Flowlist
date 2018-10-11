@@ -28,7 +28,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         constrainContent()
         constrainButtonOverlay()
         
-        observe(numberOfUserCreatedTasks)
+        observe(numberOfUserCreatedLeafs)
         {
             [weak self] itemNumber in
             
@@ -37,7 +37,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
             me.itemLabel.stringValue = me.labelText(for: itemNumber)
             me.itemLabel.textColor = me.labelColor(for: itemNumber).nsColor
             
-            let progress = CGFloat(itemNumber) / CGFloat(maxNumberOfTasksInTrial)
+            let progress = CGFloat(itemNumber) / CGFloat(maxNumberOfLeafsInTrial)
             me.progressBar.progress = progress
         }
     }
@@ -62,8 +62,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
         progressBar.progressColor = .progressBar
         progressBarSeparator.backgroundColor = .progressBarSeparator
         
-        let taskNumber = numberOfUserCreatedTasks.latestUpdate
-        itemLabel.textColor = labelColor(for: taskNumber).nsColor
+        let itemNumber = numberOfUserCreatedLeafs.latestUpdate
+        itemLabel.textColor = labelColor(for: itemNumber).nsColor
         
         expandIcon.image = isExpanded ? closeImage : expandImage
         
@@ -125,10 +125,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
         let field = addForAutoLayout(Label())
         
         field.font = Font.purchasePanel.nsFont
-        let color = labelColor(for: numberOfUserCreatedTasks.latestUpdate)
+        let color = labelColor(for: numberOfUserCreatedLeafs.latestUpdate)
         field.textColor = color.nsColor
         
-        let itemNumber = numberOfUserCreatedTasks.latestUpdate
+        let itemNumber = numberOfUserCreatedLeafs.latestUpdate
         field.stringValue = labelText(for: itemNumber)
         
         return field
@@ -143,7 +143,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func labelText(for itemNumber: Int) -> String
     {
-        return "You have \(itemNumber) items. This trial version can hold up to \(maxNumberOfTasksInTrial) items. Click here to learn about the unlimited full version."
+        return "You have \(itemNumber) items. This trial version can hold up to \(maxNumberOfLeafsInTrial) items. Click here to learn about the unlimited full version."
     }
     
     // MARK: - Expand Icon
@@ -200,7 +200,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         bar.translatesAutoresizingMaskIntoConstraints = false
         addSubview(bar, positioned: .below, relativeTo: buttonOverlay)
         
-        let progress = CGFloat(numberOfUserCreatedTasks.latestUpdate) / CGFloat(maxNumberOfTasksInTrial)
+        let progress = CGFloat(numberOfUserCreatedLeafs.latestUpdate) / CGFloat(maxNumberOfLeafsInTrial)
         bar.progress = progress
         bar.backgroundColor = .progressBackground
         bar.progressColor = .progressBar

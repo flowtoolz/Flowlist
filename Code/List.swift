@@ -25,18 +25,17 @@ class List: Observable, Observer
     {
         guard newRoot !== root else
         {
-            log(warning: "Tried to set identical root in task list.")
+            log(warning: "Tried to set identical root in item list.")
             return
         }
         
-        observeTasks(with: root, start: false)
-        observeTasks(with: newRoot)
+        observeItems(with: root, start: false)
+        observeItems(with: newRoot)
         
         root = newRoot
     }
     
-    private func observeTasks(with root: Item?,
-                              start: Bool = true)
+    private func observeItems(with root: Item?, start: Bool = true)
     {
         guard let root = root else
         {
@@ -45,7 +44,7 @@ class List: Observable, Observer
         }
         
         observe(root: root, start: start)
-        observeTasksListed(in: root, start: start)
+        observeItemsListed(in: root, start: start)
     }
     
     // MARK: - Observe Root
@@ -80,11 +79,11 @@ class List: Observable, Observer
         switch edit
         {
         case .insert(let indexes):
-            observeTasksListed(in: root, at: indexes)
+            observeItemsListed(in: root, at: indexes)
             
-        case .remove(let tasks, let indexes):
+        case .remove(let items, let indexes):
             deselectItems(at: indexes)
-            for task in tasks { observe(listedTask: task, start: false) }
+            for item in items { observe(listedItem: item, start: false) }
             
         case .move: break
             
@@ -94,60 +93,60 @@ class List: Observable, Observer
         send(.did(edit))
     }
     
-    // MARK: - Observe Listed Tasks
+    // MARK: - Observe Listed Items
     
-    private func observeTasksListed(in root: Item, start: Bool = true)
+    private func observeItemsListed(in root: Item, start: Bool = true)
     {
         let indexes = Array(0 ..< root.count)
         
-        observeTasksListed(in: root, at: indexes, start: start)
+        observeItemsListed(in: root, at: indexes, start: start)
     }
     
-    private func observeTasksListed(in root: Item,
+    private func observeItemsListed(in root: Item,
                                     at indexes: [Int],
                                     start: Bool = true)
     {
         for index in indexes
         {
-            guard let task = root[index] else { continue }
+            guard let item = root[index] else { continue }
             
-            observe(listedTask: task, start: start)
+            observe(listedItem: item, start: start)
         }
     }
     
-    private func observe(listedTask task: Item, start: Bool = true)
+    private func observe(listedItem item: Item, start: Bool = true)
     {
         guard start else
         {
-            stopObserving(task.data?.state)
+            stopObserving(item.data?.state)
             
             return
         }
         
-        if let state = task.data?.state
+        if let state = item.data?.state
         {
             observe(state)
             {
-                [weak self, weak task] _ in self?.taskDidChangeState(task)
+                [weak self, weak item] _ in self?.itemDidChangeState(item)
             }
         }
     }
     
-    private func taskDidChangeState(_ task: Item?)
+    private func itemDidChangeState(_ item: Item?)
     {
-        guard let task = task, let index = task.indexInRoot else { return }
+        guard let item = item, let index = item.indexInRoot else { return }
         
-        if task.isDone
+        if item.isDone
         {
-            root?.moveSubtaskToTopOfDoneList(from: index)
+            root?.moveSubitemToTopOfDoneList(from: index)
         }
-        else if task.isInProgress
+        else if item.isInProgress
         {
             root?.moveNode(from: index, to: 0)
         }
-        else if task.isUndone
+        else if item.isUndone
         {
-            root?.moveSubtaskToTopOfUndoneList(from: index)
+            root?.moveSubitemToTopOfUndoneList(from: index)
         }
     }
     
@@ -180,13 +179,13 @@ class List: Observable, Observer
     
     let isFocused = Var(false)
     
-    // MARK: - Listed Tasks
+    // MARK: - Listed Items
     
     subscript(_ index: Int) -> Item?
     {
         guard let root = root else
         {
-            log(warning: "Tried to get task at \(index) from list without root.")
+            log(warning: "Tried to get item at \(index) from list without root.")
             return nil
         }
         
@@ -220,7 +219,7 @@ class List: Observable, Observer
     
     // MARK: - Atomic Selection Operations
     
-    func setSelectionWithTasksListed(at newIndexes: [Int])
+    func setSelectionWithItemsListed(at newIndexes: [Int])
     {
         var newSelections = Array<Bool>(repeating: false, count: count)
         
@@ -237,7 +236,7 @@ class List: Observable, Observer
         send(.didChangeSelection)
     }
     
-    func selectTask(at index: Int)
+    func selectItem(at index: Int)
     {
         guard let data = self[index]?.data, !data.isSelected.latestUpdate else
         {

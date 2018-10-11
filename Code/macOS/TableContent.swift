@@ -26,7 +26,7 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
             return ItemView.heightWithSingleLine / 2
         }
         
-        return delegate?.taskViewHeight(at: row) ?? ItemView.heightWithSingleLine
+        return delegate?.itemViewHeight(at: row) ?? ItemView.heightWithSingleLine
     }
     
     // MARK: - Cells
@@ -43,33 +43,33 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
                                       owner: nil) ?? Spacer()
         }
         
-        guard let task = list[row] else
+        guard let item = list[row] else
         {
-            log(error: "Couldn't find task for row \(row) in list \(list.title.observable?.value ?? "nil").")
+            log(error: "Couldn't find item for row \(row) in list \(list.title.observable?.value ?? "nil").")
             return nil
         }
         
-        let taskView = retrieveTaskView(from: tableView)
+        let itemView = retrieveItemView(from: tableView)
         
-        taskView.configure(with: task)
+        itemView.configure(with: item)
         
-        return taskView
+        return itemView
     }
     
-    private func retrieveTaskView(from tableView: NSTableView) -> ItemView
+    private func retrieveItemView(from tableView: NSTableView) -> ItemView
     {
         guard let dequeuedView = dequeueView(from: tableView) else
         {
-            return createTaskView()
+            return createItemView()
         }
         
-        guard let dequeuedTaskView = dequeuedView as? ItemView else
+        guard let dequeuedItemView = dequeuedView as? ItemView else
         {
             log(error: "Couldn't cast dequeued view to \(ItemView.self)")
-            return createTaskView()
+            return createItemView()
         }
         
-        return dequeuedTaskView
+        return dequeuedItemView
     }
     
     private func dequeueView(from tableView: NSTableView) -> NSView?
@@ -78,13 +78,13 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
                                   owner: nil)
     }
     
-    private func createTaskView() -> ItemView
+    private func createItemView() -> ItemView
     {
-        let taskView = ItemView()
+        let itemView = ItemView()
         
-        send(.didCreate(taskView: taskView))
+        send(.didCreate(itemView: itemView))
         
-        return taskView
+        return itemView
     }
     
     // MARK: - Disable NSTableView Selection
@@ -113,11 +113,11 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     
     enum Event
     {
-        case didNothing, didCreate(taskView: ItemView)
+        case didNothing, didCreate(itemView: ItemView)
     }
 }
 
 protocol TableContentDelegate
 {
-    func taskViewHeight(at row: Int) -> CGFloat
+    func itemViewHeight(at row: Int) -> CGFloat
 }

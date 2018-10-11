@@ -1,15 +1,15 @@
 extension Tree where Data == ItemData
 {
-    func moveSubtaskToTopOfDoneList(from index: Int)
+    func moveSubitemToTopOfDoneList(from index: Int)
     {
-        guard let unchecked = indexOfLastOpenSubtask else { return }
+        guard let unchecked = indexOfLastOpenSubitem else { return }
         
         let belowUnchecked = unchecked + (unchecked < index ? 1 : 0)
         
         moveNode(from: index, to: belowUnchecked)
     }
     
-    var indexOfLastOpenSubtask: Int?
+    var indexOfLastOpenSubitem: Int?
     {
         for subitemIndex in (0 ..< count).reversed()
         {
@@ -22,16 +22,16 @@ extension Tree where Data == ItemData
         return nil
     }
     
-    func moveSubtaskToTopOfUndoneList(from index: Int)
+    func moveSubitemToTopOfUndoneList(from index: Int)
     {
-        let lastInProgress = indexOfLastSubtaskInProgress
+        let lastInProgress = indexOfLastSubitemInProgress
         
         let belowInProgress = lastInProgress + (lastInProgress < index ? 1 : 0)
         
         moveNode(from: index, to: belowInProgress)
     }
     
-    var indexOfLastSubtaskInProgress: Int
+    var indexOfLastSubitemInProgress: Int
     {
         for subitemIndex in (0 ..< count).reversed()
         {
@@ -43,20 +43,7 @@ extension Tree where Data == ItemData
         
         return -1
     }
-    
-    func indexOfFirstOpenSubtask(from: Int = 0) -> Int?
-    {
-        for i in from ..< count
-        {
-            if let subitem = self[i], subitem.isOpen
-            {
-                return i
-            }
-        }
         
-        return nil
-    }
-    
     func highestPriorityState(at indexes: [Int]) -> ItemData.State?
     {
         var highestPriorityState: ItemData.State? = .trashed

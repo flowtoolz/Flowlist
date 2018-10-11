@@ -1,10 +1,10 @@
 import Foundation
 
-var reachedTaskNumberLimit: Bool
+var reachedItemNumberLimit: Bool
 {
-    let userCreatedTasks = numberOfUserCreatedTasks.latestUpdate
+    let userCreatedLeafs = numberOfUserCreatedLeafs.latestUpdate
     
-    return !isFullVersion && userCreatedTasks >= maxNumberOfTasksInTrial
+    return !isFullVersion && userCreatedLeafs >= maxNumberOfLeafsInTrial
 }
 
 var isFullVersion: Bool
@@ -45,8 +45,8 @@ var isFullVersion: Bool
     }
 }
 
-let numberOfUserCreatedTasks = store.numberOfUserCreatedLeafs.new().unwrap(0)
-let maxNumberOfTasksInTrial = 100
+let numberOfUserCreatedLeafs = store.numberOfUserCreatedLeafs.new().unwrap(0)
+let maxNumberOfLeafsInTrial = 100
 
 fileprivate var isFullVersion_Cached: Bool?
 fileprivate let userNameKey = "UserName"

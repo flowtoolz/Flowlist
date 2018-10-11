@@ -20,16 +20,16 @@ extension Tree where Data == ItemData
     }
     
     @discardableResult
-    func copy(_ tasks: [Item]) -> Bool
+    func copy(_ items: [Item]) -> Bool
     {
-        guard !tasks.isEmpty else { return false }
+        guard !items.isEmpty else { return false }
         
-        clipboard.storeCopies(of: tasks)
+        clipboard.storeCopies(of: items)
         
         return true
     }
     
-    var clipboardTasks: [Item]
+    var clipboardItems: [Item]
     {
         return clipboard.copiesOfStoredObjects
     }

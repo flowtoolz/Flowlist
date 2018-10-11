@@ -16,10 +16,10 @@ extension Tree where Data == ItemData
         {
             guard let subitem = self[i] else { continue }
             
-            let isLastSubtask = i == count - 1
+            let isLastSubitem = i == count - 1
             let subitemPrefix = prefix + (isLast ? " " : "│") + " "
 
-            desc += "\n\(subitem.description(subitemPrefix, isLastSubtask))"
+            desc += "\n\(subitem.description(subitemPrefix, isLastSubitem))"
         }
         
         return desc

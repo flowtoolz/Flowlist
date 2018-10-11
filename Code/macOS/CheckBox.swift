@@ -18,7 +18,7 @@ class CheckBox: Icon
     
     func configure(with state: ItemData.State?, white: Bool)
     {
-        taskState = state
+        itemState = state
         isWhite = white
         updateImage()
     }
@@ -31,7 +31,7 @@ class CheckBox: Icon
     
     func set(state: ItemData.State?)
     {
-        taskState = state
+        itemState = state
         updateImage()
     }
     
@@ -39,10 +39,10 @@ class CheckBox: Icon
     
     private func updateImage()
     {
-        image = CheckBox.image(for: taskState, white: isWhite)
+        image = CheckBox.image(for: itemState, white: isWhite)
     }
     
-    private var taskState: ItemData.State?
+    private var itemState: ItemData.State?
     private var isWhite = false
     
     // MARK: - Get Image

@@ -177,7 +177,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         switch event
         {
-        case .didCreate(let taskView): observe(taskView: taskView)
+        case .didCreate(let itemView): observe(itemView: itemView)
         case .didNothing: break
         }
     }
@@ -193,11 +193,11 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         noteHeightOfRows(withIndexesChanged: allIndexes)
     }
     
-    func taskViewHeight(at row: Int) -> CGFloat
+    func itemViewHeight(at row: Int) -> CGFloat
     {
-        guard let task = list?[row] else { return ItemView.heightWithSingleLine }
+        guard let item = list?[row] else { return ItemView.heightWithSingleLine }
         
-        var height = viewHeight(for: task)
+        var height = viewHeight(for: item)
         
         if row == rowBeingEdited
         {
@@ -207,15 +207,15 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         return height
     }
     
-    private func viewHeight(for task: Item) -> CGFloat
+    private func viewHeight(for item: Item) -> CGFloat
     {
-        if let height = itemHeightCash[task] { return height }
+        if let height = itemHeightCash[item] { return height }
         
-        let title = task.data?.title.value ?? "Untitled"
+        let title = item.data?.title.value ?? "Untitled"
         
         let height = ItemView.preferredHeight(for: title, width: width)
         
-        itemHeightCash[task] = height
+        itemHeightCash[item] = height
         
         return height
     }
@@ -247,23 +247,23 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     private var cashedWidth: CGFloat?
     private var itemHeightCash = [Item : CGFloat]()
     
-    // MARK: - Observe Task Views
+    // MARK: - Observe Item Views
     
-    private func observe(taskView: ItemView)
+    private func observe(itemView: ItemView)
     {
-        observe(taskView)
+        observe(itemView)
         {
-            [weak self, weak taskView] event in
+            [weak self, weak itemView] event in
             
-            guard let taskView = taskView else { return }
+            guard let itemView = itemView else { return }
             
-            self?.didReceive(event, from: taskView)
+            self?.didReceive(event, from: itemView)
         }
     }
     
-    private func didReceive(_ event: ItemView.Event, from taskView: ItemView)
+    private func didReceive(_ event: ItemView.Event, from itemView: ItemView)
     {
-        let index = row(for: taskView)
+        let index = row(for: itemView)
         
         guard index >= 0 else { return }
         
@@ -276,7 +276,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             
             if !(list?[index]?.data?.isSelected.latestUpdate ?? false)
             {
-                list?.setSelectionWithTasksListed(at: [index])
+                list?.setSelectionWithItemsListed(at: [index])
             }
             
             send(event)
@@ -284,9 +284,9 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             noteHeightOfRows(withIndexesChanged: [index])
             
         case .didChangeTitle:
-            guard let task = taskView.task else { break }
+            guard let item = itemView.item else { break }
             
-            itemHeightCash[task] = nil
+            itemHeightCash[item] = nil
             noteHeightOfRows(withIndexesChanged: [index])
             
         case .wantToEndEditingText:
@@ -295,15 +295,15 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         case .didEditTitle:
             rowBeingEdited = nil
             
-            guard let task = taskView.task else { break }
+            guard let item = itemView.item else { break }
             
-            itemHeightCash[task] = nil
+            itemHeightCash[item] = nil
             noteHeightOfRows(withIndexesChanged: [index])
             
         case .wasClicked(let cmdKeyIsDown):
             NSApp.mainWindow?.makeFirstResponder(self)
             
-            guard let task = taskView.task, let list = list else { break }
+            guard let item = itemView.item, let list = list else { break }
             
             if cmdKeyIsDown
             {
@@ -311,7 +311,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             }
             else
             {
-                list.setSelectionWithTasksListed(at: [index])
+                list.setSelectionWithItemsListed(at: [index])
             }
             
             send(event)

@@ -4,13 +4,13 @@ extension List
     {
         if count > 0 && selectedIndexes.count == 0
         {
-            setSelectionWithTasksListed(at: [0])
+            setSelectionWithItemsListed(at: [0])
         }
     }
     
     func selectAll()
     {
-        setSelectionWithTasksListed(at: Array(0 ..< count))
+        setSelectionWithItemsListed(at: Array(0 ..< count))
     }
     
     var canShiftSelectionUp: Bool
@@ -22,11 +22,11 @@ extension List
     {
         if let firstIndex = selectedIndexes.first, firstIndex > 0
         {
-            setSelectionWithTasksListed(at: [firstIndex - 1])
+            setSelectionWithItemsListed(at: [firstIndex - 1])
         }
         else if count > 0
         {
-            setSelectionWithTasksListed(at: [0])
+            setSelectionWithItemsListed(at: [0])
         }
     }
     
@@ -39,12 +39,12 @@ extension List
     {
         if let lastIndex = selectedIndexes.last, lastIndex + 1 < count
         {
-            setSelectionWithTasksListed(at: [lastIndex + 1])
+            setSelectionWithItemsListed(at: [lastIndex + 1])
             return
         }
         else if count > 0
         {
-            setSelectionWithTasksListed(at: [count - 1])
+            setSelectionWithItemsListed(at: [count - 1])
         }
     }
     
@@ -65,7 +65,7 @@ extension List
             return
         }
         
-        selectTask(at: index - 1)
+        selectItem(at: index - 1)
     }
     
     var canExtendSelectionDown: Bool
@@ -85,11 +85,11 @@ extension List
             return
         }
         
-        selectTask(at: index + 1)
+        selectItem(at: index + 1)
     }
     
     // TODO: remove this to avoid redundant computations of selectedIndexes
-    var firstSelectedTask: Item?
+    var firstSelectedItem: Item?
     {
         guard let index = selectedIndexes.first else { return nil }
         

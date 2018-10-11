@@ -16,25 +16,25 @@ extension List
         
         let indexes = selectedIndexes
         
-        var tasks = [Item]()
+        var items = [Item]()
         
         for index in indexes
         {
-            guard let task = root[index] else { continue }
+            guard let item = root[index] else { continue }
             
-            tasks.append(task)
+            items.append(item)
         }
         
-        root.copy(tasks)
+        root.copy(items)
     }
     
     func pasteFromClipboard()
     {
-        guard let tasks = root?.clipboardTasks, !tasks.isEmpty else
+        guard let items = root?.clipboardItems, !items.isEmpty else
         {
             return
         }
         
-        paste(tasks)
+        paste(items)
     }
 }

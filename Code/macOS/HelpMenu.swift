@@ -30,7 +30,7 @@ class HelpMenu: NSMenu
     {
         switch menuItem
         {
-        case tourItem: return !reachedTaskNumberLimit
+        case tourItem: return !reachedItemNumberLimit
         default: return true
         }
     }

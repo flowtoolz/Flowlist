@@ -55,7 +55,7 @@ class EditMenu: NSMenu, Observer
     {
         guard !TextView.isEditing else { return false }
         
-        let selected = numberOfSelectedTasks
+        let selected = numberOfSelectedItems
         let deleted = browser.focusedList.root?.numberOfRemovedBranches ?? 0
         let systemPasteboard = systemPasteboardHasText
         updateTitles(numberOfDeletedItems: deleted,
@@ -65,13 +65,13 @@ class EditMenu: NSMenu, Observer
         switch menuItem
         {
         case createItem, createAtTopItem:
-            return !reachedTaskNumberLimit
+            return !reachedItemNumberLimit
             
         case renameItem, checkOffItem, deleteItem, cutItem, inProgressItem, tagItem:
             return selected > 0
             
         case copyItem:
-            return selected > 0 && !reachedTaskNumberLimit
+            return selected > 0 && !reachedItemNumberLimit
             
         case moveUpItem:
             return browser.focusedList.canMoveItems(up: true)
@@ -80,16 +80,16 @@ class EditMenu: NSMenu, Observer
             return browser.focusedList.canMoveItems(up: false)
             
         case pasteItem:
-            return !reachedTaskNumberLimit && (clipboard.count > 0 || systemPasteboard)
+            return !reachedItemNumberLimit && (clipboard.count > 0 || systemPasteboard)
             
         case undoItem:
-            return deleted > 0 && !reachedTaskNumberLimit
+            return deleted > 0 && !reachedItemNumberLimit
             
         default: return true
         }
     }
     
-    private var numberOfSelectedTasks: Int
+    private var numberOfSelectedItems: Int
     {
         return browser.focusedList.selectedIndexes.count
     }
@@ -100,15 +100,15 @@ class EditMenu: NSMenu, Observer
                               numberOfSelectedItems selected: Int,
                               systemPasteboardHasText systemPasteboard: Bool)
     {
-        let task = browser.focusedList.firstSelectedTask
+        let item = browser.focusedList.firstSelectedItem
         
         createItem.title = selected > 1 ? "Group \(selected) Items" : "Add New Item"
         renameItem.title = selected > 1 ? "Rename 1st of \(selected) Items" : "Rename Item"
         
-        let checkAction = task?.isDone ?? false ? "Uncheck" : "Check Off"
+        let checkAction = item?.isDone ?? false ? "Uncheck" : "Check Off"
         checkOffItem.title = selected > 1 ? "\(checkAction) 1st of \(selected) Items" : "\(checkAction) Item"
         
-        let progressAction = task?.isInProgress ?? false ? "Pause" : "Start"
+        let progressAction = item?.isInProgress ?? false ? "Pause" : "Start"
         inProgressItem.title = selected > 1 ? "\(progressAction) 1st of \(selected) Items" : "\(progressAction) Item"
 
         deleteItem.title = selected > 1 ? "Delete \(selected) Items" : "Delete Item"
@@ -138,7 +138,7 @@ class EditMenu: NSMenu, Observer
                                            modifiers: [],
                                            validator: self)
     {
-        browser.focusedList.createTask()
+        browser.focusedList.createItem()
     }
     
     private lazy var createAtTopItem = MenuItem("Add New Item on Top",
@@ -151,7 +151,7 @@ class EditMenu: NSMenu, Observer
     
     private func createAtTop()
     {
-        if !TextView.isEditing && !reachedTaskNumberLimit
+        if !TextView.isEditing && !reachedItemNumberLimit
         {
             browser.focusedList.create(at: 0)
         }
@@ -168,14 +168,14 @@ class EditMenu: NSMenu, Observer
                                              key: String(unicode: NSLeftArrowFunctionKey),
                                              validator: self)
     {
-        browser.focusedList.toggleDoneStateOfFirstSelectedTask()
+        browser.focusedList.toggleDoneStateOfFirstSelectedItem()
     }
     
     private lazy var inProgressItem = MenuItem("Start Item",
                                                key: String(unicode: NSRightArrowFunctionKey),
                                                validator: self)
     {
-        browser.focusedList.toggleInProgressStateOfFirstSelectedTask()
+        browser.focusedList.toggleInProgressStateOfFirstSelectedItem()
     }
     
     private lazy var deleteItem = MenuItem("Delete Item",
@@ -183,21 +183,21 @@ class EditMenu: NSMenu, Observer
                                            modifiers: [],
                                            validator: self)
     {
-        browser.focusedList.removeSelectedTasks()
+        browser.focusedList.removeSelectedItems()
     }
     
     private lazy var moveUpItem = MenuItem("Move Item Up",
                                            key: String(unicode: NSUpArrowFunctionKey),
                                            validator: self)
     {
-        browser.focusedList.moveSelectedTask(-1)
+        browser.focusedList.moveSelectedItem(-1)
     }
     
     private lazy var moveDownItem = MenuItem("Move Item Down",
                                              key: String(unicode: NSDownArrowFunctionKey),
                                              validator: self)
     {
-        browser.focusedList.moveSelectedTask(1)
+        browser.focusedList.moveSelectedItem(1)
     }
     
     
