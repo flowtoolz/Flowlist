@@ -146,7 +146,7 @@ class List: Observable, Observer
     
     func editTitle(at index: Int)
     {
-        guard index >= 0, index < numberOfTasks else
+        guard index >= 0, index < count else
         {
             log(warning: "Tried to edit title at invalid index \(index).")
             return
@@ -170,7 +170,7 @@ class List: Observable, Observer
         return root[index]
     }
     
-    var numberOfTasks: Int { return root?.count ?? 0 }
+    var count: Int { return root?.count ?? 0 }
     
     // MARK: - Root
     

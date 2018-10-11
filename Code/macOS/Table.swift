@@ -95,12 +95,12 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             
             content.configure(with: list)
             
-            if let oldNumber = oldValue?.numberOfTasks, oldNumber > 0
+            if let oldNumber = oldValue?.count, oldNumber > 0
             {
                 didRemove(from: Array(0 ..< oldNumber))
             }
             
-            if let newNumber = list?.numberOfTasks, newNumber > 0
+            if let newNumber = list?.count, newNumber > 0
             {
                 didInsert(at: Array(0 ..< newNumber))
             }

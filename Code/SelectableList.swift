@@ -175,7 +175,7 @@ class SelectableList: List
     
     private func nextSelectedTaskAfterCheckingOff(at index: Int) -> Item?
     {
-        for i in index + 1 ..< numberOfTasks
+        for i in index + 1 ..< count
         {
             guard let task = self[i] else { continue }
             
@@ -203,7 +203,7 @@ class SelectableList: List
         
         if up && selected == 0 { return false }
         
-        if !up && selected == numberOfTasks - 1 { return false }
+        if !up && selected == count - 1 { return false }
         
         return true
     }
@@ -238,7 +238,7 @@ class SelectableList: List
     
     func select()
     {
-        if numberOfTasks > 0 && selection.count == 0
+        if count > 0 && selection.count == 0
         {
             selection.setWithTasksListed(at: [0])
         }
@@ -246,12 +246,12 @@ class SelectableList: List
     
     func selectAll()
     {
-        selection.setWithTasksListed(at: Array(0 ..< numberOfTasks))
+        selection.setWithTasksListed(at: Array(0 ..< count))
     }
     
     var canShiftSelectionUp: Bool
     {
-        return numberOfTasks > 0 && selection.indexes != [0]
+        return count > 0 && selection.indexes != [0]
     }
     
     func shiftSelectionUp()
@@ -260,7 +260,7 @@ class SelectableList: List
         {
             selection.setWithTasksListed(at: [firstIndex - 1])
         }
-        else if numberOfTasks > 0
+        else if count > 0
         {
             selection.setWithTasksListed(at: [0])
         }
@@ -268,19 +268,19 @@ class SelectableList: List
     
     var canShiftSelectionDown: Bool
     {
-        return numberOfTasks > 0 && selection.indexes != [numberOfTasks - 1]
+        return count > 0 && selection.indexes != [count - 1]
     }
     
     func shiftSelectionDown()
     {
-        if let lastIndex = selection.indexes.last, lastIndex + 1 < numberOfTasks
+        if let lastIndex = selection.indexes.last, lastIndex + 1 < count
         {
             selection.setWithTasksListed(at: [lastIndex + 1])
             return
         }
-        else if numberOfTasks > 0
+        else if count > 0
         {
-            selection.setWithTasksListed(at: [numberOfTasks - 1])
+            selection.setWithTasksListed(at: [count - 1])
         }
     }
     
@@ -303,7 +303,7 @@ class SelectableList: List
     var canExtendSelectionDown: Bool
     {
         guard let index = selection.indexes.last,
-            index + 1 < numberOfTasks else { return false }
+            index + 1 < count else { return false }
         
         return true
     }
@@ -311,7 +311,7 @@ class SelectableList: List
     func extendSelectionDown()
     {
         guard let index = selection.indexes.last,
-            index + 1 < numberOfTasks else { return }
+            index + 1 < count else { return }
         
         selection.add(task: self[index + 1])
     }

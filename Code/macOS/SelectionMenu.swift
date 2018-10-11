@@ -43,7 +43,7 @@ class SelectionMenu: NSMenu
             return browser.canMove(.left)
             
         case selectAllItem:
-            return browser.focusedList.numberOfTasks > 0
+            return browser.focusedList.count > 0
             
         case goUpItem:
             return browser.focusedList.canShiftSelectionUp

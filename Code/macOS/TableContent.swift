@@ -9,7 +9,7 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     
     func numberOfRows(in tableView: NSTableView) -> Int
     {
-        return (list?.numberOfTasks ?? 0) + 1
+        return (list?.count ?? 0) + 1
     }
     
     func tableView(_ tableView: NSTableView,
@@ -21,7 +21,7 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     func tableView(_ tableView: NSTableView,
                    heightOfRow row: Int) -> CGFloat
     {
-        if row >= (list?.numberOfTasks ?? 0)
+        if row >= (list?.count ?? 0)
         {
             return ItemView.heightWithSingleLine / 2
         }
@@ -37,7 +37,7 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
     {
         guard let list = list else { return nil }
         
-        guard row < list.numberOfTasks else
+        guard row < list.count else
         {
             return tableView.makeView(withIdentifier: Spacer.uiIdentifier,
                                       owner: nil) ?? Spacer()

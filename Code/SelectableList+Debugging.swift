@@ -9,7 +9,7 @@ extension SelectableList
     {
         var desc = (title.latestUpdate ?? "untitled") + ":"
         
-        for i in 0 ..< numberOfTasks
+        for i in 0 ..< count
         {
             guard let task = self[i] else { continue }
             
