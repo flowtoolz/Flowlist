@@ -20,6 +20,7 @@ class Browser: Observer, Observable
         
         focusedList.set(root: store.root)
         focusedList.select()
+        focusedList.isFocused <- true
     }
     
     deinit { stopAllObserving() }
@@ -49,8 +50,11 @@ class Browser: Observer, Observable
         
         while index >= numberOfLists - 2 { pushList() }
         
+        focusedList.isFocused <- false
+        
         focusedIndexVariable <- index
         
+        focusedList.isFocused <- true
         focusedList.select()
     }
     

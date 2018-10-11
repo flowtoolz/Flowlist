@@ -164,11 +164,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     // MARK: - Content
     
-    var isFocused = false
-    {
-        didSet { content.isFocused = isFocused }
-    }
-    
     private lazy var content: TableContent =
     {
         let tableContent = TableContent()

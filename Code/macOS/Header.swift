@@ -55,6 +55,8 @@ class Header: LayerBackedView, Observer
     
     func configure(with list: SelectableList)
     {
+        // title
+        
         stopObserving(self.list?.title)
         observe(list.title)
         {
@@ -64,6 +66,18 @@ class Header: LayerBackedView, Observer
         }
         
         set(title: list.title.latestUpdate)
+        
+        // focus
+        
+        stopObserving(self.list?.isFocused)
+        observe(list.isFocused)
+        {
+            [weak self] focusUpdate in
+            
+            self?.set(focused: focusUpdate.new ?? false)
+        }
+        
+        // other
         
         showIcon(list.isRootList)
         
@@ -158,7 +172,7 @@ class Header: LayerBackedView, Observer
     
     // MARK: - Color View
     
-    func set(focused: Bool)
+    private func set(focused: Bool)
     {
         colorView.alphaValue = focused ? 1.0 : 0.5
     }

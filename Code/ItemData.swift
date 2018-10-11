@@ -2,6 +2,19 @@ import SwiftObserver
 
 final class ItemData: Observable
 {
+    // MARK: - Focus
+    
+    lazy var isFocused = isFocusedVar.new().filter({ $0 != nil }).unwrap(false)
+    
+    func set(isFocused: Bool)
+    {
+        isFocusedVar <- isFocused
+    }
+    
+    private let isFocusedVar = Var(false)
+    
+    // MARK: - Functional Data
+    
     var title = Var<String>()
     var state = Var<State>()
     var tag = Var<Tag>()

@@ -5,6 +5,14 @@ class List: Observable, Observer
 {
     // MARK: - Life Cycle
     
+    init()
+    {
+        observe(isFocused)
+        {
+            [weak self] _ in self?.updateFocusOfItems()
+        }
+    }
+    
     deinit
     {
         stopAllObserving()
@@ -156,6 +164,20 @@ class List: Observable, Observer
     }
     
     let title = Var<String>().new()
+    
+    // MARK: - Focus
+    
+    private func updateFocusOfItems()
+    {
+        let focused = isFocused.value ?? false
+        
+        for itemIndex in 0 ..< count
+        {
+            self[itemIndex]?.data?.set(isFocused: focused)
+        }
+    }
+    
+    let isFocused = Var(false)
     
     // MARK: - Listed Tasks
     

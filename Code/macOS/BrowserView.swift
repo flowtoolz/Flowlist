@@ -116,8 +116,6 @@ class BrowserView: LayerBackedView, Observer
         
         listViews.append(newListView)
         
-        if listViews.count == 1 { newListView.set(focused: true) }
-        
         constrainLastListView()
         
         observe(listView: newListView)
@@ -193,13 +191,6 @@ class BrowserView: LayerBackedView, Observer
         {
             bounds.origin.x = targetPosition
             return
-        }
-        
-        focusedListView.set(focused: true)
-        
-        if let from = from, listViews.isValid(index: from)
-        {
-            listViews[from].set(focused: false)
         }
         
         if listViews.isValid(index: newIndex - 1)

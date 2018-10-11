@@ -87,23 +87,6 @@ class SelectableListView: LayerBackedView, Observer, Observable
         isHidden = !shouldBeVisible
     }
     
-    func set(focused: Bool)
-    {
-        header.set(focused: focused)
-        
-        scrollTable.table.isFocused = focused
-        
-        for index in 0 ..< scrollTable.table.numberOfRows
-        {
-            if let view = scrollTable.table.view(atColumn: 0,
-                                                 row: index,
-                                                 makeIfNecessary: false) as? ItemView
-            {
-                view.set(focused: focused)
-            }
-        }
-    }
-    
     // MARK: - Mouse Input
     
     override func mouseDown(with event: NSEvent)

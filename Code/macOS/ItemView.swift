@@ -42,22 +42,29 @@ class ItemView: LayerBackedView, Observer, Observable
     
     // MARK: - Configuration
     
-    func configure(with task: Item, selected: Bool, focused: Bool)
+    func configure(with task: Item, selected: Bool)
     {
         stopObserving(task: self.task)
         observe(task: task)
         self.task = task
         
+        guard let itemData = task.data else
+        {
+            log(error: "Tried to configure Item which has no data")
+            return
+        }
+        
         isSelected = selected
+        isFocused = itemData.isFocused.latestUpdate
         
         // color overlay
         
         let isDone = task.isDone
-        let isTagged = task.data?.tag.value != nil
+        let isTagged = itemData.tag.value != nil
         
         colorOverlay.isHidden = !isTagged || isDone
         
-        if let tag = task.data?.tag.value
+        if let tag = itemData.tag.value
         {
             colorOverlay.backgroundColor = Color.tags[tag.rawValue]
         }
@@ -65,8 +72,6 @@ class ItemView: LayerBackedView, Observer, Observable
         colorOverlay.alphaValue = selected ? 1 : 0.5
         
         // background color
-        
-        isFocused = focused
         
         backgroundColor = .itemBackground(isDone: isDone,
                                           isSelected: isSelected,
@@ -141,7 +146,7 @@ class ItemView: LayerBackedView, Observer, Observable
     private func didSwitch(from oldItemData: ItemData?,
                            to newItemData: ItemData?)
     {
-        stopObserving(oldItemData)
+        stopObserving(itemData: oldItemData)
         
         guard let new = newItemData else { return }
         
@@ -169,6 +174,19 @@ class ItemView: LayerBackedView, Observer, Observable
         {
             [weak self] _ in self?.tagDidChange()
         }
+        
+        observe(itemData.isFocused)
+        {
+            [weak self] isFocused in self?.set(focused: isFocused)
+        }
+    }
+    
+    private func stopObserving(itemData: ItemData?)
+    {
+        stopObserving(itemData)
+        stopObserving(itemData?.state)
+        stopObserving(itemData?.tag)
+        stopObserving(itemData?.isFocused)
     }
     
     private func stopObserving(task: Item?)
@@ -309,9 +327,9 @@ class ItemView: LayerBackedView, Observer, Observable
     
     // MARK: - List Focus
     
-    func set(focused: Bool)
+    private func set(focused: Bool)
     {
-        self.isFocused = focused
+        isFocused = focused
         
         guard isSelected, let task = task else { return }
         
