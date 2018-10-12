@@ -51,6 +51,11 @@ extension List
             return
         }
         
+        for index in indexes
+        {
+            self[index]?.data?.set(isFocused: false)
+        }
+        
         let groupState = root?.highestPriorityState(at: indexes)
         
         if let groupIndex = indexes.first,
@@ -61,6 +66,7 @@ extension List
             let data = ItemData()
             data.state <- groupState
             group.data = data
+            group.data?.set(isFocused: true)
             group.data?.send(.wantTextInput)
         }
     }
