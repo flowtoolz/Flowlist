@@ -48,9 +48,25 @@ class ItemView: LayerBackedView, Observer, Observable
         observe(item: item)
         self.item = item
         
-        guard let itemData = item.data else
+        configure()
+    }
+    
+    private func didSwitch(from oldItemData: ItemData?, to newItemData: ItemData?)
+    {
+        stopObserving(itemData: oldItemData)
+        
+        guard let new = newItemData else { return }
+        
+        observe(itemData: new)
+        
+        configure()
+    }
+    
+    private func configure()
+    {
+        guard let itemData = self.item?.data else
         {
-            log(error: "Tried to configure Item which has no data")
+            log(error: "Tried to configure ItemView which has no data")
             return
         }
         
@@ -59,7 +75,7 @@ class ItemView: LayerBackedView, Observer, Observable
         
         // color overlay
         
-        let isDone = item.isDone
+        let isDone = itemData.state.value == .done
         let isTagged = itemData.tag.value != nil
         
         colorOverlay.isHidden = !isTagged || isDone
@@ -86,7 +102,9 @@ class ItemView: LayerBackedView, Observer, Observable
         
         // icon alphas
         
-        checkBox.alphaValue = Color.iconAlpha(isInProgress: item.isInProgress,
+        let isInProgress = itemData.state.value == .inProgress
+        
+        checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
                                               isDone: isDone,
                                               isSelected: isSelected).cgFloat
         groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
@@ -97,7 +115,7 @@ class ItemView: LayerBackedView, Observer, Observable
         
         let lightContent = Color.itemContentIsLight(isSelected: isSelected,
                                                     isFocused: isFocused)
-        checkBox.configure(with: item.data?.state.value, white: lightContent)
+        checkBox.configure(with: itemData.state.value, white: lightContent)
         
         // group icon image
         
@@ -152,16 +170,6 @@ class ItemView: LayerBackedView, Observer, Observable
     }
     
     // MARK: - Observing the Item Data
-    
-    private func didSwitch(from oldItemData: ItemData?,
-                           to newItemData: ItemData?)
-    {
-        stopObserving(itemData: oldItemData)
-        
-        guard let new = newItemData else { return }
-        
-        observe(itemData: new)
-    }
     
     private func observe(itemData: ItemData)
     {
