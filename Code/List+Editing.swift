@@ -67,7 +67,6 @@ extension List
             let data = ItemData()
             data.state <- groupState
             group.data = data
-            group.data?.set(isFocused: true)
             group.data?.send(.wantTextInput)
         }
     }

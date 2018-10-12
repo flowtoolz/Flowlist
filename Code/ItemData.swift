@@ -22,7 +22,7 @@ final class ItemData: Observable
         isFocusedVar <- isFocused
     }
     
-    private let isFocusedVar = Var(false)
+    private let isFocusedVar = Var(true)
     
     // MARK: - Functional Data
     
