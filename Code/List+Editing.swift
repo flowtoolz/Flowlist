@@ -54,6 +54,7 @@ extension List
         for index in indexes
         {
             self[index]?.data?.set(isFocused: false)
+            self[index]?.data?.set(isSelected: false)
         }
         
         let groupState = root?.highestPriorityState(at: indexes)
