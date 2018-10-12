@@ -229,12 +229,33 @@ class List: Observable, Observer
             newSelections[selectedIndex] = true
         }
         
+        var addedIndexes = [Int]()
+        var removedIndexes = [Int]()
+        
         for index in 0 ..< count
         {
-            self[index]?.data?.set(isSelected: newSelections[index])
+            let data = self[index]?.data
+            let shouldSelect = newSelections[index]
+            
+            if data?.isSelected.latestUpdate != shouldSelect
+            {
+                if shouldSelect
+                {
+                    addedIndexes.append(index)
+                }
+                else
+                {
+                    removedIndexes.append(index)
+                }
+                
+                data?.set(isSelected: shouldSelect)
+            }
         }
         
-        send(.didChangeSelection)
+        if !addedIndexes.isEmpty || !removedIndexes.isEmpty
+        {
+            send(.didChangeSelection(added: addedIndexes, removed: removedIndexes))
+        }
     }
     
     func selectItem(at index: Int)
@@ -246,7 +267,7 @@ class List: Observable, Observer
         
         data.set(isSelected: true)
         
-        send(.didChangeSelection)
+        send(.didChangeSelection(added: [index], removed: []))
     }
     
     func toggleSelection(at index: Int)
@@ -256,17 +277,36 @@ class List: Observable, Observer
         let itemIsSelected = data.isSelected.latestUpdate
         data.set(isSelected: !itemIsSelected)
         
-        send(.didChangeSelection)
+        if itemIsSelected
+        {
+            send(.didChangeSelection(added: [], removed: [index]))
+        }
+        else
+        {
+            send(.didChangeSelection(added: [index], removed: []))
+        }
     }
     
     func deselectItems(at indexes: [Int])
     {
+        var removedIndexes = [Int]()
+        
         for index in indexes
         {
-            self[index]?.data?.set(isSelected: false)
+            let data = self[index]?.data
+            
+            if data?.isSelected.latestUpdate ?? false
+            {
+                data?.set(isSelected: false)
+                
+                removedIndexes.append(index)
+            }
         }
         
-        send(.didChangeSelection)
+        if !removedIndexes.isEmpty
+        {
+            send(.didChangeSelection(added: [], removed: removedIndexes))
+        }
     }
     
     // MARK: - Observability
@@ -277,6 +317,6 @@ class List: Observable, Observer
     {
         case didNothing
         case did(Item.Edit)
-        case didChangeSelection
+        case didChangeSelection(added: [Int], removed: [Int])
     }
 }

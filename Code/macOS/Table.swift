@@ -62,9 +62,15 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         {
             [weak self] event in
             
-            if case .did(let edit) = event
+            switch event
             {
-                self?.did(edit)
+            case .didNothing: break
+            case .did(let edit): self?.did(edit)
+            case .didChangeSelection(let added, _):
+                if let firstSelectedIndex = added.first
+                {
+                    self?.scrollAnimatedTo(row: firstSelectedIndex)
+                }
             }
         }
     }
