@@ -87,6 +87,11 @@ extension List
     
     func paste(_ items: [Item])
     {
+        for item in items
+        {
+            item.data?.set(isFocused: isFocused.value ?? false)
+        }
+        
         let index = newIndexBelowSelection
         
         guard root?.insert(items, at: index) ?? false else { return }
