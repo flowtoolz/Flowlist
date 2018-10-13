@@ -100,7 +100,8 @@ class EditMenu: NSMenu, Observer
                               numberOfSelectedItems selected: Int,
                               systemPasteboardHasText systemPasteboard: Bool)
     {
-        let item = browser.focusedList.firstSelectedItem
+        let list = browser.focusedList
+        let item = list[list.selectedIndexes.first]
         
         createItem.title = selected > 1 ? "Group \(selected) Items" : "Add New Item"
         renameItem.title = selected > 1 ? "Rename 1st of \(selected) Items" : "Rename Item"

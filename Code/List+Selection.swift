@@ -88,14 +88,6 @@ extension List
         selectItem(at: index + 1)
     }
     
-    // TODO: remove this to avoid redundant computations of selectedIndexes
-    var firstSelectedItem: Item?
-    {
-        guard let index = selectedIndexes.first else { return nil }
-        
-        return self[index]
-    }
-    
     var selectedIndexes: [Int]
     {
         var selected = [Int]()

@@ -183,8 +183,10 @@ class List: Observable, Observer
     
     // MARK: - Listed Items
     
-    subscript(_ index: Int) -> Item?
+    subscript(_ index: Int?) -> Item?
     {
+        guard let index = index else { return nil }
+        
         guard let root = root else
         {
             log(warning: "Tried to get item at \(index) from list without root.")
