@@ -9,7 +9,7 @@ extension Tree where Data == ItemData
     {
         let item = Node()
         
-        let belowIsInProgress = count == 0 ? false : (self[index]?.isInProgress ?? false)
+        let belowIsInProgress = count == index ? false : (self[index]?.isInProgress ?? false)
         let aboveIsInProgress = index == 0 || (self[index - 1]?.isInProgress ?? false)
         
         item.data?.state <- belowIsInProgress && aboveIsInProgress ? .inProgress : nil
