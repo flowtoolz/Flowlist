@@ -82,8 +82,12 @@ class List: Observable, Observer
             observeItemsListed(in: root, at: indexes)
             
         case .remove(let items, let indexes):
-            deselectItems(at: indexes)
-            for item in items { observe(listedItem: item, start: false) }
+            for item in items
+            {
+                observe(listedItem: item, start: false)
+                item.data?.set(isSelected: false)
+                item.data?.set(isFocused: false)
+            }
             
         case .move: break
             
