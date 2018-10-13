@@ -321,6 +321,8 @@ class ItemView: LayerBackedView, Observer, Observable
                                           isSelected: isSelected,
                                           isFocused: isFocused))
             
+            textView.selectedTextAttributes = TextView.selectionSyle
+            
             let isInProgress = item?.isInProgress ?? false
             checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
                                                   isDone: isDone,
