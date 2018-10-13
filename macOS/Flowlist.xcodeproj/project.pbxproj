@@ -206,7 +206,7 @@
 		9E6C720E20B1E316001C3D2C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9E2CCE8C20C1DE030037D755 /* List+Clipboard.swift */,
+				9EA7F99820C19A230059166B /* Clipboard */,
 				9E82A7A81EF2A558006AEF02 /* List+Editing.swift */,
 				9EA63838216F8BB100D1503C /* List+Selection.swift */,
 				9E6C720C20B1DDE2001C3D2C /* List.swift */,
@@ -267,7 +267,6 @@
 				9E71504320D7D7E80061601E /* Full Version Purchase */,
 				9ED0277E20AB2F78004289E6 /* Browser */,
 				9E91650E20551C3B00A438FB /* List */,
-				9EA7F99820C19A230059166B /* Clipboard */,
 				9E91650F20551C5C00A438FB /* Store */,
 				9E91650D20551C1900A438FB /* Item */,
 				9EE2EE5220B4AFF4007CDC2F /* Style */,
@@ -316,6 +315,7 @@
 		9EA7F99820C19A230059166B /* Clipboard */ = {
 			isa = PBXGroup;
 			children = (
+				9E2CCE8C20C1DE030037D755 /* List+Clipboard.swift */,
 				9EA7F99B20C19B210059166B /* Item+Clipboard.swift */,
 			);
 			name = Clipboard;
