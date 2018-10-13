@@ -69,7 +69,10 @@ class Browser: Observer, Observable
         
         lists.append(newList)
         
-        updateRootOfList(at: lists.count - 1)
+        if lists.count > 1
+        {
+            updateRootOfList(at: lists.count - 1)
+        }
         
         send(.didPush(list: newList))
         
