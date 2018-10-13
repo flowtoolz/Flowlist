@@ -108,6 +108,8 @@ extension List
     {
         let indexes = selectedIndexes
         
+        deselectItems(at: indexes)
+        
         guard let root = root,
             let firstSelectedIndex = indexes.first,
             let removedItems = root.removeNodes(from: indexes),

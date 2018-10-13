@@ -85,8 +85,6 @@ class List: Observable, Observer
             for item in items
             {
                 observe(listedItem: item, start: false)
-                item.data?.set(isSelected: false)
-                item.data?.set(isFocused: false)
             }
             
         case .move: break
