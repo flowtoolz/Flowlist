@@ -184,12 +184,24 @@ class TextView: NSTextView, NSTextViewDelegate
     
     func startEditing()
     {
+        // TODO: why is self.window sometimes nil???
+        if window == nil
+        {
+            log(warning: "Want to become first responder but window is nil.")
+        }
+        
         guard NSApp.mainWindow?.makeFirstResponder(self) ?? false else
         {
+            log(error: "Could not become first responder.")
             return
         }
         
         setSelectedRange(NSMakeRange(string.count, 0))
+    }
+    
+    override var acceptsFirstResponder: Bool
+    {
+        return true
     }
 
     override func becomeFirstResponder() -> Bool
