@@ -369,6 +369,8 @@ class ItemView: LayerBackedView, Observer, Observable
                 textView.set(color: .itemText(isDone: isDone,
                                               isSelected: isSelected,
                                               isFocused: isFocused))
+                
+                textView.selectedTextAttributes = TextView.selectionSyle
             }
             
             let lightContent = Color.itemContentIsLight(isSelected: isSelected,
