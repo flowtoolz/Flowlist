@@ -38,7 +38,7 @@ final class Tree<Data: Copyable>: Copyable, Observable
     // MARK: - Group
     
     @discardableResult
-    func groupNodes(at indexes: [Int]) -> Node?
+    func groupNodes(at indexes: [Int], with data: Data) -> Node?
     {
         let sortedIndexes = indexes.sorted()
         
@@ -53,7 +53,7 @@ final class Tree<Data: Copyable>: Copyable, Observable
         
         guard let mergedNodes = removeNodes(from: indexes) else { return nil }
         
-        let group = Node(data: nil)
+        let group = Node(data: data)
         
         guard insert(group, at: groupIndex) else { return nil }
         

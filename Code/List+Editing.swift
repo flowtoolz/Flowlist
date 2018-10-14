@@ -57,16 +57,14 @@ extension List
             self[index]?.data?.set(isSelected: false)
         }
         
-        let groupState = root?.highestPriorityState(at: indexes)
+        let data = ItemData()
+        data.state <- root?.highestPriorityState(at: indexes)
         
         if let groupIndex = indexes.first,
-            let group = root?.groupNodes(at: indexes)
+            let group = root?.groupNodes(at: indexes, with: data)
         {
             setSelectionWithItemsListed(at: [groupIndex])
             
-            let data = ItemData()
-            data.state <- groupState
-            group.data = data
             group.data?.send(.wantTextInput)
         }
     }
