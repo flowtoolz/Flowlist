@@ -215,7 +215,7 @@ class ItemView: LayerBackedView, Observer, Observable
         stopObserving(data.isSelected)
     }
     
-    // MARK: - Adapt Colors to State, Tag, Dark Mode & Selection
+    // MARK: - Adapt Colors to State, Tag, Dark Mode, Selection, Focus ...
     
     private func colorModeDidChange()
     {
@@ -345,8 +345,6 @@ class ItemView: LayerBackedView, Observer, Observable
     }
     
     private(set) var isSelected = false
-    
-    // MARK: - List Focus
     
     private func set(focused: Bool)
     {

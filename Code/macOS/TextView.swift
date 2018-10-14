@@ -213,6 +213,8 @@ class TextView: NSTextView, NSTextViewDelegate
     override func shouldChangeText(in affectedCharRange: NSRange,
                                    replacementString: String?) -> Bool
     {
+        guard replacementString != " " || string != "" else { return false }
+        
         guard replacementString != "\n" else
         {
             messenger.send(.wantToEndEditing)
