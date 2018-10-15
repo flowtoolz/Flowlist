@@ -36,4 +36,6 @@ extension Tree where Data == ItemData
             item.data?.set(isSelected: false)
         }
     }
+    
+    var title: String? { return data?.title.value }
 }

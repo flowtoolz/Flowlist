@@ -49,7 +49,7 @@ extension Tree: Codable where Data == ItemData
     {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        if let titleString = data?.title.value
+        if let titleString = title
         {
             try? container.encode(titleString, forKey: .title)
         }

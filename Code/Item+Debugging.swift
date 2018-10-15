@@ -10,7 +10,7 @@ extension Tree where Data == ItemData
     func description(_ prefix: String = "", _ isLast: Bool = true) -> String
     {
         let bullet = isLast ? "└╴" : "├╴"
-        var desc = "\(prefix)\(bullet)" + (data?.title.value ?? "untitled")
+        var desc = "\(prefix)\(bullet)" + (title ?? "untitled")
         
         for i in 0 ..< count
         {

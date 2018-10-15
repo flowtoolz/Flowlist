@@ -92,7 +92,7 @@ class Header: LayerBackedView, Observer
     
     func update(with root: Item)
     {
-        let isUntitled = String(withNonEmpty: root.data?.title.value) == nil
+        let isUntitled = String(withNonEmpty: root.title) == nil
         
         let textColor = Color.itemText(isDone: root.isDone || isUntitled,
                                        isSelected: false,
