@@ -184,10 +184,10 @@ class TextView: NSTextView, NSTextViewDelegate
     
     func startEditing()
     {
-        // TODO: why is self.window sometimes nil???
-        if window == nil
+        guard window != nil else
         {
-            log(warning: "Want to become first responder but window is nil.")
+            log(error: "TextView is not in window hierarchy. Forgot to stop ItemData observation?")
+            return
         }
         
         guard NSApp.mainWindow?.makeFirstResponder(self) ?? false else

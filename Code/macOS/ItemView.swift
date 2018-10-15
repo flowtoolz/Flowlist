@@ -154,8 +154,16 @@ class ItemView: LayerBackedView, Observer, Observable
         switch event
         {
         case .didNothing: break
-        
-        case .did(let edit): if edit.modifiesContent { updateGroupIcon() }
+        case .did(let edit):
+            guard edit.modifiesContent else { break }
+
+            if case .changeRoot = edit
+            {
+                stopObserving(item: self.item)
+            }
+            
+            updateGroupIcon()
+            
         case .didChangeData(let from, let to): didSwitch(from: from, to: to)
         case .didChange(numberOfLeafs: _): break
         }
