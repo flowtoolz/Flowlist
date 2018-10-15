@@ -42,6 +42,11 @@ class EditMenu: NSMenu, Observer
             [weak self] in
             
             if $0.key == .space { self?.createAtTop() }
+            
+            else if $0.characters == "e" && $0.cmd
+            {
+                print(browser.focusedList.root?.text ?? "nil root!")
+            }
         }
     }
     
