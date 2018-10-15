@@ -1,4 +1,5 @@
 import AppKit
+import UIToolz
 
 extension Tree where Data == ItemData
 {
@@ -22,9 +23,18 @@ extension Tree where Data == ItemData
             guard modalResponse.rawValue == NSFileHandlingPanelOKButton,
                 let fileUrl = panel.url else { return }
             
-            try? self?.text().write(to: fileUrl,
-                                    atomically: false,
-                                    encoding: .utf8)
+            do
+            {
+                try self?.text().write(to: fileUrl,
+                                       atomically: false,
+                                       encoding: .utf8)
+            }
+            catch let error
+            {
+                let title = "Couldn't write \"\(fileUrl.lastPathComponent)\""
+                
+                show(alert: error.localizedDescription, title: title)
+            }
         }
     }
 }
