@@ -26,6 +26,8 @@ class WindowMenu: NSMenu, Observer
     
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
+        guard NSApp.mainWindow?.isKeyWindow ?? false else { return false }
+        
         switch menuItem
         {
         case fullscreenItem: return !isMonotasking

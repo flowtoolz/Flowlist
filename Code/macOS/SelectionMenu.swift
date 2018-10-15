@@ -32,6 +32,8 @@ class SelectionMenu: NSMenu
     
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
+        guard NSApp.mainWindow?.isKeyWindow ?? false else { return false }
+        
         guard !TextView.isEditing else { return false }
         
         switch menuItem

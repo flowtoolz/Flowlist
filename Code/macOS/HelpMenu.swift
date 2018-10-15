@@ -28,9 +28,11 @@ class HelpMenu: NSMenu
     
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
+        let mainWindowIsKey = NSApp.mainWindow?.isKeyWindow ?? false
+        
         switch menuItem
         {
-        case tourItem: return !reachedItemNumberLimit
+        case tourItem: return !reachedItemNumberLimit && mainWindowIsKey
         default: return true
         }
     }

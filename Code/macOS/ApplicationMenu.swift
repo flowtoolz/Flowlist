@@ -39,13 +39,18 @@ class ApplicationMenu: NSMenu, Observer
     
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
+        let mainWindowIsKey = NSApp.mainWindow?.isKeyWindow ?? false
+        
         switch menuItem
         {
         case increaseFontSizeItem:
-            return !TextView.isEditing
+            return !TextView.isEditing && mainWindowIsKey
             
         case decreaseFontSizeItem:
-            return !TextView.isEditing && Font.baseSize.latestUpdate > 12
+            return !TextView.isEditing && Font.baseSize.latestUpdate > 12 && mainWindowIsKey
+            
+        case darkModeItem, exportItem:
+            return mainWindowIsKey
             
         default: return true
         }
