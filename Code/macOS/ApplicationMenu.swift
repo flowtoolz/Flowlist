@@ -10,6 +10,10 @@ class ApplicationMenu: NSMenu, Observer
     {
         super.init(title: "Application Menu")
         
+        addItem(exportItem)
+        
+        addItem(NSMenuItem.separator())
+        
         addItem(increaseFontSizeItem)
         addItem(decreaseFontSizeItem)
         
@@ -81,5 +85,14 @@ class ApplicationMenu: NSMenu, Observer
     private var darkModeOptionTitle: String
     {
         return "\(Color.isInDarkMode ? "Daylight" : "Dark") Mode"
+    }
+    
+    // MARK: - Export
+    
+    private lazy var exportItem = MenuItem("Export List as Text",
+                                           key: "e",
+                                           validator: self)
+    {
+        browser.focusedList.root?.export()
     }
 }
