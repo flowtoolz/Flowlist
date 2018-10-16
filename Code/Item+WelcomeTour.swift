@@ -25,14 +25,20 @@ extension Tree where Data == ItemData
         
         // writing
         
-        let moreCommands = Item("Write")
+        let moreCommands = Item("Write Structured Texts")
         
         moreCommands.data?.tag <- .orange
         
+        let textIntroItem = Item("Empty items correspond to paragraphs, while items with subitems correspond to headings...")
+        textIntroItem.data?.state <- .inProgress
+        moreCommands.add(textIntroItem)
         moreCommands.add(Item("Hit ↵ (return) to write a new item, then hit ↵ again to finish typing"))
-        moreCommands.add(Item("Hit ⌘↵ to edit the first selected item"))
+        moreCommands.add(Item("Press ⌘↵ to edit the first selected item"))
         moreCommands.add(Item("Hit Space to add an item to the top"))
-        moreCommands.add(Item("Hit ⌫ (delete) to remove the selection"))
+        moreCommands.add(Item("Hit ⌫ (delete) to remove selected items"))
+        let exportItem = Item("Press ⌘E to export the FOCUSED (center) list and all its subitems to a plain TXT file. With paragraphs, headings, sub-headings etc.")
+        exportItem.data?.tag <- .blue
+        moreCommands.add(exportItem)
         
         tour.append(moreCommands)
         
