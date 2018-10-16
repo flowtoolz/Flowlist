@@ -4,8 +4,12 @@ extension Tree where Data == ItemData
               titlePrefix: String = "") -> String
     {
         var result = title ?? ""
-        
-        if recursionDepth > 0 && count > 0
+            
+        if recursionDepth == 0
+        {
+            result += "\n"
+        }
+        else if recursionDepth > 0 && count > 0
         {
             result = titlePrefix + " " + result
         }
