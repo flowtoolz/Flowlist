@@ -1,6 +1,7 @@
 import AppKit
 import UIToolz
 import SwiftObserver
+import SwiftyToolz
 
 class WindowMenu: NSMenu, Observer
 {
@@ -10,12 +11,23 @@ class WindowMenu: NSMenu, Observer
     {
         super.init(title: "Window")
         
+        addItem(increaseFontSizeItem)
+        addItem(decreaseFontSizeItem)
+        
+        addItem(NSMenuItem.separator())
+        
+        addItem(darkModeItem)
+        
+        addItem(NSMenuItem.separator())
+        
         addItem(fullscreenItem)
         addItem(focusItem)
         
         addItem(NSMenuItem.separator())
         
         addItem(windowItem)
+        
+        observeDarkMode()
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
@@ -26,12 +38,16 @@ class WindowMenu: NSMenu, Observer
     
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
-        guard NSApp.mainWindow?.isKeyWindow ?? false else { return false }
+        guard window?.isKeyWindow ?? false else { return false }
         
         switch menuItem
         {
         case fullscreenItem: return !isMonotasking
         case focusItem: return !(window?.isFullscreen ?? false)
+        case increaseFontSizeItem:
+            return !TextView.isEditing
+        case decreaseFontSizeItem:
+            return !TextView.isEditing && Font.baseSize.latestUpdate > 12
         default: return true
         }
     }
@@ -112,10 +128,50 @@ class WindowMenu: NSMenu, Observer
         windowItem.title = open ? "Close Window" : "Show Window"
     }
     
-    private lazy var windowItem = MenuItem("Close Window", key: "w")
+    private lazy var windowItem = MenuItem("Close Window",
+                                           key: "w",
+                                           validator: self)
     {
         [weak self] in self?.window?.toggle()
     }
     
     private weak var window: Window?
+    
+    // MARK: - Changing Font Size
+    
+    private lazy var increaseFontSizeItem = MenuItem("Bigger Font",
+                                                     key: "+",
+                                                     validator: self)
+    { Font.baseSizeVar += 1 }
+    
+    private lazy var decreaseFontSizeItem = MenuItem("Smaller Font",
+                                                     key: "-",
+                                                     validator: self)
+    { Font.baseSizeVar -= 1 }
+    
+    // MARK: - Dark Mode
+    
+    private func observeDarkMode()
+    {
+        observe(darkMode)
+        {
+            [weak self] _ in
+            
+            guard let me = self else { return }
+            
+            me.darkModeItem.title = me.darkModeOptionTitle
+        }
+    }
+    
+    private lazy var darkModeItem = MenuItem(self.darkModeOptionTitle,
+                                             key: "d",
+                                             validator: self)
+    {
+        Color.isInDarkMode = !Color.isInDarkMode
+    }
+    
+    private var darkModeOptionTitle: String
+    {
+        return "\(Color.isInDarkMode ? "Daylight" : "Dark") Mode"
+    }
 }
