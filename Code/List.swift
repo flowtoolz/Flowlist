@@ -81,7 +81,7 @@ class List: Observable, Observer
         case .insert(let indexes):
             observeItemsListed(in: root, at: indexes)
             
-        case .remove(let items, let indexes):
+        case .remove(let items, _):
             for item in items
             {
                 observe(listedItem: item, start: false)

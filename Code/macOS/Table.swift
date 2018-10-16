@@ -309,7 +309,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         case .wasClicked(let cmdKeyIsDown):
             NSApp.mainWindow?.makeFirstResponder(self)
             
-            guard let item = itemView.item, let list = list else { break }
+            guard let list = list else { break }
             
             if cmdKeyIsDown
             {

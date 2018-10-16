@@ -155,8 +155,6 @@ class BrowserView: LayerBackedView, Observer
         
         guard listViews.isValid(index: newIndex) else { return }
         
-        let focusedListView = listViews[newIndex]
-        
         var targetPosition: CGFloat = 0
         
         if newIndex > 0
