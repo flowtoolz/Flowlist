@@ -18,6 +18,8 @@ extension Tree where Data == ItemData
         
         for item in branches
         {
+            guard !item.isDone else { continue }
+            
             var itemTitleRefix = titlePrefix
             if itemTitleRefix.count > 0 { itemTitleRefix += "." }
             itemTitleRefix += "\(sectionNumber)"
