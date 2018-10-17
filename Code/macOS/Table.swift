@@ -160,7 +160,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         moveRow(at: from, to: to)
         
-        if list?[to]?.data?.isSelected.latestUpdate ?? false
+        if list?[to]?.isSelected ?? false
         {
             scrollRowToVisible(to)
         }
@@ -280,7 +280,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         case .willEditTitle:
             rowBeingEdited = index
             
-            if !(list?[index]?.data?.isSelected.latestUpdate ?? false)
+            if !(list?[index]?.isSelected ?? false)
             {
                 list?.setSelectionWithItemsListed(at: [index])
             }

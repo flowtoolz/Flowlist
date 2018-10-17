@@ -2,27 +2,10 @@ import SwiftObserver
 
 final class ItemData: Observable
 {
-    // MARK: - Selection
+    // MARK: - View Model
     
-    lazy var isSelected = isSelectedVar.new().filter({ $0 != nil }).unwrap(false)
-    
-    func set(isSelected: Bool)
-    {
-        isSelectedVar <- isSelected
-    }
-    
-    private let isSelectedVar = Var(false)
-    
-    // MARK: - Focus
-    
-    lazy var isFocused = isFocusedVar.new().filter({ $0 != nil }).unwrap(false)
-    
-    func set(isFocused: Bool)
-    {
-        isFocusedVar <- isFocused
-    }
-    
-    private let isFocusedVar = Var(true)
+    let isSelected = Var(false)
+    let isFocused = Var(true)
     
     // MARK: - Title
     

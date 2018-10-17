@@ -175,7 +175,7 @@ class List: Observable, Observer
         
         for itemIndex in 0 ..< count
         {
-            self[itemIndex]?.data?.set(isFocused: focused)
+            self[itemIndex]?.isFocused = focused
         }
     }
     
@@ -238,10 +238,10 @@ class List: Observable, Observer
         
         for index in 0 ..< count
         {
-            let data = self[index]?.data
+            let item = self[index]
             let shouldSelect = newSelections[index]
             
-            if data?.isSelected.latestUpdate != shouldSelect
+            if item?.isSelected != shouldSelect
             {
                 if shouldSelect
                 {
@@ -252,7 +252,7 @@ class List: Observable, Observer
                     removedIndexes.append(index)
                 }
                 
-                data?.set(isSelected: shouldSelect)
+                item?.isSelected = shouldSelect
             }
         }
         
@@ -264,24 +264,23 @@ class List: Observable, Observer
     
     func selectItem(at index: Int)
     {
-        guard let data = self[index]?.data, !data.isSelected.latestUpdate else
+        guard let item = self[index], !item.isSelected else
         {
             return
         }
         
-        data.set(isSelected: true)
+        item.isSelected = true
         
         send(.didChangeSelection(added: [index], removed: []))
     }
     
     func toggleSelection(at index: Int)
     {
-        guard let data = self[index]?.data else { return }
+        guard let item = self[index] else { return }
         
-        let itemIsSelected = data.isSelected.latestUpdate
-        data.set(isSelected: !itemIsSelected)
+        item.isSelected = !item.isSelected
         
-        if itemIsSelected
+        if !item.isSelected
         {
             send(.didChangeSelection(added: [], removed: [index]))
         }
@@ -297,11 +296,11 @@ class List: Observable, Observer
         
         for index in indexes
         {
-            let data = self[index]?.data
+            let item = self[index]
             
-            if data?.isSelected.latestUpdate ?? false
+            if item?.isSelected ?? false
             {
-                data?.set(isSelected: false)
+                item?.isSelected = false
                 
                 removedIndexes.append(index)
             }

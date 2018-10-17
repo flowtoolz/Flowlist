@@ -64,14 +64,14 @@ class ItemView: LayerBackedView, Observer, Observable
     
     private func configure()
     {
-        guard let itemData = self.item?.data else
+        guard let item = item, let itemData = item.data else
         {
-            log(error: "Tried to configure ItemView which has no data")
+            log(error: "Tried to configure ItemView which has no item or item data")
             return
         }
         
-        isSelected = itemData.isSelected.latestUpdate
-        isFocused = itemData.isFocused.latestUpdate
+        isSelected = item.isSelected
+        isFocused = item.isFocused
         
         // color overlay
         
@@ -203,12 +203,12 @@ class ItemView: LayerBackedView, Observer, Observable
         
         observe(itemData.isFocused)
         {
-            [weak self] isFocused in self?.set(focused: isFocused)
+            [weak self] update in self?.set(focused: update.new ?? false)
         }
         
         observe(itemData.isSelected)
         {
-            [weak self] isSelected in self?.set(selected: isSelected)
+            [weak self] update in self?.set(selected: update.new ?? false)
         }
     }
     

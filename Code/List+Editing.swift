@@ -53,8 +53,8 @@ extension List
         
         for index in indexes
         {
-            self[index]?.data?.set(isFocused: false)
-            self[index]?.data?.set(isSelected: false)
+            self[index]?.isFocused = false
+            self[index]?.isSelected = false
         }
         
         let data = ItemData()
@@ -87,7 +87,7 @@ extension List
     {
         for item in items
         {
-            item.data?.set(isFocused: isFocused.value ?? false)
+            item.isFocused = isFocused.value ?? false
         }
         
         let index = newIndexBelowSelection

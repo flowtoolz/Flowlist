@@ -33,9 +33,22 @@ extension Tree where Data == ItemData
     {
         for item in branches
         {
-            item.data?.set(isSelected: false)
+            item.isSelected = false
         }
     }
     
     var title: String? { return data?.title.value }
+    
+    var isSelected: Bool
+    {
+        get { return data?.isSelected.value ?? false }
+        set { data?.isSelected <- newValue }
+    }
+    
+    var isFocused: Bool
+    {
+        get { return data?.isFocused.value ?? false }
+        set { data?.isFocused <- newValue }
+    }
+
 }

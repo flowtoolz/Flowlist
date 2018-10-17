@@ -94,7 +94,7 @@ extension List
         
         for index in 0 ..< count
         {
-            if self[index]?.data?.isSelected.latestUpdate ?? false
+            if self[index]?.isSelected ?? false
             {
                 selected.append(index)
             }
