@@ -24,10 +24,27 @@ final class ItemData: Observable
     
     private let isFocusedVar = Var(true)
     
-    // MARK: - Functional Data
+    // MARK: - Title
     
     var title = Var<String>()
+    
+    // MARK: - State
+    
     var state = Var<State>()
+    
+    enum State: Int, Codable
+    {
+        // do not change this!
+        case inProgress = 0, done = 2, trashed = 3
+        
+        static func priority(of state: State?) -> Int
+        {
+            return state?.rawValue ?? 1
+        }
+    }
+    
+    // MARK: - Tag
+    
     var tag = Var<Tag>()
     
     enum Tag: Int, Codable
@@ -48,15 +65,7 @@ final class ItemData: Observable
         }
     }
     
-    enum State: Int, Codable
-    {
-        case inProgress = 0, done = 2, trashed = 3 // do not change this! it's how the user's json gets decoded.
-        
-        static func priority(of state: State?) -> Int
-        {
-            return state?.rawValue ?? 1
-        }
-    }
+    // MARK: - Observability
     
     var latestUpdate = Event.nothing
     
