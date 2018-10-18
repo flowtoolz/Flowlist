@@ -270,6 +270,28 @@ class TextView: NSTextView, NSTextViewDelegate
 
     static var isEditing = false
     
+    override func performKeyEquivalent(with event: NSEvent) -> Bool
+    {
+        guard NSApp.mainWindow?.firstResponder === self,
+            event.cmd,
+            let characters = event.characters
+            else
+        {
+            return super.performKeyEquivalent(with: event)
+        }
+        
+        switch characters
+        {
+        case "v": pasteAsPlainText(nil)
+        case "c": copy(nil)
+        case "x": cut(nil)
+        case "a": selectAll(nil)
+        default: return super.performKeyEquivalent(with: event)
+        }
+        
+        return true
+    }
+    
     // MARK: - Observability
     
     let messenger = Messenger()
