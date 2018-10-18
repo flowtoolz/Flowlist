@@ -266,18 +266,11 @@ class TextView: NSTextView, NSTextViewDelegate
         messenger.send(.willEdit)
     }
     
-    private(set) var isEditing = false
-
-    static var isEditing = false
-    
     override func performKeyEquivalent(with event: NSEvent) -> Bool
     {
-        guard NSApp.mainWindow?.firstResponder === self,
-            event.cmd,
-            let characters = event.characters
-            else
+        guard isEditing, event.cmd, let characters = event.characters else
         {
-            return super.performKeyEquivalent(with: event)
+            return false
         }
         
         switch characters
@@ -286,11 +279,15 @@ class TextView: NSTextView, NSTextViewDelegate
         case "c": copy(nil)
         case "x": cut(nil)
         case "a": selectAll(nil)
-        default: return super.performKeyEquivalent(with: event)
+        default: return false
         }
         
         return true
     }
+    
+    private(set) var isEditing = false
+
+    static var isEditing = false
     
     // MARK: - Observability
     
