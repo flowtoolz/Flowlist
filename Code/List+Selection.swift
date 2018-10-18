@@ -88,6 +88,26 @@ extension List
         selectItem(at: index + 1)
     }
     
+    func extendSelection(to index: Int)
+    {
+        guard root?.branches.isValid(index: index) ?? false else { return }
+        
+        let selected = selectedIndexes
+        
+        guard !selected.isEmpty,
+            let first = selected.first,
+            let last = selected.last else { return }
+        
+        if index < first
+        {
+            selectItems(at: Array(index ... first - 1))
+        }
+        else if index > last
+        {
+            selectItems(at: Array(last + 1 ... index))
+        }
+    }
+    
     var selectedIndexes: [Int]
     {
         var selected = [Int]()
