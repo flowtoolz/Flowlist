@@ -81,36 +81,34 @@ class Header: LayerBackedView, Observer
         
         showIcon(list.isRootList)
         
-        if let root = list.root { update(with: root) }
+        update(with: list.root)
         
         self.list = list
     }
     
-    private weak var list: List?
-    
     // MARK: - Adjust to Root State
     
-    func update(with root: Item)
+    func update(with root: Item?)
     {
-        let isUntitled = String(withNonEmpty: root.title) == nil
+        stopObserving(self.list?.root?.data?.tag)
         
-        let textColor = Color.itemText(isDone: root.isDone || isUntitled,
+        if let rootData = root?.data
+        {
+            observe(rootData.tag)
+            {
+                [weak self] update in self?.updateColorView(with: update.new)
+            }
+        }
+        
+        let isUntitled = String(withNonEmpty: root?.title) == nil
+        
+        let textColor = Color.itemText(isDone: root?.isDone ?? false || isUntitled,
                                        isSelected: false,
                                        isFocused: true)
         
         titleLabel.textColor = textColor.nsColor
         
-        updateColorView(with: root.data?.tag.value)
-        
-        stopObserving(self.list?.root?.data?.tag)
-        
-        if let rootItem = root.data
-        {
-            observe(rootItem.tag)
-            {
-                [weak self] update in self?.updateColorView(with: update.new)
-            }
-        }
+        updateColorView(with: root?.data?.tag.value)
     }
     
     // MARK: - Icon
@@ -262,4 +260,8 @@ class Header: LayerBackedView, Observer
     
     private lazy var layoutGuideLeft = addLayoutGuide()
     private lazy var layoutGuideRight = addLayoutGuide()
+    
+    // MARK: - List
+    
+    private weak var list: List?
 }
