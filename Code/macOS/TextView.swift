@@ -217,7 +217,7 @@ class TextView: NSTextView, NSTextViewDelegate
     {
         let willResignFirstResponder = super.resignFirstResponder()
         
-        if willResignFirstResponder { didEdit() }
+        if willResignFirstResponder && isEditing { didEdit() }
         
         return willResignFirstResponder
     }

@@ -282,7 +282,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             
             if !(list?[index]?.isSelected ?? false)
             {
-                list?.setSelectionWithItemsListed(at: [index])
+                list?.selectItem(at: index)
             }
             
             send(event)
@@ -306,6 +306,8 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             itemHeightCash[item] = nil
             noteHeightOfRows(withIndexesChanged: [index])
             
+            //editNextSelectedItem()
+            
         case .wasClicked(let click):
             NSApp.mainWindow?.makeFirstResponder(self)
             
@@ -326,6 +328,19 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             
             send(event)
         }
+    }
+    
+    private func editNextSelectedItem()
+    {
+        guard let list = list else { return }
+        
+        let selected = list.selectedIndexes
+        
+        guard selected.count > 1 else { return }
+        
+        list.deselectItems(at: [selected[0]])
+        
+        list[selected[1]]?.data?.send(.wantTextInput)
     }
     
     override func mouseDown(with event: NSEvent)
