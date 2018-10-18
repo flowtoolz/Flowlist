@@ -290,6 +290,48 @@ class List: Observable, Observer
         }
     }
     
+    func extendSelection(to index: Int)
+    {
+        guard root?.branches.isValid(index: index) ?? false else { return }
+        
+        let selected = selectedIndexes
+        
+        guard !selected.isEmpty,
+            let first = selected.first,
+            let last = selected.last else { return }
+        
+        if index < first
+        {
+            selectItems(at: Array(index ... first - 1))
+        }
+        else if index > last
+        {
+            selectItems(at: Array(last + 1 ... index))
+        }
+    }
+    
+    func selectItems(at indexes: [Int])
+    {
+        var addedIndexes = [Int]()
+        
+        for index in indexes
+        {
+            let item = self[index]
+            
+            if item?.isSelected == false
+            {
+                item?.isSelected = true
+                
+                addedIndexes.append(index)
+            }
+        }
+        
+        if !addedIndexes.isEmpty
+        {
+            send(.didChangeSelection(added: addedIndexes, removed: []))
+        }
+    }
+    
     func deselectItems(at indexes: [Int])
     {
         var removedIndexes = [Int]()

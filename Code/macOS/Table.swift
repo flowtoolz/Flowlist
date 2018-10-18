@@ -306,14 +306,18 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             itemHeightCash[item] = nil
             noteHeightOfRows(withIndexesChanged: [index])
             
-        case .wasClicked(let cmdKeyIsDown):
+        case .wasClicked(let click):
             NSApp.mainWindow?.makeFirstResponder(self)
             
             guard let list = list else { break }
             
-            if cmdKeyIsDown
+            if click.cmd
             {
                 list.toggleSelection(at: index)
+            }
+            else if click.shift
+            {
+                list.extendSelection(to: index)
             }
             else
             {
@@ -326,7 +330,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     override func mouseDown(with event: NSEvent)
     {
-        send(.wasClicked(withCmd: false))
+        send(.wasClicked(withEvent: event))
     }
     
     override var acceptsFirstResponder: Bool { return true }
@@ -337,5 +341,5 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     // MARK: - Observability
     
-    var latestUpdate: ItemView.Event { return .didNothing }
+    var latestUpdate = ItemView.Event.didNothing
 }

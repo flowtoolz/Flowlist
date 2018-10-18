@@ -306,7 +306,7 @@ class ItemView: LayerBackedView, Observer, Observable
     
     override func mouseDown(with event: NSEvent)
     {
-        send(.wasClicked(withCmd: event.cmd))
+        send(.wasClicked(withEvent: event))
     }
     
     private func set(selected: Bool)
@@ -655,6 +655,6 @@ class ItemView: LayerBackedView, Observer, Observable
         case didChangeTitle
         case wantToEndEditingText
         case didEditTitle
-        case wasClicked(withCmd: Bool)
+        case wasClicked(withEvent: NSEvent)
     }
 }
