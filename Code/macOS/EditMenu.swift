@@ -60,7 +60,7 @@ class EditMenu: NSMenu, Observer
         guard !TextView.isEditing else { return false }
         
         let selected = numberOfSelectedItems
-        let deleted = browser.focusedList.root?.numberOfRemovedBranches ?? 0
+        let deleted = browser.focusedList.root?.deletionStack.last?.count ?? 0
         let systemPasteboard = systemPasteboardHasText
         updateTitles(numberOfDeletedItems: deleted,
                      numberOfSelectedItems: selected,

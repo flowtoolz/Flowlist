@@ -131,14 +131,9 @@ extension List
     
     func undoLastRemoval()
     {
-        guard let items = root?.lastRemoved.copiesOfStoredObjects else
-        {
-            return
-        }
+        guard let items = root?.deletionStack.popLast() else { return }
         
         paste(items)
-        
-        root?.lastRemoved.removeAll()
     }
     
     var newIndexBelowSelection: Int

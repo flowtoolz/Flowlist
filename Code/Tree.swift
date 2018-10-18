@@ -91,7 +91,7 @@ final class Tree<Data: Copyable>: Copyable, Observable
             removedNodes.insert(removedNode, at: 0)
         }
         
-        lastRemoved.storeCopies(of: removedNodes)
+        deletionStack.append(removedNodes)
         
         updateNumberOfLeafs()
         
@@ -160,11 +160,9 @@ final class Tree<Data: Copyable>: Copyable, Observable
         }
     }
     
-    // MARK: - Undo History
+    // MARK: - Undo Deletions
     
-    var numberOfRemovedBranches: Int { return lastRemoved.count }
-    
-    let lastRemoved = Clipboard<Node>()
+    var deletionStack = [[Node]]()
     
     // MARK: - Counting Leafs
     
