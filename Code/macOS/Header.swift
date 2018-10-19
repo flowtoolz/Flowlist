@@ -134,9 +134,11 @@ class Header: LayerBackedView, Observer
     
     // MARK: - Title
     
-    func set(title: String?)
+    private func set(title: String)
     {
-        titleLabel.stringValue = (title ?? "Untitled").replacingOccurrences(of: "\n", with: " ")
+        var displayTitle = title.count > 0 ? title : "Untitled"
+        displayTitle = displayTitle.replacingOccurrences(of: "\n", with: " ")
+        titleLabel.stringValue = displayTitle
     }
     
     func updateTitleColor()

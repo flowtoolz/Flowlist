@@ -227,7 +227,8 @@ class List: Observable, Observer
     // MARK: - Mappings
     
     let tag = Var<ItemData.Tag>().new()
-    let title = Var<String>().new()
+    let title = Var<String>().new().unwrap("")
+    
     let state = Var<ItemData.State>().new()
     
     // MARK: - Atomic Selection Operations
