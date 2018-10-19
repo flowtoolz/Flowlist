@@ -63,6 +63,7 @@ class Header: LayerBackedView, Observer
             [weak self] newTitle in
             
             self?.set(title: newTitle)
+            self?.updateTitleColor()
         }
         
         set(title: list.title.latestUpdate)
@@ -77,38 +78,33 @@ class Header: LayerBackedView, Observer
             self?.set(focused: focusUpdate.new ?? false)
         }
         
+        // tag
+        
+        stopObserving(self.list?.tag)
+        observe(list.tag)
+        {
+            [weak self] newTag in
+            
+            self?.updateColorView(with: newTag)
+        }
+        
+        // state
+        
+        stopObserving(self.list?.state)
+        observe(list.state)
+        {
+            [weak self] _ in
+
+            self?.updateTitleColor()
+        }
+        
         // other
         
         showIcon(list.isRootList)
         
-        update(with: list.root)
-        
         self.list = list
-    }
-    
-    // MARK: - Adjust to Root State
-    
-    func update(with root: Item?)
-    {
-        stopObserving(self.list?.root?.data?.tag)
         
-        if let rootData = root?.data
-        {
-            observe(rootData.tag)
-            {
-                [weak self] update in self?.updateColorView(with: update.new)
-            }
-        }
-        
-        let isUntitled = String(withNonEmpty: root?.title) == nil
-        
-        let textColor = Color.itemText(isDone: root?.isDone ?? false || isUntitled,
-                                       isSelected: false,
-                                       isFocused: true)
-        
-        titleLabel.textColor = textColor.nsColor
-        
-        updateColorView(with: root?.data?.tag.value)
+        updateTitleColor()
     }
     
     // MARK: - Icon
@@ -141,8 +137,14 @@ class Header: LayerBackedView, Observer
     func set(title: String?)
     {
         titleLabel.stringValue = (title ?? "Untitled").replacingOccurrences(of: "\n", with: " ")
+    }
+    
+    func updateTitleColor()
+    {
+        let isUntitled = String(withNonEmpty: list?.title.latestUpdate) == nil
+        let isDone = list?.state.latestUpdate == .done
         
-        let textColor = Color.itemText(isDone: title == nil,
+        let textColor = Color.itemText(isDone: isDone || isUntitled,
                                        isSelected: false,
                                        isFocused: true)
         

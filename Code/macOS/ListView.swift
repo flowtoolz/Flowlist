@@ -54,28 +54,9 @@ class ListView: LayerBackedView, Observer, Observable
     private func didReceive(_ event: List.Event)
     {
         guard case .did(let edit) = event,
-            case .changeRoot(let old, let new) = edit else
-        {
-            return
-        }
+            case .changeRoot(_, let new) = edit else { return }
         
         isHidden = new == nil
-        
-        stopObserving(old?.data?.state)
-        
-        if let newRoot = new, let rootItem = newRoot.data
-        {
-            observe(rootItem.state)
-            {
-                [weak self, weak newRoot] _ in
-                
-                guard let root = newRoot else { return }
-                
-                self?.header.update(with: root)
-            }
-            
-            header.update(with: newRoot)
-        }
     }
     
     // MARK: - Change with Browser Moves

@@ -69,6 +69,8 @@ class List: Observable, Observer
             case .did(let edit): self?.received(edit, from: root)
             case .didChangeData(from: _, to: let newItemData):
                 self?.title.observable = newItemData?.title
+                self?.tag.observable = newItemData?.tag
+                self?.state.observable = newItemData?.state
             case .didChange(numberOfLeafs: _): break
             }
         }
@@ -125,9 +127,9 @@ class List: Observable, Observer
             return
         }
         
-        if let state = item.data?.state
+        if let itemState = item.data?.state
         {
-            observe(state)
+            observe(itemState)
             {
                 [weak self, weak item] _ in self?.itemDidChangeState(item)
             }
@@ -164,8 +166,6 @@ class List: Observable, Observer
         
         self[index]?.data?.send(.wantTextInput)
     }
-    
-    let title = Var<String>().new()
     
     // MARK: - Focus
     
@@ -218,9 +218,17 @@ class List: Observable, Observer
         old?.deselectAll()
         
         title.observable = new?.data?.title
+        tag.observable = new?.data?.tag
+        state.observable = new?.data?.state
         
         send(.did(.changeRoot(from: old, to: new)))
     }
+    
+    // MARK: - Mappings
+    
+    let tag = Var<ItemData.Tag>().new()
+    let title = Var<String>().new()
+    let state = Var<ItemData.State>().new()
     
     // MARK: - Atomic Selection Operations
     
