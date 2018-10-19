@@ -14,6 +14,19 @@ The 1st Hierarchical Task List
 
 # Flowlist AppStore Update Text
 
+## 1.6.0
+
+This update improves overall consistency and introduces TXT export. 
+
+• You can export the focused list as a text via Cmd+E, manifesting your item hierarchy as paragraphs, headings, sub-headings etc.
+• You can use editing commands within item texts: copy (Cmd+C), cut (Cmd+X), paste (Cmd+V) and select all (Cmd+A)
+• You can undo infinite deletions in every list (Cmd+Z).
+• Shift+Click works again to extend the current selection.
+• Fix: Visual delays related to selection changes are gone.
+• Minor fixes, performance- and UI improvements
+• Some significant technical improvements under the hood to maintain development speed
+
+
 ## 1.5.0
 
 This update brings a total new design.  
@@ -87,7 +100,7 @@ This update brings minor fixes and performance improvements:
 
 # Flowlist AppStore Description
 
-## Version 1.5.0
+## Version 1.6.0
 
 Flowlist is an elegant self-management tool optimized for total creative focus. Hierarchical lists make it as simple and adaptable as a box of legos. Organize your thoughts and your life in a state of flow!
 
@@ -111,6 +124,7 @@ You may use Flowlist to:
 Features:
 
 • Create your own item hierarchy: Group items together, add subitems to any (empty) item, move items between levels.
+• Export lists at any level as structured text with paragraphs, headings, sub-headings etc.
 • Tag items with colors.
 • Switch to Dark Mode to give your eyes a break, sleep better, work at night and feel like a pro.
 • Paste content from any document or web page. Flowlist detects distinct items.
