@@ -453,8 +453,8 @@ class ItemView: LayerBackedView, Observer, Observable
             send(.willEditTitle)
             
         case .didChange(let text):
-            send(.didChangeTitle)
             item?.data?.title <- String(withNonEmpty: text)
+            send(.didChangeTitle)
             
         case .wantToEndEditing:
             send(.wantToEndEditingText)
