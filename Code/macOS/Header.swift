@@ -109,7 +109,7 @@ class Header: LayerBackedView, Observer
     
     // MARK: - Icon
     
-    func showIcon(_ show: Bool = true)
+    private func showIcon(_ show: Bool = true)
     {
         titleLabel.isHidden = show
         icon.isHidden = !show
@@ -141,7 +141,7 @@ class Header: LayerBackedView, Observer
         titleLabel.stringValue = displayTitle
     }
     
-    func updateTitleColor()
+    private func updateTitleColor()
     {
         let isUntitled = String(withNonEmpty: list?.title.latestUpdate) == nil
         let isDone = list?.state.latestUpdate == .done
