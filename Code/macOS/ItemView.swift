@@ -463,6 +463,7 @@ class ItemView: LayerBackedView, Observer, Observable
             set(editing: false)
             item?.data?.title <- String(withNonEmpty: textView.string)
             send(.didEditTitle)
+        case .wasClicked: send(.textViewWasClicked)
         }
     }
     
@@ -655,6 +656,7 @@ class ItemView: LayerBackedView, Observer, Observable
         case didChangeTitle
         case wantToEndEditingText
         case didEditTitle
+        case textViewWasClicked
         case wasClicked(withEvent: NSEvent)
     }
 }

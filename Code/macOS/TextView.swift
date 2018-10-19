@@ -289,6 +289,15 @@ class TextView: NSTextView, NSTextViewDelegate
 
     static var isEditing = false
     
+    // MARK: - Inform Item View that Text was Clicked
+    
+    override func mouseDown(with event: NSEvent)
+    {
+        super.mouseDown(with: event)
+        
+        messenger.send(.wasClicked)
+    }
+    
     // MARK: - Observability
     
     let messenger = Messenger()
@@ -300,6 +309,7 @@ class TextView: NSTextView, NSTextViewDelegate
         enum Event
         {
             case didNothing
+            case wasClicked
             case willEdit
             case didChange(text: String)
             case wantToEndEditing

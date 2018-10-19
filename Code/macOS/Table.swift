@@ -280,11 +280,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         case .willEditTitle:
             rowBeingEdited = index
             
-            if !(list?[index]?.isSelected ?? false)
-            {
-                list?.selectItem(at: index)
-            }
-            
             send(event)
             
             noteHeightOfRows(withIndexesChanged: [index])
@@ -327,6 +322,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             }
             
             send(event)
+        case .textViewWasClicked: list?.setSelectionWithItemsListed(at: [index])
         }
     }
     
