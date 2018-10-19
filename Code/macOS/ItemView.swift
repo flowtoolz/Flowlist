@@ -185,6 +185,8 @@ class ItemView: LayerBackedView, Observer, Observable
         {
             [weak self] event in
             
+            guard self?.checkIsInWindow(for: itemData) ?? false else { return }
+            
             if event == .wantTextInput
             {
                 self?.textView.startEditing()
@@ -193,23 +195,51 @@ class ItemView: LayerBackedView, Observer, Observable
         
         observe(itemData.state)
         {
-            [weak self] _ in self?.itemStateDidChange()
+            [weak self] _ in
+            
+            guard self?.checkIsInWindow(for: itemData) ?? false else { return }
+            
+            self?.itemStateDidChange()
         }
         
         observe(itemData.tag)
         {
-            [weak self] _ in self?.tagDidChange()
+            [weak self] _ in
+            
+            guard self?.checkIsInWindow(for: itemData) ?? false else { return }
+            
+            self?.tagDidChange()
         }
         
         observe(itemData.isFocused)
         {
-            [weak self] update in self?.set(focused: update.new ?? false)
+            [weak self] update in
+            
+            guard self?.checkIsInWindow(for: itemData) ?? false else { return }
+            
+            self?.set(focused: update.new ?? false)
         }
         
         observe(itemData.isSelected)
         {
-            [weak self] update in self?.set(selected: update.new ?? false)
+            [weak self] update in
+            
+            guard self?.checkIsInWindow(for: itemData) ?? false else { return }
+            
+            self?.set(selected: update.new ?? false)
         }
+    }
+    
+    private func checkIsInWindow(for itemData: ItemData) -> Bool
+    {
+        guard window != nil else
+        {
+            log(warning: "Received update from item data while not being installed in Window.")
+            stopObserving(itemData: itemData)
+            return false
+        }
+        
+        return true
     }
     
     private func stopObserving(itemData: ItemData?)
