@@ -234,7 +234,6 @@ class ItemView: LayerBackedView, Observer, Observable
     {
         guard window != nil else
         {
-            log(warning: "Received update from item data while not being installed in Window.")
             stopObserving(itemData: itemData)
             return false
         }
