@@ -48,6 +48,15 @@ final class ItemData: Observable
         }
     }
     
+    // MARK: - Editing
+    
+    func edit()
+    {
+        send(.wantTextInput)
+    }
+    
+    var wantsTextInput = false
+    
     // MARK: - Observability
     
     var latestUpdate = Event.nothing

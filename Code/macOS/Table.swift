@@ -145,15 +145,37 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     private func didInsert(at indexes: [Int])
     {
-        insertRows(at: IndexSet(indexes), withAnimation: .slideDown)
+        guard let firstIndex = indexes.first else { return }
         
-//        if indexes.count == 1, let index = indexes.first
-//        {
-//            OperationQueue.main.addOperation
-//            {
-//                self.scrollAnimatedTo(row: index) {}
-//            }
-//        }
+        if rowIsVisible(firstIndex)
+        {
+            insertRows(at: indexes, firstIndex: firstIndex)
+        }
+        else
+        {
+            OperationQueue.main.addOperation
+            {
+                // scrolling to this not yet existing index only works because we have a pseudo row at the end (rounded corners)
+                self.scrollAnimatedTo(row: firstIndex)
+                {
+                    self.insertRows(at: indexes, firstIndex: firstIndex)
+                }
+            }
+        }
+    }
+    
+    private func insertRows(at indexes: [Int], firstIndex: Int)
+    {
+        self.insertRows(at: IndexSet(indexes), withAnimation: .slideDown)
+        
+        guard let list = self.list else { return }
+        
+        if indexes.count == 1,
+            list.root?.branches.isValid(index: firstIndex) ?? false,
+            list[firstIndex]?.data?.wantsTextInput ?? false
+        {
+            list.editTitle(at: firstIndex)
+        }
     }
     
     private func didMove(from: Int, to: Int)
@@ -336,7 +358,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         
         list.deselectItems(at: [selected[0]])
         
-        list[selected[1]]?.data?.send(.wantTextInput)
+        list[selected[1]]?.edit()
     }
     
     override func mouseDown(with event: NSEvent)

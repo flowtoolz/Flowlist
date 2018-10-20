@@ -183,14 +183,17 @@ class ItemView: LayerBackedView, Observer, Observable
     {
         observe(itemData)
         {
-            [weak self] event in
+            [weak self, weak itemData] event in
             
-            guard self?.checkIsInWindow(for: itemData) ?? false else { return }
+            guard let me = self,
+                let data = itemData,
+                event == .wantTextInput,
+                me.checkIsInWindow(for: data) else { return }
             
-            if event == .wantTextInput
-            {
-                self?.textView.startEditing()
-            }
+            data.wantsTextInput = false
+            
+            me.textView.startEditing()
+            
         }
         
         observe(itemData.state)

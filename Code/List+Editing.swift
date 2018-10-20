@@ -59,13 +59,12 @@ extension List
         
         let data = ItemData()
         data.state <- root?.highestPriorityState(at: indexes)
+        data.wantsTextInput = true
         
         if let groupIndex = indexes.first,
-            let group = root?.groupNodes(at: indexes, with: data)
+            let _ = root?.groupNodes(at: indexes, with: data)
         {
             setSelectionWithItemsListed(at: [groupIndex])
-            
-            group.data?.send(.wantTextInput)
         }
     }
     

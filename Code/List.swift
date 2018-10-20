@@ -164,7 +164,7 @@ class List: Observable, Observer
             return
         }
         
-        self[index]?.data?.send(.wantTextInput)
+        self[index]?.edit()
     }
     
     // MARK: - Focus

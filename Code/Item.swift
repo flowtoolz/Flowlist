@@ -14,12 +14,14 @@ extension Tree where Data == ItemData
         
         item.data?.state <- belowIsInProgress && aboveIsInProgress ? .inProgress : nil
         
-        guard insert(item, at: index) else { return nil }
+        item.data?.wantsTextInput = true
         
-        item.data?.send(.wantTextInput)
+        guard insert(item, at: index) else { return nil }
         
         return item
     }
+    
+    func edit() { data?.edit() }
     
     convenience init(_ title: String? = nil)
     {
