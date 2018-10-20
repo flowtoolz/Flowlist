@@ -237,6 +237,11 @@ class TextView: NSTextView, NSTextViewDelegate
                                       replacementString: replacementString)
     }
     
+    override func cancelOperation(_ sender: Any?)
+    {
+        messenger.send(.wantToEndEditing)
+    }
+    
     func textDidChange(_ notification: Notification)
     {
         messenger.send(.didChange(text: string))
