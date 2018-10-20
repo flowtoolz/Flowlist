@@ -45,6 +45,11 @@ class BrowserView: LayerBackedView, Observer
     
     // MARK: - Browser
     
+    override func cancelOperation(_ sender: Any?)
+    {
+        browser.move(.left)
+    }
+    
     private func observeBrowser()
     {
         observe(browser)
