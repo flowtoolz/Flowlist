@@ -38,6 +38,8 @@ class WindowMenu: NSMenu, Observer
     
     override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
+        guard menuItem !== windowItem else { return true }
+        
         guard window?.isKeyWindow ?? false else { return false }
         
         switch menuItem
