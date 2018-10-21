@@ -22,6 +22,7 @@ This update improves overall consistency and introduces TXT export.
 • You can use editing commands within item texts: copy (Cmd+C), cut (Cmd+X), paste (Cmd+V) and select all (Cmd+A)
 • You can undo infinite deletions in every list (Cmd+Z).
 • Shift+Click works again to extend the current selection.
+• You can use the ESC key to finish typing and also move back to the overview list.
 • Fix: Visual delays related to selection changes are gone.
 • Minor fixes, performance- and UI improvements
 • Some significant technical improvements under the hood to maintain development speed
