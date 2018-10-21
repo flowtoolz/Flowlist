@@ -27,6 +27,16 @@ class BrowserView: LayerBackedView, Observer
         {
             [weak self] _ in self?.fontSizeDidChange()
         }
+        
+        observe(keyboard)
+        {
+            event in
+            
+            if event.key == .esc && !TextView.isEditing
+            {
+                browser.move(.left)
+            }
+        }
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -44,11 +54,6 @@ class BrowserView: LayerBackedView, Observer
     }
     
     // MARK: - Browser
-    
-    override func cancelOperation(_ sender: Any?)
-    {
-        browser.move(.left)
-    }
     
     private func observeBrowser()
     {
