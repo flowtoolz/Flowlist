@@ -128,7 +128,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         if numberToRemove == 1 && numberToInsertBack == 1 { return }
         
         didRemove(from: Array(0 ..< numberToRemove))
-        didInsert(at: Array(0 ..< numberToInsertBack))
+        insertRows(at: Array(0 ..< numberToInsertBack), firstIndex: 0)
     }
     
     private var isVisible: Bool
@@ -155,7 +155,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         {
             OperationQueue.main.addOperation
             {
-                // scrolling to this not yet existing index only works because we have a pseudo row at the end (rounded corners)
+                // scrolling to this possibly not yet existing index only works because we have a pseudo row at the end (rounded corners)
                 self.scrollAnimatedTo(row: firstIndex)
                 {
                     self.insertRows(at: indexes, firstIndex: firstIndex)

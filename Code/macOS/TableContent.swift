@@ -35,9 +35,7 @@ class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDele
                    viewFor tableColumn: NSTableColumn?,
                    row: Int) -> NSView?
     {
-        guard let list = list else { return nil }
-        
-        guard row < list.count else
+        guard let list = list, row < list.count, tableView.numberOfRows > 1 else
         {
             return tableView.makeView(withIdentifier: Spacer.uiIdentifier,
                                       owner: nil) ?? Spacer()
