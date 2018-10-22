@@ -147,7 +147,9 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         guard let firstIndex = indexes.first else { return }
         
-        if rowIsVisible(firstIndex)
+        // with this possibly not yet existing index it only works because we have a pseudo row at the end (rounded corners)
+        
+        if numberOfRows == 0 || rowIsVisible(firstIndex)
         {
             insertRows(at: indexes, firstIndex: firstIndex)
         }
@@ -155,7 +157,6 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         {
             OperationQueue.main.addOperation
             {
-                // scrolling to this possibly not yet existing index only works because we have a pseudo row at the end (rounded corners)
                 self.scrollAnimatedTo(row: firstIndex)
                 {
                     self.insertRows(at: indexes, firstIndex: firstIndex)
