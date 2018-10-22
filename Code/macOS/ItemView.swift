@@ -282,13 +282,16 @@ class ItemView: LayerBackedView, Observer, Observable
         textView.insertionPointColor = Color.text.nsColor
         textView.selectedTextAttributes = TextView.selectionSyle
         
-        let isInProgress = item?.isInProgress ?? false
-        checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
-                                              isDone: isDone,
-                                              isSelected: isSelected).cgFloat
-        groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
-                                               isDone: isDone,
-                                               isSelected: isSelected).cgFloat
+        if !isEditing
+        {
+            let isInProgress = item?.isInProgress ?? false
+            checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
+                                                  isDone: isDone,
+                                                  isSelected: isSelected).cgFloat
+            groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
+                                                   isDone: isDone,
+                                                   isSelected: isSelected).cgFloat
+        }
     }
     
     private func itemStateDidChange()
