@@ -1,3 +1,5 @@
+It combines creative writing, conceptual mind mapping and task management, ultimately supporting any creative thought process. A unique approach, amazingly simple, vastly flexible/universal, fully animated and incredibly fun.
+
 #Flowlist AppStore Localizations
 
 Primary: English (US), English (UK), English (Canada)
