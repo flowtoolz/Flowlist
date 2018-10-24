@@ -314,7 +314,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             noteHeightOfRows(withIndexesChanged: [index])
             
         case .wantToEndEditingText:
-            NSApp.mainWindow?.makeFirstResponder(self)
+            NSApp.mainWindow?.makeFirstResponder(NSApp.mainWindow)
             
         case .didEditTitle:
             rowBeingEdited = nil
@@ -327,7 +327,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             //editNextSelectedItem()
             
         case .wasClicked(let click):
-            NSApp.mainWindow?.makeFirstResponder(self)
+            NSApp.mainWindow?.makeFirstResponder(NSApp.mainWindow)
             
             guard let list = list else { break }
             
