@@ -15,7 +15,6 @@ class HelpMenu: NSMenu
         addItem(tourItem)
         addItem(videoItem)
         addItem(keyCommandsItem)
-        addItem(blogItem)
         
         addItem(NSMenuItem.separator())
         
@@ -39,7 +38,7 @@ class HelpMenu: NSMenu
     
     // MARK: - Menu Items
     
-    private let videoItem = MenuItem("Watch Screencast Video", key: "")
+    private let videoItem = MenuItem("Watch Screencast Video (Web)", key: "")
     {
         if let url = URL(string: "http://www.flowtoolz.com/flowlist?utm_source=Flowlist&utm_medium=referral&utm_content=WatchScreencastVideo#video")
         {
@@ -47,17 +46,9 @@ class HelpMenu: NSMenu
         }
     }
     
-    private let keyCommandsItem = MenuItem("Learn Key Commands", key: "")
+    private let keyCommandsItem = MenuItem("Learn Key Commands (Web)", key: "")
     {
         if let url = URL(string: "http://www.flowtoolz.com/flowlist?utm_source=Flowlist&utm_medium=referral&utm_content=LearnKeyCommands#key-commands")
-        {
-            NSWorkspace.shared.open(url)
-        }
-    }
-    
-    private let blogItem = MenuItem("Learn About Flowlist", key: "")
-    {
-        if let url = URL(string: "http://www.flowtoolz.com/2018/07/13/how-a-minimalist-productivity-app-changed-my-life.html?utm_source=Flowlist&utm_medium=referral&utm_content=LearnFlowlist")
         {
             NSWorkspace.shared.open(url)
         }
@@ -81,7 +72,7 @@ class HelpMenu: NSMenu
         }
     }
     
-    private let voteItem = MenuItem("Vote on the Next Features", key: "")
+    private let voteItem = MenuItem("Vote on New Features (Web)", key: "")
     {
         if let url = URL(string: "https://flowtoolz.typeform.com/to/R5lp8b")
         {
