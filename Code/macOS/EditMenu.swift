@@ -36,15 +36,6 @@ class EditMenu: NSMenu, Observer
         addItem(NSMenuItem.separator())
         
         addItem(tagItem)
-        
-        observe(keyboard)
-        {
-            [weak self] in
-            
-            guard NSApp.mainWindow?.isKeyWindow ?? false else { return }
-            
-            if $0.key == .space { self?.createAtTop() }
-        }
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
@@ -151,16 +142,10 @@ class EditMenu: NSMenu, Observer
                                                 modifiers: [],
                                                 validator: self)
     {
-        [weak self] in self?.createAtTop()
+        [weak self] in self?.dummyFunction()
     }
     
-    private func createAtTop()
-    {
-        if !TextView.isEditing && !reachedItemNumberLimit
-        {
-            browser.focusedList.create(at: 0)
-        }
-    }
+    private func dummyFunction() {}
     
     private lazy var renameItem = MenuItem("Rename Item",
                                            key: "\n",

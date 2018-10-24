@@ -28,15 +28,6 @@ class Menu: NSMenu
     }
     
     private let windowMenu = WindowMenu()
-    
-    // MARK: - Avoid Space Key Equivalent Altogether For It's Unreliable
-    
-    override func performKeyEquivalent(with event: NSEvent) -> Bool
-    {
-        guard event.key != .space else { return true }
-        
-        return super.performKeyEquivalent(with: event)
-    }
 }
 
 //menu.addItem(withTitle: "Select All",

@@ -7,7 +7,7 @@ class ViewController: NSViewController, Observer
 {
     override func loadView()
     {
-        view = LayerBackedView()
+        view = View()
         
         // For making screen shots and screen recordings
 //        #if DEBUG
@@ -118,4 +118,15 @@ class ViewController: NSViewController, Observer
     }
     
     private lazy var browserView = view.addForAutoLayout(BrowserView())
+    
+    class View: LayerBackedView
+    {
+        open override func performKeyEquivalent(with event: NSEvent) -> Bool
+        {
+            // just so this goes directly to the menu
+            if event.type == .keyDown && event.key == .enter { return false }
+            
+            return super.performKeyEquivalent(with: event)
+        }
+    }
 }

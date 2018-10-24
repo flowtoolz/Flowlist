@@ -27,16 +27,6 @@ class BrowserView: LayerBackedView, Observer
         {
             [weak self] _ in self?.fontSizeDidChange()
         }
-        
-        observe(keyboard)
-        {
-            event in
-            
-            if event.key == .esc && !TextView.isEditing
-            {
-                browser.move(.left)
-            }
-        }
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -54,6 +44,28 @@ class BrowserView: LayerBackedView, Observer
     }
     
     // MARK: - Browser
+    
+    open override func performKeyEquivalent(with event: NSEvent) -> Bool
+    {
+        guard event.type == .keyDown else
+        {
+            return super.performKeyEquivalent(with: event)
+        }
+        
+        switch event.key
+        {
+        case .esc: browser.move(.left)
+        case .tab: browser.move(.right)
+        case .space:
+            if !reachedItemNumberLimit
+            {
+                browser.focusedList.create(at: 0)
+            }
+        default: return super.performKeyEquivalent(with: event)
+        }
+        
+        return true
+    }
     
     private func observeBrowser()
     {
