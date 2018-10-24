@@ -451,7 +451,6 @@ class ItemView: LayerBackedView, Observer, Observable
     
     private func updateTextView()
     {
-        // TODO: is this still needed from El Capitan onwards?
         // https://stackoverflow.com/questions/19121367/uitextviews-in-a-uitableview-link-detection-bug-in-ios-7
         textView.string = ""
         textView.string = item?.title ?? ""
