@@ -116,9 +116,9 @@ This update brings minor fixes and performance improvements:
 
 # Flowlist AppStore Description
 
-## Version 1.6.0
+## Version 1.6.1
 
-Flowlist is an elegant self-management tool optimized for total creative focus. Hierarchical lists make it as simple and adaptable as a box of legos. Organize your thoughts and your life in a state of flow!
+Flowlist is an elegant writing and self-management tool optimized for total creative focus. Hierarchical lists make it as simple and adaptable as a box of legos. Organize your thoughts and your life in a state of flow!
 
 Watch a 30 second video at www.flowlistapp.com
 It shows an old version but still illustrates the idea.
@@ -131,6 +131,7 @@ You may use Flowlist to:
 
 • Capture whatever pops into your head
 • Support your thought process
+• Work on texts for blogs, papers or books
 • Grow a backlog of ideas
 • Establish good habits
 • Manage tasks and projects
@@ -140,7 +141,7 @@ You may use Flowlist to:
 Features:
 
 • Create your own item hierarchy: Group items together, add subitems to any (empty) item, move items between levels.
-• Export lists at any level as structured text with paragraphs, headings, sub-headings etc.
+• Export any list and its item hierarchy as plain text (.txt) or markdown (.md) with paragraphs, headings, sub-headings etc.
 • Tag items with colors.
 • Switch to Dark Mode to give your eyes a break, sleep better, work at night and feel like a pro.
 • Paste content from any document or web page. Flowlist detects distinct items.
