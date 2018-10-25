@@ -1,0 +1,147 @@
+import AppKit
+import UIToolz
+import GetLaid
+import SwiftyToolz
+
+extension Tree where Data == ItemData
+{
+    func export() { ItemExportPanel().export(self) }
+}
+
+class ItemExportPanel: NSSavePanel
+{
+    // MARK: - Initialize
+    
+    override init(contentRect: NSRect,
+                  styleMask style: NSWindow.StyleMask,
+                  backing backingStoreType: NSWindow.BackingStoreType,
+                  defer flag: Bool)
+    {
+        super.init(contentRect: contentRect,
+                   styleMask: style,
+                   backing: backingStoreType,
+                   defer: flag)
+        
+        message = "Export Focused List as Text"
+        showsHiddenFiles = false
+        showsTagField = false
+        canCreateDirectories = true
+        allowsOtherFileTypes = false
+        isExtensionHidden = false
+        allowedFileTypes = [preferredFormat.fileExtension]
+        accessoryView = formatView
+        
+        constrainFormatSelectionView()
+    }
+    
+    // MARK: - Export
+    
+    func export(_ item: Item)
+    {
+        nameFieldStringValue = item.title ?? "Untitled"
+        
+        begin
+            {
+                [weak self] modalResponse in
+                
+                guard let me = self,
+                    modalResponse.rawValue == NSFileHandlingPanelOKButton,
+                    let fileUrl = me.url
+                    else
+                {
+                    return
+                }
+                
+                let text = item.text(me.selectedFormat)
+                
+                do
+                {
+                    try text.write(to: fileUrl, atomically: false, encoding: .utf8)
+                }
+                catch let error
+                {
+                    let title = "Couldn't write \"\(fileUrl.lastPathComponent)\""
+                    
+                    show(alert: error.localizedDescription, title: title)
+                }
+        }
+    }
+    
+    // MARK: - Select Export Format
+    
+    private func constrainFormatSelectionView()
+    {
+        formatContainer.constrainTopToParent()
+        formatContainer.constrainBottomToParent()
+        formatContainer.constrainCenterXToParent()
+        
+        formatLabel.constrainLeftToParent(inset: 10)
+        formatLabel.constrainCenterYToParent()
+        
+        formatMenu.constrain(toTheRightOf: formatLabel, gap: 10)
+        formatMenu.constrainToParentExcludingLeft(insetTop: 10,
+                                                  insetBottom: 10,
+                                                  insetRight: 10)
+    }
+    
+    private lazy var formatLabel: Label =
+    {
+        let label = formatContainer.addForAutoLayout(Label())
+        
+        label.stringValue = "Select Format:"
+        label.alignment = .right
+        
+        return label
+    }()
+    
+    @objc private func userDidChangeFormat()
+    {
+        allowedFileTypes = [selectedFormat.fileExtension]
+        
+        preferredFormat = selectedFormat
+    }
+    
+    var selectedFormat: TextFormat
+    {
+        return TextFormat.all[formatMenu.indexOfSelectedItem]
+    }
+    
+    private lazy var formatMenu: NSPopUpButton =
+    {
+        let menu = formatContainer.addForAutoLayout(NSPopUpButton())
+        
+        menu.addItems(withTitles: TextFormat.all.map { $0.rawValue })
+        menu.selectItem(withTitle: preferredFormat.rawValue)
+        menu.target = self
+        menu.action = #selector(userDidChangeFormat)
+        
+        return menu
+    }()
+    
+    private lazy var formatContainer = formatView.addForAutoLayout(NSView())
+    
+    private let formatView = NSView()
+    
+    // MARK: - Preferred Format
+    
+    private var preferredFormat: TextFormat
+    {
+        get
+        {
+            guard let formatString = UserDefaults.standard.string(forKey: preferredFormatKey) else
+            {
+                return .plain
+            }
+            
+            return TextFormat(rawValue: formatString) ?? .plain
+        }
+        
+        set
+        {
+            UserDefaults.standard.set(newValue.rawValue,
+                                      forKey: preferredFormatKey)
+        }
+    }
+    
+    private let preferredFormatKey = "UserDefaultsKeyExportFormat"
+}

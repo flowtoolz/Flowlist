@@ -37,7 +37,7 @@ class ApplicationMenu: NSMenu, Observer
     
     // MARK: - Export
     
-    private lazy var exportItem = MenuItem("Export List as Text",
+    private lazy var exportItem = MenuItem("Export List ...",
                                            key: "e",
                                            validator: self)
     {

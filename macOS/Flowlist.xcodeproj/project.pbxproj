@@ -16,6 +16,8 @@
 		9E2CCE8D20C1DE030037D755 /* List+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CCE8C20C1DE030037D755 /* List+Clipboard.swift */; };
 		9E2F83E520C8639F003E771E /* List+NSPasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F83E420C8639F003E771E /* List+NSPasteboard.swift */; };
 		9E2F83E720C88220003E771E /* SelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2F83E620C88220003E771E /* SelectionMenu.swift */; };
+		9E3EB55C2181E83A00681953 /* ItemExportPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EB55B2181E83A00681953 /* ItemExportPanel.swift */; };
+		9E3EB55E2181E89200681953 /* TextFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EB55D2181E89200681953 /* TextFormat.swift */; };
 		9E3F69332115ADE2002D595D /* Item+WelcomeTour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F69322115ADE2002D595D /* Item+WelcomeTour.swift */; };
 		9E4238E12180DF8800772876 /* GroupIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4238E02180DF8800772876 /* GroupIcon.swift */; };
 		9E43503F20F350D200014FFF /* WindowMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E43503E20F350D200014FFF /* WindowMenu.swift */; };
@@ -48,7 +50,6 @@
 		9ECD2953214FBE44000472B1 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECD2952214FBE44000472B1 /* MenuItem.swift */; };
 		9ED5C8DD20DF970000EF84CB /* PurchaseContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */; };
 		9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB5D032174AF740048D7C5 /* Item+Text.swift */; };
-		9EDB5D062174CA900048D7C5 /* Item+Export.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB5D052174CA900048D7C5 /* Item+Export.swift */; };
 		9EE2EE4B20B4A693007CDC2F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextView.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
 		9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */; };
@@ -85,6 +86,8 @@
 		9E2CCE8C20C1DE030037D755 /* List+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "List+Clipboard.swift"; path = "../Code/List+Clipboard.swift"; sourceTree = "<group>"; };
 		9E2F83E420C8639F003E771E /* List+NSPasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "List+NSPasteboard.swift"; path = "../Code/macOS/List+NSPasteboard.swift"; sourceTree = "<group>"; };
 		9E2F83E620C88220003E771E /* SelectionMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectionMenu.swift; path = ../Code/macOS/SelectionMenu.swift; sourceTree = "<group>"; };
+		9E3EB55B2181E83A00681953 /* ItemExportPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ItemExportPanel.swift; path = ../Code/macOS/ItemExportPanel.swift; sourceTree = "<group>"; };
+		9E3EB55D2181E89200681953 /* TextFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextFormat.swift; path = ../Code/TextFormat.swift; sourceTree = "<group>"; };
 		9E3F69322115ADE2002D595D /* Item+WelcomeTour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Item+WelcomeTour.swift"; path = "../Code/Item+WelcomeTour.swift"; sourceTree = "<group>"; };
 		9E4238E02180DF8800772876 /* GroupIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GroupIcon.swift; path = ../Code/macOS/GroupIcon.swift; sourceTree = "<group>"; };
 		9E43503E20F350D200014FFF /* WindowMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WindowMenu.swift; path = ../Code/macOS/WindowMenu.swift; sourceTree = "<group>"; };
@@ -119,7 +122,6 @@
 		9ECD2952214FBE44000472B1 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuItem.swift; path = ../Code/macOS/MenuItem.swift; sourceTree = "<group>"; };
 		9ED5C8DC20DF970000EF84CB /* PurchaseContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PurchaseContentView.swift; path = ../Code/macOS/PurchaseContentView.swift; sourceTree = "<group>"; };
 		9EDB5D032174AF740048D7C5 /* Item+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Item+Text.swift"; path = "../Code/Item+Text.swift"; sourceTree = "<group>"; };
-		9EDB5D052174CA900048D7C5 /* Item+Export.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Item+Export.swift"; path = "../Code/macOS/Item+Export.swift"; sourceTree = "<group>"; };
 		9EE2EE4A20B4A693007CDC2F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextView.swift; path = ../Code/macOS/TextView.swift; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Style.swift"; path = "../Code/Float+Style.swift"; sourceTree = "<group>"; };
 		9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckBox.swift; path = ../Code/macOS/CheckBox.swift; sourceTree = "<group>"; };
@@ -395,8 +397,9 @@
 		9EDB5D022174AF430048D7C5 /* Export Text */ = {
 			isa = PBXGroup;
 			children = (
-				9EDB5D052174CA900048D7C5 /* Item+Export.swift */,
+				9E3EB55B2181E83A00681953 /* ItemExportPanel.swift */,
 				9EDB5D032174AF740048D7C5 /* Item+Text.swift */,
+				9E3EB55D2181E89200681953 /* TextFormat.swift */,
 			);
 			name = "Export Text";
 			sourceTree = "<group>";
@@ -573,9 +576,9 @@
 				9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */,
 				9EA63839216F8BB100D1503C /* List+Selection.swift in Sources */,
 				9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */,
-				9EDB5D062174CA900048D7C5 /* Item+Export.swift in Sources */,
 				9E43503F20F350D200014FFF /* WindowMenu.swift in Sources */,
 				9E08E6B320DD13E000C32356 /* PurchaseView.swift in Sources */,
+				9E3EB55C2181E83A00681953 /* ItemExportPanel.swift in Sources */,
 				9EF0A78A20B5E26F00E1A23A /* TableContent.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */,
 				9E60275C21282F91005FFACD /* Font+Style.swift in Sources */,
@@ -606,6 +609,7 @@
 				9E5768C220C15CDF00749C0C /* Tree+Hashable.swift in Sources */,
 				9EC2C76D213FF26800823632 /* Row.swift in Sources */,
 				9EA2B96B1EF0A80A00F05F20 /* Store+Persistence.swift in Sources */,
+				9E3EB55E2181E89200681953 /* TextFormat.swift in Sources */,
 				9E7651941EEF428100DE2B07 /* ItemView.swift in Sources */,
 				9EF6C67B20E21D6B0003264A /* PriceTag.swift in Sources */,
 				9E2F83E720C88220003E771E /* SelectionMenu.swift in Sources */,
