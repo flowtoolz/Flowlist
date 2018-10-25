@@ -54,7 +54,12 @@ class BrowserView: LayerBackedView, Observer
         
         switch event.key
         {
-        case .esc: browser.move(.left)
+        case .esc:
+            if !browser.canMove(.left)
+            {
+                return super.performKeyEquivalent(with: event)
+            }
+            browser.move(.left)
         case .tab: browser.move(.right)
         case .space:
             if !reachedItemNumberLimit
