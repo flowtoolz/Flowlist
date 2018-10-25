@@ -149,7 +149,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         
         // with this possibly not yet existing index it only works because we have a pseudo row at the end (rounded corners)
         
-        if numberOfRows == 0 || rowIsVisible(firstIndex)
+        if numberOfRows <= 1 || rowIsVisible(firstIndex)
         {
             insertRows(at: indexes, firstIndex: firstIndex)
         }
