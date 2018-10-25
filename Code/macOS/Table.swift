@@ -154,7 +154,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         guard indexes.count == 1,
             numberOfRows > 1,
             !rowIsVisible(firstIndex) else { return }
-        
+
         OperationQueue.main.addOperation
         {
             self.scrollAnimatedTo(row: firstIndex)
@@ -170,7 +170,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     private func insertRows(at indexes: [Int], firstIndex: Int)
     {
-        self.insertRows(at: IndexSet(indexes), withAnimation: .slideDown)
+        insertRows(at: IndexSet(indexes), withAnimation: .slideDown)
         
         guard let list = self.list else { return }
         
@@ -178,6 +178,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             list.root?.branches.isValid(index: firstIndex) ?? false,
             list[firstIndex]?.data?.wantsTextInput ?? false
         {
+            rowBeingEdited = firstIndex
             list.editTitle(at: firstIndex)
         }
     }
@@ -227,11 +228,14 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     func itemViewHeight(at row: Int) -> CGFloat
     {
-        guard let item = list?[row] else { return ItemView.heightWithSingleLine }
+        guard let item = list?[row] else
+        {
+            return ItemView.heightWithSingleLine
+        }
         
         var height = viewHeight(for: item)
         
-        if row == rowBeingEdited
+        if row == rowBeingEdited || item.data?.wantsTextInput ?? false
         {
             height += TextView.lineHeight + TextView.lineSpacing
         }
@@ -304,11 +308,13 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         case .didNothing: break
             
         case .willEditTitle:
-            rowBeingEdited = index
+            if index != rowBeingEdited
+            {
+                rowBeingEdited = index
+                noteHeightOfRows(withIndexesChanged: [index])
+            }
             
             send(event)
-            
-            noteHeightOfRows(withIndexesChanged: [index])
             
         case .didChangeTitle:
             guard let item = itemView.item else { break }
