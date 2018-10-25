@@ -50,10 +50,7 @@ final class ItemData: Observable
     
     // MARK: - Editing
     
-    func edit()
-    {
-        send(.wantTextInput)
-    }
+    func edit() { send(.wantTextInput) }
     
     var wantsTextInput = false
     
