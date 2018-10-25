@@ -190,10 +190,10 @@ class ItemView: LayerBackedView, Observer, Observable
                 event == .wantTextInput,
                 me.checkIsInWindow(for: data) else { return }
             
-            data.wantsTextInput = false
-            
-            me.textView.startEditing()
-            
+            if me.textView.startEditing()
+            {
+                data.wantsTextInput = false
+            }
         }
         
         observe(itemData.state)

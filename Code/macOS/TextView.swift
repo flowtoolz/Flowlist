@@ -182,21 +182,24 @@ class TextView: NSTextView, NSTextViewDelegate
     
     // MARK: - Editing
     
-    func startEditing()
+    @discardableResult
+    func startEditing() -> Bool
     {
         guard window != nil else
         {
             log(error: "TextView is not in window hierarchy. Forgot to stop ItemData observation?")
-            return
+            return false
         }
         
         guard NSApp.mainWindow?.makeFirstResponder(self) ?? false else
         {
             log(error: "Could not become first responder.")
-            return
+            return false
         }
         
         setSelectedRange(NSMakeRange(string.count, 0))
+        
+        return true
     }
     
     override var acceptsFirstResponder: Bool
