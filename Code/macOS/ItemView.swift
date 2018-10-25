@@ -119,7 +119,7 @@ class ItemView: LayerBackedView, Observer, Observable
         
         // group icon image
         
-        updateGroupIconColor(light: lightContent)
+        groupIcon.set(lightMode: lightContent)
         
         // other
         
@@ -272,7 +272,7 @@ class ItemView: LayerBackedView, Observer, Observable
         let lightContent = Color.itemContentIsLight(isSelected: isSelected,
                                                     isFocused: isFocused)
         checkBox.set(white: lightContent)
-        updateGroupIconColor(light: lightContent)
+        groupIcon.set(lightMode: lightContent)
         
         textView.set(color: .itemText(isDone: isDone,
                                       isSelected: isSelected,
@@ -379,8 +379,8 @@ class ItemView: LayerBackedView, Observer, Observable
         {
             let lightContent = Color.itemContentIsLight(isSelected: isSelected,
                                                         isFocused: isFocused)
-            updateGroupIconColor(light: lightContent)
             
+            groupIcon.set(lightMode: lightContent)
             checkBox.set(white: lightContent)
         }
         
@@ -416,7 +416,8 @@ class ItemView: LayerBackedView, Observer, Observable
             
             let lightContent = Color.itemContentIsLight(isSelected: isSelected,
                                                         isFocused: isFocused)
-            updateGroupIconColor(light: lightContent)
+            
+            groupIcon.set(lightMode: lightContent)
             checkBox.set(white: lightContent)
         }
     }
@@ -530,7 +531,6 @@ class ItemView: LayerBackedView, Observer, Observable
                                              isSelected: isSelected).cgFloat
         
         NSAnimationContext.beginGrouping()
-        NSAnimationContext.current.allowsImplicitAnimation = false
         NSAnimationContext.current.duration = 0.2
         NSAnimationContext.current.completionHandler =
         {
@@ -602,26 +602,11 @@ class ItemView: LayerBackedView, Observer, Observable
         groupIcon.constrainRightToParent()
         groupIcon.constrainCenterY(to: layoutGuide)
         groupIcon.constrainHeight(to: checkBox)
-        groupIcon.constrainWidth(to: ItemView.groupIconWidthMultiplier,
+        groupIcon.constrainWidth(to: Float.groupIconWidthFactor.cgFloat,
                                  of: layoutGuide)
     }
     
-    private static let groupIconWidthMultiplier: CGFloat = 0.75
-    
-    private func updateGroupIconColor(light: Bool)
-    {
-        groupIcon.image = ItemView.groupIconImage(light: light)
-    }
-    
-    private static func groupIconImage(light: Bool) -> NSImage
-    {
-        return light ? groupIconImageWhite : groupIconImageBlack
-    }
-    
-    private static let groupIconImageBlack = #imageLiteral(resourceName: "container_indicator_pdf")
-    private static let groupIconImageWhite = #imageLiteral(resourceName: "container_indicator_white")
-    
-    private lazy var groupIcon = addForAutoLayout(Icon())
+    private lazy var groupIcon = addForAutoLayout(GroupIcon())
     
     // MARK: - Layout Guide
     
@@ -649,7 +634,7 @@ class ItemView: LayerBackedView, Observer, Observable
         
         let leftInset  = CGFloat(Int(referenceHeight * textLeftMultiplier + 0.5))
         
-        let rightInset = CGFloat(Int(referenceHeight * groupIconWidthMultiplier + 0.49999))
+        let rightInset = CGFloat(Int(referenceHeight * Float.groupIconWidthFactor.cgFloat + 0.49999))
         
         let textWidth = ((pixelsPerPoint * width) - (leftInset + rightInset)) / pixelsPerPoint
         

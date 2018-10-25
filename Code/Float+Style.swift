@@ -2,6 +2,7 @@ import SwiftyToolz
 
 extension Float
 {
+    static let groupIconWidthFactor: Float = 0.75
     static let relativeTextInset: Float = 0.85
     static let listCornerRadius: Float = 6
     static let listGap: Float = 10
