@@ -149,17 +149,20 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         
         // with this possibly not yet existing index it only works because we have a pseudo row at the end (rounded corners)
         
-        if numberOfRows <= 1 || rowIsVisible(firstIndex)
+        insertRows(at: indexes, firstIndex: firstIndex)
+        
+        guard indexes.count == 1,
+            numberOfRows > 1,
+            !rowIsVisible(firstIndex) else { return }
+        
+        OperationQueue.main.addOperation
         {
-            insertRows(at: indexes, firstIndex: firstIndex)
-        }
-        else
-        {
-            OperationQueue.main.addOperation
+            self.scrollAnimatedTo(row: firstIndex)
             {
-                self.scrollAnimatedTo(row: firstIndex)
+                if let itemData = self.list?[firstIndex]?.data,
+                    itemData.wantsTextInput
                 {
-                    self.insertRows(at: indexes, firstIndex: firstIndex)
+                    itemData.edit()
                 }
             }
         }
