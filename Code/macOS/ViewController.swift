@@ -119,7 +119,7 @@ class ViewController: NSViewController, Observer
     
     private lazy var browserView = view.addForAutoLayout(BrowserView())
     
-    class View: LayerBackedView
+    private class View: LayerBackedView
     {
         open override func performKeyEquivalent(with event: NSEvent) -> Bool
         {
