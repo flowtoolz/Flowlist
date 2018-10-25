@@ -16,6 +16,19 @@ The 1st Hierarchical Task List
 
 # Flowlist AppStore Update Text
 
+
+## 1.6.1
+
+This update improves animations and adds Markdown export.
+
+• You can chose between plain text (.txt) and markdown (.md) in the export panel. Flowlist also remembers your last choice.
+• You can move to details via TAB key as an additional shortcut. 
+• From your Home (root) list, you can leave fullsscreen via ESC key.
+• Fix: When adding an item to the top via Space key while scroll position is not at the top, scrolling plus animation is smoother and without delay.
+• Fix: When grouping items or adding an item, the animation is smooth again. The new item doesn't just plop in.
+• Fix: When switching color schemes during editing, the item icons remain hidden as they should.
+• As always: Some technical improvements under the hood to maintain development speed
+
 ## 1.6.0
 
 This update improves overall consistency and introduces TXT export. 
