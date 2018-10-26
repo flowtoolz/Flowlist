@@ -6,24 +6,15 @@ Primary: English (US), English (UK), English (Canada)
 
 All other languages get the secondary keyword list
 
-#Flowlist AppStore Name & Subtitle
-
-[30 characters max!](http://www.charactercountonline.com)
-
-Flowlist – Manage Life in Flow
-
-The 1st Hierarchical Task List
-
 # Flowlist AppStore Update Text
-
 
 ## 1.6.1
 
 This update improves animations and adds Markdown export.
 
-• You can chose between plain text (.txt) and markdown (.md) in the export panel. Flowlist also remembers your last choice.
+• You can choose between plain text (.txt) and markdown (.md) in the export panel. Flowlist also remembers your last choice.
 • You can move to details via TAB key as an additional shortcut. 
-• From your Home (root) list, you can leave fullsscreen via ESC key.
+• From your Home (root) list, you can leave fullscreen via ESC key.
 • Fix: When adding an item to the top via Space key while scroll position is not at the top, scrolling plus animation is smoother and without delay.
 • Fix: When grouping items or adding an item, the animation is smooth again. The new item doesn't just plop in.
 • Fix: When switching color schemes during editing, the item icons remain hidden as they should.
@@ -118,7 +109,7 @@ This update brings minor fixes and performance improvements:
 
 ## Version 1.6.1
 
-Flowlist is an elegant writing and self-management tool optimized for total creative focus. Hierarchical lists make it as simple and adaptable as a box of legos. Organize your thoughts and your life in a state of flow!
+Flowlist is an elegant writing and self-management tool optimized for creative focus. Hierarchical lists make it as simple and adaptable as a box of legos. Organize your thoughts and your life in a state of flow!
 
 Watch a 30 second video at www.flowlistapp.com
 It shows an old version but still illustrates the idea.
@@ -255,7 +246,7 @@ Use Flowlist to:
 Flowlist allows you to be in a flow state:
 
 * Evolve your own item hierarchy: Group items together, add subitems into any item, move items to a whole different level. Flowlist does not force your items into categories like project, task, subtask or description.
-* You chose the scope of your focus by navigating your item hierarchy. The same principles apply on all levels. The overview is to the left and details are to the right.
+* You choose the scope of your focus by navigating your item hierarchy. The same principles apply on all levels. The overview is to the left and details are to the right.
 * Your hands never have to leave the keyboard for anything. You can do everything via a few intuitive key commands
 * The interface is super clean. No buttons, knobs, alerts, popups and such clutter.
 * Use Flowlist in fullscreen or in monotasking mode to really focus.
