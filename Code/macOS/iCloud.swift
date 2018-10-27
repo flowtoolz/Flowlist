@@ -98,6 +98,13 @@ class ICloud
         }
     }
     
+    private func reference(toParent parent: CKRecord) -> CKReference
+    {
+        let parentId = parent.recordID
+        
+        return CKReference(recordID: parentId, action: .deleteSelf)
+    }
+    
     private var database: CKDatabase
     {
         return container.privateCloudDatabase
