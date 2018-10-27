@@ -24,13 +24,47 @@ class ICloud
                 print("Could not determine iCloud account status.")
             case .available:
                 print("iCloud account is available.")
-                let rootItemId = CKRecordID(recordName: "test")
-                self.fetchSubitemRecords(withSuperItemID: rootItemId)
+                self.setupSubscriptions()
             case .restricted:
                 print("iCloud account is restricted.")
             case .noAccount:
                 print("This device is not connected to an iCloud account.")
             }
+        }
+    }
+    
+    // MARK: - Observe Changes in iCloud
+    
+    private func setupSubscriptions()
+    {
+        let options: CKSubscriptionOptions =
+        [
+            .firesOnRecordUpdate,
+            .firesOnRecordCreation,
+            .firesOnRecordDeletion
+        ]
+        
+        let subscription = CKSubscription(recordType: "Item",
+                                          predicate: NSPredicate(value: true),
+                                          options: options)
+        
+        let notificationInfo = CKSubscription.NotificationInfo()
+        notificationInfo.alertLocalizationKey = "Items Changed"
+        notificationInfo.shouldBadge = false
+        
+        subscription.notificationInfo = notificationInfo
+        
+        database.save(subscription)
+        {
+            savedSubscription, error in
+            
+            if let error = error
+            {
+                print("Could not save iCloud subscription. Error: \(error.localizedDescription)")
+                return
+            }
+            
+            print("Saved iCloud subscription: \(savedSubscription.debugDescription)")
         }
     }
     
