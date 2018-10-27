@@ -24,7 +24,6 @@ class ICloud
                 print("Could not determine iCloud account status.")
             case .available:
                 print("iCloud account is available.")
-//                self.fetchAndModifyTestRecord()
                 let rootItemId = CKRecordID(recordName: "test")
                 self.fetchSubitemRecords(withSuperItemID: rootItemId)
             case .restricted:
@@ -106,9 +105,7 @@ class ICloud
     
     private func createReference(toOwner owner: CKRecord) -> CKReference
     {
-        let ownerId = owner.recordID
-        
-        return CKReference(recordID: ownerId, action: .deleteSelf)
+        return CKReference(recordID: owner.recordID, action: .deleteSelf)
     }
     
     private var database: CKDatabase
