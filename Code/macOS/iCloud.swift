@@ -24,7 +24,7 @@ class ICloud
                 print("Could not determine iCloud account status.")
             case .available:
                 print("iCloud account is available.")
-                self.setupSubscriptions()
+                //self.setupSubscriptions()
             case .restricted:
                 print("iCloud account is restricted.")
             case .noAccount:

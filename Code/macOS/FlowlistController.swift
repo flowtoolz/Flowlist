@@ -28,7 +28,7 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
             self?.window.backgroundColor = Color.windowBackground.nsColor
         }
         
-        iCloud.test()
+        NSApp.registerForRemoteNotifications(matching: [.badge, .sound, .alert])
     }
     
     private let iCloud = ICloud()
@@ -99,6 +99,20 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     }
     
     private var appearanceObservation: NSKeyValueObservation?
+    
+    // MARK: - Push Notifications
+    
+    func application(_ application: NSApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data)
+    {
+        log("Did register for push notifications.")
+    }
+    
+    func application(_ application: NSApplication,
+                     didFailToRegisterForRemoteNotificationsWithError error: Error)
+    {
+        log(error: "Could not register for push notifications. \(error.localizedDescription)")
+    }
     
     // MARK: - Menu & Mindow
     
