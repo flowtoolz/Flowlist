@@ -12,7 +12,7 @@ class ICloud
         
         let recordId = CKRecordID(recordName: "test")
         
-        let record = CKRecord(recordType: "test type", recordID: recordId)
+        let record = CKRecord(recordType: "Item", recordID: recordId)
         
         database.save(record)
         {

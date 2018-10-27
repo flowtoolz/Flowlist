@@ -19,8 +19,6 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
         fullVersionPurchaseController.setup()
         store.load()
         
-//        iCloud.test()
-        
         observeSystemAppearance()
         
         observe(darkMode)
@@ -29,6 +27,8 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
             
             self?.window.backgroundColor = Color.windowBackground.nsColor
         }
+        
+        iCloud.test()
     }
     
     private let iCloud = ICloud()
