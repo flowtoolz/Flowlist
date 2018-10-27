@@ -22,7 +22,8 @@ class ICloud
                 print("Could not determine iCloud account status.")
             case .available:
                 print("iCloud account is available.")
-                self.fetchAndModifyTestRecord()
+//                self.fetchAndModifyTestRecord()
+                self.queryRecords()
             case .restricted:
                 print("iCloud account is restricted.")
             case .noAccount:
@@ -77,6 +78,23 @@ class ICloud
             savedRecord, error in
             
             print("saved record: \(savedRecord.debugDescription)")
+        }
+    }
+    
+    private func queryRecords()
+    {
+//        let predicate = NSPredicate(format: "text = %@", "this is a test text modified")
+        let all = NSPredicate.init(value: true)
+        let query = CKQuery(recordType: "Item", predicate: all)
+        
+        database.perform(query, inZoneWith: .default)
+        {
+            records, error in
+            
+            for record in records ?? []
+            {
+                print("queried record name: \(record.recordID.recordName)")
+            }
         }
     }
     
