@@ -41,29 +41,33 @@ class ItemExportPanel: NSSavePanel
         nameFieldStringValue = item.title ?? "Untitled"
         
         begin
+        {
+            [weak self] modalResponse in
+            
+            guard modalResponse == .OK else
             {
-                [weak self] modalResponse in
-                
-                guard let me = self,
-                    modalResponse.rawValue == NSFileHandlingPanelOKButton,
-                    let fileUrl = me.url
-                    else
+                if modalResponse != .cancel
                 {
-                    return
+                    log(error: "Export panel closed with unexpected response. Raw value: \(modalResponse.rawValue)")
                 }
                 
-                let text = item.text(me.selectedFormat)
+                return
+            }
+            
+            guard let me = self, let fileUrl = me.url else { return }
+            
+            let text = item.text(me.selectedFormat)
+            
+            do
+            {
+                try text.write(to: fileUrl, atomically: false, encoding: .utf8)
+            }
+            catch let error
+            {
+                let title = "Couldn't write \"\(fileUrl.lastPathComponent)\""
                 
-                do
-                {
-                    try text.write(to: fileUrl, atomically: false, encoding: .utf8)
-                }
-                catch let error
-                {
-                    let title = "Couldn't write \"\(fileUrl.lastPathComponent)\""
-                    
-                    show(alert: error.localizedDescription, title: title)
-                }
+                show(alert: error.localizedDescription, title: title)
+            }
         }
     }
     
