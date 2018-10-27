@@ -2,6 +2,8 @@ import CloudKit
 
 class ICloud
 {
+    // MARK: - Testing
+    
     func test()
     {
         print("TESTING ICLOUD")
@@ -23,7 +25,8 @@ class ICloud
             case .available:
                 print("iCloud account is available.")
 //                self.fetchAndModifyTestRecord()
-                self.queryRecords()
+                let rootItemId = CKRecordID(recordName: "test")
+                self.fetchSubitemRecords(withSuperItemID: rootItemId)
             case .restricted:
                 print("iCloud account is restricted.")
             case .noAccount:
@@ -32,44 +35,64 @@ class ICloud
         }
     }
     
-    private func fetchAndModifyTestRecord()
-    {
-        let recordId = CKRecordID(recordName: "test3")
+    // MARK: - Create Item Record
     
-        database.fetch(withRecordID: recordId)
-        {
-            record, error in
-            
-            if let error = error
-            {
-                print("An error occured fetching iCloud record: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let record = record else { return }
-            
-            print("fetched record: \(record.debugDescription)")
-            
-            print("all keys: \(record.allKeys())")
-            
-            let text: String = record["text"] ?? "nil"
-            
-            record["text"] = text + " modified"
-            
-            self.save(record)
-        }
-    }
-    
-    private func createRecord(with text: String)
+    private func createItemRecord(with text: String) -> CKRecord
     {
-        let recordId = CKRecordID(recordName: "id \(Int.random(max: Int.max))" + text)
+        let recordId = CKRecordID(recordName: "id \(Int.random(max: Int.max))")
         
         let record = CKRecord(recordType: "Item", recordID: recordId)
         
         record["text"] = text
         
-        save(record)
+        return record
     }
+    
+    // MARK: - Fetch Item Records
+    
+    private func fetchAllItems()
+    {
+        fetchItemRecords(with: NSPredicate(value: true))
+    }
+    
+    private func fetchSubitemRecords(of itemRecord: CKRecord)
+    {
+        guard itemRecord.recordType == "Item" else { return }
+        
+        fetchSubitemRecords(withSuperItemID: itemRecord.recordID)
+    }
+    
+    private func fetchSubitemRecords(withSuperItemID id: CKRecordID)
+    {
+        let predicate = NSPredicate(format: "superItem = %@", id)
+        
+        fetchItemRecords(with: predicate)
+    }
+    
+    private func fetchItemRecords(with predicate: NSPredicate)
+    {
+        let query = CKQuery(recordType: "Item", predicate: predicate)
+        
+        database.perform(query, inZoneWith: .default)
+        {
+            records, error in
+            
+            if let error = error
+            {
+                print("Could not fetch Item iCloud records. Error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let records = records else { return }
+            
+            for record in records
+            {
+                print("fetched record name: \(record.recordID.recordName)")
+            }
+        }
+    }
+    
+    // MARK: - iCloud
     
     private func save(_ record: CKRecord)
     {
@@ -81,28 +104,11 @@ class ICloud
         }
     }
     
-    private func queryRecords()
+    private func createReference(toOwner owner: CKRecord) -> CKReference
     {
-//        let predicate = NSPredicate(format: "text = %@", "this is a test text modified")
-        let all = NSPredicate.init(value: true)
-        let query = CKQuery(recordType: "Item", predicate: all)
+        let ownerId = owner.recordID
         
-        database.perform(query, inZoneWith: .default)
-        {
-            records, error in
-            
-            for record in records ?? []
-            {
-                print("queried record name: \(record.recordID.recordName)")
-            }
-        }
-    }
-    
-    private func reference(toParent parent: CKRecord) -> CKReference
-    {
-        let parentId = parent.recordID
-        
-        return CKReference(recordID: parentId, action: .deleteSelf)
+        return CKReference(recordID: ownerId, action: .deleteSelf)
     }
     
     private var database: CKDatabase
