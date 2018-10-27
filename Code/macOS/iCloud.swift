@@ -1,4 +1,5 @@
 import CloudKit
+import SwiftyToolz
 
 class ICloud
 {
@@ -24,7 +25,6 @@ class ICloud
                 print("Could not determine iCloud account status.")
             case .available:
                 print("iCloud account is available.")
-                //self.setupSubscriptions()
             case .restricted:
                 print("iCloud account is restricted.")
             case .noAccount:
@@ -65,7 +65,7 @@ class ICloud
         }
     }
     
-    private func setupSubscriptions()
+    private func setupSubscription()
     {
         let options: CKSubscriptionOptions =
         [
@@ -113,57 +113,83 @@ class ICloud
     
     // MARK: - Fetch Item Records
     
-    private func fetchAllItems()
+    private func fetchItemecords(resultHandler: @escaping ([CKRecord]?) -> Void)
     {
-        fetchItemRecords(with: NSPredicate(value: true))
+        fetchItemRecords(with: NSPredicate(value: true),
+                         resultHandler: resultHandler)
     }
     
-    private func fetchSubitemRecords(of itemRecord: CKRecord)
+    private func fetchSubitemRecords(of itemRecord: CKRecord,
+                                     resultHandler: @escaping ([CKRecord]?) -> Void)
     {
         guard itemRecord.recordType == "Item" else { return }
         
-        fetchSubitemRecords(withSuperItemID: itemRecord.recordID)
+        fetchSubitemRecords(withSuperItemID: itemRecord.recordID,
+                            resultHandler: resultHandler)
     }
     
-    private func fetchSubitemRecords(withSuperItemID id: CKRecordID)
+    private func fetchSubitemRecords(withSuperItemID id: CKRecordID,
+                                     resultHandler: @escaping ([CKRecord]?) -> Void)
     {
         let predicate = NSPredicate(format: "superItem = %@", id)
         
-        fetchItemRecords(with: predicate)
+        fetchItemRecords(with: predicate, resultHandler: resultHandler)
     }
     
-    private func fetchItemRecords(with predicate: NSPredicate)
+    private func fetchItemRecords(with predicate: NSPredicate,
+                                  resultHandler: @escaping ([CKRecord]?) -> Void)
     {
         let query = CKQuery(recordType: "Item", predicate: predicate)
         
+        fetchRecords(with: query, resultHandler: resultHandler)
+    }
+    
+    // MARK: - iCloud
+    
+    private func fetchRecords(with query: CKQuery,
+                              resultHandler: @escaping ([CKRecord]?) -> Void)
+    {
         database.perform(query, inZoneWith: .default)
         {
             records, error in
             
             if let error = error
             {
-                print("Could not fetch Item iCloud records. Error: \(error.localizedDescription)")
+                log(error: "Could not fetch iCloud records. Error: \(error.localizedDescription)")
+                resultHandler(nil)
                 return
             }
             
-            guard let records = records else { return }
-            
-            for record in records
+            if records == nil
             {
-                print("fetched record name: \(record.recordID.recordName)")
+                log(error: "Could not fetch iCloud records. The result array is nil.")
             }
+            
+            resultHandler(records)
         }
     }
     
-    // MARK: - iCloud
     
-    private func save(_ record: CKRecord)
+    private func save(_ record: CKRecord,
+                      resultHandler: @escaping (CKRecord?) -> Void)
     {
         database.save(record)
         {
             savedRecord, error in
             
-            print("saved record: \(savedRecord.debugDescription)")
+            if let error = error
+            {
+                log(error: "Could not save iCloud record. Error: \(error.localizedDescription)")
+                resultHandler(nil)
+                return
+            }
+            
+            if savedRecord == nil
+            {
+                log(error: "Could not save iCloud record. The result record is nil.")
+            }
+            
+            resultHandler(savedRecord)
         }
     }
     
