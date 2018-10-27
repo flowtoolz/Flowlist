@@ -22,8 +22,7 @@ class ICloud
                 print("Could not determine iCloud account status.")
             case .available:
                 print("iCloud account is available.")
-                self.fetchTestRecord()
-//                self.saveTestRecord()
+                self.fetchAndModifyTestRecord()
             case .restricted:
                 print("iCloud account is restricted.")
             case .noAccount:
@@ -32,15 +31,13 @@ class ICloud
         }
     }
     
-    private func fetchTestRecord()
+    private func fetchAndModifyTestRecord()
     {
-        let database = container.privateCloudDatabase
-        
         let recordId = CKRecordID(recordName: "test3")
-        
+    
         database.fetch(withRecordID: recordId)
         {
-            fetchedRecord, error in
+            record, error in
             
             if let error = error
             {
@@ -48,28 +45,44 @@ class ICloud
                 return
             }
             
-            print("fetched record: \(fetchedRecord?.debugDescription)")
+            guard let record = record else { return }
             
-            print("all keys: \(fetchedRecord?.allKeys())")
+            print("fetched record: \(record.debugDescription)")
+            
+            print("all keys: \(record.allKeys())")
+            
+            let text: String = record["text"] ?? "nil"
+            
+            record["text"] = text + " modified"
+            
+            self.save(record)
         }
     }
     
-    private func saveTestRecord()
+    private func createRecord(with text: String)
     {
-        let recordId = CKRecordID(recordName: "test3")
+        let recordId = CKRecordID(recordName: "id \(Int.random(max: Int.max))" + text)
         
         let record = CKRecord(recordType: "Item", recordID: recordId)
         
-        record["text"] = "this is a test text"
+        record["text"] = text
         
-        let database = container.privateCloudDatabase
-        
+        save(record)
+    }
+    
+    private func save(_ record: CKRecord)
+    {
         database.save(record)
         {
             savedRecord, error in
             
-            print(savedRecord.debugDescription)
+            print("saved record: \(savedRecord.debugDescription)")
         }
+    }
+    
+    private var database: CKDatabase
+    {
+        return container.privateCloudDatabase
     }
     
     private var container: CKContainer
