@@ -29,9 +29,10 @@ class ItemExportPanel: NSSavePanel
         allowsOtherFileTypes = false
         isExtensionHidden = false
         allowedFileTypes = [preferredFormat.fileExtension]
-        accessoryView = formatView
         
         constrainFormatSelectionView()
+        
+        accessoryView = formatView
     }
     
     // MARK: - Export
@@ -75,6 +76,10 @@ class ItemExportPanel: NSSavePanel
     
     private func constrainFormatSelectionView()
     {
+        formatView.translatesAutoresizingMaskIntoConstraints = false
+        formatView.constrainWidth(toMinimum: 400)
+        formatView.constrainHeight(toMinimum: 40)
+        
         formatContainer.constrainTopToParent()
         formatContainer.constrainBottomToParent()
         formatContainer.constrainCenterXToParent()
