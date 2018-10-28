@@ -46,8 +46,6 @@ class ICloud
 
     func didReceiveRemoteNotification(with userInfo: [String : Any])
     {
-        print("received push: \(userInfo.debugDescription)")
-        
         let notification = CKNotification(fromRemoteNotificationDictionary: userInfo)
         
         guard notification.notificationType == .query,
@@ -56,6 +54,8 @@ class ICloud
         {
             return
         }
+        
+        print("received query notification: \(queryNotification.debugDescription)")
     
         let recordName = queryNotification.recordID?.recordName ?? "nil"
         
@@ -65,9 +65,7 @@ class ICloud
             print("did create record: <\(recordName)>")
             
         case .recordUpdated:
-            let changedFields = queryNotification.recordFields
-            
-            print("did change record: <\(recordName)> in fields: \(changedFields?.debugDescription ?? "nil")")
+            print("did change record: <\(recordName)>")
             
         case .recordDeleted:
             print("did delete record: <\(recordName)>")
