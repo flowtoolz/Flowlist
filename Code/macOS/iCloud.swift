@@ -34,6 +34,7 @@ class ICloud
                 print("Could not determine iCloud account status.")
             case .available:
                 print("iCloud account is available.")
+                //self.setupSubscription()
             case .restricted:
                 print("iCloud account is restricted.")
             case .noAccount:
@@ -58,14 +59,17 @@ class ICloud
         print("received query notification: \(queryNotification.debugDescription)")
     
         let recordName = queryNotification.recordID?.recordName ?? "nil"
+        let changedFields = queryNotification.recordFields
         
         switch queryNotification.queryNotificationReason
         {
         case .recordCreated:
             print("did create record: <\(recordName)>")
+            print("new fields: \(changedFields?.debugDescription ?? "nil")")
             
         case .recordUpdated:
             print("did change record: <\(recordName)>")
+            print("new fields: \(changedFields?.debugDescription ?? "nil")")
             
         case .recordDeleted:
             print("did delete record: <\(recordName)>")
@@ -86,8 +90,9 @@ class ICloud
                                           options: options)
         
         let notificationInfo = CKSubscription.NotificationInfo()
-        notificationInfo.alertLocalizationKey = "Items Changed"
+        notificationInfo.alertLocalizationKey = "Items where changed in iCloud."
         notificationInfo.shouldBadge = false
+        notificationInfo.desiredKeys = ["text", "tag", "state", "superItem"]
         
         subscription.notificationInfo = notificationInfo
         

@@ -29,6 +29,8 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
         }
         
         NSApp.registerForRemoteNotifications(matching: [.badge, .sound, .alert])
+        
+        iCloud.test()
     }
     
     func applicationWillBecomeActive(_ notification: Notification)
