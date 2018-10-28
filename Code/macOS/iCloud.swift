@@ -1,5 +1,14 @@
 import CloudKit
+import SwiftObserver
 import SwiftyToolz
+
+extension Tree where Data == ItemData
+{
+    var ckRecord: CKRecord?
+    {
+        return ICloud.createItemRecord(from: self)
+    }
+}
 
 class ICloud
 {
@@ -98,15 +107,61 @@ class ICloud
         }
     }
     
-    // MARK: - Create Item Record
+    // MARK: - Convert between Item & Record
     
-    private func createItemRecord(with text: String) -> CKRecord
+    /**
+     sets the item root with the given closure. does NOT insert the item into the root.
+     **/
+    static func createItem(from itemRecord: CKRecord,
+                           rootWithUuid: (String) -> Item?) -> Item?
     {
-        let recordId = CKRecordID(recordName: "id \(Int.random(max: Int.max))")
+        guard itemRecord.recordType == "Item" else
+        {
+            return nil
+        }
         
+        let data = ItemData(id: itemRecord.recordID.recordName)
+        
+        data.title <- itemRecord["text"]
+        
+        if let stateInt: Int = itemRecord["state"]
+        {
+            data.state <- ItemData.State(rawValue: stateInt)
+        }
+        
+        if let tagInt: Int = itemRecord["tag"]
+        {
+            data.tag <- ItemData.Tag(rawValue: tagInt)
+        }
+        
+        let item = Item(data: data)
+        
+        if let rootReference: CKReference = itemRecord["superItem"]
+        {
+            let rootUuid = rootReference.recordID.recordName
+            
+            item.root = rootWithUuid(rootUuid)
+        }
+        
+        return item
+    }
+    
+    static func createItemRecord(from item: Item) -> CKRecord?
+    {
+        guard let data = item.data else { return nil }
+        
+        let recordId = CKRecordID(recordName: data.id)
         let record = CKRecord(recordType: "Item", recordID: recordId)
         
-        record["text"] = text
+        record["text"] = item.title
+        record["state"] = data.state.value?.rawValue
+        record["tag"] = data.tag.value?.rawValue
+        
+        if let rootData = item.root?.data
+        {
+            let superItemId = CKRecordID(recordName: rootData.id)
+            record["superItem"] = ownerReference(to: superItemId)
+        }
         
         return record
     }
@@ -193,9 +248,9 @@ class ICloud
         }
     }
     
-    private func createReference(toOwner owner: CKRecord) -> CKReference
+    private static func ownerReference(to id: CKRecordID) -> CKReference
     {
-        return CKReference(recordID: owner.recordID, action: .deleteSelf)
+        return CKReference(recordID: id, action: .deleteSelf)
     }
     
     private var database: CKDatabase
