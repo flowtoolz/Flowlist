@@ -55,10 +55,14 @@ class ICloud
         {
             return
         }
-        
-        print("received query notification: \(queryNotification.debugDescription)")
     
-        let recordName = queryNotification.recordID?.recordName ?? "nil"
+        guard let recordId = queryNotification.recordID else
+        {
+            log(error: "iCloud query notification carries no record id.")
+            // TODO: could this ever happen? how is it to be handled?? reload all data from icloud??
+            return
+        }
+        
         let changedFields = queryNotification.recordFields
         
         let isUntouched = !queryNotification.isPruned
@@ -68,17 +72,17 @@ class ICloud
         switch queryNotification.queryNotificationReason
         {
         case .recordCreated:
-            print("did create record: <\(recordName)>")
+            print("did create record: <\(recordId.recordName)>")
             print("new fields: \(changedFields?.debugDescription ?? "nil")")
             print("fields are complete: \(carriesAllRelevantFields)")
             
         case .recordUpdated:
-            print("did change record: <\(recordName)>")
+            print("did change record: <\(recordId.recordName)>")
             print("new fields: \(changedFields?.debugDescription ?? "nil")")
             print("fields are complete: \(carriesAllRelevantFields)")
             
         case .recordDeleted:
-            print("did delete record: <\(recordName)>")
+            print("did delete record: <\(recordId.recordName)>")
         }
     }
     
