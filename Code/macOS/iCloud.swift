@@ -127,6 +127,8 @@ class ICloud
         operation.database = database
         operation.savePolicy = .changedKeys // TODO: or if server records unchanged? handle "merge conflicts" when multiple devices changed data locally offline...
         
+        // TODO: The server may reject large operations. When this occurs, a block reports the CKError.Code.limitExceeded error. Your app should handle this error, and refactor the operation into multiple smaller batches.
+        
         operation.perRecordCompletionBlock =
         {
             record, error in
@@ -148,7 +150,7 @@ class ICloud
                 log(error: error.localizedDescription)
             }
             
-            print("Did save \(itemRecords.count) item records to iCloud.")
+//            print("Did save \(itemRecords.count) item records to iCloud.")
             // TODO: handle completion
         }
         
