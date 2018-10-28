@@ -168,7 +168,7 @@ class ICloud
     
     // MARK: - Fetch Item Records
     
-    private func fetchItemecords(resultHandler: @escaping ([CKRecord]?) -> Void)
+    private func fetchItemRecords(resultHandler: @escaping ([CKRecord]?) -> Void)
     {
         fetchItemRecords(with: NSPredicate(value: true),
                          resultHandler: resultHandler)
