@@ -2,14 +2,6 @@ import CloudKit
 import SwiftObserver
 import SwiftyToolz
 
-extension Tree where Data == ItemData
-{
-    var ckRecord: CKRecord?
-    {
-        return ICloud.createItemRecord(from: self)
-    }
-}
-
 class ICloud
 {
     // MARK: - Testing
@@ -122,6 +114,32 @@ class ICloud
     
     private let desiredTags = ["text", "tag", "state", "superItem"]
     
+    // MARK: - Save Item Tree to iCloud
+    
+    private func save(itemTree root: Item)
+    {
+        let itemRecords = records(fromItemTree: root)
+        
+        // TODO: batch save multiple records
+    }
+    
+    private func records(fromItemTree root: Item) -> [CKRecord]
+    {
+        var result = [CKRecord]()
+        
+        if let record = root.ckRecord
+        {
+            result.append(record)
+        }
+        
+        for subitem in root.branches
+        {
+            result.append(contentsOf: records(fromItemTree: subitem))
+        }
+        
+        return result
+    }
+    
     // MARK: - Fetch & Connect Items
     
     private func fetchItemTree(receiveRoot: @escaping (Item?) -> Void)
@@ -226,26 +244,6 @@ class ICloud
         return data
     }
     
-    static func createItemRecord(from item: Item) -> CKRecord?
-    {
-        guard let data = item.data else { return nil }
-        
-        let recordId = CKRecordID(recordName: data.id)
-        let record = CKRecord(recordType: "Item", recordID: recordId)
-        
-        record["text"] = item.text
-        record["state"] = data.state.value?.rawValue
-        record["tag"] = data.tag.value?.rawValue
-        
-        if let rootData = item.root?.data
-        {
-            let superItemId = CKRecordID(recordName: rootData.id)
-            record["superItem"] = ownerReference(to: superItemId)
-        }
-        
-        return record
-    }
-    
     // MARK: - Fetch Item Records
     
     private func fetchItemRecords(resultHandler: @escaping ([CKRecord]?) -> Void)
@@ -304,7 +302,6 @@ class ICloud
         }
     }
     
-    
     private func save(_ record: CKRecord,
                       resultHandler: @escaping (CKRecord?) -> Void)
     {
@@ -328,11 +325,6 @@ class ICloud
         }
     }
     
-    private static func ownerReference(to id: CKRecordID) -> CKReference
-    {
-        return CKReference(recordID: id, action: .deleteSelf)
-    }
-    
     private var database: CKDatabase
     {
         return container.privateCloudDatabase
@@ -341,5 +333,42 @@ class ICloud
     private var container: CKContainer
     {
         return CKContainer.default()
+    }
+}
+
+extension Tree where Data == ItemData
+{
+    var ckRecord: CKRecord? { return record(from: self) }
+    
+    private func record(from item: Item) -> CKRecord?
+    {
+        guard let data = item.data else
+        {
+            log(error: "Item has no data.")
+            return nil
+        }
+
+        let result = CKRecord(recordType: "Item",
+                              recordID: CKRecordID(recordName: data.id))
+        
+        result["text"] = item.text
+        result["state"] = data.state.value?.rawValue
+        result["tag"] = data.tag.value?.rawValue
+        
+        if let rootData = item.root?.data
+        {
+            let superItemId = CKRecordID(recordName: rootData.id)
+            result["superItem"] = superItemId.ownerReference
+        }
+        
+        return result
+    }
+}
+
+extension CKRecordID
+{
+    var ownerReference: CKReference
+    {
+        return CKReference(recordID: self, action: .deleteSelf)
     }
 }
