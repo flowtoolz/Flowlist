@@ -34,7 +34,7 @@ class ICloud
                 print("Could not determine iCloud account status.")
             case .available:
                 print("iCloud account is available.")
-                //self.setupSubscription()
+                self.fetchItemTree { $0?.debug() }
             case .restricted:
                 print("iCloud account is restricted.")
             case .noAccount:
@@ -122,16 +122,90 @@ class ICloud
     
     private let desiredTags = ["text", "tag", "state", "superItem"]
     
+    // MARK: - Fetch & Connect Items
+    
+    private func fetchItemTree(receiveRoot: @escaping (Item?) -> Void)
+    {
+        fetchItemRecords()
+        {
+            records in receiveRoot(self.itemTree(from: records))
+        }
+    }
+    
+    private func itemTree(from records: [CKRecord]?) -> Item?
+    {
+        // get record array
+        
+        guard let records = records else
+        {
+            log(warning: "Record array is nil.")
+
+            return nil
+        }
+        
+        // create unconnected items. remember associated records.
+        
+        var hashMap = [String : (CKRecord, Item)]()
+        
+        for record in records
+        {
+            guard let data = ICloud.createItemData(from: record) else { continue }
+            
+            hashMap[data.id] = (record, Item(data: data))
+        }
+        
+        // connect items. find root.
+        
+        var root: Item?
+        
+        for (record, item) in hashMap.values
+        {
+            guard let superItemReference: CKReference = record["superItem"] else
+            {
+                if root != nil
+                {
+                    log(error: "Record array contains more than 1 root.")
+                    
+                    return nil
+                }
+                
+                root = item
+                
+                continue
+            }
+            
+            let superItemId = superItemReference.recordID.recordName
+            
+            guard let (_, superItem) = hashMap[superItemId] else
+            {
+                log(error: "Record for super item with id \(superItemId) is missing.")
+                
+                return nil
+            }
+            
+            item.root = superItem
+            
+            // TODO: persist and maintain item order
+            superItem.add(item)
+        }
+        
+        // return root
+        
+        if root == nil
+        {
+            log(error: "Record array contains no root.")
+        }
+        
+        return root
+    }
+    
     // MARK: - Convert between Item & Record
     
-    /**
-     sets the item root with the given closure. does NOT insert the item into the root.
-     **/
-    static func createItem(from itemRecord: CKRecord,
-                           rootWithUuid: (String) -> Item?) -> Item?
+    static func createItemData(from itemRecord: CKRecord) -> ItemData?
     {
         guard itemRecord.recordType == "Item" else
         {
+            log(error: "Cannot create ItemData from iCloud record of type \"\(itemRecord.recordType)\". Expected\"Item\".")
             return nil
         }
         
@@ -149,16 +223,7 @@ class ICloud
             data.tag <- ItemData.Tag(rawValue: tagInt)
         }
         
-        let item = Item(data: data)
-        
-        if let rootReference: CKReference = itemRecord["superItem"]
-        {
-            let rootUuid = rootReference.recordID.recordName
-            
-            item.root = rootWithUuid(rootUuid)
-        }
-        
-        return item
+        return data
     }
     
     static func createItemRecord(from item: Item) -> CKRecord?
