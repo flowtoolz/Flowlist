@@ -98,12 +98,12 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     
     private var appearanceObservation: NSKeyValueObservation?
     
-    // MARK: - Push Notifications
+    // MARK: - Push Notifications & iCloud
     
     func application(_ application: NSApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data)
     {
-        log("Did register for push notifications.")
+        //log("Did register for push notifications.")
     }
     
     func application(_ application: NSApplication,
