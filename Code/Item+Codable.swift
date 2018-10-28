@@ -4,12 +4,16 @@ extension Tree: Codable where Data == ItemData
 {
     convenience init(from decoder: Decoder) throws
     {
-        self.init()
+        self.init(data: nil)
         
         guard let container = try? decoder.container(keyedBy: CodingKeys.self) else
         {
             return
         }
+        
+        let id = try? container.decode(String.self, forKey: .id)
+        
+        data = ItemData(id: id)
         
         if let titleString = try? container.decode(String.self, forKey: .title)
         {
@@ -49,6 +53,11 @@ extension Tree: Codable where Data == ItemData
     {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
+        if let id = data?.id
+        {
+            try? container.encode(id, forKey: .id)
+        }
+        
         if let titleString = title
         {
             try? container.encode(titleString, forKey: .title)
@@ -72,6 +81,6 @@ extension Tree: Codable where Data == ItemData
     
     enum CodingKeys: String, CodingKey
     {
-        case title, state, tag, branches = "subtasks"
+        case id, title, state, tag, branches = "subtasks"
     }
 }
