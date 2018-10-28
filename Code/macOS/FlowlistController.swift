@@ -30,7 +30,7 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
         
         NSApp.registerForRemoteNotifications(matching: [.badge, .sound, .alert])
         
-        iCloud.test()
+        itemDatabase.test()
     }
     
     func applicationWillBecomeActive(_ notification: Notification)
@@ -103,24 +103,16 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     // MARK: - Push Notifications & iCloud
     
     func application(_ application: NSApplication,
-                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data)
-    {
-        //log("Did register for push notifications.")
-    }
-    
-    func application(_ application: NSApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error)
     {
-        log(error: "Could not register for push notifications. \(error.localizedDescription)")
+        log(error: error.localizedDescription)
     }
     
     func application(_ application: NSApplication,
                      didReceiveRemoteNotification userInfo: [String : Any])
     {
-        iCloud.didReceiveRemoteNotification(with: userInfo)
+        itemDatabase.didReceiveRemoteNotification(with: userInfo)
     }
-    
-    private let iCloud = ICloud()
     
     // MARK: - Menu & Mindow
     
