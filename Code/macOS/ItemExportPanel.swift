@@ -39,7 +39,7 @@ class ItemExportPanel: NSSavePanel
     
     func export(_ item: Item)
     {
-        nameFieldStringValue = item.title ?? "Untitled"
+        nameFieldStringValue = item.text ?? "Untitled"
         
         begin
         {

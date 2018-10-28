@@ -68,7 +68,7 @@ class List: Observable, Observer
             case .didNothing: break
             case .did(let edit): self?.received(edit, from: root)
             case .didChangeData(from: _, to: let newItemData):
-                self?.title.observable = newItemData?.title
+                self?.title.observable = newItemData?.text
                 self?.tag.observable = newItemData?.tag
                 self?.state.observable = newItemData?.state
             case .didChange(numberOfLeafs: _): break
@@ -156,11 +156,11 @@ class List: Observable, Observer
     
     // MARK: - Title
     
-    func editTitle(at index: Int)
+    func editText(at index: Int)
     {
         guard index >= 0, index < count else
         {
-            log(warning: "Tried to edit title at invalid index \(index).")
+            log(warning: "Tried to edit text at invalid index \(index).")
             return
         }
         
@@ -217,7 +217,7 @@ class List: Observable, Observer
         old?.deletionStack.removeAll()
         old?.deselectAll()
         
-        title.observable = new?.data?.title
+        title.observable = new?.data?.text
         tag.observable = new?.data?.tag
         state.observable = new?.data?.state
         

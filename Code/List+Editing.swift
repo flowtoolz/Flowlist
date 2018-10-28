@@ -240,12 +240,12 @@ extension List
                                 to: selectedIndex + positions)
     }
     
-    // MARK: - Edit Title
+    // MARK: - Edit Text
     
-    func editTitle()
+    func editText()
     {
         guard let index = selectedIndexes.first else { return }
         
-        editTitle(at: index)
+        editText(at: index)
     }
 }

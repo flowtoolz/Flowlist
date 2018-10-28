@@ -15,9 +15,9 @@ final class ItemData: Observable
     let isSelected = Var(false)
     let isFocused = Var(true)
     
-    // MARK: - Title
+    // MARK: - Text
     
-    var title = Var<String>()
+    var text = Var<String>()
     
     func edit() { send(.wantTextInput) }
     

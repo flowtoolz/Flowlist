@@ -454,7 +454,7 @@ class ItemView: LayerBackedView, Observer, Observable
     {
         // https://stackoverflow.com/questions/19121367/uitextviews-in-a-uitableview-link-detection-bug-in-ios-7
         textView.string = ""
-        textView.string = item?.title ?? ""
+        textView.string = item?.text ?? ""
     }
     
     private func constrainTextView()
@@ -485,19 +485,19 @@ class ItemView: LayerBackedView, Observer, Observable
             
         case .willEdit:
             set(editing: true)
-            send(.willEditTitle)
+            send(.willEditText)
             
         case .didChange(let text):
-            item?.data?.title <- String(withNonEmpty: text)
-            send(.didChangeTitle)
+            item?.data?.text <- String(withNonEmpty: text)
+            send(.didChangeText)
             
         case .wantToEndEditing:
             send(.wantToEndEditingText)
             
         case .didEdit:
             set(editing: false)
-            item?.data?.title <- String(withNonEmpty: textView.string)
-            send(.didEditTitle)
+            item?.data?.text <- String(withNonEmpty: textView.string)
+            send(.didEditText)
         case .wasClicked: send(.textViewWasClicked)
         }
     }
@@ -671,10 +671,10 @@ class ItemView: LayerBackedView, Observer, Observable
     enum Event: Equatable
     {
         case didNothing
-        case willEditTitle
-        case didChangeTitle
+        case willEditText
+        case didChangeText
         case wantToEndEditingText
-        case didEditTitle
+        case didEditText
         case textViewWasClicked
         case wasClicked(withEvent: NSEvent)
     }

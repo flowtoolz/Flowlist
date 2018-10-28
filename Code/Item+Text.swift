@@ -9,10 +9,9 @@ extension Tree where Data == ItemData
         }
     }
     
-    func plainText(recursionDepth: Int = 0,
-                   titlePrefix: String = "") -> String
+    func plainText(recursionDepth: Int = 0, prefix: String = "") -> String
     {
-        var result = title ?? ""
+        var result = text ?? ""
             
         if recursionDepth == 0
         {
@@ -20,7 +19,7 @@ extension Tree where Data == ItemData
         }
         else if recursionDepth > 0 && count > 0
         {
-            result = titlePrefix + " " + result
+            result = prefix + " " + result
         }
         
         var sectionNumber = 1
@@ -29,16 +28,16 @@ extension Tree where Data == ItemData
         {
             guard !item.isDone else { continue }
             
-            var itemTitleRefix = titlePrefix
-            if itemTitleRefix.count > 0 { itemTitleRefix += "." }
-            itemTitleRefix += "\(sectionNumber)"
+            var itemRefix = prefix
+            if itemRefix.count > 0 { itemRefix += "." }
+            itemRefix += "\(sectionNumber)"
             
             let isParagraph = item.isLeaf
             let breaks: String = "\n\n" + (isParagraph ? "" : "\n")
             let itemDepth = recursionDepth + 1
             
             result += breaks + item.plainText(recursionDepth: itemDepth,
-                                         titlePrefix: itemTitleRefix)
+                                              prefix: itemRefix)
             
             sectionNumber += isParagraph ? 0 : 1
         }
@@ -48,7 +47,7 @@ extension Tree where Data == ItemData
     
     func markdown(recursionDepth: Int = 0) -> String
     {
-        var result = title ?? ""
+        var result = text ?? ""
         
         if !isLeaf
         {

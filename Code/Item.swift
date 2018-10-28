@@ -26,7 +26,7 @@ extension Tree where Data == ItemData
     convenience init(_ title: String? = nil)
     {
         let newData = ItemData()
-        newData.title = Var(title)
+        newData.text = Var(title)
         
         self.init(data: newData)
     }
@@ -39,7 +39,7 @@ extension Tree where Data == ItemData
         }
     }
     
-    var title: String? { return data?.title.value }
+    var text: String? { return data?.text.value }
     
     var isSelected: Bool
     {

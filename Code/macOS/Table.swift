@@ -179,7 +179,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             list[firstIndex]?.data?.wantsTextInput ?? false
         {
             rowBeingEdited = firstIndex
-            list.editTitle(at: firstIndex)
+            list.editText(at: firstIndex)
         }
     }
     
@@ -247,9 +247,9 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         if let height = itemHeightCash[item] { return height }
         
-        let title = item.title ?? "Untitled"
+        let text = item.text ?? "Untitled"
         
-        let height = ItemView.preferredHeight(for: title, width: width)
+        let height = ItemView.preferredHeight(for: text, width: width)
         
         itemHeightCash[item] = height
         
@@ -307,7 +307,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         {
         case .didNothing: break
             
-        case .willEditTitle:
+        case .willEditText:
             if index != rowBeingEdited
             {
                 rowBeingEdited = index
@@ -316,7 +316,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
             
             send(event)
             
-        case .didChangeTitle:
+        case .didChangeText:
             guard let item = itemView.item else { break }
             
             itemHeightCash[item] = nil
@@ -325,7 +325,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         case .wantToEndEditingText:
             NSApp.mainWindow?.makeFirstResponder(NSApp.mainWindow)
             
-        case .didEditTitle:
+        case .didEditText:
             rowBeingEdited = nil
             
             guard let item = itemView.item else { break }
@@ -378,7 +378,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     override var acceptsFirstResponder: Bool { return true }
     
-    // MARK: - Edit Titles
+    // MARK: - Edit Texts
     
     private var rowBeingEdited: Int?
     

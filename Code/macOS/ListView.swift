@@ -119,7 +119,7 @@ class ListView: LayerBackedView, Observer, Observable
             
             switch event
             {
-            case .willEditTitle, .wasClicked:
+            case .willEditText, .wasClicked:
                 self?.send(.didReceiveUserInput)
                 
             default: break

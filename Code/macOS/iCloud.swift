@@ -133,7 +133,7 @@ class ICloud
         
         let data = ItemData(id: itemRecord.recordID.recordName)
         
-        data.title <- itemRecord["text"]
+        data.text <- itemRecord["text"]
         
         if let stateInt: Int = itemRecord["state"]
         {
@@ -164,7 +164,7 @@ class ICloud
         let recordId = CKRecordID(recordName: data.id)
         let record = CKRecord(recordType: "Item", recordID: recordId)
         
-        record["text"] = item.title
+        record["text"] = item.text
         record["state"] = data.state.value?.rawValue
         record["tag"] = data.tag.value?.rawValue
         

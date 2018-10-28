@@ -36,7 +36,7 @@ extension Store
         
         loadedRoot.recoverRoots()
         loadedRoot.recoverNumberOfLeafs()
-        loadedRoot.data?.title <- NSFullUserName()
+        loadedRoot.data?.text <- NSFullUserName()
         
         root = loadedRoot
         
@@ -45,7 +45,7 @@ extension Store
     
     private func createFile()
     {
-        root.data?.title <- NSFullUserName()
+        root.data?.text <- NSFullUserName()
         didLoadItemsSuccessfully = true
         save()
     }

@@ -151,7 +151,7 @@ class EditMenu: NSMenu, Observer
                                            key: "\n",
                                            validator: self)
     {
-        browser.focusedList.editTitle()
+        browser.focusedList.editText()
     }
     
     private lazy var checkOffItem = MenuItem("Check Off Item",

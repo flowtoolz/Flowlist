@@ -15,32 +15,34 @@ extension Tree: Codable where Data == ItemData
         
         data = ItemData(id: id)
         
-        if let titleString = try? container.decode(String.self, forKey: .title)
+        if let text = try? container.decode(String.self, forKey: .text)
         {
-            data?.title <- titleString
+            data?.text <- text
         }
-        else if let title = try? container.decode(Var<String>.self, forKey: .title)
+        else if let textVar = try? container.decode(Var<String>.self,
+                                                    forKey: .text)
         {
-            data?.title = title
+            data?.text = textVar
         }
         
         if let integer = try? container.decode(Int.self, forKey: .state)
         {
             data?.state <- ItemData.State(rawValue: integer)
         }
-        else if let state = try? container.decode(Var<ItemData.State>.self,
-                                                  forKey: .state)
+        else if let stateVar = try? container.decode(Var<ItemData.State>.self,
+                                                     forKey: .state)
         {
-            data?.state = state
+            data?.state = stateVar
         }
         
         if let integer = try? container.decode(Int.self, forKey: .tag)
         {
             data?.tag <- ItemData.Tag(rawValue: integer)
         }
-        else if let tag = try? container.decode(Var<ItemData.Tag>.self, forKey: .tag)
+        else if let tagVar = try? container.decode(Var<ItemData.Tag>.self,
+                                                   forKey: .tag)
         {
-            data?.tag = tag
+            data?.tag = tagVar
         }
         
         if let branches = try? container.decode([Node].self, forKey: .branches)
@@ -58,9 +60,9 @@ extension Tree: Codable where Data == ItemData
             try? container.encode(id, forKey: .id)
         }
         
-        if let titleString = title
+        if let text = text
         {
-            try? container.encode(titleString, forKey: .title)
+            try? container.encode(text, forKey: .text)
         }
         
         if let stateInteger = data?.state.value?.rawValue
@@ -81,6 +83,6 @@ extension Tree: Codable where Data == ItemData
     
     enum CodingKeys: String, CodingKey
     {
-        case id, title, state, tag, branches = "subtasks"
+        case id, text = "title", state, tag, branches = "subtasks"
     }
 }

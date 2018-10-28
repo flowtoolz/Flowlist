@@ -2,28 +2,28 @@ extension Tree where Data == ItemData
 {
     static func from(pasteboardString string: String) -> [Item]?
     {
-        var titles = string.components(separatedBy: .newlines)
+        var texts = string.components(separatedBy: .newlines)
         
-        titles = titles.map
+        texts = texts.map
         {
-            var title = $0
+            var text = $0
             
-            while !startCharacters.contains(title.first ?? "a")
+            while !startCharacters.contains(text.first ?? "a")
             {
-                title.removeFirst()
+                text.removeFirst()
             }
             
-            while title.last == " "
+            while text.last == " "
             {
-                title.removeLast()
+                text.removeLast()
             }
             
-            return title
+            return text
         }
         
-        titles.remove { $0.count < 2 }
+        texts.remove { $0.count < 2 }
         
-        let result = titles.map { Item($0) }
+        let result = texts.map { Item($0) }
         
         return result.isEmpty ? nil : result
     }
