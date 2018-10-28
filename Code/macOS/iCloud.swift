@@ -26,7 +26,8 @@ class ICloud
                 print("Could not determine iCloud account status.")
             case .available:
                 print("iCloud account is available.")
-                self.fetchItemTree { $0?.debug() }
+                //self.save(itemTree: store.root)
+                //self.fetchItemTree { $0?.debug() }
             case .restricted:
                 print("iCloud account is restricted.")
             case .noAccount:
@@ -120,7 +121,38 @@ class ICloud
     {
         let itemRecords = records(fromItemTree: root)
         
-        // TODO: batch save multiple records
+        let operation = CKModifyRecordsOperation(recordsToSave: itemRecords,
+                                                 recordIDsToDelete: nil)
+        
+        operation.database = database
+        operation.savePolicy = .changedKeys // TODO: or if server records unchanged? handle "merge conflicts" when multiple devices changed data locally offline...
+        
+        operation.perRecordCompletionBlock =
+        {
+            record, error in
+            
+            if let error = error
+            {
+                log(error: error.localizedDescription)
+                
+                // TODO: remember failed records and handle them / try again later...
+            }
+        }
+        
+        operation.modifyRecordsCompletionBlock =
+        {
+            records, _, error in
+            
+            if let error = error
+            {
+                log(error: error.localizedDescription)
+            }
+            
+            print("Did save \(itemRecords.count) item records to iCloud.")
+            // TODO: handle completion
+        }
+        
+        operation.start()
     }
     
     private func records(fromItemTree root: Item) -> [CKRecord]
