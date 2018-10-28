@@ -61,15 +61,21 @@ class ICloud
         let recordName = queryNotification.recordID?.recordName ?? "nil"
         let changedFields = queryNotification.recordFields
         
+        let isUntouched = !queryNotification.isPruned
+        let carriesMaximumFields = changedFields?.count == desiredTags.count
+        let carriesAllRelevantFields = isUntouched || carriesMaximumFields
+        
         switch queryNotification.queryNotificationReason
         {
         case .recordCreated:
             print("did create record: <\(recordName)>")
             print("new fields: \(changedFields?.debugDescription ?? "nil")")
+            print("fields are complete: \(carriesAllRelevantFields)")
             
         case .recordUpdated:
             print("did change record: <\(recordName)>")
             print("new fields: \(changedFields?.debugDescription ?? "nil")")
+            print("fields are complete: \(carriesAllRelevantFields)")
             
         case .recordDeleted:
             print("did delete record: <\(recordName)>")
@@ -92,7 +98,7 @@ class ICloud
         let notificationInfo = CKSubscription.NotificationInfo()
         notificationInfo.alertLocalizationKey = "Items where changed in iCloud."
         notificationInfo.shouldBadge = false
-        notificationInfo.desiredKeys = ["text", "tag", "state", "superItem"]
+        notificationInfo.desiredKeys = desiredTags
         
         subscription.notificationInfo = notificationInfo
         
@@ -109,6 +115,8 @@ class ICloud
             print("Saved iCloud subscription: \(savedSubscription.debugDescription)")
         }
     }
+    
+    private let desiredTags = ["text", "tag", "state", "superItem"]
     
     // MARK: - Convert between Item & Record
     
