@@ -27,6 +27,7 @@ extension Store
             
             let message = "Please ensure that your data file \"\(fileUrl.path)\" is formatted correctly. Then restart Flowlist.\n\n(Be careful to retain the JSON format when editing the file outside of Flowlist.)"
             
+            // TODO: This file depends on AppKit just because this alert. Avoid that.
             show(alert: message, title: "Couldn't Read From \"\(filename)\"")
             
             return
