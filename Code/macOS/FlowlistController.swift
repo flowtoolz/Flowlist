@@ -27,7 +27,7 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
             self?.window.backgroundColor = Color.windowBackground.nsColor
         }
         
-        NSApp.registerForRemoteNotifications(matching: [.badge, .sound, .alert])
+        registerForPushNotifications()
         
         storageController.appDidLaunch()
     }
@@ -99,13 +99,14 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     
     private var appearanceObservation: NSKeyValueObservation?
     
-    // MARK: - Push Notifications & Data Storage
+    // MARK: - Push Notifications
     
     func application(_ application: NSApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error)
     {
-        show(alert: "Flowlist can't receive iCloud updates without push notifications. Restart Flowlist to retry registration.\n\nError message: \(error.localizedDescription)", title: "Failed to Register for Push Notifications",
-             style: .warning)
+        show(alert: "Flowlist can't receive iCloud updates without push notifications. Restart Flowlist to retry registration.\n\nError message: \(error.localizedDescription)",
+            title: "Could Not Register for Push Notifications",
+            style: .warning)
     }
     
     func application(_ application: NSApplication,
@@ -114,9 +115,7 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
         itemDatabase.didReceiveRemoteNotification(with: userInfo)
     }
     
-    let storageController = StorageController(with: itemDatabase)
-    
-    // MARK: - Menu & Mindow
+    // MARK: - Basics
     
     private let menu = Menu()
     
@@ -124,4 +123,6 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
                                      color: Color.windowBackground.nsColor)
     
     private let viewController = ViewController()
+    
+    private let storageController = StorageController(with: itemDatabase)
 }
