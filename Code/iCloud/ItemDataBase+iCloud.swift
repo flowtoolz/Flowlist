@@ -79,13 +79,13 @@ extension ItemDatabaseUpdateInfo
                 
                 data.tag <- tag
             case .root:
-                guard let superItemRef = value as? CKReference else
+                guard let superItemId = value as? String else
                 {
                     log(error: "Couldn't cast value of field \(nameValue) to CKReference.")
                     return nil
                 }
                 
-                newRootId = superItemRef.recordID.recordName
+                newRootId = superItemId
             }
             
             fields.append(field)
