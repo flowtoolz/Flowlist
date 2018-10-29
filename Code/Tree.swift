@@ -132,7 +132,10 @@ final class Tree<Data: Copyable>: Copyable, Observable
         
         updateNumberOfLeafs()
         
-        send(.did(.insert(at: Array(index ..< index + nodes.count))))
+        let indexes = Array(index ..< index + nodes.count)
+        
+        send(.did(.insert(at: indexes)))
+        sendToRoot(.didInsert(nodes, in: self, at: indexes))
         
         return true
     }
@@ -258,6 +261,7 @@ final class Tree<Data: Copyable>: Copyable, Observable
         enum RootEvent
         {
             case didRemove(_ nodes: [Node])
+            case didInsert(_ nodes: [Node], in: Node, at: [Int])
         }
     }
     
@@ -280,6 +284,20 @@ final class Tree<Data: Copyable>: Copyable, Observable
     }
     
     // MARK: - Branches
+    
+    var array: [Node]
+    {
+        var result = [Node]()
+        
+        result.append(self)
+        
+        for branch in branches
+        {
+            result.append(contentsOf: branch.array)
+        }
+        
+        return result
+    }
     
     func recoverRoots()
     {

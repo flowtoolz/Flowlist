@@ -8,9 +8,9 @@ class Store: StoreInterface, Observer
     
     fileprivate init()
     {
-        updateUserCreatedLeafs(with: root)
-        
         observe(newRoot: root)
+        resetHashMap(with: root)
+        updateUserCreatedLeafs(with: root)
     }
 
     // MARK: - Root
@@ -19,10 +19,10 @@ class Store: StoreInterface, Observer
     {
         didSet
         {
-            updateUserCreatedLeafs(with: root)
-            
             stopObserving(oldValue)
             observe(newRoot: root)
+            resetHashMap(with: root)
+            updateUserCreatedLeafs(with: root)
         }
     }
     
@@ -38,18 +38,6 @@ class Store: StoreInterface, Observer
         }
     }
     
-    // MARK: - Welcome Tour
-    
-    func pasteWelcomeTourIfRootIsEmpty()
-    {
-        if root.isLeaf
-        {
-            root.insert(Item.welcomeTour, at: 0)
-        }
-    }
-    
-    // MARK: - Count Leafs Inside Root
-    
     private func didReceive(_ event: Item.Event, from root: Item)
     {
         switch event
@@ -62,7 +50,7 @@ class Store: StoreInterface, Observer
             {
                 updateUserCreatedLeafs(with: root)
             }
-
+            
         case .didChange(_):
             updateUserCreatedLeafs(with: root)
             
@@ -70,11 +58,55 @@ class Store: StoreInterface, Observer
             switch rootEvent
             {
             case .didRemove(let items):
-                print("did remove: \(items.first?.text ?? "Untitled")")
+                for item in items { removeFromHashMap(item.array) }
+            case .didInsert(let items, _, _):
+                for item in items { addToHashMap(item.array) }
             }
-            
         }
     }
+    
+    // MARK: - Welcome Tour
+    
+    func pasteWelcomeTourIfRootIsEmpty()
+    {
+        if root.isLeaf
+        {
+            root.insert(Item.welcomeTour, at: 0)
+        }
+    }
+    
+    // MARK: - Hash Map
+    
+    private func resetHashMap(with newRoot: Item)
+    {
+        hashMap.removeAll()
+        
+        addToHashMap(newRoot.array)
+    }
+    
+    private func addToHashMap(_ items: [Item])
+    {
+        for item in items
+        {
+            guard let data = item.data else { return }
+            
+            hashMap[data.id] = item
+        }
+    }
+    
+    private func removeFromHashMap(_ items: [Item])
+    {
+        for item in items
+        {
+            guard let data = item.data else { return }
+            
+            hashMap[data.id] = nil
+        }
+    }
+    
+    private var hashMap = [String : Item]()
+    
+    // MARK: - Count Leafs Inside Root
     
     private func updateUserCreatedLeafs(with root: Item)
     {
