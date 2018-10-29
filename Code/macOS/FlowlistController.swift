@@ -101,12 +101,11 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     
     // MARK: - Push Notifications & Data Storage
     
-    // TODO: inform storage controller about success and failure of push registration
-    
     func application(_ application: NSApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error)
     {
-        log(error: error.localizedDescription)
+        show(alert: "Flowlist can't receive iCloud updates without push notifications. Restart Flowlist to retry registration.\n\nError message: \(error.localizedDescription)", title: "Failed to Register for Push Notifications",
+             style: .warning)
     }
     
     func application(_ application: NSApplication,
