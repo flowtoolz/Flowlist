@@ -52,13 +52,27 @@ class Store: StoreInterface, Observer
     
     private func didReceive(_ event: Item.Event, from root: Item)
     {
-        if case .didChange(_) = event
+        switch event
         {
+            
+        case .didNothing, .didChangeData: break
+            
+        case .did(let edit):
+            if edit.modifiesContent
+            {
+                updateUserCreatedLeafs(with: root)
+            }
+
+        case .didChange(_):
             updateUserCreatedLeafs(with: root)
-        }
-        else if case .did(let edit) = event, edit.modifiesContent
-        {
-            updateUserCreatedLeafs(with: root)
+            
+        case .rootEvent(let rootEvent):
+            switch rootEvent
+            {
+            case .didRemove(let items):
+                print("did remove: \(items.first?.text ?? "Untitled")")
+            }
+            
         }
     }
     

@@ -65,7 +65,7 @@ class List: Observable, Observer
             
             switch event
             {
-            case .didNothing: break
+            case .didNothing, .rootEvent: break
             case .did(let edit): self?.received(edit, from: root)
             case .didChangeData(from: _, to: let newItemData):
                 self?.title.observable = newItemData?.text

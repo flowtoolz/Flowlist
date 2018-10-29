@@ -96,6 +96,7 @@ final class Tree<Data: Copyable>: Copyable, Observable
         updateNumberOfLeafs()
         
         send(.did(.remove(removedNodes, from: indexes)))
+        sendToRoot(.didRemove(removedNodes))
         
         return removedNodes
     }
@@ -229,6 +230,19 @@ final class Tree<Data: Copyable>: Copyable, Observable
         }
     }
     
+    // MARK: - Propagate Updates to Root
+    
+    private func sendToRoot(_ event: Event.RootEvent)
+    {
+        guard let root = root else
+        {
+            send(.rootEvent(event))
+            return
+        }
+        
+        root.sendToRoot(event)
+    }
+    
     // MARK: - Observability
     
     var latestUpdate: Event { return .didNothing }
@@ -239,6 +253,12 @@ final class Tree<Data: Copyable>: Copyable, Observable
         case did(Edit)
         case didChangeData(from: Data?, to: Data?)
         case didChange(numberOfLeafs: Int)
+        case rootEvent(RootEvent)
+        
+        enum RootEvent
+        {
+            case didRemove(_ nodes: [Node])
+        }
     }
     
     enum Edit

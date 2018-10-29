@@ -153,7 +153,7 @@ class ItemView: LayerBackedView, Observer, Observable
     {
         switch event
         {
-        case .didNothing: break
+        case .didNothing, .rootEvent: break
         case .did(let edit):
             guard edit.modifiesContent else { break }
 
