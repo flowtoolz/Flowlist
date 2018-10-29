@@ -3,7 +3,7 @@ import SwiftyToolz
 
 protocol ItemDatabase: Observable where UpdateType == ItemDatabaseEvent
 {
-    
+    // TODO: declare whatever functionality the StorageController needs from the ItemDatabase
 }
 
 enum ItemDatabaseEvent
