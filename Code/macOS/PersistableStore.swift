@@ -3,8 +3,8 @@ import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
-extension Store
-{
+extension Store: Persistable
+{    
     // MARK: - Load & Save
     
     func load()

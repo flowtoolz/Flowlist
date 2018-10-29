@@ -1,10 +1,10 @@
 import SwiftObserver
 
-let store = Store()
-
-class Store: Observer
+class Store: StoreInterface, Observer
 {
     // MARK: - Initialization
+    
+    static let shared = Store() 
     
     fileprivate init()
     {
@@ -50,8 +50,7 @@ class Store: Observer
     
     // MARK: - Count Leafs Inside Root
     
-    private func didReceive(_ event: Item.Event,
-                            from root: Item)
+    private func didReceive(_ event: Item.Event, from root: Item)
     {
         if case .didChange(_) = event
         {
@@ -70,3 +69,7 @@ class Store: Observer
     
     let numberOfUserCreatedLeafs = Var<Int>()
 }
+
+typealias PersistableStore = Persistable & StoreInterface
+
+protocol StoreInterface: AnyObject {}

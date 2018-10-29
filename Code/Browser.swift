@@ -18,7 +18,7 @@ class Browser: Observer, Observable
             fatalError()
         }
         
-        focusedList.set(root: store.root)
+        focusedList.set(root: Store.shared.root)
         focusedList.select()
         focusedList.isFocused <- true
     }

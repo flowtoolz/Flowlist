@@ -4,19 +4,6 @@ import SwiftyToolz
 
 extension ItemRecordICloudDatabase
 {
-    // MARK: - Testing
-    
-    func test()
-    {
-        isICloudAvailable
-        {
-            guard $0 else { return }
-            
-            //self.save(itemTree: store.root)
-            //self.fetchItemTree { $0?.debug() }
-        }
-    }
-    
     // MARK: - Save Item Tree to iCloud
     
     private func save(itemTree root: Item)

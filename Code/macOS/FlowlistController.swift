@@ -112,7 +112,7 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     func application(_ application: NSApplication,
                      didReceiveRemoteNotification userInfo: [String : Any])
     {
-        itemDatabase.didReceiveRemoteNotification(with: userInfo)
+        database.didReceiveRemoteNotification(with: userInfo)
     }
     
     // MARK: - Basics
@@ -124,5 +124,6 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     
     private let viewController = ViewController()
     
-    private let storageController = StorageController(with: itemDatabase)
+    private let storageController = StorageController(with: database,
+                                                      store: Store.shared)
 }

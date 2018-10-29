@@ -45,7 +45,7 @@ var isFullVersion: Bool
     }
 }
 
-let numberOfUserCreatedLeafs = store.numberOfUserCreatedLeafs.new().unwrap(0)
+let numberOfUserCreatedLeafs = Store.shared.numberOfUserCreatedLeafs.new().unwrap(0)
 let maxNumberOfLeafsInTrial = 100
 
 fileprivate var isFullVersion_Cached: Bool?

@@ -2,9 +2,10 @@ import SwiftObserver
 
 class StorageController<Database: ItemDatabase>: Observer
 {
-    init(with database: Database)
+    init(with database: Database, store: PersistableStore)
     {
         self.database = database
+        self.store = store
         
         observe(database)
         {
@@ -19,19 +20,19 @@ class StorageController<Database: ItemDatabase>: Observer
     
     func appDidLaunch()
     {
-        // TODO: the storage controller coordinates the logic of storage and syncronization but it should not depend on Foundation or AppKit. The Store's load and save functions introduce these unwanted dependencies. Fix that!
-        store.load()
+        store?.load()
     }
     
     func windowLostFocus()
     {
-        store.save()
+        store?.save()
     }
     
     func appWillTerminate()
     {
-        store.save()
+        store?.save()
     }
     
     private weak var database: Database?
+    private weak var store: PersistableStore?
 }
