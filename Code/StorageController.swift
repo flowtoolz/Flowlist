@@ -14,9 +14,13 @@ class StorageController<Database: ItemDatabase>: Observer
             switch event
             {
             case .didNothing: break
-            case .didModify(let info): break
-            case .didCreate(let info): break
-            case .didDelete(let id): break
+            case .didCreate(let info):
+                print("created item: id=\(info.data.id) text=<\(info.data.text.value ?? "Untitled")>")
+            case .didModify(let info):
+                print("modified item: id=\(info.data.id) text=<\(info.data.text.value ?? "Untitled")>")
+                print("modified fields: \(info.modified.map({ $0.rawValue }))")
+            case .didDelete(let id):
+                print("modified item: id=\(id)")
             }
         }
     }

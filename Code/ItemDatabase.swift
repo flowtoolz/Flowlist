@@ -32,7 +32,7 @@ struct ItemDatabaseUpdateInfo
     let modified: [ItemDatabaseField]
 }
 
-enum ItemDatabaseField
+enum ItemDatabaseField: String
 {
     case text, state, tag, root
     
