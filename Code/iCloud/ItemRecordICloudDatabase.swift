@@ -4,7 +4,7 @@ import SwiftyToolz
 
 let itemDatabase = ItemRecordICloudDatabase()
 
-class ItemRecordICloudDatabase: ICloudDatabase
+class ItemRecordICloudDatabase: ICloudDatabase, ItemDatabase
 {
     fileprivate override init() {}
     
@@ -90,4 +90,8 @@ class ItemRecordICloudDatabase: ICloudDatabase
         
         fetchRecords(with: query, handleResult: handleResult)
     }
+    
+    // MARK: - Observability
+    
+    var latestUpdate: ItemDatabaseEvent { return .didNothing }
 }

@@ -17,7 +17,6 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
         super.applicationDidFinishLaunching(aNotification)
 
         fullVersionPurchaseController.setup()
-        store.load()
         
         observeSystemAppearance()
         
@@ -30,7 +29,7 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
         
         NSApp.registerForRemoteNotifications(matching: [.badge, .sound, .alert])
         
-        itemDatabase.test()
+        storageController.appDidLaunch()
     }
     
     func applicationWillBecomeActive(_ notification: Notification)
@@ -42,7 +41,7 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     
     func applicationWillTerminate(_ notification: Notification)
     {
-        store.save()
+        storageController.appWillTerminate()
     }
     
     // MARK: - Window Delegate
@@ -75,7 +74,7 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     
     func windowDidResignKey(_ notification: Notification)
     {
-        store.save()
+        storageController.windowLostFocus()
     }
     
     // MARK: - Adjust to OSX Dark Mode Setting
@@ -100,7 +99,9 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     
     private var appearanceObservation: NSKeyValueObservation?
     
-    // MARK: - Push Notifications & iCloud
+    // MARK: - Push Notifications & Data Storage
+    
+    // TODO: inform storage controller about success and failure of push registration
     
     func application(_ application: NSApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error)
@@ -113,6 +114,8 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     {
         itemDatabase.didReceiveRemoteNotification(with: userInfo)
     }
+    
+    let storageController = StorageController(with: itemDatabase)
     
     // MARK: - Menu & Mindow
     
