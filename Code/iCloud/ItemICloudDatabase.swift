@@ -4,11 +4,6 @@ import SwiftyToolz
 
 let database = ItemICloudDatabase()
 
-extension ItemICloudDatabase: ItemDatabase
-{
-    // TODO: implement whatever the StorageController needs to do on the ItemDatabase
-}
-
 class ItemICloudDatabase: ICloudDatabase, Observable
 {
     fileprivate override init() {}

@@ -1,6 +1,32 @@
 import SwiftObserver
 
-class Store: StoreInterface, Observer
+typealias PersistableStore = Persistable & StoreInterface
+
+extension Store: StoreInterface
+{
+    func update(text: String?, ofItemWithId id: String)
+    {
+        guard let item = hashMap[id] else { return }
+        
+        item.data?.text <- text
+    }
+    
+    func set(newRoot: Item)
+    {
+        stopObserving(root)
+        observe(newRoot: newRoot)
+        resetHashMap(with: newRoot)
+        
+        // FIXME: all hell break lose updating leafs... :D
+        //updateUserCreatedLeafs(with: newRoot)
+        
+        root = newRoot
+        
+        send(.didSwitchRoot)
+    }
+}
+
+class Store: Observer, Observable
 {
     // MARK: - Initialization
     
@@ -12,19 +38,14 @@ class Store: StoreInterface, Observer
         resetHashMap(with: root)
         updateUserCreatedLeafs(with: root)
     }
-
-    // MARK: - Root
     
-    var root = Item()
+    deinit
     {
-        didSet
-        {
-            stopObserving(oldValue)
-            observe(newRoot: root)
-            resetHashMap(with: root)
-            updateUserCreatedLeafs(with: root)
-        }
+        stopAllObserving()
+        removeObservers()
     }
+
+    // MARK: - Update Root
     
     private func observe(newRoot: Item)
     {
@@ -110,12 +131,28 @@ class Store: StoreInterface, Observer
     
     private func updateUserCreatedLeafs(with root: Item)
     {
-        numberOfUserCreatedLeafs <- root.isLeaf ? 0 : root.numberOfLeafs
+        root.debug()
+        
+        // FIXME: all hell breaks lose with this:
+//        numberOfUserCreatedLeafs <- root.isLeaf ? 0 : root.numberOfLeafs
     }
     
     let numberOfUserCreatedLeafs = Var<Int>()
+    
+    // MARK: - Root
+    
+    private(set) var root = Item()
+    
+    // MARK: - Observability
+    
+    var latestUpdate = StoreEvent.didNothing
 }
 
-typealias PersistableStore = Persistable & StoreInterface
+protocol StoreInterface: Observable where UpdateType == StoreEvent
+{
+    func update(text: String?, ofItemWithId id: String)
+    
+    func set(newRoot: Item)
+}
 
-protocol StoreInterface: AnyObject {}
+enum StoreEvent { case didNothing, didSwitchRoot }

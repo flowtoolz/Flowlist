@@ -196,6 +196,17 @@ class ItemView: LayerBackedView, Observer, Observable
             }
         }
         
+        observe(itemData.text)
+        {
+            [weak self] textUpdate in
+            
+            guard let me = self,
+                me.checkIsInWindow(for: itemData),
+                !me.isEditing else { return }
+            
+            me.textView.string = textUpdate.new ?? ""
+        }
+        
         observe(itemData.state)
         {
             [weak self] _ in
@@ -249,6 +260,7 @@ class ItemView: LayerBackedView, Observer, Observable
         guard let data = itemData else { return }
         
         stopObserving(data)
+        stopObserving(data.text)
         stopObserving(data.state)
         stopObserving(data.tag)
         stopObserving(data.isFocused)

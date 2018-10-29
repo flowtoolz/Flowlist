@@ -29,7 +29,7 @@
 		9E576E352186F85100C9F876 /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E342186F85100C9F876 /* StorageController.swift */; };
 		9E576E372186FAB400C9F876 /* ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E362186FAB400C9F876 /* ItemDatabase.swift */; };
 		9E576E3A21871A9800C9F876 /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E3921871A9800C9F876 /* Persistable.swift */; };
-		9E576E3C218748E500C9F876 /* ItemDataBase+iCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E3B218748E500C9F876 /* ItemDataBase+iCloud.swift */; };
+		9E576E3C218748E500C9F876 /* ItemDatabase+iCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E3B218748E500C9F876 /* ItemDatabase+iCloud.swift */; };
 		9E576E3E2187520300C9F876 /* ItemICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E3D2187520300C9F876 /* ItemICloudDatabase.swift */; };
 		9E60275C21282F91005FFACD /* Font+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E60275A21282F91005FFACD /* Font+Style.swift */; };
 		9E61FB4A21241BF400C2EDF7 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E61FB4921241BF400C2EDF7 /* BrowserView.swift */; };
@@ -110,7 +110,7 @@
 		9E576E342186F85100C9F876 /* StorageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorageController.swift; path = ../Code/StorageController.swift; sourceTree = "<group>"; };
 		9E576E362186FAB400C9F876 /* ItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ItemDatabase.swift; path = ../Code/ItemDatabase.swift; sourceTree = "<group>"; };
 		9E576E3921871A9800C9F876 /* Persistable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Persistable.swift; path = ../Code/Persistable.swift; sourceTree = "<group>"; };
-		9E576E3B218748E500C9F876 /* ItemDataBase+iCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ItemDataBase+iCloud.swift"; path = "../Code/iCloud/ItemDataBase+iCloud.swift"; sourceTree = "<group>"; };
+		9E576E3B218748E500C9F876 /* ItemDatabase+iCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ItemDatabase+iCloud.swift"; path = "../Code/iCloud/ItemDatabase+iCloud.swift"; sourceTree = "<group>"; };
 		9E576E3D2187520300C9F876 /* ItemICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemICloudDatabase.swift; path = ../Code/iCloud/ItemICloudDatabase.swift; sourceTree = "<group>"; };
 		9E60275A21282F91005FFACD /* Font+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Font+Style.swift"; path = "../Code/macOS/Font+Style.swift"; sourceTree = "<group>"; };
 		9E61FB4921241BF400C2EDF7 /* BrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowserView.swift; path = ../Code/macOS/BrowserView.swift; sourceTree = "<group>"; };
@@ -465,7 +465,7 @@
 				9EF1C2552186355000A263D7 /* ItemICloudDatabase+Item.swift */,
 				9E576E3D2187520300C9F876 /* ItemICloudDatabase.swift */,
 				9EF1C2572186490300A263D7 /* CKRecord+Item.swift */,
-				9E576E3B218748E500C9F876 /* ItemDataBase+iCloud.swift */,
+				9E576E3B218748E500C9F876 /* ItemDatabase+iCloud.swift */,
 				9EF1C25121862ABA00A263D7 /* ItemData+iCloud.swift */,
 				9EF1C2582186490300A263D7 /* ICloudDatabase.swift */,
 			);
@@ -623,7 +623,7 @@
 				9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */,
 				9E43503F20F350D200014FFF /* WindowMenu.swift in Sources */,
 				9E08E6B320DD13E000C32356 /* PurchaseView.swift in Sources */,
-				9E576E3C218748E500C9F876 /* ItemDataBase+iCloud.swift in Sources */,
+				9E576E3C218748E500C9F876 /* ItemDatabase+iCloud.swift in Sources */,
 				9E3EB55C2181E83A00681953 /* ItemExportPanel.swift in Sources */,
 				9EF0A78A20B5E26F00E1A23A /* TableContent.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */,

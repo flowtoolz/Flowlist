@@ -1,8 +1,8 @@
 import SwiftObserver
 
-class StorageController<Database: ItemDatabase>: Observer
+class StorageController <Database: ItemDatabase, Store: PersistableStore>: Observer
 {
-    init(with database: Database, store: PersistableStore)
+    init(with database: Database, store: Store)
     {
         self.database = database
         self.store = store
@@ -24,6 +24,22 @@ class StorageController<Database: ItemDatabase>: Observer
                 print("modified fields: \(info.modified.map({ $0.rawValue }))")
             // TODO: be aware that, on modification, icloud always sends root and text, even if they weren't modified...probably has to do with the fact they are indexed
                 
+                for field in info.modified
+                {
+                    switch field
+                    {
+                    case .text:
+                        self.store?.update(text: info.data.text.value,
+                                           ofItemWithId: info.data.id)
+                    case .state:
+                        break
+                    case .tag:
+                        break
+                    case .root:
+                        break
+                    }
+                }
+                
             case .didDelete(let id):
                 print("deleted item: id=\(id)")
             }
@@ -32,19 +48,27 @@ class StorageController<Database: ItemDatabase>: Observer
     
     func appDidLaunch()
     {
-        store?.load()
+        database?.fetchItemTree()
+        {
+            root in
+
+            if let root = root
+            {
+                self.store?.set(newRoot: root)
+            }
+        }
     }
     
     func windowLostFocus()
     {
-        store?.save()
+        //store?.save()
     }
     
     func appWillTerminate()
     {
-        store?.save()
+        //store?.save()
     }
     
     private weak var database: Database?
-    private weak var store: PersistableStore?
+    private weak var store: Store?
 }

@@ -4,6 +4,8 @@ import SwiftyToolz
 protocol ItemDatabase: Observable where UpdateType == ItemDatabaseEvent
 {
     // TODO: declare whatever functionality the StorageController needs from the ItemDatabase
+    
+    func fetchItemTree(receiveRoot: @escaping (Item?) -> Void)
 }
 
 enum ItemDatabaseEvent
@@ -19,7 +21,6 @@ struct ItemDatabaseUpdateInfo
     init(data: ItemData,
          rootId: String?,
          modified: [ItemDatabaseField] = ItemDatabaseField.all)
-    
     {
         self.data = data
         self.rootId = rootId

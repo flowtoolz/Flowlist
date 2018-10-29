@@ -2,41 +2,19 @@ import CloudKit
 import SwiftObserver
 import SwiftyToolz
 
-extension ItemICloudDatabase
+extension ItemICloudDatabase: ItemDatabase
 {
-    // MARK: - Save Item Tree to iCloud
-    
-    private func save(itemTree root: Item)
-    {
-        let itemRecords = records(fromItemTree: root)
-        
-        save(itemRecords)
-    }
-    
-    private func records(fromItemTree root: Item) -> [CKRecord]
-    {
-        var result = [CKRecord]()
-        
-        if let record = CKRecord(from: root)
-        {
-            result.append(record)
-        }
-        
-        for subitem in root.branches
-        {
-            result.append(contentsOf: records(fromItemTree: subitem))
-        }
-        
-        return result
-    }
+    // TODO: implement whatever the StorageController needs to do on the ItemDatabase
     
     // MARK: - Fetch & Connect Items
     
-    private func fetchItemTree(receiveRoot: @escaping (Item?) -> Void)
+    func fetchItemTree(receiveRoot: @escaping (Item?) -> Void)
     {
         fetchItemRecords()
         {
-            records in receiveRoot(self.itemTree(from: records))
+            records in
+            
+            receiveRoot(self.itemTree(from: records))
         }
     }
     
@@ -105,5 +83,34 @@ extension ItemICloudDatabase
         }
         
         return root
+    }
+}
+
+extension ItemICloudDatabase
+{
+    // MARK: - Save Item Tree to iCloud
+    
+    private func save(itemTree root: Item)
+    {
+        let itemRecords = records(fromItemTree: root)
+        
+        save(itemRecords)
+    }
+    
+    private func records(fromItemTree root: Item) -> [CKRecord]
+    {
+        var result = [CKRecord]()
+        
+        if let record = CKRecord(from: root)
+        {
+            result.append(record)
+        }
+        
+        for subitem in root.branches
+        {
+            result.append(contentsOf: records(fromItemTree: subitem))
+        }
+        
+        return result
     }
 }

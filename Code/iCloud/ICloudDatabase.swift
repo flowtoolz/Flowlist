@@ -12,19 +12,22 @@ class ICloudDatabase
         {
             record, error in
             
-            if let error = error
+            DispatchQueue.main.async
             {
-                log(error: error.localizedDescription)
-                handleResult(nil)
-                return
+                if let error = error
+                {
+                    log(error: error.localizedDescription)
+                    handleResult(nil)
+                    return
+                }
+                
+                if record == nil
+                {
+                    log(error: "The fetched record is nil.")
+                }
+                
+                handleResult(record)
             }
-            
-            if record == nil
-            {
-                log(error: "The fetched record is nil.")
-            }
-            
-            handleResult(record)
         }
     }
     
@@ -35,19 +38,22 @@ class ICloudDatabase
         {
             records, error in
             
-            if let error = error
+            DispatchQueue.main.async
             {
-                log(error: error.localizedDescription)
-                handleResult(nil)
-                return
+                if let error = error
+                {
+                    log(error: error.localizedDescription)
+                    handleResult(nil)
+                    return
+                }
+                
+                if records == nil
+                {
+                    log(error: "The fetched record array is nil.")
+                }
+                
+                handleResult(records)
             }
-            
-            if records == nil
-            {
-                log(error: "The fetched record array is nil.")
-            }
-            
-            handleResult(records)
         }
     }
     
@@ -60,19 +66,22 @@ class ICloudDatabase
         {
             savedRecord, error in
             
-            if let error = error
+            DispatchQueue.main.async
             {
-                log(error: error.localizedDescription)
-                handleResult(nil)
-                return
+                if let error = error
+                {
+                    log(error: error.localizedDescription)
+                    handleResult(nil)
+                    return
+                }
+                
+                if savedRecord == nil
+                {
+                    log(error: "Result record is nil.")
+                }
+                
+                handleResult(savedRecord)
             }
-            
-            if savedRecord == nil
-            {
-                log(error: "Result record is nil.")
-            }
-            
-            handleResult(savedRecord)
         }
     }
     
@@ -189,7 +198,7 @@ class ICloudDatabase
             
             if let error = error
             {
-                log( error: error.localizedDescription)
+                log(error: error.localizedDescription)
             }
         }
     }

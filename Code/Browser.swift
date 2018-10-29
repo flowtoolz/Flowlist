@@ -21,9 +21,24 @@ class Browser: Observer, Observable
         focusedList.set(root: Store.shared.root)
         focusedList.select()
         focusedList.isFocused <- true
+        
+        observe(Store.shared)
+        {
+            event in
+            
+            switch event
+            {
+            case .didNothing: break
+            case .didSwitchRoot: self.lists[0].set(root: Store.shared.root)
+            }
+        }
     }
     
-    deinit { stopAllObserving() }
+    deinit
+    {
+        stopAllObserving()
+        removeObservers()
+    }
     
     // MARK: - Navigation
     
