@@ -5,6 +5,29 @@ class ICloudDatabase
 {
     // MARK: - Fetch
     
+    func fetchRecord(with id: CKRecordID,
+                     handleResult: @escaping (CKRecord?) -> Void)
+    {
+        database.fetch(withRecordID: id)
+        {
+            record, error in
+            
+            if let error = error
+            {
+                log(error: error.localizedDescription)
+                handleResult(nil)
+                return
+            }
+            
+            if record == nil
+            {
+                log(error: "The fetched record is nil.")
+            }
+            
+            handleResult(record)
+        }
+    }
+    
     func fetchRecords(with query: CKQuery,
                       handleResult: @escaping ([CKRecord]?) -> Void)
     {
@@ -21,7 +44,7 @@ class ICloudDatabase
             
             if records == nil
             {
-                log(error: "The result array is nil.")
+                log(error: "The fetched record array is nil.")
             }
             
             handleResult(records)

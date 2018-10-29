@@ -4,7 +4,12 @@ import SwiftyToolz
 
 let database = ItemRecordICloudDatabase()
 
-class ItemRecordICloudDatabase: ICloudDatabase, ItemDatabase
+extension ItemRecordICloudDatabase: ItemDatabase
+{
+    
+}
+
+class ItemRecordICloudDatabase: ICloudDatabase, Observable
 {
     fileprivate override init() {}
     
@@ -13,35 +18,94 @@ class ItemRecordICloudDatabase: ICloudDatabase, ItemDatabase
     override func didCreateRecord(with id: CKRecordID,
                                   notification: CKQueryNotification)
     {
-        if !hasAllNewFields(notification)
+        guard let recordFields = allNewFields(notification) else
         {
-            // TODO: fetch record
+            fetchRecord(with: id)
+            {
+                newRecord in
+                
+                guard let record = newRecord else
+                {
+                    log(error: "Fetched new record is nil.")
+                    return
+                }
+                
+                guard let info = ItemDatabaseUpdateInfo(from: record) else
+                {
+                    log(error: "Could not create update info for new record.")
+                    return
+                }
+                
+                self.send(.didCreateItem(info))
+            }
+            
+            return
         }
         
-        // TODO: send update to someone who will adjust items
+        guard let info = ItemDatabaseUpdateInfo(with: id,
+                                                notificationFields: recordFields)
+        else
+        {
+            log(error: "Could not create update info for new record with id \(id.recordName) and fields \(recordFields.debugDescription).")
+            return
+        }
+        
+        self.send(.didCreateItem(info))
     }
     
     override func didModifyRecord(with id: CKRecordID,
                                   notification: CKQueryNotification)
     {
-        if !hasAllNewFields(notification)
+        guard let recordFields = allNewFields(notification) else
         {
-            // TODO: fetch record
+            fetchRecord(with: id)
+            {
+                modifiedRecord in
+                
+                guard let record = modifiedRecord else
+                {
+                    log(error: "Fetched modified record is nil.")
+                    return
+                }
+                
+                guard let info = ItemDatabaseUpdateInfo(from: record) else
+                {
+                    log(error: "Could not create update info for modified record.")
+                    return
+                }
+                
+                self.send(.didModifyItem(info))
+            }
+            
+            return
         }
         
-        // TODO: send update to someone who will adjust items
+        guard let info = ItemDatabaseUpdateInfo(with: id,
+                                                notificationFields: recordFields)
+            else
+        {
+            log(error: "Could not create update info for modified record with id \(id.recordName) and fields \(recordFields.debugDescription).")
+            return
+        }
+        
+        self.send(.didModifyItem(info))
     }
     
     override func didDeleteRecord(with id: CKRecordID)
     {
-        // TODO: send update to someone who will adjust items
+        send(.didDeleteItem(id: id.recordName))
     }
     
-    private func hasAllNewFields(_ notification: CKQueryNotification) -> Bool
+    private func allNewFields(_ notification: CKQueryNotification) -> JSON?
     {
-        if !notification.isPruned { return true }
+        guard let fields = notification.recordFields else { return nil }
         
-        return notification.recordFields?.count == itemRecordTags.count
+        if !notification.isPruned || fields.count == itemFieldNames.count
+        {
+            return fields
+        }
+        
+        return nil
     }
     
     func createItemRecordSubscription()
@@ -49,14 +113,11 @@ class ItemRecordICloudDatabase: ICloudDatabase, ItemDatabase
         let alertKey = "Items where changed in iCloud."
         
         createSubscription(forRecordType: "Item",
-                           desiredTags: itemRecordTags,
+                           desiredTags: itemFieldNames,
                            alertLocalizationKey: alertKey)
     }
     
-    private var itemRecordTags: [String]
-    {
-        return ["text", "tag", "state", "superItem"]
-    }
+    private let itemFieldNames = ItemDatabaseField.all.map { $0.name.rawValue }
     
     // MARK: - Fetch Item Records
     
@@ -93,5 +154,5 @@ class ItemRecordICloudDatabase: ICloudDatabase, ItemDatabase
     
     // MARK: - Observability
     
-    var latestUpdate: ItemDatabaseEvent { return .didNothing }
+    var latestUpdate = ItemDatabaseEvent.didNothing
 }
