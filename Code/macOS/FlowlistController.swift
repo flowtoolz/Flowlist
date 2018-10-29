@@ -104,8 +104,8 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     func application(_ application: NSApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error)
     {
-        show(alert: "Flowlist can't receive iCloud updates without push notifications. Restart Flowlist to retry registration.\n\nError message: \(error.localizedDescription)",
-            title: "Could Not Register for Push Notifications",
+        show(alert: "Without push notifications, Flowlist on this device will be unaware of edits you make on other devices. Please restart Flowlist to retry registration.\n\nError message: \(error.localizedDescription)",
+            title: "Couldn't Register for Push Notifications",
             style: .warning)
     }
     
