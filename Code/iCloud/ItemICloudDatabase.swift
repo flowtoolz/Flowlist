@@ -2,14 +2,14 @@ import CloudKit
 import SwiftObserver
 import SwiftyToolz
 
-let database = ItemRecordICloudDatabase()
+let database = ItemICloudDatabase()
 
-extension ItemRecordICloudDatabase: ItemDatabase
+extension ItemICloudDatabase: ItemDatabase
 {
-    
+    // TODO: implement whatever the StorageController needs to do on the ItemDatabase
 }
 
-class ItemRecordICloudDatabase: ICloudDatabase, Observable
+class ItemICloudDatabase: ICloudDatabase, Observable
 {
     fileprivate override init() {}
     
@@ -36,7 +36,7 @@ class ItemRecordICloudDatabase: ICloudDatabase, Observable
                     return
                 }
                 
-                self.send(.didCreateItem(info))
+                self.send(.didCreate(info))
             }
             
             return
@@ -50,7 +50,7 @@ class ItemRecordICloudDatabase: ICloudDatabase, Observable
             return
         }
         
-        self.send(.didCreateItem(info))
+        self.send(.didCreate(info))
     }
     
     override func didModifyRecord(with id: CKRecordID,
@@ -74,7 +74,7 @@ class ItemRecordICloudDatabase: ICloudDatabase, Observable
                     return
                 }
                 
-                self.send(.didModifyItem(info))
+                self.send(.didModify(info))
             }
             
             return
@@ -88,12 +88,12 @@ class ItemRecordICloudDatabase: ICloudDatabase, Observable
             return
         }
         
-        self.send(.didModifyItem(info))
+        self.send(.didModify(info))
     }
     
     override func didDeleteRecord(with id: CKRecordID)
     {
-        send(.didDeleteItem(id: id.recordName))
+        send(.didDelete(id: id.recordName))
     }
     
     private func allNewFields(_ notification: CKQueryNotification) -> JSON?
@@ -117,7 +117,7 @@ class ItemRecordICloudDatabase: ICloudDatabase, Observable
                            alertLocalizationKey: alertKey)
     }
     
-    private let itemFieldNames = ItemDatabaseField.all.map { $0.name.rawValue }
+    private let itemFieldNames = ItemDatabaseField.all.map { $0.iCloudName.rawValue }
     
     // MARK: - Fetch Item Records
     

@@ -14,7 +14,7 @@ extension ItemDatabaseUpdateInfo
         
         var newRootId: String?
         
-        let superItemString = ItemDatabaseField.Name.superItem.rawValue
+        let superItemString = ItemDatabaseField.ICloudName.superItem.rawValue
         
         if let superItemRef: CKReference = record[superItemString]
         {
@@ -32,7 +32,7 @@ extension ItemDatabaseUpdateInfo
         
         for (nameValue, value) in notificationFields
         {
-            guard let name = ItemDatabaseField.Name(rawValue: nameValue) else
+            guard let name = ItemDatabaseField.ICloudName(rawValue: nameValue) else
             {
                 log(error: "Unknown item database field name: \(nameValue)")
                 return nil
@@ -97,9 +97,9 @@ extension ItemDatabaseUpdateInfo
 
 extension ItemDatabaseField
 {
-    init(from name: Name)
+    init(from iCloudName: ICloudName)
     {
-        switch name
+        switch iCloudName
         {
         case .text: self = .text
         case .state: self = .state
@@ -108,7 +108,7 @@ extension ItemDatabaseField
         }
     }
     
-    var name: Name
+    var iCloudName: ICloudName
     {
         switch self
         {
@@ -119,7 +119,7 @@ extension ItemDatabaseField
         }
     }
     
-    enum Name: String
+    enum ICloudName: String
     {
         case text, state, tag, superItem
     }

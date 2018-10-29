@@ -9,15 +9,15 @@ protocol ItemDatabase: Observable where UpdateType == ItemDatabaseEvent
 enum ItemDatabaseEvent
 {
     case didNothing
-    case didCreateItem(_ info: ItemDatabaseUpdateInfo)
-    case didModifyItem(_ info: ItemDatabaseUpdateInfo)
-    case didDeleteItem(id: String)
+    case didCreate(_ info: ItemDatabaseUpdateInfo)
+    case didModify(_ info: ItemDatabaseUpdateInfo)
+    case didDelete(id: String)
 }
 
 struct ItemDatabaseUpdateInfo
 {
     init(data: ItemData,
-         rootId: String? = nil,
+         rootId: String?,
          modified: [ItemDatabaseField] = ItemDatabaseField.all)
     
     {

@@ -14,9 +14,9 @@ class StorageController<Database: ItemDatabase>: Observer
             switch event
             {
             case .didNothing: break
-            case .didModifyItem(let info): break
-            case .didCreateItem(let info): break
-            case .didDeleteItem(let id): break
+            case .didModify(let info): break
+            case .didCreate(let info): break
+            case .didDelete(let id): break
             }
         }
     }
