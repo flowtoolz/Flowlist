@@ -27,9 +27,7 @@ class Store: Observer, Observable
         stopObserving(root)
         observe(newRoot: newRoot)
         itemHash.reset(with: newRoot.array)
-        
-        // FIXME: all hell break lose updating leafs... :D
-        //updateUserCreatedLeafs(with: newRoot)
+        updateUserCreatedLeafs(with: newRoot)
         
         root = newRoot
         
@@ -94,14 +92,13 @@ class Store: Observer, Observable
     
     let itemHash = ItemHash()
     
-    // MARK: - Count Leafs Inside Root
+    // MARK: - Track Number of User Created Leafs
     
     private func updateUserCreatedLeafs(with root: Item)
     {
         root.debug()
         
-        // FIXME: all hell breaks lose with this:
-//        numberOfUserCreatedLeafs <- root.isLeaf ? 0 : root.numberOfLeafs
+        numberOfUserCreatedLeafs <- root.isLeaf ? 0 : root.numberOfLeafs
     }
     
     let numberOfUserCreatedLeafs = Var<Int>()
