@@ -1,7 +1,5 @@
 import SwiftObserver
 
-typealias PersistableStore = Persistable & StoreInterface
-
 extension Store: StoreInterface
 {
     func updateItem(with edit: ItemEdit)

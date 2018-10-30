@@ -1,11 +1,5 @@
 import SwiftObserver
 
-protocol StoreInterface: Observable where UpdateType == StoreEvent
-{
-    func updateItem(with edit: ItemEdit)
-    func set(newRoot: Item)
-}
-
 class Store: Observer, Observable
 {
     // MARK: - Initialization
@@ -22,7 +16,7 @@ class Store: Observer, Observable
 
     // MARK: - Update Root
     
-    func set(newRoot: Item)
+    func update(root newRoot: Item)
     {
         stopObserving(root)
         observe(newRoot: newRoot)
@@ -78,7 +72,7 @@ class Store: Observer, Observable
     {
         if root == nil
         {
-            set(newRoot: Item(NSUserName()))
+            update(root: Item(NSUserName()))
         }
         
         if root?.isLeaf ?? false

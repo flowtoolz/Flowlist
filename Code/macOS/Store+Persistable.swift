@@ -35,7 +35,7 @@ extension Store: Persistable
         loadedRoot.recoverNumberOfLeafs()
         loadedRoot.data?.text <- NSFullUserName()
         
-        set(newRoot: loadedRoot)
+        update(root: loadedRoot)
         
         pasteWelcomeTourIfRootIsEmpty()
     }

@@ -21,7 +21,7 @@ class StorageController <Database: ItemDatabase, Store: PersistableStore>: Obser
         {
             if let root = $0
             {
-                self.store?.set(newRoot: root)
+                self.store?.update(root: root)
             }
             else
             {
