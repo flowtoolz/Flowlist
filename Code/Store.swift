@@ -1,79 +1,9 @@
 import SwiftObserver
 
-typealias PersistableStore = Persistable & StoreInterface
-
-extension Store: StoreInterface
+protocol StoreInterface: Observable where UpdateType == StoreEvent
 {
     func updateItem(with edit: ItemEdit)
-    {
-        // TODO: be aware that, on modification, icloud always sends root and text, even if they weren't modified
-        
-        switch edit
-        {
-        case .didNothing: break
-            
-        case .didCreate(let info):
-            let newItem = Item(data: info.data)
-            
-            hashMap[info.data.id] = newItem
-            
-            if let rootId = info.rootId,
-                let rootItem = hashMap[rootId]
-            {
-                rootItem.add(newItem)
-            }
-            
-        case .didModify(let info):
-            let id = info.data.id
-            
-            guard let item = hashMap[id] else { break }
-            
-            for field in info.modified
-            {
-                switch field
-                {
-                case .text:
-                    item.data?.text <- info.data.text.value
-
-                case .state:
-                    item.data?.state <- info.data.state.value
-                    
-                case .tag:
-                    item.data?.tag <- info.data.tag.value
-                
-                case .root: break
-                }
-            }
-            
-        case .didDelete(let id): removeItem(with: id)
-        }
-    }
-    
-    private func removeItem(with id: String)
-    {
-        guard let item = hashMap[id] else { return }
-        
-        removeFromHashMap([item])
-        
-        guard let superItem = item.root,
-            let index = item.indexInRoot else { return }
-        
-        superItem.removeNodes(from: [index])
-    }
-    
     func set(newRoot: Item)
-    {
-        stopObserving(root)
-        observe(newRoot: newRoot)
-        resetHashMap(with: newRoot)
-        
-        // FIXME: all hell break lose updating leafs... :D
-        //updateUserCreatedLeafs(with: newRoot)
-        
-        root = newRoot
-        
-        send(.didSwitchRoot)
-    }
 }
 
 class Store: Observer, Observable
@@ -91,6 +21,20 @@ class Store: Observer, Observable
     }
 
     // MARK: - Update Root
+    
+    func set(newRoot: Item)
+    {
+        stopObserving(root)
+        observe(newRoot: newRoot)
+        itemHash.reset(with: newRoot.array)
+        
+        // FIXME: all hell break lose updating leafs... :D
+        //updateUserCreatedLeafs(with: newRoot)
+        
+        root = newRoot
+        
+        send(.didSwitchRoot)
+    }
     
     private func observe(newRoot: Item)
     {
@@ -124,9 +68,9 @@ class Store: Observer, Observable
             switch rootEvent
             {
             case .didRemove(let items):
-                for item in items { removeFromHashMap(item.array) }
+                for item in items { itemHash.remove(item.array) }
             case .didInsert(let items, _, _):
-                for item in items { addToHashMap(item.array) }
+                for item in items { itemHash.add(item.array) }
             }
         }
     }
@@ -148,34 +92,7 @@ class Store: Observer, Observable
     
     // MARK: - Hash Map
     
-    private func resetHashMap(with newRoot: Item)
-    {
-        hashMap.removeAll()
-        
-        addToHashMap(newRoot.array)
-    }
-    
-    private func addToHashMap(_ items: [Item])
-    {
-        for item in items
-        {
-            guard let data = item.data else { return }
-            
-            hashMap[data.id] = item
-        }
-    }
-    
-    private func removeFromHashMap(_ items: [Item])
-    {
-        for item in items
-        {
-            guard let data = item.data else { return }
-            
-            hashMap[data.id] = nil
-        }
-    }
-    
-    private var hashMap = [String : Item]()
+    let itemHash = ItemHash()
     
     // MARK: - Count Leafs Inside Root
     
@@ -198,10 +115,46 @@ class Store: Observer, Observable
     var latestUpdate = StoreEvent.didNothing
 }
 
-protocol StoreInterface: Observable where UpdateType == StoreEvent
-{
-    func updateItem(with edit: ItemEdit)
-    func set(newRoot: Item)
-}
-
 enum StoreEvent { case didNothing, didSwitchRoot }
+
+class ItemHash
+{
+    var items: [Item]
+    {
+        return Array(storedItems.values)
+    }
+    
+    subscript(_ id: String) -> Item?
+    {
+        return storedItems[id]
+    }
+    
+    func reset(with items: [Item])
+    {
+        storedItems.removeAll()
+        
+        add(items)
+    }
+    
+    func add(_ items: [Item])
+    {
+        for item in items
+        {
+            guard let data = item.data else { return }
+            
+            storedItems[data.id] = item
+        }
+    }
+    
+    func remove(_ items: [Item])
+    {
+        for item in items
+        {
+            guard let data = item.data else { return }
+            
+            storedItems[data.id] = nil
+        }
+    }
+    
+    private var storedItems = [String : Item]()
+}
