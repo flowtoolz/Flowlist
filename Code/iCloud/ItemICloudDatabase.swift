@@ -25,7 +25,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                     return
                 }
                 
-                guard let info = ItemDatabaseUpdateInfo(from: record) else
+                guard let info = ItemEditInfo(from: record) else
                 {
                     log(error: "Could not create update info for new record.")
                     return
@@ -37,7 +37,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
             return
         }
         
-        guard let info = ItemDatabaseUpdateInfo(with: id,
+        guard let info = ItemEditInfo(with: id,
                                                 notificationFields: recordFields)
         else
         {
@@ -63,7 +63,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                     return
                 }
                 
-                guard let info = ItemDatabaseUpdateInfo(from: record) else
+                guard let info = ItemEditInfo(from: record) else
                 {
                     log(error: "Could not create update info for modified record.")
                     return
@@ -75,7 +75,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
             return
         }
         
-        guard let info = ItemDatabaseUpdateInfo(with: id,
+        guard let info = ItemEditInfo(with: id,
                                                 notificationFields: recordFields)
             else
         {
@@ -112,7 +112,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                            alertLocalizationKey: alertKey)
     }
     
-    private let itemFieldNames = ItemDatabaseField.all.map { $0.iCloudName.rawValue }
+    private let itemFieldNames = ItemStorageField.all.map { $0.iCloudName.rawValue }
     
     // MARK: - Fetch Item Records
     
@@ -149,5 +149,5 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     // MARK: - Observability
     
-    var latestUpdate = ItemDatabaseEvent.didNothing
+    var latestUpdate = ItemEdit.didNothing
 }

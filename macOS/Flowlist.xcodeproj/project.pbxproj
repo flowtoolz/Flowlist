@@ -70,6 +70,7 @@
 		9EF1C2562186355000A263D7 /* ItemICloudDatabase+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1C2552186355000A263D7 /* ItemICloudDatabase+Item.swift */; };
 		9EF1C2592186490300A263D7 /* CKRecord+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1C2572186490300A263D7 /* CKRecord+Item.swift */; };
 		9EF1C25A2186490300A263D7 /* ICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1C2582186490300A263D7 /* ICloudDatabase.swift */; };
+		9EF2E8912187D293008D2780 /* ItemChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF2E8902187D293008D2780 /* ItemChange.swift */; };
 		9EF6C67B20E21D6B0003264A /* PriceTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF6C67A20E21D6B0003264A /* PriceTag.swift */; };
 		9EF6C67D20E22DE10003264A /* SKProduct+FormattedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF6C67C20E22DE10003264A /* SKProduct+FormattedPrice.swift */; };
 		9EF6C67F20E272340003264A /* BulletpointList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF6C67E20E272340003264A /* BulletpointList.swift */; };
@@ -152,6 +153,7 @@
 		9EF1C2552186355000A263D7 /* ItemICloudDatabase+Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ItemICloudDatabase+Item.swift"; path = "../Code/iCloud/ItemICloudDatabase+Item.swift"; sourceTree = "<group>"; };
 		9EF1C2572186490300A263D7 /* CKRecord+Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CKRecord+Item.swift"; path = "../Code/iCloud/CKRecord+Item.swift"; sourceTree = "<group>"; };
 		9EF1C2582186490300A263D7 /* ICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICloudDatabase.swift; path = ../Code/iCloud/ICloudDatabase.swift; sourceTree = "<group>"; };
+		9EF2E8902187D293008D2780 /* ItemChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ItemChange.swift; path = ../Code/ItemChange.swift; sourceTree = "<group>"; };
 		9EF6C67A20E21D6B0003264A /* PriceTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PriceTag.swift; path = ../Code/macOS/PriceTag.swift; sourceTree = "<group>"; };
 		9EF6C67C20E22DE10003264A /* SKProduct+FormattedPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SKProduct+FormattedPrice.swift"; path = "../Code/macOS/SKProduct+FormattedPrice.swift"; sourceTree = "<group>"; };
 		9EF6C67E20E272340003264A /* BulletpointList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BulletpointList.swift; path = ../Code/macOS/BulletpointList.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				9E576E342186F85100C9F876 /* StorageController.swift */,
 				9E576E382186FADD00C9F876 /* Database */,
 				9E6C721220B1E7C4001C3D2C /* Store */,
+				9EF2E8902187D293008D2780 /* ItemChange.swift */,
 			);
 			name = Storage;
 			sourceTree = "<group>";
@@ -684,6 +687,7 @@
 				9E1AAD6C20B58AD1001657A7 /* Header.swift in Sources */,
 				9E0D5AA120C160C800F0D827 /* Color+Style.swift in Sources */,
 				9EF1C25221862ABA00A263D7 /* ItemData+iCloud.swift in Sources */,
+				9EF2E8912187D293008D2780 /* ItemChange.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

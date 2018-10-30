@@ -21,8 +21,6 @@ extension Store: Persistable
         
         guard let loadedRoot = Item(from: fileUrl) else
         {
-            didLoadItemsSuccessfully = false
-            
             log(error: "Failed to load items from " + fileUrl.absoluteString)
             
             let message = "Please ensure that your data file \"\(fileUrl.path)\" is formatted correctly. Then restart Flowlist.\n\n(Be careful to retain the JSON format when editing the file outside of Flowlist.)"
@@ -32,8 +30,6 @@ extension Store: Persistable
             
             return
         }
-        
-        didLoadItemsSuccessfully = true
         
         loadedRoot.recoverRoots()
         loadedRoot.recoverNumberOfLeafs()
@@ -46,14 +42,15 @@ extension Store: Persistable
     
     private func createFile()
     {
+        guard let root = root else { return }
+        
         root.data?.text <- NSFullUserName()
-        didLoadItemsSuccessfully = true
         save()
     }
     
     func save()
     {
-        guard didLoadItemsSuccessfully,
+        guard let root = root,
             let fileUrl = fileUrl,
             let _ = root.save(to: fileUrl)
         else
@@ -80,5 +77,3 @@ extension Store: Persistable
         #endif
     }
 }
-
-fileprivate var didLoadItemsSuccessfully = false

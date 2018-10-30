@@ -4,11 +4,61 @@ typealias PersistableStore = Persistable & StoreInterface
 
 extension Store: StoreInterface
 {
-    func update(text: String?, ofItemWithId id: String)
+    func updateItem(with edit: ItemEdit)
+    {
+        // TODO: be aware that, on modification, icloud always sends root and text, even if they weren't modified
+        
+        switch edit
+        {
+        case .didNothing: break
+            
+        case .didCreate(let info):
+            let newItem = Item(data: info.data)
+            
+            hashMap[info.data.id] = newItem
+            
+            if let rootId = info.rootId,
+                let rootItem = hashMap[rootId]
+            {
+                rootItem.add(newItem)
+            }
+            
+        case .didModify(let info):
+            let id = info.data.id
+            
+            guard let item = hashMap[id] else { break }
+            
+            for field in info.modified
+            {
+                switch field
+                {
+                case .text:
+                    item.data?.text <- info.data.text.value
+
+                case .state:
+                    item.data?.state <- info.data.state.value
+                    
+                case .tag:
+                    item.data?.tag <- info.data.tag.value
+                
+                case .root: break
+                }
+            }
+            
+        case .didDelete(let id): removeItem(with: id)
+        }
+    }
+    
+    private func removeItem(with id: String)
     {
         guard let item = hashMap[id] else { return }
         
-        item.data?.text <- text
+        removeFromHashMap([item])
+        
+        guard let superItem = item.root,
+            let index = item.indexInRoot else { return }
+        
+        superItem.removeNodes(from: [index])
     }
     
     func set(newRoot: Item)
@@ -32,12 +82,7 @@ class Store: Observer, Observable
     
     static let shared = Store() 
     
-    fileprivate init()
-    {
-        observe(newRoot: root)
-        resetHashMap(with: root)
-        updateUserCreatedLeafs(with: root)
-    }
+    fileprivate init() {}
     
     deinit
     {
@@ -90,9 +135,14 @@ class Store: Observer, Observable
     
     func pasteWelcomeTourIfRootIsEmpty()
     {
-        if root.isLeaf
+        if root == nil
         {
-            root.insert(Item.welcomeTour, at: 0)
+            set(newRoot: Item(NSUserName()))
+        }
+        
+        if root?.isLeaf ?? false
+        {
+            root?.insert(Item.welcomeTour, at: 0)
         }
     }
     
@@ -141,7 +191,7 @@ class Store: Observer, Observable
     
     // MARK: - Root
     
-    private(set) var root = Item()
+    private(set) var root: Item?
     
     // MARK: - Observability
     
@@ -150,8 +200,7 @@ class Store: Observer, Observable
 
 protocol StoreInterface: Observable where UpdateType == StoreEvent
 {
-    func update(text: String?, ofItemWithId id: String)
-    
+    func updateItem(with edit: ItemEdit)
     func set(newRoot: Item)
 }
 

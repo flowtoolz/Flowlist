@@ -2,7 +2,7 @@ import CloudKit
 import SwiftObserver
 import SwiftyToolz
 
-extension ItemDatabaseUpdateInfo
+extension ItemEditInfo
 {
     init?(from record: CKRecord)
     {
@@ -14,7 +14,7 @@ extension ItemDatabaseUpdateInfo
         
         var newRootId: String?
         
-        let superItemString = ItemDatabaseField.ICloudName.superItem.rawValue
+        let superItemString = ItemStorageField.ICloudName.superItem.rawValue
         
         if let superItemRef: CKReference = record[superItemString]
         {
@@ -26,19 +26,19 @@ extension ItemDatabaseUpdateInfo
     
     init?(with id: CKRecordID, notificationFields: JSON)
     {
-        var fields = [ItemDatabaseField]()
+        var fields = [ItemStorageField]()
         let data = ItemData(id: id.recordName)
         var newRootId: String?
         
         for (nameValue, value) in notificationFields
         {
-            guard let name = ItemDatabaseField.ICloudName(rawValue: nameValue) else
+            guard let name = ItemStorageField.ICloudName(rawValue: nameValue) else
             {
                 log(error: "Unknown item database field name: \(nameValue)")
                 return nil
             }
             
-            let field = ItemDatabaseField(from: name)
+            let field = ItemStorageField(from: name)
             
             switch field
             {
@@ -95,7 +95,7 @@ extension ItemDatabaseUpdateInfo
     }
 }
 
-extension ItemDatabaseField
+extension ItemStorageField
 {
     init(from iCloudName: ICloudName)
     {
