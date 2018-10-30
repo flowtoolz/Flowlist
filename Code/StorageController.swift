@@ -23,6 +23,10 @@ class StorageController <Database: ItemDatabase, Store: PersistableStore>: Obser
             {
                 self.store?.set(newRoot: root)
             }
+            else
+            {
+                self.store?.load()
+            }
         }
     }
     
