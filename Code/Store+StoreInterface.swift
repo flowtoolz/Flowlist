@@ -27,7 +27,7 @@ extension Store: StoreInterface
         
         guard let rootItem = itemHash[rootId] else
         {
-            log(warning: "Root (id \(rootId)) of new item (id \(info.data.id)) is no in hash map.")
+            log(warning: "Root (id \(rootId)) of new item (id \(info.data.id)) is not in hash map.")
             return
         }
         
@@ -49,9 +49,7 @@ extension Store: StoreInterface
             case .text: item.data?.text <- info.data.text.value
             case .state: item.data?.state <- info.data.state.value
             case .tag: item.data?.tag <- info.data.tag.value
-            case .root:
-                // TODO: implement this to be safe
-                break
+            case .root: log(error: "Did not expect direct modification of item root. ID: \(info.data.id). Text: \(item.text ?? "nil")")
             }
         }
     }

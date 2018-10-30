@@ -9,9 +9,7 @@ class StorageController <Database: ItemDatabase, Store: PersistableStore>: Obser
         
         observe(database)
         {
-            itemEdit in
-            
-            self.store?.apply(itemEdit)
+            itemEdit in self.store?.apply(itemEdit)
         }
     }
     
