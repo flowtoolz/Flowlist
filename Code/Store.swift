@@ -7,12 +7,6 @@ class Store: Observer, Observable
     static let shared = Store() 
     
     fileprivate init() {}
-    
-    deinit
-    {
-        stopAllObserving()
-        removeObservers()
-    }
 
     // MARK: - Update Root
     
