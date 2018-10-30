@@ -50,8 +50,7 @@ class Store: Observer, Observable
     {
         switch event
         {
-            
-        case .didNothing, .didChangeData: break
+        case .didNothing, .didSwitchData: break
             
         case .did(let edit):
             if edit.modifiesContent

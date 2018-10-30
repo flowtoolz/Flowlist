@@ -67,7 +67,7 @@ class List: Observable, Observer
             {
             case .didNothing, .rootEvent: break
             case .did(let edit): self?.received(edit, from: root)
-            case .didChangeData(from: _, to: let newItemData):
+            case .didSwitchData(from: _, to: let newItemData):
                 self?.title.observable = newItemData?.text
                 self?.tag.observable = newItemData?.tag
                 self?.state.observable = newItemData?.state

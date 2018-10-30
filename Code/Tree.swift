@@ -160,7 +160,7 @@ final class Tree<Data: Copyable>: Copyable, Observable
         {
             guard data !== oldValue else { return }
             
-            send(.didChangeData(from: oldValue, to: data))
+            send(.didSwitchData(from: oldValue, to: data))
         }
     }
     
@@ -254,7 +254,7 @@ final class Tree<Data: Copyable>: Copyable, Observable
     {
         case didNothing
         case did(Edit)
-        case didChangeData(from: Data?, to: Data?)
+        case didSwitchData(from: Data?, to: Data?)
         case didChange(numberOfLeafs: Int)
         case rootEvent(RootEvent)
         

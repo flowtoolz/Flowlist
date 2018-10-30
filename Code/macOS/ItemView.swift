@@ -164,7 +164,7 @@ class ItemView: LayerBackedView, Observer, Observable
             
             updateGroupIcon()
             
-        case .didChangeData(let from, let to): didSwitch(from: from, to: to)
+        case .didSwitchData(let from, let to): didSwitch(from: from, to: to)
         case .didChange(numberOfLeafs: _): break
         }
     }
