@@ -1,3 +1,5 @@
+import SwiftObserver
+
 class ItemHash
 {
     var items: [Item] { return Array(storedItems.values) }
@@ -15,7 +17,11 @@ class ItemHash
     {
         for item in items
         {
-            guard let data = item.data else { return }
+            guard let data = item.data else
+            {
+                log(error: "Item has no data.")
+                return
+            }
             
             storedItems[data.id] = item
         }
@@ -25,7 +31,11 @@ class ItemHash
     {
         for item in items
         {
-            guard let data = item.data else { return }
+            guard let data = item.data else
+            {
+                log(error: "Item has no data.")
+                return
+            }
             
             storedItems[data.id] = nil
         }

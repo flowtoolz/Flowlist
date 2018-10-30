@@ -11,7 +11,7 @@ class StorageController <Database: ItemDatabase, Store: PersistableStore>: Obser
         {
             itemEdit in
             
-            self.store?.updateItem(with: itemEdit)
+            self.store?.apply(itemEdit)
         }
     }
     
