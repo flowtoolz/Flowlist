@@ -87,7 +87,7 @@ class Store: Observer, Observable
     // MARK: - Item Storage
     
     private(set) var root: Item?
-    let itemHash = ItemHash()
+    let itemHash = HashMap()
     
     // MARK: - Observability
     

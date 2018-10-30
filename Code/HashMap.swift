@@ -1,6 +1,6 @@
 import SwiftObserver
 
-class ItemHash
+class HashMap
 {
     var items: [Item] { return Array(storedItems.values) }
     
