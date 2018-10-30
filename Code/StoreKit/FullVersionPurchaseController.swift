@@ -1,8 +1,8 @@
-import Foundation
 import StoreKit
+import Foundation
 import FoundationToolz
-import SwiftyToolz
 import SwiftObserver
+import SwiftyToolz
 
 let fullVersionPurchaseController = FullVersionPurchaseController()
 
@@ -162,6 +162,16 @@ class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDele
     }
     
     var fullVersionProduct: SKProduct?
+    {
+        didSet
+        {
+            fullVersionPrice = fullVersionProduct?.price
+            fullVersionPriceLocale = fullVersionProduct?.priceLocale
+            fullVersionFormattedPrice = fullVersionProduct?.formattedPrice
+        }
+    }
+    
+    
     private let fullVersionId = "com.flowtoolz.flowlist.fullversion"
     
     // MARK: - Discount

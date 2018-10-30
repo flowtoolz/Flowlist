@@ -1,5 +1,4 @@
 import AppKit
-import StoreKit
 import UIToolz
 import SwiftObserver
 import SwiftyToolz
@@ -10,7 +9,7 @@ class PriceTag: NSView, Observer
     
     override init(frame frameRect: NSRect)
     {
-        super.init(frame: frameRect)
+        super.init(frame: .zero)
         
         constrainDiscountPriceLabel()
         constrainPriceLabel()
@@ -32,28 +31,27 @@ class PriceTag: NSView, Observer
     
     func update()
     {
-        guard let product = product else { return }
+        guard let price = fullVersionPrice,
+            let priceLocale = fullVersionPriceLocale else { return }
         
-        let appStorePrice = product.formattedPrice ?? ""
+        let appStorePrice = fullVersionFormattedPrice ?? ""
         discountPriceLabel.stringValue = "Introductory Price " + appStorePrice
         
         let discountAvailable = fullVersionPurchaseController.summerDiscountIsAvailable
         
         if discountAvailable
         {
-            var roundedPrice = product.price.intValue
+            var roundedPrice = price.intValue
             
-            if Double(roundedPrice) < product.price.doubleValue
+            if Double(roundedPrice) < price.doubleValue
             {
                 roundedPrice += 1
             }
             
             let roundedPriceNumber = NSDecimalNumber(value: roundedPrice)
-            let regularPriceNumber = product.price.adding(roundedPriceNumber)
+            let regularPriceNumber = price.adding(roundedPriceNumber)
             
-            let locale = product.priceLocale
-            
-            let regularPrice = regularPriceNumber.formattedPrice(in: locale) ?? ""
+            let regularPrice = regularPriceNumber.formattedPrice(in: priceLocale) ?? ""
             
             priceLabel.stringValue = regularPrice
         }
@@ -110,12 +108,5 @@ class PriceTag: NSView, Observer
         label.textColor = color.nsColor
         
         return label
-    }
-    
-    // MARK: - Product Information
-    
-    private var product: SKProduct?
-    {
-        return fullVersionPurchaseController.fullVersionProduct
     }
 }

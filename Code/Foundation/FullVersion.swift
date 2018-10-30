@@ -50,3 +50,7 @@ let maxNumberOfLeafsInTrial = 100
 
 fileprivate var isFullVersion_Cached: Bool?
 fileprivate let userNameKey = "UserName"
+
+var fullVersionPrice: NSDecimalNumber?
+var fullVersionPriceLocale: Locale?
+var fullVersionFormattedPrice: String?
