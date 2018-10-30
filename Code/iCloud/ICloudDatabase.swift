@@ -1,4 +1,5 @@
 import CloudKit
+import SwiftObserver
 import SwiftyToolz
 
 class ICloudDatabase

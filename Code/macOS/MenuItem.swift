@@ -1,5 +1,5 @@
 import AppKit
-import SwiftyToolz
+import SwiftObserver
 
 public class MenuItem: NSMenuItem
 {

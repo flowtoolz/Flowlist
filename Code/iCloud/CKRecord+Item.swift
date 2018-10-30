@@ -1,5 +1,5 @@
 import CloudKit
-import SwiftyToolz
+import SwiftObserver
 
 extension CKRecord
 {

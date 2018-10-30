@@ -1,6 +1,7 @@
 import AppKit
 import UIToolz
 import GetLaid
+import SwiftObserver
 import SwiftyToolz
 
 extension Tree where Data == ItemData
