@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9E053B23218867E4001B7103 /* Store+Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B22218867E4001B7103 /* Store+Persistable.swift */; };
+		9E053B2521886867001B7103 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2421886867001B7103 /* FullVersion.swift */; };
+		9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */; };
 		9E08E6B320DD13E000C32356 /* PurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E6B220DD13E000C32356 /* PurchaseView.swift */; };
 		9E0D5AA120C160C800F0D827 /* Color+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0D5AA020C160C800F0D827 /* Color+Style.swift */; };
 		9E15185C1EEEE8CE00B35AD5 /* Item+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185B1EEEE8CE00B35AD5 /* Item+Codable.swift */; };
@@ -37,7 +39,6 @@
 		9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Item+State.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
 		9E6C721020B1E66D001C3D2C /* Item+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720F20B1E66D001C3D2C /* Item+Debugging.swift */; };
-		9E6C8C7120E3E5D90068EBCF /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C8C7020E3E5D90068EBCF /* NSDecimalNumber+Price.swift */; };
 		9E71504520D7D80F0061601E /* FullVersionPurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71504420D7D80F0061601E /* FullVersionPurchaseController.swift */; };
 		9E72881B1EEF3095003A2F46 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E72881A1EEF3095003A2F46 /* ListView.swift */; };
 		9E7651941EEF428100DE2B07 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651931EEF428100DE2B07 /* ItemView.swift */; };
@@ -59,7 +60,6 @@
 		9EE2EE4B20B4A693007CDC2F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE4A20B4A693007CDC2F /* TextView.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
 		9EE2EE5C20B4C8F6007CDC2F /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */; };
-		9EE582FF20DA7377004DE407 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE582FE20DA7377004DE407 /* FullVersion.swift */; };
 		9EEBA1A32168DAE40053B628 /* ItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEBA1A22168DAE40053B628 /* ItemData.swift */; };
 		9EEBA1A52168DC280053B628 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEBA1A42168DC280053B628 /* Item.swift */; };
 		9EEBA1A72168EE860053B628 /* ItemData+Copyable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEBA1A62168EE860053B628 /* ItemData+Copyable.swift */; };
@@ -92,6 +92,8 @@
 		78B3E83C8B5F1E96FF074B6D /* Pods-Flowlist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flowlist.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist.debug.xcconfig"; sourceTree = "<group>"; };
 		9E0410F820CE60B300C7C3E3 /* Flowlist.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Flowlist.entitlements; path = Resources/Flowlist.entitlements; sourceTree = "<group>"; };
 		9E053B22218867E4001B7103 /* Store+Persistable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Store+Persistable.swift"; path = "../Code/Foundation/Store+Persistable.swift"; sourceTree = "<group>"; };
+		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FullVersion.swift; path = ../Code/Foundation/FullVersion.swift; sourceTree = "<group>"; };
+		9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDecimalNumber+Price.swift"; path = "../Code/Foundation/NSDecimalNumber+Price.swift"; sourceTree = "<group>"; };
 		9E08E6B220DD13E000C32356 /* PurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PurchaseView.swift; path = ../Code/macOS/PurchaseView.swift; sourceTree = "<group>"; };
 		9E0D5AA020C160C800F0D827 /* Color+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Color+Style.swift"; path = "../Code/Color+Style.swift"; sourceTree = "<group>"; };
 		9E15185B1EEEE8CE00B35AD5 /* Item+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Item+Codable.swift"; path = "../Code/Item+Codable.swift"; sourceTree = "<group>"; };
@@ -122,7 +124,6 @@
 		9E6C720A20B19C88001C3D2C /* Item+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Item+State.swift"; path = "../Code/Item+State.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = List.swift; path = ../Code/List.swift; sourceTree = "<group>"; };
 		9E6C720F20B1E66D001C3D2C /* Item+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Item+Debugging.swift"; path = "../Code/Item+Debugging.swift"; sourceTree = "<group>"; };
-		9E6C8C7020E3E5D90068EBCF /* NSDecimalNumber+Price.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSDecimalNumber+Price.swift"; path = "../Code/NSDecimalNumber+Price.swift"; sourceTree = "<group>"; };
 		9E71504420D7D80F0061601E /* FullVersionPurchaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FullVersionPurchaseController.swift; path = ../Code/macOS/FullVersionPurchaseController.swift; sourceTree = "<group>"; };
 		9E72881A1EEF3095003A2F46 /* ListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListView.swift; path = ../Code/macOS/ListView.swift; sourceTree = "<group>"; };
 		9E7651931EEF428100DE2B07 /* ItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemView.swift; path = ../Code/macOS/ItemView.swift; sourceTree = "<group>"; };
@@ -145,7 +146,6 @@
 		9EE2EE4A20B4A693007CDC2F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextView.swift; path = ../Code/macOS/TextView.swift; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Float+Style.swift"; path = "../Code/Float+Style.swift"; sourceTree = "<group>"; };
 		9EE2EE5B20B4C8F6007CDC2F /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CheckBox.swift; path = ../Code/macOS/CheckBox.swift; sourceTree = "<group>"; };
-		9EE582FE20DA7377004DE407 /* FullVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FullVersion.swift; path = ../Code/FullVersion.swift; sourceTree = "<group>"; };
 		9EEBA1A22168DAE40053B628 /* ItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ItemData.swift; path = ../Code/ItemData.swift; sourceTree = "<group>"; };
 		9EEBA1A42168DC280053B628 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Item.swift; path = ../Code/Item.swift; sourceTree = "<group>"; };
 		9EEBA1A62168EE860053B628 /* ItemData+Copyable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ItemData+Copyable.swift"; path = "../Code/ItemData+Copyable.swift"; sourceTree = "<group>"; };
@@ -306,7 +306,7 @@
 				9EF6C67E20E272340003264A /* BulletpointList.swift */,
 				9EF6C67A20E21D6B0003264A /* PriceTag.swift */,
 				9E71504420D7D80F0061601E /* FullVersionPurchaseController.swift */,
-				9EE582FE20DA7377004DE407 /* FullVersion.swift */,
+				9E053B2421886867001B7103 /* FullVersion.swift */,
 			);
 			name = "Full Version Purchase";
 			sourceTree = "<group>";
@@ -488,7 +488,7 @@
 			children = (
 				9E576E3921871A9800C9F876 /* Persistable.swift */,
 				9EF6C67C20E22DE10003264A /* SKProduct+FormattedPrice.swift */,
-				9E6C8C7020E3E5D90068EBCF /* NSDecimalNumber+Price.swift */,
+				9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */,
 				9ECD2952214FBE44000472B1 /* MenuItem.swift */,
 				9E5768C120C15CDF00749C0C /* Tree+Hashable.swift */,
 				9EFB86DB21662AD100985B14 /* Tree.swift */,
@@ -642,7 +642,6 @@
 				9EF0AABE21883E6E00B707F4 /* ItemHash.swift in Sources */,
 				9E60275C21282F91005FFACD /* Font+Style.swift in Sources */,
 				9E71504520D7D80F0061601E /* FullVersionPurchaseController.swift in Sources */,
-				9E6C8C7120E3E5D90068EBCF /* NSDecimalNumber+Price.swift in Sources */,
 				9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */,
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
 				9EFB86DC21662AD100985B14 /* Tree.swift in Sources */,
@@ -664,9 +663,11 @@
 				9EF0AAC02188506B00B707F4 /* PersistableStore.swift in Sources */,
 				9E053B23218867E4001B7103 /* Store+Persistable.swift in Sources */,
 				9E61FB4A21241BF400C2EDF7 /* BrowserView.swift in Sources */,
+				9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */,
 				9E6C721020B1E66D001C3D2C /* Item+Debugging.swift in Sources */,
 				9EF0A78C20B5F8B200E1A23A /* ScrollTable.swift in Sources */,
 				9E15185C1EEEE8CE00B35AD5 /* Item+Codable.swift in Sources */,
+				9E053B2521886867001B7103 /* FullVersion.swift in Sources */,
 				9E2F83E520C8639F003E771E /* List+NSPasteboard.swift in Sources */,
 				9ED5C8DD20DF970000EF84CB /* PurchaseContentView.swift in Sources */,
 				9E3F69332115ADE2002D595D /* Item+WelcomeTour.swift in Sources */,
@@ -692,7 +693,6 @@
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,
 				9E5768BC20C14B9300749C0C /* Direction.swift in Sources */,
 				9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */,
-				9EE582FF20DA7377004DE407 /* FullVersion.swift in Sources */,
 				9EEBA1A32168DAE40053B628 /* ItemData.swift in Sources */,
 				9EF6C67F20E272340003264A /* BulletpointList.swift in Sources */,
 				9ECD2953214FBE44000472B1 /* MenuItem.swift in Sources */,
