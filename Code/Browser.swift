@@ -18,9 +18,10 @@ class Browser: Observer, Observable
             fatalError()
         }
         
-        focusedList.set(root: Store.shared.root)
-        focusedList.select()
-        focusedList.isFocused <- true
+        if Store.shared.root != nil
+        {
+            storeGotNewRoot()
+        }
         
         observe(Store.shared)
         {
@@ -29,7 +30,7 @@ class Browser: Observer, Observable
             switch event
             {
             case .didNothing: break
-            case .didSwitchRoot: self.lists[0].set(root: Store.shared.root)
+            case .didSwitchRoot: self.storeGotNewRoot()
             }
         }
     }
@@ -38,6 +39,16 @@ class Browser: Observer, Observable
     {
         stopAllObserving()
         removeObservers()
+    }
+    
+    // MARK: - Store Root
+    
+    private func storeGotNewRoot()
+    {
+        lists[0].set(root: Store.shared.root)
+        move(to: 0)
+        focusedList.isFocused <- true
+        focusedList.select()
     }
     
     // MARK: - Navigation
