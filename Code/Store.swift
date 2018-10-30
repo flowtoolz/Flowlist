@@ -87,24 +87,19 @@ class Store: Observer, Observable
         }
     }
     
-    // MARK: - Hash Map
-    
-    let itemHash = ItemHash()
-    
     // MARK: - Track Number of User Created Leafs
     
     private func updateUserCreatedLeafs(with root: Item)
     {
-        root.debug()
-        
         numberOfUserCreatedLeafs <- root.isLeaf ? 0 : root.numberOfLeafs
     }
     
     let numberOfUserCreatedLeafs = Var<Int>()
     
-    // MARK: - Root
+    // MARK: - Item Storage
     
     private(set) var root: Item?
+    let itemHash = ItemHash()
     
     // MARK: - Observability
     
