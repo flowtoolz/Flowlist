@@ -4,8 +4,6 @@ import SwiftyToolz
 
 extension ItemICloudDatabase: ItemDatabase
 {
-    // TODO: implement whatever the StorageController needs to do on the ItemDatabase
-    
     // MARK: - Fetch & Connect Items
     
     func fetchItemTree(receiveRoot: @escaping (Item?) -> Void)
@@ -84,13 +82,10 @@ extension ItemICloudDatabase: ItemDatabase
         
         return root
     }
-}
-
-extension ItemICloudDatabase
-{
-    // MARK: - Save Item Tree to iCloud
     
-    private func save(itemTree root: Item)
+    // MARK: - Save Item Tree
+    
+    func save(itemTree root: Item)
     {
         let itemRecords = records(fromItemTree: root)
         
