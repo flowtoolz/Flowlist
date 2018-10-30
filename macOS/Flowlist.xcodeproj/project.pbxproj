@@ -66,6 +66,7 @@
 		9EF0A78C20B5F8B200E1A23A /* ScrollTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0A78B20B5F8B200E1A23A /* ScrollTable.swift */; };
 		9EF0A79320B72B5A00E1A23A /* FlowlistController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0A79220B72B5A00E1A23A /* FlowlistController.swift */; };
 		9EF0AABC218838FA00B707F4 /* Store+StoreInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0AABB218838FA00B707F4 /* Store+StoreInterface.swift */; };
+		9EF0AABE21883E6E00B707F4 /* ItemHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0AABD21883E6E00B707F4 /* ItemHash.swift */; };
 		9EF1C2482186297800A263D7 /* Store+Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1C2472186297800A263D7 /* Store+Persistable.swift */; };
 		9EF1C25221862ABA00A263D7 /* ItemData+iCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1C25121862ABA00A263D7 /* ItemData+iCloud.swift */; };
 		9EF1C2562186355000A263D7 /* ItemICloudDatabase+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1C2552186355000A263D7 /* ItemICloudDatabase+Item.swift */; };
@@ -150,6 +151,7 @@
 		9EF0A78B20B5F8B200E1A23A /* ScrollTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScrollTable.swift; path = ../Code/macOS/ScrollTable.swift; sourceTree = "<group>"; };
 		9EF0A79220B72B5A00E1A23A /* FlowlistController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FlowlistController.swift; path = ../Code/macOS/FlowlistController.swift; sourceTree = "<group>"; };
 		9EF0AABB218838FA00B707F4 /* Store+StoreInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Store+StoreInterface.swift"; path = "../Code/Store+StoreInterface.swift"; sourceTree = "<group>"; };
+		9EF0AABD21883E6E00B707F4 /* ItemHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ItemHash.swift; path = ../Code/ItemHash.swift; sourceTree = "<group>"; };
 		9EF1C2472186297800A263D7 /* Store+Persistable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Store+Persistable.swift"; path = "../Code/macOS/Store+Persistable.swift"; sourceTree = "<group>"; };
 		9EF1C25121862ABA00A263D7 /* ItemData+iCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ItemData+iCloud.swift"; path = "../Code/iCloud/ItemData+iCloud.swift"; sourceTree = "<group>"; };
 		9EF1C2552186355000A263D7 /* ItemICloudDatabase+Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ItemICloudDatabase+Item.swift"; path = "../Code/iCloud/ItemICloudDatabase+Item.swift"; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				9EF1C2472186297800A263D7 /* Store+Persistable.swift */,
 				9EF0AABB218838FA00B707F4 /* Store+StoreInterface.swift */,
 				9E7651951EEF4DA200DE2B07 /* Store.swift */,
+				9EF0AABD21883E6E00B707F4 /* ItemHash.swift */,
 				9E576E3921871A9800C9F876 /* Persistable.swift */,
 			);
 			name = Store;
@@ -633,6 +636,7 @@
 				9E3EB55C2181E83A00681953 /* ItemExportPanel.swift in Sources */,
 				9EF0A78A20B5E26F00E1A23A /* TableContent.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */,
+				9EF0AABE21883E6E00B707F4 /* ItemHash.swift in Sources */,
 				9E60275C21282F91005FFACD /* Font+Style.swift in Sources */,
 				9E71504520D7D80F0061601E /* FullVersionPurchaseController.swift in Sources */,
 				9E6C8C7120E3E5D90068EBCF /* NSDecimalNumber+Price.swift in Sources */,
