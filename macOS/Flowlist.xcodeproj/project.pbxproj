@@ -10,6 +10,12 @@
 		9E053B23218867E4001B7103 /* Store+Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B22218867E4001B7103 /* Store+Persistable.swift */; };
 		9E053B2521886867001B7103 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2421886867001B7103 /* FullVersion.swift */; };
 		9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */; };
+		9E053B2E21886963001B7103 /* ItemICloudDatabase+ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2821886962001B7103 /* ItemICloudDatabase+ItemDatabase.swift */; };
+		9E053B2F21886963001B7103 /* ItemData+iCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2921886962001B7103 /* ItemData+iCloud.swift */; };
+		9E053B3021886963001B7103 /* ItemDatabase+iCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2A21886963001B7103 /* ItemDatabase+iCloud.swift */; };
+		9E053B3121886963001B7103 /* CKRecord+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2B21886963001B7103 /* CKRecord+Item.swift */; };
+		9E053B3221886963001B7103 /* ICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2C21886963001B7103 /* ICloudDatabase.swift */; };
+		9E053B3321886963001B7103 /* ItemICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */; };
 		9E08E6B320DD13E000C32356 /* PurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E08E6B220DD13E000C32356 /* PurchaseView.swift */; };
 		9E0D5AA120C160C800F0D827 /* Color+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0D5AA020C160C800F0D827 /* Color+Style.swift */; };
 		9E15185C1EEEE8CE00B35AD5 /* Item+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E15185B1EEEE8CE00B35AD5 /* Item+Codable.swift */; };
@@ -32,8 +38,6 @@
 		9E576E352186F85100C9F876 /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E342186F85100C9F876 /* StorageController.swift */; };
 		9E576E372186FAB400C9F876 /* ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E362186FAB400C9F876 /* ItemDatabase.swift */; };
 		9E576E3A21871A9800C9F876 /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E3921871A9800C9F876 /* Persistable.swift */; };
-		9E576E3C218748E500C9F876 /* ItemDatabase+iCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E3B218748E500C9F876 /* ItemDatabase+iCloud.swift */; };
-		9E576E3E2187520300C9F876 /* ItemICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E3D2187520300C9F876 /* ItemICloudDatabase.swift */; };
 		9E60275C21282F91005FFACD /* Font+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E60275A21282F91005FFACD /* Font+Style.swift */; };
 		9E61FB4A21241BF400C2EDF7 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E61FB4921241BF400C2EDF7 /* BrowserView.swift */; };
 		9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Item+State.swift */; };
@@ -69,10 +73,6 @@
 		9EF0AABC218838FA00B707F4 /* Store+StoreInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0AABB218838FA00B707F4 /* Store+StoreInterface.swift */; };
 		9EF0AABE21883E6E00B707F4 /* ItemHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0AABD21883E6E00B707F4 /* ItemHash.swift */; };
 		9EF0AAC02188506B00B707F4 /* PersistableStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0AABF2188506B00B707F4 /* PersistableStore.swift */; };
-		9EF1C25221862ABA00A263D7 /* ItemData+iCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1C25121862ABA00A263D7 /* ItemData+iCloud.swift */; };
-		9EF1C2562186355000A263D7 /* ItemICloudDatabase+ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1C2552186355000A263D7 /* ItemICloudDatabase+ItemDatabase.swift */; };
-		9EF1C2592186490300A263D7 /* CKRecord+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1C2572186490300A263D7 /* CKRecord+Item.swift */; };
-		9EF1C25A2186490300A263D7 /* ICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF1C2582186490300A263D7 /* ICloudDatabase.swift */; };
 		9EF2E8912187D293008D2780 /* ItemEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF2E8902187D293008D2780 /* ItemEdit.swift */; };
 		9EF6C67B20E21D6B0003264A /* PriceTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF6C67A20E21D6B0003264A /* PriceTag.swift */; };
 		9EF6C67D20E22DE10003264A /* SKProduct+FormattedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF6C67C20E22DE10003264A /* SKProduct+FormattedPrice.swift */; };
@@ -94,6 +94,12 @@
 		9E053B22218867E4001B7103 /* Store+Persistable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Store+Persistable.swift"; path = "../Code/Foundation/Store+Persistable.swift"; sourceTree = "<group>"; };
 		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FullVersion.swift; path = ../Code/Foundation/FullVersion.swift; sourceTree = "<group>"; };
 		9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDecimalNumber+Price.swift"; path = "../Code/Foundation/NSDecimalNumber+Price.swift"; sourceTree = "<group>"; };
+		9E053B2821886962001B7103 /* ItemICloudDatabase+ItemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ItemICloudDatabase+ItemDatabase.swift"; path = "../Code/CloudKit/ItemICloudDatabase+ItemDatabase.swift"; sourceTree = "<group>"; };
+		9E053B2921886962001B7103 /* ItemData+iCloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ItemData+iCloud.swift"; path = "../Code/CloudKit/ItemData+iCloud.swift"; sourceTree = "<group>"; };
+		9E053B2A21886963001B7103 /* ItemDatabase+iCloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ItemDatabase+iCloud.swift"; path = "../Code/CloudKit/ItemDatabase+iCloud.swift"; sourceTree = "<group>"; };
+		9E053B2B21886963001B7103 /* CKRecord+Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CKRecord+Item.swift"; path = "../Code/CloudKit/CKRecord+Item.swift"; sourceTree = "<group>"; };
+		9E053B2C21886963001B7103 /* ICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICloudDatabase.swift; path = ../Code/CloudKit/ICloudDatabase.swift; sourceTree = "<group>"; };
+		9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemICloudDatabase.swift; path = ../Code/CloudKit/ItemICloudDatabase.swift; sourceTree = "<group>"; };
 		9E08E6B220DD13E000C32356 /* PurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PurchaseView.swift; path = ../Code/macOS/PurchaseView.swift; sourceTree = "<group>"; };
 		9E0D5AA020C160C800F0D827 /* Color+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Color+Style.swift"; path = "../Code/Color+Style.swift"; sourceTree = "<group>"; };
 		9E15185B1EEEE8CE00B35AD5 /* Item+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Item+Codable.swift"; path = "../Code/Item+Codable.swift"; sourceTree = "<group>"; };
@@ -117,8 +123,6 @@
 		9E576E342186F85100C9F876 /* StorageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorageController.swift; path = ../Code/StorageController.swift; sourceTree = "<group>"; };
 		9E576E362186FAB400C9F876 /* ItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ItemDatabase.swift; path = ../Code/ItemDatabase.swift; sourceTree = "<group>"; };
 		9E576E3921871A9800C9F876 /* Persistable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Persistable.swift; path = ../Code/Persistable.swift; sourceTree = "<group>"; };
-		9E576E3B218748E500C9F876 /* ItemDatabase+iCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ItemDatabase+iCloud.swift"; path = "../Code/iCloud/ItemDatabase+iCloud.swift"; sourceTree = "<group>"; };
-		9E576E3D2187520300C9F876 /* ItemICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemICloudDatabase.swift; path = ../Code/iCloud/ItemICloudDatabase.swift; sourceTree = "<group>"; };
 		9E60275A21282F91005FFACD /* Font+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Font+Style.swift"; path = "../Code/macOS/Font+Style.swift"; sourceTree = "<group>"; };
 		9E61FB4921241BF400C2EDF7 /* BrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowserView.swift; path = ../Code/macOS/BrowserView.swift; sourceTree = "<group>"; };
 		9E6C720A20B19C88001C3D2C /* Item+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Item+State.swift"; path = "../Code/Item+State.swift"; sourceTree = "<group>"; };
@@ -155,10 +159,6 @@
 		9EF0AABB218838FA00B707F4 /* Store+StoreInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Store+StoreInterface.swift"; path = "../Code/Store+StoreInterface.swift"; sourceTree = "<group>"; };
 		9EF0AABD21883E6E00B707F4 /* ItemHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ItemHash.swift; path = ../Code/ItemHash.swift; sourceTree = "<group>"; };
 		9EF0AABF2188506B00B707F4 /* PersistableStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PersistableStore.swift; path = ../Code/PersistableStore.swift; sourceTree = "<group>"; };
-		9EF1C25121862ABA00A263D7 /* ItemData+iCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ItemData+iCloud.swift"; path = "../Code/iCloud/ItemData+iCloud.swift"; sourceTree = "<group>"; };
-		9EF1C2552186355000A263D7 /* ItemICloudDatabase+ItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ItemICloudDatabase+ItemDatabase.swift"; path = "../Code/iCloud/ItemICloudDatabase+ItemDatabase.swift"; sourceTree = "<group>"; };
-		9EF1C2572186490300A263D7 /* CKRecord+Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CKRecord+Item.swift"; path = "../Code/iCloud/CKRecord+Item.swift"; sourceTree = "<group>"; };
-		9EF1C2582186490300A263D7 /* ICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICloudDatabase.swift; path = ../Code/iCloud/ICloudDatabase.swift; sourceTree = "<group>"; };
 		9EF2E8902187D293008D2780 /* ItemEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ItemEdit.swift; path = ../Code/ItemEdit.swift; sourceTree = "<group>"; };
 		9EF6C67A20E21D6B0003264A /* PriceTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PriceTag.swift; path = ../Code/macOS/PriceTag.swift; sourceTree = "<group>"; };
 		9EF6C67C20E22DE10003264A /* SKProduct+FormattedPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SKProduct+FormattedPrice.swift"; path = "../Code/macOS/SKProduct+FormattedPrice.swift"; sourceTree = "<group>"; };
@@ -473,12 +473,12 @@
 		9EF1C250218629BA00A263D7 /* iCloud */ = {
 			isa = PBXGroup;
 			children = (
-				9EF1C2552186355000A263D7 /* ItemICloudDatabase+ItemDatabase.swift */,
-				9E576E3D2187520300C9F876 /* ItemICloudDatabase.swift */,
-				9EF1C2572186490300A263D7 /* CKRecord+Item.swift */,
-				9E576E3B218748E500C9F876 /* ItemDatabase+iCloud.swift */,
-				9EF1C25121862ABA00A263D7 /* ItemData+iCloud.swift */,
-				9EF1C2582186490300A263D7 /* ICloudDatabase.swift */,
+				9E053B2821886962001B7103 /* ItemICloudDatabase+ItemDatabase.swift */,
+				9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */,
+				9E053B2B21886963001B7103 /* CKRecord+Item.swift */,
+				9E053B2A21886963001B7103 /* ItemDatabase+iCloud.swift */,
+				9E053B2921886962001B7103 /* ItemData+iCloud.swift */,
+				9E053B2C21886963001B7103 /* ICloudDatabase.swift */,
 			);
 			name = iCloud;
 			sourceTree = "<group>";
@@ -630,18 +630,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E053B2F21886963001B7103 /* ItemData+iCloud.swift in Sources */,
+				9E053B3321886963001B7103 /* ItemICloudDatabase.swift in Sources */,
 				9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */,
 				9EA63839216F8BB100D1503C /* List+Selection.swift in Sources */,
 				9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */,
 				9E43503F20F350D200014FFF /* WindowMenu.swift in Sources */,
 				9E08E6B320DD13E000C32356 /* PurchaseView.swift in Sources */,
-				9E576E3C218748E500C9F876 /* ItemDatabase+iCloud.swift in Sources */,
 				9E3EB55C2181E83A00681953 /* ItemExportPanel.swift in Sources */,
 				9EF0A78A20B5E26F00E1A23A /* TableContent.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */,
 				9EF0AABE21883E6E00B707F4 /* ItemHash.swift in Sources */,
 				9E60275C21282F91005FFACD /* Font+Style.swift in Sources */,
 				9E71504520D7D80F0061601E /* FullVersionPurchaseController.swift in Sources */,
+				9E053B3021886963001B7103 /* ItemDatabase+iCloud.swift in Sources */,
 				9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */,
 				9E542E951EEEE41C00534981 /* main.swift in Sources */,
 				9EFB86DC21662AD100985B14 /* Tree.swift in Sources */,
@@ -649,17 +651,16 @@
 				9EEBA1A72168EE860053B628 /* ItemData+Copyable.swift in Sources */,
 				9E4238E12180DF8800772876 /* GroupIcon.swift in Sources */,
 				9E576E372186FAB400C9F876 /* ItemDatabase.swift in Sources */,
-				9EF1C2562186355000A263D7 /* ItemICloudDatabase+ItemDatabase.swift in Sources */,
 				9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */,
 				9EE2EE4B20B4A693007CDC2F /* TextView.swift in Sources */,
 				9E72881B1EEF3095003A2F46 /* ListView.swift in Sources */,
 				9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */,
 				9EF9BDDA2110EECC009E62AF /* HelpMenu.swift in Sources */,
 				9EF0A79320B72B5A00E1A23A /* FlowlistController.swift in Sources */,
-				9EF1C25A2186490300A263D7 /* ICloudDatabase.swift in Sources */,
 				9EB6217220C27DD500DD3DA5 /* ApplicationMenu.swift in Sources */,
 				9E576E352186F85100C9F876 /* StorageController.swift in Sources */,
 				9E15185E1EEEE97700B35AD5 /* ViewController.swift in Sources */,
+				9E053B2E21886963001B7103 /* ItemICloudDatabase+ItemDatabase.swift in Sources */,
 				9EF0AAC02188506B00B707F4 /* PersistableStore.swift in Sources */,
 				9E053B23218867E4001B7103 /* Store+Persistable.swift in Sources */,
 				9E61FB4A21241BF400C2EDF7 /* BrowserView.swift in Sources */,
@@ -678,13 +679,13 @@
 				9E576E3A21871A9800C9F876 /* Persistable.swift in Sources */,
 				9E7651941EEF428100DE2B07 /* ItemView.swift in Sources */,
 				9EF6C67B20E21D6B0003264A /* PriceTag.swift in Sources */,
-				9E576E3E2187520300C9F876 /* ItemICloudDatabase.swift in Sources */,
-				9EF1C2592186490300A263D7 /* CKRecord+Item.swift in Sources */,
 				9E2F83E720C88220003E771E /* SelectionMenu.swift in Sources */,
 				9EF0AABC218838FA00B707F4 /* Store+StoreInterface.swift in Sources */,
+				9E053B3221886963001B7103 /* ICloudDatabase.swift in Sources */,
 				9EB6217720C2830200DD3DA5 /* EditMenu.swift in Sources */,
 				9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */,
 				9E5768C020C15B6300749C0C /* Browser+Debugging.swift in Sources */,
+				9E053B3121886963001B7103 /* CKRecord+Item.swift in Sources */,
 				9EAD75411EF6502000DC46FD /* Table.swift in Sources */,
 				9E88F54F20B7761F00A64F7B /* Menu.swift in Sources */,
 				9E2645A9215E4AC000E7982D /* Spacer.swift in Sources */,
@@ -698,7 +699,6 @@
 				9ECD2953214FBE44000472B1 /* MenuItem.swift in Sources */,
 				9E1AAD6C20B58AD1001657A7 /* Header.swift in Sources */,
 				9E0D5AA120C160C800F0D827 /* Color+Style.swift in Sources */,
-				9EF1C25221862ABA00A263D7 /* ItemData+iCloud.swift in Sources */,
 				9EF2E8912187D293008D2780 /* ItemEdit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
