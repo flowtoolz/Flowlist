@@ -4,7 +4,7 @@ import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
-class FlowlistController: AppController, Observer, NSWindowDelegate
+class FlowlistController: AppController, NSWindowDelegate
 {
     // MARK: - Initialization
     
@@ -15,21 +15,6 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     override func applicationDidFinishLaunching(_ aNotification: Notification)
     {
         super.applicationDidFinishLaunching(aNotification)
-        
-        observe(Log.shared.latestEntry)
-        {
-            logUpdate in
-            
-            guard let entry = logUpdate.new,
-                entry.forUser,
-                entry.level != .off else { return }
-            
-            let title = entry.title ?? entry.level.rawValue.uppercased()
-            
-            show(alert: entry.message + "\n\n(\(entry.context))",
-                 title: title,
-                 style: entry.level.alertStyle)
-        }
 
         fullVersionPurchaseController.setup()
         
@@ -119,9 +104,9 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     func application(_ application: NSApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error)
     {
-        show(alert: "Without push notifications, Flowlist on this device will be unaware of edits you make on other devices. Please restart Flowlist to retry registration.\n\nError message: \(error.localizedDescription)",
+        log(warning: "Without push notifications, Flowlist on this device will be unaware of edits you make on other devices. Please restart Flowlist to retry registration.\n\nError message: \(error.localizedDescription)",
             title: "Couldn't Register for Push Notifications",
-            style: .warning)
+            forUser: true)
     }
     
     func application(_ application: NSApplication,
@@ -141,17 +126,4 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     
     private let storageController = StorageController(with: database,
                                                       store: Store.shared)
-}
-
-extension Log.Level
-{
-    var alertStyle: NSAlert.Style
-    {
-        switch self
-        {
-        case .info, .off: return NSAlert.Style.informational
-        case .warning: return NSAlert.Style.warning
-        case .error: return NSAlert.Style.critical
-        }
-    }
 }
