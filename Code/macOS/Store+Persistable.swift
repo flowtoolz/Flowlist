@@ -1,4 +1,3 @@
-import UIToolz
 import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
@@ -21,12 +20,11 @@ extension Store: Persistable
         
         guard let loadedRoot = Item(from: fileUrl) else
         {
-            log(error: "Failed to load items from " + fileUrl.absoluteString)
+            let title = "Couldn't Read From \"\(filename)\""
             
-            let message = "Please ensure that your data file \"\(fileUrl.path)\" is formatted correctly. Then restart Flowlist.\n\n(Be careful to retain the JSON format when editing the file outside of Flowlist.)"
+            let message = "Please ensure your file at \(fileUrl.path) is formatted correctly. Then restart Flowlist.\n\nBe careful to retain the JSON format when editing the file outside of Flowlist."
             
-            // TODO: This file depends on AppKit just because this alert. Avoid that.
-            show(alert: message, title: "Couldn't Read From \"\(filename)\"")
+            log(error: message, title: title, forUser: true)
             
             return
         }

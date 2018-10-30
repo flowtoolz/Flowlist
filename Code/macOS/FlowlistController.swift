@@ -15,6 +15,21 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     override func applicationDidFinishLaunching(_ aNotification: Notification)
     {
         super.applicationDidFinishLaunching(aNotification)
+        
+        observe(Log.shared.latestEntry)
+        {
+            logUpdate in
+            
+            guard let entry = logUpdate.new,
+                entry.forUser,
+                entry.level != .off else { return }
+            
+            let title = entry.title ?? entry.level.rawValue.uppercased()
+            
+            show(alert: entry.message + "\n\n(\(entry.context))",
+                 title: title,
+                 style: entry.level.alertStyle)
+        }
 
         fullVersionPurchaseController.setup()
         
@@ -126,4 +141,17 @@ class FlowlistController: AppController, Observer, NSWindowDelegate
     
     private let storageController = StorageController(with: database,
                                                       store: Store.shared)
+}
+
+extension Log.Level
+{
+    var alertStyle: NSAlert.Style
+    {
+        switch self
+        {
+        case .info, .off: return NSAlert.Style.informational
+        case .warning: return NSAlert.Style.warning
+        case .error: return NSAlert.Style.critical
+        }
+    }
 }
