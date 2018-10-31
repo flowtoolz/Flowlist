@@ -22,7 +22,7 @@ extension CKRecord
         superItem = item.root?.data?.id
     }
     
-    // MARK: - Item Storage Properties
+    // MARK: - Storage Properties
     
     var text: String?
     {
@@ -119,7 +119,10 @@ extension CKRecord
     {
         let result = recordType == CKRecord.itemType
         
-        if !result { log(warning: "CKRecord is not an item record.") }
+        if !result
+        {
+            log(warning: "Type is \"\(recordType)\" but expected \"\(CKRecord.itemType)\".")
+        }
         
         return result
     }

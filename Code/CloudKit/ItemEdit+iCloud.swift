@@ -1,17 +1,10 @@
 import CloudKit
-import SwiftObserver
-import SwiftyToolz
 
 extension ItemEditInfo
 {
     init?(from record: CKRecord)
     {
-        guard record.isItem else
-        {
-            log(error: "iCloud record type is \"\(record.recordType)\". Expected\"Item\".")
-            
-            return nil
-        }
+        guard record.isItem else { return nil }
         
         self.init(id: record.recordID.recordName,
                   text: record.text,
@@ -20,7 +13,7 @@ extension ItemEditInfo
                   rootId: record.superItem)
     }
     
-    init?(with id: CKRecordID, notificationFields: JSON)
+    init?(with id: CKRecordID, notificationFields: [String : Any])
     {
         var modifiedFields = [ItemStorageField]()
         var newRootId: String?
@@ -51,5 +44,3 @@ extension ItemEditInfo
                   modified: modifiedFields)
     }
 }
-
-
