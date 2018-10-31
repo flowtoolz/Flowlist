@@ -2,9 +2,9 @@ import SwiftObserver
 
 extension Store: StoreInterface
 {
-    func apply(_ operation: Item.Interaction)
+    func apply(_ interaction: Item.Interaction)
     {
-        switch operation
+        switch interaction
         {
         case .none: break
         case .create(let modification): createItem(with: modification)
