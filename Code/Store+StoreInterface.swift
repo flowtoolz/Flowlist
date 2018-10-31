@@ -48,8 +48,8 @@ extension Store: StoreInterface
             switch field
             {
             case .text: item.data?.text <- info.text
-            case .state: item.data?.state <- ItemData.State(from: info.state)
-            case .tag: item.data?.tag <- ItemData.Tag(from: info.tag)
+            case .state: item.data?.state <- info.state
+            case .tag: item.data?.tag <- info.tag
             case .root: log(error: "Did not expect direct modification of item root. ID: \(info.id). Intended new root ID: \(String(describing: info.rootId)) item Text: \(item.text ?? "nil")")
             }
         }

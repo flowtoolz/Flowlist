@@ -44,7 +44,7 @@ extension ItemICloudDatabase: ItemDatabase
         
         for (record, item) in hashMap.values
         {
-            guard let superItemReference: CKReference = record["superItem"] else
+            guard let superItemId = record.superItem else
             {
                 if root != nil
                 {
@@ -57,8 +57,6 @@ extension ItemICloudDatabase: ItemDatabase
                 
                 continue
             }
-            
-            let superItemId = superItemReference.recordID.recordName
             
             guard let (_, superItem) = hashMap[superItemId] else
             {

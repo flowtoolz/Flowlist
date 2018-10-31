@@ -23,24 +23,12 @@ enum ItemEdit
     case didDelete(id: String)
 }
 
-extension ItemData
-{
-    convenience init(from editInfo: ItemEditInfo)
-    {
-        self.init(id: editInfo.id)
-        
-        text <- editInfo.text
-        state <- State(from: editInfo.state)
-        tag <- Tag(from: editInfo.tag)
-    }
-}
-
 struct ItemEditInfo
 {
     init(id: String,
          text: String? = nil,
-         state: Int? = nil,
-         tag: Int? = nil,
+         state: ItemData.State? = nil,
+         tag: ItemData.Tag? = nil,
          rootId: String? = nil,
          modified: [ItemStorageField] = ItemStorageField.all)
     {
@@ -54,8 +42,8 @@ struct ItemEditInfo
     
     let id: String
     let text: String?
-    let state: Int?
-    let tag: Int?
+    let state: ItemData.State?
+    let tag: ItemData.Tag?
     let rootId: String?
     let modified: [ItemStorageField]
 }

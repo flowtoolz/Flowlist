@@ -23,9 +23,9 @@ extension ItemEditInfo
         }
         
         self.init(id: record.recordID.recordName,
-                  text: record["text"],
-                  state: record["state"],
-                  tag: record["tag"],
+                  text: record.text,
+                  state: record.state,
+                  tag: record.tag,
                   rootId: newRootId)
     }
     
@@ -34,8 +34,8 @@ extension ItemEditInfo
         var modifiedFields = [ItemStorageField]()
         var newRootId: String?
         var newText: String?
-        var newState: Int?
-        var newTag: Int?
+        var newState: ItemData.State?
+        var newTag: ItemData.Tag?
         
         for (nameValue, value) in notificationFields
         {
@@ -50,8 +50,8 @@ extension ItemEditInfo
             switch field
             {
             case .text: newText = value as? String
-            case .state: newState = value as? Int
-            case .tag: newTag = value as? Int
+            case .state: newState = ItemData.State(from: value as? Int)
+            case .tag: newTag = ItemData.Tag(from: value as? Int)
             case .root: newRootId = value as? String
             }
             
@@ -67,32 +67,4 @@ extension ItemEditInfo
     }
 }
 
-extension ItemStorageField
-{
-    init(from iCloudName: ICloudName)
-    {
-        switch iCloudName
-        {
-        case .text: self = .text
-        case .state: self = .state
-        case .tag: self = .tag
-        case .superItem: self = .root
-        }
-    }
-    
-    var iCloudName: ICloudName
-    {
-        switch self
-        {
-        case .text: return .text
-        case .state: return .state
-        case .tag: return .tag
-        case .root: return .superItem
-        }
-    }
-    
-    enum ICloudName: String
-    {
-        case text, state, tag, superItem
-    }
-}
+
