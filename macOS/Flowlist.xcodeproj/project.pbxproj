@@ -16,7 +16,7 @@
 		9E053B3121886963001B7103 /* CKRecord+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2B21886963001B7103 /* CKRecord+Item.swift */; };
 		9E053B3221886963001B7103 /* ICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2C21886963001B7103 /* ICloudDatabase.swift */; };
 		9E053B3321886963001B7103 /* ItemICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */; };
-		9E053B3521886AC4001B7103 /* FullVersionPurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3421886AC4001B7103 /* FullVersionPurchaseController.swift */; };
+		9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3421886AC4001B7103 /* PurchaseController.swift */; };
 		9E053B3721886BD4001B7103 /* SKProduct+FormattedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */; };
 		9E053B3A218870D0001B7103 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B38218870D0001B7103 /* main.swift */; };
 		9E053B3B218870D0001B7103 /* FlowlistController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B39218870D0001B7103 /* FlowlistController.swift */; };
@@ -100,7 +100,7 @@
 		9E053B2B21886963001B7103 /* CKRecord+Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CKRecord+Item.swift"; path = "../Code/CloudKit/CKRecord+Item.swift"; sourceTree = "<group>"; };
 		9E053B2C21886963001B7103 /* ICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICloudDatabase.swift; path = ../Code/CloudKit/ICloudDatabase.swift; sourceTree = "<group>"; };
 		9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemICloudDatabase.swift; path = ../Code/CloudKit/ItemICloudDatabase.swift; sourceTree = "<group>"; };
-		9E053B3421886AC4001B7103 /* FullVersionPurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FullVersionPurchaseController.swift; path = ../Code/StoreKit/FullVersionPurchaseController.swift; sourceTree = "<group>"; };
+		9E053B3421886AC4001B7103 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseController.swift; path = ../Code/StoreKit/PurchaseController.swift; sourceTree = "<group>"; };
 		9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SKProduct+FormattedPrice.swift"; path = "../Code/StoreKit/SKProduct+FormattedPrice.swift"; sourceTree = "<group>"; };
 		9E053B38218870D0001B7103 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../Code/AppKit/main.swift; sourceTree = "<group>"; };
 		9E053B39218870D0001B7103 /* FlowlistController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlowlistController.swift; path = ../Code/AppKit/FlowlistController.swift; sourceTree = "<group>"; };
@@ -271,7 +271,7 @@
 		9E053B7821887315001B7103 /* StoreKit */ = {
 			isa = PBXGroup;
 			children = (
-				9E053B3421886AC4001B7103 /* FullVersionPurchaseController.swift */,
+				9E053B3421886AC4001B7103 /* PurchaseController.swift */,
 			);
 			name = StoreKit;
 			sourceTree = "<group>";
@@ -375,26 +375,26 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		9E71504320D7D7E80061601E /* Full Version Purchase */ = {
+		9E71504320D7D7E80061601E /* Purchase */ = {
 			isa = PBXGroup;
 			children = (
 				9E053B7721887309001B7103 /* UI */,
 				9E053B7821887315001B7103 /* StoreKit */,
 				9E053B7921887326001B7103 /* Foundation */,
 			);
-			name = "Full Version Purchase";
+			name = Purchase;
 			sourceTree = "<group>";
 		};
 		9E91650B20551B6B00A438FB /* Code */ = {
 			isa = PBXGroup;
 			children = (
 				9EF0A78F20B710C800E1A23A /* Main */,
-				9E71504320D7D7E80061601E /* Full Version Purchase */,
 				9ED0277E20AB2F78004289E6 /* Browser */,
 				9E91650E20551C3B00A438FB /* List */,
+				9EDB5D022174AF430048D7C5 /* Export */,
 				9E91650F20551C5C00A438FB /* Storage */,
-				9EDB5D022174AF430048D7C5 /* Export Text */,
 				9E91650D20551C1900A438FB /* Item */,
+				9E71504320D7D7E80061601E /* Purchase */,
 				9EE2EE5220B4AFF4007CDC2F /* Style */,
 				9EFA20DF20BDF94400FB2156 /* Framework Candidates */,
 			);
@@ -506,13 +506,13 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
-		9EDB5D022174AF430048D7C5 /* Export Text */ = {
+		9EDB5D022174AF430048D7C5 /* Export */ = {
 			isa = PBXGroup;
 			children = (
 				9E053B722188725A001B7103 /* UI */,
 				9E053B7321887267001B7103 /* Model */,
 			);
-			name = "Export Text";
+			name = Export;
 			sourceTree = "<group>";
 		};
 		9EE2EE5220B4AFF4007CDC2F /* Style */ = {
@@ -723,7 +723,7 @@
 				9E053B3021886963001B7103 /* ItemEdit+iCloud.swift in Sources */,
 				9E053B5D218871C4001B7103 /* Spacer.swift in Sources */,
 				9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */,
-				9E053B3521886AC4001B7103 /* FullVersionPurchaseController.swift in Sources */,
+				9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */,
 				9EFB86DC21662AD100985B14 /* Tree.swift in Sources */,
 				9E053B512188715D001B7103 /* PurchaseContentView.swift in Sources */,
 				9E053B422188711A001B7103 /* ApplicationMenu.swift in Sources */,

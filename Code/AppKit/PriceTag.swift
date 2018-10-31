@@ -17,7 +17,7 @@ class PriceTag: NSView, Observer
         
         update()
         
-        observe(fullVersionPurchaseController, select: .didLoadFullVersionProduct)
+        observe(purchaseController, select: .didLoadFullVersionProduct)
         {
             [weak self] in self?.update()
         }
@@ -37,7 +37,7 @@ class PriceTag: NSView, Observer
         let appStorePrice = fullVersionFormattedPrice ?? ""
         discountPriceLabel.stringValue = "Introductory Price " + appStorePrice
         
-        let discountAvailable = fullVersionPurchaseController.summerDiscountIsAvailable
+        let discountAvailable = purchaseController.summerDiscountIsAvailable
         
         if discountAvailable
         {

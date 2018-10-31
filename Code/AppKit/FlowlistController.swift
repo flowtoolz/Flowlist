@@ -16,7 +16,7 @@ class FlowlistController: AppController, NSWindowDelegate
     {
         super.applicationDidFinishLaunching(aNotification)
 
-        fullVersionPurchaseController.setup()
+        purchaseController.setup()
         
         observeSystemAppearance()
         

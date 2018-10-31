@@ -30,7 +30,7 @@ class ViewController: NSViewController, Observer
                 [weak self] in self?.togglePurchaseView()
             }
             
-            observe(fullVersionPurchaseController, select: .didPurchaseFullVersion)
+            observe(purchaseController, select: .didPurchaseFullVersion)
             {
                 [weak self] in self?.didPurchaseFullVersion()
             }

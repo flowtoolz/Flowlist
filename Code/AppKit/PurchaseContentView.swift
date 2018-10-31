@@ -26,7 +26,7 @@ class PurchaseContentView: NSView, Observer
 
         constrainBulletpointList()
         
-        observe(fullVersionPurchaseController)
+        observe(purchaseController)
         {
             [weak self] event in self?.didReceive(event)
         }
@@ -56,7 +56,7 @@ class PurchaseContentView: NSView, Observer
     
     // MARK: - Load Data From AppStore
     
-    private func didReceive(_ event: FullVersionPurchaseController.Event)
+    private func didReceive(_ event: PurchaseController.Event)
     {
         switch event
         {
@@ -86,7 +86,7 @@ class PurchaseContentView: NSView, Observer
         showLoadingIndicator()
         c2aButton.isHidden = true
         priceTag.isHidden = true
-        fullVersionPurchaseController.loadFullVersionProductFromAppStore()
+        purchaseController.loadFullVersionProductFromAppStore()
     }
     
     func showPriceAndC2aButton()
@@ -290,7 +290,7 @@ class PurchaseContentView: NSView, Observer
     
     private func didClickC2aButton()
     {
-        fullVersionPurchaseController.purchaseFullVersion()
+        purchaseController.purchaseFullVersion()
     }
     
     // MARK: - Restore Button
@@ -325,7 +325,7 @@ class PurchaseContentView: NSView, Observer
     
     private func didClickRestoreButton()
     {
-        fullVersionPurchaseController.restorePurchases()
+        purchaseController.restorePurchases()
     }
     
     // MARK: - Description

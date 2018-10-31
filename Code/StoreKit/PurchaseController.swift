@@ -4,9 +4,9 @@ import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
-let fullVersionPurchaseController = FullVersionPurchaseController()
+let purchaseController = PurchaseController()
 
-class FullVersionPurchaseController: NSObject, Observable, SKProductsRequestDelegate, SKPaymentTransactionObserver
+class PurchaseController: NSObject, Observable, SKProductsRequestDelegate, SKPaymentTransactionObserver
 {
     // MARK: - Life Cycle
     
