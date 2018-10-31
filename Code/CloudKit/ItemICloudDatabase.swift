@@ -45,7 +45,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
             return
         }
         
-        self.send(.didCreate(info))
+        send(.didCreate(info))
     }
     
     override func didModifyRecord(with id: CKRecordID,
@@ -76,14 +76,14 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         }
         
         guard let info = ItemEditInfo(with: id,
-                                                notificationFields: recordFields)
-            else
+                                      notificationFields: recordFields)
+        else
         {
             log(error: "Could not create update info for modified record with id \(id.recordName) and fields \(recordFields.debugDescription).")
             return
         }
         
-        self.send(.didModify(info))
+        send(.didModify(info))
     }
     
     override func didDeleteRecord(with id: CKRecordID)
