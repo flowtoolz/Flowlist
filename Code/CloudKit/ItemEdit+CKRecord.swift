@@ -1,19 +1,20 @@
 import CloudKit
 
-extension ItemEditInfo
+extension Tree where Data == ItemData
 {
-    init?(from record: CKRecord)
+    static func editInfo(from record: CKRecord) -> ItemEditInfo?
     {
         guard record.isItem else { return nil }
         
-        self.init(id: record.recordID.recordName,
-                  text: record.text,
-                  state: record.state,
-                  tag: record.tag,
-                  rootId: record.superItem)
+        return ItemEditInfo(id: record.recordID.recordName,
+                            text: record.text,
+                            state: record.state,
+                            tag: record.tag,
+                            rootId: record.superItem)
     }
     
-    init?(with id: CKRecordID, notificationFields: [String : Any])
+    static func editInfo(with id: CKRecordID,
+                         notificationFields: [String : Any]) -> ItemEditInfo?
     {
         var modifiedFields = [ItemStorageField]()
         var newRootId: String?
@@ -36,11 +37,11 @@ extension ItemEditInfo
             modifiedFields.append(field)
         }
         
-        self.init(id: id.recordName,
-                  text: newText,
-                  state: newState,
-                  tag: newTag,
-                  rootId: newRootId,
-                  modified: modifiedFields)
+        return ItemEditInfo(id: id.recordName,
+                            text: newText,
+                            state: newState,
+                            tag: newTag,
+                            rootId: newRootId,
+                            modified: modifiedFields)
     }
 }

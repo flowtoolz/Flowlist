@@ -25,7 +25,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                     return
                 }
                 
-                guard let info = ItemEditInfo(from: record) else
+                guard let info = Item.editInfo(from: record) else
                 {
                     log(error: "Could not create update info for new record.")
                     return
@@ -37,8 +37,8 @@ class ItemICloudDatabase: ICloudDatabase, Observable
             return
         }
         
-        guard let info = ItemEditInfo(with: id,
-                                      notificationFields: recordFields)
+        guard let info = Item.editInfo(with: id,
+                                       notificationFields: recordFields)
         else
         {
             log(error: "Could not create update info for new record with id \(id.recordName) and fields \(recordFields.debugDescription).")
@@ -63,7 +63,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                     return
                 }
                 
-                guard let info = ItemEditInfo(from: record) else
+                guard let info = Item.editInfo(from: record) else
                 {
                     log(error: "Could not create update info for modified record.")
                     return
@@ -75,8 +75,8 @@ class ItemICloudDatabase: ICloudDatabase, Observable
             return
         }
         
-        guard let info = ItemEditInfo(with: id,
-                                      notificationFields: recordFields)
+        guard let info = Item.editInfo(with: id,
+                                       notificationFields: recordFields)
         else
         {
             log(error: "Could not create update info for modified record with id \(id.recordName) and fields \(recordFields.debugDescription).")
