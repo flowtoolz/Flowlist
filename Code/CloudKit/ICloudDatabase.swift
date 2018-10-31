@@ -1,4 +1,3 @@
-import CloudKit.CKSubscription
 import CloudKit
 import SwiftObserver
 import SwiftyToolz

@@ -89,7 +89,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     @available(OSX 10.12, *)
     func createItemRecordSubscription()
     {
-        let alertKey = "Items where changed in iCloud."
+        let alertKey = "Items were changed in iCloud."
         
         createSubscription(forRecordType: CKRecord.itemType,
                            desiredTags: itemFieldNames,
@@ -102,8 +102,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     func fetchItemRecords(handleResult: @escaping ([CKRecord]?) -> Void)
     {
-        fetchItemRecords(with: NSPredicate(value: true),
-                         handleResult: handleResult)
+        fetchItemRecords(.all, handleResult: handleResult)
     }
     
     func fetchSubitemRecords(of itemRecord: CKRecord,
@@ -120,10 +119,10 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     {
         let predicate = NSPredicate(format: "superItem = %@", id)
         
-        fetchItemRecords(with: predicate, handleResult: handleResult)
+        fetchItemRecords(predicate, handleResult: handleResult)
     }
     
-    func fetchItemRecords(with predicate: NSPredicate,
+    func fetchItemRecords(_ predicate: NSPredicate,
                           handleResult: @escaping ([CKRecord]?) -> Void)
     {
         let query = CKQuery(recordType: CKRecord.itemType,
