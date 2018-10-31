@@ -11,7 +11,7 @@
 		9E053B2521886867001B7103 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2421886867001B7103 /* FullVersion.swift */; };
 		9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */; };
 		9E053B2E21886963001B7103 /* ItemICloudDatabase+ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2821886962001B7103 /* ItemICloudDatabase+ItemDatabase.swift */; };
-		9E053B3021886963001B7103 /* CKRecordID+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2A21886963001B7103 /* CKRecordID+Item.swift */; };
+		9E053B3021886963001B7103 /* CKRecord.ID+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2A21886963001B7103 /* CKRecord.ID+Item.swift */; };
 		9E053B3121886963001B7103 /* CKRecord+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2B21886963001B7103 /* CKRecord+Item.swift */; };
 		9E053B3221886963001B7103 /* ICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2C21886963001B7103 /* ICloudDatabase.swift */; };
 		9E053B3321886963001B7103 /* ItemICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */; };
@@ -96,7 +96,7 @@
 		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FullVersion.swift; path = ../Code/Foundation/FullVersion.swift; sourceTree = "<group>"; };
 		9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDecimalNumber+Price.swift"; path = "../Code/Foundation/NSDecimalNumber+Price.swift"; sourceTree = "<group>"; };
 		9E053B2821886962001B7103 /* ItemICloudDatabase+ItemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ItemICloudDatabase+ItemDatabase.swift"; path = "../Code/CloudKit/ItemICloudDatabase+ItemDatabase.swift"; sourceTree = "<group>"; };
-		9E053B2A21886963001B7103 /* CKRecordID+Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CKRecordID+Item.swift"; path = "../Code/CloudKit/CKRecordID+Item.swift"; sourceTree = "<group>"; };
+		9E053B2A21886963001B7103 /* CKRecord.ID+Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CKRecord.ID+Item.swift"; path = "../Code/CloudKit/CKRecord.ID+Item.swift"; sourceTree = "<group>"; };
 		9E053B2B21886963001B7103 /* CKRecord+Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CKRecord+Item.swift"; path = "../Code/CloudKit/CKRecord+Item.swift"; sourceTree = "<group>"; };
 		9E053B2C21886963001B7103 /* ICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ICloudDatabase.swift; path = ../Code/CloudKit/ICloudDatabase.swift; sourceTree = "<group>"; };
 		9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemICloudDatabase.swift; path = ../Code/CloudKit/ItemICloudDatabase.swift; sourceTree = "<group>"; };
@@ -553,7 +553,7 @@
 			children = (
 				9E053B2821886962001B7103 /* ItemICloudDatabase+ItemDatabase.swift */,
 				9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */,
-				9E053B2A21886963001B7103 /* CKRecordID+Item.swift */,
+				9E053B2A21886963001B7103 /* CKRecord.ID+Item.swift */,
 				9E053B2B21886963001B7103 /* CKRecord+Item.swift */,
 				9E053B2C21886963001B7103 /* ICloudDatabase.swift */,
 			);
@@ -722,7 +722,7 @@
 				9E053B442188711A001B7103 /* HelpMenu.swift in Sources */,
 				9EF0AABE21883E6E00B707F4 /* HashMap.swift in Sources */,
 				9E053B62218871C4001B7103 /* TableContent.swift in Sources */,
-				9E053B3021886963001B7103 /* CKRecordID+Item.swift in Sources */,
+				9E053B3021886963001B7103 /* CKRecord.ID+Item.swift in Sources */,
 				9E053B5D218871C4001B7103 /* Spacer.swift in Sources */,
 				9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */,
 				9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */,
