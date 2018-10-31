@@ -25,13 +25,9 @@ class Browser: Observer, Observable
         
         observe(Store.shared)
         {
-            event in
+            [weak self] event in
             
-            switch event
-            {
-            case .didNothing: break
-            case .didSwitchRoot: self.storeGotNewRoot()
-            }
+            if case .didSwitchRoot = event { self?.storeGotNewRoot() }
         }
     }
     
