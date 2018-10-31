@@ -20,35 +20,35 @@ extension Tree where Data == ItemData
         }
         
         case didNothing
-        case didCreate(_ info: ItemEditInfo)
-        case didModify(_ info: ItemEditInfo)
+        case didCreate(_ info: EditInfo)
+        case didModify(_ info: EditInfo)
         case didDelete(id: String)
     }
-}
-
-struct ItemEditInfo
-{
-    init(id: String,
-         text: String? = nil,
-         state: ItemData.State? = nil,
-         tag: ItemData.Tag? = nil,
-         rootId: String? = nil,
-         modified: [ItemStorageField] = ItemStorageField.all)
-    {
-        self.id = id
-        self.text = text
-        self.state = state
-        self.tag = tag
-        self.rootId = rootId
-        self.modified = modified
-    }
     
-    let id: String
-    let text: String?
-    let state: ItemData.State?
-    let tag: ItemData.Tag?
-    let rootId: String?
-    let modified: [ItemStorageField]
+    struct EditInfo
+    {
+        init(id: String,
+             text: String? = nil,
+             state: ItemData.State? = nil,
+             tag: ItemData.Tag? = nil,
+             rootId: String? = nil,
+             modified: [ItemStorageField] = ItemStorageField.all)
+        {
+            self.id = id
+            self.text = text
+            self.state = state
+            self.tag = tag
+            self.rootId = rootId
+            self.modified = modified
+        }
+        
+        let id: String
+        let text: String?
+        let state: ItemData.State?
+        let tag: ItemData.Tag?
+        let rootId: String?
+        let modified: [ItemStorageField]
+    }
 }
 
 enum ItemStorageField: String

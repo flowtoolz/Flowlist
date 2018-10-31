@@ -13,7 +13,7 @@ extension Store: StoreInterface
         }
     }
     
-    private func createItem(with info: ItemEditInfo)
+    private func createItem(with info: Item.EditInfo)
     {
         let newItem = Item(data: ItemData(from: info))
         
@@ -34,7 +34,7 @@ extension Store: StoreInterface
         rootItem.add(newItem)
     }
     
-    private func updateItem(with info: ItemEditInfo)
+    private func updateItem(with info: Item.EditInfo)
     {
         guard let item = itemHash[info.id] else
         {

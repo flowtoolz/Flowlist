@@ -2,7 +2,7 @@ import SwiftObserver
 
 extension ItemData
 {
-    convenience init(from editInfo: ItemEditInfo)
+    convenience init(from editInfo: Item.EditInfo)
     {
         self.init(id: editInfo.id)
         
