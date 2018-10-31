@@ -253,7 +253,7 @@ final class Tree<Data: Copyable>: Copyable, Observable
     enum Event
     {
         case didNothing
-        case did(Edit)
+        case did(TreeEdit)
         case didSwitchData(from: Data?, to: Data?)
         case didChange(numberOfLeafs: Int)
         case rootEvent(RootEvent)
@@ -265,7 +265,7 @@ final class Tree<Data: Copyable>: Copyable, Observable
         }
     }
     
-    enum Edit
+    enum TreeEdit
     {
         case nothing
         case changeRoot(from: Node?, to: Node?)

@@ -38,7 +38,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         }
         
         guard let info = ItemEditInfo(with: id,
-                                                notificationFields: recordFields)
+                                      notificationFields: recordFields)
         else
         {
             log(error: "Could not create update info for new record with id \(id.recordName) and fields \(recordFields.debugDescription).")

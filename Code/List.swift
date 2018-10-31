@@ -76,7 +76,7 @@ class List: Observable, Observer
         }
     }
     
-    func received(_ edit: Item.Edit, from root: Item)
+    func received(_ edit: Item.TreeEdit, from root: Item)
     {
         switch edit
         {
@@ -350,7 +350,7 @@ class List: Observable, Observer
     enum Event
     {
         case didNothing
-        case did(Item.Edit)
+        case did(Item.TreeEdit)
         case didChangeSelection(added: [Int], removed: [Int])
     }
 }
