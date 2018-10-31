@@ -244,10 +244,11 @@ class ICloudDatabase
     let container = CKContainer.default()
 }
 
-extension CKRecordID
+extension CKReference
 {
-    var ownerReference: CKReference
+    convenience init(toOwner ownerName: String)
     {
-        return CKReference(recordID: self, action: .deleteSelf)
+        self.init(recordID: CKRecordID(recordName: ownerName),
+                  action: .deleteSelf)
     }
 }

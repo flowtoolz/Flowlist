@@ -109,7 +109,7 @@ extension CKRecord
                 return
             }
             
-            self[fieldName] = CKRecordID(recordName: newValue).ownerReference
+            self[fieldName] = CKReference(toOwner: newValue)
         }
     }
     
