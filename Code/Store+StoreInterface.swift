@@ -2,7 +2,7 @@ import SwiftObserver
 
 extension Store: StoreInterface
 {
-    func apply(_ itemEdit: ItemEdit)
+    func apply(_ itemEdit: Item.Edit)
     {
         switch itemEdit
         {

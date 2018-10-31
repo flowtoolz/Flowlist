@@ -1,26 +1,29 @@
 import SwiftObserver
 
-enum ItemEdit
+extension Tree where Data == ItemData
 {
-    // TODO: generalize ItemEdit so it can inform about batch edits
-    init(from event: Item.Event.RootEvent)
+    enum Edit
     {
-        switch event
+        // TODO: generalize ItemEdit so it can inform about batch edits
+        init(from event: Item.Event.RootEvent)
         {
-        case .didRemove(let items):
-            self = .didNothing
-            
-        case .didInsert(let items,
-                        in: let superItem,
-                        at: let indexes):
-            self = .didNothing
+            switch event
+            {
+            case .didRemove(let items):
+                self = .didNothing
+                
+            case .didInsert(let items,
+                            in: let superItem,
+                            at: let indexes):
+                self = .didNothing
+            }
         }
+        
+        case didNothing
+        case didCreate(_ info: ItemEditInfo)
+        case didModify(_ info: ItemEditInfo)
+        case didDelete(id: String)
     }
-    
-    case didNothing
-    case didCreate(_ info: ItemEditInfo)
-    case didModify(_ info: ItemEditInfo)
-    case didDelete(id: String)
 }
 
 struct ItemEditInfo

@@ -150,5 +150,5 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     // MARK: - Observability
     
-    var latestUpdate = ItemEdit.didNothing
+    var latestUpdate = Item.Edit.didNothing
 }
