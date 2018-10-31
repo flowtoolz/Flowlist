@@ -3,7 +3,7 @@ import UIObserver
 import SwiftyToolz
 import SwiftObserver
 
-class EditMenu: NSMenu, Observer
+class EditMenu: NSMenu, NSMenuItemValidation, Observer
 {
     // MARK: - Initialization
     
@@ -55,7 +55,7 @@ class EditMenu: NSMenu, Observer
     
     // MARK: - Action Availability
     
-    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
         guard NSApp.mainWindow?.isKeyWindow ?? false else { return false }
         
@@ -166,21 +166,21 @@ class EditMenu: NSMenu, Observer
     }
     
     private lazy var checkOffItem = MenuItem("Check Off Item",
-                                             key: String(unicode: NSLeftArrowFunctionKey),
+                                             key: String(unicode: NSEvent.SpecialKey.leftArrow.rawValue),
                                              validator: self)
     {
         browser.focusedList.toggleDoneStateOfFirstSelectedItem()
     }
     
     private lazy var inProgressItem = MenuItem("Start Item",
-                                               key: String(unicode: NSRightArrowFunctionKey),
+                                               key: String(unicode: NSEvent.SpecialKey.rightArrow.rawValue),
                                                validator: self)
     {
         browser.focusedList.toggleInProgressStateOfFirstSelectedItem()
     }
     
     private lazy var deleteItem = MenuItem("Delete Item",
-                                           key: String(unicode: NSBackspaceCharacter),
+                                           key: String(unicode: NSEvent.SpecialKey.backspace.rawValue),
                                            modifiers: [],
                                            validator: self)
     {
@@ -188,14 +188,14 @@ class EditMenu: NSMenu, Observer
     }
     
     private lazy var moveUpItem = MenuItem("Move Item Up",
-                                           key: String(unicode: NSUpArrowFunctionKey),
+                                           key: String(unicode: NSEvent.SpecialKey.upArrow.rawValue),
                                            validator: self)
     {
         browser.focusedList.moveSelectedItem(-1)
     }
     
     private lazy var moveDownItem = MenuItem("Move Item Down",
-                                             key: String(unicode: NSDownArrowFunctionKey),
+                                             key: String(unicode: NSEvent.SpecialKey.downArrow.rawValue),
                                              validator: self)
     {
         browser.focusedList.moveSelectedItem(1)

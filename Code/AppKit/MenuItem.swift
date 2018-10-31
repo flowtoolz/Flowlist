@@ -1,14 +1,14 @@
 import AppKit
 import SwiftObserver
 
-public class MenuItem: NSMenuItem
+public class MenuItem: NSMenuItem, NSMenuItemValidation
 {
     // MARK: - Initialization
     
     init(_ title: String,
          key: String = "",
          modifiers: NSEvent.ModifierFlags = [.command],
-         validator: NSObject? = nil,
+         validator: NSMenuItemValidation? = nil,
          action: @escaping () -> Void)
     {
         actionClosure = action
@@ -33,7 +33,7 @@ public class MenuItem: NSMenuItem
     
     // MARK: - Validation
     
-    public override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
+    public func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
         guard menuItem === self else
         {
@@ -44,5 +44,5 @@ public class MenuItem: NSMenuItem
         return validator?.validateMenuItem(self) ?? true
     }
     
-    private weak var validator: NSObject?
+    private weak var validator: NSMenuItemValidation?
 }

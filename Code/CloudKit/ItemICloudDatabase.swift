@@ -10,7 +10,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     // MARK: - Observe Item Records
     
-    override func didCreateRecord(with id: CKRecordID,
+    override func didCreateRecord(with id: CKRecord.ID,
                                   notification: CKQueryNotification)
     {
         guard let fields = allNewFields(notification) else
@@ -40,7 +40,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         }
     }
     
-    override func didModifyRecord(with id: CKRecordID,
+    override func didModifyRecord(with id: CKRecord.ID,
                                   notification: CKQueryNotification)
     {
         guard let fields = allNewFields(notification) else
@@ -69,7 +69,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         }
     }
     
-    override func didDeleteRecord(with id: CKRecordID)
+    override func didDeleteRecord(with id: CKRecord.ID)
     {
         send(.delete(id: id.recordName))
     }
@@ -86,6 +86,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         return nil
     }
     
+    @available(OSX 10.12, *)
     func createItemRecordSubscription()
     {
         let alertKey = "Items where changed in iCloud."
@@ -114,7 +115,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                             handleResult: handleResult)
     }
     
-    func fetchSubitemRecords(withSuperItemID id: CKRecordID,
+    func fetchSubitemRecords(withSuperItemID id: CKRecord.ID,
                              handleResult: @escaping ([CKRecord]?) -> Void)
     {
         let predicate = NSPredicate(format: "superItem = %@", id)

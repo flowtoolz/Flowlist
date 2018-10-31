@@ -1,6 +1,6 @@
 import AppKit
 
-class SelectionMenu: NSMenu
+class SelectionMenu: NSMenu, NSMenuItemValidation
 {
     // MARK: - Initialization
     
@@ -30,7 +30,7 @@ class SelectionMenu: NSMenu
     
     // MARK: - Action Availability
     
-    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
         guard NSApp.mainWindow?.isKeyWindow ?? false else { return false }
         
@@ -67,7 +67,7 @@ class SelectionMenu: NSMenu
     // MARK: - Items
     
     private lazy var goRightItem = MenuItem("Go to Details",
-                                            key: String(unicode: NSRightArrowFunctionKey),
+                                            key: String(unicode: NSEvent.SpecialKey.rightArrow.rawValue),
                                             modifiers: [],
                                             validator: self)
     {
@@ -75,7 +75,7 @@ class SelectionMenu: NSMenu
     }
     
     private lazy var goLeftItem = MenuItem("Go to Overview",
-                                           key: String(unicode: NSLeftArrowFunctionKey),
+                                           key: String(unicode: NSEvent.SpecialKey.leftArrow.rawValue),
                                            modifiers: [],
                                            validator: self)
     {
@@ -83,7 +83,7 @@ class SelectionMenu: NSMenu
     }
     
     private lazy var goUpItem = MenuItem("Go Up",
-                                         key: String(unicode: NSUpArrowFunctionKey),
+                                         key: String(unicode: NSEvent.SpecialKey.upArrow.rawValue),
                                          modifiers: [],
                                          validator: self)
     {
@@ -91,7 +91,7 @@ class SelectionMenu: NSMenu
     }
     
     private lazy var goDownItem = MenuItem("Go Down",
-                                           key: String(unicode: NSDownArrowFunctionKey),
+                                           key: String(unicode: NSEvent.SpecialKey.downArrow.rawValue),
                                            modifiers: [],
                                            validator: self)
     {
@@ -99,7 +99,7 @@ class SelectionMenu: NSMenu
     }
     
     private lazy var selectUpItem = MenuItem("Extend Selection Up",
-                                             key: String(unicode: NSUpArrowFunctionKey),
+                                             key: String(unicode: NSEvent.SpecialKey.upArrow.rawValue),
                                              modifiers: [.shift],
                                              validator: self)
     {
@@ -107,7 +107,7 @@ class SelectionMenu: NSMenu
     }
     
     private lazy var selectDownItem = MenuItem("Extend Selection Down",
-                                               key: String(unicode: NSDownArrowFunctionKey),
+                                               key: String(unicode: NSEvent.SpecialKey.downArrow.rawValue),
                                                modifiers: [.shift],
                                                validator: self)
     {

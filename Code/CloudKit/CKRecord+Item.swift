@@ -14,7 +14,7 @@ extension CKRecord
         }
         
         self.init(recordType: CKRecord.itemType,
-                  recordID: CKRecordID(recordName: data.id))
+                  recordID: CKRecord.ID(recordName: data.id))
         
         text = item.text
         state = data.state.value
@@ -106,7 +106,7 @@ extension CKRecord
             
             let fieldName = FieldName.superItem.rawValue
             
-            guard let reference: CKReference = self[fieldName] else
+            guard let reference: CKRecord.Reference = self[fieldName] else
             {
                 return nil
             }
@@ -126,7 +126,7 @@ extension CKRecord
                 return
             }
             
-            self[fieldName] = CKReference(toOwner: newValue)
+            self[fieldName] = CKRecord.Reference(toOwner: newValue)
         }
     }
     

@@ -2,7 +2,7 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class ApplicationMenu: NSMenu, Observer
+class ApplicationMenu: NSMenu, NSMenuItemValidation, Observer
 {
     // MARK: - Initialization
     
@@ -24,7 +24,7 @@ class ApplicationMenu: NSMenu, Observer
     
     required init(coder decoder: NSCoder) { fatalError() }
     
-    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
         let mainWindowIsKey = NSApp.mainWindow?.isKeyWindow ?? false
         

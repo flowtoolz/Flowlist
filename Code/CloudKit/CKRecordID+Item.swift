@@ -1,7 +1,7 @@
 import CloudKit
 import SwiftObserver
 
-extension CKRecordID
+extension CKRecord.ID
 {
     func modification(fromNotificationFields fields: [String : Any]) -> Item.Modification?
     {

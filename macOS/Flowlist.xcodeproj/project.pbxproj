@@ -606,7 +606,7 @@
 					9E542E901EEEE41C00534981 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 8T3R57GCBV;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -867,8 +867,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "Flowlist Mac Development Provisioning Profile";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Beta;
 		};
@@ -1000,8 +999,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.flowlist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Flowlist Mac Development Provisioning Profile";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1026,8 +1024,7 @@
 				PROVISIONING_PROFILE = "dd797d11-2c00-486f-af88-369419b34f85";
 				PROVISIONING_PROFILE_SPECIFIER = "Flowlist AppStore iCloud Provisioning Profile";
 				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

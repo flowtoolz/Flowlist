@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class WindowMenu: NSMenu, Observer
+class WindowMenu: NSMenu, NSMenuItemValidation, Observer
 {
     // MARK: - Initialization
     
@@ -36,7 +36,7 @@ class WindowMenu: NSMenu, Observer
     
     // MARK: - Validate Items
     
-    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
         guard menuItem !== windowItem else { return true }
         

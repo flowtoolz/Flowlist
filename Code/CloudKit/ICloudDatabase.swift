@@ -1,3 +1,4 @@
+import CloudKit.CKSubscription
 import CloudKit
 import SwiftObserver
 import SwiftyToolz
@@ -6,7 +7,7 @@ class ICloudDatabase
 {
     // MARK: - Fetch
     
-    func fetchRecord(with id: CKRecordID,
+    func fetchRecord(with id: CKRecord.ID,
                      handleResult: @escaping (CKRecord?) -> Void)
     {
         database.fetch(withRecordID: id)
@@ -154,49 +155,50 @@ class ICloudDatabase
         }
     }
     
-    func didCreateRecord(with id: CKRecordID,
+    func didCreateRecord(with id: CKRecord.ID,
                          notification: CKQueryNotification)
     {
         log("Did create record: <\(id.recordName)>")
     }
     
-    func didModifyRecord(with id: CKRecordID,
+    func didModifyRecord(with id: CKRecord.ID,
                          notification: CKQueryNotification)
     {
         log("Did modify record: <\(id.recordName)>")
     }
     
-    func didDeleteRecord(with id: CKRecordID)
+    func didDeleteRecord(with id: CKRecord.ID)
     {
         log("Did delete record: <\(id.recordName)>")
     }
     
+    @available(OSX 10.12, *)
     func createSubscription(forRecordType type: String,
                             desiredTags: [String],
                             alertLocalizationKey key: String)
     {
-        let options: CKSubscriptionOptions =
+        let options: CKQuerySubscription.Options =
         [
             .firesOnRecordUpdate,
             .firesOnRecordCreation,
             .firesOnRecordDeletion
         ]
         
-        let subscription = CKSubscription(recordType: type,
-                                          predicate: NSPredicate(value: true),
-                                          options: options)
-        
+        let sub = CKQuerySubscription(recordType: type,
+                                      predicate: .all,
+                                      options:options)
+
         let notificationInfo = CKSubscription.NotificationInfo()
         notificationInfo.alertLocalizationKey = key
         notificationInfo.desiredKeys = desiredTags
         notificationInfo.shouldBadge = false
-        
-        subscription.notificationInfo = notificationInfo
-        
-        database.save(subscription)
+
+        sub.notificationInfo = notificationInfo
+
+        database.save(sub)
         {
             savedSubscription, error in
-            
+
             if let error = error
             {
                 log(error: error.localizedDescription)
@@ -244,11 +246,16 @@ class ICloudDatabase
     let container = CKContainer.default()
 }
 
-extension CKReference
+extension CKRecord.Reference
 {
     convenience init(toOwner ownerName: String)
     {
-        self.init(recordID: CKRecordID(recordName: ownerName),
+        self.init(recordID: CKRecord.ID(recordName: ownerName),
                   action: .deleteSelf)
     }
+}
+
+extension NSPredicate
+{
+    static var all: NSPredicate { return NSPredicate(value: true) }
 }

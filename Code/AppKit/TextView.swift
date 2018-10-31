@@ -70,20 +70,20 @@ class TextView: NSTextView, NSTextViewDelegate
         self.textColor = color.nsColor
     }
     
-    private static var typingSyle: [NSAttributedStringKey : Any]
+    private static var typingSyle: [NSAttributedString.Key : Any]
     {
         return [.font : Font.text.nsFont,
                 .paragraphStyle : TextView.paragraphStyle]
     }
     
-    static var selectionSyle: [NSAttributedStringKey : Any]
+    static var selectionSyle: [NSAttributedString.Key : Any]
     {
         return [.backgroundColor : Color.textSelectedBackground.nsColor]
     }
     
-    private static let linkStyle: [NSAttributedStringKey : Any] =
+    private static let linkStyle: [NSAttributedString.Key : Any] =
     [
-        .underlineStyle : NSUnderlineStyle.styleSingle.rawValue
+        .underlineStyle : NSUnderlineStyle.single.rawValue
     ]
     
     private static var textFont: NSFont

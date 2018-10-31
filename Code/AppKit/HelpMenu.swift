@@ -1,6 +1,6 @@
 import AppKit
 
-class HelpMenu: NSMenu
+class HelpMenu: NSMenu, NSMenuItemValidation
 {
     // MARK: - Initialization
     
@@ -25,7 +25,7 @@ class HelpMenu: NSMenu
     
     // MARK: - Action Availability
     
-    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
         let mainWindowIsKey = NSApp.mainWindow?.isKeyWindow ?? false
         
