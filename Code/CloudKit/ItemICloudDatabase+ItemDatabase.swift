@@ -33,9 +33,9 @@ extension ItemICloudDatabase: ItemDatabase
         
         for record in records
         {
-            guard let data = ItemData(from: record) else { continue }
+            guard let edit = ItemEditInfo(from: record) else { continue }
             
-            hashMap[data.id] = (record, Item(data: data))
+            hashMap[edit.id] = (record, Item(data: ItemData(from: edit)))
         }
         
         // connect items. find root.

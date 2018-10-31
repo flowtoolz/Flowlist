@@ -62,7 +62,6 @@
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
 		9E6C721020B1E66D001C3D2C /* Item+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720F20B1E66D001C3D2C /* Item+Debugging.swift */; };
 		9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* Store.swift */; };
-		9E7C6AF72189CB6F00CCA885 /* ItemData+CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C6AF62189CB6F00CCA885 /* ItemData+CloudKit.swift */; };
 		9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* List+Editing.swift */; };
 		9E91651520551E5600A438FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E91651320551E5500A438FB /* Assets.xcassets */; };
 		9EA63839216F8BB100D1503C /* List+Selection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA63838216F8BB100D1503C /* List+Selection.swift */; };
@@ -147,7 +146,6 @@
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = List.swift; path = ../Code/List.swift; sourceTree = "<group>"; };
 		9E6C720F20B1E66D001C3D2C /* Item+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Item+Debugging.swift"; path = "../Code/Item+Debugging.swift"; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Store.swift; path = ../Code/Store.swift; sourceTree = "<group>"; };
-		9E7C6AF62189CB6F00CCA885 /* ItemData+CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ItemData+CloudKit.swift"; path = "../Code/CloudKit/ItemData+CloudKit.swift"; sourceTree = "<group>"; };
 		9E82A7A81EF2A558006AEF02 /* List+Editing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "List+Editing.swift"; path = "../Code/List+Editing.swift"; sourceTree = "<group>"; };
 		9E91651320551E5500A438FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		9E916518205520B800A438FB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
@@ -552,7 +550,6 @@
 				9E053B2B21886963001B7103 /* CKRecord+Item.swift */,
 				9E053B2A21886963001B7103 /* ItemEdit+iCloud.swift */,
 				9E053B2C21886963001B7103 /* ICloudDatabase.swift */,
-				9E7C6AF62189CB6F00CCA885 /* ItemData+CloudKit.swift */,
 			);
 			name = iCloud;
 			sourceTree = "<group>";
@@ -717,7 +714,6 @@
 				9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */,
 				9E053B65218871F5001B7103 /* ItemExportPanel.swift in Sources */,
 				9E053B442188711A001B7103 /* HelpMenu.swift in Sources */,
-				9E7C6AF72189CB6F00CCA885 /* ItemData+CloudKit.swift in Sources */,
 				9EF0AABE21883E6E00B707F4 /* HashMap.swift in Sources */,
 				9E053B62218871C4001B7103 /* TableContent.swift in Sources */,
 				9E053B3021886963001B7103 /* ItemEdit+iCloud.swift in Sources */,
