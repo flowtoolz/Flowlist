@@ -22,6 +22,23 @@ extension CKRecord
         superItem = item.root?.data?.id
     }
     
+    // MARK: - Mofification
+    
+    var modification: Item.Modification?
+    {
+        guard isItem else
+        {
+            log(error: "Could not create modification from record.")
+            return nil
+        }
+        
+        return Item.Modification(id: recordID.recordName,
+                                 text: text,
+                                 state: state,
+                                 tag: tag,
+                                 rootId: superItem)
+    }
+    
     // MARK: - Storage Properties
     
     var text: String?

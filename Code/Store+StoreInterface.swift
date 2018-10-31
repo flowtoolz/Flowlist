@@ -2,55 +2,55 @@ import SwiftObserver
 
 extension Store: StoreInterface
 {
-    func apply(_ itemEdit: Item.Operation)
+    func apply(_ operation: Item.Interaction)
     {
-        switch itemEdit
+        switch operation
         {
-        case .didNothing: break
-        case .didCreate(let edit): createItem(with: edit)
-        case .didModify(let edit): updateItem(with: edit)
-        case .didDelete(let id): removeItem(with: id)
+        case .none: break
+        case .create(let modification): createItem(with: modification)
+        case .modify(let modification): updateItem(with: modification)
+        case .delete(let id): removeItem(with: id)
         }
     }
     
-    private func createItem(with edit: Item.Edit)
+    private func createItem(with modification: Item.Modification)
     {
-        let newItem = Item(with: edit)
+        let newItem = Item(from: modification)
         
         itemHash.add([newItem])
         
-        guard let rootId = edit.rootId else
+        guard let rootId = modification.rootId else
         {
-            log(warning: "New item (id \(edit.id)) has no root.")
+            log(warning: "New item (id \(modification.id)) has no root.")
             return
         }
         
         guard let rootItem = itemHash[rootId] else
         {
-            log(warning: "Root (id \(rootId)) of new item (id \(edit.id)) is not in hash map.")
+            log(warning: "Root (id \(rootId)) of new item (id \(modification.id)) is not in hash map.")
             return
         }
         
         rootItem.add(newItem)
     }
     
-    private func updateItem(with edit: Item.Edit)
+    private func updateItem(with modification: Item.Modification)
     {
-        guard let item = itemHash[edit.id] else
+        guard let item = itemHash[modification.id] else
         {
-            log(error: "Item with id \(edit.id) is not in hash map.")
+            log(error: "Item with id \(modification.id) is not in hash map.")
             return
         }
         
         // TODO: updating an Item with ItemEditInfo should be an Item extension
-        for field in edit.modified
+        for field in modification.modified
         {
             switch field
             {
-            case .text: item.data?.text <- edit.text
-            case .state: item.data?.state <- edit.state
-            case .tag: item.data?.tag <- edit.tag
-            case .root: log(error: "Did not expect direct modification of item root. ID: \(edit.id). Intended new root ID: \(String(describing: edit.rootId)) item Text: \(item.text ?? "nil")")
+            case .text: item.data?.text <- modification.text
+            case .state: item.data?.state <- modification.state
+            case .tag: item.data?.tag <- modification.tag
+            case .root: log(error: "Did not expect direct modification of item root. ID: \(modification.id). Intended new root ID: \(String(describing: modification.rootId)) item Text: \(item.text ?? "nil")")
             }
         }
     }

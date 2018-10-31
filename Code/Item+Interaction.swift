@@ -2,41 +2,41 @@ import SwiftObserver
 
 extension Tree where Data == ItemData
 {
-    convenience init(with edit: Edit)
+    convenience init(from modification: Modification)
     {
-        let data = ItemData(id: edit.id)
+        let data = ItemData(id: modification.id)
         
-        data.text <- edit.text
-        data.state <- edit.state
-        data.tag <- edit.tag
+        data.text <- modification.text
+        data.state <- modification.state
+        data.tag <- modification.tag
         
         self.init(data: data)
     }
     
-    enum Operation
+    enum Interaction
     {
-        // TODO: generalize ItemEdit so it can inform about batch edits
+        // TODO: generalize Interaction so it can describe batch edits
         init(from event: Item.TreeEvent.RootEvent)
         {
             switch event
             {
             case .didRemove(let items):
-                self = .didNothing
+                self = .none
                 
             case .didInsert(let items,
                             in: let superItem,
                             at: let indexes):
-                self = .didNothing
+                self = .none
             }
         }
         
-        case didNothing
-        case didCreate(_ edit: Edit)
-        case didModify(_ edit: Edit)
-        case didDelete(id: String)
+        case none
+        case create(_ modification: Modification)
+        case modify(_ modification: Modification)
+        case delete(id: String)
     }
     
-    struct Edit
+    struct Modification
     {
         init(id: String,
              text: String? = nil,
