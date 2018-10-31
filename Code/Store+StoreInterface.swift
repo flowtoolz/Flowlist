@@ -15,19 +15,19 @@ extension Store: StoreInterface
     
     private func createItem(with info: ItemEditInfo)
     {
-        let newItem = Item(data: info.data)
+        let newItem = Item(data: ItemData(from: info))
         
         itemHash.add([newItem])
         
         guard let rootId = info.rootId else
         {
-            log(warning: "New item (id \(info.data.id)) has no root.")
+            log(warning: "New item (id \(info.id)) has no root.")
             return
         }
         
         guard let rootItem = itemHash[rootId] else
         {
-            log(warning: "Root (id \(rootId)) of new item (id \(info.data.id)) is not in hash map.")
+            log(warning: "Root (id \(rootId)) of new item (id \(info.id)) is not in hash map.")
             return
         }
         
@@ -36,20 +36,21 @@ extension Store: StoreInterface
     
     private func updateItem(with info: ItemEditInfo)
     {
-        guard let item = itemHash[info.data.id] else
+        guard let item = itemHash[info.id] else
         {
-            log(error: "Item with id \(info.data.id) is not in hash map.")
+            log(error: "Item with id \(info.id) is not in hash map.")
             return
         }
         
+        // TODO: updating an Item with ItemEditInfo should be an Item extension
         for field in info.modified
         {
             switch field
             {
-            case .text: item.data?.text <- info.data.text.value
-            case .state: item.data?.state <- info.data.state.value
-            case .tag: item.data?.tag <- info.data.tag.value
-            case .root: log(error: "Did not expect direct modification of item root. ID: \(info.data.id). Text: \(item.text ?? "nil")")
+            case .text: item.data?.text <- info.text
+            case .state: item.data?.state <- ItemData.State(from: info.state)
+            case .tag: item.data?.tag <- ItemData.Tag(from: info.tag)
+            case .root: log(error: "Did not expect direct modification of item root. ID: \(info.id). Intended new root ID: \(String(describing: info.rootId)) item Text: \(item.text ?? "nil")")
             }
         }
     }

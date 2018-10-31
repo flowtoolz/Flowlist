@@ -29,6 +29,16 @@ final class ItemData: Observable
     
     enum State: Int, Codable
     {
+        init?(from value: Int?)
+        {
+            guard let value = value, let state = State(rawValue: value) else
+            {
+                return nil
+            }
+            
+            self = state
+        }
+        
         // do not change this!
         case inProgress = 0, done = 2, trashed = 3
         
@@ -44,6 +54,17 @@ final class ItemData: Observable
     
     enum Tag: Int, Codable
     {
+        // TODO: use this everywhere where optional Ints are written to property tag... same for state...
+        init?(from value: Int?)
+        {
+            guard let value = value, let tag = Tag(rawValue: value) else
+            {
+                return nil
+            }
+            
+            self = tag
+        }
+        
         case red, orange, yellow, green, blue, purple
         
         var string: String

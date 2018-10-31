@@ -1,3 +1,5 @@
+import SwiftObserver
+
 enum ItemEdit
 {
     // TODO: generalize ItemEdit so it can inform about batch edits
@@ -21,20 +23,40 @@ enum ItemEdit
     case didDelete(id: String)
 }
 
+extension ItemData
+{
+    convenience init(from editInfo: ItemEditInfo)
+    {
+        self.init(id: editInfo.id)
+        
+        text <- editInfo.text
+        state <- State(from: editInfo.state)
+        tag <- Tag(from: editInfo.tag)
+    }
+}
+
 struct ItemEditInfo
 {
-    init(data: ItemData,
-         rootId: String?,
+    init(id: String,
+         text: String? = nil,
+         state: Int? = nil,
+         tag: Int? = nil,
+         rootId: String? = nil,
          modified: [ItemStorageField] = ItemStorageField.all)
     {
-        self.data = data
+        self.id = id
+        self.text = text
+        self.state = state
+        self.tag = tag
         self.rootId = rootId
         self.modified = modified
     }
     
-    let data: ItemData
+    let id: String
+    let text: String?
+    let state: Int?
+    let tag: Int?
     let rootId: String?
-    
     let modified: [ItemStorageField]
 }
 

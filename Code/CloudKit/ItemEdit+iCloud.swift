@@ -6,9 +6,10 @@ extension ItemEditInfo
 {
     init?(from record: CKRecord)
     {
-        guard let data = ItemData(from: record) else
+        guard record.recordType == "Item" else
         {
-            log(error: "Could not create item data from record.")
+            log(error: "iCloud record type is \"\(record.recordType)\". Expected\"Item\".")
+            
             return nil
         }
         
@@ -21,14 +22,20 @@ extension ItemEditInfo
             newRootId = superItemRef.recordID.recordName
         }
         
-        self.init(data: data, rootId: newRootId)
+        self.init(id: record.recordID.recordName,
+                  text: record["text"],
+                  state: record["state"],
+                  tag: record["tag"],
+                  rootId: newRootId)
     }
     
     init?(with id: CKRecordID, notificationFields: JSON)
     {
-        var fields = [ItemStorageField]()
-        let data = ItemData(id: id.recordName)
+        var modifiedFields = [ItemStorageField]()
         var newRootId: String?
+        var newText: String?
+        var newState: Int?
+        var newTag: Int?
         
         for (nameValue, value) in notificationFields
         {
@@ -42,56 +49,21 @@ extension ItemEditInfo
             
             switch field
             {
-            case .text:
-                guard let text = value as? String else
-                {
-                    log(error: "Couldn't cast value of field \(nameValue) to String.")
-                    return nil
-                }
-                
-                data.text <- text
-            case .state:
-                guard let stateInt = value as? Int else
-                {
-                    log(error: "Couldn't cast value of field \(nameValue) to Int.")
-                    return nil
-                }
-                
-                guard let state = ItemData.State(rawValue: stateInt) else
-                {
-                    log(error: "Couldn't create item state from number \(stateInt).")
-                    return nil
-                }
-                
-                data.state <- state
-            case .tag:
-                guard let tagInt = value as? Int else
-                {
-                    log(error: "Couldn't cast value of field \(nameValue) to Int.")
-                    return nil
-                }
-                
-                guard let tag = ItemData.Tag(rawValue: tagInt) else
-                {
-                    log(error: "Couldn't create item tag from number \(tagInt).")
-                    return nil
-                }
-                
-                data.tag <- tag
-            case .root:
-                guard let superItemId = value as? String else
-                {
-                    log(error: "Couldn't cast value of field \(nameValue) to CKReference.")
-                    return nil
-                }
-                
-                newRootId = superItemId
+            case .text: newText = value as? String
+            case .state: newState = value as? Int
+            case .tag: newTag = value as? Int
+            case .root: newRootId = value as? String
             }
             
-            fields.append(field)
+            modifiedFields.append(field)
         }
         
-        self.init(data: data, rootId: newRootId, modified: fields)
+        self.init(id: id.recordName,
+                  text: newText,
+                  state: newState,
+                  tag: newTag,
+                  rootId: newRootId,
+                  modified: modifiedFields)
     }
 }
 
