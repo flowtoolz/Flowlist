@@ -166,21 +166,23 @@ class EditMenu: NSMenu, NSMenuItemValidation, Observer
     }
     
     private lazy var checkOffItem = MenuItem("Check Off Item",
-                                             key: String(unicode: NSEvent.SpecialKey.leftArrow.rawValue),
+                                             key: .leftArrow,
                                              validator: self)
     {
         browser.focusedList.toggleDoneStateOfFirstSelectedItem()
     }
     
     private lazy var inProgressItem = MenuItem("Start Item",
-                                               key: String(unicode: NSEvent.SpecialKey.rightArrow.rawValue),
+                                               key: .rightArrow,
                                                validator: self)
     {
+        
+        
         browser.focusedList.toggleInProgressStateOfFirstSelectedItem()
     }
     
     private lazy var deleteItem = MenuItem("Delete Item",
-                                           key: String(unicode: NSEvent.SpecialKey.backspace.rawValue),
+                                           key: .backspace,
                                            modifiers: [],
                                            validator: self)
     {
@@ -188,14 +190,14 @@ class EditMenu: NSMenu, NSMenuItemValidation, Observer
     }
     
     private lazy var moveUpItem = MenuItem("Move Item Up",
-                                           key: String(unicode: NSEvent.SpecialKey.upArrow.rawValue),
+                                           key: .upArrow,
                                            validator: self)
     {
         browser.focusedList.moveSelectedItem(-1)
     }
     
     private lazy var moveDownItem = MenuItem("Move Item Down",
-                                             key: String(unicode: NSEvent.SpecialKey.downArrow.rawValue),
+                                             key: .downArrow,
                                              validator: self)
     {
         browser.focusedList.moveSelectedItem(1)

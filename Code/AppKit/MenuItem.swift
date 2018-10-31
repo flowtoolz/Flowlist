@@ -5,6 +5,19 @@ public class MenuItem: NSMenuItem, NSMenuItemValidation
 {
     // MARK: - Initialization
     
+    convenience init(_ title: String,
+                     key: NSEvent.SpecialKey,
+                     modifiers: NSEvent.ModifierFlags = [.command],
+                     validator: NSMenuItemValidation? = nil,
+                     action: @escaping () -> Void)
+    {
+        self.init(title,
+                  key: String(key.unicodeScalar),
+                  modifiers: modifiers,
+                  validator: validator,
+                  action: action)
+    }
+    
     init(_ title: String,
          key: String = "",
          modifiers: NSEvent.ModifierFlags = [.command],
