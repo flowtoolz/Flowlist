@@ -136,6 +136,8 @@ class Browser: Observer, Observable
             
             if self[i + 1]?.root == nil { break }
         }
+        
+        send(.selectionChanged(in: list))
     }
     
     // MARK: - Lists
@@ -186,5 +188,6 @@ class Browser: Observer, Observable
     {
         case didNothing
         case didPush(list: List)
+        case selectionChanged(in: List)
     }
 }

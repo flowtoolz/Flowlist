@@ -36,6 +36,17 @@ class EditMenu: NSMenu, Observer
         addItem(NSMenuItem.separator())
         
         addItem(tagItem)
+        
+        observe(browser)
+        {
+            [weak self] event in
+            
+            if case .selectionChanged(let list) = event,
+                list === browser.focusedList
+            {
+                self?.update()
+            }
+        }
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
