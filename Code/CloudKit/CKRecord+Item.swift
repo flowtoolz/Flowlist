@@ -28,13 +28,13 @@ extension CKRecord
     {
         get
         {
-            guard recordType == CKRecord.itemType else { return nil }
+            guard isItem else { return nil }
             return self[ItemStorageField.text.iCloudName.rawValue]
         }
         
         set
         {
-            guard recordType == CKRecord.itemType else { return }
+            guard isItem else { return }
             self[ItemStorageField.text.iCloudName.rawValue] = newValue
         }
     }
@@ -43,7 +43,7 @@ extension CKRecord
     {
         get
         {
-            guard recordType == CKRecord.itemType else { return nil }
+            guard isItem else { return nil }
             
             let stateInt: Int? = self[ItemStorageField.state.iCloudName.rawValue]
             
@@ -52,7 +52,7 @@ extension CKRecord
         
         set
         {
-            guard recordType == CKRecord.itemType else { return }
+            guard isItem else { return }
             
             let stateInt = newValue?.rawValue
             
@@ -64,7 +64,7 @@ extension CKRecord
     {
         get
         {
-            guard recordType == CKRecord.itemType else { return nil }
+            guard isItem else { return nil }
             
             let tagInt: Int? = self[ItemStorageField.tag.iCloudName.rawValue]
             
@@ -73,7 +73,7 @@ extension CKRecord
         
         set
         {
-            guard recordType == CKRecord.itemType else { return }
+            guard isItem else { return }
             
             let tagInt = newValue?.rawValue
             
@@ -85,7 +85,7 @@ extension CKRecord
     {
         get
         {
-            guard recordType == CKRecord.itemType else { return nil }
+            guard isItem else { return nil }
             
             let fieldName = ItemStorageField.ICloudName.superItem.rawValue
             
@@ -99,7 +99,7 @@ extension CKRecord
         
         set
         {
-            guard recordType == CKRecord.itemType else { return }
+            guard isItem else { return }
             
             let fieldName = ItemStorageField.ICloudName.superItem.rawValue
             
@@ -113,13 +113,45 @@ extension CKRecord
         }
     }
     
-    // MARK: - Item Type
+    // MARK: - Type
+    
+    var isItem: Bool
+    {
+        let result = recordType == CKRecord.itemType
+        
+        if !result { log(warning: "CKRecord is not an item record.") }
+        
+        return result
+    }
     
     static var itemType: String { return "Item" }
+    
+    // MARK: - Fields
+    
+    static var fieldNames: [String]
+    {
+        return ItemStorageField.all.map { $0.iCloudName.rawValue }
+    }
+    
+    static func field(for name: String) -> ItemStorageField?
+    {
+        return ItemStorageField(fromRecordField: name)
+    }
 }
 
-extension ItemStorageField
+fileprivate extension ItemStorageField
 {
+    init?(fromRecordField recordField: String)
+    {
+        guard let iCloudName = ICloudName(rawValue: recordField) else
+        {
+            log(error: "Unknown item record field name: \(recordField)")
+            return nil
+        }
+        
+        self = ItemStorageField(from: iCloudName)
+    }
+    
     init(from iCloudName: ICloudName)
     {
         switch iCloudName

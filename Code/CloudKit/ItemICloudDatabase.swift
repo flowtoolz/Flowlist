@@ -107,12 +107,12 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     {
         let alertKey = "Items where changed in iCloud."
         
-        createSubscription(forRecordType: "Item",
+        createSubscription(forRecordType: CKRecord.itemType,
                            desiredTags: itemFieldNames,
                            alertLocalizationKey: alertKey)
     }
     
-    private let itemFieldNames = ItemStorageField.all.map { $0.iCloudName.rawValue }
+    private let itemFieldNames = CKRecord.fieldNames
     
     // MARK: - Fetch Item Records
     
@@ -125,7 +125,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     func fetchSubitemRecords(of itemRecord: CKRecord,
                              handleResult: @escaping ([CKRecord]?) -> Void)
     {
-        guard itemRecord.recordType == "Item" else { return }
+        guard itemRecord.isItem else { return }
         
         fetchSubitemRecords(withSuperItemID: itemRecord.recordID,
                             handleResult: handleResult)
@@ -142,7 +142,8 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     func fetchItemRecords(with predicate: NSPredicate,
                           handleResult: @escaping ([CKRecord]?) -> Void)
     {
-        let query = CKQuery(recordType: "Item", predicate: predicate)
+        let query = CKQuery(recordType: CKRecord.itemType,
+                            predicate: predicate)
         
         fetchRecords(with: query, handleResult: handleResult)
     }
