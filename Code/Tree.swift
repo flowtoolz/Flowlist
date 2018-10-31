@@ -235,7 +235,7 @@ final class Tree<Data: Copyable>: Copyable, Observable
     
     // MARK: - Propagate Updates to Root
     
-    private func sendToRoot(_ event: Event.RootEvent)
+    private func sendToRoot(_ event: TreeEvent.RootEvent)
     {
         guard let root = root else
         {
@@ -248,9 +248,9 @@ final class Tree<Data: Copyable>: Copyable, Observable
     
     // MARK: - Observability
     
-    var latestUpdate: Event { return .didNothing }
+    var latestUpdate: TreeEvent { return .didNothing }
     
-    enum Event
+    enum TreeEvent
     {
         case didNothing
         case did(TreeEdit)

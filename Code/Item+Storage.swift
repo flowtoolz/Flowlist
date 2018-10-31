@@ -2,10 +2,21 @@ import SwiftObserver
 
 extension Tree where Data == ItemData
 {
-    enum Edit
+    convenience init(with edit: Edit)
+    {
+        let data = ItemData(id: edit.id)
+        
+        data.text <- edit.text
+        data.state <- edit.state
+        data.tag <- edit.tag
+        
+        self.init(data: data)
+    }
+    
+    enum Operation
     {
         // TODO: generalize ItemEdit so it can inform about batch edits
-        init(from event: Item.Event.RootEvent)
+        init(from event: Item.TreeEvent.RootEvent)
         {
             switch event
             {
@@ -20,19 +31,19 @@ extension Tree where Data == ItemData
         }
         
         case didNothing
-        case didCreate(_ info: EditInfo)
-        case didModify(_ info: EditInfo)
+        case didCreate(_ edit: Edit)
+        case didModify(_ edit: Edit)
         case didDelete(id: String)
     }
     
-    struct EditInfo
+    struct Edit
     {
         init(id: String,
              text: String? = nil,
              state: ItemData.State? = nil,
              tag: ItemData.Tag? = nil,
              rootId: String? = nil,
-             modified: [ItemStorageField] = ItemStorageField.all)
+             modified: [Field] = Field.all)
         {
             self.id = id
             self.text = text
@@ -47,13 +58,13 @@ extension Tree where Data == ItemData
         let state: ItemData.State?
         let tag: ItemData.Tag?
         let rootId: String?
-        let modified: [ItemStorageField]
+        let modified: [Field]
     }
-}
-
-enum ItemStorageField: String
-{
-    case text, state, tag, root
     
-    static let all: [ItemStorageField] = [text, state, tag, root]
+    enum Field: String
+    {
+        case text, state, tag, root
+        
+        static let all: [Field] = [text, state, tag, root]
+    }
 }

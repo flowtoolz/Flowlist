@@ -2,21 +2,21 @@ import CloudKit
 
 extension Tree where Data == ItemData
 {
-    static func editInfo(from record: CKRecord) -> EditInfo?
+    static func edit(from record: CKRecord) -> Edit?
     {
         guard record.isItem else { return nil }
         
-        return EditInfo(id: record.recordID.recordName,
-                            text: record.text,
-                            state: record.state,
-                            tag: record.tag,
-                            rootId: record.superItem)
+        return Edit(id: record.recordID.recordName,
+                    text: record.text,
+                    state: record.state,
+                    tag: record.tag,
+                    rootId: record.superItem)
     }
     
-    static func editInfo(with id: CKRecordID,
-                         notificationFields: [String : Any]) -> EditInfo?
+    static func edit(with id: CKRecordID,
+                     notificationFields: [String : Any]) -> Edit?
     {
-        var modifiedFields = [ItemStorageField]()
+        var modifiedFields = [Item.Field]()
         var newRootId: String?
         var newText: String?
         var newState: ItemData.State?
@@ -37,7 +37,7 @@ extension Tree where Data == ItemData
             modifiedFields.append(field)
         }
         
-        return EditInfo(id: id.recordName,
+        return Edit(id: id.recordName,
                             text: newText,
                             state: newState,
                             tag: newTag,

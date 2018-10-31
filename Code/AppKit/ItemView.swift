@@ -149,7 +149,7 @@ class ItemView: LayerBackedView, Observer, Observable
         observe(itemData: itemData)
     }
     
-    private func received(_ event: Item.Event, from item: Item)
+    private func received(_ event: Item.TreeEvent, from item: Item)
     {
         switch event
         {

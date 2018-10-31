@@ -2,55 +2,55 @@ import SwiftObserver
 
 extension Store: StoreInterface
 {
-    func apply(_ itemEdit: Item.Edit)
+    func apply(_ itemEdit: Item.Operation)
     {
         switch itemEdit
         {
         case .didNothing: break
-        case .didCreate(let info): createItem(with: info)
-        case .didModify(let info): updateItem(with: info)
+        case .didCreate(let edit): createItem(with: edit)
+        case .didModify(let edit): updateItem(with: edit)
         case .didDelete(let id): removeItem(with: id)
         }
     }
     
-    private func createItem(with info: Item.EditInfo)
+    private func createItem(with edit: Item.Edit)
     {
-        let newItem = Item(data: ItemData(from: info))
+        let newItem = Item(with: edit)
         
         itemHash.add([newItem])
         
-        guard let rootId = info.rootId else
+        guard let rootId = edit.rootId else
         {
-            log(warning: "New item (id \(info.id)) has no root.")
+            log(warning: "New item (id \(edit.id)) has no root.")
             return
         }
         
         guard let rootItem = itemHash[rootId] else
         {
-            log(warning: "Root (id \(rootId)) of new item (id \(info.id)) is not in hash map.")
+            log(warning: "Root (id \(rootId)) of new item (id \(edit.id)) is not in hash map.")
             return
         }
         
         rootItem.add(newItem)
     }
     
-    private func updateItem(with info: Item.EditInfo)
+    private func updateItem(with edit: Item.Edit)
     {
-        guard let item = itemHash[info.id] else
+        guard let item = itemHash[edit.id] else
         {
-            log(error: "Item with id \(info.id) is not in hash map.")
+            log(error: "Item with id \(edit.id) is not in hash map.")
             return
         }
         
         // TODO: updating an Item with ItemEditInfo should be an Item extension
-        for field in info.modified
+        for field in edit.modified
         {
             switch field
             {
-            case .text: item.data?.text <- info.text
-            case .state: item.data?.state <- info.state
-            case .tag: item.data?.tag <- info.tag
-            case .root: log(error: "Did not expect direct modification of item root. ID: \(info.id). Intended new root ID: \(String(describing: info.rootId)) item Text: \(item.text ?? "nil")")
+            case .text: item.data?.text <- edit.text
+            case .state: item.data?.state <- edit.state
+            case .tag: item.data?.tag <- edit.tag
+            case .root: log(error: "Did not expect direct modification of item root. ID: \(edit.id). Intended new root ID: \(String(describing: edit.rootId)) item Text: \(item.text ?? "nil")")
             }
         }
     }

@@ -29,13 +29,13 @@ extension CKRecord
         get
         {
             guard isItem else { return nil }
-            return self[ItemStorageField.text.iCloudName.rawValue]
+            return self[FieldName.text.rawValue]
         }
         
         set
         {
             guard isItem else { return }
-            self[ItemStorageField.text.iCloudName.rawValue] = newValue
+            self[FieldName.text.rawValue] = newValue
         }
     }
     
@@ -45,7 +45,7 @@ extension CKRecord
         {
             guard isItem else { return nil }
             
-            let stateInt: Int? = self[ItemStorageField.state.iCloudName.rawValue]
+            let stateInt: Int? = self[FieldName.state.rawValue]
             
             return ItemData.State(from: stateInt)
         }
@@ -56,7 +56,7 @@ extension CKRecord
             
             let stateInt = newValue?.rawValue
             
-            self[ItemStorageField.state.iCloudName.rawValue] = stateInt
+            self[FieldName.state.rawValue] = stateInt
         }
     }
     
@@ -66,7 +66,7 @@ extension CKRecord
         {
             guard isItem else { return nil }
             
-            let tagInt: Int? = self[ItemStorageField.tag.iCloudName.rawValue]
+            let tagInt: Int? = self[FieldName.tag.rawValue]
             
             return ItemData.Tag(from: tagInt)
         }
@@ -77,7 +77,7 @@ extension CKRecord
             
             let tagInt = newValue?.rawValue
             
-            self[ItemStorageField.tag.iCloudName.rawValue] = tagInt
+            self[FieldName.tag.rawValue] = tagInt
         }
     }
     
@@ -87,7 +87,7 @@ extension CKRecord
         {
             guard isItem else { return nil }
             
-            let fieldName = ItemStorageField.ICloudName.superItem.rawValue
+            let fieldName = FieldName.superItem.rawValue
             
             guard let reference: CKReference = self[fieldName] else
             {
@@ -101,7 +101,7 @@ extension CKRecord
         {
             guard isItem else { return }
             
-            let fieldName = ItemStorageField.ICloudName.superItem.rawValue
+            let fieldName = FieldName.superItem.rawValue
             
             guard let newValue = newValue else
             {
@@ -133,52 +133,44 @@ extension CKRecord
     
     static var fieldNames: [String]
     {
-        return ItemStorageField.all.map { $0.iCloudName.rawValue }
+        return Item.Field.all.map { FieldName(from: $0).rawValue }
     }
     
-    static func field(for name: String) -> ItemStorageField?
+    static func field(for name: String) -> Item.Field?
     {
-        return ItemStorageField(fromRecordField: name)
-    }
-}
-
-fileprivate extension ItemStorageField
-{
-    init?(fromRecordField recordField: String)
-    {
-        guard let iCloudName = ICloudName(rawValue: recordField) else
+        guard let recordField = FieldName(rawValue: name) else
         {
-            log(error: "Unknown item record field name: \(recordField)")
+            log(error: "Unknown item record field name: \(name)")
             return nil
         }
         
-        self = ItemStorageField(from: iCloudName)
+        return recordField.itemField
     }
     
-    init(from iCloudName: ICloudName)
+    private enum FieldName: String
     {
-        switch iCloudName
+        init(from itemField: Item.Field)
         {
-        case .text: self = .text
-        case .state: self = .state
-        case .tag: self = .tag
-        case .superItem: self = .root
+            switch itemField
+            {
+            case .text: self = .text
+            case .state: self = .state
+            case .tag: self = .tag
+            case .root: self = .superItem
+            }
         }
-    }
-    
-    var iCloudName: ICloudName
-    {
-        switch self
+        
+        var itemField: Item.Field
         {
-        case .text: return .text
-        case .state: return .state
-        case .tag: return .tag
-        case .root: return .superItem
+            switch self
+            {
+            case .text: return .text
+            case .state: return .state
+            case .tag: return .tag
+            case .superItem: return .root
+            }
         }
-    }
-    
-    enum ICloudName: String
-    {
+        
         case text, state, tag, superItem
     }
 }

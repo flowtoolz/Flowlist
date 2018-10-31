@@ -34,7 +34,7 @@ class Store: Observer, Observable
         }
     }
     
-    private func didReceive(_ event: Item.Event, from root: Item)
+    private func didReceive(_ event: Item.TreeEvent, from root: Item)
     {
         switch event
         {
