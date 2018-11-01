@@ -12,7 +12,7 @@ class Store: Observer, Observable
     
     func update(root newRoot: ItemDataTree)
     {
-        stopObserving(root)
+        stopObserving(root?.treeMessenger)
         observe(newRoot: newRoot)
         itemHash.reset(with: newRoot.array)
         updateUserCreatedLeafs(with: newRoot)
@@ -24,7 +24,7 @@ class Store: Observer, Observable
     
     private func observe(newRoot: ItemDataTree)
     {
-        observe(newRoot)
+        observe(newRoot.treeMessenger)
         {
             [weak self, weak newRoot] event in
             

@@ -53,11 +53,11 @@ class List: Observable, Observer
     {
         guard start else
         {
-            stopObserving(root)
+            stopObserving(root.treeMessenger)
             return
         }
         
-        observe(root)
+        observe(root.treeMessenger)
         {
             [weak self, weak root] event in
             

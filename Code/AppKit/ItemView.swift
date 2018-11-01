@@ -132,7 +132,7 @@ class ItemView: LayerBackedView, Observer, Observable
     
     private func observe(item: ItemDataTree)
     {
-        observe(item)
+        observe(item.treeMessenger)
         {
             [weak self, weak item] event in
             
@@ -175,7 +175,7 @@ class ItemView: LayerBackedView, Observer, Observable
     {
         guard let item = item else { return }
         
-        stopObserving(item)
+        stopObserving(item.treeMessenger)
         stopObserving(itemData: item.data)
     }
     

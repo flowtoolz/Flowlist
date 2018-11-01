@@ -3,7 +3,7 @@ import SwiftyToolz
 
 // MARK: - Tree
 
-class Tree<Data: Copyable>: Copyable, Observable
+class Tree<Data: Copyable>: Copyable
 {
     // MARK: - Copyable
     
@@ -95,7 +95,7 @@ class Tree<Data: Copyable>: Copyable, Observable
         
         updateNumberOfLeafs()
         
-        send(.did(.remove(removedNodes, from: indexes)))
+        messenger.send(.did(.remove(removedNodes, from: indexes)))
         sendToRoot(.didRemove(removedNodes))
         
         return removedNodes
@@ -134,7 +134,7 @@ class Tree<Data: Copyable>: Copyable, Observable
         
         let indexes = Array(index ..< index + nodes.count)
         
-        send(.did(.insert(at: indexes)))
+        messenger.send(.did(.insert(at: indexes)))
         sendToRoot(.didInsert(nodes, in: self, at: indexes))
         
         return true
@@ -147,7 +147,7 @@ class Tree<Data: Copyable>: Copyable, Observable
     {
         guard branches.moveElement(from: from, to: to) else { return false }
         
-        send(.did(.move(from: from, to: to)))
+        messenger.send(.did(.move(from: from, to: to)))
         
         return true
     }
@@ -160,7 +160,7 @@ class Tree<Data: Copyable>: Copyable, Observable
         {
             guard data !== oldValue else { return }
             
-            send(.didSwitchData(from: oldValue, to: data))
+            messenger.send(.didSwitchData(from: oldValue, to: data))
         }
     }
     
@@ -200,7 +200,7 @@ class Tree<Data: Copyable>: Copyable, Observable
         numberOfLeafs = newNumber
         root?.updateNumberOfLeafs()
         
-        send(.didChange(numberOfLeafs: numberOfLeafs))
+        messenger.send(.didChange(numberOfLeafs: numberOfLeafs))
     }
     
     func numberOfLeafsRecursively() -> Int
@@ -229,7 +229,7 @@ class Tree<Data: Copyable>: Copyable, Observable
         {
             guard oldValue !== root else { return }
 
-            send(.did(.changeRoot(from: oldValue, to: root)))
+            messenger.send(.did(.changeRoot(from: oldValue, to: root)))
         }
     }
     
@@ -239,7 +239,7 @@ class Tree<Data: Copyable>: Copyable, Observable
     {
         guard let root = root else
         {
-            send(.rootEvent(event))
+            messenger.send(.rootEvent(event))
             return
         }
         
@@ -248,7 +248,13 @@ class Tree<Data: Copyable>: Copyable, Observable
     
     // MARK: - Observability
     
-    var latestUpdate: TreeEvent { return .didNothing }
+    private var messenger: Messenger { return treeMessenger }
+    let treeMessenger = Messenger()
+    
+    class Messenger: Observable
+    {
+        var latestUpdate = TreeEvent.didNothing
+    }
     
     enum TreeEvent
     {
