@@ -2,18 +2,18 @@ import SwiftObserver
 
 class HashMap
 {
-    var items: [ItemDataTree] { return Array(storedItems.values) }
+    var items: [Item] { return Array(storedItems.values) }
     
-    subscript(_ id: String) -> ItemDataTree? { return storedItems[id] }
+    subscript(_ id: String) -> Item? { return storedItems[id] }
     
-    func reset(with items: [ItemDataTree])
+    func reset(with items: [Item])
     {
         storedItems.removeAll()
         
         add(items)
     }
     
-    func add(_ items: [ItemDataTree])
+    func add(_ items: [Item])
     {
         for item in items
         {   
@@ -21,7 +21,7 @@ class HashMap
         }
     }
     
-    func remove(_ items: [ItemDataTree])
+    func remove(_ items: [Item])
     {
         for item in items
         {
@@ -29,5 +29,5 @@ class HashMap
         }
     }
     
-    private var storedItems = [String : ItemDataTree]()
+    private var storedItems = [String : Item]()
 }

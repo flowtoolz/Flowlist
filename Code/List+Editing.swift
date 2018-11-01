@@ -84,7 +84,7 @@ extension List
     
     // MARK: - Paste
     
-    func paste(_ items: [ItemDataTree])
+    func paste(_ items: [Item])
     {
         for item in items
         {

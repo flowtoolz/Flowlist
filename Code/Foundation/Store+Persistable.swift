@@ -18,7 +18,7 @@ extension Store: Persistable
             return
         }
         
-        guard let loadedRoot = Item(from: fileUrl) else
+        guard let loadedRoot = DecodableItem(from: fileUrl) else
         {
             let title = "Couldn't Read From \"\(filename)\""
             

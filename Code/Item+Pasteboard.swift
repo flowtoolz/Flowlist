@@ -1,6 +1,6 @@
 extension Tree where Data == ItemData
 {
-    static func from(pasteboardString string: String) -> [ItemDataTree]?
+    static func from(pasteboardString string: String) -> [Item]?
     {
         var texts = string.components(separatedBy: .newlines)
         

@@ -75,7 +75,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         }
     }
     
-    private func did(_ edit: ItemDataTree.Messenger.Event.NodeEdit)
+    private func did(_ edit: Item.Messenger.Event.NodeEdit)
     {
         switch edit
         {
@@ -243,7 +243,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         return height
     }
     
-    private func viewHeight(for item: ItemDataTree) -> CGFloat
+    private func viewHeight(for item: Item) -> CGFloat
     {
         if let height = itemHeightCash[item] { return height }
         
@@ -281,7 +281,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     }
     
     private var cashedWidth: CGFloat?
-    private var itemHeightCash = [ItemDataTree : CGFloat]()
+    private var itemHeightCash = [Item : CGFloat]()
     
     // MARK: - Observe Item Views
     

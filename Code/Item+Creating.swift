@@ -24,4 +24,12 @@ extension Tree where Data == ItemData
         
         return item
     }
+    
+    convenience init(text: String? = nil)
+    {
+        let newData = ItemData()
+        newData.text <- text
+        
+        self.init(data: newData)
+    }
 }

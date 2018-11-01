@@ -1,111 +1,36 @@
 import SwiftObserver
 
-class Item: Tree<ItemData>, Decodable, Observable
+extension Tree where Data == ItemData
 {
-    // MARK: - Decodable
+    // selection
     
-    required convenience init(from decoder: Decoder) throws
+    var isSelected: Bool
     {
-        guard let container = decoder.itemContainer else
+        get { return data.isSelected.value ?? false }
+        set { data.isSelected <- newValue }
+    }
+    
+    func deselectAll()
+    {
+        for item in branches
         {
-            throw DecodingError.noItemContainer
-        }
-        
-        self.init(data: container.itemData)
-        
-        if let branches = container.get([Item].self, for: .branches)
-        {
-            for subitem in branches { subitem.root = self }
-            
-            reset(branches: branches)
+            item.isSelected = false
         }
     }
     
-    private enum DecodingError: Error { case noItemContainer }
+    // text
     
-    // MARK: - Initialization
+    func edit() { data.edit() }
     
-    convenience init(text: String? = nil)
+    var text: String? { return data.text.value }
+    
+    // focus
+    
+    var isFocused: Bool
     {
-        let newData = ItemData()
-        newData.text <- text
-        
-        self.init(data: newData)
-    }
-//    
-//    convenience init(from itemDataTree: ItemDataTree)
-//    {
-//        self.init(data: itemDataTree.data,
-//                  root: itemDataTree.root,
-//                  numberOfLeafs: itemDataTree.numberOfLeafs)
-//        
-//        reset(branches: itemDataTree.branches)
-//    }
-    
-    override init(data: ItemData,
-                  root: Node? = nil,
-                  numberOfLeafs: Int = 1)
-    {
-        print("creating item with text: \(data.text.value ?? "nil")")
-        
-        super.init(data: data,
-                   root: root,
-                   numberOfLeafs: numberOfLeafs)
-    }
-    
-    // MARK: - Observable
-    
-    var latestUpdate = Event.didNothing
-    
-    enum Event { case didNothing }
-}
-
-// MARK: - Decoding
-
-fileprivate extension Decoder
-{
-    var itemContainer: KeyedDecodingContainer<ItemCodingKey>?
-    {
-        return try? container(keyedBy: ItemCodingKey.self)
+        get { return data.isFocused.value ?? false }
+        set { data.isFocused <- newValue }
     }
 }
 
-fileprivate extension KeyedDecodingContainer where K == ItemCodingKey
-{
-    var itemData: ItemData
-    {
-        let data = ItemData(id: id)
-        
-        data.text <- text
-        data.state <- state
-        data.tag <- tag
-        
-        return data
-    }
-    
-    var id: String? { return string(.id) }
-    
-    var text: String?
-    {
-        return string(.text) ?? get(Var<String>.self, for: .text)?.value
-    }
-    
-    var state: ItemData.State?
-    {
-        let direct = ItemData.State(from: int(.state))
-        return direct ?? get(Var<ItemData.State>.self, for: .state)?.value
-    }
-    
-    var tag: ItemData.Tag?
-    {
-        let direct = ItemData.Tag(from: int(.tag))
-        return direct ?? get(Var<ItemData.Tag>.self, for: .tag)?.value
-    }
-}
-
-// MARK: - Item Coding Key
-
-enum ItemCodingKey: String, CodingKey
-{
-    case id, text = "title", state, tag, branches = "subtasks"
-}
+typealias Item = Tree<ItemData>

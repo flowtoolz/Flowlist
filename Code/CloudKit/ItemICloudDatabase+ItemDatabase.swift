@@ -6,7 +6,7 @@ extension ItemICloudDatabase: ItemDatabase
 {
     // MARK: - Fetch & Connect Items
     
-    func fetchItemTree(receiveRoot: @escaping (ItemDataTree?) -> Void)
+    func fetchItemTree(receiveRoot: @escaping (Item?) -> Void)
     {
         fetchItemRecords()
         {
@@ -16,7 +16,7 @@ extension ItemICloudDatabase: ItemDatabase
         }
     }
     
-    private func itemTree(from records: [CKRecord]?) -> ItemDataTree?
+    private func itemTree(from records: [CKRecord]?) -> Item?
     {
         // get record array
         
@@ -29,7 +29,7 @@ extension ItemICloudDatabase: ItemDatabase
         
         // create unconnected items. remember associated records.
         
-        var hashMap = [String : (CKRecord, ItemDataTree)]()
+        var hashMap = [String : (CKRecord, Item)]()
         
         for record in records
         {
@@ -42,7 +42,7 @@ extension ItemICloudDatabase: ItemDatabase
         
         // connect items. find root.
         
-        var root: ItemDataTree?
+        var root: Item?
         
         for (record, item) in hashMap.values
         {
@@ -85,14 +85,14 @@ extension ItemICloudDatabase: ItemDatabase
     
     // MARK: - Save Item Tree
     
-    func save(itemTree root: ItemDataTree)
+    func save(itemTree root: Item)
     {
         let itemRecords = records(fromItemTree: root)
         
         save(itemRecords)
     }
     
-    private func records(fromItemTree root: ItemDataTree) -> [CKRecord]
+    private func records(fromItemTree root: Item) -> [CKRecord]
     {
         var result = [CKRecord(from: root)]
         

@@ -42,7 +42,7 @@ class ItemView: LayerBackedView, Observer, Observable
     
     // MARK: - Configuration
     
-    func configure(with item: ItemDataTree)
+    func configure(with item: Item)
     {
         stopObserving(item: self.item)
         observe(item: item)
@@ -118,7 +118,7 @@ class ItemView: LayerBackedView, Observer, Observable
     
     // MARK: - Observing the Item
     
-    private func observe(item: ItemDataTree)
+    private func observe(item: Item)
     {
         observe(item.treeMessenger)
         {
@@ -132,8 +132,8 @@ class ItemView: LayerBackedView, Observer, Observable
         observe(itemData: item.data)
     }
     
-    private func received(_ event: ItemDataTree.Messenger.Event,
-                          from item: ItemDataTree)
+    private func received(_ event: Item.Messenger.Event,
+                          from item: Item)
     {
         switch event
         {
@@ -153,7 +153,7 @@ class ItemView: LayerBackedView, Observer, Observable
         }
     }
     
-    private func stopObserving(item: ItemDataTree?)
+    private func stopObserving(item: Item?)
     {
         guard let item = item else { return }
         
@@ -659,7 +659,7 @@ class ItemView: LayerBackedView, Observer, Observable
     
     static let uiIdentifier = NSUserInterfaceItemIdentifier(rawValue: "ItemViewID")
     
-    private(set) weak var item: ItemDataTree?
+    private(set) weak var item: Item?
     
     // MARK: - Observability
     

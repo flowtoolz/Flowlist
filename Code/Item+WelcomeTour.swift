@@ -2,9 +2,9 @@ import SwiftObserver
 
 extension Tree where Data == ItemData
 {
-    static var welcomeTour: [ItemDataTree]
+    static var welcomeTour: [Item]
     {
-        var tour = [ItemDataTree]()
+        var tour = [Item]()
         
         tour.append(Item(text: "Welcome to Flowlist!"))
         tour[0].data.state <- .inProgress

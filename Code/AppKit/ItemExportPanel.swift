@@ -38,7 +38,7 @@ class ItemExportPanel: NSSavePanel
     
     // MARK: - Export
     
-    func export(_ item: ItemDataTree)
+    func export(_ item: Item)
     {
         nameFieldStringValue = item.text ?? "Untitled"
         

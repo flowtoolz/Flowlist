@@ -10,7 +10,7 @@ class Store: Observer, Observable
 
     // MARK: - Update Root
     
-    func update(root newRoot: ItemDataTree)
+    func update(root newRoot: Item)
     {
         stopObserving(root?.treeMessenger)
         observe(newRoot: newRoot)
@@ -22,7 +22,7 @@ class Store: Observer, Observable
         send(.didSwitchRoot)
     }
     
-    private func observe(newRoot: ItemDataTree)
+    private func observe(newRoot: Item)
     {
         observe(newRoot.treeMessenger)
         {
@@ -34,8 +34,8 @@ class Store: Observer, Observable
         }
     }
     
-    private func didReceive(_ event: ItemDataTree.Messenger.Event,
-                            from root: ItemDataTree)
+    private func didReceive(_ event: Item.Messenger.Event,
+                            from root: Item)
     {
         switch event
         {
@@ -59,7 +59,7 @@ class Store: Observer, Observable
                 for item in items { itemHash.add(item.array) }
             }
             
-            let interaction = ItemDataTree.Interaction(from: edit)
+            let interaction = Item.Interaction(from: edit)
             
             print(interaction)
             
@@ -78,13 +78,13 @@ class Store: Observer, Observable
         
         if root?.isLeaf ?? false
         {
-            root?.insert(Item.welcomeTour, at: 0)
+            root?.insert(DecodableItem.welcomeTour, at: 0)
         }
     }
     
     // MARK: - Track Number of User Created Leafs
     
-    private func updateUserCreatedLeafs(with root: ItemDataTree)
+    private func updateUserCreatedLeafs(with root: Item)
     {
         numberOfUserCreatedLeafs <- root.isLeaf ? 0 : root.numberOfLeafs
     }
@@ -93,7 +93,7 @@ class Store: Observer, Observable
     
     // MARK: - Item Storage
     
-    private(set) var root: ItemDataTree?
+    private(set) var root: Item?
     let itemHash = HashMap()
     
     // MARK: - Observability

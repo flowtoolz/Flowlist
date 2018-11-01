@@ -35,4 +35,4 @@ extension Tree where Data == ItemData
     }
 }
 
-let clipboard = Clipboard<ItemDataTree>()
+let clipboard = Clipboard<Item>()

@@ -21,7 +21,7 @@ class List: Observable, Observer
     
     // MARK: - Configuration
     
-    func set(root newRoot: ItemDataTree?)
+    func set(root newRoot: Item?)
     {
         guard newRoot !== root else
         {
@@ -35,7 +35,7 @@ class List: Observable, Observer
         root = newRoot
     }
     
-    private func observeItems(with root: ItemDataTree?, start: Bool = true)
+    private func observeItems(with root: Item?, start: Bool = true)
     {
         guard let root = root else
         {
@@ -49,7 +49,7 @@ class List: Observable, Observer
     
     // MARK: - Observe Root
     
-    private func observe(root: ItemDataTree, start: Bool = true)
+    private func observe(root: Item, start: Bool = true)
     {
         guard start else
         {
@@ -72,8 +72,8 @@ class List: Observable, Observer
         }
     }
     
-    func received(_ edit: ItemDataTree.Messenger.Event.NodeEdit,
-                  from root: ItemDataTree)
+    func received(_ edit: Item.Messenger.Event.NodeEdit,
+                  from root: Item)
     {
         switch edit
         {
@@ -96,7 +96,7 @@ class List: Observable, Observer
     
     // MARK: - Observe Listed Items
     
-    private func observeItemsListed(in root: ItemDataTree,
+    private func observeItemsListed(in root: Item,
                                     start: Bool = true)
     {
         let indexes = Array(0 ..< root.count)
@@ -104,7 +104,7 @@ class List: Observable, Observer
         observeItemsListed(in: root, at: indexes, start: start)
     }
     
-    private func observeItemsListed(in root: ItemDataTree,
+    private func observeItemsListed(in root: Item,
                                     at indexes: [Int],
                                     start: Bool = true)
     {
@@ -116,7 +116,7 @@ class List: Observable, Observer
         }
     }
     
-    private func observe(listedItem item: ItemDataTree, start: Bool = true)
+    private func observe(listedItem item: Item, start: Bool = true)
     {
         guard start else
         {
@@ -131,7 +131,7 @@ class List: Observable, Observer
         }
     }
     
-    private func itemDidChangeState(_ item: ItemDataTree?)
+    private func itemDidChangeState(_ item: Item?)
     {
         guard let item = item, let index = item.indexInRoot else { return }
         
@@ -178,7 +178,7 @@ class List: Observable, Observer
     
     // MARK: - Listed Items
     
-    subscript(_ index: Int?) -> ItemDataTree?
+    subscript(_ index: Int?) -> Item?
     {
         guard let index = index else { return nil }
         
@@ -197,7 +197,7 @@ class List: Observable, Observer
     
     var isRootList: Bool { return root != nil && root?.root == nil }
     
-    private(set) weak var root: ItemDataTree?
+    private(set) weak var root: Item?
     {
         didSet
         {
@@ -207,8 +207,8 @@ class List: Observable, Observer
         }
     }
     
-    private func didSwitchRoot(from old: ItemDataTree?,
-                               to new: ItemDataTree?)
+    private func didSwitchRoot(from old: Item?,
+                               to new: Item?)
     {
         old?.deletionStack.removeAll()
         old?.deselectAll()
@@ -346,7 +346,7 @@ class List: Observable, Observer
     enum Event
     {
         case didNothing
-        case did(ItemDataTree.Messenger.Event.NodeEdit)
+        case did(Item.Messenger.Event.NodeEdit)
         case didChangeSelection(added: [Int], removed: [Int])
     }
 }
