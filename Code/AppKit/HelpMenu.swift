@@ -58,8 +58,8 @@ class HelpMenu: NSMenu, NSMenuItemValidation
                                          key: "",
                                          validator: self)
     {
-        let tour = Item("Welcome Tour")
-        tour.insert(Item.welcomeTour, at: 0)
+        let tour = ItemDataTree("Welcome Tour")
+        tour.insert(ItemDataTree.welcomeTour, at: 0)
         browser.focusedList.paste([tour])
     }
     

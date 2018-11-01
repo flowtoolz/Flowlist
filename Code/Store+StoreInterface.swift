@@ -2,7 +2,7 @@ import SwiftObserver
 
 extension Store: StoreInterface
 {
-    func apply(_ interaction: Item.Interaction)
+    func apply(_ interaction: ItemDataTree.Interaction)
     {
         switch interaction
         {
@@ -13,9 +13,9 @@ extension Store: StoreInterface
         }
     }
     
-    private func createItem(with modification: Item.Modification)
+    private func createItem(with modification: ItemDataTree.Modification)
     {
-        let newItem = Item(from: modification)
+        let newItem = ItemDataTree(from: modification)
         
         itemHash.add([newItem])
         
@@ -34,7 +34,7 @@ extension Store: StoreInterface
         rootItem.add(newItem)
     }
     
-    private func updateItem(with modification: Item.Modification)
+    private func updateItem(with modification: ItemDataTree.Modification)
     {
         guard let item = itemHash[modification.id] else
         {

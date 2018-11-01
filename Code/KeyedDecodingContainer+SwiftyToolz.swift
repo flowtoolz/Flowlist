@@ -10,8 +10,7 @@ public extension KeyedDecodingContainer
         return try? decode(String.self, forKey: key)
     }
     
-    func get<T>(_ type: T.Type,
-                for key: KeyedDecodingContainer<K>.Key) -> T? where T : Decodable
+    func get<T>(_ type: T.Type, for key: Key) -> T? where T : Decodable
     {
         return try? decode(type, forKey: key)
     }

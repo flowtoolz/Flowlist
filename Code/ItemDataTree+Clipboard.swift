@@ -20,7 +20,7 @@ extension Tree where Data == ItemData
     }
     
     @discardableResult
-    func copy(_ items: [Item]) -> Bool
+    func copy(_ items: [ItemDataTree]) -> Bool
     {
         guard !items.isEmpty else { return false }
         
@@ -29,10 +29,10 @@ extension Tree where Data == ItemData
         return true
     }
     
-    var clipboardItems: [Item]
+    var clipboardItems: [ItemDataTree]
     {
         return clipboard.copiesOfStoredObjects
     }
 }
 
-let clipboard = Clipboard<Item>()
+let clipboard = Clipboard<ItemDataTree>()

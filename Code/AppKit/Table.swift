@@ -75,7 +75,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         }
     }
     
-    private func did(_ edit: Item.TreeEdit)
+    private func did(_ edit: ItemDataTree.TreeEdit)
     {
         switch edit
         {
@@ -113,8 +113,8 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     // MARK: - Animation
     
-    private func didChangeRoot(from old: Item?,
-                               to new: Item?)
+    private func didChangeRoot(from old: Tree<ItemData>?,
+                               to new: Tree<ItemData>?)
     {
         guard isVisible else
         {
@@ -243,7 +243,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         return height
     }
     
-    private func viewHeight(for item: Item) -> CGFloat
+    private func viewHeight(for item: ItemDataTree) -> CGFloat
     {
         if let height = itemHeightCash[item] { return height }
         
@@ -281,7 +281,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     }
     
     private var cashedWidth: CGFloat?
-    private var itemHeightCash = [Item : CGFloat]()
+    private var itemHeightCash = [ItemDataTree : CGFloat]()
     
     // MARK: - Observe Item Views
     

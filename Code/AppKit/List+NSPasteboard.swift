@@ -6,7 +6,7 @@ extension List
     func pasteFromSystemPasteboard()
     {
         guard let string = NSPasteboard.general.string(forType: .string),
-            let items = Item.from(pasteboardString: string)
+            let items = ItemDataTree.from(pasteboardString: string)
         else
         {
             return

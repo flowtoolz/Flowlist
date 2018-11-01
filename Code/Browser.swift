@@ -150,7 +150,7 @@ class Browser: Observer, Observable
         
         let superSelection = superList.selectedIndexes
         
-        let newRoot: Item? =
+        let newRoot: ItemDataTree? =
         {
             guard superSelection.count == 1 else { return nil }
             

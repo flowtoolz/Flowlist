@@ -16,7 +16,7 @@ extension List
         
         let indexes = selectedIndexes
         
-        var items = [Item]()
+        var items = [ItemDataTree]()
         
         for index in indexes
         {

@@ -3,16 +3,16 @@ import SwiftyToolz
 
 // MARK: - Tree
 
-final class Tree<Data: Copyable>: Copyable, Observable
+class Tree<Data: Copyable>: Copyable, Observable
 {
     // MARK: - Copyable
     
-    convenience init(with original: Node)
+    public required convenience init(with original: Node)
     {
         self.init(with: original, root: nil)
     }
     
-    convenience init(with original: Node, root: Node? = nil)
+    private convenience init(with original: Node, root: Node? = nil)
     {
         self.init(data: original.data?.copy,
                   root: root,
@@ -354,5 +354,5 @@ final class Tree<Data: Copyable>: Copyable, Observable
     
     // MARK: - Node
     
-    typealias Node = Tree<Data>
+    public typealias Node = Tree<Data>
 }

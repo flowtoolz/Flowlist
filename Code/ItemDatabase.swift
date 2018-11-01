@@ -1,8 +1,9 @@
 import SwiftObserver
 import SwiftyToolz
 
-protocol ItemDatabase: Observable where UpdateType == Item.Interaction
+protocol ItemDatabase: Observable
+    where UpdateType == ItemDataTree.Interaction
 {
-    func fetchItemTree(receiveRoot: @escaping (Item?) -> Void)
-    func save(itemTree root: Item)
+    func fetchItemTree(receiveRoot: @escaping (ItemDataTree?) -> Void)
+    func save(itemTree root: ItemDataTree)
 }

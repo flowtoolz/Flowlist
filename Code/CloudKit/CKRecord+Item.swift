@@ -5,7 +5,7 @@ extension CKRecord
 {
     // MARK: - Initialization
     
-    convenience init?(from item: Item)
+    convenience init?(from item: ItemDataTree)
     {
         guard let data = item.data else
         {
@@ -24,7 +24,7 @@ extension CKRecord
     
     // MARK: - Mofification
     
-    var modification: Item.Modification?
+    var modification: ItemDataTree.Modification?
     {
         guard isItem else
         {
@@ -32,11 +32,11 @@ extension CKRecord
             return nil
         }
         
-        return Item.Modification(id: recordID.recordName,
-                                 text: text,
-                                 state: state,
-                                 tag: tag,
-                                 rootId: superItem)
+        return ItemDataTree.Modification(id: recordID.recordName,
+                                          text: text,
+                                          state: state,
+                                          tag: tag,
+                                          rootId: superItem)
     }
     
     // MARK: - Storage Properties
@@ -150,10 +150,10 @@ extension CKRecord
     
     static var fieldNames: [String]
     {
-        return Item.Field.all.map { FieldName(from: $0).rawValue }
+        return ItemDataTree.Field.all.map { FieldName(from: $0).rawValue }
     }
     
-    static func field(for name: String) -> Item.Field?
+    static func field(for name: String) -> ItemDataTree.Field?
     {
         guard let recordField = FieldName(rawValue: name) else
         {
@@ -166,7 +166,7 @@ extension CKRecord
     
     private enum FieldName: String
     {
-        init(from itemField: Item.Field)
+        init(from itemField: ItemDataTree.Field)
         {
             switch itemField
             {
@@ -177,7 +177,7 @@ extension CKRecord
             }
         }
         
-        var itemField: Item.Field
+        var itemField: ItemDataTree.Field
         {
             switch self
             {

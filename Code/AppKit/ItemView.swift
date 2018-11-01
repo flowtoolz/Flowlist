@@ -42,7 +42,7 @@ class ItemView: LayerBackedView, Observer, Observable
     
     // MARK: - Configuration
     
-    func configure(with item: Item)
+    func configure(with item: ItemDataTree)
     {
         stopObserving(item: self.item)
         observe(item: item)
@@ -51,7 +51,8 @@ class ItemView: LayerBackedView, Observer, Observable
         configure()
     }
     
-    private func didSwitch(from oldItemData: ItemData?, to newItemData: ItemData?)
+    private func didSwitch(from oldItemData: ItemData?,
+                           to newItemData: ItemData?)
     {
         stopObserving(itemData: oldItemData)
         
@@ -129,7 +130,7 @@ class ItemView: LayerBackedView, Observer, Observable
     
     // MARK: - Observing the Item
     
-    private func observe(item: Item)
+    private func observe(item: ItemDataTree)
     {
         observe(item)
         {
@@ -149,7 +150,8 @@ class ItemView: LayerBackedView, Observer, Observable
         observe(itemData: itemData)
     }
     
-    private func received(_ event: Item.TreeEvent, from item: Item)
+    private func received(_ event: ItemDataTree.TreeEvent,
+                          from item: ItemDataTree)
     {
         switch event
         {
@@ -169,7 +171,7 @@ class ItemView: LayerBackedView, Observer, Observable
         }
     }
     
-    private func stopObserving(item: Item?)
+    private func stopObserving(item: ItemDataTree?)
     {
         guard let item = item else { return }
         
@@ -471,7 +473,8 @@ class ItemView: LayerBackedView, Observer, Observable
     
     private func constrainTextView()
     {
-        textView.constrainLeft(to: ItemView.textLeftMultiplier, of: layoutGuide)
+        textView.constrainLeft(to: ItemView.textLeftMultiplier,
+                               of: layoutGuide)
         textView.constrain(toTheLeftOf: groupIcon)
         textView.constrainTop(to: 0.303, of: layoutGuide)
         textView.constrainBottomToParent()
@@ -674,7 +677,7 @@ class ItemView: LayerBackedView, Observer, Observable
     
     static let uiIdentifier = NSUserInterfaceItemIdentifier(rawValue: "ItemViewID")
     
-    private(set) weak var item: Item?
+    private(set) weak var item: ItemDataTree?
     
     // MARK: - Observability
     

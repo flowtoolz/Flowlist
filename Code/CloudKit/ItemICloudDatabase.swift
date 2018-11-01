@@ -133,5 +133,5 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     // MARK: - Observability
     
-    var latestUpdate = Item.Interaction.none
+    var latestUpdate = ItemDataTree.Interaction.none
 }

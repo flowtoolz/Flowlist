@@ -1,56 +1,89 @@
 import SwiftObserver
 
-typealias Item = Tree<ItemData>
-
-extension Tree where Data == ItemData
+class Item: Tree<ItemData>, Codable
 {
-    @discardableResult
-    func createSubitem(at index: Int) -> Node?
+    required convenience init(from decoder: Decoder) throws
     {
-        let item = Node()
+        self.init(data: nil)
         
-        let belowIsInProgress = count == index ? false : (self[index]?.isInProgress ?? false)
-        let aboveIsInProgress = index == 0 || (self[index - 1]?.isInProgress ?? false)
+        guard let container = decoder.itemContainer else { return }
         
-        item.data?.state <- belowIsInProgress && aboveIsInProgress ? .inProgress : nil
+        data = container.itemData
         
-        item.data?.wantsTextInput = true
-        
-        guard insert(item, at: index) else { return nil }
-        
-        return item
+        reset(branches: container.get([Item].self, for: .branches))
     }
     
-    func edit() { data?.edit() }
-    
-    convenience init(_ title: String? = nil)
+    func encode(to encoder: Encoder) throws
     {
-        let newData = ItemData()
-        newData.text = Var(title)
+        var container = encoder.container(keyedBy: ItemCodingKey.self)
         
-        self.init(data: newData)
-    }
-    
-    func deselectAll()
-    {
-        for item in branches
+        container.set(data?.id, for: .id)
+        container.set(text, for: .text)
+        container.set(data?.state.value?.rawValue, for: .state)
+        container.set(data?.tag.value?.rawValue, for: .tag)
+        
+        if !isLeaf
         {
-            item.isSelected = false
+            let subitems: [Item] = branches.map { Item(from: $0) }
+            
+            container.set(subitems, for: .branches)
         }
     }
     
-    var text: String? { return data?.text.value }
-    
-    var isSelected: Bool
+    convenience init(from itemDataTree: ItemDataTree)
     {
-        get { return data?.isSelected.value ?? false }
-        set { data?.isSelected <- newValue }
+        self.init(data: itemDataTree.data,
+                  root: itemDataTree.root,
+                  numberOfLeafs: itemDataTree.numberOfLeafs)
+        
+        reset(branches: itemDataTree.branches)
     }
-    
-    var isFocused: Bool
-    {
-        get { return data?.isFocused.value ?? false }
-        set { data?.isFocused <- newValue }
-    }
+}
 
+// MARK: - Codability
+
+fileprivate extension Decoder
+{
+    var itemContainer: KeyedDecodingContainer<ItemCodingKey>?
+    {
+        return try? container(keyedBy: ItemCodingKey.self)
+    }
+}
+
+fileprivate extension KeyedDecodingContainer where K == ItemCodingKey
+{
+    var itemData: ItemData
+    {
+        let data = ItemData(id: id)
+        
+        data.text <- text
+        data.state <- state
+        data.tag <- tag
+        
+        return data
+    }
+    
+    var id: String? { return string(.id) }
+    
+    var text: String?
+    {
+        return string(.text) ?? get(Var<String>.self, for: .text)?.value
+    }
+    
+    var state: ItemData.State?
+    {
+        let direct = ItemData.State(from: int(.state))
+        return direct ?? get(Var<ItemData.State>.self, for: .state)?.value
+    }
+    
+    var tag: ItemData.Tag?
+    {
+        let direct = ItemData.Tag(from: int(.tag))
+        return direct ?? get(Var<ItemData.Tag>.self, for: .tag)?.value
+    }
+}
+
+fileprivate enum ItemCodingKey: String, CodingKey
+{
+    case id, text = "title", state, tag, branches = "subtasks"
 }

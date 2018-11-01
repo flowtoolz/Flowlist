@@ -3,9 +3,9 @@ import SwiftObserver
 
 extension CKRecord.ID
 {
-    func modification(fromNotificationFields fields: [String : Any]) -> Item.Modification?
+    func modification(fromNotificationFields fields: [String : Any]) -> ItemDataTree.Modification?
     {
-        var modifiedFields = [Item.Field]()
+        var modifiedFields = [ItemDataTree.Field]()
         var newRootId: String?
         var newText: String?
         var newState: ItemData.State?
@@ -30,11 +30,11 @@ extension CKRecord.ID
             modifiedFields.append(field)
         }
         
-        return Item.Modification(id: recordName,
-                                 text: newText,
-                                 state: newState,
-                                 tag: newTag,
-                                 rootId: newRootId,
-                                 modified: modifiedFields)
+        return ItemDataTree.Modification(id: recordName,
+                                          text: newText,
+                                          state: newState,
+                                          tag: newTag,
+                                          rootId: newRootId,
+                                          modified: modifiedFields)
     }
 }

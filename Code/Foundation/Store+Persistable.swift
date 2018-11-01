@@ -50,7 +50,7 @@ extension Store: Persistable
     {
         guard let root = root,
             let fileUrl = fileUrl,
-            let _ = root.save(to: fileUrl)
+            let _ = Item(from: root).save(to: fileUrl)
         else
         {
             let fileString = self.fileUrl?.absoluteString ?? "file"

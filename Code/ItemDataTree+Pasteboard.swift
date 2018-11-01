@@ -1,6 +1,6 @@
 extension Tree where Data == ItemData
 {
-    static func from(pasteboardString string: String) -> [Item]?
+    static func from(pasteboardString string: String) -> [ItemDataTree]?
     {
         var texts = string.components(separatedBy: .newlines)
         
@@ -23,7 +23,7 @@ extension Tree where Data == ItemData
         
         texts.remove { $0.count < 2 }
         
-        let result = texts.map { Item($0) }
+        let result = texts.map { ItemDataTree($0) }
         
         return result.isEmpty ? nil : result
     }
