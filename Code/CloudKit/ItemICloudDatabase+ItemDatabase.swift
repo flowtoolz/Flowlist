@@ -37,7 +37,7 @@ extension ItemICloudDatabase: ItemDatabase
             
             let id = modification.id
             
-            hashMap[id] = (record, ItemDataTree(from: modification))
+            hashMap[id] = (record, Item(from: modification))
         }
         
         // connect items. find root.

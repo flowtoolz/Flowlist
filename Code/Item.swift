@@ -23,10 +23,31 @@ class Item: Tree<ItemData>, Decodable, Observable
     
     private enum DecodingError: Error { case noItemContainer }
     
+    // MARK: - Initialization
+    
+    convenience init(text: String? = nil)
+    {
+        let newData = ItemData()
+        newData.text <- text
+        
+        self.init(data: newData)
+    }
+    
+    convenience init(from itemDataTree: ItemDataTree)
+    {
+        self.init(data: itemDataTree.data,
+                  root: itemDataTree.root,
+                  numberOfLeafs: itemDataTree.numberOfLeafs)
+        
+        reset(branches: itemDataTree.branches)
+    }
+    
     override init(data: ItemData,
                   root: Node? = nil,
                   numberOfLeafs: Int = 1)
     {
+        print("creating item with text: \(data.text.value ?? "nil")")
+        
         super.init(data: data,
                    root: root,
                    numberOfLeafs: numberOfLeafs)

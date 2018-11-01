@@ -23,7 +23,7 @@ extension Store: StoreInterface
     
     private func createItem(with modification: ItemDataTree.Modification)
     {
-        let newItem = ItemDataTree(from: modification)
+        let newItem = Item(from: modification)
         
         itemHash.add([newItem])
         

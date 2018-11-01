@@ -15,18 +15,18 @@ class StorageController <Database: ItemDatabase, Store: PersistableStore>: Obser
     
     func appDidLaunch()
     {
-//        store?.load()
-        database?.fetchItemTree()
-        {
-            if let root = $0
-            {
-                self.store?.update(root: root)
-            }
-            else
-            {
-                self.store?.load()
-            }
-        }
+        store?.load()
+//        database?.fetchItemTree()
+//        {
+//            if let root = $0
+//            {
+//                self.store?.update(root: root)
+//            }
+//            else
+//            {
+//                self.store?.load()
+//            }
+//        }
     }
     
     func windowLostFocus()

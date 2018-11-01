@@ -73,7 +73,7 @@ class Store: Observer, Observable
     {
         if root == nil
         {
-            update(root: ItemDataTree(NSUserName()))
+            update(root: Item(text: NSUserName()))
         }
         
         if root?.isLeaf ?? false

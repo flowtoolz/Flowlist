@@ -61,8 +61,10 @@ extension List
         data.state <- root?.highestPriorityState(at: indexes)
         data.wantsTextInput = true
         
+        let item = Item(data: data)
+        
         if let groupIndex = indexes.first,
-            let _ = root?.groupNodes(at: indexes, with: data)
+            let _ = root?.groupNodes(at: indexes, as: item)
         {
             setSelectionWithItemsListed(at: [groupIndex])
         }

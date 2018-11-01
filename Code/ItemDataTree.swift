@@ -1,35 +1,8 @@
 import SwiftObserver
 
-typealias ItemDataTree = Tree<ItemData>
-
 extension Tree where Data == ItemData
 {
-    @discardableResult
-    func createSubitem(at index: Int) -> Node?
-    {
-        let item = Node()
-        
-        let belowIsInProgress = count == index ? false : (self[index]?.isInProgress ?? false)
-        let aboveIsInProgress = index == 0 || (self[index - 1]?.isInProgress ?? false)
-        
-        item.data.state <- belowIsInProgress && aboveIsInProgress ? .inProgress : nil
-        
-        item.data.wantsTextInput = true
-        
-        guard insert(item, at: index) else { return nil }
-        
-        return item
-    }
-    
     func edit() { data.edit() }
-    
-    convenience init(_ title: String? = nil)
-    {
-        let newData = ItemData()
-        newData.text = Var(title)
-        
-        self.init(data: newData)
-    }
     
     func deselectAll()
     {
@@ -53,3 +26,5 @@ extension Tree where Data == ItemData
         set { data.isFocused <- newValue }
     }
 }
+
+typealias ItemDataTree = Tree<ItemData>
