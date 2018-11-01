@@ -308,14 +308,8 @@ class Tree<Data: Copyable>: Copyable, Observable
         }
     }
     
-    func reset(branches newBranches: [Node]?)
-    {
-        guard let newBranches = newBranches else
-        {
-            log(warning: "Array of new branches is nil.")
-            return
-        }
-        
+    func reset(branches newBranches: [Node])
+    {   
         branches = newBranches
     }
     

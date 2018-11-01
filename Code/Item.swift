@@ -9,8 +9,11 @@ class Item: Tree<ItemData>, Codable
         guard let container = decoder.itemContainer else { return }
         
         data = container.itemData
-        
-        reset(branches: container.get([Item].self, for: .branches))
+
+        if let branches = container.get([Item].self, for: .branches)
+        {
+            reset(branches: branches)
+        }
     }
     
     func encode(to encoder: Encoder) throws
