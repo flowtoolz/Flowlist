@@ -1,4 +1,4 @@
-extension Item: Encodable
+extension Tree: Encodable where Data == ItemData
 {
     func encode(to encoder: Encoder) throws
     {
@@ -11,18 +11,7 @@ extension Item: Encodable
         
         if !isLeaf
         {
-            let subitems: [Item] = branches.map { Item(from: $0) }
-            
-            container.set(subitems, for: .branches)
+            container.set(branches, for: .branches)
         }
-    }
-    
-    convenience init(from itemDataTree: ItemDataTree)
-    {
-        self.init(data: itemDataTree.data,
-                  root: itemDataTree.root,
-                  numberOfLeafs: itemDataTree.numberOfLeafs)
-        
-        reset(branches: itemDataTree.branches)
     }
 }
