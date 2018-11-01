@@ -1,10 +1,11 @@
+import SwiftObserver
 import SwiftyToolz
 
 extension Tree where Data == ItemData
 {
     func debug()
     {
-        print("════════════════════════════════════════════════\n\n" + description() + "\n")
+        log("════════════════════════════════════════════════\n\n" + description() + "\n")
     }
     
     func description(_ prefix: String = "", _ isLast: Bool = true) -> String

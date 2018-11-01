@@ -56,7 +56,7 @@ class Store: Observer, Observable
                 for item in items { itemHash.add(item.array) }
                 
             case .receivedDataUpdate(let event, in: let node):
-                print("\(event) in node \(node.text ?? "untitled")")
+                log("\(event) in node \(node.text ?? "untitled")")
                 
             case .removedNodes(let items, _):
                 for item in items { itemHash.remove(item.array) }
@@ -64,7 +64,7 @@ class Store: Observer, Observable
             
             let interaction = Item.Interaction(from: edit)
             
-            print("interaction: \(interaction)")
+            log("interaction: \(interaction)")
             
             // TODO: send item tree interactions to storage controller
         }

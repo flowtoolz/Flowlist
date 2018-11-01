@@ -8,7 +8,12 @@ class FlowlistController: AppController, NSWindowDelegate
 {
     // MARK: - Initialization
     
-    init() { super.init(withMainMenu: menu) }
+    init()
+    {
+        Log.prefix = "FLOWLIST" // use "flowlist:" as console filter
+        
+        super.init(withMainMenu: menu)
+    }
     
     // MARK: - App Delegate
     
