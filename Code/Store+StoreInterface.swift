@@ -7,9 +7,17 @@ extension Store: StoreInterface
         switch interaction
         {
         case .none: break
-        case .create(let modification): createItem(with: modification)
-        case .modify(let modification): updateItem(with: modification)
-        case .delete(let id): removeItem(with: id)
+        case .insertNodes(let modifications, let superId):
+            for modification in modifications
+            {
+                createItem(with: modification)
+            }
+        case .modifyNode(let modification): updateItem(with: modification)
+        case .removeNodesWithIds(let nodeIds):
+            for id in nodeIds
+            {
+                removeItem(with: id)
+            }
         }
     }
     

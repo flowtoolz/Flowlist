@@ -25,19 +25,24 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                     return
                 }
                 
-                if let modification = record.modification
+                if let mod = record.modification
                 {
-                    self.send(.create(modification))
+                    self.didCreateRecord(with: mod)
                 }
             }
             
             return
         }
         
-        if let modification = id.modification(fromNotificationFields: fields)
+        if let mod = id.modification(fromNotificationFields: fields)
         {
-            send(.create(modification))
+            didCreateRecord(with: mod)
         }
+    }
+    
+    private func didCreateRecord(with mod: ItemDataTree.Modification)
+    {
+        send(.insertNodes([mod], inNodeWithId: mod.rootId))
     }
     
     override func didModifyRecord(with id: CKRecord.ID,
@@ -55,9 +60,10 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                     return
                 }
                 
-                guard let modification = record.modification else { return }
-                
-                self.send(.modify(modification))
+                if let modification = record.modification
+                {
+                    self.didModifyRecord(with: modification)
+                }
             }
             
             return
@@ -65,13 +71,18 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         
         if let modification = id.modification(fromNotificationFields: fields)
         {
-            send(.modify(modification))
+            didModifyRecord(with: modification)
         }
+    }
+    
+    private func didModifyRecord(with mod: ItemDataTree.Modification)
+    {
+        send(.modifyNode(mod))
     }
     
     override func didDeleteRecord(with id: CKRecord.ID)
     {
-        send(.delete(id: id.recordName))
+        send(.removeNodesWithIds([id.recordName]))
     }
     
     private func allNewFields(_ notification: CKQueryNotification) -> JSON?

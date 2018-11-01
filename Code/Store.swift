@@ -50,14 +50,20 @@ class Store: Observer, Observable
         case .didChangeLeafNumber(_):
             updateUserCreatedLeafs(with: root)
             
-        case .didEditTree(let rootEvent):
-            switch rootEvent
+        case .didEditTree(let edit):
+            switch edit
             {
             case .remove(let items, _):
                 for item in items { itemHash.remove(item.array) }
             case .insert(let items, _, _):
                 for item in items { itemHash.add(item.array) }
             }
+            
+            let interaction = ItemDataTree.Interaction(from: edit)
+            
+            print(interaction)
+            
+            // TODO: send item tree interactions to storage controller
         }
     }
     

@@ -15,29 +15,42 @@ extension Tree where Data == ItemData
     
     enum Interaction
     {
-        // TODO: generalize Interaction so it can describe batch edits
-        init(from event: ItemDataTree.Messenger.Event.TreeEdit)
+        init(from treeEdit: Messenger.Event.TreeEdit)
         {
-            switch event
+            switch treeEdit
             {
-            case .remove(let items):
-                self = .none
+            case .remove(let nodes, let root):
+                // TODO possibly extend removeNodesWithIds to include root
+                let ids = nodes.compactMap { $0.data?.id }
+                self = .removeNodesWithIds(ids)
                 
-            case .insert(let items,
-                            in: let superItem,
-                            at: let indexes):
-                self = .none
+            case .insert(let nodes, let root, let indexes):
+                let mods = nodes.compactMap { Modification(from: $0) }
+                self = .insertNodes(mods, inNodeWithId: root.data?.id)
             }
         }
         
         case none
-        case create(_ modification: Modification)
-        case modify(_ modification: Modification)
-        case delete(id: String)
+        case insertNodes([Modification], inNodeWithId: String?)
+        case modifyNode(Modification)
+        case removeNodesWithIds([String])
     }
     
     struct Modification
     {
+        init?(from itemDataTree: ItemDataTree,
+              modified: [Field] = Field.all)
+        {
+            guard let data = itemDataTree.data else { return nil }
+            
+            self.init(id: data.id,
+                      text: itemDataTree.text,
+                      state: data.state.value,
+                      tag: data.tag.value,
+                      rootId: itemDataTree.root?.data?.id,
+                      modified: modified)
+        }
+        
         init(id: String,
              text: String? = nil,
              state: ItemData.State? = nil,

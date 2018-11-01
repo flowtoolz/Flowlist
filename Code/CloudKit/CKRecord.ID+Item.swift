@@ -31,10 +31,10 @@ extension CKRecord.ID
         }
         
         return ItemDataTree.Modification(id: recordName,
-                                          text: newText,
-                                          state: newState,
-                                          tag: newTag,
-                                          rootId: newRootId,
-                                          modified: modifiedFields)
+                                         text: newText,
+                                         state: newState,
+                                         tag: newTag,
+                                         rootId: newRootId,
+                                         modified: modifiedFields)
     }
 }
