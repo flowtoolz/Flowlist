@@ -51,18 +51,6 @@ class ItemView: LayerBackedView, Observer, Observable
         configure()
     }
     
-    private func didSwitch(from oldItemData: ItemData?,
-                           to newItemData: ItemData?)
-    {
-        stopObserving(itemData: oldItemData)
-        
-        guard let new = newItemData else { return }
-        
-        observe(itemData: new)
-        
-        configure()
-    }
-    
     private func configure()
     {
         guard let item = item else
@@ -155,10 +143,7 @@ class ItemView: LayerBackedView, Observer, Observable
             {
             case .switchRoot:
                 stopObserving(item: self.item)
-                
-            case .switchData(let from, let to):
-                didSwitch(from: from, to: to)
-                
+
             default: break
             }
             

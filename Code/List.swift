@@ -86,11 +86,6 @@ class List: Observable, Observer
                 observe(listedItem: item, start: false)
             }
             
-        case .switchData(from: _, to: let newItemData):
-            title.observable = newItemData?.text
-            tag.observable = newItemData?.tag
-            state.observable = newItemData?.state
-            
         case .move: break
             
         case .nothing, .switchRoot: return

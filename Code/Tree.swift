@@ -154,16 +154,7 @@ class Tree<Data: Copyable>: Copyable
     
     // MARK: - Data
     
-    var data: Data
-    {
-        didSet
-        {
-            guard data !== oldValue else { return }
-            
-            messenger.send(.didEditNode(.switchData(from: oldValue,
-                                                    to: data)))
-        }
-    }
+    let data: Data
     
     // MARK: - Undo Deletions
     
@@ -276,7 +267,6 @@ class Tree<Data: Copyable>: Copyable
             {
                 case nothing
                 case switchRoot(from: Node?, to: Node?)
-                case switchData(from: Data?, to: Data?)
                 case insert(at: [Int])
                 case move(from: Int, to: Int)
                 case remove([Node], from: [Int])
