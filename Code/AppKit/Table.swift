@@ -75,7 +75,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         }
     }
     
-    private func did(_ edit: Item.Messenger.Event.NodeUpdate)
+    private func did(_ edit: Item.Event.NodeUpdate)
     {
         switch edit
         {

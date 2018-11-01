@@ -3,7 +3,7 @@ import SwiftyToolz
 
 // MARK: - Tree
 
-class Tree<Data: Copyable & Observable>: Copyable, Observer
+class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
 {
     // MARK: - Copyable
     
@@ -44,7 +44,11 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         }
     }
     
-    deinit { stopAllObserving() }
+    deinit
+    {
+        stopAllObserving()
+        removeObservers()
+    }
     
     // MARK: - Group
     
@@ -104,7 +108,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         
         updateNumberOfLeafs()
         
-        messenger.send(.didUpdateNode(.removedNodes(removedNodes, from: indexes)))
+        send(.didUpdateNode(.removedNodes(removedNodes, from: indexes)))
         sendToRoot(.removedNodes(removedNodes, from: self))
         
         return removedNodes
@@ -143,7 +147,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         
         let indexes = Array(index ..< index + nodes.count)
         
-        messenger.send(.didUpdateNode(.insertedNodes(at: indexes)))
+        send(.didUpdateNode(.insertedNodes(at: indexes)))
         sendToRoot(.insertedNodes(nodes, in: self, at: indexes))
         
         return true
@@ -156,7 +160,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     {
         guard branches.moveElement(from: from, to: to) else { return false }
         
-        messenger.send(.didUpdateNode(.movedNode(from: from, to: to)))
+        send(.didUpdateNode(.movedNode(from: from, to: to)))
         
         return true
     }
@@ -201,7 +205,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         numberOfLeafs = newNumber
         root?.updateNumberOfLeafs()
         
-        messenger.send(.didChangeLeafNumber(numberOfLeafs))
+        send(.didChangeLeafNumber(numberOfLeafs))
     }
     
     func numberOfLeafsRecursively() -> Int
@@ -230,18 +234,17 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         {
             guard oldValue !== root else { return }
 
-            messenger.send(.didUpdateNode(.switchedRoot(from: oldValue,
-                                                    to: root)))
+            send(.didUpdateNode(.switchedRoot(from: oldValue, to: root)))
         }
     }
     
     // MARK: - Propagate Updates to Root
     
-    private func sendToRoot(_ event: Messenger.Event.TreeUpdate)
+    private func sendToRoot(_ event: Event.TreeUpdate)
     {
         guard let root = root else
         {
-            messenger.send(.didUpdateTree(event))
+            send(.didUpdateTree(event))
             return
         }
         
@@ -250,43 +253,35 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     // MARK: - Observability
     
-    private var messenger: Messenger { return treeMessenger }
-    let treeMessenger = Messenger()
+    var latestUpdate = Event.didNothing
     
-    class Messenger: Observable
+    enum Event
     {
-        deinit { removeObservers() }
+        case didNothing
+        case didUpdateTree(TreeUpdate)
+        case didUpdateNode(NodeUpdate)
+        case didChangeLeafNumber(Int)
         
-        var latestUpdate = Event.didNothing
-        
-        enum Event
+        enum TreeUpdate
         {
-            case didNothing
-            case didUpdateTree(TreeUpdate)
-            case didUpdateNode(NodeUpdate)
-            case didChangeLeafNumber(Int)
+            case removedNodes([Node], from: Node)
+            case insertedNodes([Node], in: Node, at: [Int])
+            case receivedDataUpdate(Data.UpdateType, in: Node)
+        }
+        
+        enum NodeUpdate
+        {
+            case switchedRoot(from: Node?, to: Node?)
+            case insertedNodes(at: [Int])
+            case movedNode(from: Int, to: Int)
+            case removedNodes([Node], from: [Int])
             
-            enum TreeUpdate
+            var modifiesGraphStructure: Bool
             {
-                case removedNodes([Node], from: Node)
-                case insertedNodes([Node], in: Node, at: [Int])
-                case receivedDataUpdate(Data.UpdateType, in: Node)
-            }
-            
-            enum NodeUpdate
-            {
-                case switchedRoot(from: Node?, to: Node?)
-                case insertedNodes(at: [Int])
-                case movedNode(from: Int, to: Int)
-                case removedNodes([Node], from: [Int])
-                
-                var modifiesGraphStructure: Bool
+                switch self
                 {
-                    switch self
-                    {
-                    case .removedNodes, .insertedNodes, .switchedRoot: return true
-                    default: return false
-                    }
+                case .removedNodes, .insertedNodes, .switchedRoot: return true
+                default: return false
                 }
             }
         }

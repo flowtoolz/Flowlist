@@ -53,11 +53,11 @@ class List: Observable, Observer
     {
         guard start else
         {
-            stopObserving(root.treeMessenger)
+            stopObserving(root)
             return
         }
         
-        observe(root.treeMessenger)
+        observe(root)
         {
             [weak self, weak root] event in
             
@@ -72,7 +72,7 @@ class List: Observable, Observer
         }
     }
     
-    func received(_ edit: Item.Messenger.Event.NodeUpdate,
+    func received(_ edit: Item.Event.NodeUpdate,
                   from root: Item)
     {
         switch edit
@@ -346,7 +346,7 @@ class List: Observable, Observer
     enum Event
     {
         case didNothing
-        case did(Item.Messenger.Event.NodeUpdate)
+        case did(Item.Event.NodeUpdate)
         case didChangeSelection(added: [Int], removed: [Int])
     }
 }

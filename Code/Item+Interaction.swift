@@ -15,7 +15,7 @@ extension Tree where Data == ItemData
     
     enum Interaction
     {
-        init(from treeEdit: Messenger.Event.TreeUpdate)
+        init(from treeEdit: Event.TreeUpdate)
         {
             switch treeEdit
             {
