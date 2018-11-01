@@ -65,8 +65,8 @@ class List: Observable, Observer
             
             switch event
             {
-            case .didNothing, .rootEvent: break
-            case .did(let edit): self?.received(edit, from: root)
+            case .didNothing, .didEditTree: break
+            case .didEditNode(let edit): self?.received(edit, from: root)
             case .didSwitchData(from: _, to: let newItemData):
                 self?.title.observable = newItemData?.text
                 self?.tag.observable = newItemData?.tag
@@ -76,7 +76,7 @@ class List: Observable, Observer
         }
     }
     
-    func received(_ edit: ItemDataTree.TreeEdit,
+    func received(_ edit: ItemDataTree.Messenger.Event.NodeEdit,
                   from root: ItemDataTree)
     {
         switch edit
@@ -353,7 +353,7 @@ class List: Observable, Observer
     enum Event
     {
         case didNothing
-        case did(ItemDataTree.TreeEdit)
+        case did(ItemDataTree.Messenger.Event.NodeEdit)
         case didChangeSelection(added: [Int], removed: [Int])
     }
 }

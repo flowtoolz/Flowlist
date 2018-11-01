@@ -34,14 +34,14 @@ class Store: Observer, Observable
         }
     }
     
-    private func didReceive(_ event: ItemDataTree.TreeEvent,
+    private func didReceive(_ event: ItemDataTree.Messenger.Event,
                             from root: ItemDataTree)
     {
         switch event
         {
         case .didNothing, .didSwitchData: break
             
-        case .did(let edit):
+        case .didEditNode(let edit):
             if edit.modifiesContent
             {
                 updateUserCreatedLeafs(with: root)
@@ -50,7 +50,7 @@ class Store: Observer, Observable
         case .didChange(_):
             updateUserCreatedLeafs(with: root)
             
-        case .rootEvent(let rootEvent):
+        case .didEditTree(let rootEvent):
             switch rootEvent
             {
             case .didRemove(let items):

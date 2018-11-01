@@ -16,7 +16,7 @@ extension Tree where Data == ItemData
     enum Interaction
     {
         // TODO: generalize Interaction so it can describe batch edits
-        init(from event: ItemDataTree.TreeEvent.RootEvent)
+        init(from event: ItemDataTree.Messenger.Event.TreeEdit)
         {
             switch event
             {

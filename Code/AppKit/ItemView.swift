@@ -150,13 +150,13 @@ class ItemView: LayerBackedView, Observer, Observable
         observe(itemData: itemData)
     }
     
-    private func received(_ event: ItemDataTree.TreeEvent,
+    private func received(_ event: ItemDataTree.Messenger.Event,
                           from item: ItemDataTree)
     {
         switch event
         {
-        case .didNothing, .rootEvent: break
-        case .did(let edit):
+        case .didNothing, .didEditTree: break
+        case .didEditNode(let edit):
             guard edit.modifiesContent else { break }
 
             if case .changeRoot = edit

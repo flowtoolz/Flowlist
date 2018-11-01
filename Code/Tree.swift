@@ -95,7 +95,7 @@ class Tree<Data: Copyable>: Copyable
         
         updateNumberOfLeafs()
         
-        messenger.send(.did(.remove(removedNodes, from: indexes)))
+        messenger.send(.didEditNode(.remove(removedNodes, from: indexes)))
         sendToRoot(.didRemove(removedNodes))
         
         return removedNodes
@@ -134,7 +134,7 @@ class Tree<Data: Copyable>: Copyable
         
         let indexes = Array(index ..< index + nodes.count)
         
-        messenger.send(.did(.insert(at: indexes)))
+        messenger.send(.didEditNode(.insert(at: indexes)))
         sendToRoot(.didInsert(nodes, in: self, at: indexes))
         
         return true
@@ -147,7 +147,7 @@ class Tree<Data: Copyable>: Copyable
     {
         guard branches.moveElement(from: from, to: to) else { return false }
         
-        messenger.send(.did(.move(from: from, to: to)))
+        messenger.send(.didEditNode(.move(from: from, to: to)))
         
         return true
     }
@@ -229,17 +229,17 @@ class Tree<Data: Copyable>: Copyable
         {
             guard oldValue !== root else { return }
 
-            messenger.send(.did(.changeRoot(from: oldValue, to: root)))
+            messenger.send(.didEditNode(.changeRoot(from: oldValue, to: root)))
         }
     }
     
     // MARK: - Propagate Updates to Root
     
-    private func sendToRoot(_ event: TreeEvent.RootEvent)
+    private func sendToRoot(_ event: Messenger.Event.TreeEdit)
     {
         guard let root = root else
         {
-            messenger.send(.rootEvent(event))
+            messenger.send(.didEditTree(event))
             return
         }
         
@@ -253,38 +253,40 @@ class Tree<Data: Copyable>: Copyable
     
     class Messenger: Observable
     {
-        var latestUpdate = TreeEvent.didNothing
-    }
-    
-    enum TreeEvent
-    {
-        case didNothing
-        case did(TreeEdit)
-        case didSwitchData(from: Data?, to: Data?)
-        case didChange(numberOfLeafs: Int)
-        case rootEvent(RootEvent)
+        deinit { removeObservers() }
         
-        enum RootEvent
-        {
-            case didRemove(_ nodes: [Node])
-            case didInsert(_ nodes: [Node], in: Node, at: [Int])
-        }
-    }
-    
-    enum TreeEdit
-    {
-        case nothing
-        case changeRoot(from: Node?, to: Node?)
-        case insert(at: [Int])
-        case move(from: Int, to: Int)
-        case remove([Node], from: [Int])
+        var latestUpdate = Event.didNothing
         
-        var modifiesContent: Bool
+        enum Event
         {
-            switch self
+            case didNothing
+            case didEditTree(TreeEdit)
+            case didEditNode(NodeEdit)
+            case didSwitchData(from: Data?, to: Data?) // TODO: move to NodeEdit
+            case didChange(numberOfLeafs: Int)
+            
+            enum TreeEdit
             {
-            case .remove, .insert, .changeRoot: return true
-            default: return false
+                case didRemove(_ nodes: [Node])
+                case didInsert(_ nodes: [Node], in: Node, at: [Int])
+            }
+            
+            enum NodeEdit
+            {
+                case nothing
+                case changeRoot(from: Node?, to: Node?)
+                case insert(at: [Int])
+                case move(from: Int, to: Int)
+                case remove([Node], from: [Int])
+                
+                var modifiesContent: Bool
+                {
+                    switch self
+                    {
+                    case .remove, .insert, .changeRoot: return true
+                    default: return false
+                    }
+                }
             }
         }
     }
