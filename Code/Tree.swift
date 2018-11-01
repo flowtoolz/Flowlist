@@ -298,16 +298,7 @@ class Tree<Data: Copyable>: Copyable
         
         return result
     }
-    
-    func recoverRoots()
-    {
-        for branch in branches
-        {
-            branch.root = self
-            branch.recoverRoots()
-        }
-    }
-    
+
     func reset(branches newBranches: [Node])
     {   
         branches = newBranches

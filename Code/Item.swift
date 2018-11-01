@@ -13,9 +13,10 @@ class Item: Tree<ItemData>, Decodable, Observable
         
         self.init(data: container.itemData)
         
-        // TODO: reconstruct the parent child connections right here
         if let branches = container.get([Item].self, for: .branches)
         {
+            for subitem in branches { subitem.root = self }
+            
             reset(branches: branches)
         }
     }
