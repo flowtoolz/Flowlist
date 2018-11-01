@@ -42,7 +42,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     private func didCreateRecord(with mod: ItemDataTree.Modification)
     {
-        send(.insertNodes([mod], inNodeWithId: mod.rootId))
+        send(.insertItem([mod], inItemWithId: mod.rootId))
     }
     
     override func didModifyRecord(with id: CKRecord.ID,
@@ -77,12 +77,12 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     private func didModifyRecord(with mod: ItemDataTree.Modification)
     {
-        send(.modifyNode(mod))
+        send(.modifyItem(mod))
     }
     
     override func didDeleteRecord(with id: CKRecord.ID)
     {
-        send(.removeNodesWithIds([id.recordName]))
+        send(.removeItemsWithIds([id.recordName]))
     }
     
     private func allNewFields(_ notification: CKQueryNotification) -> JSON?
