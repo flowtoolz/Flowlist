@@ -24,16 +24,15 @@ extension Tree where Data == ItemData
     {
         guard !nodes.isEmpty else { return false }
         
-        let items = nodes.map { Item(from: $0) }
-        clipboard.storeCopies(of: items)
+        clipboard.storeCopies(of: nodes)
         
         return true
     }
     
-    var clipboardItems: [Item]
+    var clipboardItems: [Node]
     {
         return clipboard.copiesOfStoredObjects
     }
 }
 
-let clipboard = Clipboard<Item>()
+let clipboard = Clipboard<ItemDataTree>()

@@ -32,15 +32,15 @@ class Item: Tree<ItemData>, Decodable, Observable
         
         self.init(data: newData)
     }
-    
-    convenience init(from itemDataTree: ItemDataTree)
-    {
-        self.init(data: itemDataTree.data,
-                  root: itemDataTree.root,
-                  numberOfLeafs: itemDataTree.numberOfLeafs)
-        
-        reset(branches: itemDataTree.branches)
-    }
+//    
+//    convenience init(from itemDataTree: ItemDataTree)
+//    {
+//        self.init(data: itemDataTree.data,
+//                  root: itemDataTree.root,
+//                  numberOfLeafs: itemDataTree.numberOfLeafs)
+//        
+//        reset(branches: itemDataTree.branches)
+//    }
     
     override init(data: ItemData,
                   root: Node? = nil,
