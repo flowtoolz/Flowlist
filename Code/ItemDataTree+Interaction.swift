@@ -19,12 +19,11 @@ extension Tree where Data == ItemData
         {
             switch treeEdit
             {
-            case .remove(let nodes, let root):
-                // TODO possibly extend removeNodesWithIds to include root
+            case .remove(let nodes, _):
                 let ids = nodes.compactMap { $0.data?.id }
                 self = .removeNodesWithIds(ids)
                 
-            case .insert(let nodes, let root, let indexes):
+            case .insert(let nodes, let root, _):
                 let mods = nodes.compactMap { Modification(from: $0) }
                 self = .insertNodes(mods, inNodeWithId: root.data?.id)
             }

@@ -33,10 +33,10 @@ extension CKRecord
         }
         
         return ItemDataTree.Modification(id: recordID.recordName,
-                                          text: text,
-                                          state: state,
-                                          tag: tag,
-                                          rootId: superItem)
+                                         text: text,
+                                         state: state,
+                                         tag: tag,
+                                         rootId: superItem)
     }
     
     // MARK: - Storage Properties

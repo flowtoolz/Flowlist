@@ -1,7 +1,9 @@
 import SwiftObserver
 
-class Item: Tree<ItemData>, Codable
+class Item: Tree<ItemData>, Decodable, Observable
 {
+    // MARK: - Decodable
+    
     required convenience init(from decoder: Decoder) throws
     {
         self.init(data: nil)
@@ -9,41 +11,30 @@ class Item: Tree<ItemData>, Codable
         guard let container = decoder.itemContainer else { return }
         
         data = container.itemData
-
+        
         if let branches = container.get([Item].self, for: .branches)
         {
             reset(branches: branches)
         }
     }
     
-    func encode(to encoder: Encoder) throws
+    override init(data: ItemData?,
+                  root: Node? = nil,
+                  numberOfLeafs: Int = 1)
     {
-        var container = encoder.container(keyedBy: ItemCodingKey.self)
-        
-        container.set(data?.id, for: .id)
-        container.set(text, for: .text)
-        container.set(data?.state.value?.rawValue, for: .state)
-        container.set(data?.tag.value?.rawValue, for: .tag)
-        
-        if !isLeaf
-        {
-            let subitems: [Item] = branches.map { Item(from: $0) }
-            
-            container.set(subitems, for: .branches)
-        }
+        super.init(data: data,
+                   root: root,
+                   numberOfLeafs: numberOfLeafs)
     }
     
-    convenience init(from itemDataTree: ItemDataTree)
-    {
-        self.init(data: itemDataTree.data,
-                  root: itemDataTree.root,
-                  numberOfLeafs: itemDataTree.numberOfLeafs)
-        
-        reset(branches: itemDataTree.branches)
-    }
+    // MARK: - Observable
+    
+    var latestUpdate = Event.didNothing
+    
+    enum Event { case didNothing }
 }
 
-// MARK: - Codability
+// MARK: - Decoding
 
 fileprivate extension Decoder
 {
@@ -86,7 +77,9 @@ fileprivate extension KeyedDecodingContainer where K == ItemCodingKey
     }
 }
 
-fileprivate enum ItemCodingKey: String, CodingKey
+// MARK: - Item Coding Key
+
+enum ItemCodingKey: String, CodingKey
 {
     case id, text = "title", state, tag, branches = "subtasks"
 }
