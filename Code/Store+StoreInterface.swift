@@ -55,9 +55,9 @@ extension Store: StoreInterface
         {
             switch field
             {
-            case .text: item.data?.text <- modification.text
-            case .state: item.data?.state <- modification.state
-            case .tag: item.data?.tag <- modification.tag
+            case .text: item.data.text <- modification.text
+            case .state: item.data.state <- modification.state
+            case .tag: item.data.tag <- modification.tag
             case .root: log(error: "Did not expect direct modification of item root. ID: \(modification.id). Intended new root ID: \(String(describing: modification.rootId)) item Text: \(item.text ?? "nil")")
             }
         }

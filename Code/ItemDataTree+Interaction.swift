@@ -20,12 +20,12 @@ extension Tree where Data == ItemData
             switch treeEdit
             {
             case .remove(let nodes, _):
-                let ids = nodes.compactMap { $0.data?.id }
+                let ids = nodes.compactMap { $0.data.id }
                 self = .removeNodesWithIds(ids)
                 
             case .insert(let nodes, let root, _):
                 let mods = nodes.compactMap { Modification(from: $0) }
-                self = .insertNodes(mods, inNodeWithId: root.data?.id)
+                self = .insertNodes(mods, inNodeWithId: root.data.id)
             }
         }
         
@@ -37,16 +37,15 @@ extension Tree where Data == ItemData
     
     struct Modification
     {
-        init?(from itemDataTree: ItemDataTree,
-              modified: [Field] = Field.all)
+        init(from itemDataTree: ItemDataTree, modified: [Field] = Field.all)
         {
-            guard let data = itemDataTree.data else { return nil }
-            
+            let data = itemDataTree.data
+
             self.init(id: data.id,
                       text: itemDataTree.text,
                       state: data.state.value,
                       tag: data.tag.value,
-                      rootId: itemDataTree.root?.data?.id,
+                      rootId: itemDataTree.root?.data.id,
                       modified: modified)
         }
         

@@ -22,7 +22,7 @@ extension List
         {
             for selectedindex in selected
             {
-                self[selectedindex]?.data?.tag <- tag
+                self[selectedindex]?.data.tag <- tag
             }
         }
     }
@@ -155,7 +155,7 @@ extension List
             deselectItems(at: [firstSelectedIndex])
         }
         
-        item.data?.state <- !item.isInProgress ? .inProgress : nil
+        item.data.state <- !item.isInProgress ? .inProgress : nil
     }
     
     func toggleDoneStateOfFirstSelectedItem()
@@ -184,7 +184,7 @@ extension List
             deselectItems(at: [firstSelectedIndex])
         }
         
-        item.data?.state <- newState
+        item.data.state <- newState
     }
     
     private func nextSelectedIndexAfterCheckingOff(at index: Int) -> Int?

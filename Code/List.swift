@@ -125,17 +125,14 @@ class List: Observable, Observer
     {
         guard start else
         {
-            stopObserving(item.data?.state)
+            stopObserving(item.data.state)
             
             return
         }
         
-        if let itemState = item.data?.state
+        observe(item.data.state)
         {
-            observe(itemState)
-            {
-                [weak self, weak item] _ in self?.itemDidChangeState(item)
-            }
+            [weak self, weak item] _ in self?.itemDidChangeState(item)
         }
     }
     
@@ -221,9 +218,9 @@ class List: Observable, Observer
         old?.deletionStack.removeAll()
         old?.deselectAll()
         
-        title.observable = new?.data?.text
-        tag.observable = new?.data?.tag
-        state.observable = new?.data?.state
+        title.observable = new?.data.text
+        tag.observable = new?.data.tag
+        state.observable = new?.data.state
         
         send(.did(.switchRoot(from: old, to: new)))
     }

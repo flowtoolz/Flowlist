@@ -31,7 +31,7 @@ extension Store: Persistable
         
         loadedRoot.recoverRoots()
         loadedRoot.recoverNumberOfLeafs()
-        loadedRoot.data?.text <- NSFullUserName()
+        loadedRoot.data.text <- NSFullUserName()
         
         update(root: loadedRoot)
         
@@ -42,7 +42,7 @@ extension Store: Persistable
     {
         guard let root = root else { return }
         
-        root.data?.text <- NSFullUserName()
+        root.data.text <- NSFullUserName()
         save()
     }
     

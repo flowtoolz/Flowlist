@@ -6,19 +6,23 @@ class Item: Tree<ItemData>, Decodable, Observable
     
     required convenience init(from decoder: Decoder) throws
     {
-        self.init(data: nil)
+        guard let container = decoder.itemContainer else
+        {
+            throw DecodingError.noItemContainer
+        }
         
-        guard let container = decoder.itemContainer else { return }
+        self.init(data: container.itemData)
         
-        data = container.itemData
-        
+        // TODO: reconstruct the parent child connections right here
         if let branches = container.get([Item].self, for: .branches)
         {
             reset(branches: branches)
         }
     }
     
-    override init(data: ItemData?,
+    private enum DecodingError: Error { case noItemContainer }
+    
+    override init(data: ItemData,
                   root: Node? = nil,
                   numberOfLeafs: Int = 1)
     {

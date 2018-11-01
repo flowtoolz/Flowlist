@@ -14,7 +14,7 @@ class Tree<Data: Copyable>: Copyable
     
     private convenience init(with original: Node, root: Node? = nil)
     {
-        self.init(data: original.data?.copy,
+        self.init(data: original.data.copy,
                   root: root,
                   numberOfLeafs: original.numberOfLeafs)
         
@@ -28,7 +28,7 @@ class Tree<Data: Copyable>: Copyable
     
     // MARK: - Initialization
     
-    init(data: Data?, root: Node? = nil, numberOfLeafs: Int = 1)
+    init(data: Data, root: Node? = nil, numberOfLeafs: Int = 1)
     {
         self.data = data
         self.root = root
@@ -154,7 +154,7 @@ class Tree<Data: Copyable>: Copyable
     
     // MARK: - Data
     
-    var data: Data?
+    var data: Data
     {
         didSet
         {
@@ -230,7 +230,8 @@ class Tree<Data: Copyable>: Copyable
         {
             guard oldValue !== root else { return }
 
-            messenger.send(.didEditNode(.switchRoot(from: oldValue, to: root)))
+            messenger.send(.didEditNode(.switchRoot(from: oldValue,
+                                                    to: root)))
         }
     }
     

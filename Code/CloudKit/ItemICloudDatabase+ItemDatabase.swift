@@ -94,12 +94,7 @@ extension ItemICloudDatabase: ItemDatabase
     
     private func records(fromItemTree root: ItemDataTree) -> [CKRecord]
     {
-        var result = [CKRecord]()
-        
-        if let record = CKRecord(from: root)
-        {
-            result.append(record)
-        }
+        var result = [CKRecord(from: root)]
         
         for subitem in root.branches
         {

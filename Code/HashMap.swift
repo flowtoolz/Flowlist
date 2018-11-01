@@ -16,14 +16,8 @@ class HashMap
     func add(_ items: [ItemDataTree])
     {
         for item in items
-        {
-            guard let data = item.data else
-            {
-                log(error: "Item has no data.")
-                return
-            }
-            
-            storedItems[data.id] = item
+        {   
+            storedItems[item.data.id] = item
         }
     }
     
@@ -31,13 +25,7 @@ class HashMap
     {
         for item in items
         {
-            guard let data = item.data else
-            {
-                log(error: "Item has no data.")
-                return
-            }
-            
-            storedItems[data.id] = nil
+            storedItems[item.data.id] = nil
         }
     }
     

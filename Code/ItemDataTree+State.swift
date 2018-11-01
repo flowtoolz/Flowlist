@@ -52,7 +52,7 @@ extension Tree where Data == ItemData
         {
             guard let subitem = self[index] else { continue }
             
-            let subitemState = subitem.data?.state.value
+            let subitemState = subitem.data.state.value
             let subitemPriority = ItemData.State.priority(of: subitemState)
             let highestPriority = ItemData.State.priority(of: highestPriorityState)
             
@@ -65,8 +65,8 @@ extension Tree where Data == ItemData
         return highestPriorityState
     }
     
-    var isDone: Bool { return data?.state.value == .done }
+    var isDone: Bool { return data.state.value == .done }
     var isOpen: Bool { return isInProgress || isUndone }
-    var isInProgress: Bool { return data?.state.value == .inProgress }
-    var isUndone: Bool { return data?.state.value == nil }
+    var isInProgress: Bool { return data.state.value == .inProgress }
+    var isUndone: Bool { return data.state.value == nil }
 }

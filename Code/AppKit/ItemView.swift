@@ -65,9 +65,9 @@ class ItemView: LayerBackedView, Observer, Observable
     
     private func configure()
     {
-        guard let item = item, let itemData = item.data else
+        guard let item = item else
         {
-            log(error: "Tried to configure ItemView which has no item or item data")
+            log(error: "Tried to configure ItemView which has no item")
             return
         }
         
@@ -76,12 +76,12 @@ class ItemView: LayerBackedView, Observer, Observable
         
         // color overlay
         
-        let isDone = itemData.state.value == .done
-        let isTagged = itemData.tag.value != nil
+        let isDone = item.data.state.value == .done
+        let isTagged = item.data.tag.value != nil
         
         colorOverlay.isHidden = !isTagged || isDone
         
-        if let tag = itemData.tag.value
+        if let tag = item.data.tag.value
         {
             colorOverlay.backgroundColor = Color.tags[tag.rawValue]
         }
@@ -103,7 +103,7 @@ class ItemView: LayerBackedView, Observer, Observable
         
         // icon alphas
         
-        let isInProgress = itemData.state.value == .inProgress
+        let isInProgress = item.data.state.value == .inProgress
         
         checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
                                               isDone: isDone,
@@ -116,7 +116,7 @@ class ItemView: LayerBackedView, Observer, Observable
         
         let lightContent = Color.itemContentIsLight(isSelected: isSelected,
                                                     isFocused: isFocused)
-        checkBox.configure(with: itemData.state.value, white: lightContent)
+        checkBox.configure(with: item.data.state.value, white: lightContent)
         
         // group icon image
         
@@ -141,13 +141,7 @@ class ItemView: LayerBackedView, Observer, Observable
             self?.received(event, from: item)
         }
         
-        guard let itemData = item.data else
-        {
-            log(error: "Tried to observe item which has no data object")
-            return
-        }
-        
-        observe(itemData: itemData)
+        observe(itemData: item.data)
     }
     
     private func received(_ event: ItemDataTree.Messenger.Event,
@@ -277,7 +271,7 @@ class ItemView: LayerBackedView, Observer, Observable
     private func colorModeDidChange()
     {
         let isDone = item?.isDone ?? false
-        let isTagged = item?.data?.tag.value != nil
+        let isTagged = item?.data.tag.value != nil
         
         backgroundColor = .itemBackground(isDone: isDone,
                                           isSelected: isSelected,
@@ -316,14 +310,14 @@ class ItemView: LayerBackedView, Observer, Observable
         guard let item = item else { return }
         
         let isDone = item.isDone
-        let isTagged = item.data?.tag.value != nil
+        let isTagged = item.data.tag.value != nil
         
         backgroundColor = .itemBackground(isDone: isDone,
                                           isSelected: isSelected,
                                           isTagged: isTagged,
                                           isFocusedList: isFocused)
         
-        checkBox.set(state: item.data?.state.value)
+        checkBox.set(state: item.data.state.value)
         
         checkBox.alphaValue = Color.iconAlpha(isInProgress: item.isInProgress,
                                               isDone: isDone,
@@ -336,19 +330,19 @@ class ItemView: LayerBackedView, Observer, Observable
                                       isSelected: isSelected,
                                       isFocused: isFocused))
         
-        colorOverlay.isHidden = item.data?.tag.value == nil || isDone
+        colorOverlay.isHidden = item.data.tag.value == nil || isDone
     }
     
     private func tagDidChange()
     {
         guard let item = item else { return }
         
-        let isTagged = item.data?.tag.value != nil
+        let isTagged = item.data.tag.value != nil
         let isDone = item.isDone
         
         colorOverlay.isHidden = !isTagged || isDone
         
-        if let tag = item.data?.tag.value
+        if let tag = item.data.tag.value
         {
             let tagColor = Color.tags[tag.rawValue]
             
@@ -368,7 +362,7 @@ class ItemView: LayerBackedView, Observer, Observable
         isSelected = selected
         
         let isDone = item?.isDone ?? false
-        let isTagged = item?.data?.tag.value != nil
+        let isTagged = item?.data.tag.value != nil
         
         backgroundColor = .itemBackground(isDone: isDone,
                                           isSelected: isSelected,
@@ -413,7 +407,7 @@ class ItemView: LayerBackedView, Observer, Observable
         guard isSelected, let item = item else { return }
         
         let isDone = item.isDone
-        let isTagged = item.data?.tag.value != nil
+        let isTagged = item.data.tag.value != nil
         
         backgroundColor = .itemBackground(isDone: isDone,
                                           isSelected: isSelected,
@@ -506,7 +500,7 @@ class ItemView: LayerBackedView, Observer, Observable
             send(.willEditText)
             
         case .didChange(let text):
-            item?.data?.text <- String(withNonEmpty: text)
+            item?.data.text <- String(withNonEmpty: text)
             send(.didChangeText)
             
         case .wantToEndEditing:
@@ -514,7 +508,7 @@ class ItemView: LayerBackedView, Observer, Observable
             
         case .didEdit:
             set(editing: false)
-            item?.data?.text <- String(withNonEmpty: textView.string)
+            item?.data.text <- String(withNonEmpty: textView.string)
             send(.didEditText)
         case .wasClicked: send(.textViewWasClicked)
         }
@@ -605,7 +599,7 @@ class ItemView: LayerBackedView, Observer, Observable
     
     @objc private func didClickCheckBox()
     {
-        item?.data?.state <- item?.isDone ?? false ? nil : .done
+        item?.data.state <- item?.isDone ?? false ? nil : .done
     }
     
     // MARK: - Group Icon

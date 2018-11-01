@@ -5,13 +5,9 @@ extension CKRecord
 {
     // MARK: - Initialization
     
-    convenience init?(from item: ItemDataTree)
+    convenience init(from item: ItemDataTree)
     {
-        guard let data = item.data else
-        {
-            log(error: "Item has no data.")
-            return nil
-        }
+        let data = item.data
         
         self.init(recordType: CKRecord.itemType,
                   recordID: ID(recordName: data.id))
@@ -19,7 +15,7 @@ extension CKRecord
         text = item.text
         state = data.state.value
         tag = data.tag.value
-        superItem = item.root?.data?.id
+        superItem = item.root?.data.id
     }
     
     // MARK: - Mofification

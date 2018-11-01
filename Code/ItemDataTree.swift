@@ -12,16 +12,16 @@ extension Tree where Data == ItemData
         let belowIsInProgress = count == index ? false : (self[index]?.isInProgress ?? false)
         let aboveIsInProgress = index == 0 || (self[index - 1]?.isInProgress ?? false)
         
-        item.data?.state <- belowIsInProgress && aboveIsInProgress ? .inProgress : nil
+        item.data.state <- belowIsInProgress && aboveIsInProgress ? .inProgress : nil
         
-        item.data?.wantsTextInput = true
+        item.data.wantsTextInput = true
         
         guard insert(item, at: index) else { return nil }
         
         return item
     }
     
-    func edit() { data?.edit() }
+    func edit() { data.edit() }
     
     convenience init(_ title: String? = nil)
     {
@@ -39,17 +39,17 @@ extension Tree where Data == ItemData
         }
     }
     
-    var text: String? { return data?.text.value }
+    var text: String? { return data.text.value }
     
     var isSelected: Bool
     {
-        get { return data?.isSelected.value ?? false }
-        set { data?.isSelected <- newValue }
+        get { return data.isSelected.value ?? false }
+        set { data.isSelected <- newValue }
     }
     
     var isFocused: Bool
     {
-        get { return data?.isFocused.value ?? false }
-        set { data?.isFocused <- newValue }
+        get { return data.isFocused.value ?? false }
+        set { data.isFocused <- newValue }
     }
 }

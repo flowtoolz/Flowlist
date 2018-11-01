@@ -176,7 +176,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         
         if indexes.count == 1,
             list.root?.branches.isValid(index: firstIndex) ?? false,
-            list[firstIndex]?.data?.wantsTextInput ?? false
+            list[firstIndex]?.data.wantsTextInput ?? false
         {
             rowBeingEdited = firstIndex
             list.editText(at: firstIndex)
@@ -235,7 +235,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         
         var height = viewHeight(for: item)
         
-        if row == rowBeingEdited || item.data?.wantsTextInput ?? false
+        if row == rowBeingEdited || item.data.wantsTextInput
         {
             height += TextView.lineHeight + TextView.lineSpacing
         }
