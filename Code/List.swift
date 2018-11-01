@@ -67,11 +67,7 @@ class List: Observable, Observer
             {
             case .didNothing, .didEditTree: break
             case .didEditNode(let edit): self?.received(edit, from: root)
-            case .didSwitchData(from: _, to: let newItemData):
-                self?.title.observable = newItemData?.text
-                self?.tag.observable = newItemData?.tag
-                self?.state.observable = newItemData?.state
-            case .didChange(numberOfLeafs: _): break
+            case .didChangeLeafNumber(numberOfLeafs: _): break
             }
         }
     }
@@ -90,9 +86,14 @@ class List: Observable, Observer
                 observe(listedItem: item, start: false)
             }
             
+        case .switchData(from: _, to: let newItemData):
+            title.observable = newItemData?.text
+            tag.observable = newItemData?.tag
+            state.observable = newItemData?.state
+            
         case .move: break
             
-        case .nothing, .changeRoot: return
+        case .nothing, .switchRoot: return
         }
         
         send(.did(edit))
@@ -224,7 +225,7 @@ class List: Observable, Observer
         tag.observable = new?.data?.tag
         state.observable = new?.data?.state
         
-        send(.did(.changeRoot(from: old, to: new)))
+        send(.did(.switchRoot(from: old, to: new)))
     }
     
     // MARK: - Mappings

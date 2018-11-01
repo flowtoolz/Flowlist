@@ -39,23 +39,23 @@ class Store: Observer, Observable
     {
         switch event
         {
-        case .didNothing, .didSwitchData: break
+        case .didNothing: break
             
         case .didEditNode(let edit):
-            if edit.modifiesContent
+            if edit.modifiesGraphStructure
             {
                 updateUserCreatedLeafs(with: root)
             }
             
-        case .didChange(_):
+        case .didChangeLeafNumber(_):
             updateUserCreatedLeafs(with: root)
             
         case .didEditTree(let rootEvent):
             switch rootEvent
             {
-            case .didRemove(let items):
+            case .remove(let items, _):
                 for item in items { itemHash.remove(item.array) }
-            case .didInsert(let items, _, _):
+            case .insert(let items, _, _):
                 for item in items { itemHash.add(item.array) }
             }
         }

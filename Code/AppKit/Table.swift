@@ -79,11 +79,11 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     {
         switch edit
         {
-        case .nothing: break
+        case .nothing, .switchData: break
         case .insert(let indexes): didInsert(at: indexes)
         case .remove(_, let indexes): didRemove(from: indexes)
         case .move(let from, let to): didMove(from: from, to: to)
-        case .changeRoot(let old, let new): didChangeRoot(from: old, to: new)
+        case .switchRoot(let old, let new): didChangeRoot(from: old, to: new)
         }
     }
     

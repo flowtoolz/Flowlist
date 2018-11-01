@@ -20,10 +20,10 @@ extension Tree where Data == ItemData
         {
             switch event
             {
-            case .didRemove(let items):
+            case .remove(let items):
                 self = .none
                 
-            case .didInsert(let items,
+            case .insert(let items,
                             in: let superItem,
                             at: let indexes):
                 self = .none

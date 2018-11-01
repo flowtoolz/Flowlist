@@ -96,7 +96,7 @@ class Tree<Data: Copyable>: Copyable
         updateNumberOfLeafs()
         
         messenger.send(.didEditNode(.remove(removedNodes, from: indexes)))
-        sendToRoot(.didRemove(removedNodes))
+        sendToRoot(.remove(removedNodes, from: self))
         
         return removedNodes
     }
@@ -135,7 +135,7 @@ class Tree<Data: Copyable>: Copyable
         let indexes = Array(index ..< index + nodes.count)
         
         messenger.send(.didEditNode(.insert(at: indexes)))
-        sendToRoot(.didInsert(nodes, in: self, at: indexes))
+        sendToRoot(.insert(nodes, in: self, at: indexes))
         
         return true
     }
@@ -160,7 +160,8 @@ class Tree<Data: Copyable>: Copyable
         {
             guard data !== oldValue else { return }
             
-            messenger.send(.didSwitchData(from: oldValue, to: data))
+            messenger.send(.didEditNode(.switchData(from: oldValue,
+                                                    to: data)))
         }
     }
     
@@ -200,7 +201,7 @@ class Tree<Data: Copyable>: Copyable
         numberOfLeafs = newNumber
         root?.updateNumberOfLeafs()
         
-        messenger.send(.didChange(numberOfLeafs: numberOfLeafs))
+        messenger.send(.didChangeLeafNumber(numberOfLeafs))
     }
     
     func numberOfLeafsRecursively() -> Int
@@ -229,7 +230,7 @@ class Tree<Data: Copyable>: Copyable
         {
             guard oldValue !== root else { return }
 
-            messenger.send(.didEditNode(.changeRoot(from: oldValue, to: root)))
+            messenger.send(.didEditNode(.switchRoot(from: oldValue, to: root)))
         }
     }
     
@@ -262,28 +263,28 @@ class Tree<Data: Copyable>: Copyable
             case didNothing
             case didEditTree(TreeEdit)
             case didEditNode(NodeEdit)
-            case didSwitchData(from: Data?, to: Data?) // TODO: move to NodeEdit
-            case didChange(numberOfLeafs: Int)
+            case didChangeLeafNumber(Int)
             
             enum TreeEdit
             {
-                case didRemove(_ nodes: [Node])
-                case didInsert(_ nodes: [Node], in: Node, at: [Int])
+                case remove(_ nodes: [Node], from: Node)
+                case insert(_ nodes: [Node], in: Node, at: [Int])
             }
             
             enum NodeEdit
             {
                 case nothing
-                case changeRoot(from: Node?, to: Node?)
+                case switchRoot(from: Node?, to: Node?)
+                case switchData(from: Data?, to: Data?)
                 case insert(at: [Int])
                 case move(from: Int, to: Int)
                 case remove([Node], from: [Int])
                 
-                var modifiesContent: Bool
+                var modifiesGraphStructure: Bool
                 {
                     switch self
                     {
-                    case .remove, .insert, .changeRoot: return true
+                    case .remove, .insert, .switchRoot: return true
                     default: return false
                     }
                 }
