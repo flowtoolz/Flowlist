@@ -41,7 +41,7 @@ class Store: Observer, Observable
         {
         case .didNothing: break
             
-        case .didEditNode(let edit):
+        case .didUpdateNode(let edit):
             if edit.modifiesGraphStructure
             {
                 updateUserCreatedLeafs(with: root)
@@ -50,18 +50,22 @@ class Store: Observer, Observable
         case .didChangeLeafNumber(_):
             updateUserCreatedLeafs(with: root)
             
-        case .didEditTree(let edit):
+        case .didUpdateTree(let edit):
             switch edit
             {
-            case .remove(let items, _):
-                for item in items { itemHash.remove(item.array) }
-            case .insert(let items, _, _):
+            case .insertedNodes(let items, _, _):
                 for item in items { itemHash.add(item.array) }
+                
+            case .receivedDataUpdate(let event, in: let node):
+                print("\(event) in node \(node.text ?? "untitled")")
+                
+            case .removedNodes(let items, _):
+                for item in items { itemHash.remove(item.array) }
             }
             
             let interaction = Item.Interaction(from: edit)
             
-            print(interaction)
+            print("interaction: \(interaction)")
             
             // TODO: send item tree interactions to storage controller
         }

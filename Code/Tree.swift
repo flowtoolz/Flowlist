@@ -3,7 +3,7 @@ import SwiftyToolz
 
 // MARK: - Tree
 
-class Tree<Data: Copyable>: Copyable
+class Tree<Data: Copyable & Observable>: Copyable, Observer
 {
     // MARK: - Copyable
     
@@ -33,7 +33,18 @@ class Tree<Data: Copyable>: Copyable
         self.data = data
         self.root = root
         self.numberOfLeafs = numberOfLeafs
+        
+        observe(data)
+        {
+            [weak self] update in
+            
+            guard let me = self else { return }
+            
+            me.sendToRoot(.receivedDataUpdate(update, in: me))
+        }
     }
+    
+    deinit { stopAllObserving() }
     
     // MARK: - Group
     
@@ -93,8 +104,8 @@ class Tree<Data: Copyable>: Copyable
         
         updateNumberOfLeafs()
         
-        messenger.send(.didEditNode(.remove(removedNodes, from: indexes)))
-        sendToRoot(.remove(removedNodes, from: self))
+        messenger.send(.didUpdateNode(.removedNodes(removedNodes, from: indexes)))
+        sendToRoot(.removedNodes(removedNodes, from: self))
         
         return removedNodes
     }
@@ -132,8 +143,8 @@ class Tree<Data: Copyable>: Copyable
         
         let indexes = Array(index ..< index + nodes.count)
         
-        messenger.send(.didEditNode(.insert(at: indexes)))
-        sendToRoot(.insert(nodes, in: self, at: indexes))
+        messenger.send(.didUpdateNode(.insertedNodes(at: indexes)))
+        sendToRoot(.insertedNodes(nodes, in: self, at: indexes))
         
         return true
     }
@@ -145,7 +156,7 @@ class Tree<Data: Copyable>: Copyable
     {
         guard branches.moveElement(from: from, to: to) else { return false }
         
-        messenger.send(.didEditNode(.move(from: from, to: to)))
+        messenger.send(.didUpdateNode(.movedNode(from: from, to: to)))
         
         return true
     }
@@ -219,18 +230,18 @@ class Tree<Data: Copyable>: Copyable
         {
             guard oldValue !== root else { return }
 
-            messenger.send(.didEditNode(.switchRoot(from: oldValue,
+            messenger.send(.didUpdateNode(.switchedRoot(from: oldValue,
                                                     to: root)))
         }
     }
     
     // MARK: - Propagate Updates to Root
     
-    private func sendToRoot(_ event: Messenger.Event.TreeEdit)
+    private func sendToRoot(_ event: Messenger.Event.TreeUpdate)
     {
         guard let root = root else
         {
-            messenger.send(.didEditTree(event))
+            messenger.send(.didUpdateTree(event))
             return
         }
         
@@ -251,29 +262,29 @@ class Tree<Data: Copyable>: Copyable
         enum Event
         {
             case didNothing
-            case didEditTree(TreeEdit)
-            case didEditNode(NodeEdit)
+            case didUpdateTree(TreeUpdate)
+            case didUpdateNode(NodeUpdate)
             case didChangeLeafNumber(Int)
             
-            enum TreeEdit
+            enum TreeUpdate
             {
-                case remove(_ nodes: [Node], from: Node)
-                case insert(_ nodes: [Node], in: Node, at: [Int])
+                case removedNodes([Node], from: Node)
+                case insertedNodes([Node], in: Node, at: [Int])
+                case receivedDataUpdate(Data.UpdateType, in: Node)
             }
             
-            enum NodeEdit
+            enum NodeUpdate
             {
-                case nothing
-                case switchRoot(from: Node?, to: Node?)
-                case insert(at: [Int])
-                case move(from: Int, to: Int)
-                case remove([Node], from: [Int])
+                case switchedRoot(from: Node?, to: Node?)
+                case insertedNodes(at: [Int])
+                case movedNode(from: Int, to: Int)
+                case removedNodes([Node], from: [Int])
                 
                 var modifiesGraphStructure: Bool
                 {
                     switch self
                     {
-                    case .remove, .insert, .switchRoot: return true
+                    case .removedNodes, .insertedNodes, .switchedRoot: return true
                     default: return false
                     }
                 }

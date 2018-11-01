@@ -15,17 +15,20 @@ extension Tree where Data == ItemData
     
     enum Interaction
     {
-        init(from treeEdit: Messenger.Event.TreeEdit)
+        init(from treeEdit: Messenger.Event.TreeUpdate)
         {
             switch treeEdit
             {
-            case .remove(let nodes, _):
+            case .removedNodes(let nodes, _):
                 let ids = nodes.compactMap { $0.data.id }
                 self = .removeItemsWithIds(ids)
                 
-            case .insert(let nodes, let root, _):
+            case .insertedNodes(let nodes, let root, _):
                 let mods = nodes.compactMap { Modification(from: $0) }
                 self = .insertItem(mods, inItemWithId: root.data.id)
+            
+            case .receivedDataUpdate(let dataEvent, let node):
+                self = .none // TODO: ...
             }
         }
         

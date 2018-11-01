@@ -65,30 +65,30 @@ class List: Observable, Observer
             
             switch event
             {
-            case .didNothing, .didEditTree: break
-            case .didEditNode(let edit): self?.received(edit, from: root)
+            case .didNothing, .didUpdateTree: break
+            case .didUpdateNode(let edit): self?.received(edit, from: root)
             case .didChangeLeafNumber(numberOfLeafs: _): break
             }
         }
     }
     
-    func received(_ edit: Item.Messenger.Event.NodeEdit,
+    func received(_ edit: Item.Messenger.Event.NodeUpdate,
                   from root: Item)
     {
         switch edit
         {
-        case .insert(let indexes):
+        case .insertedNodes(let indexes):
             observeItemsListed(in: root, at: indexes)
             
-        case .remove(let items, _):
+        case .removedNodes(let items, _):
             for item in items
             {
                 observe(listedItem: item, start: false)
             }
             
-        case .move: break
+        case .movedNode: break
             
-        case .nothing, .switchRoot: return
+        case .switchedRoot: return
         }
         
         send(.did(edit))
@@ -217,7 +217,7 @@ class List: Observable, Observer
         tag.observable = new?.data.tag
         state.observable = new?.data.state
         
-        send(.did(.switchRoot(from: old, to: new)))
+        send(.did(.switchedRoot(from: old, to: new)))
     }
     
     // MARK: - Mappings
@@ -346,7 +346,7 @@ class List: Observable, Observer
     enum Event
     {
         case didNothing
-        case did(Item.Messenger.Event.NodeEdit)
+        case did(Item.Messenger.Event.NodeUpdate)
         case didChangeSelection(added: [Int], removed: [Int])
     }
 }

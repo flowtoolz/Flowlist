@@ -137,11 +137,11 @@ class ItemView: LayerBackedView, Observer, Observable
     {
         switch event
         {
-        case .didNothing, .didEditTree: break
-        case .didEditNode(let edit):
+        case .didNothing, .didUpdateTree: break
+        case .didUpdateNode(let edit):
             switch edit
             {
-            case .switchRoot:
+            case .switchedRoot:
                 stopObserving(item: self.item)
 
             default: break

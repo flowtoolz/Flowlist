@@ -75,15 +75,14 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         }
     }
     
-    private func did(_ edit: Item.Messenger.Event.NodeEdit)
+    private func did(_ edit: Item.Messenger.Event.NodeUpdate)
     {
         switch edit
         {
-        case .nothing: break
-        case .insert(let indexes): didInsert(at: indexes)
-        case .remove(_, let indexes): didRemove(from: indexes)
-        case .move(let from, let to): didMove(from: from, to: to)
-        case .switchRoot(let old, let new): didChangeRoot(from: old, to: new)
+        case .insertedNodes(let indexes): didInsert(at: indexes)
+        case .removedNodes(_, let indexes): didRemove(from: indexes)
+        case .movedNode(let from, let to): didMove(from: from, to: to)
+        case .switchedRoot(let old, let new): didChangeRoot(from: old, to: new)
         }
     }
     
