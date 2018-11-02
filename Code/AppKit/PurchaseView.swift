@@ -32,13 +32,13 @@ class PurchaseView: LayerBackedView, Observable, Observer
         {
             [weak self] itemNumber in
             
-            guard let me = self else { return }
+            guard let self = self else { return }
             
-            me.itemLabel.stringValue = me.labelText(for: itemNumber)
-            me.itemLabel.textColor = me.labelColor(for: itemNumber).nsColor
+            self.itemLabel.stringValue = self.labelText(for: itemNumber)
+            self.itemLabel.textColor = self.labelColor(for: itemNumber).nsColor
             
             let progress = CGFloat(itemNumber) / CGFloat(maxNumberOfLeafsInTrial)
-            me.progressBar.progress = progress
+            self.progressBar.progress = progress
         }
     }
     

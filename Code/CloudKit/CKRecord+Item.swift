@@ -146,7 +146,7 @@ extension CKRecord
     
     static var fieldNames: [String]
     {
-        return Item.Field.all.map { FieldName(from: $0).rawValue }
+        return Item.Field.allCases.map { FieldName(from: $0).rawValue }
     }
     
     static func field(for name: String) -> Item.Field?

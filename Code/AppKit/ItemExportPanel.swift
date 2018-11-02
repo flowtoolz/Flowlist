@@ -113,14 +113,14 @@ class ItemExportPanel: NSSavePanel
     
     var selectedFormat: TextFormat
     {
-        return TextFormat.all[formatMenu.indexOfSelectedItem]
+        return TextFormat.allCases[formatMenu.indexOfSelectedItem]
     }
     
     private lazy var formatMenu: NSPopUpButton =
     {
         let menu = formatContainer.addForAutoLayout(NSPopUpButton())
         
-        menu.addItems(withTitles: TextFormat.all.map { $0.rawValue })
+        menu.addItems(withTitles: TextFormat.allCases.map { $0.rawValue })
         menu.selectItem(withTitle: preferredFormat.rawValue)
         menu.target = self
         menu.action = #selector(userDidChangeFormat)

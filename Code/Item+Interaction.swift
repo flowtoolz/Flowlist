@@ -40,7 +40,7 @@ extension Tree where Data == ItemData
     
     struct Modification
     {
-        init(from itemDataTree: Item, modified: [Field] = Field.all)
+        init(from itemDataTree: Item, modified: [Field] = Field.allCases)
         {
             let data = itemDataTree.data
 
@@ -57,7 +57,7 @@ extension Tree where Data == ItemData
              state: ItemData.State? = nil,
              tag: ItemData.Tag? = nil,
              rootId: String? = nil,
-             modified: [Field] = Field.all)
+             modified: [Field] = Field.allCases)
         {
             self.id = id
             self.text = text
@@ -75,10 +75,8 @@ extension Tree where Data == ItemData
         let modified: [Field]
     }
     
-    enum Field: String
+    enum Field: String, CaseIterable
     {
         case text, state, tag, root
-        
-        static let all: [Field] = [text, state, tag, root]
     }
 }

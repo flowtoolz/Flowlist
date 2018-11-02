@@ -82,12 +82,12 @@ class WindowMenu: NSMenu, NSMenuItemValidation, Observer
     {
         [weak self] in
         
-        guard let me = self else { return }
+        guard let self = self else { return }
         
         let options: NSApplication.PresentationOptions = [.autoHideMenuBar,
                                                           .autoHideDock]
     
-        if me.isMonotasking
+        if self.isMonotasking
         {
             NSApp.unhideAllApplications(self)
             NSApp.presentationOptions.remove(options)
@@ -98,8 +98,8 @@ class WindowMenu: NSMenu, NSMenuItemValidation, Observer
             NSApp.hideOtherApplications(self)
         }
         
-        me.isMonotasking = !me.isMonotasking
-        me.focusItem.title = "\(me.isMonotasking ? "Multi" : "Mono")tasking"
+        self.isMonotasking = !self.isMonotasking
+        self.focusItem.title = "\(self.isMonotasking ? "Multi" : "Mono")tasking"
     }
     
     private var isMonotasking = false
@@ -159,9 +159,9 @@ class WindowMenu: NSMenu, NSMenuItemValidation, Observer
         {
             [weak self] _ in
             
-            guard let me = self else { return }
+            guard let self = self else { return }
             
-            me.darkModeItem.title = me.darkModeOptionTitle
+            self.darkModeItem.title = self.darkModeOptionTitle
         }
     }
     

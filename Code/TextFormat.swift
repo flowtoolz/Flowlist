@@ -1,8 +1,6 @@
-enum TextFormat: String
+enum TextFormat: String, CaseIterable
 {
     case plain = "Plain Text", markdown = "Markdown"
-    
-    static var all: [TextFormat] { return [.plain, .markdown] }
     
     var fileExtension: String
     {

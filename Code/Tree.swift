@@ -38,9 +38,9 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
         {
             [weak self] update in
             
-            guard let me = self else { return }
+            guard let self = self else { return }
             
-            me.sendToRoot(.receivedDataUpdate(update, in: me))
+            self.sendToRoot(.receivedDataUpdate(update, in: self))
         }
     }
     
