@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class ViewController: NSViewController, Observer
+class FlowlistViewController: NSViewController, Observer
 {
     override func loadView()
     {

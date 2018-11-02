@@ -124,10 +124,10 @@ class FlowlistController: AppController, NSWindowDelegate
     
     private let menu = Menu()
     
-    private lazy var window = Window(with: viewController,
+    private lazy var window = Window(viewController: viewController,
                                      color: Color.windowBackground.nsColor)
     
-    private let viewController = ViewController()
+    private let viewController = FlowlistViewController()
     
     private let storageController = StorageController(with: database,
                                                       store: Store.shared)
