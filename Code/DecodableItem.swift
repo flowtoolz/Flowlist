@@ -22,13 +22,13 @@ class DecodableItem: Tree<ItemData>, Decodable
 
 fileprivate extension Decoder
 {
-    func itemContainer() throws -> KeyedDecodingContainer<Item.JsonKey>
+    func itemContainer() throws -> KeyedDecodingContainer<Item.JSONKey>
     {
-        return try container(keyedBy: Item.JsonKey.self)
+        return try container(keyedBy: Item.JSONKey.self)
     }
 }
 
-fileprivate extension KeyedDecodingContainer where K == Item.JsonKey
+fileprivate extension KeyedDecodingContainer where K == Item.JSONKey
 {
     var itemData: ItemData
     {

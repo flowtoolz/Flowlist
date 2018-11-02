@@ -13,7 +13,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     override func didCreateRecord(with id: CKRecord.ID,
                                   notification: CKQueryNotification)
     {
-        guard let fields = allNewFields(notification) else
+        guard hasAllNewFields(notification) else
         {
             fetchRecord(with: id)
             {
@@ -34,7 +34,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
             return
         }
         
-        if let mod = id.modification(fromNotificationFields: fields)
+        if let mod = id.makeModification(from: notification)
         {
             didCreateRecord(with: mod)
         }
@@ -48,7 +48,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     override func didModifyRecord(with id: CKRecord.ID,
                                   notification: CKQueryNotification)
     {
-        guard let fields = allNewFields(notification) else
+        guard hasAllNewFields(notification) else
         {
             fetchRecord(with: id)
             {
@@ -69,7 +69,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
             return
         }
         
-        if let modification = id.modification(fromNotificationFields: fields)
+        if let modification = id.makeModification(from: notification)
         {
             didModifyRecord(with: modification)
         }
@@ -85,16 +85,11 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         send(.removeItemsWithIds([id.recordName]))
     }
     
-    private func allNewFields(_ notification: CKQueryNotification) -> JSON?
+    private func hasAllNewFields(_ notification: CKQueryNotification) -> Bool
     {
-        guard let fields = notification.recordFields else { return nil }
+        guard let fields = notification.recordFields else { return false }
         
-        if !notification.isPruned || fields.count == itemFieldNames.count
-        {
-            return fields
-        }
-        
-        return nil
+        return !notification.isPruned || fields.count == itemFieldNames.count
     }
     
     @available(OSX 10.12, *)

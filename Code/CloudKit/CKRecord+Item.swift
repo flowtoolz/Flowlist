@@ -122,7 +122,7 @@ extension CKRecord
                 return
             }
             
-            self[fieldName] = Reference(toOwner: newValue)
+            self[fieldName] = Reference(ownerName: newValue)
         }
     }
     

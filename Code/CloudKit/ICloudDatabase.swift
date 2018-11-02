@@ -247,7 +247,7 @@ class ICloudDatabase
 
 extension CKRecord.Reference
 {
-    convenience init(toOwner ownerName: String)
+    convenience init(ownerName: String)
     {
         self.init(recordID: CKRecord.ID(recordName: ownerName),
                   action: .deleteSelf)

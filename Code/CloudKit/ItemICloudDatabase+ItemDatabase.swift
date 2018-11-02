@@ -12,11 +12,11 @@ extension ItemICloudDatabase: ItemDatabase
         {
             records in
             
-            receiveRoot(self.itemTree(from: records))
+            receiveRoot(self.makeItem(from: records))
         }
     }
     
-    private func itemTree(from records: [CKRecord]?) -> Item?
+    private func makeItem(from records: [CKRecord]?) -> Item?
     {
         // get record array
         
