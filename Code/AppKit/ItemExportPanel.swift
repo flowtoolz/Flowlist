@@ -98,6 +98,7 @@ class ItemExportPanel: NSSavePanel
     {
         let label = formatContainer.addForAutoLayout(Label())
         
+        label.font = .system
         label.stringValue = "Select Format:"
         label.alignment = .right
         
