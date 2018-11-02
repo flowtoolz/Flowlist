@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class TableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDelegate
+class ItemTableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDelegate
 {
     // MARK: - Rows
     

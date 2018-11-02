@@ -1,7 +1,7 @@
 import AppKit
 import SwiftyToolz
 
-class ScrollTable: NSScrollView
+class ItemScrollTable: NSScrollView
 {
     // MARK: - Initialization
     
@@ -29,7 +29,7 @@ class ScrollTable: NSScrollView
     
     // MARK: - Basics
     
-    let table = Table()
+    let table = ItemTable()
     
     private weak var list: List?
 }

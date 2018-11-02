@@ -3,7 +3,7 @@ import SwiftObserver
 import SwiftyToolz
 import UIToolz
 
-class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
+class ItemTable: AnimatedTableView, Observer, Observable, TableContentDelegate
 {
     // MARK: - Life Cycle
     
@@ -194,9 +194,9 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     // MARK: - Content
     
-    private lazy var content: TableContent =
+    private lazy var content: ItemTableContent =
     {
-        let tableContent = TableContent()
+        let tableContent = ItemTableContent()
         
         tableContent.delegate = self
         
@@ -205,7 +205,7 @@ class Table: AnimatedTableView, Observer, Observable, TableContentDelegate
         return tableContent
     }()
     
-    private func didReceive(_ event: TableContent.Event)
+    private func didReceive(_ event: ItemTableContent.Event)
     {
         switch event
         {

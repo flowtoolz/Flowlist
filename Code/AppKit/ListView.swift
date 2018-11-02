@@ -109,9 +109,9 @@ class ListView: LayerBackedView, Observer, Observable
         scrollTable.table.didEndResizing()
     }
     
-    private(set) lazy var scrollTable: ScrollTable =
+    private(set) lazy var scrollTable: ItemScrollTable =
     {
-        let scrollView = addForAutoLayout(ScrollTable())
+        let scrollView = addForAutoLayout(ItemScrollTable())
         
         observe(scrollView.table)
         {
