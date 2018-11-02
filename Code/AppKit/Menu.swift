@@ -9,11 +9,11 @@ class Menu: NSMenu
     {
         super.init(title: "Flowlist Menu Bar")
 
-        addItem(NSMenuItem(with: ApplicationMenu()))
-        addItem(NSMenuItem(with: SelectionMenu()))
-        addItem(NSMenuItem(with: EditMenu()))
-        addItem(NSMenuItem(with: windowMenu))
-        addItem(NSMenuItem(with: HelpMenu()))
+        addItem(NSMenuItem(submenu: ApplicationMenu()))
+        addItem(NSMenuItem(submenu: SelectionMenu()))
+        addItem(NSMenuItem(submenu: EditMenu()))
+        addItem(NSMenuItem(submenu: windowMenu))
+        addItem(NSMenuItem(submenu: HelpMenu()))
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
