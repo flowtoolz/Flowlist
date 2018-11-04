@@ -656,7 +656,7 @@ class ItemView: LayerBackedView, Observer, Observable
     
     // MARK: - Data
     
-    static let uiIdentifier = NSUserInterfaceItemIdentifier(rawValue: "ItemViewID")
+    static let uiIdentifier = UIItemID(rawValue: "ItemViewID")
     
     private(set) weak var item: Item?
     

@@ -34,5 +34,5 @@ class Spacer: LayerBackedView, Observer
     
     deinit { stopAllObserving() }
     
-    static let uiIdentifier = NSUserInterfaceItemIdentifier(rawValue: "SpacerID")
+    static let uiIdentifier = UIItemID(rawValue: "SpacerID")
 }
