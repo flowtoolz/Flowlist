@@ -1,5 +1,6 @@
 import AppKit.NSTableRowView
 
+// TODO: this only exists to avoid a macOS layout bug. investigate, understand, remove!
 class Row: NSTableRowView
 {
     // MARK: - Initialization

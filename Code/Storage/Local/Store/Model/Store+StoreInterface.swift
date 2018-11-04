@@ -84,3 +84,9 @@ extension Store: StoreInterface
         superItem.removeNodes(from: [index])
     }
 }
+
+protocol StoreInterface: Observable where UpdateType == StoreEvent
+{
+    func apply(_ itemEdit: Item.Interaction)
+    func update(root newRoot: Item)
+}

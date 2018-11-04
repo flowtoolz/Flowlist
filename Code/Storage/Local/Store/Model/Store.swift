@@ -81,7 +81,7 @@ class Store: Observer, Observable
         
         if root?.isLeaf ?? false
         {
-            root?.insert(DecodableItem.welcomeTour, at: 0)
+            root?.insert(Item.welcomeTour, at: 0)
         }
     }
     
