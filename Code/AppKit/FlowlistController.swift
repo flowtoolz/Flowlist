@@ -4,26 +4,24 @@ import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
-class FlowlistController: AppController, NSWindowDelegate
+class FlowlistController: AppController
 {
     // MARK: - Initialization
     
-    init()
-    {
-        Log.prefix = "FLOWLIST" // use "flowlist:" as console filter
-        
-        super.init(withMainMenu: menu)
-    }
+    init() { super.init(withMainMenu: menu) }
     
     // MARK: - App Delegate
     
     override func applicationDidFinishLaunching(_ aNotification: Notification)
     {
         super.applicationDidFinishLaunching(aNotification)
-
+        
+        Color.isInDarkMode = systemIsInDarkMode
+        
         purchaseController.setup()
         
-        observeSystemAppearance()
+        window.contentViewController = viewController
+        window.backgroundColor = Color.windowBackground.nsColor
         
         observe(darkMode)
         {
@@ -37,11 +35,11 @@ class FlowlistController: AppController, NSWindowDelegate
         storageController.appDidLaunch()
     }
     
-    func applicationWillBecomeActive(_ notification: Notification)
+    override func applicationWillBecomeActive(_ notification: Notification)
     {
+        super.applicationWillBecomeActive(notification)
+        
         menu.set(window: window)
-        window.delegate = self
-        window.show()
     }
     
     func applicationWillTerminate(_ notification: Notification)
@@ -56,24 +54,15 @@ class FlowlistController: AppController, NSWindowDelegate
         viewController.contentView.didResize()
     }
     
-    func windowDidEndLiveResize(_ notification: Notification)
-    {
-        window.didEndLiveResize()
-    }
-    
     func windowWillEnterFullScreen(_ notification: Notification)
     {
         menu.windowChangesFullscreen(to: true)
     }
     
-    func windowDidEnterFullScreen(_ notification: Notification)
+    override func windowDidExitFullScreen(_ notification: Notification)
     {
-        window.didEndLiveResize()
-    }
-
-    func windowDidExitFullScreen(_ notification: Notification)
-    {
-        window.didEndLiveResize()
+        super.windowDidExitFullScreen(notification)
+        
         menu.windowChangesFullscreen(to: false)
     }
     
@@ -84,25 +73,10 @@ class FlowlistController: AppController, NSWindowDelegate
     
     // MARK: - Adjust to OSX Dark Mode Setting
     
-    private func observeSystemAppearance()
+    override func systemDidChangeColorMode(dark: Bool)
     {
-        guard #available(OSX 10.14, *) else { return }
-        
-        adjustToSystemAppearance()
-        
-        appearanceObservation = NSApp.observe(\.effectiveAppearance)
-        {
-            [weak self] _, _ in self?.adjustToSystemAppearance()
-        }
+        Color.isInDarkMode = dark
     }
-    
-    @available(OSX 10.14, *)
-    private func adjustToSystemAppearance()
-    {
-        Color.isInDarkMode = NSApp.effectiveAppearance.name == .darkAqua
-    }
-    
-    private var appearanceObservation: NSKeyValueObservation?
     
     // MARK: - Push Notifications
     
@@ -123,12 +97,7 @@ class FlowlistController: AppController, NSWindowDelegate
     // MARK: - Basics
     
     private let menu = Menu()
-    
-    private lazy var window = Window(viewController: viewController,
-                                     color: Color.windowBackground.nsColor)
-    
     private let viewController = ViewController<FlowlistView>()
-    
     private let storageController = StorageController(with: database,
                                                       store: Store.shared)
 }
