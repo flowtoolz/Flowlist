@@ -1,4 +1,5 @@
 import AppKit
+import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
@@ -9,6 +10,11 @@ class ApplicationMenu: NSMenu, NSMenuItemValidation, Observer
     init()
     {
         super.init(title: "Application Menu")
+        
+        let exportItem = makeItem("Export List ...", key: "e", id: "export")
+        {
+            browser.focusedList.root?.export()
+        }
         
         addItem(exportItem)
         
@@ -28,19 +34,10 @@ class ApplicationMenu: NSMenu, NSMenuItemValidation, Observer
     {
         let mainWindowIsKey = NSApp.mainWindow?.isKeyWindow ?? false
         
-        switch menuItem
+        switch menuItem.id
         {
-        case exportItem: return mainWindowIsKey
+        case "export": return mainWindowIsKey
         default: return true
         }
-    }
-    
-    // MARK: - Export
-    
-    private lazy var exportItem = MenuItem("Export List ...",
-                                           key: "e",
-                                           validator: self)
-    {
-        browser.focusedList.root?.export()
     }
 }
