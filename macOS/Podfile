@@ -4,12 +4,12 @@ platform :osx, '10.11'
 
 target 'Flowlist' do
 
-    pod 'GetLaid', :path=> '../../Github Repos/Frameworks/GetLaid'
-    pod 'UIObserver', :path=> '../../Github Repos/Frameworks/UIObserver'
-    pod 'UIToolz', :path=> '../../Github Repos/Frameworks/UIToolz'
-    pod 'FoundationToolz', :path=> '../../Github Repos/Frameworks/FoundationToolz'
-    pod 'SwiftObserver', :path=> '../../Github Repos/Frameworks/SwiftObserver'
-    pod 'SwiftyToolz', :path=> '../../Github Repos/Frameworks/SwiftyToolz'
+    pod 'GetLaid', :path=> '../../Frameworks/GetLaid'
+    pod 'UIObserver', :path=> '../../Frameworks/UIObserver'
+    pod 'UIToolz', :path=> '../../Frameworks/UIToolz'
+    pod 'FoundationToolz', :path=> '../../Frameworks/FoundationToolz'
+    pod 'SwiftObserver', :path=> '../../Frameworks/SwiftObserver'
+    pod 'SwiftyToolz', :path=> '../../Frameworks/SwiftyToolz'
 
 end
 
