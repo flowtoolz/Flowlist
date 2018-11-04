@@ -363,7 +363,7 @@
 			isa = PBXGroup;
 			children = (
 				9EA5A893218ECB45004902F7 /* CloudKit */,
-				9EA5A894218ECB86004902F7 /* Model */,
+				9E576E362186FAB400C9F876 /* ItemDatabase.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -380,14 +380,6 @@
 			path = CloudKit;
 			sourceTree = "<group>";
 		};
-		9EA5A894218ECB86004902F7 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				9E576E362186FAB400C9F876 /* ItemDatabase.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		9EA5A895218ECC5A004902F7 /* Local */ = {
 			isa = PBXGroup;
 			children = (
@@ -401,7 +393,10 @@
 			isa = PBXGroup;
 			children = (
 				9EA5A89B218ED21B004902F7 /* Foundation */,
-				9EA5A89C218ED23E004902F7 /* Model */,
+				9EF0AABF2188506B00B707F4 /* PersistableStore.swift */,
+				9EF0AABB218838FA00B707F4 /* Store+StoreInterface.swift */,
+				9E7651951EEF4DA200DE2B07 /* Store.swift */,
+				9EF0AABD21883E6E00B707F4 /* HashMap.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -409,7 +404,8 @@
 		9EA5A898218ECEF5004902F7 /* Codable-Item */ = {
 			isa = PBXGroup;
 			children = (
-				9EA5A89D218ED2E8004902F7 /* Model */,
+				9EF231AE218B99B0006E783C /* DecodableItem.swift */,
+				9EF231A8218B570F006E783C /* Item+Encodable.swift */,
 			);
 			path = "Codable-Item";
 			sourceTree = "<group>";
@@ -420,26 +416,6 @@
 				9E053B22218867E4001B7103 /* Store+Persistable.swift */,
 			);
 			path = Foundation;
-			sourceTree = "<group>";
-		};
-		9EA5A89C218ED23E004902F7 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				9EF0AABF2188506B00B707F4 /* PersistableStore.swift */,
-				9EF0AABB218838FA00B707F4 /* Store+StoreInterface.swift */,
-				9E7651951EEF4DA200DE2B07 /* Store.swift */,
-				9EF0AABD21883E6E00B707F4 /* HashMap.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		9EA5A89D218ED2E8004902F7 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				9EF231AE218B99B0006E783C /* DecodableItem.swift */,
-				9EF231A8218B570F006E783C /* Item+Encodable.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		9EA5A89F218ED324004902F7 /* AppKit */ = {
