@@ -3,21 +3,13 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class FlowlistViewController: NSViewController, Observer
+class FlowlistView: LayerBackedView, Observer
 {
-    override func loadView()
+    // MARK: - Life Cycle
+    
+    override init(frame frameRect: NSRect)
     {
-        view = View()
-        
-        // For making screen shots and screen recordings
-//        #if DEBUG
-//        isFullVersion = true
-//        view.layer?.backgroundColor = NSColor.black.cgColor
-//        browserView.constrainWidth(to: 960)
-//        browserView.constrainHeight(to: 540)
-//        browserView.constrainCenter(to: view)
-//        return
-//        #endif
+        super.init(frame: frameRect)
         
         constrainBrowserView()
         
@@ -40,9 +32,31 @@ class FlowlistViewController: NSViewController, Observer
         {
             [weak self] _ in self?.browserView.didEndResizing()
         }
+        
+        // For making screen shots and screen recordings
+        //        #if DEBUG
+        //        isFullVersion = true
+        //        view.layer?.backgroundColor = NSColor.black.cgColor
+        //        browserView.constrainWidth(to: 960)
+        //        browserView.constrainHeight(to: 540)
+        //        browserView.constrainCenter(to: view)
+        //        return
+        //        #endif
     }
     
+    required init?(coder decoder: NSCoder) { fatalError() }
+    
     deinit { stopAllObserving() }
+    
+    // MARK: - Key Events
+    
+    override func performKeyEquivalent(with event: NSEvent) -> Bool
+    {
+        // just so this goes directly to the menu
+        if event.type == .keyDown && event.key == .enter { return false }
+        
+        return super.performKeyEquivalent(with: event)
+    }
     
     // MARK: - Purchase View
     
@@ -55,7 +69,7 @@ class FlowlistViewController: NSViewController, Observer
     
     private func removePurchaseView()
     {
-        view.removeConstraints(view.constraints)
+        removeConstraints(constraints)
         purchaseView.removeFromSuperview()
         
         constrainBrowserView()
@@ -79,7 +93,7 @@ class FlowlistViewController: NSViewController, Observer
         context.completionHandler = completionHandler
         
         purchaseViewHeightConstraint?.constant = purchaseViewHeight
-        view.layoutSubtreeIfNeeded()
+        layoutSubtreeIfNeeded()
         
         NSAnimationContext.endGrouping()
     }
@@ -98,7 +112,7 @@ class FlowlistViewController: NSViewController, Observer
     
     private var purchaseViewHeightConstraint: NSLayoutConstraint?
     
-    private lazy var purchaseView = view.addForAutoLayout(PurchaseView())
+    private lazy var purchaseView = addForAutoLayout(PurchaseView())
     
     // MARK: - Browser View
     
@@ -117,16 +131,5 @@ class FlowlistViewController: NSViewController, Observer
         }
     }
     
-    private lazy var browserView = view.addForAutoLayout(BrowserView())
-    
-    private class View: LayerBackedView
-    {
-        open override func performKeyEquivalent(with event: NSEvent) -> Bool
-        {
-            // just so this goes directly to the menu
-            if event.type == .keyDown && event.key == .enter { return false }
-            
-            return super.performKeyEquivalent(with: event)
-        }
-    }
+    private lazy var browserView = addForAutoLayout(BrowserView())
 }

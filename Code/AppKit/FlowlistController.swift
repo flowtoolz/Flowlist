@@ -53,7 +53,7 @@ class FlowlistController: AppController, NSWindowDelegate
     
     func windowDidResize(_ notification: Notification)
     {
-        viewController.didResize()
+        viewController.contentView.didResize()
     }
     
     func windowDidEndLiveResize(_ notification: Notification)
@@ -127,7 +127,7 @@ class FlowlistController: AppController, NSWindowDelegate
     private lazy var window = Window(viewController: viewController,
                                      color: Color.windowBackground.nsColor)
     
-    private let viewController = FlowlistViewController()
+    private let viewController = ViewController<FlowlistView>()
     
     private let storageController = StorageController(with: database,
                                                       store: Store.shared)

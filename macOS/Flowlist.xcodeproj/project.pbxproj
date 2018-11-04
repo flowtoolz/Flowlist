@@ -25,7 +25,7 @@
 		9E053B452188711A001B7103 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3F2188711A001B7103 /* Menu.swift */; };
 		9E053B462188711A001B7103 /* WindowMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B402188711A001B7103 /* WindowMenu.swift */; };
 		9E053B472188711A001B7103 /* EditMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B412188711A001B7103 /* EditMenu.swift */; };
-		9E053B4921887133001B7103 /* FlowlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B4821887133001B7103 /* FlowlistViewController.swift */; };
+		9E053B4921887133001B7103 /* FlowlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B4821887133001B7103 /* FlowlistView.swift */; };
 		9E053B4E2188715D001B7103 /* PriceTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B4A2188715D001B7103 /* PriceTag.swift */; };
 		9E053B4F2188715D001B7103 /* BulletpointList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B4B2188715D001B7103 /* BulletpointList.swift */; };
 		9E053B502188715D001B7103 /* PurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B4C2188715D001B7103 /* PurchaseView.swift */; };
@@ -112,7 +112,7 @@
 		9E053B3F2188711A001B7103 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		9E053B402188711A001B7103 /* WindowMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowMenu.swift; sourceTree = "<group>"; };
 		9E053B412188711A001B7103 /* EditMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMenu.swift; sourceTree = "<group>"; };
-		9E053B4821887133001B7103 /* FlowlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowlistViewController.swift; sourceTree = "<group>"; };
+		9E053B4821887133001B7103 /* FlowlistView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowlistView.swift; sourceTree = "<group>"; };
 		9E053B4A2188715D001B7103 /* PriceTag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceTag.swift; sourceTree = "<group>"; };
 		9E053B4B2188715D001B7103 /* BulletpointList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulletpointList.swift; sourceTree = "<group>"; };
 		9E053B4C2188715D001B7103 /* PurchaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseView.swift; sourceTree = "<group>"; };
@@ -423,7 +423,7 @@
 			children = (
 				9E053B38218870D0001B7103 /* main.swift */,
 				9E053B39218870D0001B7103 /* FlowlistController.swift */,
-				9E053B4821887133001B7103 /* FlowlistViewController.swift */,
+				9E053B4821887133001B7103 /* FlowlistView.swift */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -752,7 +752,7 @@
 				9E053B3121886963001B7103 /* CKRecord+Item.swift in Sources */,
 				9E2CCE8D20C1DE030037D755 /* List+Clipboard.swift in Sources */,
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,
-				9E053B4921887133001B7103 /* FlowlistViewController.swift in Sources */,
+				9E053B4921887133001B7103 /* FlowlistView.swift in Sources */,
 				9E22D8AF218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift in Sources */,
 				9E5768BC20C14B9300749C0C /* Direction.swift in Sources */,
 				9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */,
