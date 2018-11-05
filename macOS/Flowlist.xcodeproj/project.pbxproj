@@ -31,7 +31,6 @@
 		9E053B502188715D001B7103 /* PurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B4C2188715D001B7103 /* PurchaseView.swift */; };
 		9E053B512188715D001B7103 /* PurchaseContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B4D2188715D001B7103 /* PurchaseContentView.swift */; };
 		9E053B532188717D001B7103 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B522188717D001B7103 /* BrowserView.swift */; };
-		9E053B5C218871C4001B7103 /* ItemScrollTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B54218871C4001B7103 /* ItemScrollTable.swift */; };
 		9E053B5D218871C4001B7103 /* Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B55218871C4001B7103 /* Spacer.swift */; };
 		9E053B5E218871C4001B7103 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B56218871C4001B7103 /* ListView.swift */; };
 		9E053B5F218871C4001B7103 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B57218871C4001B7103 /* Header.swift */; };
@@ -117,7 +116,6 @@
 		9E053B4C2188715D001B7103 /* PurchaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseView.swift; sourceTree = "<group>"; };
 		9E053B4D2188715D001B7103 /* PurchaseContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseContentView.swift; sourceTree = "<group>"; };
 		9E053B522188717D001B7103 /* BrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
-		9E053B54218871C4001B7103 /* ItemScrollTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemScrollTable.swift; sourceTree = "<group>"; };
 		9E053B55218871C4001B7103 /* Spacer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spacer.swift; sourceTree = "<group>"; };
 		9E053B56218871C4001B7103 /* ListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		9E053B57218871C4001B7103 /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
@@ -309,7 +307,6 @@
 			children = (
 				9E053B56218871C4001B7103 /* ListView.swift */,
 				9E053B57218871C4001B7103 /* Header.swift */,
-				9E053B54218871C4001B7103 /* ItemScrollTable.swift */,
 				9E053B58218871C4001B7103 /* ItemTable.swift */,
 				9E053B5A218871C4001B7103 /* ItemTableContent.swift */,
 				9E053B5B218871C4001B7103 /* Row.swift */,
@@ -679,7 +676,6 @@
 			files = (
 				9E053B3321886963001B7103 /* ItemICloudDatabase.swift in Sources */,
 				9E053B3A218870D0001B7103 /* main.swift in Sources */,
-				9E053B5C218871C4001B7103 /* ItemScrollTable.swift in Sources */,
 				9E053B502188715D001B7103 /* PurchaseView.swift in Sources */,
 				9EF231A7218B1349006E783C /* Item.swift in Sources */,
 				9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */,

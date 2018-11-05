@@ -41,7 +41,7 @@ class ListView: LayerBackedView, Observer, Observable
     {
         header.configure(with: list)
         
-        scrollTable.configure(with: list)
+        scrollTable.table.configure(with: list)
         
         stopObserving(self.list)
         observe(list) { [weak self] in self?.didReceive($0) }
@@ -109,9 +109,16 @@ class ListView: LayerBackedView, Observer, Observable
         scrollTable.table.didEndResizing()
     }
     
-    private(set) lazy var scrollTable: ItemScrollTable =
+    private(set) lazy var scrollTable: ScrollTable<ItemTable> =
     {
-        let scrollView = addForAutoLayout(ItemScrollTable())
+        let scrollView = addForAutoLayout(ScrollTable<ItemTable>())
+        
+        scrollView.drawsBackground = false
+        scrollView.automaticallyAdjustsContentInsets = false
+        scrollView.contentInsets = NSEdgeInsets(top: 0,
+                                                left: 0,
+                                                bottom: 10,
+                                                right: 0)
         
         observe(scrollView.table)
         {
