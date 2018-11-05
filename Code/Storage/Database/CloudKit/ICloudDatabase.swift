@@ -76,6 +76,7 @@ class ICloudDatabase
                     return
                 }
                 
+                // TODO: why would there be no error but a nil record???
                 if savedRecord == nil
                 {
                     log(error: "Result record is nil.")
@@ -91,37 +92,10 @@ class ICloudDatabase
         let operation = CKModifyRecordsOperation(recordsToSave: records,
                                                  recordIDsToDelete: nil)
         
-        operation.database = database
-        operation.savePolicy = .changedKeys // TODO: or if server records unchanged? handle "merge conflicts" when multiple devices changed data locally offline...
-        
-        // TODO: The server may reject large operations. When this occurs, a block reports the CKError.Code.limitExceeded error. Your app should handle this error, and refactor the operation into multiple smaller batches.
-        
-        operation.perRecordCompletionBlock =
-        {
-            record, error in
-            
-            if let error = error
-            {
-                log(error: error.localizedDescription)
-                
-                // TODO: remember failed records and handle them / try again later...
-            }
-        }
-        
-        operation.modifyRecordsCompletionBlock =
-        {
-            records, _, error in
-            
-            if let error = error
-            {
-                log(error: error.localizedDescription)
-            }
-            
-            // TODO: handle completion
-        }
-        
-        operation.start()
+        perform(operation: operation)
     }
+    
+    // MARK: - Delete
     
     func deleteRecord(with id: CKRecord.ID,
                       handleSuccess: @escaping (Bool) -> Void)
@@ -150,6 +124,14 @@ class ICloudDatabase
                 handleSuccess(true)
             }
         }
+    }
+    
+    func deleteRecords(withIDs ids: [CKRecord.ID])
+    {
+        let operation = CKModifyRecordsOperation(recordsToSave: nil,
+                                                 recordIDsToDelete: ids)
+        
+        perform(operation: operation)
     }
     
     // MARK: - Observing Records
@@ -235,6 +217,40 @@ class ICloudDatabase
     }
     
     // MARK: - Basics
+    
+    private func perform(operation: CKModifyRecordsOperation)
+    {
+        operation.database = database
+        operation.savePolicy = .changedKeys // TODO: or if server records unchanged? handle "merge conflicts" when multiple devices changed data locally offline...
+        
+        // TODO: The server may reject large operations. When this occurs, a block reports the CKError.Code.limitExceeded error. Your app should handle this error, and refactor the operation into multiple smaller batches.
+        
+        operation.perRecordCompletionBlock =
+        {
+            record, error in
+            
+            if let error = error
+            {
+                log(error: error.localizedDescription)
+                
+                // TODO: remember failed records and handle them / try again later...
+            }
+        }
+        
+        operation.modifyRecordsCompletionBlock =
+        {
+            records, _, error in
+            
+            if let error = error
+            {
+                log(error: error.localizedDescription)
+            }
+            
+            // TODO: handle completion
+        }
+        
+        operation.start()
+    }
     
     var database: CKDatabase
     {
