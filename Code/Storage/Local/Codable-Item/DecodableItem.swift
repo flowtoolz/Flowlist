@@ -9,11 +9,11 @@ class DecodableItem: Tree<ItemData>, Decodable
         
         self.init(data: container.itemData)
         
-        if let branches = container.get([DecodableItem].self, for: .subitems)
+        if let subitems = container.get([DecodableItem].self, for: .subitems)
         {
-            for subitem in branches { subitem.root = self }
+            for subitem in subitems { subitem.root = self }
             
-            reset(branches: branches)
+            reset(branches: subitems)
         }
     }
 }
