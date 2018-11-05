@@ -10,9 +10,7 @@ extension ItemICloudDatabase: ItemDatabase
     {
         fetchItemRecords()
         {
-            records in
-            
-            receiveRoot(self.makeItem(from: records))
+            records in receiveRoot(self.makeItem(from: records))
         }
     }
     
@@ -83,7 +81,7 @@ extension ItemICloudDatabase: ItemDatabase
         return root
     }
     
-    // MARK: - Save Item Tree
+    // MARK: - Save
     
     func save(itemTree root: Item)
     {
@@ -97,5 +95,24 @@ extension ItemICloudDatabase: ItemDatabase
         let records = modifications.map { CKRecord(from: $0) }
         
         save(records)
+    }
+    
+    func saveItem(with modification: Item.Modification)
+    {
+        save(CKRecord(from: modification)) { _ in }
+    }
+    
+    // MARK: - Delete
+    
+    func deleteItem(with id: String)
+    {
+        didDeleteRecord(with: CKRecord.ID(recordName: id))
+    }
+    
+    func deleteItems(with ids: [String])
+    {
+        let recordIDs = ids.map { CKRecord.ID(recordName: $0) }
+        
+        deleteRecords(withIDs: recordIDs)
     }
 }
