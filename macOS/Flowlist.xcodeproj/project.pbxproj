@@ -45,7 +45,6 @@
 		9E053B6C21887210001B7103 /* GroupIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B6821887210001B7103 /* GroupIcon.swift */; };
 		9E053B6D21887210001B7103 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B6921887210001B7103 /* ItemView.swift */; };
 		9E053B6F2188722D001B7103 /* Font+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B6E2188722D001B7103 /* Font+Style.swift */; };
-		9E053B712188723D001B7103 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B702188723D001B7103 /* MenuItem.swift */; };
 		9E0D5AA120C160C800F0D827 /* Color+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0D5AA020C160C800F0D827 /* Color+Style.swift */; };
 		9E1F2CF42184476B00DFFD73 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1F2CF32184476B00DFFD73 /* CloudKit.framework */; };
 		9E22D8AD218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */; };
@@ -132,7 +131,6 @@
 		9E053B6821887210001B7103 /* GroupIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupIcon.swift; sourceTree = "<group>"; };
 		9E053B6921887210001B7103 /* ItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		9E053B6E2188722D001B7103 /* Font+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Font+Style.swift"; sourceTree = "<group>"; };
-		9E053B702188723D001B7103 /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		9E0D5AA020C160C800F0D827 /* Color+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Style.swift"; sourceTree = "<group>"; };
 		9E1F2CF32184476B00DFFD73 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyedEncodingContainer+SwiftyToolz.swift"; sourceTree = "<group>"; };
@@ -518,7 +516,6 @@
 		9EA5A8AA218ED9A9004902F7 /* Framework-Candidates */ = {
 			isa = PBXGroup;
 			children = (
-				9EA5A8AB218ED9C9004902F7 /* AppKit */,
 				9EA5A8AC218ED9D8004902F7 /* StoreKit */,
 				9EA5A8AD218ED9FB004902F7 /* Foundation */,
 				9E576E3921871A9800C9F876 /* Persistable.swift */,
@@ -528,14 +525,6 @@
 				9E22D8AE218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift */,
 			);
 			path = "Framework-Candidates";
-			sourceTree = "<group>";
-		};
-		9EA5A8AB218ED9C9004902F7 /* AppKit */ = {
-			isa = PBXGroup;
-			children = (
-				9E053B702188723D001B7103 /* MenuItem.swift */,
-			);
-			path = AppKit;
 			sourceTree = "<group>";
 		};
 		9EA5A8AC218ED9D8004902F7 /* StoreKit */ = {
@@ -739,7 +728,6 @@
 				9E053B4E2188715D001B7103 /* PriceTag.swift in Sources */,
 				9E053B60218871C4001B7103 /* ItemTable.swift in Sources */,
 				9E5768C220C15CDF00749C0C /* Tree+Hashable.swift in Sources */,
-				9E053B712188723D001B7103 /* MenuItem.swift in Sources */,
 				9E3EB55E2181E89200681953 /* TextFormat.swift in Sources */,
 				9E053B6C21887210001B7103 /* GroupIcon.swift in Sources */,
 				9E576E3A21871A9800C9F876 /* Persistable.swift in Sources */,

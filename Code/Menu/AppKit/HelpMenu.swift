@@ -1,4 +1,5 @@
 import AppKit
+import UIToolz
 
 class HelpMenu: NSMenu, NSMenuItemValidation
 {

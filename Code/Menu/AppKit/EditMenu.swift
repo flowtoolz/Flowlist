@@ -1,5 +1,6 @@
 import AppKit
 import UIObserver
+import UIToolz
 import SwiftyToolz
 import SwiftObserver
 
