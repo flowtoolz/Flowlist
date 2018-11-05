@@ -21,30 +21,30 @@ class StorageController <Database: ItemDatabase, Store: PersistableStore>: Obser
             
             switch interaction
             {
-            case .insertItem(_, let id):
-                break
-            case .modifyItem(_):
-                break
-            case .removeItemsWithIds(_):
-                break
+            case .insertItem(let modifications, _):
+                database.saveItems(with: modifications)
+            case .modifyItem(let modification):
+                database.saveItem(with: modification)
+            case .removeItemsWithIds(let ids):
+                database.deleteItems(with: ids)
             }
         }
     }
     
     func appDidLaunch()
     {
-        store?.load()
-//        database?.fetchItemTree()
-//        {
-//            if let root = $0
-//            {
-//                self.store?.update(root: root)
-//            }
-//            else
-//            {
-//                self.store?.load()
-//            }
-//        }
+//        store?.load()
+        database?.fetchItemTree()
+        {
+            if let root = $0
+            {
+                self.store?.update(root: root)
+            }
+            else
+            {
+                self.store?.load()
+            }
+        }
     }
     
     func windowLostFocus()
