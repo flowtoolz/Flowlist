@@ -5,17 +5,15 @@ extension CKRecord
 {
     // MARK: - Initialization
     
-    convenience init(from item: Item)
+    convenience init(from modification: Item.Modification)
     {
-        let data = item.data
-        
         self.init(recordType: CKRecord.itemType,
-                  recordID: ID(recordName: data.id))
+                  recordID: ID(recordName: modification.id))
         
-        text = item.text
-        state = data.state.value
-        tag = data.tag.value
-        superItem = item.root?.data.id
+        text = modification.text
+        state = modification.state
+        tag = modification.tag
+        superItem = modification.rootId
     }
     
     // MARK: - Mofification
@@ -29,10 +27,10 @@ extension CKRecord
         }
         
         return Item.Modification(id: recordID.recordName,
-                                         text: text,
-                                         state: state,
-                                         tag: tag,
-                                         rootId: superItem)
+                                 text: text,
+                                 state: state,
+                                 tag: tag,
+                                 rootId: superItem)
     }
     
     // MARK: - Storage Properties

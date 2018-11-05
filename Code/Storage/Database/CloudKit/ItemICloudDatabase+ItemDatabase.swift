@@ -87,13 +87,15 @@ extension ItemICloudDatabase: ItemDatabase
     
     func save(itemTree root: Item)
     {
-        let itemRecords = records(fromItemTree: root)
+        let modifications = root.array.map { $0.modification }
         
-        save(itemRecords)
+        saveItems(with: modifications)
     }
     
-    private func records(fromItemTree root: Item) -> [CKRecord]
+    func saveItems(with modifications: [Item.Modification])
     {
-        return root.array.map { CKRecord(from: $0) }
+        let records = modifications.map { CKRecord(from: $0) }
+        
+        save(records)
     }
 }
