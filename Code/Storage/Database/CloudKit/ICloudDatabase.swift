@@ -123,6 +123,35 @@ class ICloudDatabase
         operation.start()
     }
     
+    func deleteRecord(with id: CKRecord.ID,
+                      handleSuccess: @escaping (Bool) -> Void)
+    {
+        database.delete(withRecordID: id)
+        {
+            id, error in
+            
+            DispatchQueue.main.async
+            {
+                if let error = error
+                {
+                    log(error: error.localizedDescription)
+                    handleSuccess(false)
+                    return
+                }
+                
+                // TODO: why would there be no error but a nil id???
+                guard id != nil else
+                {
+                    log(error: "Result id is nil.")
+                    handleSuccess(false)
+                    return
+                }
+                
+                handleSuccess(true)
+            }
+        }
+    }
+    
     // MARK: - Observing Records
     
     func didReceiveRemoteNotification(with userInfo: [String : Any])
