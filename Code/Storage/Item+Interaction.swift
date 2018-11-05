@@ -1,5 +1,6 @@
 import SwiftObserver
 
+// TODO: Modification and Interaction seem more generel and low level than Item. Maybe they should not depend on Item but be top level types. The convenience initializers to convert between Item and Modification can be in a separate extension. -> database, storage controller etc don't need to depend on Item when they know about Interaction + Modification...
 extension Tree where Data == ItemData
 {
     convenience init(from modification: Modification)
