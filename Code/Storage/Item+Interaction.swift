@@ -14,6 +14,15 @@ extension Tree where Data == ItemData
         self.init(data: data)
     }
     
+    var modification: Modification
+    {
+        return Modification(id: data.id,
+                            text: text,
+                            state: data.state.value,
+                            tag: data.tag.value,
+                            rootId: root?.data.id)
+    }
+    
     enum Interaction
     {
         init?(from treeUpdate: Event.TreeUpdate)
@@ -25,13 +34,13 @@ extension Tree where Data == ItemData
                 self = .removeItemsWithIds(ids)
                 
             case .insertedNodes(let nodes, let root, _):
-                let mods = nodes.compactMap { Modification(from: $0) }
+                let mods = nodes.compactMap { $0.modification }
                 self = .insertItem(mods, inItemWithId: root.data.id)
             
             case .receivedDataUpdate(let dataUpdate, let node):
                 if case .wasModified = dataUpdate
                 {
-                    self = .modifyItem(Modification(from: node))
+                    self = .modifyItem(node.modification)
                 }
                 else { return nil }
             }
@@ -44,18 +53,6 @@ extension Tree where Data == ItemData
     
     struct Modification
     {
-        init(from itemDataTree: Item, modified: [Field] = Field.allCases)
-        {
-            let data = itemDataTree.data
-
-            self.init(id: data.id,
-                      text: itemDataTree.text,
-                      state: data.state.value,
-                      tag: data.tag.value,
-                      rootId: itemDataTree.root?.data.id,
-                      modified: modified)
-        }
-        
         init(id: String,
              text: String? = nil,
              state: ItemData.State? = nil,
