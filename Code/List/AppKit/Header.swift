@@ -100,7 +100,7 @@ class Header: LayerBackedView, Observer
         
         // other
         
-        showIcon(list.isRootList)
+        showIcon(if: list.isRootList)
         
         self.list = list
         
@@ -109,7 +109,7 @@ class Header: LayerBackedView, Observer
     
     // MARK: - Icon
     
-    private func showIcon(_ show: Bool = true)
+    private func showIcon(if show: Bool = true)
     {
         titleLabel.isHidden = show
         icon.isHidden = !show

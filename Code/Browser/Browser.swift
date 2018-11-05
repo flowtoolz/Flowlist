@@ -85,7 +85,7 @@ class Browser: Observer, Observable
     @discardableResult
     private func pushList() -> List
     {
-        let newList = List()
+        let newList = List(isRoot: lists.isEmpty)
         
         observe(list: newList)
         

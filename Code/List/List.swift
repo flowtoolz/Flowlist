@@ -5,8 +5,10 @@ class List: Observable, Observer
 {
     // MARK: - Life Cycle
     
-    init()
+    init(isRoot: Bool)
     {
+        isRootList = isRoot
+        
         observe(isFocused)
         {
             [weak self] _ in self?.updateFocusOfItems()
@@ -195,7 +197,7 @@ class List: Observable, Observer
     
     // MARK: - Root
     
-    var isRootList: Bool { return root != nil && root?.root == nil }
+    let isRootList: Bool
     
     private(set) weak var root: Item?
     {
