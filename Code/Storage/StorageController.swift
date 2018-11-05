@@ -5,11 +5,29 @@ class StorageController <Database: ItemDatabase, Store: PersistableStore>: Obser
     init(with database: Database, store: Store)
     {
         self.database = database
-        self.store = store
         
         observe(database)
         {
-            itemEdit in self.store?.apply(itemEdit)
+            guard let interaction = $0 else { return }
+            
+            self.store?.apply(interaction)
+        }
+        
+        self.store = store
+        
+        observe(store)
+        {
+            guard case .wasInteractedWith(let interaction) = $0 else { return }
+            
+            switch interaction
+            {
+            case .insertItem(_, let id):
+                break
+            case .modifyItem(_):
+                break
+            case .removeItemsWithIds(_):
+                break
+            }
         }
     }
     

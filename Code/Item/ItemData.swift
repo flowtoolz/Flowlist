@@ -1,13 +1,24 @@
 import SwiftObserver
 import SwiftyToolz
 
-final class ItemData: Observable
+final class ItemData: Observable, Observer
 {
-    // MARK: - Initialization
+    // MARK: - Life Cycle
     
     init(id: String? = nil)
     {
-        self.id = id ?? String.uuid
+        self.id = id ?? String.makeUUID()
+        
+        observe(text, state, tag)
+        {
+            [weak self] _,_,_ in self?.send(.wasModified)
+        }
+    }
+    
+    deinit
+    {
+        stopAllObserving()
+        removeObservers()
     }
     
     // MARK: - View Model
@@ -83,9 +94,9 @@ final class ItemData: Observable
     
     // MARK: - Observability
     
-    var latestUpdate = Event.nothing
+    var latestUpdate = Event.didNothing
     
-    enum Event { case nothing, wantTextInput }
+    enum Event { case didNothing, wasModified, wantTextInput }
     
     // MARK: - ID
     

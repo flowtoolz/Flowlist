@@ -49,24 +49,22 @@ class Store: Observer, Observable
         case .didChangeLeafNumber(_):
             updateUserCreatedLeafs(with: root)
             
-        case .didUpdateTree(let edit):
-            switch edit
+        case .didUpdateTree(let treeUpdate):
+            switch treeUpdate
             {
             case .insertedNodes(let items, _, _):
                 for item in items { itemHash.add(item.array) }
                 
-            case .receivedDataUpdate(let event, in: let node):
-                log("\(event) in node \(node.text ?? "untitled")")
+            case .receivedDataUpdate: break
                 
             case .removedNodes(let items, _):
                 for item in items { itemHash.remove(item.array) }
             }
             
-            let interaction = Item.Interaction(from: edit)
-            
-            log("interaction: \(interaction)")
-            
-            // TODO: send item tree interactions to storage controller
+            if let interaction = Item.Interaction(from: treeUpdate)
+            {
+                send(.wasInteractedWith(interaction))
+            }
         }
     }
     
@@ -104,4 +102,7 @@ class Store: Observer, Observable
     var latestUpdate = StoreEvent.didNothing
 }
 
-enum StoreEvent { case didNothing, didSwitchRoot }
+enum StoreEvent
+{
+    case didNothing, didSwitchRoot, wasInteractedWith(Item.Interaction)
+}

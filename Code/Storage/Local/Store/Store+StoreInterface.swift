@@ -6,13 +6,13 @@ extension Store: StoreInterface
     {
         switch interaction
         {
-        case .none: break
         case .insertItem(let modifications, _):
             for modification in modifications
             {
                 createItem(with: modification)
             }
-        case .modifyItem(let modification): updateItem(with: modification)
+        case .modifyItem(let modification):
+            updateItem(with: modification)
         case .removeItemsWithIds(let nodeIds):
             for id in nodeIds
             {
@@ -87,6 +87,6 @@ extension Store: StoreInterface
 
 protocol StoreInterface: Observable where UpdateType == StoreEvent
 {
-    func apply(_ itemEdit: Item.Interaction)
+    func apply(_ interaction: Item.Interaction)
     func update(root newRoot: Item)
 }
