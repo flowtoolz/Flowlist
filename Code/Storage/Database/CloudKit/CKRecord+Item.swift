@@ -4,16 +4,27 @@ import SwiftObserver
 extension CKRecord
 {
     // MARK: - Initialization
-    
+
     convenience init(from modification: Item.Modification)
     {
         self.init(recordType: CKRecord.itemType,
                   recordID: ID(recordName: modification.id))
         
-        text = modification.text
-        state = modification.state
-        tag = modification.tag
-        superItem = modification.rootId
+        apply(modification)
+    }
+    
+    func apply(_ modification: Item.Modification)
+    {
+        for field in modification.modified
+        {
+            switch field
+            {
+            case .text: text = modification.text
+            case .state: state = modification.state
+            case .tag: tag = modification.tag
+            case .root: superItem = modification.rootId
+            }
+        }
     }
     
     // MARK: - Mofification

@@ -10,6 +10,8 @@ class StorageController <Database: ItemDatabase, Store: PersistableStore>: Obser
         {
             guard let interaction = $0 else { return }
             
+            log("applying interaction from db to store: \(interaction)")
+            
             self.store?.apply(interaction)
         }
         
@@ -19,12 +21,14 @@ class StorageController <Database: ItemDatabase, Store: PersistableStore>: Obser
         {
             guard case .wasInteractedWith(let interaction) = $0 else { return }
             
+            log("applying interaction store to db: \(interaction)")
+            
             switch interaction
             {
             case .insertItem(let modifications, _):
-                database.saveItems(with: modifications)
+                database.createItems(with: modifications)
             case .modifyItem(let modification):
-                database.saveItem(with: modification)
+                database.modifyItem(with: modification)
             case .removeItemsWithIds(let ids):
                 database.deleteItems(with: ids)
             }

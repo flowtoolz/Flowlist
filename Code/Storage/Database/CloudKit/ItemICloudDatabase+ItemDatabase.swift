@@ -81,25 +81,35 @@ extension ItemICloudDatabase: ItemDatabase
         return root
     }
     
-    // MARK: - Save
+    // MARK: - Create
     
-    func save(itemTree root: Item)
+    func create(itemTree root: Item)
     {
         let modifications = root.array.map { $0.modification }
         
-        saveItems(with: modifications)
+        createItems(with: modifications)
     }
+
     
-    func saveItems(with modifications: [Item.Modification])
+    func createItems(with modifications: [Item.Modification])
     {
         let records = modifications.map { CKRecord(from: $0) }
         
         save(records)
     }
     
-    func saveItem(with modification: Item.Modification)
+    // MARK: - Modify
+    
+    func modifyItem(with modification: Item.Modification)
     {
-        save(CKRecord(from: modification)) { _ in }
+        fetchRecord(with: CKRecord.ID(recordName: modification.id))
+        {
+            guard let record = $0 else { return }
+            
+            record.apply(modification)
+            
+            self.save(record) { _ in }
+        }
     }
     
     // MARK: - Delete
