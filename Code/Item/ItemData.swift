@@ -37,7 +37,7 @@ final class ItemData: Observable, Observer
     
     // MARK: - Text
     
-    var text = Var<String>()
+    let text = Var<String>()
     
     func requestTextInput() { send(.wantTextInput) }
     func startedEditing() { wantsTextInput = false }
@@ -46,7 +46,7 @@ final class ItemData: Observable, Observer
     
     // MARK: - State
     
-    var state = Var<State>()
+    let state = Var<State>()
     
     enum State: Int, Codable
     {
@@ -71,7 +71,7 @@ final class ItemData: Observable, Observer
     
     // MARK: - Tag
     
-    var tag = Var<Tag>()
+    let tag = Var<Tag>()
     
     enum Tag: Int, Codable
     {

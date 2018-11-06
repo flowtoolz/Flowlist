@@ -7,8 +7,8 @@ extension ItemData: Copyable
     {
         self.init()
         
-        text = Var(original.text.value)
-        state = Var(original.state.value)
-        tag = Var(original.tag.value)
+        text <- original.text.value
+        state <- original.state.value
+        tag <- original.tag.value
     }
 }
