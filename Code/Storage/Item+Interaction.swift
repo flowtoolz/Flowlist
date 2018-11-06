@@ -41,7 +41,7 @@ extension Tree where Data == ItemData
                 else { return nil }
                 
             case .removedNodes(let nodes, _):
-                let ids = nodes.allItems.compactMap { $0.data.id }
+                let ids = nodes.compactMap { $0.data.id }
                 self = .removeItemsWithIds(ids)
             }
         }
