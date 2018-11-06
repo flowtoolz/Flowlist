@@ -136,14 +136,16 @@ class Header: LayerBackedView, Observer
     
     private func set(title: String)
     {
-        var displayTitle = title.count > 0 ? title : "Untitled"
+        let nonEmptyTitle = String(withNonEmpty: title)
+        isUntitled = nonEmptyTitle == nil
+        
+        var displayTitle = nonEmptyTitle ?? Header.untitled
         displayTitle = displayTitle.replacingOccurrences(of: "\n", with: " ")
         titleLabel.stringValue = displayTitle
     }
     
     private func updateTitleColor()
     {
-        let isUntitled = String(withNonEmpty: list?.title.latestUpdate) == nil
         let isDone = list?.state.latestUpdate == .done
         
         let textColor = Color.itemText(isDone: isDone || isUntitled,
@@ -171,6 +173,9 @@ class Header: LayerBackedView, Observer
         
         return label
     }()
+    
+    private var isUntitled = true
+    private static let untitled = "Untitled"
     
     // MARK: - Color View
     
