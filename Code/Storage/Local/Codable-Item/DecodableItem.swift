@@ -11,9 +11,7 @@ class DecodableItem: Tree<ItemData>, Decodable
         
         if let subitems = container.get([DecodableItem].self, for: .subitems)
         {
-            for subitem in subitems { subitem.root = self }
-            
-            reset(branches: subitems)
+            insert(subitems, at: 0)
         }
     }
 }

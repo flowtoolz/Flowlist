@@ -305,11 +305,6 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
     }
     
     // MARK: - Branches
-
-    func reset(branches newBranches: [Node])
-    {   
-        branches = newBranches
-    }
     
     subscript(_ indexes: [Int]) -> [Node]
     {

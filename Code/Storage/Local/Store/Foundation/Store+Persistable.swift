@@ -29,7 +29,6 @@ extension Store: Persistable
             return
         }
         
-        loadedRoot.recoverNumberOfLeafs()
         loadedRoot.data.text <- NSFullUserName()
         
         update(root: loadedRoot)
