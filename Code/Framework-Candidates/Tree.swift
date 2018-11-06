@@ -1,6 +1,23 @@
 import SwiftObserver
 import SwiftyToolz
 
+extension Tree
+{
+    var array: [Node]
+    {
+        var result = [Node]()
+        
+        result.append(self)
+        
+        for branch in branches
+        {
+            result.append(contentsOf: branch.array)
+        }
+        
+        return result
+    }
+}
+
 // MARK: - Tree
 
 class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
@@ -288,20 +305,6 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
     }
     
     // MARK: - Branches
-    
-    var array: [Node]
-    {
-        var result = [Node]()
-        
-        result.append(self)
-        
-        for branch in branches
-        {
-            result.append(contentsOf: branch.array)
-        }
-        
-        return result
-    }
 
     func reset(branches newBranches: [Node])
     {   
