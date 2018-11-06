@@ -1,9 +1,11 @@
 import SwiftObserver
 
-class StorageController <Database: ItemDatabase, Store: PersistableStore>: Observer
+class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
 {
-    init(with database: Database, store: Store)
+    init(with file: File, database: Database)
     {
+        self.file = file
+        
         self.database = database
         
         observe(database)
@@ -12,12 +14,10 @@ class StorageController <Database: ItemDatabase, Store: PersistableStore>: Obser
             
             log("applying interaction from db to store: \(interaction)")
             
-            self.store?.apply(interaction)
+            Store.shared.apply(interaction)
         }
         
-        self.store = store
-        
-        observe(store)
+        observe(Store.shared)
         {
             guard case .wasInteractedWith(let interaction) = $0 else { return }
             
@@ -37,30 +37,50 @@ class StorageController <Database: ItemDatabase, Store: PersistableStore>: Obser
     
     func appDidLaunch()
     {
-//        store?.load()
-        database?.fetchItemTree()
-        {
-            if let root = $0
-            {
-                self.store?.update(root: root)
-            }
-            else
-            {
-                self.store?.load()
-            }
-        }
+        loadFromFile()
+//        database?.fetchItemTree()
+//        {
+//            if let root = $0
+//            {
+//                Store.shared.update(root: root)
+//            }
+//            else
+//            {
+//                self.loadFromFile()
+//            }
+//        }
     }
     
     func windowLostFocus()
     {
-        store?.save()
+        saveToFile()
     }
     
     func appWillTerminate()
     {
-        store?.save()
+        saveToFile()
     }
     
+    // MARK: - Database
+    
     private weak var database: Database?
-    private weak var store: Store?
+    
+    // MARK: - File
+    
+    private func saveToFile()
+    {
+        guard let root = Store.shared.root else { return }
+        
+        file?.save(root)
+    }
+
+    private func loadFromFile()
+    {
+        if let item = file?.loadItem()
+        {
+            Store.shared.update(root: item)
+        }
+    }
+    
+    private weak var file: File?
 }

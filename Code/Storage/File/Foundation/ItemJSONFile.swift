@@ -2,23 +2,28 @@ import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
-extension Store: Persistable
-{    
-    // MARK: - Load & Save
+class ItemJSONFile: ItemFile
+{
+    static let shared = ItemJSONFile()
     
-    func load()
+    private init() {}
+    
+    func loadItem() -> Item?
     {
-        guard let fileUrl = fileUrl else { return }
+        guard let fileUrl = fileUrl else { return nil }
         
-        guard FileManager.default.fileExists(atPath: fileUrl.path) else
+        let manager = FileManager.default
+        
+        guard manager.fileExists(atPath: fileUrl.path) else
         {
-            createFile()
-            pasteWelcomeTourIfRootIsEmpty()
+            let item = Item(text: NSFullUserName())
             
-            return
+            save(item)
+            
+            return item
         }
         
-        guard let loadedRoot = DecodableItem(from: fileUrl) else
+        guard let item = DecodableItem(from: fileUrl) else
         {
             let title = "Couldn't Read From \"\(filename)\""
             
@@ -26,33 +31,18 @@ extension Store: Persistable
             
             log(error: message, title: title, forUser: true)
             
-            return
+            return nil
         }
         
-        loadedRoot.data.text <- NSFullUserName()
-        
-        update(root: loadedRoot)
-        
-        pasteWelcomeTourIfRootIsEmpty()
+        return item
     }
     
-    private func createFile()
+    func save(_ item: Item)
     {
-        guard let root = root else { return }
-        
-        root.data.text <- NSFullUserName()
-        save()
-    }
-    
-    func save()
-    {
-        guard let root = root,
-            let fileUrl = fileUrl,
-            let _ = root.save(to: fileUrl)
-        else
+        guard let file = fileUrl, let _ = item.save(to: file) else
         {
             let fileString = self.fileUrl?.absoluteString ?? "file"
-            log(error: "Failed to save items to " + fileString)
+            log(error: "Could not save items to " + fileString)
             return
         }
     }

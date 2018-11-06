@@ -19,6 +19,8 @@ class Store: Observer, Observable
         
         root = newRoot
         
+        pasteWelcomeTourIfRootIsEmpty()
+        
         send(.didSwitchRoot)
     }
     
@@ -104,14 +106,15 @@ class Store: Observer, Observable
     
     func pasteWelcomeTourIfRootIsEmpty()
     {
-        if root == nil
+        guard let root = root else
         {
-            update(root: Item(text: NSUserName()))
+            log(warning: "Root is nil.")
+            return
         }
         
-        if root?.isLeaf ?? false
+        if root.isLeaf
         {
-            root?.insert(Item.welcomeTour, at: 0)
+            root.insert(Item.welcomeTour, at: 0)
         }
     }
     
@@ -131,10 +134,10 @@ class Store: Observer, Observable
     
     // MARK: - Observability
     
-    var latestUpdate = StoreEvent.didNothing
-}
-
-enum StoreEvent
-{
-    case didNothing, didSwitchRoot, wasInteractedWith(Item.Interaction)
+    var latestUpdate = Event.didNothing
+    
+    enum Event
+    {
+        case didNothing, didSwitchRoot, wasInteractedWith(Item.Interaction)
+    }
 }

@@ -98,6 +98,6 @@ class FlowlistController: AppController
     
     private let menu = Menu()
     private let viewController = ViewController<FlowlistView>()
-    private let storageController = StorageController(with: database,
-                                                      store: Store.shared)
+    private let storageController = StorageController(with: ItemJSONFile.shared,
+                                                      database: database)
 }

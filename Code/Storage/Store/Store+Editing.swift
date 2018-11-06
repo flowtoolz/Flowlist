@@ -1,6 +1,6 @@
 import SwiftObserver
 
-extension Store: StoreInterface
+extension Store
 {
     func apply(_ interaction: Item.Interaction)
     {
@@ -84,10 +84,4 @@ extension Store: StoreInterface
 
         superItem.removeNodes(from: [index])
     }
-}
-
-protocol StoreInterface: Observable where UpdateType == StoreEvent
-{
-    func apply(_ interaction: Item.Interaction)
-    func update(root newRoot: Item)
 }
