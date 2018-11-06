@@ -2,7 +2,7 @@ extension Tree: Encodable where Data == ItemData
 {
     func encode(to encoder: Encoder) throws
     {
-        var container = encoder.container(keyedBy: JSONKey.self)
+        var container = encoder.container(keyedBy: CodableKey.self)
         
         container.set(data.id, for: .id)
         container.set(text, for: .text)
@@ -15,7 +15,7 @@ extension Tree: Encodable where Data == ItemData
         }
     }
     
-    enum JSONKey: String, CodingKey
+    enum CodableKey: String, CodingKey
     {
         case id, text = "title", state, tag, subitems = "subtasks"
     }
