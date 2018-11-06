@@ -192,29 +192,9 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
     
     // MARK: - Counting Leafs
     
-    @discardableResult
-    func recoverNumberOfLeafs() -> Int
-    {
-        if isLeaf
-        {
-            numberOfLeafs = 1
-            return numberOfLeafs
-        }
-        
-        var subitemLeafs = 0
-        
-        for subitem in branches
-        {
-            subitemLeafs += subitem.recoverNumberOfLeafs()
-        }
-        
-        numberOfLeafs = subitemLeafs
-        
-        return numberOfLeafs
-    }
-    
     func updateNumberOfLeafs()
     {
+        // TODO: make sure no unnecessary nodes get updated... don't traverse the whole subtree after editing operations...
         let newNumber = numberOfLeafsRecursively()
         
         guard newNumber != numberOfLeafs else { return }
