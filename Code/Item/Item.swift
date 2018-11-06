@@ -1,5 +1,20 @@
 import SwiftObserver
 
+extension Array where Element == Item
+{
+    var allItems: [Item]
+    {
+        var result = [Item]()
+        
+        for item in self
+        {
+            result.append(contentsOf: item.array)
+        }
+        
+        return result
+    }
+}
+
 extension Tree where Data == ItemData
 {
     // selection
