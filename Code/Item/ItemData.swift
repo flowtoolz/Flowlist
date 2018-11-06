@@ -9,9 +9,18 @@ final class ItemData: Observable, Observer
     {
         self.id = id ?? String.makeUUID()
         
+        wantsTextInput = id == nil
+        
         observe(text, state, tag)
         {
-            [weak self] _,_,_ in self?.send(.wasModified)
+            [weak self] textUpdate, _, _ in
+            
+            if textUpdate.old != textUpdate.new
+            {
+                self?.wantsTextInput = false
+            }
+            
+            self?.send(.wasModified)
         }
     }
     
@@ -30,9 +39,10 @@ final class ItemData: Observable, Observer
     
     var text = Var<String>()
     
-    func edit() { send(.wantTextInput) }
+    func requestTextInput() { send(.wantTextInput) }
+    func startedEditing() { wantsTextInput = false }
     
-    var wantsTextInput = false
+    private(set) var wantsTextInput = false
     
     // MARK: - State
     
@@ -96,7 +106,13 @@ final class ItemData: Observable, Observer
     
     var latestUpdate = Event.didNothing
     
-    enum Event { case didNothing, wasModified, wantTextInput }
+    enum Event: Equatable
+    {
+        case didNothing
+        case wasModified
+        case wantTextInput
+        case didTypeText(_ text: String)
+    }
     
     // MARK: - ID
     

@@ -175,7 +175,7 @@ class ItemView: LayerBackedView, Observer, Observable
             
             if me.textView.startEditing()
             {
-                data.wantsTextInput = false
+                data.startedEditing()
             }
         }
         
@@ -484,7 +484,7 @@ class ItemView: LayerBackedView, Observer, Observable
             send(.willEditText)
             
         case .didChange(let text):
-            item?.data.text <- String(withNonEmpty: text)
+            item?.data.send(.didTypeText(text))
             send(.didChangeText)
             
         case .wantToEndEditing:

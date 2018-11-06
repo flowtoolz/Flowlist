@@ -161,7 +161,7 @@ class ItemTable: AnimatedTableView, Observer, Observable, TableContentDelegate
                 if let itemData = self.list?[firstIndex]?.data,
                     itemData.wantsTextInput
                 {
-                    itemData.edit()
+                    itemData.requestTextInput()
                 }
             }
         }

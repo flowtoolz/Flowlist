@@ -209,8 +209,7 @@ class List: Observable, Observer
         }
     }
     
-    private func didSwitchRoot(from old: Item?,
-                               to new: Item?)
+    private func didSwitchRoot(from old: Item?, to new: Item?)
     {
         old?.deletionStack.removeAll()
         old?.deselectAll()
@@ -218,6 +217,20 @@ class List: Observable, Observer
         title.observable = new?.data.text
         tag.observable = new?.data.tag
         state.observable = new?.data.state
+        
+        stopObserving(old?.data)
+        if let new = new
+        {
+            observe(new.data)
+            {
+                [weak self] in
+                
+                if case .didTypeText(let text) = $0
+                {
+                    self?.title.send(text)
+                }
+            }
+        }
         
         send(.did(.switchedRoot(from: old, to: new)))
     }

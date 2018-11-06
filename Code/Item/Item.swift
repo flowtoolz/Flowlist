@@ -35,7 +35,7 @@ extension Tree where Data == ItemData
     
     // text
     
-    func edit() { data.edit() }
+    func edit() { data.requestTextInput() }
     
     var text: String? { return data.text.value }
     

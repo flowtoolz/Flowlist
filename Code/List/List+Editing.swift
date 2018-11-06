@@ -59,7 +59,6 @@ extension List
         
         let data = ItemData()
         data.state <- root?.highestPriorityState(at: indexes)
-        data.wantsTextInput = true
         
         let item = Item(data: data)
         

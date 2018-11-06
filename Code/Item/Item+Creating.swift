@@ -7,8 +7,6 @@ extension Tree where Data == ItemData
     {
         let data = ItemData()
         
-        data.wantsTextInput = true // TODO: set this as initial value?
-        
         let belowIsInProgress = count == index ? false : (self[index]?.isInProgress ?? false)
         
         let aboveIsInProgress = index == 0 || (self[index - 1]?.isInProgress ?? false)
