@@ -29,12 +29,8 @@ extension Tree where Data == ItemData
         {
             switch treeUpdate
             {
-            case .removedNodes(let nodes, _):
-                let ids = nodes.compactMap { $0.data.id }
-                self = .removeItemsWithIds(ids)
-                
             case .insertedNodes(let nodes, let root, _):
-                let mods = nodes.compactMap { $0.modification }
+                let mods = nodes.allItems.compactMap { $0.modification }
                 self = .insertItem(mods, inItemWithId: root.data.id)
             
             case .receivedDataUpdate(let dataUpdate, let node):
@@ -43,6 +39,10 @@ extension Tree where Data == ItemData
                     self = .modifyItem(node.modification)
                 }
                 else { return nil }
+                
+            case .removedNodes(let nodes, _):
+                let ids = nodes.allItems.compactMap { $0.data.id }
+                self = .removeItemsWithIds(ids)
             }
         }
 
