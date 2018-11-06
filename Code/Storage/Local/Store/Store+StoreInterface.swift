@@ -16,7 +16,10 @@ extension Store: StoreInterface
         case .removeItemsWithIds(let nodeIds):
             for id in nodeIds
             {
-                removeItem(with: id)
+                if itemHash[id] != nil
+                {
+                    removeItem(with: id)
+                }
             }
         }
     }
@@ -50,7 +53,7 @@ extension Store: StoreInterface
             return
         }
         
-        // TODO: updating an Item with ItemEditInfo should be an Item extension
+        // TODO: updating an Item should be an Item extension
         for field in modification.modified
         {
             switch field
@@ -71,16 +74,14 @@ extension Store: StoreInterface
             return
         }
         
-        itemHash.remove([item])
+        itemHash.remove(item.array)
         
-        guard let superItem = item.root,
-            let index = item.indexInRoot
-        else
+        guard let superItem = item.root, let index = item.indexInRoot else
         {
             log(warning: "Did remove root with id \(id) from hash map. Text: \(item.text ?? "nil")")
             return
         }
-        
+
         superItem.removeNodes(from: [index])
     }
 }

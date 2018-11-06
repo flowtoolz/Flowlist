@@ -53,18 +53,50 @@ class Store: Observer, Observable
             switch treeUpdate
             {
             case .insertedNodes(let items, _, _):
-                for item in items { itemHash.add(item.array) }
+                var hadAlreadyAddedAll = true
                 
-            case .receivedDataUpdate: break
+                for item in items
+                {
+                    if itemHash[item.data.id] == nil
+                    {
+                        hadAlreadyAddedAll = false
+                        itemHash.add(item.array)
+                    }
+                }
+                
+                if !hadAlreadyAddedAll
+                {
+                    sendInteraction(with: treeUpdate)
+                }
+                
+            case .receivedDataUpdate:
+                sendInteraction(with: treeUpdate)
                 
             case .removedNodes(let items, _):
-                for item in items { itemHash.remove(item.array) }
+                var hadAlreadyRemovedAll = true
+                
+                for item in items
+                {
+                    if itemHash[item.data.id] != nil
+                    {
+                        hadAlreadyRemovedAll = false
+                        itemHash.remove(item.array)
+                    }
+                }
+                
+                if !hadAlreadyRemovedAll
+                {
+                    sendInteraction(with: treeUpdate)
+                }
             }
-            
-            if let interaction = Item.Interaction(from: treeUpdate)
-            {
-                send(.wasInteractedWith(interaction))
-            }
+        }
+    }
+    
+    private func sendInteraction(with treeUpdate: Item.Event.TreeUpdate)
+    {
+        if let interaction = Item.Interaction(from: treeUpdate)
+        {
+            send(.wasInteractedWith(interaction))
         }
     }
     
