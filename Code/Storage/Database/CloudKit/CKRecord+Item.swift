@@ -13,18 +13,33 @@ extension CKRecord
         apply(modification)
     }
     
-    func apply(_ modification: Item.Modification)
+    @discardableResult
+    func apply(_ modification: Item.Modification) -> Bool
     {
+        var didChange = false
+        
         for field in modification.modified
         {
             switch field
             {
-            case .text: text = modification.text
-            case .state: state = modification.state
-            case .tag: tag = modification.tag
-            case .root: superItem = modification.rootId
+            case .text:
+                guard text != modification.text else { continue }
+                text = modification.text
+            case .state:
+                guard state != modification.state else { continue }
+                state = modification.state
+            case .tag:
+                guard tag != modification.tag else { continue }
+                tag = modification.tag
+            case .root:
+                guard superItem != modification.rootId else { continue }
+                superItem = modification.rootId
             }
+            
+            didChange = true
         }
+        
+        return didChange
     }
     
     // MARK: - Mofification

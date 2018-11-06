@@ -104,10 +104,11 @@ extension ItemICloudDatabase: ItemDatabase
     {
         fetchRecord(with: CKRecord.ID(recordName: modification.id))
         {
-            guard let record = $0 else { return }
-            
-            record.apply(modification)
-            
+            guard let record = $0, record.apply(modification) else
+            {
+                return
+            }
+
             self.save(record) { _ in }
         }
     }
