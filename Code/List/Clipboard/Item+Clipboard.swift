@@ -4,7 +4,11 @@ extension Tree where Data == ItemData
 {
     func cut(at indexes: [Int]) -> Bool
     {
-        guard copy(at: indexes) else { return false }
+        let nodes = self[indexes]
+        
+        guard !nodes.isEmpty else { return false }
+        
+        clipboard.storeCopiesAndOriginals(of: nodes)
         
         removeNodes(from: indexes)
         
@@ -27,11 +31,6 @@ extension Tree where Data == ItemData
         clipboard.storeCopies(of: nodes)
         
         return true
-    }
-    
-    var clipboardItems: [Node]
-    {
-        return clipboard.copiesOfStoredObjects
     }
 }
 

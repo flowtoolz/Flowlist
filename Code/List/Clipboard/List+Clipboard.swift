@@ -30,7 +30,7 @@ extension List
     
     func pasteFromClipboard()
     {
-        guard let items = root?.clipboardItems, !items.isEmpty else
+        guard let items = clipboard.popOriginalsOrMakeCopies() else
         {
             return
         }
