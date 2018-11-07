@@ -40,7 +40,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         }
     }
     
-    private func didCreateRecord(with mod: Item.Modification)
+    private func didCreateRecord(with mod: Modification)
     {
         send(.insertItem([mod], inItemWithId: mod.rootId))
     }
@@ -75,7 +75,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         }
     }
     
-    private func didModifyRecord(with mod: Item.Modification)
+    private func didModifyRecord(with mod: Modification)
     {
         send(.modifyItem(mod))
     }
@@ -139,5 +139,5 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     // MARK: - Observability
     
-    var latestUpdate: Item.Interaction? = nil
+    var latestUpdate: Edit? = nil
 }

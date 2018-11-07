@@ -10,20 +10,20 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
         
         observe(database)
         {
-            guard let interaction = $0 else { return }
+            guard let edit = $0 else { return }
             
-            log("applying interaction from db to store: \(interaction)")
+            log("applying edit from db to store: \(edit)")
             
-            Store.shared.apply(interaction)
+            Store.shared.apply(edit)
         }
         
         observe(Store.shared)
         {
-            guard case .wasInteractedWith(let interaction) = $0 else { return }
+            guard case .wasInteractedWith(let edit) = $0 else { return }
             
-            log("applying interaction from store to db: \(interaction)")
+            log("applying edit from store to db: \(edit)")
             
-            switch interaction
+            switch edit
             {
             case .insertItem(let modifications, _):
                 database.createItems(with: modifications)

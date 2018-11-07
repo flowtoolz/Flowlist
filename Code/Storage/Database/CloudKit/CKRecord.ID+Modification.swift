@@ -3,11 +3,11 @@ import SwiftObserver
 
 extension CKRecord.ID
 {
-    func makeModification(from notificaton: CKQueryNotification) -> Item.Modification?
+    func makeModification(from notificaton: CKQueryNotification) -> Modification?
     {
         guard let fields = notificaton.recordFields else { return nil }
         
-        var modifiedFields = [Item.Field]()
+        var modifiedFields = [Modification.Field]()
         var newRootId: String?
         var newText: String?
         var newState: ItemData.State?
@@ -32,11 +32,11 @@ extension CKRecord.ID
             modifiedFields.append(field)
         }
         
-        return Item.Modification(id: recordName,
-                                 text: newText,
-                                 state: newState,
-                                 tag: newTag,
-                                 rootId: newRootId,
-                                 modified: modifiedFields)
+        return Modification(id: recordName,
+                            text: newText,
+                            state: newState,
+                            tag: newTag,
+                            rootId: newRootId,
+                            modified: modifiedFields)
     }
 }

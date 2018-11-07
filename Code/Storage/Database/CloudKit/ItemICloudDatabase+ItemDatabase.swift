@@ -91,7 +91,7 @@ extension ItemICloudDatabase: ItemDatabase
     }
 
     
-    func createItems(with modifications: [Item.Modification])
+    func createItems(with modifications: [Modification])
     {
         let records = modifications.map { CKRecord(from: $0) }
         
@@ -100,7 +100,7 @@ extension ItemICloudDatabase: ItemDatabase
     
     // MARK: - Modify
     
-    func modifyItem(with modification: Item.Modification)
+    func modifyItem(with modification: Modification)
     {
         fetchRecord(with: CKRecord.ID(recordName: modification.id))
         {

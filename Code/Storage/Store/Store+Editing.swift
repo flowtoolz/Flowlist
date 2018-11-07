@@ -2,9 +2,9 @@ import SwiftObserver
 
 extension Store
 {
-    func apply(_ interaction: Item.Interaction)
+    func apply(_ edit: Edit)
     {
-        switch interaction
+        switch edit
         {
         case .insertItem(let modifications, _):
             for modification in modifications
@@ -24,7 +24,7 @@ extension Store
         }
     }
     
-    private func createItem(with modification: Item.Modification)
+    private func createItem(with modification: Modification)
     {
         let newItem = Item(from: modification)
         
@@ -45,7 +45,7 @@ extension Store
         rootItem.add(newItem)
     }
     
-    private func updateItem(with modification: Item.Modification)
+    private func updateItem(with modification: Modification)
     {
         guard let item = itemHash[modification.id] else
         {

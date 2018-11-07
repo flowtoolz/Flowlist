@@ -5,7 +5,7 @@ extension CKRecord
 {
     // MARK: - Initialization
 
-    convenience init(from modification: Item.Modification)
+    convenience init(from modification: Modification)
     {
         self.init(recordType: CKRecord.itemType,
                   recordID: ID(recordName: modification.id))
@@ -14,7 +14,7 @@ extension CKRecord
     }
     
     @discardableResult
-    func apply(_ modification: Item.Modification) -> Bool
+    func apply(_ modification: Modification) -> Bool
     {
         var didChange = false
         
@@ -44,7 +44,7 @@ extension CKRecord
     
     // MARK: - Mofification
     
-    var modification: Item.Modification?
+    var modification: Modification?
     {
         guard isItem else
         {
@@ -52,11 +52,11 @@ extension CKRecord
             return nil
         }
         
-        return Item.Modification(id: recordID.recordName,
-                                 text: text,
-                                 state: state,
-                                 tag: tag,
-                                 rootId: superItem)
+        return Modification(id: recordID.recordName,
+                            text: text,
+                            state: state,
+                            tag: tag,
+                            rootId: superItem)
     }
     
     // MARK: - Storage Properties
@@ -170,10 +170,10 @@ extension CKRecord
     
     static var fieldNames: [String]
     {
-        return Item.Field.allCases.map { FieldName(from: $0).rawValue }
+        return Modification.Field.allCases.map { FieldName(from: $0).rawValue }
     }
     
-    static func field(for name: String) -> Item.Field?
+    static func field(for name: String) -> Modification.Field?
     {
         guard let recordField = FieldName(rawValue: name) else
         {
@@ -181,14 +181,14 @@ extension CKRecord
             return nil
         }
         
-        return recordField.itemField
+        return recordField.modificationField
     }
     
     private enum FieldName: String
     {
-        init(from itemField: Item.Field)
+        init(from modificationField: Modification.Field)
         {
-            switch itemField
+            switch modificationField
             {
             case .text: self = .text
             case .state: self = .state
@@ -197,7 +197,7 @@ extension CKRecord
             }
         }
         
-        var itemField: Item.Field
+        var modificationField: Modification.Field
         {
             switch self
             {

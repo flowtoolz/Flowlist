@@ -68,11 +68,11 @@ class Store: Observer, Observable
                 
                 if !hadAlreadyAddedAll
                 {
-                    sendInteraction(with: treeUpdate)
+                    sendEdit(with: treeUpdate)
                 }
                 
             case .receivedDataUpdate:
-                sendInteraction(with: treeUpdate)
+                sendEdit(with: treeUpdate)
                 
             case .removedNodes(let items, _):
                 var hadAlreadyRemovedAll = true
@@ -88,17 +88,17 @@ class Store: Observer, Observable
                 
                 if !hadAlreadyRemovedAll
                 {
-                    sendInteraction(with: treeUpdate)
+                    sendEdit(with: treeUpdate)
                 }
             }
         }
     }
     
-    private func sendInteraction(with treeUpdate: Item.Event.TreeUpdate)
+    private func sendEdit(with treeUpdate: Item.Event.TreeUpdate)
     {
-        if let interaction = Item.Interaction(from: treeUpdate)
+        if let edit = Edit(from: treeUpdate)
         {
-            send(.wasInteractedWith(interaction))
+            send(.wasInteractedWith(edit))
         }
     }
     
@@ -138,6 +138,6 @@ class Store: Observer, Observable
     
     enum Event
     {
-        case didNothing, didSwitchRoot, wasInteractedWith(Item.Interaction)
+        case didNothing, didSwitchRoot, wasInteractedWith(Edit)
     }
 }
