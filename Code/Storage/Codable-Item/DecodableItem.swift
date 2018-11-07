@@ -20,13 +20,13 @@ class DecodableItem: Tree<ItemData>, Decodable
 
 fileprivate extension Decoder
 {
-    func itemContainer() throws -> KeyedDecodingContainer<Item.CodableKey>
+    func itemContainer() throws -> KeyedDecodingContainer<Item.CodableField>
     {
-        return try container(keyedBy: Item.CodableKey.self)
+        return try container(keyedBy: Item.CodableField.self)
     }
 }
 
-fileprivate extension KeyedDecodingContainer where K == Item.CodableKey
+fileprivate extension KeyedDecodingContainer where K == Item.CodableField
 {
     var itemData: ItemData
     {
