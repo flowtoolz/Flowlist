@@ -23,7 +23,7 @@ struct Modification
     let tag: ItemData.Tag?
     let rootId: String?
     let position: Int?
-    let modified: [Field]
+    var modified: [Field]
     
     enum Field: String, CaseIterable
     {
