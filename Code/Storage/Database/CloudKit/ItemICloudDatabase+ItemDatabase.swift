@@ -4,6 +4,97 @@ import SwiftyToolz
 
 extension ItemICloudDatabase: ItemDatabase
 {
+    // MARK: - Create
+    
+    func createItems(with modifications: [Modification],
+                     inRootWithID rootID: String)
+    {
+        let superitemID = CKRecord.ID(recordName: rootID)
+        
+        fetchSubitemRecords(withSuperItemID: superitemID)
+        {
+            // get sorted array of sibling records
+            
+            guard var siblingRecords = $0 else { return }
+            
+            siblingRecords.sort
+            {
+                $0.position ?? 0 < $1.position ?? 0
+            }
+            
+            // insert new records into sibling array
+            
+            let sortedMods = modifications.sorted
+            {
+                $0.position ?? 0 < $1.position ?? 0
+            }
+            
+            var recordsToSave = [CKRecord]()
+            
+            for mod in sortedMods
+            {
+                guard let pos = mod.position,
+                    pos <= siblingRecords.count
+                else
+                {
+                    log(error: "No valid position specified for new item.")
+                    return
+                }
+                
+                let newRecord = CKRecord(from: mod)
+                
+                siblingRecords.insert(newRecord, at: pos)
+                recordsToSave.append(newRecord)
+            }
+            
+            // siblings whose position has shifted must be saved back
+            
+            for position in 0 ..< siblingRecords.count
+            {
+                guard siblingRecords[position].position != position else
+                {
+                    continue
+                }
+                
+                siblingRecords[position].position = position
+                recordsToSave.append(siblingRecords[position])
+            }
+            
+            // save records
+            
+            self.save(recordsToSave)
+        }
+    }
+    
+    // MARK: - Modify
+    
+    func modifyItem(with modification: Modification)
+    {
+        fetchRecord(with: CKRecord.ID(recordName: modification.id))
+        {
+            guard let record = $0, record.apply(modification) else
+            {
+                return
+            }
+
+            self.save(record) { _ in }
+        }
+    }
+    
+    // MARK: - Delete
+    
+    func deleteItem(with id: String)
+    {
+        didDeleteRecord(with: CKRecord.ID(recordName: id))
+    }
+    
+    func deleteItems(with ids: [String])
+    {
+        let recordIDs = ids.map { CKRecord.ID(recordName: $0) }
+        
+        deleteRecords(withIDs: recordIDs)
+    }
+    
     // MARK: - Fetch & Connect Items
     
     func fetchItemTree(receiveRoot: @escaping (Item?) -> Void)
@@ -86,51 +177,5 @@ extension ItemICloudDatabase: ItemDatabase
         }
         
         return root
-    }
-    
-    // MARK: - Create
-    
-    func create(itemTree root: Item)
-    {
-        let modifications = root.modifications()
-        
-        createItems(with: modifications)
-    }
-
-    
-    func createItems(with modifications: [Modification])
-    {
-        let records = modifications.map { CKRecord(from: $0) }
-        
-        save(records)
-    }
-    
-    // MARK: - Modify
-    
-    func modifyItem(with modification: Modification)
-    {
-        fetchRecord(with: CKRecord.ID(recordName: modification.id))
-        {
-            guard let record = $0, record.apply(modification) else
-            {
-                return
-            }
-
-            self.save(record) { _ in }
-        }
-    }
-    
-    // MARK: - Delete
-    
-    func deleteItem(with id: String)
-    {
-        didDeleteRecord(with: CKRecord.ID(recordName: id))
-    }
-    
-    func deleteItems(with ids: [String])
-    {
-        let recordIDs = ids.map { CKRecord.ID(recordName: $0) }
-        
-        deleteRecords(withIDs: recordIDs)
     }
 }

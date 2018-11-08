@@ -42,7 +42,15 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     private func didCreateRecord(with mod: Modification)
     {
-        send(.insertItems([mod], inItemWithId: mod.rootId))
+        if let rootID = mod.rootId
+        {
+            send(.insertItems([mod], inItemWithId: rootID))
+        }
+        else
+        {
+            // TODO: ...
+            log(error: "Root was created in iCloud. This case is not being handled.")
+        }
     }
     
     override func didModifyRecord(with id: CKRecord.ID,

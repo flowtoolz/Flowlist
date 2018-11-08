@@ -4,60 +4,6 @@ import SwiftyToolz
 
 class ICloudDatabase
 {
-    // MARK: - Fetch
-    
-    func fetchRecord(with id: CKRecord.ID,
-                     handleResult: @escaping (CKRecord?) -> Void)
-    {
-        database.fetch(withRecordID: id)
-        {
-            record, error in
-            
-            DispatchQueue.main.async
-            {
-                if let error = error
-                {
-                    log(error: error.localizedDescription)
-                    handleResult(nil)
-                    return
-                }
-                
-                if record == nil
-                {
-                    log(error: "The fetched record is nil.")
-                }
-                
-                handleResult(record)
-            }
-        }
-    }
-    
-    func fetchRecords(with query: CKQuery,
-                      handleResult: @escaping ([CKRecord]?) -> Void)
-    {
-        database.perform(query, inZoneWith: .default)
-        {
-            records, error in
-            
-            DispatchQueue.main.async
-            {
-                if let error = error
-                {
-                    log(error: error.localizedDescription)
-                    handleResult(nil)
-                    return
-                }
-                
-                if records == nil
-                {
-                    log(error: "The fetched record array is nil.")
-                }
-                
-                handleResult(records)
-            }
-        }
-    }
-    
     // MARK: - Save
     
     func save(_ record: CKRecord,
@@ -132,6 +78,60 @@ class ICloudDatabase
                                                  recordIDsToDelete: ids)
         
         perform(operation: operation)
+    }
+    
+    // MARK: - Fetch
+    
+    func fetchRecord(with id: CKRecord.ID,
+                     handleResult: @escaping (CKRecord?) -> Void)
+    {
+        database.fetch(withRecordID: id)
+        {
+            record, error in
+            
+            DispatchQueue.main.async
+            {
+                if let error = error
+                {
+                    log(error: error.localizedDescription)
+                    handleResult(nil)
+                    return
+                }
+                
+                if record == nil
+                {
+                    log(error: "The fetched record is nil.")
+                }
+                
+                handleResult(record)
+            }
+        }
+    }
+    
+    func fetchRecords(with query: CKQuery,
+                      handleResult: @escaping ([CKRecord]?) -> Void)
+    {
+        database.perform(query, inZoneWith: .default)
+        {
+            records, error in
+            
+            DispatchQueue.main.async
+            {
+                if let error = error
+                {
+                    log(error: error.localizedDescription)
+                    handleResult(nil)
+                    return
+                }
+                
+                if records == nil
+                {
+                    log(error: "The fetched record array is nil.")
+                }
+                
+                handleResult(records)
+            }
+        }
     }
     
     // MARK: - Observing Records
