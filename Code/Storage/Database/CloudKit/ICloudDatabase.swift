@@ -33,15 +33,34 @@ class ICloudDatabase
         }
     }
     
-    func save(_ records: [CKRecord])
+    func save(_ records: [CKRecord],
+              handleSuccess: @escaping (Bool) -> Void)
     {
         let operation = CKModifyRecordsOperation(recordsToSave: records,
                                                  recordIDsToDelete: nil)
         
-        perform(operation: operation)
+        perform(operation: operation,
+                handleCreationSuccess: handleSuccess,
+                handleDeletionSuccess: nil)
     }
     
     // MARK: - Delete
+    
+    func deleteRecords(ofType type: String,
+                       handleSuccess: @escaping (Bool) -> Void)
+    {
+        let queryAll = CKQuery(recordType: type,
+                               predicate: NSPredicate.all)
+        
+        fetchRecords(with: queryAll)
+        {
+            guard let records = $0 else { return }
+            
+            let ids = records.map { $0.recordID }
+            
+            self.deleteRecords(withIDs: ids, handleSuccess: handleSuccess)
+        }
+    }
     
     func deleteRecord(with id: CKRecord.ID,
                       handleSuccess: @escaping (Bool) -> Void)
@@ -72,12 +91,15 @@ class ICloudDatabase
         }
     }
     
-    func deleteRecords(withIDs ids: [CKRecord.ID])
+    func deleteRecords(withIDs ids: [CKRecord.ID],
+                       handleSuccess: @escaping (Bool) -> Void)
     {
         let operation = CKModifyRecordsOperation(recordsToSave: nil,
                                                  recordIDsToDelete: ids)
         
-        perform(operation: operation)
+        perform(operation: operation,
+                handleCreationSuccess: nil,
+                handleDeletionSuccess: handleSuccess)
     }
     
     // MARK: - Fetch
@@ -218,7 +240,9 @@ class ICloudDatabase
     
     // MARK: - Basics
     
-    private func perform(operation: CKModifyRecordsOperation)
+    private func perform(operation: CKModifyRecordsOperation,
+                         handleCreationSuccess: ((Bool) -> Void)?,
+                         handleDeletionSuccess: ((Bool) -> Void)?)
     {
         operation.database = database
         operation.savePolicy = .changedKeys // TODO: or if server records unchanged? handle "merge conflicts" when multiple devices changed data locally offline...
@@ -239,14 +263,17 @@ class ICloudDatabase
         
         operation.modifyRecordsCompletionBlock =
         {
-            records, _, error in
+            records, ids, error in
             
             if let error = error
             {
                 log(error: error.localizedDescription)
+                handleDeletionSuccess?(false)
+                handleCreationSuccess?(false)
             }
             
-            // TODO: handle completion
+            handleCreationSuccess?(records != nil)
+            handleDeletionSuccess?(ids != nil)
         }
         
         operation.start()

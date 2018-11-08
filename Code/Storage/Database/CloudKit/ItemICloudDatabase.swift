@@ -145,6 +145,14 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         fetchRecords(with: query, handleResult: handleResult)
     }
     
+    // MARK: - Delete
+    
+    func deleteItems(handleSuccess: @escaping (Bool) -> Void)
+    {
+        deleteRecords(ofType: CKRecord.itemType,
+                      handleSuccess: handleSuccess)
+    }
+    
     // MARK: - Observability
     
     var latestUpdate: Edit? = nil
