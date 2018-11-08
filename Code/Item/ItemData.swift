@@ -50,9 +50,9 @@ final class ItemData: Observable, Observer
     
     enum State: Int, Codable
     {
-        init?(from value: Int?)
+        init?(integer: Int?)
         {
-            guard let value = value, let state = State(rawValue: value) else
+            guard let int = integer, let state = State(rawValue: int) else
             {
                 return nil
             }
@@ -76,9 +76,9 @@ final class ItemData: Observable, Observer
     enum Tag: Int, Codable
     {
         // TODO: use this everywhere where optional Ints are written to property tag... same for state...
-        init?(from value: Int?)
+        init?(integer: Int?)
         {
-            guard let value = value, let tag = Tag(rawValue: value) else
+            guard let int = integer, let tag = Tag(rawValue: int) else
             {
                 return nil
             }

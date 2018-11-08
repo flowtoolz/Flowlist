@@ -23,7 +23,7 @@ class ItemJSONFile: ItemFile
             return item
         }
         
-        guard let item = DecodableItem(from: fileUrl) else
+        guard let item = DecodableItem(fileURL: fileUrl) else
         {
             let title = "Couldn't Read From \"\(filename)\""
             

@@ -251,7 +251,7 @@ class EditMenu: NSMenu, NSMenuItemValidation, Observer
         
         for i in 0 ..< 7
         {
-            let tag = ItemData.Tag(from: i)
+            let tag = ItemData.Tag(integer: i)
             
             let name = tag?.string ?? "None"
             

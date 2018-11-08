@@ -1,6 +1,6 @@
 enum Edit
 {
-    init?(from treeUpdate: Item.Event.TreeUpdate)
+    init?(treeUpdate: Item.Event.TreeUpdate)
     {
         switch treeUpdate
         {

@@ -12,7 +12,7 @@ extension ItemICloudDatabase: ItemDatabase
         {
             guard $0 else { return }
             
-            let records = modifications.map { CKRecord(from: $0) }
+            let records = modifications.map { CKRecord(modification: $0) }
             
             self.save(records)
             {
@@ -54,7 +54,7 @@ extension ItemICloudDatabase: ItemDatabase
             
             let id = modification.id
             
-            hashMap[id] = (record, Item(from: modification))
+            hashMap[id] = (record, Item(modification: modification))
         }
         
         // connect items. find root.
@@ -146,7 +146,7 @@ extension ItemICloudDatabase: ItemDatabase
                     return
                 }
                 
-                let newRecord = CKRecord(from: mod)
+                let newRecord = CKRecord(modification: mod)
                 
                 siblingRecords.insert(newRecord, at: pos)
                 recordsToSave.append(newRecord)

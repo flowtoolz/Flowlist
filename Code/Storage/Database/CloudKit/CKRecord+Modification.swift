@@ -5,7 +5,7 @@ extension CKRecord
 {
     // MARK: - Initialization
 
-    convenience init(from modification: Modification)
+    convenience init(modification: Modification)
     {
         self.init(recordType: CKRecord.itemType,
                   recordID: ID(recordName: modification.id))
@@ -87,7 +87,7 @@ extension CKRecord
             
             let stateInt: Int? = self[FieldName.state.rawValue]
             
-            return ItemData.State(from: stateInt)
+            return ItemData.State(integer: stateInt)
         }
         
         set
@@ -108,7 +108,7 @@ extension CKRecord
             
             let tagInt: Int? = self[FieldName.tag.rawValue]
             
-            return ItemData.Tag(from: tagInt)
+            return ItemData.Tag(integer: tagInt)
         }
         
         set
@@ -188,7 +188,7 @@ extension CKRecord
     
     static var fieldNames: [String]
     {
-        return Modification.Field.allCases.map { FieldName(from: $0).rawValue }
+        return Modification.Field.allCases.map { FieldName($0).rawValue }
     }
     
     static func field(for name: String) -> Modification.Field?
@@ -204,9 +204,9 @@ extension CKRecord
     
     private enum FieldName: String
     {
-        init(from modificationField: Modification.Field)
+        init(_ field: Modification.Field)
         {
-            switch modificationField
+            switch field
             {
             case .text: self = .text
             case .state: self = .state

@@ -48,13 +48,13 @@ fileprivate extension KeyedDecodingContainer where K == Item.CodableField
     
     var state: ItemData.State?
     {
-        let direct = ItemData.State(from: int(.state))
+        let direct = ItemData.State(integer: int(.state))
         return direct ?? get(Var<ItemData.State>.self, for: .state)?.value
     }
     
     var tag: ItemData.Tag?
     {
-        let direct = ItemData.Tag(from: int(.tag))
+        let direct = ItemData.Tag(integer: int(.tag))
         return direct ?? get(Var<ItemData.Tag>.self, for: .tag)?.value
     }
 }

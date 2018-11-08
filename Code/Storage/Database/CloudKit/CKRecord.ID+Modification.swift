@@ -25,8 +25,8 @@ extension CKRecord.ID
             switch field
             {
             case .text: newText = value as? String
-            case .state: newState = ItemData.State(from: value as? Int)
-            case .tag: newTag = ItemData.Tag(from: value as? Int)
+            case .state: newState = ItemData.State(integer: value as? Int)
+            case .tag: newTag = ItemData.Tag(integer: value as? Int)
             case .root: newRootId = value as? String
             case .position: newPosition = value as? Int
             }

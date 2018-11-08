@@ -2,7 +2,7 @@ import SwiftObserver
 
 extension Tree where Data == ItemData
 {
-    convenience init(from modification: Modification)
+    convenience init(modification: Modification)
     {
         let data = ItemData(id: modification.id)
         

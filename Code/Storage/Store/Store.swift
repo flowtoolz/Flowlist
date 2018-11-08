@@ -97,7 +97,7 @@ class Store: Observer, Observable
     
     private func sendEdit(with treeUpdate: Item.Event.TreeUpdate)
     {
-        if let edit = Edit(from: treeUpdate)
+        if let edit = Edit(treeUpdate: treeUpdate)
         {
             send(.wasEdited(edit))
         }

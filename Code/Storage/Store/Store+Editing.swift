@@ -31,7 +31,7 @@ extension Store
     
     private func createItem(with modification: Modification)
     {
-        let newItem = Item(from: modification)
+        let newItem = Item(modification: modification)
         
         itemHash.add([newItem])
         
