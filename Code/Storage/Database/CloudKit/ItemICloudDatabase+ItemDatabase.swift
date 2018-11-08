@@ -40,6 +40,7 @@ extension ItemICloudDatabase: ItemDatabase
         
         // connect items. find root.
         
+        // TODO: improve performance by sorting each item's children after connecting the tree, instead of sorting all items together before connecting them...
         let sortedTuples = hashMap.values.sorted
         {
             $0.0.position ?? 0 < $1.0.position ?? 0
