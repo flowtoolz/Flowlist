@@ -309,6 +309,16 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
         return branches[validIndex]
     }
     
+    func sortWithoutSendingUpdate(comparator: (Node, Node) -> Bool)
+    {
+        branches.sort(by: comparator)
+        
+        for branch in branches
+        {
+            branch.sortWithoutSendingUpdate(comparator: comparator)
+        }
+    }
+    
     func index(of branch: Node) -> Int?
     {
         return branches.index { $0 === branch }
