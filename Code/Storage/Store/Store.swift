@@ -99,7 +99,7 @@ class Store: Observer, Observable
     {
         if let edit = Edit(from: treeUpdate)
         {
-            send(.wasInteractedWith(edit))
+            send(.wasEdited(edit))
         }
     }
     
@@ -139,6 +139,6 @@ class Store: Observer, Observable
     
     enum Event
     {
-        case didNothing, didSwitchRoot, wasInteractedWith(Edit)
+        case didNothing, didSwitchRoot, wasEdited(Edit)
     }
 }
