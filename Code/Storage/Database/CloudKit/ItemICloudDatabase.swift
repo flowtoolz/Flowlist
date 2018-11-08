@@ -42,7 +42,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     private func didCreateRecord(with mod: Modification)
     {
-        send(.insertItem([mod], inItemWithId: mod.rootId))
+        send(.insertItems([mod], inItemWithId: mod.rootId))
     }
     
     override func didModifyRecord(with id: CKRecord.ID,

@@ -12,7 +12,7 @@ enum Edit
                 mods.append(contentsOf: item.modifications())
             }
             
-            self = .insertItem(mods, inItemWithId: root.data.id)
+            self = .insertItems(mods, inItemWithId: root.data.id)
             
         case .receivedDataUpdate(let dataUpdate, let node):
             if case .wasModified = dataUpdate
@@ -34,7 +34,7 @@ enum Edit
         }
     }
     
-    case insertItem([Modification], inItemWithId: String?)
+    case insertItems([Modification], inItemWithId: String?)
     case modifyItem(Modification)
     case removeItemsWithIds([String])
 }

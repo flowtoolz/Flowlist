@@ -25,7 +25,7 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
 //
 //            switch edit
 //            {
-//            case .insertItem(let modifications, _):
+//            case .insertItems(let modifications, _):
 //                database.createItems(with: modifications)
 //            case .modifyItem(let modification):
 //                database.modifyItem(with: modification)

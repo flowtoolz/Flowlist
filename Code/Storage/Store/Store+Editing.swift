@@ -6,7 +6,7 @@ extension Store
     {
         switch edit
         {
-        case .insertItem(let modifications, _):
+        case .insertItems(let modifications, _):
             for modification in modifications
             {
                 createItem(with: modification)
