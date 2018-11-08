@@ -193,13 +193,13 @@ extension CKRecord
     
     static func field(for name: String) -> Modification.Field?
     {
-        guard let recordField = FieldName(rawValue: name) else
+        guard let fieldName = FieldName(rawValue: name) else
         {
             log(error: "Unknown item record field name: \(name)")
             return nil
         }
         
-        return recordField.modificationField
+        return fieldName.field
     }
     
     private enum FieldName: String
@@ -216,7 +216,7 @@ extension CKRecord
             }
         }
         
-        var modificationField: Modification.Field
+        var field: Modification.Field
         {
             switch self
             {
