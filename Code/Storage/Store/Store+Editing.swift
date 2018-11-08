@@ -7,7 +7,12 @@ extension Store
         switch edit
         {
         case .insertItems(let modifications, _):
-            for modification in modifications
+            let sortedByPosition = modifications.sorted
+            {
+                $0.position ?? 0 < $1.position ?? 0
+            }
+            
+            for modification in sortedByPosition
             {
                 createItem(with: modification)
             }
@@ -42,7 +47,8 @@ extension Store
             return
         }
         
-        rootItem.add(newItem)
+        rootItem.insert(newItem,
+                        at: modification.position ?? rootItem.count)
     }
     
     private func updateItem(with modification: Modification)
