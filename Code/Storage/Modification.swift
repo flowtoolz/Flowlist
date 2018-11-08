@@ -5,6 +5,7 @@ struct Modification
          state: ItemData.State? = nil,
          tag: ItemData.Tag? = nil,
          rootId: String? = nil,
+         position: Int? = nil,
          modified: [Field] = Field.allCases)
     {
         self.id = id
@@ -12,6 +13,7 @@ struct Modification
         self.state = state
         self.tag = tag
         self.rootId = rootId
+        self.position = position
         self.modified = modified
     }
     
@@ -20,10 +22,11 @@ struct Modification
     let state: ItemData.State?
     let tag: ItemData.Tag?
     let rootId: String?
+    let position: Int?
     let modified: [Field]
     
     enum Field: String, CaseIterable
     {
-        case text, state, tag, root
+        case text, state, tag, root, position
     }
 }

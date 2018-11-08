@@ -85,7 +85,7 @@ extension ItemICloudDatabase: ItemDatabase
     
     func create(itemTree root: Item)
     {
-        let modifications = root.array.map { $0.modification }
+        let modifications = root.modifications()
         
         createItems(with: modifications)
     }

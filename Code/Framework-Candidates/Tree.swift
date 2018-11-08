@@ -5,9 +5,7 @@ extension Tree
 {
     var array: [Node]
     {
-        var result = [Node]()
-        
-        result.append(self)
+        var result = [self]
         
         for branch in branches
         {

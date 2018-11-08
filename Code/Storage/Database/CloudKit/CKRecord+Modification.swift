@@ -34,6 +34,9 @@ extension CKRecord
             case .root:
                 guard superItem != modification.rootId else { continue }
                 superItem = modification.rootId
+            case .position:
+                guard position != modification.position else { continue }
+                position = modification.position
             }
             
             didChange = true
@@ -150,6 +153,21 @@ extension CKRecord
         }
     }
     
+    var position: Int?
+    {
+        get
+        {
+            guard isItem else { return nil }
+            return self[FieldName.position.rawValue]
+        }
+        
+        set
+        {
+            guard isItem else { return }
+            self[FieldName.position.rawValue] = newValue
+        }
+    }
+    
     // MARK: - Type
     
     var isItem: Bool
@@ -194,6 +212,7 @@ extension CKRecord
             case .state: self = .state
             case .tag: self = .tag
             case .root: self = .superItem
+            case .position: self = .position
             }
         }
         
@@ -205,9 +224,10 @@ extension CKRecord
             case .state: return .state
             case .tag: return .tag
             case .superItem: return .root
+            case .position: return .position
             }
         }
         
-        case text, state, tag, superItem
+        case text, state, tag, superItem, position
     }
 }

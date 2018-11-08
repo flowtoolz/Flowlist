@@ -62,6 +62,17 @@ extension Store
             case .state: item.data.state <- modification.state
             case .tag: item.data.tag <- modification.tag
             case .root: log(error: "Did not expect direct modification of item root. ID: \(modification.id). Intended new root ID: \(String(describing: modification.rootId)) item Text: \(item.text ?? "nil")")
+            case .position:
+                guard let newPosition = modification.position,
+                    let itemRoot = item.root,
+                    let oldPosition = itemRoot.index(of: item),
+                    oldPosition != newPosition
+                else
+                {
+                    break
+                }
+                
+                itemRoot.moveNode(from: oldPosition, to: newPosition)
             }
         }
     }
