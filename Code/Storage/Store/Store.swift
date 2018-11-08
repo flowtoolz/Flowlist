@@ -71,7 +71,8 @@ class Store: Observer, Observable
                     sendEdit(with: treeUpdate)
                 }
                 
-            case .receivedDataUpdate:
+            case .receivedDataUpdate, .movedNode:
+                // TODO: avoid sending updates back that were triggered from outside (from database)
                 sendEdit(with: treeUpdate)
                 
             case .removedNodes(let items, _):

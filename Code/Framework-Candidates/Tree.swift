@@ -176,6 +176,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
         guard branches.moveElement(from: from, to: to) else { return false }
         
         send(.didUpdateNode(.movedNode(from: from, to: to)))
+        sendToRoot(.movedNode(branches[to], from: from, to: to))
         
         return true
     }
@@ -262,6 +263,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
             case removedNodes([Node], from: Node)
             case insertedNodes([Node], in: Node, at: [Int])
             case receivedDataUpdate(Data.UpdateType, in: Node)
+            case movedNode(Node, from: Int, to: Int)
         }
         
         enum NodeUpdate

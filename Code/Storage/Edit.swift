@@ -18,6 +18,9 @@ enum Edit
         case .removedNodes(let nodes, _):
             let ids = nodes.compactMap { $0.data.id }
             self = .removeItemsWithIds(ids)
+            
+        case .movedNode(let node, _, _):
+            self = .modifyItem(node.modification)
         }
     }
     
