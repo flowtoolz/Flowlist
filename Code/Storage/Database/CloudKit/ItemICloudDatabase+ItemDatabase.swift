@@ -40,15 +40,9 @@ extension ItemICloudDatabase: ItemDatabase
         
         // connect items. find root.
         
-        // TODO: improve performance by sorting each item's children after connecting the tree, instead of sorting all items together before connecting them...
-        let sortedTuples = hashMap.values.sorted
-        {
-            $0.0.position ?? 0 < $1.0.position ?? 0
-        }
-        
         var root: Item?
         
-        for (record, item) in sortedTuples
+        for (record, item) in hashMap.values
         {
             guard let superItemId = record.superItem else
             {
@@ -76,11 +70,19 @@ extension ItemICloudDatabase: ItemDatabase
             superItem.add(item)
         }
         
-        // return root
-        
         if root == nil
         {
             log(error: "Record array contains no root.")
+        }
+        
+        // sort and return root
+        
+        root?.sortWithoutSendingUpdate
+        {
+            let leftPosition = hashMap[$0.data.id]?.0.position ?? 0
+            let rightPosition = hashMap[$1.data.id]?.0.position ?? 0
+            
+            return leftPosition < rightPosition
         }
         
         return root
