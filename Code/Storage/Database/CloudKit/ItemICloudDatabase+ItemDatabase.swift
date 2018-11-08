@@ -40,9 +40,14 @@ extension ItemICloudDatabase: ItemDatabase
         
         // connect items. find root.
         
+        let sortedTuples = hashMap.values.sorted
+        {
+            $0.0.position ?? 0 < $1.0.position ?? 0
+        }
+        
         var root: Item?
         
-        for (record, item) in hashMap.values
+        for (record, item) in sortedTuples
         {
             guard let superItemId = record.superItem else
             {
@@ -67,7 +72,6 @@ extension ItemICloudDatabase: ItemDatabase
             
             item.root = superItem
             
-            // TODO: persist and maintain item order
             superItem.add(item)
         }
         
