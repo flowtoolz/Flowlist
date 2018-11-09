@@ -23,17 +23,7 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
             
             log("applying edit from store to db: \(edit)")
 
-            // TODO: except for modifications that don't involve the position: fetch all siblings and update at least the position of each
-            switch edit
-            {
-            case .insertItems(let modifications, let rootID):
-                database.createItems(with: modifications,
-                                     inRootWithID: rootID)
-            case .modifyItem(let modification):
-                database.modifyItem(with: modification)
-            case .removeItemsWithIds(let ids):
-                database.deleteItems(with: ids)
-            }
+            database.apply(edit)
         }
     }
     

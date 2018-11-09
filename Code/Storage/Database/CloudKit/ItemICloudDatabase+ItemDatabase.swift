@@ -4,6 +4,23 @@ import SwiftyToolz
 
 extension ItemICloudDatabase: ItemDatabase
 {
+    // MARK: - Apply Edits
+    
+    func apply(_ edit: Edit)
+    {
+        // TODO: except for modifications that don't involve the position: fetch all siblings and update at least the position of each
+        switch edit
+        {
+        case .insertItems(let modifications, let rootID):
+            createItems(with: modifications,
+                                 inRootWithID: rootID)
+        case .modifyItem(let modification):
+            modifyItem(with: modification)
+        case .removeItemsWithIds(let ids):
+            deleteItems(with: ids)
+        }
+    }
+    
     // MARK: - Manage the Root
     
     func resetItemTree(with modifications: [Modification])
