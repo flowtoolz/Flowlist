@@ -26,7 +26,6 @@ extension CKRecord.ID
             case .text: newText = value as? String
             case .state: newState = ItemData.State(integer: value as? Int)
             case .tag: newTag = ItemData.Tag(integer: value as? Int)
-            case .root: newRootId = value as? String
             case .position: newPosition = value as? Int
             }
         }
@@ -35,7 +34,6 @@ extension CKRecord.ID
                             text: newText,
                             state: newState,
                             tag: newTag,
-                            rootId: newRootId,
                             position: newPosition)
     }
 }

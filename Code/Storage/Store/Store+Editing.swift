@@ -6,7 +6,7 @@ extension Store
     {
         switch edit
         {
-        case .insertItems(let modifications, _):
+        case .insertItems(let modifications, let rootID):
             let sortedByPosition = modifications.sorted
             {
                 $0.position ?? 0 < $1.position ?? 0
@@ -14,7 +14,7 @@ extension Store
             
             for modification in sortedByPosition
             {
-                createItem(with: modification)
+                createItem(with: modification, inItemWithID: rootID)
             }
         case .modifyItem(let modification, let rootID):
             updateItem(with: modification, rootID: rootID)
@@ -29,15 +29,12 @@ extension Store
         }
     }
     
-    private func createItem(with modification: Modification)
+    private func createItem(with modification: Modification,
+                            inItemWithID rootID: String?)
     {
-        let newItem = Item(modification: modification)
-        
-        itemHash.add([newItem])
-        
-        guard let rootId = modification.rootId else
+        guard let rootId = rootID else
         {
-            log(warning: "New item (id \(modification.id)) has no root.")
+            log(error: "Trying to create new root. This is unhandled.")
             return
         }
         
@@ -46,6 +43,10 @@ extension Store
             log(warning: "Root (id \(rootId)) of new item (id \(modification.id)) is not in hash map.")
             return
         }
+        
+        let newItem = Item(modification: modification)
+        
+        itemHash.add([newItem])
         
         rootItem.insert(newItem,
                         at: modification.position ?? rootItem.count)
@@ -68,7 +69,7 @@ extension Store
         
         if item.root?.data.id != rootID
         {
-            log(error: "Did not expect direct modification of item root. ID: \(modification.id). Intended new root ID: \(String(describing: modification.rootId)) item Text: \(item.text ?? "nil")")
+            log(error: "Did not expect direct modification of item root. ID: \(modification.id). Intended new root ID: \(String(describing: rootID)) item Text: \(item.text ?? "nil")")
         }
         
         if let newPosition = modification.position,

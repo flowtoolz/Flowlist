@@ -27,7 +27,8 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                 
                 if let mod = record.modification
                 {
-                    self.didCreateRecord(with: mod)
+                    self.didCreateRecord(with: mod,
+                                         superItemName: record.superItem)
                 }
             }
             
@@ -36,21 +37,14 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         
         if let mod = id.makeModification(from: notification)
         {
-            didCreateRecord(with: mod)
+            didCreateRecord(with: mod,
+                            superItemName: superItemName(from: notification))
         }
     }
     
-    private func didCreateRecord(with mod: Modification)
+    private func didCreateRecord(with mod: Modification, superItemName: String?)
     {
-        if let rootID = mod.rootId
-        {
-            send(.insertItems([mod], inItemWithId: rootID))
-        }
-        else
-        {
-            // TODO: ...
-            log(error: "Root was created in iCloud. This case is not being handled.")
-        }
+        send(.insertItems([mod], inItemWithId: superItemName))
     }
     
     override func didModifyRecord(with id: CKRecord.ID,
@@ -78,13 +72,10 @@ class ItemICloudDatabase: ICloudDatabase, Observable
             return
         }
         
-        let superItemFieldName = CKRecord.FieldName.superItem.rawValue
-        let fields = notification.recordFields
-        let superItemName = fields?[superItemFieldName] as? String
-        
         if let modification = id.makeModification(from: notification)
         {
-            didModifyRecord(with: modification, superItemName: superItemName)
+            didModifyRecord(with: modification,
+                            superItemName: superItemName(from: notification))
         }
     }
     
@@ -103,6 +94,13 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         guard let fields = notification.recordFields else { return false }
         
         return !notification.isPruned || fields.count == fieldNames.count
+    }
+    
+    private func superItemName(from notification: CKQueryNotification) -> String?
+    {
+        let fieldName = CKRecord.FieldName.superItem.rawValue
+        
+        return notification.recordFields?[fieldName] as? String
     }
     
     func createItemRecordSubscription()

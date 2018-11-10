@@ -36,12 +36,6 @@ extension CKRecord
             didChange = true
         }
         
-        if superItem != modification.rootId
-        {
-            superItem = modification.rootId
-            didChange = true
-        }
-        
         if position != modification.position
         {
             position = modification.position
@@ -65,7 +59,7 @@ extension CKRecord
                             text: text,
                             state: state,
                             tag: tag,
-                            rootId: superItem)
+                            position: position)
     }
     
     // MARK: - Storage Properties
@@ -194,7 +188,7 @@ extension CKRecord
     
     static var itemFieldNames: [String]
     {
-        return Modification.Field.allCases.map { FieldName($0).rawValue }
+        return FieldName.allCases.map { $0.rawValue }
     }
     
     static func field(for name: String) -> Modification.Field?
@@ -208,7 +202,7 @@ extension CKRecord
         return fieldName.field
     }
     
-    enum FieldName: String
+    enum FieldName: String, CaseIterable
     {
         init(_ field: Modification.Field)
         {
@@ -217,20 +211,19 @@ extension CKRecord
             case .text: self = .text
             case .state: self = .state
             case .tag: self = .tag
-            case .root: self = .superItem
             case .position: self = .position
             }
         }
         
-        var field: Modification.Field
+        var field: Modification.Field?
         {
             switch self
             {
             case .text: return .text
             case .state: return .state
             case .tag: return .tag
-            case .superItem: return .root
             case .position: return .position
+            case .superItem: return nil
             }
         }
         

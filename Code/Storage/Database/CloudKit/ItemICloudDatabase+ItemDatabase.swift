@@ -23,8 +23,24 @@ extension ItemICloudDatabase: ItemDatabase
     // MARK: - Create
     
     func createItems(with modifications: [Modification],
-                     inRootWithID rootID: String)
+                     inRootWithID rootID: String?)
     {
+        guard let rootID = rootID else
+        {
+            // TODO: saving new root items to icloud... handle this case correctly in context...
+            
+            let records = modifications.map { CKRecord(modification: $0) }
+            
+            self.save(records)
+            {
+                success in
+                
+                // TODO: handle failure
+            }
+            
+            return
+        }
+        
         let superitemID = CKRecord.ID(recordName: rootID)
         
         fetchSubitemRecords(withSuperItemID: superitemID)
@@ -49,9 +65,7 @@ extension ItemICloudDatabase: ItemDatabase
             
             for mod in sortedMods
             {
-                guard let pos = mod.position,
-                    pos <= siblingRecords.count
-                else
+                guard let pos = mod.position, pos <= siblingRecords.count else
                 {
                     log(error: "No valid position specified for new item.")
                     return
@@ -94,12 +108,16 @@ extension ItemICloudDatabase: ItemDatabase
         // TODO: maintain order when item changes position...
         fetchRecord(with: CKRecord.ID(recordName: modification.id))
         {
-            guard let record = $0, record.apply(modification) else
+            guard let record = $0, record.superItem == rootID else
             {
+                log(error: "Didn't find record to modify or record has different superItem.")
                 return
             }
 
-            self.save(record) { _ in }
+            if record.apply(modification)
+            {
+                self.save(record) { _ in }
+            }
         }
     }
     
