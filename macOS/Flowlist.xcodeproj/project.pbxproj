@@ -48,6 +48,7 @@
 		9E1F2CF42184476B00DFFD73 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1F2CF32184476B00DFFD73 /* CloudKit.framework */; };
 		9E22D8AD218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */; };
 		9E22D8AF218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22D8AE218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift */; };
+		9E2640FB21972941008FCD19 /* Edit+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2640FA21972941008FCD19 /* Edit+Item.swift */; };
 		9E2CCE8D20C1DE030037D755 /* List+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CCE8C20C1DE030037D755 /* List+Clipboard.swift */; };
 		9E3EB55E2181E89200681953 /* TextFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EB55D2181E89200681953 /* TextFormat.swift */; };
 		9E3F69332115ADE2002D595D /* Item+WelcomeTour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F69322115ADE2002D595D /* Item+WelcomeTour.swift */; };
@@ -135,6 +136,7 @@
 		9E1F2CF32184476B00DFFD73 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyedEncodingContainer+SwiftyToolz.swift"; sourceTree = "<group>"; };
 		9E22D8AE218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer+SwiftyToolz.swift"; sourceTree = "<group>"; };
+		9E2640FA21972941008FCD19 /* Edit+Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Edit+Item.swift"; sourceTree = "<group>"; };
 		9E2CCE8C20C1DE030037D755 /* List+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+Clipboard.swift"; sourceTree = "<group>"; };
 		9E3EB55D2181E89200681953 /* TextFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormat.swift; sourceTree = "<group>"; };
 		9E3F69322115ADE2002D595D /* Item+WelcomeTour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+WelcomeTour.swift"; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 			children = (
 				9EF0AABB218838FA00B707F4 /* Store+Editing.swift */,
 				9E7651951EEF4DA200DE2B07 /* Store.swift */,
+				9E2640FA21972941008FCD19 /* Edit+Item.swift */,
 				9EF0AABD21883E6E00B707F4 /* HashMap.swift */,
 			);
 			path = Store;
@@ -696,6 +699,7 @@
 				9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */,
 				9EF231A9218B570F006E783C /* Item+Encodable.swift in Sources */,
+				9E2640FB21972941008FCD19 /* Edit+Item.swift in Sources */,
 				9E053B65218871F5001B7103 /* ItemExportPanel.swift in Sources */,
 				9E6E70AB21936A8B00BDB0BA /* Item+Modification.swift in Sources */,
 				9E053B442188711A001B7103 /* HelpMenu.swift in Sources */,
