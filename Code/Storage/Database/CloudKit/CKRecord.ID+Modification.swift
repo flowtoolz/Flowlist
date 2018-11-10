@@ -14,7 +14,10 @@ extension CKRecord.ID
         
         for (name, value) in fields
         {
-            guard let field = CKRecord.modificationField(forItemFieldName: name) else { continue }
+            guard let field = CKRecord.modificationField(forFieldName: name) else
+            {
+                continue
+            }
             
             switch field
             {

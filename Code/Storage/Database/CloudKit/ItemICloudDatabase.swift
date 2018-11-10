@@ -106,8 +106,6 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     {
         let fieldName = CKRecord.ItemFieldName.superItem.rawValue
         
-        print("superItem from notification: \(notification.recordFields?[fieldName] as? String)")
-        
         return notification.recordFields?[fieldName] as? String
     }
     

@@ -191,7 +191,7 @@ extension CKRecord
         return ItemFieldName.allCases.map { $0.rawValue }
     }
     
-    static func modificationField(forItemFieldName name: String) -> Modification.Field?
+    static func modificationField(forFieldName name: String) -> Modification.Field?
     {
         guard let itemFieldName = ItemFieldName(rawValue: name) else
         {
