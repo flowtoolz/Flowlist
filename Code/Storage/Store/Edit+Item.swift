@@ -13,13 +13,13 @@ extension Edit
             }
             
             self = .insertItems(withModifications: mods,
-                                inItemWithID: root.data.id)
+                                inRootWithID: root.data.id)
             
         case .receivedDataUpdate(let dataUpdate, let node):
             if case .wasModified = dataUpdate
             {
                 self = .modifyItem(withModification: node.modification,
-                                   inItemWithID: node.root?.data.id)
+                                   inRootWithID: node.root?.data.id)
             }
             else { return nil }
             
@@ -29,7 +29,7 @@ extension Edit
             
         case .movedNode(let node, _, _):
             self = .modifyItem(withModification: node.modification,
-                               inItemWithID: node.root?.data.id)
+                               inRootWithID: node.root?.data.id)
         }
     }
 }

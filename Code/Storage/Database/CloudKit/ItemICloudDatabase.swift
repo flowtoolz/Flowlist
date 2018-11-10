@@ -45,7 +45,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     private func didCreateRecord(with mod: Modification, superItemName: String?)
     {
         send(.insertItems(withModifications: [mod],
-                          inItemWithID: superItemName))
+                          inRootWithID: superItemName))
     }
     
     // MARK: - Observe Item Modification
@@ -85,7 +85,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     private func didModifyRecord(with mod: Modification, superItemName: String?)
     {
         send(.modifyItem(withModification: mod,
-                         inItemWithID: superItemName))
+                         inRootWithID: superItemName))
     }
     
     // MARK: - Observe Item Deletion
