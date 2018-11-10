@@ -1,6 +1,6 @@
 enum Edit
 {
-    case insertItems([Modification], inItemWithId: String?)
-    case modifyItem(Modification, inItemWithId: String?)
-    case removeItemsWithIds([String])
+    case insertItems(withModifications: [Modification], inItemWithID: String?)
+    case modifyItem(withModification: Modification, inItemWithID: String?)
+    case removeItems(withIDs: [String])
 }

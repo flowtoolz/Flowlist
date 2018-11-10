@@ -8,21 +8,20 @@ extension ItemICloudDatabase: ItemDatabase
     
     func apply(_ edit: Edit)
     {
-        // TODO: except for modifications that don't involve the position: fetch all siblings and update at least the position of each
         switch edit
         {
         case .insertItems(let modifications, let rootID):
-            createItems(with: modifications, inRootWithID: rootID)
+            insertItems(with: modifications, inRootWithID: rootID)
         case .modifyItem(let modification, let rootID):
-            modifyItem(with: modification, rootID: rootID)
-        case .removeItemsWithIds(let ids):
+            modifyItem(with: modification, inRootWithID: rootID)
+        case .removeItems(let ids):
             deleteItems(with: ids)
         }
     }
     
     // MARK: - Create
     
-    func createItems(with modifications: [Modification],
+    func insertItems(with modifications: [Modification],
                      inRootWithID rootID: String?)
     {
         guard let rootID = rootID else
@@ -103,7 +102,7 @@ extension ItemICloudDatabase: ItemDatabase
     
     // MARK: - Modify
     
-    func modifyItem(with modification: Modification, rootID: String?)
+    func modifyItem(with modification: Modification, inRootWithID rootID: String?)
     {
         // TODO: maintain order when item changes position...
         fetchRecord(with: CKRecord.ID(recordName: modification.id))
@@ -163,6 +162,8 @@ extension ItemICloudDatabase: ItemDatabase
     
     func deleteItems(with ids: [String])
     {
+        // TODO: maintain position of siblings
+        
         let recordIDs = ids.map { CKRecord.ID(recordName: $0) }
         
         deleteRecords(withIDs: recordIDs)
@@ -175,8 +176,7 @@ extension ItemICloudDatabase: ItemDatabase
     
     func deleteItems(handleSuccess: @escaping (Bool) -> Void)
     {
-        deleteRecords(ofType: CKRecord.itemType,
-                      handleSuccess: handleSuccess)
+        deleteRecords(ofType: CKRecord.itemType, handleSuccess: handleSuccess)
     }
     
     // MARK: - Manage the Root

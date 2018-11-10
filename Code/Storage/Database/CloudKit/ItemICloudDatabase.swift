@@ -44,7 +44,8 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     private func didCreateRecord(with mod: Modification, superItemName: String?)
     {
-        send(.insertItems([mod], inItemWithId: superItemName))
+        send(.insertItems(withModifications: [mod],
+                          inItemWithID: superItemName))
     }
     
     // MARK: - Observe Item Modification
@@ -83,14 +84,15 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     private func didModifyRecord(with mod: Modification, superItemName: String?)
     {
-        send(.modifyItem(mod, inItemWithId: superItemName))
+        send(.modifyItem(withModification: mod,
+                         inItemWithID: superItemName))
     }
     
     // MARK: - Observe Item Deletion
     
     override func didDeleteRecord(with id: CKRecord.ID)
     {
-        send(.removeItemsWithIds([id.recordName]))
+        send(.removeItems(withIDs: [id.recordName]))
     }
     
     // MARK: - Get Data from Notification

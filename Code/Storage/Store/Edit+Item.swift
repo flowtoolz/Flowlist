@@ -12,23 +12,24 @@ extension Edit
                 mods.append(contentsOf: item.modifications())
             }
             
-            self = .insertItems(mods, inItemWithId: root.data.id)
+            self = .insertItems(withModifications: mods,
+                                inItemWithID: root.data.id)
             
         case .receivedDataUpdate(let dataUpdate, let node):
             if case .wasModified = dataUpdate
             {
-                self = .modifyItem(node.modification,
-                                   inItemWithId: node.root?.data.id)
+                self = .modifyItem(withModification: node.modification,
+                                   inItemWithID: node.root?.data.id)
             }
             else { return nil }
             
         case .removedNodes(let nodes, _):
             let ids = nodes.compactMap { $0.data.id }
-            self = .removeItemsWithIds(ids)
+            self = .removeItems(withIDs: ids)
             
         case .movedNode(let node, _, _):
-            self = .modifyItem(node.modification,
-                               inItemWithId: node.root?.data.id)
+            self = .modifyItem(withModification: node.modification,
+                               inItemWithID: node.root?.data.id)
         }
     }
 }

@@ -18,7 +18,7 @@ extension Store
             }
         case .modifyItem(let modification, let rootID):
             updateItem(with: modification, rootID: rootID)
-        case .removeItemsWithIds(let nodeIds):
+        case .removeItems(let nodeIds):
             for id in nodeIds
             {
                 if itemHash[id] != nil
