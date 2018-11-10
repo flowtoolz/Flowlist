@@ -8,7 +8,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
 {
     fileprivate override init() {}
     
-    // MARK: - Observe Item Records
+    // MARK: - Observe Item Creation
     
     override func didCreateRecord(with id: CKRecord.ID,
                                   notification: CKQueryNotification)
@@ -47,6 +47,8 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         send(.insertItems([mod], inItemWithId: superItemName))
     }
     
+    // MARK: - Observe Item Modification
+    
     override func didModifyRecord(with id: CKRecord.ID,
                                   notification: CKQueryNotification)
     {
@@ -84,10 +86,14 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         send(.modifyItem(mod, inItemWithId: superItemName))
     }
     
+    // MARK: - Observe Item Deletion
+    
     override func didDeleteRecord(with id: CKRecord.ID)
     {
         send(.removeItemsWithIds([id.recordName]))
     }
+    
+    // MARK: - Get Data from Notification
     
     private func hasAllNewFields(_ notification: CKQueryNotification) -> Bool
     {
@@ -98,10 +104,14 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     private func superItemName(from notification: CKQueryNotification) -> String?
     {
-        let fieldName = CKRecord.FieldName.superItem.rawValue
+        let fieldName = CKRecord.ItemFieldName.superItem.rawValue
+        
+        print("superItem from notification: \(notification.recordFields?[fieldName] as? String)")
         
         return notification.recordFields?[fieldName] as? String
     }
+    
+    // MARK: - Create Item Subscription
     
     func createItemRecordSubscription()
     {

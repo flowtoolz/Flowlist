@@ -7,7 +7,6 @@ extension CKRecord.ID
     {
         guard let fields = notificaton.recordFields else { return nil }
         
-        var newRootId: String?
         var newPosition: Int?
         var newText: String?
         var newState: ItemData.State?
@@ -15,11 +14,7 @@ extension CKRecord.ID
         
         for (name, value) in fields
         {
-            guard let field = CKRecord.field(for: name) else
-            {
-                log(error: "Could not create modification from record id \(recordName) and notification field \(fields.debugDescription).")
-                return nil
-            }
+            guard let field = CKRecord.modificationField(forItemFieldName: name) else { continue }
             
             switch field
             {

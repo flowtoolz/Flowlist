@@ -69,13 +69,13 @@ extension CKRecord
         get
         {
             guard isItem else { return nil }
-            return self[FieldName.text.rawValue]
+            return self[ItemFieldName.text.rawValue]
         }
         
         set
         {
             guard isItem else { return }
-            self[FieldName.text.rawValue] = newValue
+            self[ItemFieldName.text.rawValue] = newValue
         }
     }
     
@@ -85,7 +85,7 @@ extension CKRecord
         {
             guard isItem else { return nil }
             
-            let stateInt: Int? = self[FieldName.state.rawValue]
+            let stateInt: Int? = self[ItemFieldName.state.rawValue]
             
             return ItemData.State(integer: stateInt)
         }
@@ -96,7 +96,7 @@ extension CKRecord
             
             let stateInt = newValue?.rawValue
             
-            self[FieldName.state.rawValue] = stateInt
+            self[ItemFieldName.state.rawValue] = stateInt
         }
     }
     
@@ -106,7 +106,7 @@ extension CKRecord
         {
             guard isItem else { return nil }
             
-            let tagInt: Int? = self[FieldName.tag.rawValue]
+            let tagInt: Int? = self[ItemFieldName.tag.rawValue]
             
             return ItemData.Tag(integer: tagInt)
         }
@@ -117,7 +117,7 @@ extension CKRecord
             
             let tagInt = newValue?.rawValue
             
-            self[FieldName.tag.rawValue] = tagInt
+            self[ItemFieldName.tag.rawValue] = tagInt
         }
     }
     
@@ -127,7 +127,7 @@ extension CKRecord
         {
             guard isItem else { return nil }
             
-            let fieldName = FieldName.superItem.rawValue
+            let fieldName = ItemFieldName.superItem.rawValue
             
             guard let reference: Reference = self[fieldName] else
             {
@@ -141,7 +141,7 @@ extension CKRecord
         {
             guard isItem else { return }
             
-            let fieldName = FieldName.superItem.rawValue
+            let fieldName = ItemFieldName.superItem.rawValue
             
             guard let newValue = newValue else
             {
@@ -158,13 +158,13 @@ extension CKRecord
         get
         {
             guard isItem else { return nil }
-            return self[FieldName.position.rawValue]
+            return self[ItemFieldName.position.rawValue]
         }
         
         set
         {
             guard isItem else { return }
-            self[FieldName.position.rawValue] = newValue
+            self[ItemFieldName.position.rawValue] = newValue
         }
     }
     
@@ -188,34 +188,23 @@ extension CKRecord
     
     static var itemFieldNames: [String]
     {
-        return FieldName.allCases.map { $0.rawValue }
+        return ItemFieldName.allCases.map { $0.rawValue }
     }
     
-    static func field(for name: String) -> Modification.Field?
+    static func modificationField(forItemFieldName name: String) -> Modification.Field?
     {
-        guard let fieldName = FieldName(rawValue: name) else
+        guard let itemFieldName = ItemFieldName(rawValue: name) else
         {
             log(error: "Unknown item record field name: \(name)")
             return nil
         }
         
-        return fieldName.field
+        return itemFieldName.modificationField
     }
     
-    enum FieldName: String, CaseIterable
+    enum ItemFieldName: String, CaseIterable
     {
-        init(_ field: Modification.Field)
-        {
-            switch field
-            {
-            case .text: self = .text
-            case .state: self = .state
-            case .tag: self = .tag
-            case .position: self = .position
-            }
-        }
-        
-        var field: Modification.Field?
+        var modificationField: Modification.Field?
         {
             switch self
             {
