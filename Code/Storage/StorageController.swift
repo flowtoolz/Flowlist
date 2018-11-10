@@ -30,10 +30,10 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
     func appDidLaunch()
     {
 //        loadFromFile()
-        
+//
 //        if let root = Store.shared.root
 //        {
-//            database?.createItems(with: root.modifications())
+//            database?.resetItemTree(with: root.modifications())
 //        }
         database?.fetchItemTree()
         {
