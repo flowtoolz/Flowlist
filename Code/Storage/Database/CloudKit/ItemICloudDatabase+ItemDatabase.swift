@@ -12,14 +12,16 @@ extension ItemICloudDatabase: ItemDatabase
         {
         case .insertItems(let modifications, let rootID):
             insertItems(with: modifications, inRootWithID: rootID)
+            
         case .modifyItem(let modification, let rootID):
             modifyItem(with: modification, inRootWithID: rootID)
+            
         case .removeItems(let ids):
             deleteItems(with: ids)
         }
     }
     
-    // MARK: - Create
+    // MARK: - Insert
     
     func insertItems(with modifications: [Modification],
                      inRootWithID rootID: String?)
@@ -120,7 +122,28 @@ extension ItemICloudDatabase: ItemDatabase
         }
     }
     
-    // MARK: - Fetch Item Records
+    // MARK: - Delete
+    
+    func deleteItems(with ids: [String])
+    {
+        // TODO: maintain position of siblings
+        
+        let recordIDs = ids.map { CKRecord.ID(recordName: $0) }
+        
+        deleteRecords(withIDs: recordIDs)
+        {
+            success in
+            
+            // TODO: handle failure
+        }
+    }
+    
+    func deleteItems(handleSuccess: @escaping (Bool) -> Void)
+    {
+        deleteRecords(ofType: CKRecord.itemType, handleSuccess: handleSuccess)
+    }
+    
+    // MARK: - Fetch
     
     func fetchItemRecords(handleResult: @escaping ([CKRecord]?) -> Void)
     {
@@ -151,32 +174,6 @@ extension ItemICloudDatabase: ItemDatabase
                             predicate: predicate)
         
         fetchRecords(with: query, handleResult: handleResult)
-    }
-    
-    // MARK: - Delete
-    
-    func deleteItem(with id: String)
-    {
-        didDeleteRecord(with: CKRecord.ID(recordName: id))
-    }
-    
-    func deleteItems(with ids: [String])
-    {
-        // TODO: maintain position of siblings
-        
-        let recordIDs = ids.map { CKRecord.ID(recordName: $0) }
-        
-        deleteRecords(withIDs: recordIDs)
-        {
-            success in
-            
-            // TODO: handle failure
-        }
-    }
-    
-    func deleteItems(handleSuccess: @escaping (Bool) -> Void)
-    {
-        deleteRecords(ofType: CKRecord.itemType, handleSuccess: handleSuccess)
     }
     
     // MARK: - Manage the Root
