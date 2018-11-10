@@ -77,6 +77,8 @@ class ItemICloudDatabase: ICloudDatabase, Observable
             return
         }
         
+        print("icloud did modify record. did sent all new fields:\n\(notification.recordFields.debugDescription)")
+        
         if let modification = id.makeModification(from: notification)
         {
             didModifyRecord(with: modification)
@@ -100,9 +102,14 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         return !notification.isPruned || fields.count == fieldNames.count
     }
     
-    @available(OSX 10.12, *)
     func createItemRecordSubscription()
     {
+        guard #available(OSX 10.12, *) else
+        {
+            log(error: "Function not available below macOS 10.12")
+            return
+        }
+        
         let alertKey = "Items were changed in iCloud."
         
         createSubscription(forRecordType: CKRecord.itemType,

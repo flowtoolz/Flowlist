@@ -18,27 +18,33 @@ extension CKRecord
     {
         var didChange = false
         
-        for field in modification.modified
+        if text != modification.text
         {
-            switch field
-            {
-            case .text:
-                guard text != modification.text else { continue }
-                text = modification.text
-            case .state:
-                guard state != modification.state else { continue }
-                state = modification.state
-            case .tag:
-                guard tag != modification.tag else { continue }
-                tag = modification.tag
-            case .root:
-                guard superItem != modification.rootId else { continue }
-                superItem = modification.rootId
-            case .position:
-                guard position != modification.position else { continue }
-                position = modification.position
-            }
-            
+            text = modification.text
+            didChange = true
+        }
+        
+        if state != modification.state
+        {
+            state = modification.state
+            didChange = true
+        }
+        
+        if tag != modification.tag
+        {
+            tag = modification.tag
+            didChange = true
+        }
+        
+        if superItem != modification.rootId
+        {
+            superItem = modification.rootId
+            didChange = true
+        }
+        
+        if position != modification.position
+        {
+            position = modification.position
             didChange = true
         }
         

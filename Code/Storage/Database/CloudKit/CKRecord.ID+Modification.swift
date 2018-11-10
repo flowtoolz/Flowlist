@@ -7,7 +7,6 @@ extension CKRecord.ID
     {
         guard let fields = notificaton.recordFields else { return nil }
         
-        var modifiedFields = [Modification.Field]()
         var newRootId: String?
         var newPosition: Int?
         var newText: String?
@@ -30,8 +29,6 @@ extension CKRecord.ID
             case .root: newRootId = value as? String
             case .position: newPosition = value as? Int
             }
-            
-            modifiedFields.append(field)
         }
         
         return Modification(id: recordName,
@@ -39,7 +36,6 @@ extension CKRecord.ID
                             state: newState,
                             tag: newTag,
                             rootId: newRootId,
-                            position: newPosition,
-                            modified: modifiedFields)
+                            position: newPosition)
     }
 }

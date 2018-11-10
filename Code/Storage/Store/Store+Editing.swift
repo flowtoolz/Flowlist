@@ -53,33 +53,35 @@ extension Store
     
     private func updateItem(with modification: Modification)
     {
+        // TODO: updating an Item should be an Item extension
+        
         guard let item = itemHash[modification.id] else
         {
             log(error: "Item with id \(modification.id) is not in hash map.")
             return
         }
         
-        // TODO: updating an Item should be an Item extension
-        for field in modification.modified
+        item.data.text <- modification.text
+        item.data.state <- modification.state
+        item.data.tag <- modification.tag
+        
+        if item.root?.data.id != modification.rootId
         {
-            switch field
+            log(error: "Did not expect direct modification of item root. ID: \(modification.id). Intended new root ID: \(String(describing: modification.rootId)) item Text: \(item.text ?? "nil")")
+        }
+        
+        if let newPosition = modification.position,
+            let itemRoot = item.root,
+            let oldPosition = itemRoot.index(of: item)
+        {
+            if oldPosition != newPosition
             {
-            case .text: item.data.text <- modification.text
-            case .state: item.data.state <- modification.state
-            case .tag: item.data.tag <- modification.tag
-            case .root: log(error: "Did not expect direct modification of item root. ID: \(modification.id). Intended new root ID: \(String(describing: modification.rootId)) item Text: \(item.text ?? "nil")")
-            case .position:
-                guard let newPosition = modification.position,
-                    let itemRoot = item.root,
-                    let oldPosition = itemRoot.index(of: item),
-                    oldPosition != newPosition
-                else
-                {
-                    break
-                }
-                
                 itemRoot.moveNode(from: oldPosition, to: newPosition)
             }
+        }
+        else
+        {
+            log(error: "Invalid position: Item is root or modification has no position.")
         }
     }
     
