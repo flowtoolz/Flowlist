@@ -186,7 +186,7 @@ extension CKRecord
     
     // MARK: - Fields
     
-    static var fieldNames: [String]
+    static var itemFieldNames: [String]
     {
         return Modification.Field.allCases.map { FieldName($0).rawValue }
     }

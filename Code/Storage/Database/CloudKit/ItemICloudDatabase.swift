@@ -97,7 +97,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     {
         guard let fields = notification.recordFields else { return false }
         
-        return !notification.isPruned || fields.count == itemFieldNames.count
+        return !notification.isPruned || fields.count == fieldNames.count
     }
     
     @available(OSX 10.12, *)
@@ -106,11 +106,11 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         let alertKey = "Items were changed in iCloud."
         
         createSubscription(forRecordType: CKRecord.itemType,
-                           desiredTags: itemFieldNames,
+                           desiredTags: fieldNames,
                            alertLocalizationKey: alertKey)
     }
     
-    private let itemFieldNames = CKRecord.fieldNames
+    private let fieldNames = CKRecord.itemFieldNames
     
     // MARK: - Observability
     

@@ -18,7 +18,7 @@ extension CKRecord.ID
         {
             guard let field = CKRecord.field(for: name) else
             {
-                log(error: "Could not create modification from record id \(recordName) and notification fields \(fields.debugDescription).")
+                log(error: "Could not create modification from record id \(recordName) and notification field \(fields.debugDescription).")
                 return nil
             }
             
