@@ -91,7 +91,7 @@ class FlowlistController: AppController
     func application(_ application: NSApplication,
                      didReceiveRemoteNotification userInfo: [String : Any])
     {
-        database.didReceiveRemoteNotification(with: userInfo)
+        itemICloudDatabase.didReceiveRemoteNotification(with: userInfo)
     }
     
     // MARK: - Basics
@@ -99,5 +99,5 @@ class FlowlistController: AppController
     private let menu = Menu()
     private let viewController = ViewController<FlowlistView>()
     private let storageController = StorageController(with: ItemJSONFile.shared,
-                                                      database: database)
+                                                      database: itemICloudDatabase)
 }

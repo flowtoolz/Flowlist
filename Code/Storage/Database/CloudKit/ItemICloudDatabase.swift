@@ -2,7 +2,7 @@ import CloudKit
 import SwiftObserver
 import SwiftyToolz
 
-let database = ItemICloudDatabase()
+let itemICloudDatabase = ItemICloudDatabase()
 
 class ItemICloudDatabase: ICloudDatabase, Observable
 {
