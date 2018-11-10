@@ -12,10 +12,9 @@ extension ItemICloudDatabase: ItemDatabase
         switch edit
         {
         case .insertItems(let modifications, let rootID):
-            createItems(with: modifications,
-                                 inRootWithID: rootID)
-        case .modifyItem(let modification):
-            modifyItem(with: modification)
+            createItems(with: modifications, inRootWithID: rootID)
+        case .modifyItem(let modification, let rootID):
+            modifyItem(with: modification, rootID: rootID)
         case .removeItemsWithIds(let ids):
             deleteItems(with: ids)
         }
@@ -90,8 +89,9 @@ extension ItemICloudDatabase: ItemDatabase
     
     // MARK: - Modify
     
-    func modifyItem(with modification: Modification)
+    func modifyItem(with modification: Modification, rootID: String?)
     {
+        // TODO: maintain order when item changes position...
         fetchRecord(with: CKRecord.ID(recordName: modification.id))
         {
             guard let record = $0, record.apply(modification) else

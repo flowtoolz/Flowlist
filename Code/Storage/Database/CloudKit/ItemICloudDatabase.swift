@@ -70,24 +70,27 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                 
                 if let modification = record.modification
                 {
-                    self.didModifyRecord(with: modification)
+                    self.didModifyRecord(with: modification,
+                                         superItemName: record.superItem)
                 }
             }
             
             return
         }
         
-        print("icloud did modify record. did sent all new fields:\n\(notification.recordFields.debugDescription)")
+        let superItemFieldName = CKRecord.FieldName.superItem.rawValue
+        let fields = notification.recordFields
+        let superItemName = fields?[superItemFieldName] as? String
         
         if let modification = id.makeModification(from: notification)
         {
-            didModifyRecord(with: modification)
+            didModifyRecord(with: modification, superItemName: superItemName)
         }
     }
     
-    private func didModifyRecord(with mod: Modification)
+    private func didModifyRecord(with mod: Modification, superItemName: String?)
     {
-        send(.modifyItem(mod))
+        send(.modifyItem(mod, inItemWithId: superItemName))
     }
     
     override func didDeleteRecord(with id: CKRecord.ID)

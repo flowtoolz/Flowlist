@@ -17,7 +17,8 @@ enum Edit
         case .receivedDataUpdate(let dataUpdate, let node):
             if case .wasModified = dataUpdate
             {
-                self = .modifyItem(node.modification)
+                self = .modifyItem(node.modification,
+                                   inItemWithId: node.root?.data.id)
             }
             else { return nil }
             
@@ -26,11 +27,12 @@ enum Edit
             self = .removeItemsWithIds(ids)
             
         case .movedNode(let node, _, _):
-            self = .modifyItem(node.modification)
+            self = .modifyItem(node.modification,
+                               inItemWithId: node.root?.data.id)
         }
     }
     
     case insertItems([Modification], inItemWithId: String)
-    case modifyItem(Modification)
+    case modifyItem(Modification, inItemWithId: String?)
     case removeItemsWithIds([String])
 }

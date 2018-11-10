@@ -208,7 +208,7 @@ extension CKRecord
         return fieldName.field
     }
     
-    private enum FieldName: String
+    enum FieldName: String
     {
         init(_ field: Modification.Field)
         {

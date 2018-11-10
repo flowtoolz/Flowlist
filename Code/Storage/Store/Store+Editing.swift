@@ -16,8 +16,8 @@ extension Store
             {
                 createItem(with: modification)
             }
-        case .modifyItem(let modification):
-            updateItem(with: modification)
+        case .modifyItem(let modification, let rootID):
+            updateItem(with: modification, rootID: rootID)
         case .removeItemsWithIds(let nodeIds):
             for id in nodeIds
             {
@@ -51,8 +51,9 @@ extension Store
                         at: modification.position ?? rootItem.count)
     }
     
-    private func updateItem(with modification: Modification)
+    private func updateItem(with modification: Modification, rootID: String?)
     {
+        
         // TODO: updating an Item should be an Item extension
         
         guard let item = itemHash[modification.id] else
@@ -65,7 +66,7 @@ extension Store
         item.data.state <- modification.state
         item.data.tag <- modification.tag
         
-        if item.root?.data.id != modification.rootId
+        if item.root?.data.id != rootID
         {
             log(error: "Did not expect direct modification of item root. ID: \(modification.id). Intended new root ID: \(String(describing: modification.rootId)) item Text: \(item.text ?? "nil")")
         }
