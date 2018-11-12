@@ -28,7 +28,7 @@ extension ItemICloudDatabase: ItemDatabase
     {
         guard let rootID = rootID else
         {
-            // TODO: saving new root items to icloud... handle this case correctly in context...
+            // TODO: saving new root item(s) to icloud... handle this case correctly in context...
             
             let records = modifications.map { CKRecord(modification: $0) }
             
@@ -104,8 +104,41 @@ extension ItemICloudDatabase: ItemDatabase
     
     // MARK: - Modify
     
-    func modifyItem(with modification: Modification, inRootWithID rootID: String?)
+    func modifyItem(with modification: Modification,
+                    inRootWithID rootID: String?)
     {
+        guard let rootID = rootID else
+        {
+            log(warning: "Attempting to modify root item. This cannot happen through regular user interaction.")
+            
+            fetchRecord(with: CKRecord.ID(recordName: modification.id))
+            {
+                guard let record = $0 else
+                {
+                    log(error: "Didn't find root item record to modify.")
+                    return
+                }
+                
+                if let superItem = record.superItem
+                {
+                    log(warning: "Record of supposed root item (no root ID was provided) has itself a super item: \(superItem)")
+                }
+
+                guard record.apply(modification) else { return }
+                
+                self.save(record)
+                {
+                    guard let savedRecord = $0 else
+                    {
+                        // TODO: handle failure
+                        return
+                    }
+                }
+            }
+            
+            return
+        }
+        
         // TODO: maintain order when item changes position...
         fetchRecord(with: CKRecord.ID(recordName: modification.id))
         {
@@ -140,7 +173,8 @@ extension ItemICloudDatabase: ItemDatabase
     
     func deleteItems(handleSuccess: @escaping (Bool) -> Void)
     {
-        deleteRecords(ofType: CKRecord.itemType, handleSuccess: handleSuccess)
+        deleteRecords(ofType: CKRecord.itemType,
+                      handleSuccess: handleSuccess)
     }
     
     // MARK: - Fetch
