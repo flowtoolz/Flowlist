@@ -28,15 +28,22 @@ extension ItemICloudDatabase: ItemDatabase
     {
         guard let rootID = rootID else
         {
+            log(warning: "Attempting to create new root item in iCloud DB. This cannot currently happen through regular user interaction.")
+            
             // TODO: saving new root item(s) to icloud... handle this case correctly in context...
             
             let records = modifications.map { CKRecord(modification: $0) }
             
             self.save(records)
             {
-                success in
-                
-                // TODO: handle failure
+                guard $0 else
+                {
+                    log(error: "Couldn't save records.")
+                    
+                    // TODO: handle failure
+                    
+                    return
+                }
             }
             
             return
@@ -44,6 +51,7 @@ extension ItemICloudDatabase: ItemDatabase
         
         let superitemID = CKRecord.ID(recordName: rootID)
         
+        // TODO: more specifically fetch only those records whose position is >= the smallest position among the new "modifications" ... for efficiency: pass insert position with edit event
         fetchSubitemRecords(withSuperItemID: superitemID)
         {
             // get sorted array of sibling records
@@ -95,9 +103,14 @@ extension ItemICloudDatabase: ItemDatabase
             
             self.save(recordsToSave)
             {
-                success in
-                
-                // TODO: handle failure
+                guard $0 else
+                {
+                    log(error: "Couldn't save records.")
+                    
+                    // TODO: handle failure
+                    
+                    return
+                }
             }
         }
     }
@@ -107,11 +120,13 @@ extension ItemICloudDatabase: ItemDatabase
     func modifyItem(with modification: Modification,
                     inRootWithID rootID: String?)
     {
+        let recordID = CKRecord.ID(recordName: modification.id)
+        
         guard let rootID = rootID else
         {
             log(warning: "Attempting to modify root item. This cannot happen through regular user interaction.")
             
-            fetchRecord(with: CKRecord.ID(recordName: modification.id))
+            fetchRecord(with: recordID)
             {
                 guard let record = $0 else
                 {
@@ -130,6 +145,7 @@ extension ItemICloudDatabase: ItemDatabase
                 {
                     guard let savedRecord = $0 else
                     {
+                        log(error: "Couldn't save record.")
                         // TODO: handle failure
                         return
                     }
@@ -139,18 +155,39 @@ extension ItemICloudDatabase: ItemDatabase
             return
         }
         
-        // TODO: maintain order when item changes position...
-        fetchRecord(with: CKRecord.ID(recordName: modification.id))
+        fetchRecord(with: recordID)
         {
-            guard let record = $0, record.superItem == rootID else
+            guard let record = $0 else
             {
-                log(error: "Didn't find record to modify or record has different superItem.")
+                log(error: "Didn't find item record to modify.")
                 return
             }
-
-            if record.apply(modification)
+            
+            if record.superItem == nil
             {
-                self.save(record) { _ in }
+                log(warning: "Record of supposed sub item (a root ID was provided) has itself no super item.")
+            }
+
+            let positionOld = record.position
+            
+            guard record.apply(modification) else { return }
+            
+            let positionNew = record.position
+            
+            if positionOld != positionNew
+            {
+                // TODO: position is being modified. update sibling positions as well!
+                log(error: "necessary TODO still open.")
+            }
+            
+            self.save(record)
+            {
+                guard let savedRecord = $0 else
+                {
+                    log(error: "Couldn't save record.")
+                    // TODO: handle failure
+                    return
+                }
             }
         }
     }
