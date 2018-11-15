@@ -163,16 +163,18 @@ extension ItemICloudDatabase: ItemDatabase
             {
                 log(warning: "Record of supposed subitem (a root ID was provided) has itself no superitem.")
             }
-
-            let oldPosition = record.position
             
+            let oldPosition = record.position
+
             guard record.apply(modification) else
             {
                 log(warning: "Modification didn't change iCloud record. This is unexpected.")
                 return
             }
             
-            guard oldPosition != record.position else
+            let mustUpdatePositions = modification.modifiesPosition || record.position != oldPosition
+            
+            guard mustUpdatePositions else
             {
                 self.save(record)
                 {
