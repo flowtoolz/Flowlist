@@ -17,7 +17,7 @@ extension ItemICloudDatabase: ItemDatabase
             modifyItem(with: modification, inRootWithID: rootID)
             
         case .removeItems(let ids):
-            deleteItems(with: ids)
+            removeItems(with: ids)
         }
     }
     
@@ -51,32 +51,28 @@ extension ItemICloudDatabase: ItemDatabase
         
         let superitemID = CKRecord.ID(recordName: rootID)
         
-        // TODO: more specifically fetch only those records whose position is >= the smallest position among the new "modifications" ... for efficiency: pass insert position with edit event
+        // TODO: more specifically fetch only those records whose position is >= the smallest position among the new "modifications" ... for efficiency: pass insert position with edit event ... but consider: deletion doesn't update item positions...
         fetchSubitemRecords(withSuperItemID: superitemID)
         {
             // get sorted array of sibling records
             
             guard var siblingRecords = $0 else { return }
             
-            siblingRecords.sort
-            {
-                $0.position ?? 0 < $1.position ?? 0
-            }
+            siblingRecords.sort { $0.position < $1.position }
             
             // insert new records into sibling array
             
-            let sortedMods = modifications.sorted
-            {
-                $0.position ?? 0 < $1.position ?? 0
-            }
+            let sortedMods = modifications.sorted { $0.position < $1.position }
             
             var recordsToSave = [CKRecord]()
             
             for mod in sortedMods
             {
-                guard let pos = mod.position, pos <= siblingRecords.count else
+                let pos = mod.position
+                
+                guard pos <= siblingRecords.count else
                 {
-                    log(error: "No valid position specified for new item.")
+                    log(error: "Invalid position specified for new item.")
                     return
                 }
                 
@@ -176,7 +172,7 @@ extension ItemICloudDatabase: ItemDatabase
                 return
             }
             
-            guard let position = record.position, oldPosition != position else
+            guard oldPosition != record.position else
             {
                 self.save(record)
                 {
@@ -201,14 +197,11 @@ extension ItemICloudDatabase: ItemDatabase
                 
                 guard var siblingRecords = $0 else { return }
                 
-                siblingRecords.sort
-                {
-                    $0.position ?? 0 < $1.position ?? 0
-                }
+                siblingRecords.sort { $0.position < $1.position }
                 
                 // insert fetched record
                 
-                siblingRecords.insert(record, at: position)
+                siblingRecords.insert(record, at: record.position)
                 
                 var recordsToSave = [record]
                 
@@ -242,9 +235,9 @@ extension ItemICloudDatabase: ItemDatabase
         }
     }
     
-    // MARK: - Delete
+    // MARK: - Remove
     
-    func deleteItems(with ids: [String])
+    func removeItems(with ids: [String])
     {
         // TODO: maintain position of siblings
         
@@ -258,7 +251,7 @@ extension ItemICloudDatabase: ItemDatabase
         }
     }
     
-    func deleteItems(handleSuccess: @escaping (Bool) -> Void)
+    func removeItems(handleSuccess: @escaping (Bool) -> Void)
     {
         deleteRecords(ofType: CKRecord.itemType,
                       handleSuccess: handleSuccess)
@@ -301,7 +294,7 @@ extension ItemICloudDatabase: ItemDatabase
     
     func resetItemTree(with modifications: [Modification])
     {
-        deleteItems
+        removeItems
         {
             guard $0 else { return }
             

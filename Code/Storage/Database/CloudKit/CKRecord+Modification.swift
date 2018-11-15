@@ -153,12 +153,12 @@ extension CKRecord
         }
     }
     
-    var position: Int?
+    var position: Int
     {
         get
         {
-            guard isItem else { return nil }
-            return self[ItemFieldName.position.rawValue]
+            guard isItem else { return 0 }
+            return self[ItemFieldName.position.rawValue] ?? 0
         }
         
         set

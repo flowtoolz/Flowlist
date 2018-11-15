@@ -19,7 +19,7 @@ extension Tree where Data == ItemData
                             text: text,
                             state: data.state.value,
                             tag: data.tag.value,
-                            position: indexInRoot)
+                            position: indexInRoot ?? 0)
     }
     
     /**
@@ -27,11 +27,13 @@ extension Tree where Data == ItemData
      **/
     func modifications(position: Int? = nil) -> [Modification]
     {
+        let modPosition = position ?? (indexInRoot ?? 0)
+        
         let modification = Modification(id: data.id,
                                         text: text,
                                         state: data.state.value,
                                         tag: data.tag.value,
-                                        position: position ?? indexInRoot)
+                                        position: modPosition)
         
         var result = [modification]
         

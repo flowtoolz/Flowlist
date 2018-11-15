@@ -32,6 +32,6 @@ extension CKRecord.ID
                             text: newText,
                             state: newState,
                             tag: newTag,
-                            position: newPosition)
+                            position: newPosition ?? 0)
     }
 }

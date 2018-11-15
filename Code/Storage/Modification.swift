@@ -4,7 +4,7 @@ struct Modification
          text: String? = nil,
          state: ItemData.State? = nil,
          tag: ItemData.Tag? = nil,
-         position: Int?)
+         position: Int)
     {
         self.id = id
         self.text = text
@@ -17,7 +17,7 @@ struct Modification
     let text: String?
     let state: ItemData.State?
     let tag: ItemData.Tag?
-    let position: Int?
+    let position: Int
     
     enum Field: String, CaseIterable
     {

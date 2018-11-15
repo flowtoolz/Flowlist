@@ -72,8 +72,9 @@ extension Store
             log(error: "Did not expect direct modification of item root. ID: \(modification.id). Intended new root ID: \(String(describing: rootID)) item Text: \(item.text ?? "nil")")
         }
         
-        if let newPosition = modification.position,
-            let itemRoot = item.root,
+        let newPosition = modification.position
+        
+        if let itemRoot = item.root,
             let oldPosition = itemRoot.index(of: item)
         {
             if oldPosition != newPosition
