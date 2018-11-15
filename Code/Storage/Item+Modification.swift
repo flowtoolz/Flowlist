@@ -13,13 +13,14 @@ extension Tree where Data == ItemData
         self.init(data: data)
     }
     
-    var modification: Modification
+    func modification(modifiesPosition: Bool = true) -> Modification
     {
         return Modification(id: data.id,
                             text: text,
                             state: data.state.value,
                             tag: data.tag.value,
-                            position: indexInRoot ?? 0)
+                            position: indexInRoot ?? 0,
+                            modifiesPosition: modifiesPosition)
     }
     
     /**

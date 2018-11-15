@@ -18,7 +18,8 @@ extension Edit
         case .receivedDataUpdate(let dataUpdate, let node):
             if case .wasModified = dataUpdate
             {
-                self = .modifyItem(withModification: node.modification,
+                let modification = node.modification(modifiesPosition: false)
+                self = .modifyItem(withModification: modification,
                                    inRootWithID: node.root?.data.id)
             }
             else { return nil }
@@ -28,7 +29,7 @@ extension Edit
             self = .removeItems(withIDs: ids)
             
         case .movedNode(let node, _, _):
-            self = .modifyItem(withModification: node.modification,
+            self = .modifyItem(withModification: node.modification(),
                                inRootWithID: node.root?.data.id)
         }
     }
