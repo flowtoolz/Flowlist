@@ -52,7 +52,7 @@ extension ItemICloudDatabase: ItemDatabase
             
             guard var siblingRecords = $0 else
             {
-                log(error: "Couldn't get sibling records.")
+                log(error: "Couldn't download sibling records.")
                 return
             }
             
@@ -119,9 +119,6 @@ extension ItemICloudDatabase: ItemDatabase
                 guard $0 else
                 {
                     log(error: "Couldn't save records.")
-                    
-                    // TODO: handle failure
-                    
                     return
                 }
             }
@@ -152,14 +149,17 @@ extension ItemICloudDatabase: ItemDatabase
                     log(warning: "Record of supposed root item (no root ID was provided) has itself a super item: \(superItem)")
                 }
 
-                guard record.apply(modification) else { return }
+                guard record.apply(modification) else
+                {
+                    log(warning: "Modification didn't change iCloud root record. This is unexpected.")
+                    return
+                }
                 
                 self.save(record)
                 {
-                    guard let savedRecord = $0 else
+                    guard let _ = $0 else
                     {
                         log(error: "Couldn't save record.")
-                        // TODO: handle failure
                         return
                     }
                 }
@@ -195,10 +195,9 @@ extension ItemICloudDatabase: ItemDatabase
             {
                 self.save(record)
                 {
-                    guard let savedRecord = $0 else
+                    guard let _ = $0 else
                     {
                         log(error: "Couldn't save record.")
-                        // TODO: handle failure
                         return
                     }
                 }
@@ -214,7 +213,11 @@ extension ItemICloudDatabase: ItemDatabase
             {
                 // get sorted array of sibling records (includes moved record)
                 
-                guard var siblingRecords = $0 else { return }
+                guard var siblingRecords = $0 else
+                {
+                    log(error: "Couldn't download sibling records.")
+                    return
+                }
                 
                 siblingRecords.sort { $0.position < $1.position }
                 
@@ -249,9 +252,6 @@ extension ItemICloudDatabase: ItemDatabase
                     guard $0 else
                     {
                         log(error: "Couldn't save records.")
-                        
-                        // TODO: handle failure
-                        
                         return
                     }
                 }
@@ -267,9 +267,11 @@ extension ItemICloudDatabase: ItemDatabase
         
         deleteRecords(withIDs: recordIDs)
         {
-            success in
-            
-            // TODO: handle failure
+            guard $0 else
+            {
+                log(error: "Couldn't delete records.")
+                return
+            }
         }
     }
     
@@ -348,7 +350,6 @@ extension ItemICloudDatabase: ItemDatabase
         guard let records = records else
         {
             log(warning: "Record array is nil.")
-            
             return nil
         }
         
@@ -376,7 +377,6 @@ extension ItemICloudDatabase: ItemDatabase
                 if root != nil
                 {
                     log(error: "Record array contains more than 1 root.")
-                    
                     return nil
                 }
                 
@@ -388,7 +388,6 @@ extension ItemICloudDatabase: ItemDatabase
             guard let (_, superItem) = hashMap[superItemId] else
             {
                 log(error: "Record for super item with id \(superItemId) is missing.")
-                
                 return nil
             }
             
