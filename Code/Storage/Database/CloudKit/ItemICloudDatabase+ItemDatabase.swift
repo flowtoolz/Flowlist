@@ -30,8 +30,6 @@ extension ItemICloudDatabase: ItemDatabase
         {
             log(warning: "Attempting to create new root item in iCloud DB. This cannot currently happen through regular user interaction.")
             
-            // TODO: saving new root item(s) to icloud... handle this case correctly in context...
-            
             let records = modifications.map { CKRecord(modification: $0) }
             
             self.save(records)
@@ -39,9 +37,6 @@ extension ItemICloudDatabase: ItemDatabase
                 guard $0 else
                 {
                     log(error: "Couldn't save records.")
-                    
-                    // TODO: handle failure
-                    
                     return
                 }
             }
@@ -51,12 +46,34 @@ extension ItemICloudDatabase: ItemDatabase
         
         let superitemID = CKRecord.ID(recordName: rootID)
         
-        // TODO: more specifically fetch only those records whose position is >= the smallest position among the new "modifications" ... for efficiency: pass insert position with edit event ... but consider: deletion doesn't update item positions...
         fetchSubitemRecords(withSuperItemID: superitemID)
         {
             // get sorted array of sibling records
             
-            guard var siblingRecords = $0 else { return }
+            guard var siblingRecords = $0 else
+            {
+                log(error: "Couldn't get sibling records.")
+                return
+            }
+            
+            guard !siblingRecords.isEmpty else
+            {
+                let recordsToSave = modifications.map
+                {
+                    CKRecord(modification: $0)
+                }
+                
+                self.save(recordsToSave)
+                {
+                    guard $0 else
+                    {
+                        log(error: "Couldn't save records.")
+                        return
+                    }
+                }
+                
+                return
+            }
             
             siblingRecords.sort { $0.position < $1.position }
             
@@ -66,9 +83,9 @@ extension ItemICloudDatabase: ItemDatabase
             
             var recordsToSave = [CKRecord]()
             
-            for mod in sortedMods
+            for modification in sortedMods
             {
-                let targetPosition = mod.position
+                let targetPosition = modification.position
                 
                 guard targetPosition <= siblingRecords.count else
                 {
@@ -76,7 +93,7 @@ extension ItemICloudDatabase: ItemDatabase
                     return
                 }
                 
-                let newRecord = CKRecord(modification: mod)
+                let newRecord = CKRecord(modification: modification)
                 
                 siblingRecords.insert(newRecord, at: targetPosition)
                 recordsToSave.append(newRecord)
