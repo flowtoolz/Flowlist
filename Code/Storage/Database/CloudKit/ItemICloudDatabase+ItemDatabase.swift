@@ -241,8 +241,6 @@ extension ItemICloudDatabase: ItemDatabase
     
     func removeItems(with ids: [String])
     {
-        // TODO: maintain position of siblings
-        
         let recordIDs = ids.map { CKRecord.ID(recordName: $0) }
         
         deleteRecords(withIDs: recordIDs)
