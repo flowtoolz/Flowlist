@@ -68,9 +68,9 @@ extension ItemICloudDatabase: ItemDatabase
             
             for mod in sortedMods
             {
-                let pos = mod.position
+                let targetPosition = mod.position
                 
-                guard pos <= siblingRecords.count else
+                guard targetPosition <= siblingRecords.count else
                 {
                     log(error: "Invalid position specified for new item.")
                     return
@@ -78,7 +78,7 @@ extension ItemICloudDatabase: ItemDatabase
                 
                 let newRecord = CKRecord(modification: mod)
                 
-                siblingRecords.insert(newRecord, at: pos)
+                siblingRecords.insert(newRecord, at: targetPosition)
                 recordsToSave.append(newRecord)
             }
             
@@ -203,7 +203,7 @@ extension ItemICloudDatabase: ItemDatabase
                 
                 // insert fetched record
                 
-                siblingRecords.insert(record, at: record.position)
+                siblingRecords.insert(record, at: modification.position)
                 
                 var recordsToSave = [record]
                 
