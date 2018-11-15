@@ -195,19 +195,24 @@ extension ItemICloudDatabase: ItemDatabase
             
             self.fetchSubitemRecords(withSuperItemID: superitemID)
             {
-                // get sorted array of sibling records
+                // get sorted array of sibling records (includes moved record)
                 
                 guard var siblingRecords = $0 else { return }
                 
                 siblingRecords.sort { $0.position < $1.position }
                 
-                // insert fetched record
+                // replace modified record
+                
+                siblingRecords.remove
+                {
+                    $0.recordID.recordName == record.recordID.recordName
+                }
                 
                 siblingRecords.insert(record, at: modification.position)
                 
-                var recordsToSave = [record]
-                
                 // siblings whose position has shifted must be saved back
+                
+                var recordsToSave = [record]
                 
                 for position in 0 ..< siblingRecords.count
                 {
