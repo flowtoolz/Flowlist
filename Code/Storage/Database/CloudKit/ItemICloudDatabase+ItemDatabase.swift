@@ -165,28 +165,78 @@ extension ItemICloudDatabase: ItemDatabase
             
             if record.superItem == nil
             {
-                log(warning: "Record of supposed sub item (a root ID was provided) has itself no super item.")
+                log(warning: "Record of supposed subitem (a root ID was provided) has itself no superitem.")
             }
 
-            let positionOld = record.position
+            let oldPosition = record.position
             
-            guard record.apply(modification) else { return }
-            
-            let positionNew = record.position
-            
-            if positionOld != positionNew
+            guard record.apply(modification) else
             {
-                // TODO: position is being modified. update sibling positions as well!
-                log(error: "necessary TODO still open.")
+                log(warning: "Modification didn't change iCloud record. This is unexpected.")
+                return
             }
             
-            self.save(record)
+            guard let position = record.position, oldPosition != position else
             {
-                guard let savedRecord = $0 else
+                self.save(record)
                 {
-                    log(error: "Couldn't save record.")
-                    // TODO: handle failure
-                    return
+                    guard let savedRecord = $0 else
+                    {
+                        log(error: "Couldn't save record.")
+                        // TODO: handle failure
+                        return
+                    }
+                }
+                
+                return
+            }
+            
+            // TODO: more specifically fetch only those records whose position is >= the smallest position among the new "modifications" ... for efficiency: pass insert position with edit event
+            
+            let superitemID = CKRecord.ID(recordName: rootID)
+            
+            self.fetchSubitemRecords(withSuperItemID: superitemID)
+            {
+                // get sorted array of sibling records
+                
+                guard var siblingRecords = $0 else { return }
+                
+                siblingRecords.sort
+                {
+                    $0.position ?? 0 < $1.position ?? 0
+                }
+                
+                // insert fetched record
+                
+                siblingRecords.insert(record, at: position)
+                
+                var recordsToSave = [record]
+                
+                // siblings whose position has shifted must be saved back
+                
+                for position in 0 ..< siblingRecords.count
+                {
+                    guard siblingRecords[position].position != position else
+                    {
+                        continue
+                    }
+                    
+                    siblingRecords[position].position = position
+                    recordsToSave.append(siblingRecords[position])
+                }
+                
+                // save records
+            
+                self.save(recordsToSave)
+                {
+                    guard $0 else
+                    {
+                        log(error: "Couldn't save records.")
+                        
+                        // TODO: handle failure
+                        
+                        return
+                    }
                 }
             }
         }
