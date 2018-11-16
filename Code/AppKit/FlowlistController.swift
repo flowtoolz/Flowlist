@@ -16,6 +16,8 @@ class FlowlistController: AppController
     {
         super.applicationDidFinishLaunching(aNotification)
         
+        persistentFlags = UserDefaultsFlags()
+        
         Color.isInDarkMode = systemIsInDarkMode
         
         purchaseController.setup()

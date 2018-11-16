@@ -71,6 +71,8 @@
 		9EA1D3A9219EA80100B5943C /* ItemICloudDatabase+Inserting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3A8219EA80100B5943C /* ItemICloudDatabase+Inserting.swift */; };
 		9EA1D3AB219EA85700B5943C /* ItemICloudDatabase+Removing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3AA219EA85700B5943C /* ItemICloudDatabase+Removing.swift */; };
 		9EA1D3AD219EB4AD00B5943C /* Item+CKRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3AC219EB4AD00B5943C /* Item+CKRecord.swift */; };
+		9EA1D3B0219EBFD000B5943C /* UserDefaultsFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3AF219EBFD000B5943C /* UserDefaultsFlags.swift */; };
+		9EA1D3B2219EC26F00B5943C /* PersistentFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3B1219EC26F00B5943C /* PersistentFlags.swift */; };
 		9EA63839216F8BB100D1503C /* List+Selection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA63838216F8BB100D1503C /* List+Selection.swift */; };
 		9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7F99B20C19B210059166B /* Item+Clipboard.swift */; };
 		9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* Browser.swift */; };
@@ -166,6 +168,8 @@
 		9EA1D3A8219EA80100B5943C /* ItemICloudDatabase+Inserting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemICloudDatabase+Inserting.swift"; sourceTree = "<group>"; };
 		9EA1D3AA219EA85700B5943C /* ItemICloudDatabase+Removing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemICloudDatabase+Removing.swift"; sourceTree = "<group>"; };
 		9EA1D3AC219EB4AD00B5943C /* Item+CKRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CKRecord.swift"; sourceTree = "<group>"; };
+		9EA1D3AF219EBFD000B5943C /* UserDefaultsFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsFlags.swift; sourceTree = "<group>"; };
+		9EA1D3B1219EC26F00B5943C /* PersistentFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentFlags.swift; sourceTree = "<group>"; };
 		9EA63838216F8BB100D1503C /* List+Selection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+Selection.swift"; sourceTree = "<group>"; };
 		9EA7F99B20C19B210059166B /* Item+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Clipboard.swift"; sourceTree = "<group>"; };
 		9EBC70282056FD02007A1EA8 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Browser.swift; sourceTree = "<group>"; };
@@ -542,6 +546,7 @@
 				9EA5A8AD218ED9FB004902F7 /* Foundation */,
 				9E5768C120C15CDF00749C0C /* Tree+Hashable.swift */,
 				9EFB86DB21662AD100985B14 /* Tree.swift */,
+				9EA1D3B1219EC26F00B5943C /* PersistentFlags.swift */,
 				9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */,
 				9E22D8AE218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift */,
 			);
@@ -559,6 +564,7 @@
 		9EA5A8AD218ED9FB004902F7 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				9EA1D3AF219EBFD000B5943C /* UserDefaultsFlags.swift */,
 				9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */,
 			);
 			path = Foundation;
@@ -699,6 +705,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E6E70AF2193803E00BDB0BA /* Item+CodableField.swift in Sources */,
+				9EA1D3B0219EBFD000B5943C /* UserDefaultsFlags.swift in Sources */,
 				9EA1D3A9219EA80100B5943C /* ItemICloudDatabase+Inserting.swift in Sources */,
 				9E053B3321886963001B7103 /* ItemICloudDatabase.swift in Sources */,
 				9E053B3A218870D0001B7103 /* main.swift in Sources */,
@@ -712,6 +719,7 @@
 				9E053B6F2188722D001B7103 /* Font+Style.swift in Sources */,
 				9E053B5E218871C4001B7103 /* ListView.swift in Sources */,
 				9EF231AF218B99B1006E783C /* DecodableItem.swift in Sources */,
+				9EA1D3B2219EC26F00B5943C /* PersistentFlags.swift in Sources */,
 				9E053B5F218871C4001B7103 /* Header.swift in Sources */,
 				9E053B4F2188715D001B7103 /* BulletpointList.swift in Sources */,
 				9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */,
