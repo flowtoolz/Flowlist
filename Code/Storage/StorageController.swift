@@ -14,7 +14,7 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
         {
             guard let edit = $0 else { return }
             
-            log("applying edit from db to store: \(edit)")
+            //log("applying edit from db to store: \(edit)")
             
             Store.shared.apply(edit)
         }
@@ -23,7 +23,7 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
         {
             guard case .wasEdited(let edit) = $0 else { return }
             
-            log("applying edit from store to db: \(edit)")
+            //log("applying edit from store to db: \(edit)")
 
             database.apply(edit)
         }
