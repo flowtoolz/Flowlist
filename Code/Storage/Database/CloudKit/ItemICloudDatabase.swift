@@ -1,6 +1,5 @@
 import CloudKit
 import SwiftObserver
-import SwiftyToolz
 
 let itemICloudDatabase = ItemICloudDatabase()
 
@@ -111,7 +110,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         return notification.recordFields?[fieldName] as? String
     }
     
-    // MARK: - Create Item Subscription
+    // MARK: - Create Subscription
     
     func createItemRecordSubscription()
     {

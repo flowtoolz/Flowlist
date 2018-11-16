@@ -33,7 +33,7 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
 //
 //        if let root = Store.shared.root
 //        {
-//            database?.resetItemTree(with: root.modifications())
+//            database?.resetItemTree(with: root)
 //        }
         database?.fetchItemTree()
         {

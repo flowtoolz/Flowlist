@@ -5,12 +5,14 @@ extension CKRecord
 {
     // MARK: - Initialization
 
-    convenience init(modification: Modification)
+    convenience init(modification: Modification, superItem: String?)
     {
         self.init(recordType: CKRecord.itemType,
                   recordID: ID(recordName: modification.id))
         
         apply(modification)
+        
+        self.superItem = superItem
     }
     
     @discardableResult

@@ -8,5 +8,5 @@ protocol ItemDatabase: Observable where UpdateType == Edit?
     
     // root management
     func fetchItemTree(receiveRoot: @escaping (Item?) -> Void)
-    func resetItemTree(with modifications: [Modification])
+    func resetItemTree(with root: Item)
 }
