@@ -33,6 +33,10 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
     
     func appDidLaunch()
     {
+        print(userWantsICloud.value)
+        
+        userWantsICloud.value = false
+        
 //        loadFromFile()
 //
 //        if let root = Store.shared.root
@@ -84,4 +88,9 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
     }
     
     private weak var file: File?
+    
+    // MARK: - State
+    
+    var userWantsICloud = PersistentFlag(key: "UserWantsICloud",
+                                         defaultValue: true)
 }
