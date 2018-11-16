@@ -2,6 +2,8 @@ import SwiftObserver
 
 class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
 {
+    // MARK: - Initialization
+    
     init(with file: File, database: Database)
     {
         self.file = file
@@ -27,6 +29,8 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
         }
     }
     
+    // MARK: - App Life Cycle
+    
     func appDidLaunch()
     {
 //        loadFromFile()
@@ -48,15 +52,8 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
         }
     }
     
-    func windowLostFocus()
-    {
-        saveToFile()
-    }
-    
-    func appWillTerminate()
-    {
-        saveToFile()
-    }
+    func windowLostFocus() { saveToFile() }
+    func appWillTerminate() { saveToFile() }
     
     // MARK: - Database
     
@@ -66,17 +63,24 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
     
     private func saveToFile()
     {
-        guard let root = Store.shared.root else { return }
+        guard let root = Store.shared.root else
+        {
+            log(warning: "Tried to save items to file but store has no root item.")
+            return
+        }
         
         file?.save(root)
     }
 
     private func loadFromFile()
     {
-        if let item = file?.loadItem()
+        guard let item = file?.loadItem() else
         {
-            Store.shared.update(root: item)
+            log(error: "Couldn't load items from file.")
+            return
         }
+    
+        Store.shared.update(root: item)
     }
     
     private weak var file: File?
