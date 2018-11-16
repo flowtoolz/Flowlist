@@ -33,16 +33,43 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
     
     func appDidLaunch()
     {
-        print(userWantsICloud.value)
+        guard userWantsDatabase.value else
+        {
+            loadFromFile()
+            return
+        }
         
-        userWantsICloud.value = false
-        
-//        loadFromFile()
-//
+        database?.checkAvailability
+        {
+            available, errorMessage in
+            
+            guard available else
+            {
+                log("This issue did occur: \(errorMessage ?? "Flowlist couldn't determine your iCloud account status.")\n\nMake sure your device is connected to your iCloud account, then restart Flowlist.\n\nOr: Deactivate iCloud integration via the main menu.\n",
+                    title: "Whoops, no iCloud?",
+                    forUser: true)
+                
+                self.loadFromFile()
+                
+                return
+            }
+            
+            self.tryToLoadFromDatabase()
+        }
+
 //        if let root = Store.shared.root
 //        {
 //            database?.resetItemTree(with: root)
 //        }
+    }
+    
+    func windowLostFocus() { saveToFile() }
+    func appWillTerminate() { saveToFile() }
+    
+    // MARK: - Database
+    
+    private func tryToLoadFromDatabase()
+    {
         database?.fetchItemTree()
         {
             if let root = $0
@@ -51,15 +78,11 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
             }
             else
             {
+                log(error: "Couldn't load items from database. Falling back to local file.")
                 self.loadFromFile()
             }
         }
     }
-    
-    func windowLostFocus() { saveToFile() }
-    func appWillTerminate() { saveToFile() }
-    
-    // MARK: - Database
     
     private weak var database: Database?
     
@@ -91,6 +114,6 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
     
     // MARK: - State
     
-    var userWantsICloud = PersistentFlag(key: "UserWantsICloud",
-                                         defaultValue: true)
+    var userWantsDatabase = PersistentFlag(key: "UserWantsDatabase",
+                                           defaultValue: true)
 }

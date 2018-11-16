@@ -288,33 +288,39 @@ class ICloudDatabase
         return container.privateCloudDatabase
     }
     
-    func isICloudAvailable(handleResult: @escaping (Bool) -> Void)
+    func checkAvailability(handleResult: @escaping (_ available: Bool, _ errorMessage: String?) -> Void)
     {
         container.accountStatus
         {
             status, error in
             
-            if let error = error
+            DispatchQueue.main.async
             {
-                log(error: error.localizedDescription)
-                handleResult(false)
-                return
+                if let error = error
+                {
+                    log(error: error.localizedDescription)
+                    handleResult(false, error.localizedDescription)
+                    return
+                }
+                
+                var errorMessage: String?
+                
+                switch status
+                {
+                case .couldNotDetermine:
+                    errorMessage = "Could not determine iCloud account status."
+                case .available:
+                    handleResult(true, nil)
+                    return
+                case .restricted:
+                    errorMessage = "iCloud account is restricted."
+                case .noAccount:
+                    errorMessage = "This device is not connected to an iCloud account."
+                }
+                
+                log(error: errorMessage ?? "An unknown error occured.")
+                handleResult(false, errorMessage)
             }
-            
-            switch status
-            {
-            case .couldNotDetermine:
-                log(error: "Could not determine iCloud account status.")
-            case .available:
-                handleResult(true)
-                return
-            case .restricted:
-                log(error: "iCloud account is restricted.")
-            case .noAccount:
-                log(error: "This device is not connected to an iCloud account.")
-            }
-            
-            handleResult(false)
         }
     }
     
