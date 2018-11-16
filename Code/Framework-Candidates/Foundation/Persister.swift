@@ -17,8 +17,15 @@ class Persister: PersisterInterface
         return UserDefaults.standard.string(forKey: key)
     }
     
-    func set(_ key: String, _ value: String)
+    func set(_ key: String, _ value: String?)
     {
-        UserDefaults.standard.set(value, forKey: key)
+        if let value = value
+        {
+            UserDefaults.standard.set(value, forKey: key)
+        }
+        else
+        {
+            UserDefaults.standard.removeObject(forKey: key)
+        }
     }
 }

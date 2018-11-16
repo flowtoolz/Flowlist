@@ -1,11 +1,26 @@
 import Foundation
 
+// TODO: extract model code from this file / avoid Foundation dependence
+
+// MARK: - Item Limit
+
 var reachedItemNumberLimit: Bool
 {
     let userCreatedLeafs = numberOfUserCreatedLeafs.latestUpdate
     
     return !isFullVersion && userCreatedLeafs >= maxNumberOfLeafsInTrial
 }
+
+let numberOfUserCreatedLeafs = Store.shared.numberOfUserCreatedLeafs.new().unwrap(0)
+let maxNumberOfLeafsInTrial = 100
+
+// MARK: - Price
+
+var fullVersionPrice: NSDecimalNumber?
+var fullVersionPriceLocale: Locale?
+var fullVersionFormattedPrice: String?
+
+// MARK: - Persistent Full Version Flag
 
 var isFullVersion: Bool
 {
@@ -15,15 +30,15 @@ var isFullVersion: Bool
         
         return true
         
-//        #elseif DEBUG
-//        
-//        return true
+        //        #elseif DEBUG
+        //
+        //        return true
         
         #endif
         
         if let fullVersion = isFullVersion_Cached { return fullVersion }
         
-        let fullVersion = UserDefaults.standard.string(forKey: userNameKey) != nil
+        let fullVersion = persister.string(userNameKey) != nil
         
         isFullVersion_Cached = fullVersion
         
@@ -34,23 +49,9 @@ var isFullVersion: Bool
     {
         isFullVersion_Cached = newValue
         
-        if newValue
-        {
-            UserDefaults.standard.set(NSFullUserName(), forKey: userNameKey)
-        }
-        else
-        {
-            UserDefaults.standard.removeObject(forKey: userNameKey)
-        }
+        persister.set(userNameKey, newValue ? NSFullUserName() : nil)
     }
 }
 
-let numberOfUserCreatedLeafs = Store.shared.numberOfUserCreatedLeafs.new().unwrap(0)
-let maxNumberOfLeafsInTrial = 100
-
 fileprivate var isFullVersion_Cached: Bool?
 fileprivate let userNameKey = "UserName"
-
-var fullVersionPrice: NSDecimalNumber?
-var fullVersionPriceLocale: Locale?
-var fullVersionFormattedPrice: String?
