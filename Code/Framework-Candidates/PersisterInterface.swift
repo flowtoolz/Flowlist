@@ -6,6 +6,12 @@ public struct PersistentFlag
         set { persister.set(key, newValue)}
     }
     
+    func erase()
+    {
+        let nilBool: Bool? = nil
+        persister.set(key, nilBool)
+    }
+    
     let key: String
     let defaultValue: Bool
 }
