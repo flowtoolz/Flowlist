@@ -1,3 +1,15 @@
+public struct PersistentFlag
+{
+    public var value: Bool
+    {
+        get { return persister.bool(key) ?? defaultValue }
+        set { persister.set(key, newValue)}
+    }
+    
+    let key: String
+    let defaultValue: Bool
+}
+
 public var persister: PersisterInterface = DummyPersister()
 
 fileprivate class DummyPersister: PersisterInterface
