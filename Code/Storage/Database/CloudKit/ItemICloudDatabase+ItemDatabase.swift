@@ -52,6 +52,7 @@ extension ItemICloudDatabase: ItemDatabase
             guard let records = $0 else
             {
                 log(error: "Couldn't fetch records.")
+                receiveRoot(nil)
                 return
             }
             

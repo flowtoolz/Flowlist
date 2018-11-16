@@ -54,7 +54,11 @@ class ICloudDatabase
         
         fetchRecords(with: queryAll)
         {
-            guard let records = $0 else { return }
+            guard let records = $0 else
+            {
+                handleSuccess(false)
+                return
+            }
             
             let ids = records.map { $0.recordID }
             
