@@ -10,10 +10,7 @@ extension ItemICloudDatabase
         {
             log(warning: "Attempting to create new root item in iCloud DB. This cannot currently happen through regular user interaction.")
             
-            let records = modifications.map
-            {
-                CKRecord(modification: $0, superItem: nil)
-            }
+            let records = modifications.map { CKRecord(modification: $0) }
             
             self.save(records)
             {
@@ -41,12 +38,9 @@ extension ItemICloudDatabase
             
             guard !siblingRecords.isEmpty else
             {
-                let recordsToSave = modifications.map
-                {
-                    CKRecord(modification: $0, superItem: rootID)
-                }
+                let records = modifications.map { CKRecord(modification: $0) }
                 
-                self.save(recordsToSave)
+                self.save(records)
                 {
                     guard $0 else
                     {
@@ -60,40 +54,56 @@ extension ItemICloudDatabase
             
             siblingRecords.sort { $0.position < $1.position }
             
-            // insert new records into sibling array
-            
-            let sortedMods = modifications.sorted { $0.position < $1.position }
+            // insert new sibling records into sibling array
             
             var recordsToSave = [CKRecord]()
             
-            for modification in sortedMods
+            let sortedNewModifications = modifications.sorted
             {
-                let targetPosition = modification.position
+                $0.position < $1.position
+            }
+            
+            var foundAtLeastOneNewSibling = false
+            
+            for newModification in sortedNewModifications
+            {
+                let newRecord = CKRecord(modification: newModification)
+                recordsToSave.append(newRecord)
                 
-                guard targetPosition <= siblingRecords.count else
+                guard newModification.rootID == rootID else { continue }
+                
+                foundAtLeastOneNewSibling = true
+                
+                let targetPosition = newModification.position
+                
+                if targetPosition > siblingRecords.count
                 {
                     log(error: "Invalid position specified for new item.")
                     return
                 }
                 
-                let newRecord = CKRecord(modification: modification,
-                                         superItem: rootID)
-                
-                siblingRecords.insert(newRecord, at: targetPosition)
-                recordsToSave.append(newRecord)
+                let insertPosition = min(targetPosition, siblingRecords.count)
+                siblingRecords.insert(newRecord, at: insertPosition)
             }
             
-            // siblings whose position has shifted must be saved back
-            
-            for position in 0 ..< siblingRecords.count
+            if !foundAtLeastOneNewSibling
             {
-                guard siblingRecords[position].position != position else
-                {
-                    continue
-                }
+                log(error: "None of the items that are supposed to be inserted into item \(rootID) actually have that item as their root. The items are still being saved to iCloud, but their tree structure is corrupted.")
+            }
+            else
+            {
+                // siblings whose position has shifted must be saved back
                 
-                siblingRecords[position].position = position
-                recordsToSave.append(siblingRecords[position])
+                for position in 0 ..< siblingRecords.count
+                {
+                    guard siblingRecords[position].position != position else
+                    {
+                        continue
+                    }
+                    
+                    siblingRecords[position].position = position
+                    recordsToSave.append(siblingRecords[position])
+                }
             }
             
             // save records

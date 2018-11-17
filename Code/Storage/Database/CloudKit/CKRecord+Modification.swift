@@ -5,14 +5,12 @@ extension CKRecord
 {
     // MARK: - Initialization
 
-    convenience init(modification: Modification, superItem: String?)
+    convenience init(modification: Modification)
     {
         self.init(recordType: CKRecord.itemType,
                   recordID: ID(recordName: modification.id))
         
         apply(modification)
-        
-        self.superItem = superItem
     }
     
     @discardableResult
@@ -35,6 +33,12 @@ extension CKRecord
         if tag != modification.tag
         {
             tag = modification.tag
+            didChange = true
+        }
+        
+        if superItem != modification.rootID
+        {
+            superItem = modification.rootID
             didChange = true
         }
         

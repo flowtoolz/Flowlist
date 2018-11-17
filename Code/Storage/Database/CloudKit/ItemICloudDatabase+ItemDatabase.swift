@@ -30,8 +30,7 @@ extension ItemICloudDatabase: ItemDatabase
             
             let records: [CKRecord] = root.array.map
             {
-                CKRecord(modification: $0.modification(),
-                         superItem: $0.root?.data.id)
+                CKRecord(modification: $0.modification())
             }
             
             self.save(records)
