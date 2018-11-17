@@ -4,7 +4,7 @@ class StorageController: Observer
 {
     // MARK: - Initialization
     
-    init(with file: ItemFile, database: ItemDatabase)
+    init(with file: ItemFile, database: Database)
     {
         self.file = file
         
@@ -84,7 +84,7 @@ class StorageController: Observer
         }
     }
     
-    private weak var database: ItemDatabase?
+    private weak var database: Database?
     
     // MARK: - File
     

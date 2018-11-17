@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-protocol ItemDatabase: class
+protocol Database: class
 {
     // status
     func checkAvailability(handleResult: @escaping (_ available: Bool,_ message: String?) -> Void)

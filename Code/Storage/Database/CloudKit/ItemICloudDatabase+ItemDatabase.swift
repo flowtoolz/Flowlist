@@ -1,7 +1,7 @@
 import CloudKit
 import SwiftObserver
 
-extension ItemICloudDatabase: ItemDatabase
+extension ItemICloudDatabase: Database
 {
     // MARK: - Apply Edits
     
