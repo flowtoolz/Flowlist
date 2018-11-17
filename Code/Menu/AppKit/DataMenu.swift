@@ -18,11 +18,6 @@ class DataMenu: NSMenu, NSMenuItemValidation
         
         addItem(exportItem)
         
-        let cloudItem = makeItem("Start Using iCloud", id: "iCloud")
-        {
-            // TODO: ...
-        }
-        
         addItem(cloudItem)
     }
     
@@ -30,6 +25,8 @@ class DataMenu: NSMenu, NSMenuItemValidation
     
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
+        cloudItem.title = cloudItemTitle
+        
         let mainWindowIsKey = NSApp.mainWindow?.isKeyWindow ?? false
         
         switch menuItem.id
@@ -37,5 +34,16 @@ class DataMenu: NSMenu, NSMenuItemValidation
         case "export": return mainWindowIsKey
         default: return true
         }
+    }
+    
+    private lazy var cloudItem = makeItem(cloudItemTitle)
+    {
+        Storage.shared.isUsingDatabase.toggle()
+    }
+    
+    private var cloudItemTitle: String
+    {
+        let usesICloud = Storage.shared.isUsingDatabase
+        return "\(usesICloud ? "Stop" : "Start") Using iCloud"
     }
 }

@@ -2,6 +2,8 @@ import SwiftObserver
 
 class Storage: Observer
 {
+    // MARK: - Initialization & Configuration
+    
     static let shared = Storage()
     
     private init()
@@ -15,8 +17,6 @@ class Storage: Observer
             self.database?.apply(edit)
         }
     }
-    
-    // MARK: - Configuration
     
     func configure(with file: ItemFile, database: Database)
     {
@@ -36,11 +36,25 @@ class Storage: Observer
         }
     }
     
+    // MARK: - Opting In and Out of iCloud
+    
+    var isUsingDatabase: Bool
+    {
+        set
+        {
+            databaseFlag.value = newValue
+            
+            // TODO: implement opting in and out of iCloud
+        }
+        
+        get { return databaseFlag.value }
+    }
+    
     // MARK: - App Life Cycle
     
     func appDidLaunch()
     {
-        guard userWantsDatabase.value else
+        guard isUsingDatabase else
         {
             loadFromFile()
             return
@@ -121,6 +135,6 @@ class Storage: Observer
     
     // MARK: - State
     
-    var userWantsDatabase = PersistentFlag(key: "UserWantsDatabase",
-                                           defaultValue: true)
+    private var databaseFlag = PersistentFlag(key: "IsUsingDatabase",
+                                              defaultValue: true)
 }
