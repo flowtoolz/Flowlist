@@ -117,5 +117,5 @@ class ItemICloudDatabase: ICloudDatabase
     
     // MARK: - Observability
     
-    var messenger = DatabaseMessenger()
+    let messenger = DatabaseMessenger()
 }
