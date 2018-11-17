@@ -49,8 +49,7 @@ class ICloudDatabase
     func deleteRecords(ofType type: String,
                        handleSuccess: @escaping (Bool) -> Void)
     {
-        let queryAll = CKQuery(recordType: type,
-                               predicate: NSPredicate.all)
+        let queryAll = CKQuery(recordType: type, predicate: .all)
         
         fetchRecords(with: queryAll)
         {

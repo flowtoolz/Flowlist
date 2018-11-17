@@ -61,6 +61,7 @@ extension CKRecord
                             text: text,
                             state: state,
                             tag: tag,
+                            rootID: superItem,
                             position: position)
     }
     
@@ -206,7 +207,7 @@ extension CKRecord
     
     enum ItemFieldName: String, CaseIterable
     {
-        var modificationField: Modification.Field?
+        var modificationField: Modification.Field
         {
             switch self
             {
@@ -214,7 +215,7 @@ extension CKRecord
             case .state: return .state
             case .tag: return .tag
             case .position: return .position
-            case .superItem: return nil
+            case .superItem: return .root
             }
         }
         

@@ -26,8 +26,8 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                 
                 if let mod = record.modification
                 {
-                    self.didCreateRecord(with: mod,
-                                         superItemName: record.superItem)
+                    self.send(.insertItems(withModifications: [mod],
+                                           inRootWithID: mod.rootID))
                 }
             }
             
@@ -36,15 +36,9 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         
         if let mod = id.makeModification(from: notification)
         {
-            didCreateRecord(with: mod,
-                            superItemName: superItemName(from: notification))
+            send(.insertItems(withModifications: [mod],
+                              inRootWithID: mod.rootID))
         }
-    }
-    
-    private func didCreateRecord(with mod: Modification, superItemName: String?)
-    {
-        send(.insertItems(withModifications: [mod],
-                          inRootWithID: superItemName))
     }
     
     // MARK: - Observe Item Modification
@@ -66,8 +60,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                 
                 if let modification = record.modification
                 {
-                    self.didModifyRecord(with: modification,
-                                         superItemName: record.superItem)
+                    self.send(.modifyItem(withModification: modification))
                 }
             }
             
@@ -76,15 +69,8 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         
         if let modification = id.makeModification(from: notification)
         {
-            didModifyRecord(with: modification,
-                            superItemName: superItemName(from: notification))
+            send(.modifyItem(withModification: modification))
         }
-    }
-    
-    private func didModifyRecord(with mod: Modification, superItemName: String?)
-    {
-        send(.modifyItem(withModification: mod,
-                         inRootWithID: superItemName))
     }
     
     // MARK: - Observe Item Deletion

@@ -12,8 +12,8 @@ extension ItemICloudDatabase: ItemDatabase
         case .insertItems(let modifications, let rootID):
             insertItems(with: modifications, inRootWithID: rootID)
             
-        case .modifyItem(let modification, let rootID):
-            modifyItem(with: modification, inRootWithID: rootID)
+        case .modifyItem(let modification):
+            modifyItem(with: modification)
             
         case .removeItems(let ids):
             removeItems(with: ids)

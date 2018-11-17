@@ -5,12 +5,11 @@ extension ItemICloudDatabase
 {
     // MARK: - Modify
     
-    func modifyItem(with modification: Modification,
-                    inRootWithID rootID: String?)
+    func modifyItem(with modification: Modification)
     {
         let recordID = CKRecord.ID(recordName: modification.id)
         
-        guard let rootID = rootID else
+        guard let rootID = modification.rootID else
         {
             log(warning: "Attempting to modify root item. This cannot happen through regular user interaction.")
             

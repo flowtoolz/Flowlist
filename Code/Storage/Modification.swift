@@ -4,6 +4,7 @@ struct Modification
          text: String? = nil,
          state: ItemData.State? = nil,
          tag: ItemData.Tag? = nil,
+         rootID: String?,
          position: Int,
          modifiesPosition: Bool = true)
     {
@@ -11,6 +12,7 @@ struct Modification
         self.text = text
         self.state = state
         self.tag = tag
+        self.rootID = rootID
         self.position = position
         self.modifiesPosition = modifiesPosition
     }
@@ -19,11 +21,12 @@ struct Modification
     let text: String?
     let state: ItemData.State?
     let tag: ItemData.Tag?
+    let rootID: String?
     let position: Int
     let modifiesPosition: Bool
     
     enum Field: String, CaseIterable
     {
-        case text, state, tag, position
+        case text, state, tag, root, position
     }
 }

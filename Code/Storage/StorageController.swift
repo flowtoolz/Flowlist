@@ -39,23 +39,28 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
             return
         }
         
-        database?.checkAvailability
+        database?.removeItems
         {
-            available, errorMessage in
-            
-            guard available else
-            {
-                log("This issue did occur: \(errorMessage ?? "Flowlist couldn't determine your iCloud account status.")\n\nMake sure your device is connected to your iCloud account, then restart Flowlist.\n\nOr: Deactivate iCloud integration via the main menu.\n",
-                    title: "Whoops, no iCloud?",
-                    forUser: true)
-                
-                self.loadFromFile()
-                
-                return
-            }
-            
-            self.tryToLoadFromDatabase()
+            print("did remove all items: \($0)")
         }
+        
+//        database?.checkAvailability
+//        {
+//            available, errorMessage in
+//
+//            guard available else
+//            {
+//                log("This issue did occur: \(errorMessage ?? "Flowlist couldn't determine your iCloud account status.")\n\nMake sure your device is connected to your iCloud account, then restart Flowlist.\n\nOr: Deactivate iCloud integration via the main menu.\n",
+//                    title: "Whoops, no iCloud?",
+//                    forUser: true)
+//
+//                self.loadFromFile()
+//
+//                return
+//            }
+//
+//            self.tryToLoadFromDatabase()
+//        }
 
 //        if let root = Store.shared.root
 //        {

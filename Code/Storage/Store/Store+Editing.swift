@@ -9,15 +9,15 @@ extension Store
         case .insertItems(let modifications, let rootID):
             let sortedByPosition = modifications.sorted
             {
-                $0.position ?? 0 < $1.position ?? 0
+                $0.position < $1.position
             }
             
             for modification in sortedByPosition
             {
                 createItem(with: modification, inItemWithID: rootID)
             }
-        case .modifyItem(let modification, let rootID):
-            updateItem(with: modification, rootID: rootID)
+        case .modifyItem(let modification):
+            updateItem(with: modification)
         case .removeItems(let nodeIds):
             for id in nodeIds
             {
@@ -48,13 +48,11 @@ extension Store
         
         itemHash.add([newItem])
         
-        rootItem.insert(newItem,
-                        at: modification.position ?? rootItem.count)
+        rootItem.insert(newItem, at: modification.position)
     }
     
-    private func updateItem(with modification: Modification, rootID: String?)
+    private func updateItem(with modification: Modification)
     {
-        
         // TODO: updating an Item should be an Item extension
         
         guard let item = itemHash[modification.id] else
@@ -67,9 +65,9 @@ extension Store
         item.data.state <- modification.state
         item.data.tag <- modification.tag
         
-        if item.root?.data.id != rootID
+        if item.root?.data.id != modification.rootID
         {
-            log(error: "Did not expect direct modification of item root. ID: \(modification.id). Intended new root ID: \(String(describing: rootID)) item Text: \(item.text ?? "nil")")
+            log(error: "Did not expect direct modification of item root. ID: \(modification.id). Intended new root ID: \(String(describing: modification.rootID)) item Text: \(item.text ?? "nil")")
         }
         
         let newPosition = modification.position

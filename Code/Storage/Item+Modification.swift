@@ -19,6 +19,7 @@ extension Tree where Data == ItemData
                             text: text,
                             state: data.state.value,
                             tag: data.tag.value,
+                            rootID: root?.data.id,
                             position: indexInRoot ?? 0,
                             modifiesPosition: modifiesPosition)
     }
@@ -34,6 +35,7 @@ extension Tree where Data == ItemData
                                         text: text,
                                         state: data.state.value,
                                         tag: data.tag.value,
+                                        rootID: root?.data.id,
                                         position: modPosition)
         
         var result = [modification]
