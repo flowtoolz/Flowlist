@@ -1,10 +1,10 @@
 import SwiftObserver
 import SwiftyToolz
 
-protocol ItemDatabase: Observable where UpdateType == Edit?
+protocol ItemDatabase: class
 {
     // status
-    func checkAvailability(handleResult: @escaping (_ available: Bool, _ message: String?) -> Void)
+    func checkAvailability(handleResult: @escaping (_ available: Bool,_ message: String?) -> Void)
     
     // general edits
     func apply(_ edit: Edit)
@@ -13,4 +13,12 @@ protocol ItemDatabase: Observable where UpdateType == Edit?
     func fetchItemTree(receiveRoot: @escaping (Item?) -> Void)
     func resetItemTree(with root: Item)
     func removeItems(handleSuccess: @escaping (Bool) -> Void)
+    
+    // observing the database
+    var messenger: DatabaseMessenger { get }
+}
+
+class DatabaseMessenger: Observable
+{
+    var latestUpdate: Edit? = nil
 }

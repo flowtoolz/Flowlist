@@ -17,6 +17,13 @@ class DataMenu: NSMenu, NSMenuItemValidation
         }
         
         addItem(exportItem)
+        
+        let cloudItem = makeItem("Start Using iCloud", id: "iCloud")
+        {
+            // TODO: ...
+        }
+        
+        addItem(cloudItem)
     }
     
     required init(coder decoder: NSCoder) { fatalError() }

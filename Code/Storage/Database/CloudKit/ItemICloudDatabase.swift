@@ -3,7 +3,7 @@ import SwiftObserver
 
 let itemICloudDatabase = ItemICloudDatabase()
 
-class ItemICloudDatabase: ICloudDatabase, Observable
+class ItemICloudDatabase: ICloudDatabase
 {
     fileprivate override init() {}
     
@@ -26,8 +26,8 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                 
                 if let mod = record.modification
                 {
-                    self.send(.insertItems(withModifications: [mod],
-                                           inRootWithID: mod.rootID))
+                    self.messenger.send(.insertItems(withModifications: [mod],
+                                                     inRootWithID: mod.rootID))
                 }
             }
             
@@ -36,8 +36,8 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         
         if let mod = id.makeModification(from: notification)
         {
-            send(.insertItems(withModifications: [mod],
-                              inRootWithID: mod.rootID))
+            messenger.send(.insertItems(withModifications: [mod],
+                                        inRootWithID: mod.rootID))
         }
     }
     
@@ -60,7 +60,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
                 
                 if let modification = record.modification
                 {
-                    self.send(.modifyItem(withModification: modification))
+                    self.messenger.send(.modifyItem(withModification: modification))
                 }
             }
             
@@ -69,7 +69,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
         
         if let modification = id.makeModification(from: notification)
         {
-            send(.modifyItem(withModification: modification))
+            messenger.send(.modifyItem(withModification: modification))
         }
     }
     
@@ -77,7 +77,7 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     override func didDeleteRecord(with id: CKRecord.ID)
     {
-        send(.removeItems(withIDs: [id.recordName]))
+        messenger.send(.removeItems(withIDs: [id.recordName]))
     }
     
     // MARK: - Get Data from Notification
@@ -117,5 +117,5 @@ class ItemICloudDatabase: ICloudDatabase, Observable
     
     // MARK: - Observability
     
-    var latestUpdate: Edit? = nil
+    var messenger = DatabaseMessenger()
 }

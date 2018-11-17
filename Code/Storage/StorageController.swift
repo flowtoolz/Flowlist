@@ -1,16 +1,16 @@
 import SwiftObserver
 
-class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
+class StorageController: Observer
 {
     // MARK: - Initialization
     
-    init(with file: File, database: Database)
+    init(with file: ItemFile, database: ItemDatabase)
     {
         self.file = file
         
         self.database = database
         
-        observe(database)
+        observe(database.messenger)
         {
             guard let edit = $0 else { return }
             
@@ -84,7 +84,7 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
         }
     }
     
-    private weak var database: Database?
+    private weak var database: ItemDatabase?
     
     // MARK: - File
     
@@ -110,7 +110,7 @@ class StorageController<Database: ItemDatabase, File: ItemFile>: Observer
         Store.shared.update(root: item)
     }
     
-    private weak var file: File?
+    private weak var file: ItemFile?
     
     // MARK: - State
     
