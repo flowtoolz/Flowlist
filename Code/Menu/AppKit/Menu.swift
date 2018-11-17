@@ -10,7 +10,7 @@ class Menu: NSMenu
         super.init(title: "Flowlist Menu Bar")
 
         addItem(NSMenuItem(submenu: ApplicationMenu()))
-        addItem(NSMenuItem(submenu: FileMenu()))
+        addItem(NSMenuItem(submenu: DataMenu()))
         addItem(NSMenuItem(submenu: SelectionMenu()))
         addItem(NSMenuItem(submenu: EditMenu()))
         addItem(NSMenuItem(submenu: windowMenu))

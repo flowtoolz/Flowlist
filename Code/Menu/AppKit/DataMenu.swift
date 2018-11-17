@@ -3,13 +3,13 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class FileMenu: NSMenu, NSMenuItemValidation
+class DataMenu: NSMenu, NSMenuItemValidation
 {
     // MARK: - Initialization
     
     init()
     {
-        super.init(title: "File")
+        super.init(title: "Data")
         
         let exportItem = makeItem("Export List as Text...", key: "e", id: "export")
         {
