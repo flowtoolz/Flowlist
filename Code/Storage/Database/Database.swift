@@ -15,10 +15,10 @@ protocol Database: class
     func removeItems(handleSuccess: @escaping (Bool) -> Void)
     
     // observing the database
-    var messenger: DatabaseMessenger { get }
+    var messenger: EditSender { get }
 }
 
-class DatabaseMessenger: Observable
+class EditSender: Observable
 {
     var latestUpdate: Edit? = nil
 }
