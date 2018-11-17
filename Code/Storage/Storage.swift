@@ -1,12 +1,28 @@
 import SwiftObserver
 
-class StorageController: Observer
+class Storage: Observer
 {
-    // MARK: - Initialization
+    static let shared = Storage()
     
-    init(with file: ItemFile, database: Database)
+    private init()
+    {
+        observe(Store.shared)
+        {
+            guard case .wasEdited(let edit) = $0 else { return }
+            
+            //log("applying edit from store to db: \(edit)")
+            
+            self.database?.apply(edit)
+        }
+    }
+    
+    // MARK: - Configuration
+    
+    func configure(with file: ItemFile, database: Database)
     {
         self.file = file
+        
+        stopObserving(self.database?.messenger)
         
         self.database = database
         
@@ -17,15 +33,6 @@ class StorageController: Observer
             //log("applying edit from db to store: \(edit)")
             
             Store.shared.apply(edit)
-        }
-        
-        observe(Store.shared)
-        {
-            guard case .wasEdited(let edit) = $0 else { return }
-            
-            //log("applying edit from store to db: \(edit)")
-
-            database.apply(edit)
         }
     }
     
