@@ -1,7 +1,6 @@
 import AppKit
 import UIToolz
 import SwiftObserver
-import SwiftyToolz
 
 class DataMenu: NSMenu, NSMenuItemValidation
 {
@@ -36,6 +35,8 @@ class DataMenu: NSMenu, NSMenuItemValidation
     
     required init(coder decoder: NSCoder) { fatalError() }
     
+    // MARK: - Item Validation and Titles
+    
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
         cloudItem.title = cloudItemTitle
@@ -48,6 +49,8 @@ class DataMenu: NSMenu, NSMenuItemValidation
         default: return true
         }
     }
+    
+    // MARK: - iCloud Item
     
     private lazy var cloudItem = makeItem(cloudItemTitle)
     {
