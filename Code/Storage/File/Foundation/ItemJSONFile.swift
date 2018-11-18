@@ -10,7 +10,7 @@ class ItemJSONFile: ItemFile
     
     func loadItem() -> Item?
     {
-        guard let fileUrl = fileUrl else { return nil }
+        guard let fileUrl = url else { return nil }
         
         let manager = FileManager.default
         
@@ -39,9 +39,9 @@ class ItemJSONFile: ItemFile
     
     func save(_ item: Item)
     {
-        guard let file = fileUrl, let _ = item.save(to: file) else
+        guard let file = url, let _ = item.save(to: file) else
         {
-            let fileString = self.fileUrl?.absoluteString ?? "file"
+            let fileString = self.url?.absoluteString ?? "file"
             log(error: "Could not save items to " + fileString)
             return
         }
@@ -49,7 +49,7 @@ class ItemJSONFile: ItemFile
     
     // MARK: - File URL
     
-    private var fileUrl: URL?
+    var url: URL?
     {
         return URL.documentDirectory?.appendingPathComponent(filename)
     }

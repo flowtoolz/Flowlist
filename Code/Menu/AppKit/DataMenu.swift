@@ -18,6 +18,19 @@ class DataMenu: NSMenu, NSMenuItemValidation
         
         addItem(exportItem)
         
+        let finderItem = makeItem("Show File in Finder")
+        {
+            guard let fileURL = ItemJSONFile.shared.url else
+            {
+                log(error: "No file URL")
+                return
+            }
+            
+            NSWorkspace.shared.activateFileViewerSelecting([fileURL])
+        }
+        
+        addItem(finderItem)
+        
         addItem(cloudItem)
     }
     
