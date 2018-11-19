@@ -6,7 +6,10 @@ class Storage: Observer
     
     static let shared = Storage()
     
-    private init() { observeStore() }
+    private init()
+    {
+        if isUsingDatabase { observeStore() }
+    }
     
     func configure(with file: ItemFile, database: Database)
     {
@@ -37,30 +40,44 @@ class Storage: Observer
         saveStoreItemsToFile()
     }
     
-    // MARK: - Opting In and Out of iCloud
+    // MARK: - Opting In and Out of Syncing Database & Store
     
     var isUsingDatabase: Bool
     {
         set
         {
-            databaseUsageFlag.value = newValue
-            
             if newValue
             {
-                observeDatabase()
+                tryToStartUsingDatabase()
             }
             else
             {
                 stopObservingDatabase()
+                stopObserving(Store.shared)
+                databaseUsageFlag.value = false
+                
+                // TODO: anything else? sync up data one last time??
             }
-            
-            // TODO: further implement opting in and out of iCloud
         }
         
         get { return databaseUsageFlag.value }
     }
+    
+    private func tryToStartUsingDatabase()
+    {
+        doAfterAvailabilityCheck
+        {
+            guard $0 != nil else { return }
+            
+            // TODO: sync up data
+            
+            self.observeDatabase()
+            self.observeStore()
+            self.databaseUsageFlag.value = true
+        }
+    }
   
-    // MARK: - Observe Database & Store
+    // MARK: - Sync Database & Store
     
     private func observeDatabase()
     {
@@ -86,6 +103,16 @@ class Storage: Observer
         stopObserving(database?.messenger)
     }
     
+    private func observeStore()
+    {
+        observe(Store.shared)
+        {
+            guard case .wasEdited(let edit) = $0 else { return }
+            
+            self.storeWasEdited(edit)
+        }
+    }
+    
     private func storeWasEdited(_ edit: Edit)
     {
         //log("applying edit from store to db: \(edit)")
@@ -102,17 +129,7 @@ class Storage: Observer
         if databaseAvailable { database?.apply(edit) }
     }
     
-    private func observeStore()
-    {
-        observe(Store.shared)
-        {
-            guard case .wasEdited(let edit) = $0 else { return }
-            
-            self.storeWasEdited(edit)
-        }
-    }
-    
-    // MARK: - Other Use Cases
+    // MARK: - Basic Use Cases
     
     private func initializeStoreItems()
     {
