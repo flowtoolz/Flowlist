@@ -161,7 +161,7 @@ class ICloudDatabase
     
     // MARK: - Observing Records
     
-    func didReceiveRemoteNotification(with userInfo: [String : Any])
+    func handlePushNotification(with userInfo: [String : Any])
     {
         let notification = CKNotification(fromRemoteNotificationDictionary: userInfo)
         

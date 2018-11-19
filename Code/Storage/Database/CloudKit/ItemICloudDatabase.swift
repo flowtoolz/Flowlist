@@ -1,10 +1,10 @@
 import CloudKit
 import SwiftObserver
 
-let itemICloudDatabase = ItemICloudDatabase()
-
 class ItemICloudDatabase: ICloudDatabase
 {
+    static let shared = ItemICloudDatabase()
+    
     fileprivate override init() {}
     
     // MARK: - Observe Item Creation

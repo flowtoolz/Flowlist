@@ -23,7 +23,7 @@ class Storage: Observer
         if isUsingDatabase { observeDatabase() }
     }
     
-    // MARK: - App Life Cycle
+    // MARK: - Respond to App Life Cycle
     
     func appDidLaunch()
     {

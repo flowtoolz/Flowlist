@@ -33,7 +33,7 @@ class FlowlistController: AppController
         registerForPushNotifications()
         
         Storage.shared.configure(with: ItemJSONFile.shared,
-                                 database: itemICloudDatabase)
+                                 database: ItemICloudDatabase.shared)
         Storage.shared.appDidLaunch()
     }
     
@@ -93,7 +93,7 @@ class FlowlistController: AppController
     func application(_ application: NSApplication,
                      didReceiveRemoteNotification userInfo: [String : Any])
     {
-        itemICloudDatabase.didReceiveRemoteNotification(with: userInfo)
+        ItemICloudDatabase.shared.handlePushNotification(with: userInfo)
     }
     
     // MARK: - Basics
