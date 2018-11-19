@@ -26,7 +26,11 @@ extension ItemICloudDatabase: Database
     {
         removeItems
         {
-            guard $0 else { return }
+            guard $0 else
+            {
+                log(error: "Couldn't remove records.")
+                return
+            }
             
             let records: [CKRecord] = root.array.map
             {
