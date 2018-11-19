@@ -12,20 +12,62 @@ class Storage: Observer
     {
         self.file = file
         
-        stopObserving(self.database?.messenger)
+        stopObservingDatabase()
         
         self.database = database
+        databaseIsAvailable = nil
         
-        observeDatabase()
+        if isUsingDatabase { observeDatabase() }
     }
     
-    // MARK: - Observe Store and Database
+    // MARK: - App Life Cycle
+    
+    func appDidLaunch()
+    {
+        initializeStoreItems()
+    }
+    
+    func windowLostFocus()
+    {
+        saveStoreItemsToFile()
+    }
+    
+    func appWillTerminate()
+    {
+        saveStoreItemsToFile()
+    }
+    
+    // MARK: - Opting In and Out of iCloud
+    
+    var isUsingDatabase: Bool
+    {
+        set
+        {
+            databaseUsageFlag.value = newValue
+            
+            if newValue
+            {
+                observeDatabase()
+            }
+            else
+            {
+                stopObservingDatabase()
+            }
+            
+            // TODO: further implement opting in and out of iCloud
+        }
+        
+        get { return databaseUsageFlag.value }
+    }
+  
+    // MARK: - Observe Database & Store
     
     private func observeDatabase()
     {
         guard let databaseMessenger = database?.messenger else
         {
             log(error: "No database has been provided.")
+            databaseIsAvailable = false
             return
         }
         
@@ -39,77 +81,72 @@ class Storage: Observer
         }
     }
     
+    private func stopObservingDatabase()
+    {
+        stopObserving(database?.messenger)
+    }
+    
+    private func storeWasEdited(_ edit: Edit)
+    {
+        //log("applying edit from store to db: \(edit)")
+        
+        guard let databaseAvailable = databaseIsAvailable else
+        {
+            log(warning: "Hadn't checked database availability before editing.")
+            
+            doAfterAvailabilityCheck { $0?.apply(edit) }
+            
+            return
+        }
+        
+        if databaseAvailable { database?.apply(edit) }
+    }
+    
     private func observeStore()
     {
         observe(Store.shared)
         {
             guard case .wasEdited(let edit) = $0 else { return }
             
-            //log("applying edit from store to db: \(edit)")
-            
-            self.database?.apply(edit)
+            self.storeWasEdited(edit)
         }
     }
     
-    // MARK: - Opting In and Out of iCloud
-    
-    var isUsingDatabase: Bool
-    {
-        set
-        {
-            databaseUsageFlag.value = newValue
-            
-            // TODO: implement opting in and out of iCloud
-        }
-        
-        get { return databaseUsageFlag.value }
-    }
-    
-    // MARK: - App Life Cycle
-    
-    func appDidLaunch()
-    {
-        initializeStoreItems()
-    }
-    
-    func windowLostFocus()
-    {
-        saveToFile()
-    }
-    
-    func appWillTerminate()
-    {
-        saveToFile()
-    }
-    
-    // MARK: - Use Cases
+    // MARK: - Other Use Cases
     
     private func initializeStoreItems()
     {
         guard isUsingDatabase else
         {
-            loadFromFile()
+            loadStoreItemsFromFile()
             return
         }
         
-        database?.checkAvailability
+        resetStoreWithDatabaseItems()
+    }
+    
+    private func resetStoreWithDatabaseItems()
+    {
+        doAfterAvailabilityCheck
         {
-            available, errorMessage in
-            
-            self.databaseIsAvailable = available
-
-            guard available else
+            guard let database = $0 else
             {
-                log("This issue occured: \(errorMessage ?? "Flowlist couldn't determine your iCloud account status.")\n\nMake sure your Mac is connected to your iCloud account, then restart Flowlist.\n\nOr: Stop using iCloud via the \"Data\" menu.\n",
-                    title: "Whoops, no iCloud?",
-                    forUser: true)
-
-                self.loadFromFile()
-
+                self.loadStoreItemsFromFile()
                 return
             }
-
-            self.tryToLoadFromDatabase()
+            
+            database.fetchItemTree()
+            {
+                if let root = $0
+                {
+                    Store.shared.update(root: root)
+                }
+                else
+                {
+                    log(error: "Couldn't fetch item tree. Falling back to file.")
+                    self.loadStoreItemsFromFile()
+                }
+            }
         }
     }
     
@@ -117,36 +154,59 @@ class Storage: Observer
     {
         guard let root = Store.shared.root else
         {
-            log(warning: "No root in store")
+            log(error: "No root in store")
             return
         }
         
-        database?.resetItemTree(with: root)
+        doAfterAvailabilityCheck
+        {
+            $0?.resetItemTree(with: root)
+        }
     }
     
     // MARK: - Database
     
-    private func tryToLoadFromDatabase()
+    private func doAfterAvailabilityCheck(action: @escaping (Database?) -> Void)
     {
-        database?.fetchItemTree()
+        guard let database = database else
         {
-            if let root = $0
+            log(error: "No database has been provided.")
+            databaseIsAvailable = false
+            action(nil)
+            return
+        }
+        
+        database.checkAvailability
+        {
+            available, errorMessage in
+            
+            self.databaseIsAvailable = available
+            
+            guard available else
             {
-                Store.shared.update(root: root)
+                log("This issue occured: \(errorMessage ?? "Flowlist couldn't determine your iCloud account status.")\n\nMake sure your Mac is connected to your iCloud account, then restart Flowlist.\n\nOr: Stop using iCloud via the \"Data\" menu.\n",
+                    title: "Whoops, no iCloud?",
+                    forUser: true)
+                
+                action(nil)
+                
+                return
             }
-            else
-            {
-                log(error: "Couldn't fetch item tree. Falling back to file.")
-                self.loadFromFile()
-            }
+            
+            action(database)
         }
     }
     
     private weak var database: Database?
     
+    private var databaseUsageFlag = PersistentFlag(key: "IsUsingDatabase",
+                                                   defaultValue: true)
+    
+    private var databaseIsAvailable: Bool?
+    
     // MARK: - File
     
-    private func saveToFile()
+    private func saveStoreItemsToFile()
     {
         guard let root = Store.shared.root else
         {
@@ -157,7 +217,7 @@ class Storage: Observer
         file?.save(root)
     }
 
-    private func loadFromFile()
+    private func loadStoreItemsFromFile()
     {
         guard let item = file?.loadItem() else
         {
@@ -169,11 +229,4 @@ class Storage: Observer
     }
     
     private weak var file: ItemFile?
-    
-    // MARK: - State
-    
-    private var databaseUsageFlag = PersistentFlag(key: "IsUsingDatabase",
-                                                   defaultValue: true)
-    
-    private var databaseIsAvailable: Bool?
 }
