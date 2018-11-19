@@ -29,7 +29,7 @@ extension Tree where Data == ItemData
                 if root != nil
                 {
                     log(error: "Record array contains more than 1 root.")
-                    return nil
+                    continue
                 }
                 
                 root = item
@@ -40,7 +40,7 @@ extension Tree where Data == ItemData
             guard let (_, superItem) = hashMap[superItemId] else
             {
                 log(error: "Record for superitem with id \(superItemId) is missing.")
-                return nil
+                continue
             }
             
             item.root = superItem
