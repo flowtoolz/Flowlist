@@ -179,6 +179,11 @@ class ICloudDatabase
             return
         }
         
+        if !Thread.isMainThread
+        {
+            log(error: "Go to main thread at this point. We're on a background thread.")
+        }
+        
         switch queryNotification.queryNotificationReason
         {
         case .recordCreated:
