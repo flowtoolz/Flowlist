@@ -183,6 +183,25 @@ class Storage: Observer
     
     // MARK: - Database
     
+    func databasAvailabilityMayHaveChanged()
+    {
+        doAfterAvailabilityCheck
+        {
+            guard $0 != nil || !self.isUsingDatabase else
+            {
+                log(error: "Database became unavailable. Case not yet handled.")
+                
+                // TODO: handle this. don't opt out. maybe remember timestamp of last full sync for later merge
+                return
+            }
+            
+            if self.isUsingDatabase
+            {
+                // TODO: handle this as well. resync, merge...
+            }
+        }
+    }
+    
     private func doAfterAvailabilityCheck(action: @escaping (Database?) -> Void)
     {
         guard let database = database else

@@ -31,6 +31,7 @@ class FlowlistController: AppController
         }
         
         registerForPushNotifications()
+        registerForICloudStatusChangeNotifications()
         
         Storage.shared.configure(with: ItemJSONFile.shared,
                                  database: ItemICloudDatabase.shared)
@@ -94,6 +95,25 @@ class FlowlistController: AppController
                      didReceiveRemoteNotification userInfo: [String : Any])
     {
         ItemICloudDatabase.shared.handlePushNotification(with: userInfo)
+    }
+    
+    private func registerForICloudStatusChangeNotifications()
+    {
+        let name = Notification.Name.CKAccountChanged
+        let center = NotificationCenter.default
+        
+        center.addObserver(self,
+                           selector: #selector(iCloudStatusChanged),
+                           name: name,
+                           object: nil)
+    }
+    
+    @objc private func iCloudStatusChanged()
+    {
+        DispatchQueue.main.async
+        {
+            Storage.shared.databasAvailabilityMayHaveChanged()
+        }
     }
     
     // MARK: - Basics
