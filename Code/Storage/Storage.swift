@@ -6,7 +6,40 @@ class Storage: Observer
     
     static let shared = Storage()
     
-    private init()
+    private init() { observeStore() }
+    
+    func configure(with file: ItemFile, database: Database)
+    {
+        self.file = file
+        
+        stopObserving(self.database?.messenger)
+        
+        self.database = database
+        
+        observeDatabase()
+    }
+    
+    // MARK: - Observe Store and Database
+    
+    private func observeDatabase()
+    {
+        guard let databaseMessenger = database?.messenger else
+        {
+            log(error: "No database has been provided.")
+            return
+        }
+        
+        observe(databaseMessenger)
+        {
+            guard let edit = $0 else { return }
+            
+            //log("applying edit from db to store: \(edit)")
+            
+            Store.shared.apply(edit)
+        }
+    }
+    
+    private func observeStore()
     {
         observe(Store.shared)
         {
@@ -18,41 +51,40 @@ class Storage: Observer
         }
     }
     
-    func configure(with file: ItemFile, database: Database)
-    {
-        self.file = file
-        
-        stopObserving(self.database?.messenger)
-        
-        self.database = database
-        
-        observe(database.messenger)
-        {
-            guard let edit = $0 else { return }
-            
-            //log("applying edit from db to store: \(edit)")
-            
-            Store.shared.apply(edit)
-        }
-    }
-    
     // MARK: - Opting In and Out of iCloud
     
     var isUsingDatabase: Bool
     {
         set
         {
-            databaseFlag.value = newValue
+            databaseUsageFlag.value = newValue
             
             // TODO: implement opting in and out of iCloud
         }
         
-        get { return databaseFlag.value }
+        get { return databaseUsageFlag.value }
     }
     
     // MARK: - App Life Cycle
     
     func appDidLaunch()
+    {
+        initializeStoreItems()
+    }
+    
+    func windowLostFocus()
+    {
+        saveToFile()
+    }
+    
+    func appWillTerminate()
+    {
+        saveToFile()
+    }
+    
+    // MARK: - Use Cases
+    
+    private func initializeStoreItems()
     {
         guard isUsingDatabase else
         {
@@ -63,10 +95,12 @@ class Storage: Observer
         database?.checkAvailability
         {
             available, errorMessage in
+            
+            self.databaseIsAvailable = available
 
             guard available else
             {
-                log("This issue did occur: \(errorMessage ?? "Flowlist couldn't determine your iCloud account status.")\n\nMake sure your device is connected to your iCloud account, then restart Flowlist.\n\nOr: Deactivate iCloud integration via the main menu.\n",
+                log("This issue occured: \(errorMessage ?? "Flowlist couldn't determine your iCloud account status.")\n\nMake sure your Mac is connected to your iCloud account, then restart Flowlist.\n\nOr: Stop using iCloud via the \"Data\" menu.\n",
                     title: "Whoops, no iCloud?",
                     forUser: true)
 
@@ -77,15 +111,18 @@ class Storage: Observer
 
             self.tryToLoadFromDatabase()
         }
-
-        if let root = Store.shared.root
-        {
-            database?.resetItemTree(with: root)
-        }
     }
     
-    func windowLostFocus() { saveToFile() }
-    func appWillTerminate() { saveToFile() }
+    private func resetDatabaseWithStoreItems()
+    {
+        guard let root = Store.shared.root else
+        {
+            log(warning: "No root in store")
+            return
+        }
+        
+        database?.resetItemTree(with: root)
+    }
     
     // MARK: - Database
     
@@ -99,7 +136,7 @@ class Storage: Observer
             }
             else
             {
-                log(error: "Couldn't load items from database. Falling back to local file.")
+                log(error: "Couldn't fetch item tree. Falling back to file.")
                 self.loadFromFile()
             }
         }
@@ -113,7 +150,7 @@ class Storage: Observer
     {
         guard let root = Store.shared.root else
         {
-            log(warning: "Tried to save items to file but store has no root item.")
+            log(warning: "Store has no root item.")
             return
         }
         
@@ -135,6 +172,8 @@ class Storage: Observer
     
     // MARK: - State
     
-    private var databaseFlag = PersistentFlag(key: "IsUsingDatabase",
-                                              defaultValue: true)
+    private var databaseUsageFlag = PersistentFlag(key: "IsUsingDatabase",
+                                                   defaultValue: true)
+    
+    private var databaseIsAvailable: Bool?
 }
