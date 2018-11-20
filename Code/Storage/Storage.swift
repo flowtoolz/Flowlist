@@ -33,15 +33,9 @@ class Storage: Observer
         
     }
     
-    func windowLostFocus()
-    {
-        saveStoreItemsToFile()
-    }
+    func windowLostFocus() { Store.shared.saveItems(to: file) }
     
-    func appWillTerminate()
-    {
-        saveStoreItemsToFile()
-    }
+    func appWillTerminate() { Store.shared.saveItems(to: file) }
     
     // MARK: - Opting In and Out of Syncing Database & Store
     
@@ -173,7 +167,7 @@ class Storage: Observer
     {
         guard isUsingDatabase else
         {
-            loadStoreItemsFromFile()
+            Store.shared.loadItems(from: file)
             return
         }
         
@@ -189,7 +183,7 @@ class Storage: Observer
             guard let database = database else
             {
                 log(error: "Database is unavailable.")
-                self.loadStoreItemsFromFile()
+                Store.shared.loadItems(from: self.file)
                 return
             }
             
@@ -202,7 +196,7 @@ class Storage: Observer
                 else
                 {
                     log(error: "Couldn't fetch item tree. Falling back to file.")
-                    self.loadStoreItemsFromFile()
+                    Store.shared.loadItems(from: self.file)
                 }
             }
         }
@@ -285,9 +279,6 @@ class Storage: Observer
                                                    defaultValue: true)
     
     // MARK: - File
-    
-    private func saveStoreItemsToFile() { Store.shared.saveItems(to: file) }
-    private func loadStoreItemsFromFile() { Store.shared.loadItems(from: file) }
     
     private weak var file: ItemFile?
 }
