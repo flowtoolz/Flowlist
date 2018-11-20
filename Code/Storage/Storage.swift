@@ -27,7 +27,11 @@ class Storage: Observer
     
     func appDidLaunch()
     {
-        initializeStoreItems()
+        updateDatabaseAvailability
+        {
+            _, _ in self.initializeStoreItems()
+        }
+        
     }
     
     func windowLostFocus()
@@ -46,18 +50,8 @@ class Storage: Observer
     {
         set
         {
-            if newValue
-            {
-                tryToStartUsingDatabase()
-            }
-            else
-            {
-                stopObservingDatabase()
-                stopObserving(Store.shared)
-                databaseUsageFlag.value = false
-                
-                // TODO: anything else? sync up data one last time??
-            }
+            if newValue { tryToStartUsingDatabase() }
+            else { stopUsingDatabase() }
         }
         
         get { return databaseUsageFlag.value }
@@ -65,16 +59,59 @@ class Storage: Observer
     
     private func tryToStartUsingDatabase()
     {
-        doAfterAvailabilityCheck
+        guard let databaseIsAvailable = databaseIsAvailable else
         {
-            guard $0 != nil else { return }
+            log(warning: "Hadn't checked database availability before opting into using it.")
             
-            // TODO: sync up data
+            updateDatabaseAvailability
+            {
+                db, error in
+                
+                guard db != nil else
+                {
+                    self.didTryToStartUsingUnavailableDatabase()
+                    return
+                }
+                
+                self.startUsingDatabase()
+            }
             
-            self.observeDatabase()
-            self.observeStore()
-            self.databaseUsageFlag.value = true
+            return
         }
+        
+        guard databaseIsAvailable else
+        {
+            didTryToStartUsingUnavailableDatabase()
+            return
+        }
+        
+        startUsingDatabase()
+    }
+    
+    private func didTryToStartUsingUnavailableDatabase()
+    {
+        log(error: "Could not start using database because it's unavailable. Case is unhandled.")
+        // TODO: handle this case. do anything at all?
+    }
+    
+    private func startUsingDatabase()
+    {
+        databaseUsageFlag.value = true
+        
+        observeDatabase()
+        observeStore()
+        
+        // TODO: sync up data
+    }
+    
+    private func stopUsingDatabase()
+    {
+        databaseUsageFlag.value = false
+        
+        stopObservingDatabase()
+        stopObserving(Store.shared)
+        
+        // TODO: do anything? sync up data one last time if db still available?
     }
   
     // MARK: - Sync Database & Store
@@ -121,7 +158,10 @@ class Storage: Observer
         {
             log(warning: "Hadn't checked database availability before editing.")
             
-            doAfterAvailabilityCheck { $0?.apply(edit) }
+            updateDatabaseAvailability
+            {
+                db, error in db?.apply(edit)
+            }
             
             return
         }
@@ -144,10 +184,13 @@ class Storage: Observer
     
     private func resetStoreWithDatabaseItems()
     {
-        doAfterAvailabilityCheck
+        updateDatabaseAvailability
         {
-            guard let database = $0 else
+            database, errorMessage in
+            
+            guard let database = database else
             {
+                log(error: "Database is unavailable.")
                 self.loadStoreItemsFromFile()
                 return
             }
@@ -175,40 +218,46 @@ class Storage: Observer
             return
         }
         
-        doAfterAvailabilityCheck
+        updateDatabaseAvailability
         {
-            $0?.resetItemTree(with: root)
+            database, _ in
+            
+            database?.resetItemTree(with: root)
         }
     }
     
     // MARK: - Database
     
-    func databasAvailabilityMayHaveChanged()
+    func databaseAvailabilityMayHaveChanged()
     {
-        doAfterAvailabilityCheck
+        updateDatabaseAvailability
         {
-            guard $0 != nil || !self.isUsingDatabase else
+            db, errorMessage in
+            
+            guard self.isUsingDatabase else { return }
+            
+            let databaseAvailable = db != nil
+            
+            guard databaseAvailable else
             {
+                self.informUserThatDatabaseIsUnavailable(error: errorMessage)
                 log(error: "Database became unavailable. Case not yet handled.")
-                
                 // TODO: handle this. don't opt out. maybe remember timestamp of last full sync for later merge
                 return
             }
             
-            if self.isUsingDatabase
-            {
-                // TODO: handle this as well. resync, merge...
-            }
+            log(error: "Database became available again. Case not yet handled.")
+            // TODO: handle this as well. resync, merge...
         }
     }
     
-    private func doAfterAvailabilityCheck(action: @escaping (Database?) -> Void)
+    private func updateDatabaseAvailability(action: @escaping (Database?, String?) -> Void)
     {
         guard let database = database else
         {
             log(error: "No database has been provided.")
             databaseIsAvailable = false
-            action(nil)
+            action(nil, nil)
             return
         }
         
@@ -220,17 +269,19 @@ class Storage: Observer
             
             guard available else
             {
-                log("This issue occured: \(errorMessage ?? "Flowlist couldn't determine your iCloud account status.")\n\nMake sure your Mac is connected to your iCloud account, then restart Flowlist.\n\nOr: Stop using iCloud via the \"Data\" menu.\n",
-                    title: "Whoops, no iCloud?",
-                    forUser: true)
-                
-                action(nil)
-                
+                action(nil, errorMessage)
                 return
             }
             
-            action(database)
+            action(database, nil)
         }
+    }
+    
+    private func informUserThatDatabaseIsUnavailable(error: String?)
+    {
+        log("This issue occured: \(error ?? "Flowlist couldn't determine your iCloud account status.")\n\nMake sure your Mac is connected to your iCloud account, then restart Flowlist.\n\nOr: Stop using iCloud via the \"Data\" menu.\n",
+            title: "Whoops, no iCloud?",
+            forUser: true)
     }
     
     private weak var database: Database?
@@ -242,27 +293,8 @@ class Storage: Observer
     
     // MARK: - File
     
-    private func saveStoreItemsToFile()
-    {
-        guard let root = Store.shared.root else
-        {
-            log(warning: "Store has no root item.")
-            return
-        }
-        
-        file?.save(root)
-    }
-
-    private func loadStoreItemsFromFile()
-    {
-        guard let item = file?.loadItem() else
-        {
-            log(error: "Couldn't load items from file.")
-            return
-        }
-    
-        Store.shared.update(root: item)
-    }
+    private func saveStoreItemsToFile() { Store.shared.saveItems(to: file) }
+    private func loadStoreItemsFromFile() { Store.shared.loadItems(from: file) }
     
     private weak var file: ItemFile?
 }

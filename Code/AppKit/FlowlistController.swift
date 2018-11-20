@@ -112,7 +112,7 @@ class FlowlistController: AppController
     {
         DispatchQueue.main.async
         {
-            Storage.shared.databasAvailabilityMayHaveChanged()
+            Storage.shared.databaseAvailabilityMayHaveChanged()
         }
     }
     
