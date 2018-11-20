@@ -28,6 +28,8 @@ class Storage: Observer
             {
                 Store.shared.loadItems(from: self.file)
                 
+                self.stopUsingDatabase()
+                
                 let c2a = "Make sure your Mac is connected to your iCloud account, then retry using iCloud via the \"Data\" menu option \"Start Using iCloud\"."
                 
                 self.informUserDatabaseIsUnavailable(error: errorMessage,
