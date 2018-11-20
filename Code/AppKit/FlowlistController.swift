@@ -33,9 +33,7 @@ class FlowlistController: AppController
         registerForPushNotifications()
         registerForICloudStatusChangeNotifications()
         
-        Storage.initSharedStorage(with: ItemJSONFile.shared,
-                                  database: ItemICloudDatabase.shared)
-        Storage.shared?.appDidLaunch()
+        StorageController.shared.appDidLaunch()
     }
     
     override func applicationWillBecomeActive(_ notification: Notification)

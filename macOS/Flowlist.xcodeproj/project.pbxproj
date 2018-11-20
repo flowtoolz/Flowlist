@@ -59,6 +59,7 @@
 		9E576E372186FAB400C9F876 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E362186FAB400C9F876 /* Database.swift */; };
 		9E654E0A21A431C50052607F /* Store+ItemFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E654E0921A431C50052607F /* Store+ItemFile.swift */; };
 		9E654E0C21A43D070052607F /* Store+Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E654E0B21A43D070052607F /* Store+Database.swift */; };
+		9E654E1121A487070052607F /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E654E1021A485B30052607F /* StorageController.swift */; };
 		9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Item+State.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
 		9E6C721020B1E66D001C3D2C /* Item+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720F20B1E66D001C3D2C /* Item+Debugging.swift */; };
@@ -158,6 +159,7 @@
 		9E576E362186FAB400C9F876 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		9E654E0921A431C50052607F /* Store+ItemFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Store+ItemFile.swift"; sourceTree = "<group>"; };
 		9E654E0B21A43D070052607F /* Store+Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Store+Database.swift"; sourceTree = "<group>"; };
+		9E654E1021A485B30052607F /* StorageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageController.swift; sourceTree = "<group>"; };
 		9E6C720A20B19C88001C3D2C /* Item+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+State.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		9E6C720F20B1E66D001C3D2C /* Item+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Debugging.swift"; sourceTree = "<group>"; };
@@ -259,6 +261,14 @@
 				9E542E911EEEE41C00534981 /* Flowlist.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9E654E0F21A4859C0052607F /* CloudKit */ = {
+			isa = PBXGroup;
+			children = (
+				9E654E1021A485B30052607F /* StorageController.swift */,
+			);
+			path = CloudKit;
 			sourceTree = "<group>";
 		};
 		9E91651620551E6F00A438FB /* Resources */ = {
@@ -372,6 +382,7 @@
 		9EA5A891218ECB1C004902F7 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				9E654E0F21A4859C0052607F /* CloudKit */,
 				9E576E342186F85100C9F876 /* Storage.swift */,
 				9E654E0B21A43D070052607F /* Store+Database.swift */,
 				9EA5A892218ECB37004902F7 /* Database */,
@@ -772,6 +783,7 @@
 				9E6C721020B1E66D001C3D2C /* Item+Debugging.swift in Sources */,
 				9E053B2521886867001B7103 /* FullVersion.swift in Sources */,
 				9E053B3721886BD4001B7103 /* SKProduct+FormattedPrice.swift in Sources */,
+				9E654E1121A487070052607F /* StorageController.swift in Sources */,
 				9E3F69332115ADE2002D595D /* Item+WelcomeTour.swift in Sources */,
 				9E053B6B21887210001B7103 /* TextView.swift in Sources */,
 				9E053B4E2188715D001B7103 /* PriceTag.swift in Sources */,

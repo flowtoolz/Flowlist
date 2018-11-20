@@ -4,17 +4,13 @@ import SwiftyToolz
 
 class ItemJSONFile: ItemFile
 {
-    static let shared = ItemJSONFile()
-    
-    private init() {}
+    init(url: URL = ItemJSONFile.defaultURL) { self.url = url }
     
     func loadItem() -> Item?
     {
-        guard let fileUrl = url else { return nil }
-        
         let manager = FileManager.default
         
-        guard manager.fileExists(atPath: fileUrl.path) else
+        guard manager.fileExists(atPath: url.path) else
         {
             let item = Item(text: NSFullUserName())
             
@@ -23,11 +19,11 @@ class ItemJSONFile: ItemFile
             return item
         }
         
-        guard let item = DecodableItem(fileURL: fileUrl) else
+        guard let item = DecodableItem(fileURL: url) else
         {
-            let title = "Couldn't Read From \"\(filename)\""
+            let title = "Couldn't Read From \"\(url.lastPathComponent)\""
             
-            let message = "Please ensure your file at \(fileUrl.path) is formatted correctly. Then restart Flowlist.\n\nBe careful to retain the JSON format when editing the file outside of Flowlist."
+            let message = "Please ensure your file at \(url.path) is formatted correctly. Then restart Flowlist.\n\nBe careful to retain the JSON format when editing the file outside of Flowlist."
             
             log(error: message, title: title, forUser: true)
             
@@ -39,27 +35,34 @@ class ItemJSONFile: ItemFile
     
     func save(_ item: Item)
     {
-        guard let file = url, let _ = item.save(to: file) else
+        guard let _ = item.save(to: url) else
         {
-            let fileString = self.url?.absoluteString ?? "file"
+            let fileString = self.url.absoluteString
             log(error: "Could not save items to " + fileString)
             return
         }
     }
     
-    // MARK: - File URL
+    // MARK: - URL
     
-    var url: URL?
+    let url: URL
+    
+    // MARK: - Default URL
+    
+    static var defaultURL: URL
     {
-        return URL.documentDirectory?.appendingPathComponent(filename)
+        let directory = URL.documentDirectory ?? Bundle.main.bundleURL
+        let fileName = ItemJSONFile.defaultFileName
+        
+        return directory.appendingPathComponent(fileName)
     }
     
-    private var filename: String
+    private static let defaultFileName: String =
     {
         #if DEBUG
         return "flowlist_debug.json"
         #else
         return "flowlist.json"
         #endif
-    }
+    }()
 }

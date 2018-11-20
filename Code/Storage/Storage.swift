@@ -2,7 +2,7 @@ import SwiftObserver
 
 class Storage: Observer
 {
-    // MARK: - Congigurable Singleton That Logs Error if it Doesn't Exist
+    // MARK: - Configurable Singleton That Logs Error if it Doesn't Exist
     
     static var shared: Storage?
     {
@@ -210,9 +210,9 @@ class Storage: Observer
     private var databaseUsageFlag = PersistentFlag(key: "IsUsingDatabase",
                                                    defaultValue: true)
     
-    private let database: Database
+    let database: Database
     
     // MARK: - File
     
-    private let file: ItemFile
+    let file: ItemFile
 }
