@@ -2,26 +2,9 @@ import SwiftObserver
 
 class Storage: Observer
 {
-    // MARK: - Configurable Singleton That Logs Error if it Doesn't Exist
+    // MARK: - Initialize
     
-    static var shared: Storage?
-    {
-        if sharedInstance == nil
-        {
-            log(error: "Shared Storage instance hasn't been created. Use Storage.initSharedStorage(...) for that.")
-        }
-        
-        return sharedInstance
-    }
-    
-    static func initSharedStorage(with file: ItemFile, database: Database)
-    {
-        sharedInstance = Storage(with: file, database: database)
-    }
-    
-    private static var sharedInstance: Storage?
-    
-    private init(with file: ItemFile, database: Database)
+    init(with file: ItemFile, database: Database)
     {
         self.file = file
         self.database = database

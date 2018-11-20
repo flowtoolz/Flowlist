@@ -4,18 +4,21 @@ import SwiftObserver
 
 class StorageController
 {
+    // MARK: - Singleton Instance
+    
     static let shared = StorageController()
     
     private init()
     {
-        Storage.initSharedStorage(with: jsonFile, database: iCloudDatabase)
+        storage = Storage(with: jsonFile, database: iCloudDatabase)
     }
     
-    func appDidLaunch()
-    {
-        Storage.shared?.appDidLaunch()
-    }
+    // MARK: - System Storage
     
-    let jsonFile = ItemJSONFile()
     let iCloudDatabase = ItemICloudDatabase()
+    let jsonFile = ItemJSONFile()
+    
+    // MARK: - Storage Model
+    
+    let storage: Storage
 }
