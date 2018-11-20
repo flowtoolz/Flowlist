@@ -34,6 +34,7 @@ class Storage: Observer
                 
                 self.informUserDatabaseIsUnavailable(error: errorMessage,
                                                      callToAction: c2a)
+                
                 return
             }
             
@@ -52,6 +53,33 @@ class Storage: Observer
     func windowLostFocus() { Store.shared.saveItems(to: file) }
     
     func appWillTerminate() { Store.shared.saveItems(to: file) }
+    
+    // MARK: - Keep Track of Database Availability
+    
+    func databaseAvailabilityMayHaveChanged()
+    {
+        guard self.isUsingDatabase else { return }
+        
+        database.updateAvailability
+        {
+            available, errorMessage in
+            
+            guard available else
+            {
+                self.stopUsingDatabase()
+                
+                let c2a = "Make sure your Mac is connected to your iCloud account, then retry using iCloud via the \"Data\" menu option \"Start Using iCloud\"."
+                
+                self.informUserDatabaseIsUnavailable(error: errorMessage,
+                                                     callToAction: c2a)
+
+                return
+            }
+            
+            log(error: "Database became available again. Case not yet handled.")
+            // TODO: handle this as well. resync, merge...
+        }
+    }
     
     // MARK: - Opting In and Out of Syncing Database & Store
     
@@ -153,33 +181,6 @@ class Storage: Observer
         }
         
         if databaseAvailable { database.apply(edit) }
-    }
-    
-    // MARK: - Keep Track of Database Availability
-    
-    func databaseAvailabilityMayHaveChanged()
-    {
-        guard self.isUsingDatabase else { return }
-        
-        database.updateAvailability
-        {
-            available, errorMessage in
-            
-            guard available else
-            {
-                let c2a = "Make sure your Mac is connected to your iCloud account, then restart Flowlist.\n\nOr: Stop using iCloud via the \"Data\" menu."
-                
-                self.informUserDatabaseIsUnavailable(error: errorMessage,
-                                                     callToAction: c2a)
-                
-                log(error: "Database became unavailable. Case not yet handled.")
-                // TODO: handle this. don't opt out. maybe remember timestamp of last full sync for later merge
-                return
-            }
-            
-            log(error: "Database became available again. Case not yet handled.")
-            // TODO: handle this as well. resync, merge...
-        }
     }
     
     // MARK: - Database
