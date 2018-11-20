@@ -26,7 +26,7 @@ class Storage: Observer
     
     func appDidLaunch()
     {
-        updateDatabaseAvailability
+        database?.updateAvailability
         {
             _, _ in self.initializeStoreItems()
         }
@@ -54,13 +54,13 @@ class Storage: Observer
     {
         guard let databaseIsAvailable = database?.isAvailable else
         {
-            log(warning: "Hadn't checked database availability before opting into using it. Or no databse has been provided.")
+            log(warning: "Hadn't determined database availability before opting into using it. Or no databse has been provided.")
             
-            updateDatabaseAvailability
+            database?.updateAvailability
             {
-                db, error in
+                available, error in
                 
-                guard db != nil else
+                guard available else
                 {
                     self.didTryToStartUsingUnavailableDatabase()
                     return
@@ -150,9 +150,9 @@ class Storage: Observer
         {
             log(warning: "Hadn't checked database availability before editing. Or no databse has been provided.")
             
-            updateDatabaseAvailability
+            database?.updateAvailability
             {
-                db, error in db?.apply(edit)
+                _, _ in self.database?.apply(edit)
             }
             
             return
@@ -176,18 +176,18 @@ class Storage: Observer
     
     private func resetStoreWithDatabaseItems()
     {
-        updateDatabaseAvailability
+        database?.updateAvailability
         {
-            database, errorMessage in
+            available, errorMessage in
             
-            guard let database = database else
+            guard available else
             {
-                log(error: "Database is unavailable.")
+                log(error: "Database is unavailable. error message: \(errorMessage ?? "nil")")
                 Store.shared.loadItems(from: self.file)
                 return
             }
             
-            database.fetchItemTree()
+            self.database?.fetchItemTree()
             {
                 if let root = $0
                 {
@@ -210,11 +210,11 @@ class Storage: Observer
             return
         }
         
-        updateDatabaseAvailability
+        database?.updateAvailability
         {
-            database, _ in
+            available, errorMessage in
             
-            database?.resetItemTree(with: root)
+            self.database?.resetItemTree(with: root)
         }
     }
     
@@ -222,15 +222,13 @@ class Storage: Observer
     
     func databaseAvailabilityMayHaveChanged()
     {
-        updateDatabaseAvailability
+        database?.updateAvailability
         {
-            db, errorMessage in
+            available, errorMessage in
             
             guard self.isUsingDatabase else { return }
             
-            let databaseAvailable = db != nil
-            
-            guard databaseAvailable else
+            guard available else
             {
                 self.informUserThatDatabaseIsUnavailable(error: errorMessage)
                 log(error: "Database became unavailable. Case not yet handled.")
@@ -240,29 +238,6 @@ class Storage: Observer
             
             log(error: "Database became available again. Case not yet handled.")
             // TODO: handle this as well. resync, merge...
-        }
-    }
-    
-    private func updateDatabaseAvailability(action: @escaping (Database?, String?) -> Void)
-    {
-        guard let database = database else
-        {
-            log(error: "No database has been provided.")
-            action(nil, nil)
-            return
-        }
-        
-        database.updateAvailability
-        {
-            available, errorMessage in
-            
-            guard available else
-            {
-                action(nil, errorMessage)
-                return
-            }
-            
-            action(database, nil)
         }
     }
     
