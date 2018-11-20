@@ -10,6 +10,7 @@ class StorageController
     
     private init()
     {
+        persister = Persister()
         storage = Storage(with: jsonFile, database: iCloudDatabase)
     }
     
