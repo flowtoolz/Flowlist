@@ -60,6 +60,11 @@ class Storage: Observer
     {
         guard self.isUsingDatabase else { return }
         
+        if database.isAvailable != true
+        {
+            log(error: "Invalid state: Using database while it's POSSIBLY unavailable: Is availabe: \(String(describing: database.isAvailable))")
+        }
+    
         database.updateAvailability
         {
             available, errorMessage in
@@ -75,9 +80,6 @@ class Storage: Observer
 
                 return
             }
-            
-            log(error: "Database became available again. Case not yet handled.")
-            // TODO: handle this as well. resync, merge...
         }
     }
     
@@ -168,19 +170,13 @@ class Storage: Observer
     {
         //log("applying edit from store to db: \(edit)")
         
-        guard let databaseAvailable = database.isAvailable else
+        guard database.isAvailable == true else
         {
-            log(warning: "Hadn't checked database availability before editing.")
-            
-            database.updateAvailability
-            {
-                _, _ in self.database.apply(edit)
-            }
-            
+            log(error: "Invalid state: Applying store edits to database while database is unavailable.")
             return
         }
         
-        if databaseAvailable { database.apply(edit) }
+        database.apply(edit)
     }
     
     // MARK: - Database
