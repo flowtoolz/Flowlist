@@ -2,25 +2,77 @@ import SwiftObserver
 
 class Storage: Observer
 {
-    // MARK: - Initialization & Configuration
+    // MARK: - Congigurable Singleton That Logs Error if it Doesn't Exist
     
-    static let shared = Storage()
-    
-    private init()
+    static var shared: Storage?
     {
-        if isUsingDatabase { observeStore() }
+        if sharedInstance == nil
+        {
+            log(error: "Shared Storage instance hasn't been created. Use Storage.initSharedStorage(...) for that.")
+        }
+        
+        return sharedInstance
     }
     
-    func configure(with file: ItemFile, database: Database)
+    static func initSharedStorage(with file: ItemFile, database: Database)
+    {
+        sharedInstance = Storage(with: file, database: database)
+    }
+    
+    private static var sharedInstance: Storage?
+    
+    private init(with file: ItemFile, database: Database)
     {
         self.file = file
-        
-        stopObservingDatabase()
-        
         self.database = database
-        
-        if isUsingDatabase { observeDatabase() }
     }
+    
+    // MARK: - Respond to App Life Cycle
+    
+    func appDidLaunch()
+    {
+        guard isUsingDatabase else
+        {
+            Store.shared.loadItems(from: file)
+            return
+        }
+        
+        guard let database = database else
+        {
+            log(error: "No database has been provided.")
+            return
+        }
+        
+        database.updateAvailability
+        {
+            available, errorMessage in
+        
+            guard available else
+            {
+                Store.shared.loadItems(from: self.file)
+                
+                let c2a = "Make sure your Mac is connected to your iCloud account, then restart Flowlist.\n\nOr: Stop using iCloud via the \"Data\" menu."
+                
+                self.informUserDatabaseIsUnavailable(error: errorMessage,
+                                                     callToAction: c2a)
+                return
+            }
+            
+            Store.shared.resetWithItems(fromAvailableDatabase: database)
+            {
+                guard $0 else
+                {
+                    Store.shared.loadItems(from: self.file)
+                    log(error: "Could not reset store with database items.")
+                    return
+                }
+            }
+        }
+    }
+    
+    func windowLostFocus() { Store.shared.saveItems(to: file) }
+    
+    func appWillTerminate() { Store.shared.saveItems(to: file) }
     
     // MARK: - Opting In and Out of Syncing Database & Store
     
@@ -160,53 +212,6 @@ class Storage: Observer
             // TODO: handle this as well. resync, merge...
         }
     }
-    
-    // MARK: - Respond to App Life Cycle
-    
-    func appDidLaunch()
-    {
-        guard isUsingDatabase else
-        {
-            Store.shared.loadItems(from: file)
-            return
-        }
-        
-        guard let database = database else
-        {
-            log(error: "No database has been provided.")
-            return
-        }
-        
-        database.updateAvailability
-        {
-            available, errorMessage in
-        
-            guard available else
-            {
-                Store.shared.loadItems(from: self.file)
-                
-                let c2a = "Make sure your Mac is connected to your iCloud account, then restart Flowlist.\n\nOr: Stop using iCloud via the \"Data\" menu."
-                
-                self.informUserDatabaseIsUnavailable(error: errorMessage,
-                                                     callToAction: c2a)
-                return
-            }
-            
-            Store.shared.resetWithItems(fromAvailableDatabase: database)
-            {
-                guard $0 else
-                {
-                    Store.shared.loadItems(from: self.file)
-                    log(error: "Could not reset store with database items.")
-                    return
-                }
-            }
-        }
-    }
-    
-    func windowLostFocus() { Store.shared.saveItems(to: file) }
-    
-    func appWillTerminate() { Store.shared.saveItems(to: file) }
     
     // MARK: - Database
     
