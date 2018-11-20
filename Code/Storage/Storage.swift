@@ -18,7 +18,6 @@ class Storage: Observer
         stopObservingDatabase()
         
         self.database = database
-        databaseIsAvailable = nil
         
         if isUsingDatabase { observeDatabase() }
     }
@@ -59,9 +58,9 @@ class Storage: Observer
     
     private func tryToStartUsingDatabase()
     {
-        guard let databaseIsAvailable = databaseIsAvailable else
+        guard let databaseIsAvailable = database?.isAvailable else
         {
-            log(warning: "Hadn't checked database availability before opting into using it.")
+            log(warning: "Hadn't checked database availability before opting into using it. Or no databse has been provided.")
             
             updateDatabaseAvailability
             {
@@ -121,7 +120,6 @@ class Storage: Observer
         guard let databaseMessenger = database?.messenger else
         {
             log(error: "No database has been provided.")
-            databaseIsAvailable = false
             return
         }
         
@@ -154,9 +152,9 @@ class Storage: Observer
     {
         //log("applying edit from store to db: \(edit)")
         
-        guard let databaseAvailable = databaseIsAvailable else
+        guard let databaseAvailable = database?.isAvailable else
         {
-            log(warning: "Hadn't checked database availability before editing.")
+            log(warning: "Hadn't checked database availability before editing. Or no databse has been provided.")
             
             updateDatabaseAvailability
             {
@@ -256,16 +254,13 @@ class Storage: Observer
         guard let database = database else
         {
             log(error: "No database has been provided.")
-            databaseIsAvailable = false
             action(nil, nil)
             return
         }
         
-        database.checkAvailability
+        database.updateAvailability
         {
             available, errorMessage in
-            
-            self.databaseIsAvailable = available
             
             guard available else
             {
@@ -288,8 +283,6 @@ class Storage: Observer
     
     private var databaseUsageFlag = PersistentFlag(key: "IsUsingDatabase",
                                                    defaultValue: true)
-    
-    private var databaseIsAvailable: Bool?
     
     // MARK: - File
     

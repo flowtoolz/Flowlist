@@ -292,7 +292,7 @@ class ICloudDatabase
         return container.privateCloudDatabase
     }
     
-    func checkAvailability(handleResult: @escaping (_ available: Bool, _ errorMessage: String?) -> Void)
+    func updateAvailability(handleResult: @escaping (_ available: Bool, _ errorMessage: String?) -> Void)
     {
         container.accountStatus
         {
@@ -302,6 +302,7 @@ class ICloudDatabase
             {
                 if let error = error
                 {
+                    self.isAvailable = false
                     log(error: error.localizedDescription)
                     handleResult(false, error.localizedDescription)
                     return
@@ -313,20 +314,26 @@ class ICloudDatabase
                 {
                 case .couldNotDetermine:
                     errorMessage = "Could not determine iCloud account status."
-                case .available:
-                    handleResult(true, nil)
-                    return
+                case .available: break
                 case .restricted:
                     errorMessage = "iCloud account is restricted."
                 case .noAccount:
                     errorMessage = "This device is not connected to an iCloud account."
                 }
                 
-                log(error: errorMessage ?? "An unknown error occured.")
-                handleResult(false, errorMessage)
+                if let errorMessage = errorMessage
+                {
+                    log(error: errorMessage)
+                }
+                
+                let available = errorMessage == nil
+                self.isAvailable = available
+                handleResult(available, errorMessage)
             }
         }
     }
+    
+    private(set) var isAvailable: Bool?
     
     let container = CKContainer.default()
 }
