@@ -37,12 +37,6 @@ class Storage: Observer
             return
         }
         
-        guard let database = database else
-        {
-            log(error: "No database has been provided.")
-            return
-        }
-        
         database.updateAvailability
         {
             available, errorMessage in
@@ -58,7 +52,7 @@ class Storage: Observer
                 return
             }
             
-            Store.shared.resetWithItems(fromAvailableDatabase: database)
+            Store.shared.resetWithItems(fromAvailableDatabase: self.database)
             {
                 guard $0 else
                 {
@@ -89,12 +83,6 @@ class Storage: Observer
     
     private func tryToStartUsingDatabase()
     {
-        guard let database = database else
-        {
-            log(error: "No database has been provided.")
-            return
-        }
-        
         database.updateAvailability
         {
             available, errorMessage in
@@ -136,11 +124,7 @@ class Storage: Observer
     
     private func observeDatabase()
     {
-        guard let databaseMessenger = database?.messenger else
-        {
-            log(error: "No database has been provided.")
-            return
-        }
+        let databaseMessenger = database.messenger
         
         observe(databaseMessenger)
         {
@@ -154,7 +138,7 @@ class Storage: Observer
     
     private func stopObservingDatabase()
     {
-        stopObserving(database?.messenger)
+        stopObserving(database.messenger)
     }
     
     private func observeStore()
@@ -171,19 +155,19 @@ class Storage: Observer
     {
         //log("applying edit from store to db: \(edit)")
         
-        guard let databaseAvailable = database?.isAvailable else
+        guard let databaseAvailable = database.isAvailable else
         {
-            log(warning: "Hadn't checked database availability before editing. Or no databse has been provided.")
+            log(warning: "Hadn't checked database availability before editing.")
             
-            database?.updateAvailability
+            database.updateAvailability
             {
-                _, _ in self.database?.apply(edit)
+                _, _ in self.database.apply(edit)
             }
             
             return
         }
         
-        if databaseAvailable { database?.apply(edit) }
+        if databaseAvailable { database.apply(edit) }
     }
     
     // MARK: - Keep Track of Database Availability
@@ -192,7 +176,7 @@ class Storage: Observer
     {
         guard self.isUsingDatabase else { return }
         
-        database?.updateAvailability
+        database.updateAvailability
         {
             available, errorMessage in
             
@@ -226,9 +210,9 @@ class Storage: Observer
     private var databaseUsageFlag = PersistentFlag(key: "IsUsingDatabase",
                                                    defaultValue: true)
     
-    private weak var database: Database?
+    private let database: Database
     
     // MARK: - File
     
-    private weak var file: ItemFile?
+    private let file: ItemFile
 }
