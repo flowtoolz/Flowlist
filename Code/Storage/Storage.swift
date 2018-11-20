@@ -28,7 +28,7 @@ class Storage: Observer
             {
                 Store.shared.loadItems(from: self.file)
                 
-                let c2a = "Make sure your Mac is connected to your iCloud account, then restart Flowlist.\n\nOr: Stop using iCloud via the \"Data\" menu."
+                let c2a = "Make sure your Mac is connected to your iCloud account, then retry using iCloud via the \"Data\" menu option \"Start Using iCloud\"."
                 
                 self.informUserDatabaseIsUnavailable(error: errorMessage,
                                                      callToAction: c2a)

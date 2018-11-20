@@ -41,7 +41,7 @@ class HelpMenu: NSMenu, NSMenuItemValidation
     
     private let videoItem = MenuItem("Watch Screencast Video (Web)", key: "")
     {
-        if let url = URL(string: "http://www.flowtoolz.com/flowlist?utm_source=Flowlist&utm_medium=referral&utm_content=WatchScreencastVideo#video")
+        if let url = URL(string: "https://www.flowtoolz.com/flowlist?utm_source=Flowlist&utm_medium=referral&utm_content=WatchScreencastVideo#video")
         {
             NSWorkspace.shared.open(url)
         }
@@ -49,7 +49,7 @@ class HelpMenu: NSMenu, NSMenuItemValidation
     
     private let keyCommandsItem = MenuItem("Learn Key Commands (Web)", key: "")
     {
-        if let url = URL(string: "http://www.flowtoolz.com/flowlist?utm_source=Flowlist&utm_medium=referral&utm_content=LearnKeyCommands#key-commands")
+        if let url = URL(string: "https://www.flowtoolz.com/flowlist?utm_source=Flowlist&utm_medium=referral&utm_content=LearnKeyCommands#key-commands")
         {
             NSWorkspace.shared.open(url)
         }
@@ -64,10 +64,10 @@ class HelpMenu: NSMenu, NSMenuItemValidation
         browser.focusedList.paste([tour])
     }
     
-    private let contactItem = MenuItem("Contact Me: support@flowlistapp.com",
+    private let contactItem = MenuItem("Contact Me: hello@flowlistapp.com",
                                        key: "")
     {
-        if let url = URL(string: "mailto:support%40flowlistapp.com?SUBJECT=Flowlist")
+        if let url = URL(string: "mailto:hello%40flowlistapp.com?SUBJECT=Flowlist")
         {
             NSWorkspace.shared.open(url)
         }
