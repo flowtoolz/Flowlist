@@ -3,10 +3,6 @@ import SwiftObserver
 
 class ItemICloudDatabase: ICloudDatabase
 {
-    static let shared = ItemICloudDatabase()
-    
-    fileprivate override init() {}
-    
     // MARK: - Observe Item Creation
     
     override func didCreateRecord(with id: CKRecord.ID,

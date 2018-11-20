@@ -17,5 +17,5 @@ class StorageController
     }
     
     let jsonFile = ItemJSONFile()
-    let iCloudDatabase = ItemICloudDatabase.shared
+    let iCloudDatabase = ItemICloudDatabase()
 }
