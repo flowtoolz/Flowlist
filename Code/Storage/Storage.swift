@@ -14,38 +14,20 @@ class Storage: Observer
     
     func appDidLaunch()
     {
-        guard isUsingDatabase else
-        {
-            Store.shared.loadItems(from: file)
-            return
-        }
+        Store.shared.loadItems(from: file)
+
+        guard isUsingDatabase else { return }
         
-        database.updateAvailability
+        tryToStartSyncing
         {
-            available, errorMessage in
-        
-            guard available else
+            success, errorMessage in
+            
+            guard success else
             {
-                Store.shared.loadItems(from: self.file)
-                
-                self.stopUsingDatabase()
-                
                 let c2a = "Make sure your Mac is connected to your iCloud account, then retry using iCloud via the \"Data\" menu option \"Start Using iCloud\"."
-                
                 self.informUserDatabaseIsUnavailable(error: errorMessage,
                                                      callToAction: c2a)
-                
                 return
-            }
-            
-            Store.shared.resetWithItems(fromAvailableDatabase: self.database)
-            {
-                guard $0 else
-                {
-                    Store.shared.loadItems(from: self.file)
-                    log(error: "Could not reset store with database items.")
-                    return
-                }
             }
         }
     }
@@ -71,9 +53,9 @@ class Storage: Observer
             
             guard available else
             {
-                self.stopUsingDatabase()
+                self.stopContinuousSyncing()
                 
-                let c2a = "Make sure your Mac is connected to your iCloud account, then retry using iCloud via the \"Data\" menu option \"Start Using iCloud\"."
+                let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account, then pick the menu option \"Data -> Start Using iCloud\"."
                 
                 self.informUserDatabaseIsUnavailable(error: errorMessage,
                                                      callToAction: c2a)
@@ -89,53 +71,124 @@ class Storage: Observer
     {
         set
         {
-            if newValue { tryToStartUsingDatabase() }
-            else { stopUsingDatabase() }
+            guard newValue else
+            {
+                stopContinuousSyncing()
+                return
+            }
+            
+            tryToStartSyncing
+            {
+                success, errorMessage in
+                
+                guard success else
+                {
+                    let c2a = "Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the \"Data\" menu."
+                    
+                    self.informUserDatabaseIsUnavailable(error: errorMessage,
+                                                         callToAction: c2a)
+                    
+                    return
+                }
+            }
         }
         
         get { return databaseUsageFlag.value }
     }
     
-    private func tryToStartUsingDatabase()
+    // MARK: - Initiating Database Use
+    
+    private func tryToStartSyncing(handleSuccess: @escaping (Bool, String?) -> Void)
     {
+        guard Store.shared.root != nil else
+        {
+            log(error: "Store has no root. Create file and Store root before trying top sync Store with Database.")
+            stopContinuousSyncing()
+            return
+        }
+        
         database.updateAvailability
         {
             available, errorMessage in
             
             guard available else
             {
-                let c2a = "Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the \"Data\" menu."
-                
-                self.informUserDatabaseIsUnavailable(error: errorMessage,
-                                                     callToAction: c2a)
+                self.stopContinuousSyncing()
+                handleSuccess(false, errorMessage)
                 return
             }
             
-            self.startUsingDatabase()
+            self.doInitialSync
+            {
+                success in
+                
+                guard success else
+                {
+                    self.stopContinuousSyncing()
+                    handleSuccess(false, "The initial Sync up between iCloud and your Mac didn't work.")
+                    return
+                }
+                
+                self.startContinuousSyncing()
+                handleSuccess(true, nil)
+            }
         }
     }
     
-    private func startUsingDatabase()
+    private func doInitialSync(handleSuccess: @escaping (Bool) -> Void)
     {
-        // TODO: sync up data
+        guard let storeRoot = Store.shared.root else
+        {
+            log(error: "Store has no root. Create file and Store root before syncing Store with Database.")
+            handleSuccess(false)
+            return
+        }
         
-        databaseUsageFlag.value = true
-        
-        observeDatabase()
-        observeStore()
+        self.database.fetchItemTree
+        {
+            success, databaseRoot in
+            
+            guard success else
+            {
+                handleSuccess(false)
+                return
+            }
+            
+            guard let databaseRoot = databaseRoot else
+            {
+                self.database.resetItemTree(with: storeRoot,
+                                            handleSuccess: handleSuccess)
+                
+                return
+            }
+            
+            // FIX: Make Merge Policy more intelligent... handle offline periods etc...
+            Store.shared.update(root: databaseRoot)
+            self.file.save(databaseRoot)
+            
+            handleSuccess(true)
+        }
     }
     
-    private func stopUsingDatabase()
+    // MARK: - Continuous Syncing
+    
+    private func startContinuousSyncing()
     {
-        // TODO: do anything? sync up data one last time if db still available?
-
+        self.databaseUsageFlag.value = true
+        
+        self.observeDatabase()
+        self.observeStore()
+    }
+    
+    private func stopContinuousSyncing()
+    {
         databaseUsageFlag.value = false
         
         stopObservingDatabase()
         stopObserving(Store.shared)
     }
     
-    // MARK: - Sync Database & Store
+    // MARK: - Observe Database & Store
     
     private func observeDatabase()
     {

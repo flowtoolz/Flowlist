@@ -58,7 +58,6 @@
 		9E576E352186F85100C9F876 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E342186F85100C9F876 /* Storage.swift */; };
 		9E576E372186FAB400C9F876 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E362186FAB400C9F876 /* Database.swift */; };
 		9E654E0A21A431C50052607F /* Store+ItemFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E654E0921A431C50052607F /* Store+ItemFile.swift */; };
-		9E654E0C21A43D070052607F /* Store+Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E654E0B21A43D070052607F /* Store+Database.swift */; };
 		9E654E1121A487070052607F /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E654E1021A485B30052607F /* StorageController.swift */; };
 		9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Item+State.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
@@ -158,7 +157,6 @@
 		9E576E342186F85100C9F876 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		9E576E362186FAB400C9F876 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		9E654E0921A431C50052607F /* Store+ItemFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Store+ItemFile.swift"; sourceTree = "<group>"; };
-		9E654E0B21A43D070052607F /* Store+Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Store+Database.swift"; sourceTree = "<group>"; };
 		9E654E1021A485B30052607F /* StorageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageController.swift; sourceTree = "<group>"; };
 		9E6C720A20B19C88001C3D2C /* Item+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+State.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
@@ -384,7 +382,6 @@
 			children = (
 				9E654E0F21A4859C0052607F /* CloudKit */,
 				9E576E342186F85100C9F876 /* Storage.swift */,
-				9E654E0B21A43D070052607F /* Store+Database.swift */,
 				9EA5A892218ECB37004902F7 /* Database */,
 				9EA5A897218ECC98004902F7 /* Store */,
 				9EA5A895218ECC5A004902F7 /* File */,
@@ -765,7 +762,6 @@
 				9EEA769F21922A5700642EE7 /* ItemFile.swift in Sources */,
 				9E053B532188717D001B7103 /* BrowserView.swift in Sources */,
 				9E053B61218871C4001B7103 /* List+NSPasteboard.swift in Sources */,
-				9E654E0C21A43D070052607F /* Store+Database.swift in Sources */,
 				9E576E372186FAB400C9F876 /* Database.swift in Sources */,
 				9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */,
 				9E053B3B218870D0001B7103 /* FlowlistController.swift in Sources */,

@@ -11,8 +11,9 @@ protocol Database: class
     func apply(_ edit: Edit)
     
     // root management
-    func fetchItemTree(receiveRoot: @escaping (Item?) -> Void)
-    func resetItemTree(with root: Item)
+    func fetchItemTree(handleResult: @escaping (_ success: Bool, _ root: Item?) -> Void)
+    func resetItemTree(with root: Item,
+                       handleSuccess: @escaping (Bool) -> Void)
     func removeItems(handleSuccess: @escaping (Bool) -> Void)
     
     // observing the database

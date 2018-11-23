@@ -22,13 +22,15 @@ extension ItemICloudDatabase: Database
     
     // MARK: - Manage the Root
     
-    func resetItemTree(with root: Item)
+    func resetItemTree(with root: Item,
+                       handleSuccess: @escaping (Bool) -> Void)
     {
         removeItems
         {
             guard $0 else
             {
                 log(error: "Couldn't remove records.")
+                handleSuccess(false)
                 return
             }
             
@@ -42,24 +44,40 @@ extension ItemICloudDatabase: Database
                 guard $0 else
                 {
                     log(error: "Couldn't save records.")
+                    handleSuccess(false)
                     return
                 }
+                
+                handleSuccess(true)
             }
         }
     }
     
-    func fetchItemTree(receiveRoot: @escaping (Item?) -> Void)
+    func fetchItemTree(handleResult: @escaping (_ success: Bool, _ root: Item?) -> Void)
     {
         fetchItemRecords()
         {
             guard let records = $0 else
             {
                 log(error: "Couldn't fetch records.")
-                receiveRoot(nil)
+                handleResult(false, nil)
                 return
             }
             
-            receiveRoot(Item(records: records))
+            guard !records.isEmpty else
+            {
+                handleResult(true, nil)
+                return
+            }
+            
+            guard let root = Item(records: records) else
+            {
+                log(error: "Couldn't create item tree from records.")
+                handleResult(false, nil)
+                return
+            }
+            
+            handleResult(true, root)
         }
     }
 }
