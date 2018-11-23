@@ -109,14 +109,13 @@ This update brings minor fixes and performance improvements:
 
 ## Version 1.6.1
 
-Flowlist is an elegant writing and self-management tool optimized for creative focus. Hierarchical lists make it as simple and adaptable as a box of legos. Organize your thoughts and your life in a state of flow!
+Flowlist is an elegant tool for self-management and creative writing. Unbelievably easy yet infinitely flexible. Organize your brain in flow!
 
-Watch a 30 second video at www.flowlistapp.com
-It shows an old version but still illustrates the idea.
+The simple concept of hierarchical lists, the fully animated beautiful interface and the consequent design for creative focus make Flowlist unique, widely applicable and incredibly fun!
 
-Flowlist does not force your stuff into categories like "Project" or "Todo". Instead, items are universal and may contain other items, like folders on your Mac contain other folders. You're free to organize yourself in your own way.
+Flowlist does not force your stuff into categories like "Project" or "Subtask". Instead, items are universal and may contain other items, like folders on your Mac contain other folders. You're free to organize yourself in your own way.
 
-A novel interaction concept combines intuitive key commands, a clean interface and meaningful animations, so you can rapidly navigate and edit your item hierarchy in a state of deep concentration.
+A novel interaction concept combines intuitive key commands, a radically clean interface and meaningful animations, so you can rapidly navigate and edit your item hierarchy in a state of deep concentration.
 
 You may use Flowlist to:
 

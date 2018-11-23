@@ -125,7 +125,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-11-19 21:24:50 +0000</string>
+	<string>2018-11-23 01:37:28 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -188,7 +188,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-932.07317073170714, -307.31707317073142}, {2459.0243902439024, 1456.5853658536587}}</string>
+				<string>{{-932.07317073170714, -307.31707317073165}, {2459.0243902439024, 1456.5853658536585}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -263,7 +263,7 @@
 							<key>Outer</key>
 							<true/>
 							<key>Width</key>
-							<real>3</real>
+							<real>2</real>
 						</dict>
 					</dict>
 					<key>Text</key>
@@ -5243,7 +5243,7 @@
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{499.39024390243918, 499.26829268292715}, {337.07317073170742, 307.31707317073165}}</string>
+		<string>{{499.39024390243918, 499.26829268292693}, {337.07317073170742, 307.31707317073165}}</string>
 		<key>WindowInfo_InspectorTab</key>
 		<array>
 			<string>com.omnigroup.OmniGraffle.inspectorGroup.object</string>
