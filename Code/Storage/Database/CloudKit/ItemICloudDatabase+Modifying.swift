@@ -32,9 +32,9 @@ extension ItemICloudDatabase
                     return
                 }
                 
-                self.save(record)
+                self.save([record])
                 {
-                    guard let _ = $0 else
+                    guard $0 else
                     {
                         log(error: "Couldn't save record.")
                         return
@@ -70,9 +70,9 @@ extension ItemICloudDatabase
             
             guard mustUpdatePositions else
             {
-                self.save(record)
+                self.save([record])
                 {
-                    guard let _ = $0 else
+                    guard $0 else
                     {
                         log(error: "Couldn't save record.")
                         return

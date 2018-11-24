@@ -6,33 +6,6 @@ class ICloudDatabase
 {
     // MARK: - Save
     
-    func save(_ record: CKRecord,
-              handleResult: @escaping (CKRecord?) -> Void)
-    {
-        database.save(record)
-        {
-            savedRecord, error in
-            
-            DispatchQueue.main.async
-            {
-                if let error = error
-                {
-                    log(error: error.localizedDescription)
-                    handleResult(nil)
-                    return
-                }
-                
-                // TODO: why would there be no error but a nil record???
-                if savedRecord == nil
-                {
-                    log(error: "Result record is nil.")
-                }
-                
-                handleResult(savedRecord)
-            }
-        }
-    }
-    
     func save(_ records: [CKRecord],
               handleSuccess: @escaping (Bool) -> Void)
     {
@@ -62,35 +35,6 @@ class ICloudDatabase
             let ids = records.map { $0.recordID }
             
             self.deleteRecords(withIDs: ids, handleSuccess: handleSuccess)
-        }
-    }
-    
-    func deleteRecord(with id: CKRecord.ID,
-                      handleSuccess: @escaping (Bool) -> Void)
-    {
-        database.delete(withRecordID: id)
-        {
-            id, error in
-            
-            DispatchQueue.main.async
-            {
-                if let error = error
-                {
-                    log(error: error.localizedDescription)
-                    handleSuccess(false)
-                    return
-                }
-                
-                // TODO: why would there be no error but a nil id???
-                guard id != nil else
-                {
-                    log(error: "Result id is nil.")
-                    handleSuccess(false)
-                    return
-                }
-                
-                handleSuccess(true)
-            }
         }
     }
     
