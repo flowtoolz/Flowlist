@@ -24,7 +24,7 @@ extension ItemICloudDatabase
             return
         }
         
-        let superitemID = CKRecord.ID(recordName: rootID)
+        let superitemID = CKRecord.ID(itemID: rootID)
         
         fetchSubitemRecords(withSuperItemID: superitemID)
         {

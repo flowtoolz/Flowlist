@@ -8,8 +8,8 @@ extension CKRecord
     convenience init(modification: Modification)
     {
         self.init(recordType: CKRecord.itemType,
-                  recordID: ID(recordName: modification.id))
-        
+                  recordID: ID(itemID: modification.id))
+
         apply(modification)
     }
     
@@ -156,7 +156,7 @@ extension CKRecord
                 return
             }
             
-            self[fieldName] = Reference(ownerName: newValue)
+            self[fieldName] = Reference(itemOwnerName: newValue)
         }
     }
     

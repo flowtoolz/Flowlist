@@ -37,4 +37,9 @@ extension CKRecord.ID
                             rootID: newRootID,
                             position: newPosition ?? 0)
     }
+    
+    convenience init(itemID: String)
+    {
+        self.init(recordName: itemID, zoneID: CKRecordZone.ID.item)
+    }
 }

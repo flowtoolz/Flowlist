@@ -92,6 +92,8 @@
 		9EF231AF218B99B1006E783C /* DecodableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF231AE218B99B0006E783C /* DecodableItem.swift */; };
 		9EF2E8912187D293008D2780 /* Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF2E8902187D293008D2780 /* Edit.swift */; };
 		9EF37C4E21A08EED00A43AA9 /* DataMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF37C4D21A08EED00A43AA9 /* DataMenu.swift */; };
+		9EF96E7421A9F516005619C7 /* CKRecordZone.ID+ItemZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF96E7321A9F516005619C7 /* CKRecordZone.ID+ItemZone.swift */; };
+		9EF96E7621A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF96E7521A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift */; };
 		9EFB86DC21662AD100985B14 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFB86DB21662AD100985B14 /* Tree.swift */; };
 		C932DAFCC628909A261C9DC7 /* Pods_Flowlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D591083E3159C05E29673835 /* Pods_Flowlist.framework */; };
 /* End PBXBuildFile section */
@@ -192,6 +194,8 @@
 		9EF231AE218B99B0006E783C /* DecodableItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodableItem.swift; sourceTree = "<group>"; };
 		9EF2E8902187D293008D2780 /* Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Edit.swift; sourceTree = "<group>"; };
 		9EF37C4D21A08EED00A43AA9 /* DataMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMenu.swift; sourceTree = "<group>"; };
+		9EF96E7321A9F516005619C7 /* CKRecordZone.ID+ItemZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecordZone.ID+ItemZone.swift"; sourceTree = "<group>"; };
+		9EF96E7521A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord.Reference+ItemZone.swift"; sourceTree = "<group>"; };
 		9EFB86DB21662AD100985B14 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
 		BA6347ACAE78132863C2FF94 /* Pods_FlowlistTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlowlistTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCFD3E12471EE5C3B17C7DE0 /* Pods_TodayListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodayListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -412,8 +416,10 @@
 				9EA1D3AA219EA85700B5943C /* ItemICloudDatabase+Removing.swift */,
 				9EA1D3A4219EA60500B5943C /* ItemICloudDatabase+Fetching.swift */,
 				9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */,
-				9E053B2A21886963001B7103 /* CKRecord.ID+Modification.swift */,
 				9E053B2B21886963001B7103 /* CKRecord+Modification.swift */,
+				9EF96E7521A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift */,
+				9E053B2A21886963001B7103 /* CKRecord.ID+Modification.swift */,
+				9EF96E7321A9F516005619C7 /* CKRecordZone.ID+ItemZone.swift */,
 				9E053B2C21886963001B7103 /* ICloudDatabase.swift */,
 			);
 			path = CloudKit;
@@ -760,6 +766,7 @@
 				9EF231AD218B785A006E783C /* Item+Creating.swift in Sources */,
 				9EEBA1A72168EE860053B628 /* ItemData+Copyable.swift in Sources */,
 				9EEA769F21922A5700642EE7 /* ItemFile.swift in Sources */,
+				9EF96E7621A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift in Sources */,
 				9E053B532188717D001B7103 /* BrowserView.swift in Sources */,
 				9E053B61218871C4001B7103 /* List+NSPasteboard.swift in Sources */,
 				9E576E372186FAB400C9F876 /* Database.swift in Sources */,
@@ -781,6 +788,7 @@
 				9E053B3721886BD4001B7103 /* SKProduct+FormattedPrice.swift in Sources */,
 				9E654E1121A487070052607F /* StorageController.swift in Sources */,
 				9E3F69332115ADE2002D595D /* Item+WelcomeTour.swift in Sources */,
+				9EF96E7421A9F516005619C7 /* CKRecordZone.ID+ItemZone.swift in Sources */,
 				9E053B6B21887210001B7103 /* TextView.swift in Sources */,
 				9E053B4E2188715D001B7103 /* PriceTag.swift in Sources */,
 				9E053B60218871C4001B7103 /* ItemTable.swift in Sources */,

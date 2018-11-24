@@ -282,15 +282,6 @@ class ICloudDatabase
     let container = CKContainer.default()
 }
 
-extension CKRecord.Reference
-{
-    convenience init(ownerName: String)
-    {
-        self.init(recordID: CKRecord.ID(recordName: ownerName),
-                  action: .deleteSelf)
-    }
-}
-
 extension NSPredicate
 {
     static var all: NSPredicate { return NSPredicate(value: true) }

@@ -7,7 +7,7 @@ extension ItemICloudDatabase
     
     func modifyItem(with modification: Modification)
     {
-        let recordID = CKRecord.ID(recordName: modification.id)
+        let recordID = CKRecord.ID(itemID: modification.id)
         
         guard let rootID = modification.rootID else
         {
@@ -84,7 +84,7 @@ extension ItemICloudDatabase
             
             // TODO: more specifically fetch only those records whose position is >= the smallest position among the new "modifications" ... for efficiency: pass insert position with edit event
             
-            let superitemID = CKRecord.ID(recordName: rootID)
+            let superitemID = CKRecord.ID(itemID: rootID)
             
             self.fetchSubitemRecords(withSuperItemID: superitemID)
             {

@@ -5,7 +5,7 @@ extension ItemICloudDatabase
 {
     func removeItems(with ids: [String])
     {
-        let recordIDs = ids.map { CKRecord.ID(recordName: $0) }
+        let recordIDs = ids.map { CKRecord.ID(itemID: $0) }
         
         deleteRecords(withIDs: recordIDs)
         {
