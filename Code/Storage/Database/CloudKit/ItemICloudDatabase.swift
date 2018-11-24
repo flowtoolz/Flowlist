@@ -95,13 +95,7 @@ class ItemICloudDatabase: ICloudDatabase
     // MARK: - Create Subscription
     
     func createItemRecordSubscription()
-    {
-        guard #available(OSX 10.12, *) else
-        {
-            log(error: "Function not available below macOS 10.12")
-            return
-        }
-        
+    {   
         let alertKey = "Items were changed in iCloud."
         
         createSubscription(forRecordType: CKRecord.itemType,

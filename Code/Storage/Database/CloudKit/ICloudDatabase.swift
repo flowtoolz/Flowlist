@@ -156,7 +156,6 @@ class ICloudDatabase
         log("Did delete record: <\(id.recordName)>")
     }
     
-    @available(OSX 10.12, *)
     func createSubscription(forRecordType type: String,
                             desiredTags: [String],
                             alertLocalizationKey key: String)
