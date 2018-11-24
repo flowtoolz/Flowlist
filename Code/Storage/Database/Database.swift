@@ -4,7 +4,7 @@ import SwiftyToolz
 protocol Database: class
 {
     // status
-    func updateAvailability(handleResult: @escaping (_ available: Bool, _ error: String?) -> Void)
+    func checkAvailability(handleResult: @escaping (_ available: Bool, _ error: String?) -> Void)
     var isAvailable: Bool? { get }
     
     // general edits

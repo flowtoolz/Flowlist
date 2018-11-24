@@ -47,7 +47,7 @@ class Storage: Observer
             log(error: "Invalid state: Using database while it's POSSIBLY unavailable: Is availabe: \(String(describing: database.isAvailable))")
         }
     
-        database.updateAvailability
+        database.checkAvailability
         {
             available, errorMessage in
             
@@ -107,7 +107,7 @@ class Storage: Observer
             return
         }
         
-        database.updateAvailability
+        database.checkAvailability
         {
             available, errorMessage in
             

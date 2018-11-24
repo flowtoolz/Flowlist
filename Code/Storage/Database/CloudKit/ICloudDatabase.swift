@@ -292,7 +292,7 @@ class ICloudDatabase
         return container.privateCloudDatabase
     }
     
-    func updateAvailability(handleResult: @escaping (_ available: Bool, _ errorMessage: String?) -> Void)
+    func checkAvailability(handleResult: @escaping (_ available: Bool, _ errorMessage: String?) -> Void)
     {
         container.accountStatus
         {
