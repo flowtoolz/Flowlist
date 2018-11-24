@@ -55,7 +55,7 @@ class Storage: Observer
             {
                 self.stopContinuousSyncing()
                 
-                let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account, then pick the menu option \"Data -> Start Using iCloud\"."
+                let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account, then select the menu option \"Data → Start Using iCloud\"."
                 
                 self.informUserDatabaseIsUnavailable(error: errorMessage,
                                                      callToAction: c2a)
@@ -83,7 +83,7 @@ class Storage: Observer
                 
                 guard success else
                 {
-                    let c2a = "Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the \"Data\" menu."
+                    let c2a = "Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the menu option \"Data → Start Using iCloud\"."
                     
                     self.informUserDatabaseIsUnavailable(error: errorMessage,
                                                          callToAction: c2a)
@@ -96,7 +96,7 @@ class Storage: Observer
         get { return databaseUsageFlag.value }
     }
     
-    // MARK: - Initiating Database Use
+    // MARK: - Initiate Database Use
     
     private func tryToStartSyncing(handleSuccess: @escaping (Bool, String?) -> Void)
     {
@@ -125,7 +125,7 @@ class Storage: Observer
                 guard success else
                 {
                     self.stopContinuousSyncing()
-                    handleSuccess(false, "The initial Sync up between iCloud and your Mac didn't work.")
+                    handleSuccess(false, "The initial Sync up with iCloud didn't work.")
                     return
                 }
                 
