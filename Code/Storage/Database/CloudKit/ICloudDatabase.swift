@@ -226,12 +226,13 @@ class ICloudDatabase
         
         let sub = CKQuerySubscription(recordType: type,
                                       predicate: .all,
-                                      options:options)
+                                      options: options)
 
         let notificationInfo = CKSubscription.NotificationInfo()
         notificationInfo.alertLocalizationKey = key
         notificationInfo.desiredKeys = desiredTags
         notificationInfo.shouldBadge = false
+        notificationInfo.shouldSendContentAvailable = true
 
         sub.notificationInfo = notificationInfo
 
