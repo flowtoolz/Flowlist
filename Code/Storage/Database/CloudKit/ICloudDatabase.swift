@@ -239,7 +239,6 @@ class ICloudDatabase
                          handleCreationSuccess: ((Bool) -> Void)?,
                          handleDeletionSuccess: ((Bool) -> Void)?)
     {
-        operation.database = database
         operation.savePolicy = .changedKeys // TODO: or if server records unchanged? handle "merge conflicts" when multiple devices changed data locally offline...
         
         // TODO: The server may reject large operations. When this occurs, a block reports the CKError.Code.limitExceeded error. Your app should handle this error, and refactor the operation into multiple smaller batches.
@@ -272,7 +271,7 @@ class ICloudDatabase
             handleDeletionSuccess?(ids != nil)
         }
         
-        operation.start()
+        database.add(operation)
     }
     
     var database: CKDatabase
