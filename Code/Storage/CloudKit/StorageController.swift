@@ -12,7 +12,14 @@ class StorageController
     {
         persister = Persister()
         storage = Storage(with: jsonFile, database: iCloudDatabase)
-        //iCloudDatabase.createItemQuerySubscription()
+        
+        iCloudDatabase.fetchChanges
+        {
+            changedRecords, deletionIDs in
+            
+            print("# changed: \(String(describing: changedRecords?.count))")
+            print("# deleted: \(String(describing: deletionIDs?.count))")
+        }
     }
     
     // MARK: - System Storage

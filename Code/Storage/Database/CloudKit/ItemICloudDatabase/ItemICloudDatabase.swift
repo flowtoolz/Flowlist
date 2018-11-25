@@ -3,7 +3,7 @@ import SwiftObserver
 
 class ItemICloudDatabase: ICloudDatabase
 {
-    // MARK: - Query Subscription Notifications
+    // MARK: - Handle Query Notifications
     
     override func didCreateRecord(with id: CKRecord.ID,
                                   notification: CKQueryNotification)
@@ -88,7 +88,7 @@ class ItemICloudDatabase: ICloudDatabase
         return notification.recordFields?[fieldName] as? String
     }
     
-    // MARK: - Database Subscription Notifications
+    // MARK: - Handle Database Notifications
     
     override func didReceive(databaseNotification: CKDatabaseNotification)
     {
