@@ -206,9 +206,9 @@ class ICloudDatabase
         save(subscription)
     }
     
-    func createDatabasSubscription()
+    func createDatabasSubscription(withID id: String)
     {
-        let subID = CKSubscription.ID("ItemDataBaseSuscription")
+        let subID = CKSubscription.ID(id)
         let sub = CKDatabaseSubscription(subscriptionID: subID)
         
         save(sub)

@@ -88,7 +88,7 @@ class ItemICloudDatabase: ICloudDatabase
         return notification.recordFields?[fieldName] as? String
     }
     
-    // MARK: - Create Query Subscription
+    // MARK: - Create Subscriptions
     
     func createItemQuerySubscription()
     {
@@ -97,6 +97,11 @@ class ItemICloudDatabase: ICloudDatabase
     }
     
     private let fieldNames = CKRecord.itemFieldNames
+    
+    func createItemDatabaseSubscription()
+    {
+        createDatabasSubscription(withID: "ItemDataBaseSuscription")
+    }
     
     // MARK: - Database Subscription Notifications
     
