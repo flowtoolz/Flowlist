@@ -105,6 +105,7 @@ extension ItemICloudDatabase
                     $0.recordID.recordName == record.recordID.recordName
                 }
                 
+                // FIXME: crashes with index out of range when moving item around
                 siblingRecords.insert(record, at: modification.position)
                 
                 // siblings whose position has shifted must be saved back
