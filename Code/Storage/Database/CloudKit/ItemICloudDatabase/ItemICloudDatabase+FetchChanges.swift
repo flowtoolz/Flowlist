@@ -35,10 +35,14 @@ extension ItemICloudDatabase
         
         operation.recordZoneChangeTokensUpdatedBlock =
         {
-            zoneID, newToken, _ in
+            zoneID, newToken, clientToken in
             
             print("recordZoneChangeTokensUpdatedBlock")
             print("new token: \(newToken?.debugDescription ?? "nil")")
+            
+            print("client token: \(clientToken?.debugDescription ?? "nil")")
+            print("app instance token: \(self.appInstanceToken?.debugDescription ?? "nil")")
+            print("client token = current app instance token: \(clientToken == self.appInstanceToken)")
             
             guard zoneID == itemZoneID else
             {
@@ -51,10 +55,23 @@ extension ItemICloudDatabase
         
         operation.recordZoneFetchCompletionBlock =
         {
-            zoneID, token, _, moreIsComing, error in
+            zoneID, token, clientToken, moreIsComing, error in
             
             print("recordZoneFetchCompletionBlock")
-            print("new token: \(token?.debugDescription ?? "nil")")
+            
+            if let appToken = self.appInstanceToken
+            {
+                print("app instance token: \(String(data: appToken, encoding: .utf8) ?? "nil")")
+            }
+            else { print("NO app token") }
+            
+            if let clientToken = clientToken
+            {
+            print("new client token: \(String(data: clientToken, encoding: .utf8) ?? "nil")")
+            }
+            else { print("NO client token") }
+
+            print("client token = current app instance token: \(clientToken == self.appInstanceToken)")
             
             guard zoneID == itemZoneID else
             {

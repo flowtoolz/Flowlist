@@ -13,7 +13,7 @@ class ICloudDatabase
         let operation = CKModifyRecordsOperation(recordsToSave: records,
                                                  recordIDsToDelete: nil)
         
-        perform(operation: operation,
+        perform(modifyOperation : operation,
                 handleCreationSuccess: handleSuccess,
                 handleDeletionSuccess: nil)
     }
@@ -45,7 +45,7 @@ class ICloudDatabase
         let operation = CKModifyRecordsOperation(recordsToSave: nil,
                                                  recordIDsToDelete: ids)
         
-        perform(operation: operation,
+        perform(modifyOperation: operation,
                 handleCreationSuccess: nil,
                 handleDeletionSuccess: handleSuccess)
     }
@@ -235,13 +235,15 @@ class ICloudDatabase
     
     // MARK: - Database
     
-    private func perform(operation: CKModifyRecordsOperation,
+    private func perform(modifyOperation operation: CKModifyRecordsOperation,
                          handleCreationSuccess: ((Bool) -> Void)?,
                          handleDeletionSuccess: ((Bool) -> Void)?)
     {
         operation.savePolicy = .changedKeys // TODO: or if server records unchanged? handle "merge conflicts" when multiple devices changed data locally offline...
         
         // TODO: The server may reject large operations. When this occurs, a block reports the CKError.Code.limitExceeded error. Your app should handle this error, and refactor the operation into multiple smaller batches.
+        
+        operation.clientChangeTokenData = appInstanceToken
         
         operation.perRecordCompletionBlock =
         {
@@ -321,6 +323,22 @@ class ICloudDatabase
             }
         }
     }
+    
+    private(set) lazy var appInstanceToken: Data? =
+    {
+        if let id = persister.string(appInstanceIDKey)
+        {
+            return id.data(using: .utf8)
+        }
+        
+        let newID = String.makeUUID()
+        
+        persister.set(appInstanceIDKey, newID)
+        
+        return newID.data(using: .utf8)
+    }()
+    
+    private let appInstanceIDKey = "UserDefaultsKeyAppInstanceID"
     
     private(set) var isAvailable: Bool?
     
