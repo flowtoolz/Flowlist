@@ -1,4 +1,5 @@
 import CloudKit
+import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
@@ -103,41 +104,66 @@ class ICloudDatabase
         }
     }
     
-    // MARK: - Observing Records
+    // MARK: - Respond to Notifications
     
     func handlePushNotification(with userInfo: [String : Any])
     {
-        let notification = CKNotification(fromRemoteNotificationDictionary: userInfo)
-        
-        guard notification.notificationType == .query,
-            let queryNotification = notification as? CKQueryNotification
-        else
+        if !Thread.isMainThread
         {
-            return
+            log(error: "Unexpected: We're on a background thread.")
         }
         
-        guard let recordId = queryNotification.recordID else
+        let notification = CKNotification(fromRemoteNotificationDictionary: userInfo)
+        
+        switch notification.notificationType
+        {
+        case .query:
+            guard let notification = notification as? CKQueryNotification else
+            {
+                log(error: "Couldn't cast query notification to CKQueryNotification.")
+                break
+            }
+            
+            didReceive(queryNotification: notification)
+            
+        case .recordZone:
+            log(error: "Unexpectedly received iCloud record zone notification.")
+            
+        case .readNotification:
+            log(error: "Unexpectedly received iCloud read notification.")
+            
+        case .database:
+            guard let notification = notification as? CKDatabaseNotification else
+            {
+                log(error: "Couldn't cast database notification to CKDatabaseNotification.")
+                break
+            }
+            
+            didReceive(databaseNotification: notification)
+        }
+    }
+    
+    private func didReceive(queryNotification notification: CKQueryNotification)
+    {
+        guard let recordId = notification.recordID else
         {
             log(error: "iCloud query notification carries no record id.")
             // TODO: could this ever happen? how is it to be handled?? reload all data from icloud??
             return
         }
         
-        if !Thread.isMainThread
-        {
-            log(error: "Go to main thread at this point. We're on a background thread.")
-        }
-        
-        switch queryNotification.queryNotificationReason
+        switch notification.queryNotificationReason
         {
         case .recordCreated:
-            didCreateRecord(with: recordId, notification: queryNotification)
+            didCreateRecord(with: recordId, notification: notification)
         case .recordUpdated:
-            didModifyRecord(with: recordId, notification: queryNotification)
+            didModifyRecord(with: recordId, notification: notification)
         case .recordDeleted:
             didDeleteRecord(with: recordId)
         }
     }
+    
+    // MARK: - To Overwrite in Subclasses
     
     func didCreateRecord(with id: CKRecord.ID,
                          notification: CKQueryNotification)
@@ -156,9 +182,15 @@ class ICloudDatabase
         log("Did delete record: <\(id.recordName)>")
     }
     
-    func createSubscription(forRecordType type: String,
-                            desiredTags: [String],
-                            alertLocalizationKey key: String)
+    func didReceive(databaseNotification: CKDatabaseNotification)
+    {
+        log("Did receive database notification.")
+    }
+    
+    // MARK: - Creating Subscriptions
+    
+    func createQuerySubscription(forRecordType type: String,
+                                 desiredTags: [String])
     {
         let options: CKQuerySubscription.Options =
         [
@@ -167,22 +199,33 @@ class ICloudDatabase
             .firesOnRecordDeletion
         ]
         
-        let sub = CKQuerySubscription(recordType: type,
-                                      predicate: .all,
-                                      options: options)
-
+        let subscription = CKQuerySubscription(recordType: type,
+                                               predicate: .all,
+                                               options: options)
+        
+        save(subscription)
+    }
+    
+    func createDatabasSubscription()
+    {
+        let subID = CKSubscription.ID("ItemDataBaseSuscription")
+        let sub = CKDatabaseSubscription(subscriptionID: subID)
+        
+        save(sub)
+    }
+    
+    func save(_ subscription: CKSubscription,
+              desiredTags: [CKRecord.FieldKey]? = nil)
+    {
         let notificationInfo = CKSubscription.NotificationInfo()
-        notificationInfo.alertLocalizationKey = key
-        notificationInfo.desiredKeys = desiredTags
-        notificationInfo.shouldBadge = false
         notificationInfo.shouldSendContentAvailable = true
-
-        sub.notificationInfo = notificationInfo
-
-        database.save(sub)
+        
+        subscription.notificationInfo = notificationInfo
+        
+        database.save(subscription)
         {
             savedSubscription, error in
-
+            
             if let error = error
             {
                 log(error: error.localizedDescription)
@@ -190,7 +233,7 @@ class ICloudDatabase
         }
     }
     
-    // MARK: - Basics
+    // MARK: - Database
     
     private func perform(operation: CKModifyRecordsOperation,
                          handleCreationSuccess: ((Bool) -> Void)?,
@@ -222,6 +265,7 @@ class ICloudDatabase
                 log(error: error.localizedDescription)
                 handleDeletionSuccess?(false)
                 handleCreationSuccess?(false)
+                return
             }
             
             handleCreationSuccess?(records != nil)
@@ -235,6 +279,8 @@ class ICloudDatabase
     {
         return container.privateCloudDatabase
     }
+    
+    // MARK: - Container
     
     func checkAvailability(handleResult: @escaping (_ available: Bool, _ errorMessage: String?) -> Void)
     {
@@ -280,9 +326,4 @@ class ICloudDatabase
     private(set) var isAvailable: Bool?
     
     let container = CKContainer.default()
-}
-
-extension NSPredicate
-{
-    static var all: NSPredicate { return NSPredicate(value: true) }
 }

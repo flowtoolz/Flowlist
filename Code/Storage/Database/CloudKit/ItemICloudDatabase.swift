@@ -3,7 +3,7 @@ import SwiftObserver
 
 class ItemICloudDatabase: ICloudDatabase
 {
-    // MARK: - Observe Item Creation
+    // MARK: - Query Subscription Notifications
     
     override func didCreateRecord(with id: CKRecord.ID,
                                   notification: CKQueryNotification)
@@ -37,8 +37,6 @@ class ItemICloudDatabase: ICloudDatabase
         }
     }
     
-    // MARK: - Observe Item Modification
-    
     override func didModifyRecord(with id: CKRecord.ID,
                                   notification: CKQueryNotification)
     {
@@ -69,14 +67,12 @@ class ItemICloudDatabase: ICloudDatabase
         }
     }
     
-    // MARK: - Observe Item Deletion
-    
     override func didDeleteRecord(with id: CKRecord.ID)
     {
         messenger.send(.removeItems(withIDs: [id.recordName]))
     }
     
-    // MARK: - Get Data from Notification
+    // MARK: - Get Data from Query Notification
     
     private func hasAllNewFields(_ notification: CKQueryNotification) -> Bool
     {
@@ -92,18 +88,22 @@ class ItemICloudDatabase: ICloudDatabase
         return notification.recordFields?[fieldName] as? String
     }
     
-    // MARK: - Create Subscription
+    // MARK: - Create Query Subscription
     
-    func createItemRecordSubscription()
-    {   
-        let alertKey = "Items were changed in iCloud."
-        
-        createSubscription(forRecordType: CKRecord.itemType,
-                           desiredTags: fieldNames,
-                           alertLocalizationKey: alertKey)
+    func createItemQuerySubscription()
+    {
+        createQuerySubscription(forRecordType: CKRecord.itemType,
+                                desiredTags: fieldNames)
     }
     
     private let fieldNames = CKRecord.itemFieldNames
+    
+    // MARK: - Database Subscription Notifications
+    
+    override func didReceive(databaseNotification: CKDatabaseNotification)
+    {
+        log()
+    }
     
     // MARK: - Observability
     

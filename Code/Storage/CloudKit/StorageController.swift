@@ -12,6 +12,7 @@ class StorageController
     {
         persister = Persister()
         storage = Storage(with: jsonFile, database: iCloudDatabase)
+        //iCloudDatabase.createItemQuerySubscription()
     }
     
     // MARK: - System Storage
