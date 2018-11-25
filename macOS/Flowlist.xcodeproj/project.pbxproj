@@ -10,7 +10,7 @@
 		9E053B23218867E4001B7103 /* ItemJSONFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B22218867E4001B7103 /* ItemJSONFile.swift */; };
 		9E053B2521886867001B7103 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2421886867001B7103 /* FullVersion.swift */; };
 		9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */; };
-		9E053B2E21886963001B7103 /* ItemICloudDatabase+ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2821886962001B7103 /* ItemICloudDatabase+ItemDatabase.swift */; };
+		9E053B2E21886963001B7103 /* ItemICloudDatabase+Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2821886962001B7103 /* ItemICloudDatabase+Database.swift */; };
 		9E053B3021886963001B7103 /* CKRecord.ID+Modification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2A21886963001B7103 /* CKRecord.ID+Modification.swift */; };
 		9E053B3121886963001B7103 /* CKRecord+Modification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2B21886963001B7103 /* CKRecord+Modification.swift */; };
 		9E053B3221886963001B7103 /* ICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2C21886963001B7103 /* ICloudDatabase.swift */; };
@@ -110,7 +110,7 @@
 		9E053B22218867E4001B7103 /* ItemJSONFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemJSONFile.swift; sourceTree = "<group>"; };
 		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullVersion.swift; sourceTree = "<group>"; };
 		9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Price.swift"; sourceTree = "<group>"; };
-		9E053B2821886962001B7103 /* ItemICloudDatabase+ItemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemICloudDatabase+ItemDatabase.swift"; sourceTree = "<group>"; };
+		9E053B2821886962001B7103 /* ItemICloudDatabase+Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemICloudDatabase+Database.swift"; sourceTree = "<group>"; };
 		9E053B2A21886963001B7103 /* CKRecord.ID+Modification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CKRecord.ID+Modification.swift"; sourceTree = "<group>"; };
 		9E053B2B21886963001B7103 /* CKRecord+Modification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CKRecord+Modification.swift"; sourceTree = "<group>"; };
 		9E053B2C21886963001B7103 /* ICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudDatabase.swift; sourceTree = "<group>"; };
@@ -276,7 +276,7 @@
 		9E82C09421AAE56100152CB3 /* ItemICloudDatabase */ = {
 			isa = PBXGroup;
 			children = (
-				9E053B2821886962001B7103 /* ItemICloudDatabase+ItemDatabase.swift */,
+				9E053B2821886962001B7103 /* ItemICloudDatabase+Database.swift */,
 				9EA1D3A8219EA80100B5943C /* ItemICloudDatabase+Inserting.swift */,
 				9EA1D3A6219EA6E400B5943C /* ItemICloudDatabase+Modifying.swift */,
 				9EA1D3AA219EA85700B5943C /* ItemICloudDatabase+Removing.swift */,
@@ -785,7 +785,7 @@
 				9EA1D3A7219EA6E400B5943C /* ItemICloudDatabase+Modifying.swift in Sources */,
 				9E053B63218871C4001B7103 /* Row.swift in Sources */,
 				9EF37C4E21A08EED00A43AA9 /* DataMenu.swift in Sources */,
-				9E053B2E21886963001B7103 /* ItemICloudDatabase+ItemDatabase.swift in Sources */,
+				9E053B2E21886963001B7103 /* ItemICloudDatabase+Database.swift in Sources */,
 				9E053B452188711A001B7103 /* Menu.swift in Sources */,
 				9E053B23218867E4001B7103 /* ItemJSONFile.swift in Sources */,
 				9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */,
