@@ -88,6 +88,13 @@ class ItemICloudDatabase: ICloudDatabase
         return notification.recordFields?[fieldName] as? String
     }
     
+    // MARK: - Database Subscription Notifications
+    
+    override func didReceive(databaseNotification: CKDatabaseNotification)
+    {
+        log()
+    }
+    
     // MARK: - Create Subscriptions
     
     func createItemQuerySubscription()
@@ -101,13 +108,6 @@ class ItemICloudDatabase: ICloudDatabase
     func createItemDatabaseSubscription()
     {
         createDatabasSubscription(withID: "ItemDataBaseSuscription")
-    }
-    
-    // MARK: - Database Subscription Notifications
-    
-    override func didReceive(databaseNotification: CKDatabaseNotification)
-    {
-        log()
     }
     
     // MARK: - Observability

@@ -273,6 +273,19 @@
 			path = CloudKit;
 			sourceTree = "<group>";
 		};
+		9E82C09421AAE56100152CB3 /* ItemICloudDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				9E053B2821886962001B7103 /* ItemICloudDatabase+ItemDatabase.swift */,
+				9EA1D3A8219EA80100B5943C /* ItemICloudDatabase+Inserting.swift */,
+				9EA1D3A6219EA6E400B5943C /* ItemICloudDatabase+Modifying.swift */,
+				9EA1D3AA219EA85700B5943C /* ItemICloudDatabase+Removing.swift */,
+				9EA1D3A4219EA60500B5943C /* ItemICloudDatabase+Fetching.swift */,
+				9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */,
+			);
+			path = ItemICloudDatabase;
+			sourceTree = "<group>";
+		};
 		9E91651620551E6F00A438FB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,13 +422,8 @@
 		9EA5A893218ECB45004902F7 /* CloudKit */ = {
 			isa = PBXGroup;
 			children = (
-				9E053B2821886962001B7103 /* ItemICloudDatabase+ItemDatabase.swift */,
+				9E82C09421AAE56100152CB3 /* ItemICloudDatabase */,
 				9EA1D3AC219EB4AD00B5943C /* Item+CKRecord.swift */,
-				9EA1D3A8219EA80100B5943C /* ItemICloudDatabase+Inserting.swift */,
-				9EA1D3A6219EA6E400B5943C /* ItemICloudDatabase+Modifying.swift */,
-				9EA1D3AA219EA85700B5943C /* ItemICloudDatabase+Removing.swift */,
-				9EA1D3A4219EA60500B5943C /* ItemICloudDatabase+Fetching.swift */,
-				9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */,
 				9E053B2B21886963001B7103 /* CKRecord+Modification.swift */,
 				9EF96E7521A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift */,
 				9E053B2A21886963001B7103 /* CKRecord.ID+Modification.swift */,
