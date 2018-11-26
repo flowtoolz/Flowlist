@@ -216,8 +216,8 @@ class ICloudDatabase
         save(sub)
     }
     
-    func save(_ subscription: CKSubscription,
-              desiredTags: [CKRecord.FieldKey]? = nil)
+    private func save(_ subscription: CKSubscription,
+                      desiredTags: [CKRecord.FieldKey]? = nil)
     {
         let notificationInfo = CKSubscription.NotificationInfo()
         notificationInfo.shouldSendContentAvailable = true

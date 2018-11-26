@@ -55,7 +55,7 @@ extension ItemICloudDatabase: Database
     
     func fetchItemTree(handleResult: @escaping (_ success: Bool, _ root: Item?) -> Void)
     {
-        fetchItemRecords()
+        fetchItemRecords
         {
             guard let records = $0 else
             {
