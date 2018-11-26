@@ -30,6 +30,8 @@ extension ItemICloudDatabase
         let query = CKQuery(recordType: CKRecord.itemType,
                             predicate: predicate)
         
-        fetchRecords(with: query, handleResult: handleResult)
+        fetchRecords(with: query,
+                     inZone: CKRecordZone.ID.item,
+                     handleResult: handleResult)
     }
 }

@@ -20,6 +20,7 @@ extension ItemICloudDatabase
     func removeItems(handleSuccess: @escaping (Bool) -> Void)
     {
         deleteRecords(ofType: CKRecord.itemType,
+                      inZone: CKRecordZone.ID.item,
                       handleSuccess: handleSuccess)
     }
 }

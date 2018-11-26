@@ -21,11 +21,12 @@ class ICloudDatabase
     // MARK: - Delete
     
     func deleteRecords(ofType type: String,
+                       inZone zoneID: CKRecordZone.ID,
                        handleSuccess: @escaping (Bool) -> Void)
     {
         let queryAll = CKQuery(recordType: type, predicate: .all)
         
-        fetchRecords(with: queryAll)
+        fetchRecords(with: queryAll, inZone: zoneID)
         {
             guard let records = $0 else
             {
@@ -79,9 +80,10 @@ class ICloudDatabase
     }
     
     func fetchRecords(with query: CKQuery,
+                      inZone zoneID: CKRecordZone.ID,
                       handleResult: @escaping ([CKRecord]?) -> Void)
     {
-        database.perform(query, inZoneWith: .default)
+        database.perform(query, inZoneWith: zoneID)
         {
             records, error in
             
