@@ -16,9 +16,27 @@ class ItemICloudDatabase: ICloudDatabase
         updateServerChangeToken(zoneID: CKRecordZone.ID.item,
                                 oldToken: serverChangeToken)
         {
-            result in
+            guard let result = $0 else
+            {
+                log(error: "Could not fetch updates.")
+                return
+            }
             
-            // TODO: process result and send updates to observers
+            if result.idsOfDeletedRecords.count > 0
+            {
+                let ids = result.idsOfDeletedRecords.map { $0.recordName }
+                self.messenger.send(.removeItems(withIDs: ids))
+            }
+            
+            if result.changedRecords.count > 0
+            {
+                // TODO: generalize edits so they don't distinguish between modification and creation, since change fetches don't make that distinction anyway
+                // TODO: If possible remove rootID from edit since edits must be able to hold item mods from different roots.
+                let mods = result.changedRecords.compactMap { $0.modification }
+                
+                self.messenger.send(.insertItems(withModifications: mods,
+                                                 inRootWithID: nil))
+            }
         }
     }
     
@@ -121,7 +139,7 @@ class ItemICloudDatabase: ICloudDatabase
     
     func createItemDatabaseSubscription()
     {
-        createDatabasSubscription(withID: "ItemDataBaseSuscription")
+        createDatabasSubscription(withID: "ItemDataBaseSubscription")
     }
     
     func createItemQuerySubscription()

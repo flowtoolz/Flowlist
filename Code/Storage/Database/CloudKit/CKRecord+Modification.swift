@@ -57,7 +57,7 @@ extension CKRecord
     {
         guard isItem else
         {
-            log(error: "Could not create modification from record.")
+            log(error: "Could not create item modification from record.")
             return nil
         }
         
