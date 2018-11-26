@@ -3,11 +3,33 @@ import SwiftObserver
 
 class ItemICloudDatabase: ICloudDatabase
 {
+    // MARK: - Handle Database Notifications
+    
+    override func didReceive(databaseNotification: CKDatabaseNotification)
+    {
+        guard databaseNotification.databaseScope == .private else
+        {
+            log(error: "Unexpected database scope: \(databaseNotification.databaseScope.rawValue)")
+            return
+        }
+        
+        updateServerChangeToken(zoneID: CKRecordZone.ID.item,
+                                oldToken: serverChangeToken)
+        {
+            result in
+            
+            // TODO: process result and send updates to observers
+        }
+    }
+    
     // MARK: - Handle Query Notifications
     
     override func didCreateRecord(with id: CKRecord.ID,
                                   notification: CKQueryNotification)
     {
+        log(error: "Don't use query notifications as the pushs don't provide the server change token anyway!")
+        
+        /*
         guard hasAllNewFields(notification) else
         {
             fetchRecord(with: id)
@@ -35,11 +57,15 @@ class ItemICloudDatabase: ICloudDatabase
             messenger.send(.insertItems(withModifications: [mod],
                                         inRootWithID: mod.rootID))
         }
+         */
     }
     
     override func didModifyRecord(with id: CKRecord.ID,
                                   notification: CKQueryNotification)
     {
+        log(error: "Don't use query notifications as the pushs don't provide the server change token anyway!")
+        
+        /*
         guard hasAllNewFields(notification) else
         {
             fetchRecord(with: id)
@@ -65,11 +91,14 @@ class ItemICloudDatabase: ICloudDatabase
         {
             messenger.send(.modifyItem(withModification: modification))
         }
+         */
     }
     
     override func didDeleteRecord(with id: CKRecord.ID)
     {
-        messenger.send(.removeItems(withIDs: [id.recordName]))
+        log(error: "Don't use query notifications as the pushs don't provide the server change token anyway!")
+        
+        // messenger.send(.removeItems(withIDs: [id.recordName]))
     }
     
     // MARK: - Get Data from Query Notification
@@ -88,14 +117,12 @@ class ItemICloudDatabase: ICloudDatabase
         return notification.recordFields?[fieldName] as? String
     }
     
-    // MARK: - Handle Database Notifications
-    
-    override func didReceive(databaseNotification: CKDatabaseNotification)
-    {
-        log()
-    }
-    
     // MARK: - Create Subscriptions
+    
+    func createItemDatabaseSubscription()
+    {
+        createDatabasSubscription(withID: "ItemDataBaseSuscription")
+    }
     
     func createItemQuerySubscription()
     {
@@ -104,11 +131,6 @@ class ItemICloudDatabase: ICloudDatabase
     }
     
     private let fieldNames = CKRecord.itemFieldNames
-    
-    func createItemDatabaseSubscription()
-    {
-        createDatabasSubscription(withID: "ItemDataBaseSuscription")
-    }
     
     // MARK: - Observability
     
