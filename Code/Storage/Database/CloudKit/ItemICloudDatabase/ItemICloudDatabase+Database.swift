@@ -9,13 +9,13 @@ extension ItemICloudDatabase: Database
     {
         switch edit
         {
-        case .updateItems(let modifications): break
-//            updateItems(with: modifications)
-//            {
-//                _ in
-//
-//                self.updateServerChangeToken()
-//            }
+        case .updateItems(let modifications):
+            updateItems(with: modifications)
+            {
+                _ in
+
+                self.updateServerChangeToken()
+            }
             
         case .removeItems(let ids):
             removeItems(with: ids)

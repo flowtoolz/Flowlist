@@ -3,6 +3,14 @@ import SwiftObserver
 
 extension ItemICloudDatabase
 {
+    // MARK: - Update
+    
+    func updateItems(with modifications: [Modification],
+                     handleSuccess: @escaping (Bool) -> Void)
+    {
+        // TODO: Implement, covering insert and modify
+    }
+    
     // MARK: - Insert
     
     func insertItems(with modifications: [Modification],
