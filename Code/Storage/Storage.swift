@@ -24,7 +24,7 @@ class Storage: Observer
             
             guard success else
             {
-                let c2a = "Make sure your Mac is connected to your iCloud account, then retry using iCloud via the \"Data\" menu option \"Start Using iCloud\"."
+                let c2a = "Make sure your Mac is connected to your iCloud account, then retry using iCloud via the menu option \"Data → Start Using iCloud\"."
                 self.informUserDatabaseIsUnavailable(error: errorMessage,
                                                      callToAction: c2a)
                 return
