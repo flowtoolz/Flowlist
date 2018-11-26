@@ -42,7 +42,7 @@ extension ItemICloudDatabase: Database
         {
             guard let rootID = mod.rootID else
             {
-                log(warning: "Modification has no root ID.")
+                log(error: "Modification has no root ID.")
                 continue
             }
             
