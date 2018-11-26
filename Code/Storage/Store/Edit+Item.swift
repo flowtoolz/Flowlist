@@ -4,7 +4,7 @@ extension Edit
     {
         switch treeUpdate
         {
-        case .insertedNodes(let nodes, let root, _):
+        case .insertedNodes(let nodes, _, _):
             var mods = [Modification]()
             
             for item in nodes
@@ -12,23 +12,25 @@ extension Edit
                 mods.append(contentsOf: item.modifications())
             }
             
-            self = .insertItems(withModifications: mods,
-                                inRootWithID: root.data.id)
+            self = .updateItems(withModifications: mods)
             
         case .receivedDataUpdate(let dataUpdate, let node):
             if case .wasModified = dataUpdate
             {
-                let modification = node.modification(modifiesPosition: false)
-                self = .modifyItem(withModification: modification)
+                let mod = node.modification(modifiesPosition: false)
+                self = .updateItems(withModifications: [mod])
             }
-            else { return nil }
+            else
+            {
+                return nil
+            }
             
         case .removedNodes(let nodes, _):
             let ids = nodes.compactMap { $0.data.id }
             self = .removeItems(withIDs: ids)
             
         case .movedNode(let node, _, _):
-            self = .modifyItem(withModification: node.modification())
+            self = .updateItems(withModifications: [node.modification()])
         }
     }
 }

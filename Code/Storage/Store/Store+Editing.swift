@@ -6,10 +6,9 @@ extension Store
     {
         switch edit
         {
-        case .insertItems(let modifications, _):
+        case .updateItems(let modifications):
             updateItems(with: modifications)
-        case .modifyItem(let modification):
-            updateItems(with: [modification])
+            
         case .removeItems(let nodeIds):
             for id in nodeIds
             {

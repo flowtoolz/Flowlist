@@ -30,12 +30,12 @@ class ItemICloudDatabase: ICloudDatabase
             
             if result.changedRecords.count > 0
             {
-                // TODO: generalize edits so they don't distinguish between modification and creation, since change fetches don't make that distinction anyway
-                // TODO: If possible remove rootID from edit since edits must be able to hold item mods from different roots.
-                let mods = result.changedRecords.compactMap { $0.modification }
+                let mods = result.changedRecords.compactMap
+                {
+                    $0.modification
+                }
                 
-                self.messenger.send(.insertItems(withModifications: mods,
-                                                 inRootWithID: nil))
+                self.messenger.send(.updateItems(withModifications: mods))
             }
         }
     }
