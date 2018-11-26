@@ -2,23 +2,18 @@ import SwiftObserver
 
 extension Store
 {
+    // MARK: - Apply Edits
+    
     func apply(_ edit: Edit)
     {
         switch edit
         {
-        case .updateItems(let modifications):
-            updateItems(with: modifications)
-            
-        case .removeItems(let nodeIds):
-            for id in nodeIds
-            {
-                if itemHash[id] != nil
-                {
-                    removeItem(with: id)
-                }
-            }
+        case .updateItems(let mods): updateItems(with: mods)
+        case .removeItems(let ids): removeItems(with: ids)
         }
     }
+    
+    // MARK: - Update Items
     
     private func updateItems(with modifications: [Modification])
     {
@@ -82,21 +77,27 @@ extension Store
         }
     }
     
+    // MARK: - Remove Items
+    
+    private func removeItems(with ids: [String])
+    {
+        for id in ids
+        {
+            removeItem(with: id)
+        }
+    }
+    
     private func removeItem(with id: String)
     {
-        guard let item = itemHash[id] else
+        guard let item = itemHash[id] else { return }
+        
+        guard let superItem = item.root, let index = item.indexInRoot else
         {
-            log(error: "Item with id \(id) is not in hash map.")
+            log(error: "Tried to remove root (id \(id)). Text: \(item.text ?? "nil")")
             return
         }
         
         itemHash.remove(item.array)
-        
-        guard let superItem = item.root, let index = item.indexInRoot else
-        {
-            log(warning: "Did remove root with id \(id) from hash map. Text: \(item.text ?? "nil")")
-            return
-        }
 
         superItem.removeNodes(from: [index])
     }
