@@ -6,18 +6,10 @@ extension Store
     {
         switch edit
         {
-        case .insertItems(let modifications, let rootID):
-            let sortedByPosition = modifications.sorted
-            {
-                $0.position < $1.position
-            }
-            
-            for modification in sortedByPosition
-            {
-                createItem(with: modification, inItemWithID: rootID)
-            }
+        case .insertItems(let modifications, _):
+            updateItems(with: modifications)
         case .modifyItem(let modification):
-            updateItem(with: modification)
+            updateItems(with: [modification])
         case .removeItems(let nodeIds):
             for id in nodeIds
             {
@@ -29,60 +21,65 @@ extension Store
         }
     }
     
-    private func createItem(with modification: Modification,
-                            inItemWithID rootID: String?)
+    private func updateItems(with modifications: [Modification])
     {
-        guard let rootId = rootID else
+        // ensure items are in hash map and have updated data
+        
+        for mod in modifications
         {
-            log(error: "Trying to create new root. This is unhandled.")
-            return
+            if let item = itemHash[mod.id]
+            {
+                item.data.text <- mod.text
+                item.data.state <- mod.state
+                item.data.tag <- mod.tag
+            }
+            else
+            {
+                itemHash.add([Item(modification: mod)])
+            }
         }
         
-        guard let rootItem = itemHash[rootId] else
+        // connect items
+        
+        for mod in modifications.sorted(by: { $0.position < $1.position })
         {
-            log(warning: "Root (id \(rootId)) of new item (id \(modification.id)) is not in hash map.")
-            return
+            guard let item = itemHash[mod.id] else
+            {
+                log(error: "Item not in hash map.")
+                continue
+            }
+            
+            updateRoot(of: item, with: mod)
         }
-        
-        let newItem = Item(modification: modification)
-        
-        itemHash.add([newItem])
-        
-        rootItem.insert(newItem, at: modification.position)
     }
     
-    private func updateItem(with modification: Modification)
+    private func updateRoot(of item: Item, with modification: Modification)
     {
-        // TODO: updating an Item should be an Item extension
+        // move to new root if neccessary
         
-        guard let item = itemHash[modification.id] else
+        // TODO: catch errors...nil root etc
+        if let oldRoot = item.root,
+            let oldIndex = oldRoot.index(of: item),
+            let newRootID = modification.rootID,
+            newRootID != oldRoot.data.id,
+            let newRoot = itemHash[newRootID]
         {
-            log(error: "Item with id \(modification.id) is not in hash map.")
-            return
+            oldRoot.removeNodes(from: [oldIndex])
+            newRoot.insert(item, at: 0)
         }
         
-        item.data.text <- modification.text
-        item.data.state <- modification.state
-        item.data.tag <- modification.tag
-        
-        if item.root?.data.id != modification.rootID
-        {
-            log(error: "Did not expect direct modification of item root. ID: \(modification.id). Intended new root ID: \(String(describing: modification.rootID)) item Text: \(item.text ?? "nil")")
-        }
-        
-        let newPosition = modification.position
+        // move to new position if necessary
         
         if let itemRoot = item.root,
             let oldPosition = itemRoot.index(of: item)
         {
+            let newPosition = min(itemRoot.numberOfLeafs,
+                                  modification.position)
+            
             if oldPosition != newPosition
             {
                 itemRoot.moveNode(from: oldPosition, to: newPosition)
             }
-        }
-        else
-        {
-            log(error: "Invalid position: Item is root or modification has no position.")
         }
     }
     
