@@ -10,11 +10,16 @@ extension ItemICloudDatabase: Database
         switch edit
         {
         case .updateItems(let modifications):
-            updateItems(with: modifications)
+            let modsByRootID = getModsByRootID(from: modifications)
+            
+            for (rootID, mods) in modsByRootID
             {
-                _ in
-
-                self.updateServerChangeToken()
+                updateItems(with: mods, inRootWithID: rootID)
+                {
+                    _ in
+                    
+                    self.updateServerChangeToken()
+                }
             }
             
         case .removeItems(let ids):
@@ -25,6 +30,31 @@ extension ItemICloudDatabase: Database
                 self.updateServerChangeToken()
             }
         }
+    }
+    
+    // MARK: - Item Updates
+    
+    private func getModsByRootID(from mods: [Modification]) -> [String : [Modification]]
+    {
+        var resultDictionary = [String : [Modification]]()
+        
+        for mod in mods
+        {
+            guard let rootID = mod.rootID else
+            {
+                log(warning: "Modification has no root ID.")
+                continue
+            }
+            
+            if resultDictionary[rootID] == nil
+            {
+                resultDictionary[rootID] = [Modification]()
+            }
+            
+            resultDictionary[rootID]?.append(mod)
+        }
+        
+        return resultDictionary
     }
     
     // MARK: - Manage the Root

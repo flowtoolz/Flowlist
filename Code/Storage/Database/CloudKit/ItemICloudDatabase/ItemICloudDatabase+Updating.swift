@@ -6,6 +6,7 @@ extension ItemICloudDatabase
     // MARK: - Update
     
     func updateItems(with modifications: [Modification],
+                     inRootWithID rootID: String,
                      handleSuccess: @escaping (Bool) -> Void)
     {
         // TODO: Implement, covering insert and modify
