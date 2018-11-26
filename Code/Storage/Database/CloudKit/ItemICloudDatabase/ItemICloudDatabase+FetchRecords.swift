@@ -1,10 +1,24 @@
 import CloudKit
+import SwiftObserver
 
 extension ItemICloudDatabase
 {
-    func fetchItemRecords(handleResult: @escaping ([CKRecord]?) -> Void)
+    func fetchAllItemRecords(handleResult: @escaping ([CKRecord]?) -> Void)
     {
-        fetchItemRecords(.all, handleResult: handleResult)
+        updateServerChangeToken(zoneID: CKRecordZone.ID.item,
+                                oldToken: nil)
+        {
+            result in
+            
+            guard let result = result else
+            {
+                log(error: "Fetching changes failed.")
+                handleResult(nil)
+                return
+            }
+            
+            handleResult(result.changedRecords)
+        }
     }
     
     func fetchSubitemRecords(of itemRecord: CKRecord,
