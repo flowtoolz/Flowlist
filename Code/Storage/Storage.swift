@@ -156,17 +156,55 @@ class Storage: Observer
             
             guard let databaseRoot = databaseRoot else
             {
+                // no items in iCloud
+                
                 self.database.resetItemTree(with: storeRoot,
                                             handleSuccess: handleSuccess)
                 
                 return
             }
             
-            // FIX: Make Merge Policy more intelligent... handle offline periods etc...
-            Store.shared.update(root: databaseRoot)
-            self.file.save(databaseRoot)
+            if storeRoot.isLeaf && !databaseRoot.isLeaf
+            {
+                // no user items in Store but in iCloud
+                
+                Store.shared.update(root: databaseRoot)
+                self.file.save(databaseRoot)
+                handleSuccess(true)
+                return
+            }
             
-            handleSuccess(true)
+            if storeRoot.isIdentical(to: databaseRoot)
+            {
+                // Store and iCloud are identical
+                
+                handleSuccess(true)
+                return
+            }
+            
+            self.database.fetchUpdates
+            {
+                guard let edits = $0 else
+                {
+                    handleSuccess(false)
+                    return
+                }
+                
+                if edits.isEmpty
+                {
+                    // Store changed but noone changed iCloud
+                    
+                    self.database.resetItemTree(with: storeRoot,
+                                                handleSuccess: handleSuccess)
+                    return
+                }
+                
+                // FIXME: conflicting item trees: ask user which to use!
+                
+                Store.shared.update(root: databaseRoot)
+                self.file.save(databaseRoot)
+                handleSuccess(true)
+            }
         }
     }
     

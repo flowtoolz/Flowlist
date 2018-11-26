@@ -92,7 +92,7 @@ extension ItemICloudDatabase: Database
         }
     }
     
-    func fetchItemTree(handleResult: @escaping (_ success: Bool, _ root: Item?) -> Void)
+    func fetchItemTree(handleResult: @escaping ItemTreeHandler)
     {
         fetchAllItemRecords
         {

@@ -3,21 +3,21 @@ import SwiftyToolz
 
 protocol Database: class
 {
-    // status
-    func checkAvailability(handleResult: @escaping (_ available: Bool, _ error: String?) -> Void)
+    func checkAvailability(handleResult: @escaping AvailabilityHandler)
     var isAvailable: Bool? { get }
-    
-    // general edits
+    func fetchUpdates(handleResult: @escaping UpdateHandler)
     func apply(_ edit: Edit)
     
-    // root management
-    func fetchItemTree(handleResult: @escaping (_ success: Bool, _ root: Item?) -> Void)
+    func fetchItemTree(handleResult: @escaping ItemTreeHandler)
     func resetItemTree(with root: Item,
                        handleSuccess: @escaping (Bool) -> Void)
     func removeItems(handleSuccess: @escaping (Bool) -> Void)
     
-    // observing the database
     var messenger: EditSender { get }
+    
+    typealias AvailabilityHandler = (_ available: Bool, _ error: String?) -> Void
+    typealias ItemTreeHandler = (_ success: Bool, _ root: Item?) -> Void
+    typealias UpdateHandler = (_ edits: [Edit]?) -> Void
 }
 
 class EditSender: Observable
