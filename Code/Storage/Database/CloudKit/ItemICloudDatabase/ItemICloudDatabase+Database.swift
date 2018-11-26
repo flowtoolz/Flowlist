@@ -11,12 +11,27 @@ extension ItemICloudDatabase: Database
         {
         case .insertItems(let modifications, let rootID):
             insertItems(with: modifications, inRootWithID: rootID)
+            {
+                _ in
+                
+                self.updateServerChangeToken()
+            }
             
         case .modifyItem(let modification):
             modifyItem(with: modification)
+            {
+                _ in
+                
+                self.updateServerChangeToken()
+            }
             
         case .removeItems(let ids):
             removeItems(with: ids)
+            {
+                _ in
+             
+                self.updateServerChangeToken()
+            }
         }
     }
     
@@ -47,6 +62,8 @@ extension ItemICloudDatabase: Database
                     handleSuccess(false)
                     return
                 }
+                
+                self.updateServerChangeToken()
                 
                 handleSuccess(true)
             }
@@ -79,5 +96,13 @@ extension ItemICloudDatabase: Database
             
             handleResult(true, root)
         }
+    }
+    
+    // MARK: - Kepp Server Change Token Up To Date
+    
+    private func updateServerChangeToken()
+    {
+        updateServerChangeToken(zoneID: CKRecordZone.ID.item,
+                                oldToken: serverChangeToken) { _ in }
     }
 }

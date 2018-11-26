@@ -3,18 +3,13 @@ import SwiftObserver
 
 extension ItemICloudDatabase
 {
-    func removeItems(with ids: [String])
+    func removeItems(with ids: [String],
+                     handleSuccess: @escaping (Bool) -> Void)
     {
         let recordIDs = ids.map { CKRecord.ID(itemID: $0) }
         
-        deleteRecords(withIDs: recordIDs)
-        {
-            guard $0 else
-            {
-                log(error: "Couldn't delete records.")
-                return
-            }
-        }
+        deleteRecords(withIDs: recordIDs,
+                      handleSuccess: handleSuccess)
     }
     
     func removeItems(handleSuccess: @escaping (Bool) -> Void)

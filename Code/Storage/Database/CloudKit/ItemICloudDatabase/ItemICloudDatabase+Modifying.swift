@@ -5,7 +5,8 @@ extension ItemICloudDatabase
 {
     // MARK: - Modify
     
-    func modifyItem(with modification: Modification)
+    func modifyItem(with modification: Modification,
+                    handleSuccess: @escaping (Bool) -> Void)
     {
         let recordID = CKRecord.ID(itemID: modification.id)
         
@@ -18,6 +19,7 @@ extension ItemICloudDatabase
                 guard let record = $0 else
                 {
                     log(error: "Didn't find root item record to modify.")
+                    handleSuccess(false)
                     return
                 }
                 
@@ -29,6 +31,7 @@ extension ItemICloudDatabase
                 guard record.apply(modification) else
                 {
                     log(warning: "Modification didn't change iCloud root record. This is unexpected.")
+                    handleSuccess(true)
                     return
                 }
                 
@@ -37,8 +40,11 @@ extension ItemICloudDatabase
                     guard $0 else
                     {
                         log(error: "Couldn't save record.")
+                        handleSuccess(false)
                         return
                     }
+                    
+                    handleSuccess(true)
                 }
             }
             
@@ -50,6 +56,7 @@ extension ItemICloudDatabase
             guard let record = $0 else
             {
                 log(error: "Didn't find item record to modify.")
+                handleSuccess(false)
                 return
             }
             
@@ -63,6 +70,7 @@ extension ItemICloudDatabase
             guard record.apply(modification) else
             {
                 log(warning: "Modification didn't change iCloud record. This is unexpected.")
+                handleSuccess(true)
                 return
             }
             
@@ -75,8 +83,11 @@ extension ItemICloudDatabase
                     guard $0 else
                     {
                         log(error: "Couldn't save record.")
+                        handleSuccess(false)
                         return
                     }
+                    
+                    handleSuccess(true)
                 }
                 
                 return
@@ -93,6 +104,7 @@ extension ItemICloudDatabase
                 guard var siblingRecords = $0 else
                 {
                     log(error: "Couldn't download sibling records.")
+                    handleSuccess(false)
                     return
                 }
                 
@@ -130,8 +142,11 @@ extension ItemICloudDatabase
                     guard $0 else
                     {
                         log(error: "Couldn't save records.")
+                        handleSuccess(false)
                         return
                     }
+                    
+                    handleSuccess(true)
                 }
             }
         }

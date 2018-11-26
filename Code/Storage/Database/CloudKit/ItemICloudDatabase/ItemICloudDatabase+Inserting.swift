@@ -4,7 +4,8 @@ import SwiftObserver
 extension ItemICloudDatabase
 {
     func insertItems(with modifications: [Modification],
-                     inRootWithID rootID: String?)
+                     inRootWithID rootID: String?,
+                     handleSuccess: @escaping (Bool) -> Void)
     {
         guard let rootID = rootID else
         {
@@ -17,8 +18,11 @@ extension ItemICloudDatabase
                 guard $0 else
                 {
                     log(error: "Couldn't save records.")
+                    handleSuccess(false)
                     return
                 }
+                
+                handleSuccess(true)
             }
             
             return
@@ -33,20 +37,27 @@ extension ItemICloudDatabase
             guard var siblingRecords = $0 else
             {
                 log(error: "Couldn't download sibling records.")
+                handleSuccess(false)
                 return
             }
             
             guard !siblingRecords.isEmpty else
             {
-                let records = modifications.map { CKRecord(modification: $0) }
+                let records = modifications.map
+                {
+                    CKRecord(modification: $0)
+                }
                 
                 self.save(records)
                 {
                     guard $0 else
                     {
                         log(error: "Couldn't save records.")
+                        handleSuccess(false)
                         return
                     }
+                    
+                    handleSuccess(true)
                 }
                 
                 return
@@ -79,6 +90,7 @@ extension ItemICloudDatabase
                 if targetPosition > siblingRecords.count
                 {
                     log(error: "Invalid position specified for new item.")
+                    handleSuccess(false)
                     return
                 }
                 
@@ -113,8 +125,11 @@ extension ItemICloudDatabase
                 guard $0 else
                 {
                     log(error: "Couldn't save records.")
+                    handleSuccess(false)
                     return
                 }
+                
+                handleSuccess(true)
             }
         }
     }
