@@ -246,7 +246,7 @@ class ICloudDatabase
             
             if let error = error
             {
-                log(error: error.localizedDescription)
+                log(error)
                 
                 // TODO: remember failed records and handle them / try again later...
             }

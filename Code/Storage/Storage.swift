@@ -61,7 +61,7 @@ class Storage: Observer
                                                      callToAction: c2a)
             }
         }.catch { error in
-            log(error: error.localizedDescription)
+            log(error)
         }
     }
     
@@ -131,9 +131,7 @@ class Storage: Observer
                 self.stopContinuousSyncing()
                 handleSuccess(false, message)
             }
-        }.catch { error in
-            log(error: error.localizedDescription)
-        }
+        }.catch { log($0) }
     }
     
     private func doInitialSync(handleSuccess: @escaping (Bool) -> Void)
