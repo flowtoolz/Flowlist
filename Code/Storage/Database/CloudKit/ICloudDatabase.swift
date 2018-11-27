@@ -54,33 +54,18 @@ class ICloudDatabase
     
     func fetchRecord(with id: CKRecord.ID) -> Promise<CKRecord>
     {
-        return Promise
-        {
-            resolver in
-
-            self.database.fetch(withRecordID: id).pipe
-            {
-                result in
-                
-                DispatchQueue.main.async { resolver.resolve(result) }
-            }
-        }
+        let mainQ = DispatchQueue.main
+        
+        return database.fetch(withRecordID: id).map(on: mainQ) { $0 }
     }
     
     func fetchRecords(with query: CKQuery,
                       inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
     {
-        return Promise
-        {
-            resolver in
-
-            self.database.perform(query, inZoneWith: zoneID).pipe
-            {
-                result in
-                
-                DispatchQueue.main.async { resolver.resolve(result) }
-            }
-        }
+        let mainQ = DispatchQueue.main
+        
+        return database.perform(query,
+                                inZoneWith: zoneID).map(on: mainQ) { $0 }
     }
     
     // MARK: - Respond to Notifications
@@ -255,46 +240,27 @@ class ICloudDatabase
     
     func checkAvailability() -> Promise<Availability>
     {
-        return Promise
-        {
-            resolver in
+        return firstly {
+            container.accountStatus()
+        }.ensure {
+            self.isAvailable = false
+        }.map { status in
+            var message = "Copuld not determine iCloud account status."
             
-            firstly {
-                container.accountStatus()
-            }.done { status in
-                DispatchQueue.main.async {
-                    var unavailableMessage: String?
-                    
-                    switch status
-                    {
-                    case .couldNotDetermine:
-                        unavailableMessage = "Could not determine iCloud account status."
-                    case .available:
-                        break
-                    case .restricted:
-                        unavailableMessage = "iCloud account is restricted."
-                    case .noAccount:
-                        unavailableMessage = "This device is not connected to an iCloud account."
-                    }
-                    
-                    self.isAvailable = unavailableMessage == nil
-                    
-                    if let message = unavailableMessage
-                    {
-                        resolver.fulfill(Availability.unavailable(message))
-                    }
-                    else
-                    {
-                        resolver.fulfill(Availability.available)
-                    }
-                }
-            }.catch { error in
-                DispatchQueue.main.async
-                {
-                    self.isAvailable = false
-                    resolver.reject(error)
-                }
+            switch status
+            {
+            case .couldNotDetermine:
+                message = "Could not determine iCloud account status."
+            case .available:
+                self.isAvailable = true
+                return Availability.available
+            case .restricted:
+                message = "iCloud account is restricted."
+            case .noAccount:
+                message = "This device is not connected to an iCloud account."
             }
+            
+            return Availability.unavailable(message)
         }
     }
     
