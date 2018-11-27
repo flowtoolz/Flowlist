@@ -121,7 +121,11 @@ extension ItemICloudDatabase: ItemDatabase
     
     private func updateServerChangeToken()
     {
-        updateServerChangeToken(zoneID: CKRecordZone.ID.item,
-                                oldToken: serverChangeToken) { _ in }
+        firstly {
+            updateServerChangeToken(zoneID: CKRecordZone.ID.item,
+                                    oldToken: serverChangeToken)
+        }.catch { 
+            log($0)
+        }
     }
 }

@@ -14,15 +14,10 @@ class ItemICloudDatabase: ICloudDatabase
             return
         }
         
-        updateServerChangeToken(zoneID: CKRecordZone.ID.item,
-                                oldToken: serverChangeToken)
-        {
-            guard let result = $0 else
-            {
-                log(error: "Could not fetch updates.")
-                return
-            }
-            
+        firstly {
+            updateServerChangeToken(zoneID: CKRecordZone.ID.item,
+                                    oldToken: serverChangeToken)
+        }.done { result in
             if result.idsOfDeletedRecords.count > 0
             {
                 let ids = result.idsOfDeletedRecords.map { $0.recordName }
@@ -38,6 +33,8 @@ class ItemICloudDatabase: ICloudDatabase
                 
                 self.messenger.send(.updateItems(withModifications: mods))
             }
+        }.catch {
+            log($0)
         }
     }
     

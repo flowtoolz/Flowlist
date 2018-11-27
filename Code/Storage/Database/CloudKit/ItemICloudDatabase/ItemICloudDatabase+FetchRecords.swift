@@ -6,19 +6,14 @@ extension ItemICloudDatabase
 {
     func fetchAllItemRecords(handleResult: @escaping ([CKRecord]?) -> Void)
     {
-        updateServerChangeToken(zoneID: CKRecordZone.ID.item,
-                                oldToken: nil)
-        {
-            result in
-            
-            guard let result = result else
-            {
-                log(error: "Fetching changes failed.")
-                handleResult(nil)
-                return
-            }
-            
-            handleResult(result.changedRecords)
+        firstly {
+            updateServerChangeToken(zoneID: CKRecordZone.ID.item,
+                                    oldToken: nil)
+        }.done {
+            handleResult($0.changedRecords)
+        }.catch {
+            log($0)
+            handleResult(nil)
         }
     }
     

@@ -64,8 +64,7 @@ class ICloudDatabase
     {
         let mainQ = DispatchQueue.main
         
-        return database.perform(query,
-                                inZoneWith: zoneID).map(on: mainQ) { $0 }
+        return database.perform(query, inZoneWith: zoneID).map(on: mainQ) { $0 }
     }
     
     // MARK: - Respond to Notifications

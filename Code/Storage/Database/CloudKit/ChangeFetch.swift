@@ -5,7 +5,7 @@ extension ChangeFetch
 {
     convenience init(zoneID fetchZoneID: CKRecordZone.ID,
                      token: CKServerChangeToken?,
-                     handleResult: @escaping (Result?) -> Void)
+                     handleResult: @escaping (Result?, Error?) -> Void)
     {
         let zoneOptions = ChangeFetch.ZoneOptions()
         
@@ -85,11 +85,11 @@ extension ChangeFetch
                 if let error = error
                 {
                     log(error)
-                    handleResult(nil)
+                    handleResult(nil, error)
                     return
                 }
                 
-                handleResult(changes)
+                handleResult(changes, nil)
             }
         }
     }

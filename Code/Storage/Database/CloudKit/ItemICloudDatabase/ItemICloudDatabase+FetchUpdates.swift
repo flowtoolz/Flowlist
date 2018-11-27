@@ -1,20 +1,15 @@
 import CloudKit
 import SwiftObserver
+import PromiseKit
 
 extension ItemICloudDatabase
 {
     func fetchUpdates(handleResult: @escaping UpdateHandler)
     {
-        updateServerChangeToken(zoneID: CKRecordZone.ID.item,
-                                oldToken: serverChangeToken)
-        {
-            guard let result = $0 else
-            {
-                log(error: "Could not fetch updates.")
-                handleResult(nil)
-                return
-            }
-            
+        firstly {
+            updateServerChangeToken(zoneID: CKRecordZone.ID.item,
+                                    oldToken: serverChangeToken)
+        }.done { result in
             var edits = [Edit]()
             
             if result.idsOfDeletedRecords.count > 0
@@ -34,6 +29,9 @@ extension ItemICloudDatabase
             }
             
             handleResult(edits)
+        }.catch {
+            log($0)
+            handleResult(nil)
         }
     }
 }
