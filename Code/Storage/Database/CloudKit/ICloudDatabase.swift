@@ -206,7 +206,7 @@ class ICloudDatabase
                                                predicate: .all,
                                                options: options)
         
-        save(subscription)
+        save(subscription).catch { log(error: $0.localizedDescription) }
     }
     
     func createDatabasSubscription(withID id: String)
@@ -229,10 +229,7 @@ class ICloudDatabase
         {
             resolver in
             
-            database.save(subscription)
-            {
-                resolver.resolve($0, $1)
-            }
+            database.save(subscription) { resolver.resolve($0, $1) }
         }
     }
     
@@ -292,19 +289,10 @@ class ICloudDatabase
         {
             resolver in
             
-            container.accountStatus
-            {
-                status, error in
-                
-                DispatchQueue.main.async
-                {
-                    if let error = error
-                    {
-                        self.isAvailable = false
-                        resolver.reject(error)
-                        return
-                    }
-                    
+            firstly {
+                container.accountStatus()
+            }.done { status in
+                DispatchQueue.main.async {
                     var unavailableMessage: String?
                     
                     switch status
@@ -323,7 +311,6 @@ class ICloudDatabase
                     
                     if let message = unavailableMessage
                     {
-                        log(error: message)
                         resolver.fulfill(Availability.unavailable(message))
                     }
                     else
@@ -331,6 +318,9 @@ class ICloudDatabase
                         resolver.fulfill(Availability.available)
                     }
                 }
+            }.catch { error in
+                self.isAvailable = false
+                resolver.reject(error)
             }
         }
     }

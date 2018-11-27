@@ -1,6 +1,6 @@
 use_frameworks!
 
-platform :osx, '10.11'
+platform :osx, '10.12'
 
 target 'Flowlist' do
 
@@ -11,13 +11,14 @@ target 'Flowlist' do
     pod 'SwiftObserver', :path=> '../../Frameworks/SwiftObserver'
     pod 'SwiftyToolz', :path=> '../../Frameworks/SwiftyToolz'
     pod 'PromiseKit', '~> 6.0'
+    pod 'PromiseKit/CloudKit', '~> 6.0'
 
 end
 
 post_install do |installer|
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
-            config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '10.11'
+            config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '10.12'
         end
     end
 end
