@@ -193,7 +193,7 @@ class ICloudDatabase
     // MARK: - Creating Subscriptions
     
     func createQuerySubscription(forRecordType type: String,
-                                 desiredTags: [String])
+                                 desiredTags: [String]) -> Promise<CKSubscription>
     {
         let options: CKQuerySubscription.Options =
         [
@@ -206,15 +206,15 @@ class ICloudDatabase
                                                predicate: .all,
                                                options: options)
         
-        save(subscription).catch { log(error: $0.localizedDescription) }
+        return save(subscription)
     }
     
-    func createDatabasSubscription(withID id: String)
+    func createDatabasSubscription(withID id: String) -> Promise<CKSubscription>
     {
         let subID = CKSubscription.ID(id)
         let sub = CKDatabaseSubscription(subscriptionID: subID)
         
-        save(sub).catch { log(error: $0.localizedDescription) }
+        return save(sub)
     }
     
     private func save(_ subscription: CKSubscription,
@@ -225,12 +225,7 @@ class ICloudDatabase
         
         subscription.notificationInfo = notificationInfo
         
-        return Promise
-        {
-            resolver in
-            
-            database.save(subscription) { resolver.resolve($0, $1) }
-        }
+        return database.save(subscription)
     }
     
     // MARK: - Database
