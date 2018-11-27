@@ -214,24 +214,24 @@ class ICloudDatabase
         let subID = CKSubscription.ID(id)
         let sub = CKDatabaseSubscription(subscriptionID: subID)
         
-        save(sub)
+        save(sub).catch { log(error: $0.localizedDescription) }
     }
     
     private func save(_ subscription: CKSubscription,
-                      desiredTags: [CKRecord.FieldKey]? = nil)
+                      desiredTags: [CKRecord.FieldKey]? = nil) -> Promise<CKSubscription>
     {
         let notificationInfo = CKSubscription.NotificationInfo()
         notificationInfo.shouldSendContentAvailable = true
         
         subscription.notificationInfo = notificationInfo
         
-        database.save(subscription)
+        return Promise
         {
-            savedSubscription, error in
+            resolver in
             
-            if let error = error
+            database.save(subscription)
             {
-                log(error: error.localizedDescription)
+                resolver.resolve($0, $1)
             }
         }
     }
