@@ -2,6 +2,7 @@ import CloudKit
 import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
+import PromiseKit
 
 class ICloudDatabase
 {
@@ -285,43 +286,51 @@ class ICloudDatabase
     
     // MARK: - Container
     
-    func checkAvailability(handleResult: @escaping (_ available: Bool, _ errorMessage: String?) -> Void)
+    func checkAvailability() -> Promise<Availability>
     {
-        container.accountStatus
+        return Promise
         {
-            status, error in
+            resolver in
             
-            DispatchQueue.main.async
+            container.accountStatus
             {
-                if let error = error
+                status, error in
+                
+                DispatchQueue.main.async
                 {
-                    self.isAvailable = false
-                    log(error: error.localizedDescription)
-                    handleResult(false, error.localizedDescription)
-                    return
+                    if let error = error
+                    {
+                        self.isAvailable = false
+                        resolver.reject(error)
+                        return
+                    }
+                    
+                    var unavailableMessage: String?
+                    
+                    switch status
+                    {
+                    case .couldNotDetermine:
+                        unavailableMessage = "Could not determine iCloud account status."
+                    case .available:
+                        break
+                    case .restricted:
+                        unavailableMessage = "iCloud account is restricted."
+                    case .noAccount:
+                        unavailableMessage = "This device is not connected to an iCloud account."
+                    }
+                    
+                    self.isAvailable = unavailableMessage == nil
+                    
+                    if let message = unavailableMessage
+                    {
+                        log(error: message)
+                        resolver.fulfill(Availability.unavailable(message))
+                    }
+                    else
+                    {
+                        resolver.fulfill(Availability.available)
+                    }
                 }
-                
-                var errorMessage: String?
-                
-                switch status
-                {
-                case .couldNotDetermine:
-                    errorMessage = "Could not determine iCloud account status."
-                case .available: break
-                case .restricted:
-                    errorMessage = "iCloud account is restricted."
-                case .noAccount:
-                    errorMessage = "This device is not connected to an iCloud account."
-                }
-                
-                if let errorMessage = errorMessage
-                {
-                    log(error: errorMessage)
-                }
-                
-                let available = errorMessage == nil
-                self.isAvailable = available
-                handleResult(available, errorMessage)
             }
         }
     }

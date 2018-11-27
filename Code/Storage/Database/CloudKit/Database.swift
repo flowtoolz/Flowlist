@@ -1,26 +1,13 @@
-import SwiftObserver
-import SwiftyToolz
+import PromiseKit
 
-protocol Database: class
+protocol Database: AnyObject
 {
-    func checkAvailability(handleResult: @escaping AvailabilityHandler)
+    func checkAvailability() -> Promise<Availability>
     var isAvailable: Bool? { get }
-    func fetchUpdates(handleResult: @escaping UpdateHandler)
-    func apply(_ edit: Edit)
-    
-    func fetchItemTree(handleResult: @escaping ItemTreeHandler)
-    func resetItemTree(with root: Item,
-                       handleSuccess: @escaping (Bool) -> Void)
-    func removeItems(handleSuccess: @escaping (Bool) -> Void)
-    
-    var messenger: EditSender { get }
-    
-    typealias AvailabilityHandler = (_ available: Bool, _ error: String?) -> Void
-    typealias ItemTreeHandler = (_ success: Bool, _ root: Item?) -> Void
-    typealias UpdateHandler = (_ edits: [Edit]?) -> Void
 }
 
-class EditSender: Observable
+enum Availability
 {
-    var latestUpdate: Edit? = nil
+    case available
+    case unavailable(_ message: String)
 }

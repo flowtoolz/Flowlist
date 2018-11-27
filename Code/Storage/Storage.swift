@@ -1,10 +1,11 @@
 import SwiftObserver
+import PromiseKit
 
 class Storage: Observer
 {
     // MARK: - Initialize
     
-    init(with file: ItemFile, database: Database)
+    init(with file: ItemFile, database: ItemDatabase)
     {
         self.file = file
         self.database = database
@@ -47,21 +48,20 @@ class Storage: Observer
             log(error: "Invalid state: Using database while it's POSSIBLY unavailable: Is availabe: \(String(describing: database.isAvailable))")
         }
     
-        database.checkAvailability
-        {
-            available, errorMessage in
-            
-            guard available else
+        firstly {
+            database.checkAvailability()
+        }.done {
+            if case .unavailable(let message) = $0
             {
                 self.stopContinuousSyncing()
                 
                 let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account, then select the menu option \"Data → Start Using iCloud\"."
                 
-                self.informUserDatabaseIsUnavailable(error: errorMessage,
+                self.informUserDatabaseIsUnavailable(error: message,
                                                      callToAction: c2a)
-
-                return
             }
+        }.catch { error in
+            log(error: error.localizedDescription)
         }
     }
     
@@ -107,31 +107,32 @@ class Storage: Observer
             return
         }
         
-        database.checkAvailability
-        {
-            available, errorMessage in
-            
-            guard available else
+        firstly {
+            database.checkAvailability()
+        }.done { availability in
+            switch availability
             {
-                self.stopContinuousSyncing()
-                handleSuccess(false, errorMessage)
-                return
-            }
-            
-            self.doInitialSync
-            {
-                success in
-                
-                guard success else
+            case .available:
+                self.doInitialSync
                 {
-                    self.stopContinuousSyncing()
-                    handleSuccess(false, "The initial Sync up with iCloud didn't work.")
-                    return
+                    success in
+                    
+                    guard success else
+                    {
+                        self.stopContinuousSyncing()
+                        handleSuccess(false, "The initial Sync up with iCloud didn't work.")
+                        return
+                    }
+                    
+                    self.startContinuousSyncing()
+                    handleSuccess(true, nil)
                 }
-                
-                self.startContinuousSyncing()
-                handleSuccess(true, nil)
+            case .unavailable(let message):
+                self.stopContinuousSyncing()
+                handleSuccess(false, message)
             }
+        }.catch { error in
+            log(error: error.localizedDescription)
         }
     }
     
@@ -283,7 +284,7 @@ class Storage: Observer
     private var databaseUsageFlag = PersistentFlag(key: "IsUsingDatabase",
                                                    defaultValue: true)
     
-    let database: Database
+    let database: ItemDatabase
     
     // MARK: - File
     

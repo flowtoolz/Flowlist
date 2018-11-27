@@ -84,6 +84,7 @@
 		9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC498A521147FE1003636FE /* Item+Pasteboard.swift */; };
 		9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB5D032174AF740048D7C5 /* Item+Text.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
+		9EE60C0021ACE1AF0075109D /* ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */; };
 		9EEA769F21922A5700642EE7 /* ItemFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEA769E21922A5700642EE7 /* ItemFile.swift */; };
 		9EEBA1A32168DAE40053B628 /* ItemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEBA1A22168DAE40053B628 /* ItemData.swift */; };
 		9EEBA1A72168EE860053B628 /* ItemData+Copyable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEBA1A62168EE860053B628 /* ItemData+Copyable.swift */; };
@@ -189,6 +190,7 @@
 		9EC498A521147FE1003636FE /* Item+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Pasteboard.swift"; sourceTree = "<group>"; };
 		9EDB5D032174AF740048D7C5 /* Item+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Text.swift"; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Float+Style.swift"; sourceTree = "<group>"; };
+		9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabase.swift; sourceTree = "<group>"; };
 		9EEA769E21922A5700642EE7 /* ItemFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemFile.swift; sourceTree = "<group>"; };
 		9EEBA1A22168DAE40053B628 /* ItemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemData.swift; sourceTree = "<group>"; };
 		9EEBA1A62168EE860053B628 /* ItemData+Copyable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemData+Copyable.swift"; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 			isa = PBXGroup;
 			children = (
 				9EA5A893218ECB45004902F7 /* CloudKit */,
+				9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */,
 				9EBD41B021ACA45400C97B99 /* Database.swift */,
 			);
 			path = Database;
@@ -718,6 +721,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Flowlist/Pods-Flowlist-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/FoundationToolz/FoundationToolz.framework",
 				"${BUILT_PRODUCTS_DIR}/GetLaid/GetLaid.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftObserver/SwiftObserver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyToolz/SwiftyToolz.framework",
 				"${BUILT_PRODUCTS_DIR}/UIObserver/UIObserver.framework",
@@ -727,6 +731,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FoundationToolz.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GetLaid.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftObserver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyToolz.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIObserver.framework",
@@ -822,6 +827,7 @@
 				9E5768C020C15B6300749C0C /* Browser+Debugging.swift in Sources */,
 				9E053B3121886963001B7103 /* CKRecord+Modification.swift in Sources */,
 				9E2CCE8D20C1DE030037D755 /* List+Clipboard.swift in Sources */,
+				9EE60C0021ACE1AF0075109D /* ItemDatabase.swift in Sources */,
 				9EBD41AB21AC419B00C97B99 /* ICloudDatabase+ServerChangeToken.swift in Sources */,
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,
 				9E053B4921887133001B7103 /* FlowlistView.swift in Sources */,
