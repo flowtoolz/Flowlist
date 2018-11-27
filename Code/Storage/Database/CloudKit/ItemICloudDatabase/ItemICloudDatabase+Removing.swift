@@ -1,5 +1,6 @@
 import CloudKit
 import SwiftObserver
+import PromiseKit
 
 extension ItemICloudDatabase
 {
@@ -8,14 +9,26 @@ extension ItemICloudDatabase
     {
         let recordIDs = ids.map { CKRecord.ID(itemID: $0) }
         
-        deleteRecords(withIDs: recordIDs,
-                      handleSuccess: handleSuccess)
+        firstly {
+            deleteRecords(withIDs: recordIDs)
+        }.done {
+            handleSuccess(true)
+        }.catch {
+            log($0)
+            handleSuccess(false)
+        }
     }
     
     func removeItems(handleSuccess: @escaping (Bool) -> Void)
     {
-        deleteRecords(ofType: CKRecord.itemType,
-                      inZone: CKRecordZone.ID.item,
-                      handleSuccess: handleSuccess)
+        firstly {
+            deleteRecords(ofType: CKRecord.itemType,
+                          inZone: CKRecordZone.ID.item)
+        }.done {
+            handleSuccess(true)
+        }.catch {
+            log($0)
+            handleSuccess(false)
+        }
     }
 }

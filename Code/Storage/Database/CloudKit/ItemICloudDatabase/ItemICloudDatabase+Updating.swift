@@ -1,5 +1,6 @@
 import CloudKit
 import SwiftObserver
+import PromiseKit
 
 extension ItemICloudDatabase
 {
@@ -26,16 +27,13 @@ extension ItemICloudDatabase
             {
                 let records = mods.map { CKRecord(modification: $0) }
                 
-                self.save(records)
-                {
-                    guard $0 else
-                    {
-                        log(error: "Couldn't save records.")
-                        handleSuccess(false)
-                        return
-                    }
-                    
+                firstly {
+                    self.save(records)
+                }.done { records in
                     handleSuccess(true)
+                }.catch {
+                    log($0)
+                    handleSuccess(false)
                 }
                 
                 return
@@ -87,16 +85,13 @@ extension ItemICloudDatabase
             
             // save records back
             
-            self.save(Array(recordsToSave))
-            {
-                guard $0 else
-                {
-                    log(error: "Couldn't save records.")
-                    handleSuccess(false)
-                    return
-                }
-                
+            firstly {
+                self.save(Array(recordsToSave))
+            }.done {
                 handleSuccess(true)
+            }.catch {
+                log($0)
+                handleSuccess(false)
             }
         }
     }

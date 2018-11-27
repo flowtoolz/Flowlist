@@ -1,5 +1,6 @@
 import CloudKit
 import SwiftObserver
+import PromiseKit
 
 extension ItemICloudDatabase
 {
@@ -44,8 +45,13 @@ extension ItemICloudDatabase
         let query = CKQuery(recordType: CKRecord.itemType,
                             predicate: predicate)
         
-        fetchRecords(with: query,
-                     inZone: CKRecordZone.ID.item,
-                     handleResult: handleResult)
+        firstly {
+            fetchRecords(with: query, inZone: CKRecordZone.ID.item)
+        }.done {
+            handleResult($0)
+        }.catch {
+            log($0)
+            handleResult(nil)
+        }
     }
 }

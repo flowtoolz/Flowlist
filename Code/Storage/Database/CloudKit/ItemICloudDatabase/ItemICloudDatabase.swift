@@ -1,5 +1,6 @@
 import CloudKit
 import SwiftObserver
+import PromiseKit
 
 class ItemICloudDatabase: ICloudDatabase
 {
@@ -139,13 +140,21 @@ class ItemICloudDatabase: ICloudDatabase
     
     func createItemDatabaseSubscription()
     {
-        createDatabasSubscription(withID: "ItemDataBaseSubscription")
+        firstly {
+            createDatabasSubscription(withID: "ItemDataBaseSubscription")
+        }.catch {
+            log($0)
+        }
     }
     
     func createItemQuerySubscription()
     {
-        createQuerySubscription(forRecordType: CKRecord.itemType,
-                                desiredTags: fieldNames)
+        firstly {
+            createQuerySubscription(forRecordType: CKRecord.itemType,
+                                    desiredTags: fieldNames)
+        }.catch {
+            log($0)
+        }
     }
     
     private let fieldNames = CKRecord.itemFieldNames

@@ -1,5 +1,6 @@
 import CloudKit
 import SwiftObserver
+import PromiseKit
 
 extension ItemICloudDatabase: ItemDatabase
 {
@@ -76,18 +77,14 @@ extension ItemICloudDatabase: ItemDatabase
                 CKRecord(modification: $0.modification())
             }
             
-            self.save(records)
-            {
-                guard $0 else
-                {
-                    log(error: "Couldn't save records.")
-                    handleSuccess(false)
-                    return
-                }
-                
+            firstly {
+                self.save(records)
+            }.done { _ in
                 self.updateServerChangeToken()
-                
                 handleSuccess(true)
+            }.catch { error in
+                log(error)
+                handleSuccess(false)
             }
         }
     }

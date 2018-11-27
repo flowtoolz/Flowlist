@@ -8,101 +8,77 @@ class ICloudDatabase
 {
     // MARK: - Save
     
-    func save(_ records: [CKRecord],
-              handleSuccess: @escaping (Bool) -> Void)
+    func save(_ records: [CKRecord]) -> Promise<Void>
     {
         let operation = CKModifyRecordsOperation(recordsToSave: records,
                                                  recordIDsToDelete: nil)
         
-        perform(modifyOperation : operation,
-                handleCreationSuccess: handleSuccess,
-                handleDeletionSuccess: nil)
+        return Promise
+        {
+            perform(modifyOperation: operation,
+                    handleCreationSuccess: $0.resolve,
+                    handleDeletionSuccess: nil)
+        }
     }
     
     // MARK: - Delete
     
     func deleteRecords(ofType type: String,
-                       inZone zoneID: CKRecordZone.ID,
-                       handleSuccess: @escaping (Bool) -> Void)
+                       inZone zoneID: CKRecordZone.ID) -> Promise<Void>
     {
         let queryAll = CKQuery(recordType: type, predicate: .all)
         
-        fetchRecords(with: queryAll, inZone: zoneID)
-        {
-            guard let records = $0 else
-            {
-                handleSuccess(false)
-                return
-            }
-            
-            let ids = records.map { $0.recordID }
-            
-            self.deleteRecords(withIDs: ids, handleSuccess: handleSuccess)
+        return firstly {
+            fetchRecords(with: queryAll, inZone: zoneID)
+        }.map {
+            $0.map { $0.recordID }
+        }.then {
+            self.deleteRecords(withIDs: $0)
         }
     }
     
-    func deleteRecords(withIDs ids: [CKRecord.ID],
-                       handleSuccess: @escaping (Bool) -> Void)
+    func deleteRecords(withIDs ids: [CKRecord.ID]) -> Promise<Void>
     {
         let operation = CKModifyRecordsOperation(recordsToSave: nil,
                                                  recordIDsToDelete: ids)
         
-        perform(modifyOperation: operation,
-                handleCreationSuccess: nil,
-                handleDeletionSuccess: handleSuccess)
+        return Promise
+        {
+            perform(modifyOperation: operation,
+                    handleCreationSuccess: nil,
+                    handleDeletionSuccess: $0.resolve)
+        }
     }
     
     // MARK: - Fetch
     
-    func fetchRecord(with id: CKRecord.ID,
-                     handleResult: @escaping (CKRecord?) -> Void)
+    func fetchRecord(with id: CKRecord.ID) -> Promise<CKRecord>
     {
-        database.fetch(withRecordID: id)
+        return Promise
         {
-            record, error in
-            
-            DispatchQueue.main.async
+            resolver in
+
+            self.database.fetch(withRecordID: id).pipe
             {
-                if let error = error
-                {
-                    log(error: error.localizedDescription)
-                    handleResult(nil)
-                    return
-                }
+                result in
                 
-                if record == nil
-                {
-                    log(error: "The fetched record is nil.")
-                }
-                
-                handleResult(record)
+                DispatchQueue.main.async { resolver.resolve(result) }
             }
         }
     }
     
     func fetchRecords(with query: CKQuery,
-                      inZone zoneID: CKRecordZone.ID,
-                      handleResult: @escaping ([CKRecord]?) -> Void)
+                      inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
     {
-        database.perform(query, inZoneWith: zoneID)
+        return Promise
         {
-            records, error in
-            
-            DispatchQueue.main.async
+            resolver in
+
+            self.database.perform(query, inZoneWith: zoneID).pipe
             {
-                if let error = error
-                {
-                    log(error: error.localizedDescription)
-                    handleResult(nil)
-                    return
-                }
+                result in
                 
-                if records == nil
-                {
-                    log(error: "The fetched record array is nil.")
-                }
-                
-                handleResult(records)
+                DispatchQueue.main.async { resolver.resolve(result) }
             }
         }
     }
@@ -231,8 +207,8 @@ class ICloudDatabase
     // MARK: - Database
     
     private func perform(modifyOperation operation: CKModifyRecordsOperation,
-                         handleCreationSuccess: ((Bool) -> Void)?,
-                         handleDeletionSuccess: ((Bool) -> Void)?)
+                         handleCreationSuccess: ((Error?) -> Void)?,
+                         handleDeletionSuccess: ((Error?) -> Void)?)
     {
         operation.savePolicy = .changedKeys // TODO: or if server records unchanged? handle "merge conflicts" when multiple devices changed data locally offline...
         
@@ -258,14 +234,13 @@ class ICloudDatabase
             
             if let error = error
             {
-                log(error: error.localizedDescription)
-                handleDeletionSuccess?(false)
-                handleCreationSuccess?(false)
+                handleDeletionSuccess?(error)
+                handleCreationSuccess?(error)
                 return
             }
             
-            handleCreationSuccess?(records != nil)
-            handleDeletionSuccess?(ids != nil)
+            handleCreationSuccess?(nil)
+            handleDeletionSuccess?(nil)
         }
         
         database.add(operation)
@@ -314,8 +289,11 @@ class ICloudDatabase
                     }
                 }
             }.catch { error in
-                self.isAvailable = false
-                resolver.reject(error)
+                DispatchQueue.main.async
+                {
+                    self.isAvailable = false
+                    resolver.reject(error)
+                }
             }
         }
     }
