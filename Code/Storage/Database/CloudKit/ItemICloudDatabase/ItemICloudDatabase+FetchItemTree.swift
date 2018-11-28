@@ -34,11 +34,16 @@ extension ItemICloudDatabase
     
     private func fetchAllItemRecords(handleResult: @escaping ([CKRecord]?) -> Void)
     {
-        firstly {
+        firstly
+        {
             fetchAllUpdates()
-        }.done {
+        }
+        .done
+        {
             handleResult($0.changedRecords)
-        }.catch {
+        }
+        .catch
+        {
             log($0)
             handleResult(nil)
         }

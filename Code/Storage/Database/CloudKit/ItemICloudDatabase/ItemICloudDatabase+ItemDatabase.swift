@@ -13,23 +13,27 @@ extension ItemICloudDatabase: ItemDatabase
             
             for (rootID, mods) in modsByRootID
             {
-                firstly {
+                firstly
+                {
                     self.updateItems(with: mods, inRootWithID: rootID)
-                }.then { _ in
-                    self.fetchNewUpdates()
-                }.catch {
-                    log($0)
                 }
+                .then
+                {
+                    self.fetchNewUpdates()
+                }
+                .catch { log($0) }
             }
             
         case .removeItems(let ids):
-            firstly {
+            firstly
+            {
                 self.removeItems(with: ids)
-            }.then { _ in
-                self.fetchNewUpdates()
-            }.catch {
-                log($0)
             }
+            .then
+            {
+                self.fetchNewUpdates()
+            }
+            .catch { log($0) }
         }
     }
     

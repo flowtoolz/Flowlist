@@ -28,11 +28,16 @@ class ICloudDatabase: Observable
     {
         let queryAll = CKQuery(recordType: type, predicate: .all)
         
-        return firstly {
+        return firstly
+        {
             fetchRecords(with: queryAll, inZone: zoneID)
-        }.map {
+        }
+        .map
+        {
             $0.map { $0.recordID }
-        }.then {
+        }
+        .then
+        {
             self.deleteRecords(withIDs: $0)
         }
     }
@@ -245,11 +250,18 @@ class ICloudDatabase: Observable
     
     func checkAvailability() -> Promise<Availability>
     {
-        return firstly {
+        return firstly
+        {
             container.accountStatus()
-        }.ensure {
+        }
+        .ensure
+        {
             self.isAvailable = false
-        }.map { status in
+        }
+        .map
+        {
+            status in
+            
             var message = "Copuld not determine iCloud account status."
             
             switch status

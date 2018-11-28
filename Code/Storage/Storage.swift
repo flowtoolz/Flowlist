@@ -48,9 +48,12 @@ class Storage: Observer
             log(error: "Invalid state: Using database while it's POSSIBLY unavailable: Is availabe: \(String(describing: database.isAvailable))")
         }
     
-        firstly {
+        firstly
+        {
             database.checkAvailability()
-        }.done {
+        }
+        .done
+        {
             if case .unavailable(let message) = $0
             {
                 self.stopContinuousSyncing()
@@ -60,9 +63,8 @@ class Storage: Observer
                 self.informUserDatabaseIsUnavailable(error: message,
                                                      callToAction: c2a)
             }
-        }.catch { error in
-            log(error)
         }
+        .catch { log($0) }
     }
     
     // MARK: - Opting In and Out of Syncing Database & Store
@@ -107,9 +109,14 @@ class Storage: Observer
             return
         }
         
-        firstly {
+        firstly
+        {
             database.checkAvailability()
-        }.done { availability in
+        }
+        .done
+        {
+            availability in
+            
             switch availability
             {
             case .available:
@@ -131,7 +138,8 @@ class Storage: Observer
                 self.stopContinuousSyncing()
                 handleSuccess(false, message)
             }
-        }.catch { log($0) }
+        }
+        .catch { log($0) }
     }
     
     private func doInitialSync(handleSuccess: @escaping (Bool) -> Void)
@@ -157,11 +165,11 @@ class Storage: Observer
             {
                 // no items in iCloud
                 
-                firstly {
+                firstly
+                {
                     self.database.resetItemTree(with: storeRoot)
-                }.catch {
-                    log($0)
                 }
+                .catch { log($0) }
                 
                 return
             }
@@ -196,11 +204,11 @@ class Storage: Observer
                 {
                     // Store changed but noone changed iCloud
                     
-                    firstly {
+                    firstly
+                    {
                         self.database.resetItemTree(with: storeRoot)
-                    }.catch {
-                        log($0)
                     }
+                    .catch { log($0) }
                     
                     return
                 }

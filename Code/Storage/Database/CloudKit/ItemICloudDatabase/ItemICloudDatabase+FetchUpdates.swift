@@ -6,9 +6,14 @@ extension ItemICloudDatabase
 {
     func fetchUpdates(handleResult: @escaping UpdateHandler)
     {
-        firstly {
+        firstly
+        {
             self.fetchNewUpdates()
-        }.done { result in
+        }
+        .done
+        {
+            result in
+            
             var edits = [Edit]()
             
             if result.idsOfDeletedRecords.count > 0
@@ -28,7 +33,9 @@ extension ItemICloudDatabase
             }
             
             handleResult(edits)
-        }.catch {
+        }
+        .catch
+        {
             log($0)
             handleResult(nil)
         }
