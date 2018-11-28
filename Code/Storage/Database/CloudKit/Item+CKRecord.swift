@@ -5,6 +5,8 @@ extension Tree where Data == ItemData
 {
     convenience init?(records: [CKRecord])
     {
+        guard !records.isEmpty else { return nil }
+        
         // create unconnected items. remember associated records.
         
         var hashMap = [String : (CKRecord, Item)]()

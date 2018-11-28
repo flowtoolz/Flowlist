@@ -68,7 +68,7 @@
 		9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* Store.swift */; };
 		9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* List+Editing.swift */; };
 		9E91651520551E5600A438FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E91651320551E5500A438FB /* Assets.xcassets */; };
-		9EA1D3A5219EA60500B5943C /* ItemICloudDatabase+FetchItemTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3A4219EA60500B5943C /* ItemICloudDatabase+FetchItemTree.swift */; };
+		9EA1D3A5219EA60500B5943C /* ItemICloudDatabase+FetchTrees.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3A4219EA60500B5943C /* ItemICloudDatabase+FetchTrees.swift */; };
 		9EA1D3AD219EB4AD00B5943C /* Item+CKRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3AC219EB4AD00B5943C /* Item+CKRecord.swift */; };
 		9EA1D3B0219EBFD000B5943C /* Persister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3AF219EBFD000B5943C /* Persister.swift */; };
 		9EA1D3B2219EC26F00B5943C /* PersisterInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3B1219EC26F00B5943C /* PersisterInterface.swift */; };
@@ -172,7 +172,7 @@
 		9E82A7A81EF2A558006AEF02 /* List+Editing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "List+Editing.swift"; sourceTree = "<group>"; };
 		9E91651320551E5500A438FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		9E916518205520B800A438FB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
-		9EA1D3A4219EA60500B5943C /* ItemICloudDatabase+FetchItemTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemICloudDatabase+FetchItemTree.swift"; sourceTree = "<group>"; };
+		9EA1D3A4219EA60500B5943C /* ItemICloudDatabase+FetchTrees.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemICloudDatabase+FetchTrees.swift"; sourceTree = "<group>"; };
 		9EA1D3AC219EB4AD00B5943C /* Item+CKRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CKRecord.swift"; sourceTree = "<group>"; };
 		9EA1D3AF219EBFD000B5943C /* Persister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persister.swift; sourceTree = "<group>"; };
 		9EA1D3B1219EC26F00B5943C /* PersisterInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersisterInterface.swift; sourceTree = "<group>"; };
@@ -281,7 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				9E053B2821886962001B7103 /* ItemICloudDatabase+ItemDatabase.swift */,
-				9EA1D3A4219EA60500B5943C /* ItemICloudDatabase+FetchItemTree.swift */,
+				9EA1D3A4219EA60500B5943C /* ItemICloudDatabase+FetchTrees.swift */,
 				9EBD41AE21ACA03000C97B99 /* ItemICloudDatabase+FetchUpdates.swift */,
 				9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */,
 			);
@@ -797,7 +797,7 @@
 				9E053B452188711A001B7103 /* Menu.swift in Sources */,
 				9E053B23218867E4001B7103 /* ItemJSONFile.swift in Sources */,
 				9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */,
-				9EA1D3A5219EA60500B5943C /* ItemICloudDatabase+FetchItemTree.swift in Sources */,
+				9EA1D3A5219EA60500B5943C /* ItemICloudDatabase+FetchTrees.swift in Sources */,
 				9E22D8AD218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift in Sources */,
 				9E6C721020B1E66D001C3D2C /* Item+Debugging.swift in Sources */,
 				9E053B2521886867001B7103 /* FullVersion.swift in Sources */,

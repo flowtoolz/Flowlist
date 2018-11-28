@@ -151,25 +151,31 @@ class Storage: Observer
             return
         }
         
-        self.database.fetchItemTree
+        firstly
         {
-            success, databaseRoot in
+            self.database.fetchTrees()
+        }
+        .done
+        {
+            roots in
             
-            guard success else
+            guard let databaseRoot = roots.first else
             {
-                handleSuccess(false)
-                return
-            }
-            
-            guard let databaseRoot = databaseRoot else
-            {
-                // no items in iCloud
+                // no items in database
                 
                 firstly
                 {
                     self.database.resetItemTree(with: storeRoot)
                 }
-                .catch { log($0) }
+                .done
+                {
+                    handleSuccess(true)
+                }
+                .catch
+                {
+                    log($0)
+                    handleSuccess(false)
+                }
                 
                 return
             }
@@ -216,6 +222,8 @@ class Storage: Observer
             }
             .catch { log($0) }
         }
+        .catch { log($0) }
+        
     }
     
     // MARK: - Continuous Syncing
