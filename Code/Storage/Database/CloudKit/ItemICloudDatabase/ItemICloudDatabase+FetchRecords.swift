@@ -7,8 +7,7 @@ extension ItemICloudDatabase
     func fetchAllItemRecords(handleResult: @escaping ([CKRecord]?) -> Void)
     {
         firstly {
-            updateServerChangeToken(zoneID: CKRecordZone.ID.item,
-                                    oldToken: nil)
+            fetchAllUpdates()
         }.done {
             handleResult($0.changedRecords)
         }.catch {
@@ -41,7 +40,7 @@ extension ItemICloudDatabase
                             predicate: predicate)
         
         firstly {
-            fetchRecords(with: query, inZone: CKRecordZone.ID.item)
+            fetchRecords(with: query)
         }.done {
             handleResult($0)
         }.catch {

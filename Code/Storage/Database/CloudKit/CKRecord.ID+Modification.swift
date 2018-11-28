@@ -40,6 +40,6 @@ extension CKRecord.ID
     
     convenience init(itemID: String)
     {
-        self.init(recordName: itemID, zoneID: CKRecordZone.ID.item)
+        self.init(recordName: itemID, zoneID: .item)
     }
 }

@@ -117,13 +117,12 @@ extension ItemICloudDatabase: ItemDatabase
         }
     }
     
-    // MARK: - Kepp Server Change Token Up To Date
+    // MARK: - Keep Server Change Token Up To Date
     
     private func updateServerChangeToken()
     {
         firstly {
-            updateServerChangeToken(zoneID: CKRecordZone.ID.item,
-                                    oldToken: serverChangeToken)
+            fetchNewUpdates()
         }.catch { 
             log($0)
         }

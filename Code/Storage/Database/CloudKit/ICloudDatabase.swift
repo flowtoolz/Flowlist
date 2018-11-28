@@ -4,7 +4,7 @@ import SwiftObserver
 import SwiftyToolz
 import PromiseKit
 
-class ICloudDatabase
+class ICloudDatabase: Observable
 {
     // MARK: - Save
     
@@ -126,28 +126,28 @@ class ICloudDatabase
         }
     }
     
-    // MARK: - To Overwrite in Subclasses
+    // MARK: - Send Updates to Observers
     
-    func didCreateRecord(with id: CKRecord.ID,
+    private func didCreateRecord(with id: CKRecord.ID,
+                                 notification: CKQueryNotification)
+    {
+        send(.didCreateRecord(id: id, notification: notification))
+    }
+    
+    private func didModifyRecord(with id: CKRecord.ID,
                          notification: CKQueryNotification)
     {
-        log("Did create record: <\(id.recordName)>")
+        send(.didModifyRecord(id: id, notification: notification))
     }
     
-    func didModifyRecord(with id: CKRecord.ID,
-                         notification: CKQueryNotification)
+    private func didDeleteRecord(with id: CKRecord.ID)
     {
-        log("Did modify record: <\(id.recordName)>")
+        send(.didDeleteRecord(id: id))
     }
     
-    func didDeleteRecord(with id: CKRecord.ID)
+    private func didReceive(databaseNotification: CKDatabaseNotification)
     {
-        log("Did delete record: <\(id.recordName)>")
-    }
-    
-    func didReceive(databaseNotification: CKDatabaseNotification)
-    {
-        log("Did receive database notification.")
+        send(.didReceiveDatabaseNotification(databaseNotification))
     }
     
     // MARK: - Creating Subscriptions
@@ -227,10 +227,15 @@ class ICloudDatabase
             handleDeletionSuccess?(nil)
         }
         
+        perform(operation)
+    }
+    
+    func perform(_ operation: CKDatabaseOperation)
+    {
         database.add(operation)
     }
     
-    var database: CKDatabase
+    private var database: CKDatabase
     {
         return container.privateCloudDatabase
     }
@@ -263,6 +268,12 @@ class ICloudDatabase
         }
     }
     
+    private(set) var isAvailable: Bool?
+    
+    private let container = CKContainer.default()
+    
+    // MARK: - App Installation
+    
     private(set) lazy var appInstanceToken: Data? =
     {
         if let id = persister.string(appInstanceIDKey)
@@ -279,7 +290,18 @@ class ICloudDatabase
     
     private let appInstanceIDKey = "UserDefaultsKeyAppInstanceID"
     
-    private(set) var isAvailable: Bool?
+    // MARK: - Observability
     
-    let container = CKContainer.default()
+    var latestUpdate = Event.didNothing
+    
+    enum Event
+    {
+        case didNothing
+        case didCreateRecord(id: CKRecord.ID, notification: CKQueryNotification)
+        case didModifyRecord(id: CKRecord.ID, notification: CKQueryNotification)
+        case didDeleteRecord(id: CKRecord.ID)
+        case didReceiveDatabaseNotification(CKDatabaseNotification)
+    }
+    
+    deinit { removeObservers() }
 }

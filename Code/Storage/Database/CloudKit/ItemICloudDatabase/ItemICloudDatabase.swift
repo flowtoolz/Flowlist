@@ -2,11 +2,43 @@ import CloudKit
 import SwiftObserver
 import PromiseKit
 
-class ItemICloudDatabase: ICloudDatabase
+class ItemICloudDatabase: Observer
 {
+    // MARK: - Life Cycle
+    
+    init()
+    {
+        observe(iCloudDatabase)
+        {
+            [weak self] event in self?.didReceive(databaseEvent: event)
+        }
+    }
+    
+    private func didReceive(databaseEvent event: ICloudDatabase.Event)
+    {
+        switch event
+        {
+        case .didNothing: break
+        
+        case .didCreateRecord(let id, let notification):
+            didCreateRecord(with: id, notification: notification)
+        
+        case .didModifyRecord(let id, let notification):
+            didModifyRecord(with: id, notification: notification)
+        
+        case .didDeleteRecord(let id):
+            didDeleteRecord(with: id)
+        
+        case .didReceiveDatabaseNotification(let notification):
+            didReceive(databaseNotification: notification)
+        }
+    }
+    
+    deinit { stopAllObserving() }
+    
     // MARK: - Handle Database Notifications
     
-    override func didReceive(databaseNotification: CKDatabaseNotification)
+    private func didReceive(databaseNotification: CKDatabaseNotification)
     {
         guard databaseNotification.databaseScope == .private else
         {
@@ -15,8 +47,7 @@ class ItemICloudDatabase: ICloudDatabase
         }
         
         firstly {
-            updateServerChangeToken(zoneID: CKRecordZone.ID.item,
-                                    oldToken: serverChangeToken)
+            fetchNewUpdates()
         }.done { result in
             if result.idsOfDeletedRecords.count > 0
             {
@@ -36,8 +67,8 @@ class ItemICloudDatabase: ICloudDatabase
     
     // MARK: - Handle Query Notifications
     
-    override func didCreateRecord(with id: CKRecord.ID,
-                                  notification: CKQueryNotification)
+    private func didCreateRecord(with id: CKRecord.ID,
+                         notification: CKQueryNotification)
     {
         log(error: "Don't use query notifications as the pushs don't provide the server change token anyway!")
         
@@ -72,7 +103,7 @@ class ItemICloudDatabase: ICloudDatabase
          */
     }
     
-    override func didModifyRecord(with id: CKRecord.ID,
+    private func didModifyRecord(with id: CKRecord.ID,
                                   notification: CKQueryNotification)
     {
         log(error: "Don't use query notifications as the pushs don't provide the server change token anyway!")
@@ -106,14 +137,12 @@ class ItemICloudDatabase: ICloudDatabase
          */
     }
     
-    override func didDeleteRecord(with id: CKRecord.ID)
+    private func didDeleteRecord(with id: CKRecord.ID)
     {
         log(error: "Don't use query notifications as the pushs don't provide the server change token anyway!")
         
         // messenger.send(.removeItems(withIDs: [id.recordName]))
     }
-    
-    // MARK: - Get Data from Query Notification
     
     private func hasAllNewFields(_ notification: CKQueryNotification) -> Bool
     {
@@ -133,16 +162,83 @@ class ItemICloudDatabase: ICloudDatabase
     
     func createItemDatabaseSubscription() -> Promise<CKSubscription>
     {
-        return createDatabasSubscription(withID: "ItemDataBaseSubscription")
+        return iCloudDatabase.createDatabasSubscription(withID: "ItemDataBaseSubscription")
     }
     
     func createItemQuerySubscription() -> Promise<CKSubscription>
     {
-        return createQuerySubscription(forRecordType: CKRecord.itemType,
-                                       desiredTags: fieldNames)
+        return iCloudDatabase.createQuerySubscription(forRecordType: CKRecord.itemType,
+                                       
+                                                      desiredTags: fieldNames)
     }
     
     private let fieldNames = CKRecord.itemFieldNames
+    
+    // MARK: - Edit Items
+    
+    func save(_ records: [CKRecord]) -> Promise<Void>
+    {
+        return iCloudDatabase.save(records)
+    }
+    
+    func removeItems(with ids: [String],
+                     handleSuccess: @escaping (Bool) -> Void)
+    {
+        let recordIDs = ids.map { CKRecord.ID(itemID: $0) }
+        
+        firstly {
+            iCloudDatabase.deleteRecords(withIDs: recordIDs)
+        }.done {
+            handleSuccess(true)
+        }.catch {
+            log($0)
+            handleSuccess(false)
+        }
+    }
+    
+    func removeItems(handleSuccess: @escaping (Bool) -> Void)
+    {
+        firstly {
+            iCloudDatabase.deleteRecords(ofType: CKRecord.itemType,
+                                         inZone: .item)
+        }.done {
+            handleSuccess(true)
+        }.catch {
+            log($0)
+            handleSuccess(false)
+        }
+    }
+    
+    // MARK: - iCloud Database
+    
+    func handlePushNotification(with userInfo: [String : Any])
+    {
+        iCloudDatabase.handlePushNotification(with: userInfo)
+    }
+    
+    func checkAvailability() -> Promise<Availability>
+    {
+        return iCloudDatabase.checkAvailability()
+    }
+    
+    var isAvailable: Bool? { return iCloudDatabase.isAvailable }
+    
+    func fetchNewUpdates() -> Promise<ChangeFetch.Result>
+    {
+        return iCloudDatabase.fetchUpdates(fromZone: .item)
+    }
+    
+    func fetchAllUpdates() -> Promise<ChangeFetch.Result>
+    {
+        return iCloudDatabase.fetchUpdates(fromZone: .item, oldToken: nil)
+    }
+    
+    func fetchRecords(with query: CKQuery) -> Promise<[CKRecord]>
+    {
+        return iCloudDatabase.fetchRecords(with: query, inZone: .item)
+    }
+    
+    private let iCloudDatabase = ICloudDatabase()
     
     // MARK: - Observability
     

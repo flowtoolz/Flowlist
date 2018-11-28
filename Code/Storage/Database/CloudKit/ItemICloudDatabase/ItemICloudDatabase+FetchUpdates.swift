@@ -7,8 +7,7 @@ extension ItemICloudDatabase
     func fetchUpdates(handleResult: @escaping UpdateHandler)
     {
         firstly {
-            updateServerChangeToken(zoneID: CKRecordZone.ID.item,
-                                    oldToken: serverChangeToken)
+            self.fetchNewUpdates()
         }.done { result in
             var edits = [Edit]()
             
