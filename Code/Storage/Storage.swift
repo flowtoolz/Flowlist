@@ -120,19 +120,20 @@ class Storage: Observer
             switch availability
             {
             case .available:
-                self.doInitialSync
+                firstly
                 {
-                    success in
-                    
-                    guard success else
-                    {
-                        self.stopContinuousSyncing()
-                        handleSuccess(false, "The initial Sync up with iCloud didn't work.")
-                        return
-                    }
-                    
+                    self.doInitialSync()
+                }
+                .done
+                {
                     self.startContinuousSyncing()
                     handleSuccess(true, nil)
+                }
+                .catch
+                {
+                    log($0)
+                    self.stopContinuousSyncing()
+                    handleSuccess(false, nil)
                 }
             case .unavailable(let message):
                 self.stopContinuousSyncing()
@@ -142,42 +143,29 @@ class Storage: Observer
         .catch { log($0) }
     }
     
-    private func doInitialSync(handleSuccess: @escaping (Bool) -> Void)
+    private func doInitialSync() -> Promise<Void>
     {
         guard let storeRoot = Store.shared.root else
         {
-            log(error: "Store has no root. Create file and Store root before syncing Store with Database.")
-            handleSuccess(false)
-            return
+            return Promise
+            {
+                $0.reject(StorageError.storeHasNoRoot("Create file and Store root before syncing Store with Database!"))
+            }
         }
-        
-        firstly
+            
+        return firstly
         {
             self.database.fetchTrees()
         }
-        .done
+        .then
         {
-            roots in
+            (roots: [Item]) -> Promise<Void> in
             
             guard let databaseRoot = roots.first else
             {
                 // no items in database
                 
-                firstly
-                {
-                    self.database.resetItemTree(with: storeRoot)
-                }
-                .done
-                {
-                    handleSuccess(true)
-                }
-                .catch
-                {
-                    log($0)
-                    handleSuccess(false)
-                }
-                
-                return
+                return self.database.resetItemTree(with: storeRoot)
             }
             
             if storeRoot.isLeaf && !databaseRoot.isLeaf
@@ -186,19 +174,18 @@ class Storage: Observer
                 
                 Store.shared.update(root: databaseRoot)
                 self.file.save(databaseRoot)
-                handleSuccess(true)
-                return
+                
+                return Promise()
             }
             
             if storeRoot.isIdentical(to: databaseRoot)
             {
                 // Store and iCloud are identical
                 
-                handleSuccess(true)
-                return
+                return Promise()
             }
             
-            firstly
+            return firstly
             {
                 self.database.fetchUpdates()
             }
@@ -220,10 +207,7 @@ class Storage: Observer
                 
                 return Promise()
             }
-            .catch { log($0) }
         }
-        .catch { log($0) }
-        
     }
     
     // MARK: - Continuous Syncing
@@ -306,4 +290,11 @@ class Storage: Observer
     // MARK: - File
     
     let file: ItemFile
+    
+    // MARK: - Errors
+    
+    private enum StorageError: Error
+    {
+        case storeHasNoRoot(_ message: String)
+    }
 }
