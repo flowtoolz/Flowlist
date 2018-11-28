@@ -19,17 +19,24 @@ class Storage: Observer
 
         guard isUsingDatabase else { return }
         
-        tryToStartSyncing
+        firstly
         {
-            success, errorMessage in
-            
-            guard success else
+            startSyncing()
+        }
+        .done
+        {
+            if case .unavailable(let message) = $0
             {
+                self.stopContinuousSyncing()
                 let c2a = "Make sure your Mac is connected to your iCloud account, then retry using iCloud via the menu option \"Data → Start Using iCloud\"."
-                self.informUserDatabaseIsUnavailable(error: errorMessage,
+                self.informUserDatabaseIsUnavailable(error: message,
                                                      callToAction: c2a)
-                return
             }
+        }
+        .catch
+        {
+            self.stopContinuousSyncing()
+            log($0)
         }
     }
     
@@ -57,15 +64,19 @@ class Storage: Observer
             if case .unavailable(let message) = $0
             {
                 self.stopContinuousSyncing()
-                
-                let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account, then select the menu option \"Data → Start Using iCloud\"."
-                
+                let c2a = self.c2aLostICloud
                 self.informUserDatabaseIsUnavailable(error: message,
                                                      callToAction: c2a)
             }
         }
-        .catch { log($0) }
+        .catch
+        {
+            self.stopContinuousSyncing()
+            log($0)
+        }
     }
+    
+    private let c2aLostICloud = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account, then select the menu option \"Data → Start Using iCloud\"."
     
     // MARK: - Opting In and Out of Syncing Database & Store
     
@@ -79,19 +90,24 @@ class Storage: Observer
                 return
             }
             
-            tryToStartSyncing
+            firstly
             {
-                success, errorMessage in
-                
-                guard success else
+                startSyncing()
+            }
+            .done
+            {
+                if case .unavailable(let message) = $0
                 {
+                    self.stopContinuousSyncing()
                     let c2a = "Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the menu option \"Data → Start Using iCloud\"."
-                    
-                    self.informUserDatabaseIsUnavailable(error: errorMessage,
+                    self.informUserDatabaseIsUnavailable(error: message,
                                                          callToAction: c2a)
-                    
-                    return
                 }
+            }
+            .catch
+            {
+                self.stopContinuousSyncing()
+                log($0)
             }
         }
         
@@ -100,47 +116,47 @@ class Storage: Observer
     
     // MARK: - Initiate Database Use
     
-    private func tryToStartSyncing(handleSuccess: @escaping (Bool, String?) -> Void)
+    private func startSyncing() -> Promise<SyncStartResult>
     {
         guard Store.shared.root != nil else
         {
-            log(error: "Store has no root. Create file and Store root before trying top sync Store with Database.")
-            stopContinuousSyncing()
-            return
+            return Promise
+            {
+                $0.reject(StorageError.storeHasNoRoot("Create file and Store root before trying top sync Store with Database."))
+            }
         }
         
-        firstly
+        return firstly
         {
             database.checkAvailability()
         }
-        .done
+        .then
         {
-            availability in
+            (availability: Availability) -> Promise<SyncStartResult> in
             
             switch availability
             {
             case .available:
-                firstly
+                return firstly
                 {
                     self.doInitialSync()
                 }
-                .done
+                .map
                 {
                     self.startContinuousSyncing()
-                    handleSuccess(true, nil)
+                    
+                    return .success
                 }
-                .catch
-                {
-                    log($0)
-                    self.stopContinuousSyncing()
-                    handleSuccess(false, nil)
-                }
+                
             case .unavailable(let message):
-                self.stopContinuousSyncing()
-                handleSuccess(false, message)
+                return Promise.value(.unavailable(message))
             }
         }
-        .catch { log($0) }
+    }
+    
+    private enum SyncStartResult
+    {
+        case success, unavailable(_ message: String)
     }
     
     private func doInitialSync() -> Promise<Void>
@@ -274,10 +290,10 @@ class Storage: Observer
     
     // MARK: - Database
     
-    private func informUserDatabaseIsUnavailable(error: String?,
+    private func informUserDatabaseIsUnavailable(error: String,
                                                  callToAction: String)
     {
-        log("This issue occured: \(error ?? "Flowlist couldn't determine your iCloud account status.")\n\(callToAction)\n\n",
+        log("This issue occured: \("Flowlist could not access iCloud. This issue occured: \(error)")\n\(callToAction)\n\n",
             title: "Whoops, no iCloud?",
             forUser: true)
     }
