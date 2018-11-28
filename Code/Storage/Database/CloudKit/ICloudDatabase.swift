@@ -76,11 +76,6 @@ class ICloudDatabase: Observable
     
     func handlePushNotification(with userInfo: [String : Any])
     {
-        if !Thread.isMainThread
-        {
-            log(error: "Unexpected: We're on a background thread.")
-        }
-        
         let notification = CKNotification(fromRemoteNotificationDictionary: userInfo)
         
         switch notification.notificationType

@@ -1,5 +1,4 @@
 import SwiftObserver
-import SwiftyToolz
 import PromiseKit
 
 protocol ItemDatabase: Database

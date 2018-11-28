@@ -293,7 +293,7 @@ class Storage: Observer
     private func informUserDatabaseIsUnavailable(error: String,
                                                  callToAction: String)
     {
-        log("This issue occured: \("Flowlist could not access iCloud. This issue occured: \(error)")\n\(callToAction)\n\n",
+        log("Flowlist could not access iCloud. This issue occured: \(error)\n\(callToAction)\n\n",
             title: "Whoops, no iCloud?",
             forUser: true)
     }

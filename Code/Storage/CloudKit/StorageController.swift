@@ -1,6 +1,5 @@
 import CloudKit
 import Foundation
-import SwiftObserver
 
 class StorageController
 {
