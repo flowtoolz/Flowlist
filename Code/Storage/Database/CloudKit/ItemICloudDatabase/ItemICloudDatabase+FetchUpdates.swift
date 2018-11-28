@@ -4,15 +4,15 @@ import PromiseKit
 
 extension ItemICloudDatabase
 {
-    func fetchUpdates(handleResult: @escaping UpdateHandler)
+    func fetchUpdates() -> Promise<[Edit]>
     {
-        firstly
+        return firstly
         {
             self.fetchNewUpdates()
         }
-        .done
+        .map
         {
-            result in
+            (result: ChangeFetch.Result) -> [Edit] in
             
             var edits = [Edit]()
             
@@ -32,12 +32,7 @@ extension ItemICloudDatabase
                 edits.append(.updateItems(withModifications: mods))
             }
             
-            handleResult(edits)
-        }
-        .catch
-        {
-            log($0)
-            handleResult(nil)
+            return edits
         }
     }
 }

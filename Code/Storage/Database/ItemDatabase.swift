@@ -4,7 +4,7 @@ import PromiseKit
 
 protocol ItemDatabase: Database
 {
-    func fetchUpdates(handleResult: @escaping UpdateHandler)
+    func fetchUpdates() -> Promise<[Edit]>
     func apply(_ edit: Edit)
     
     func fetchItemTree(handleResult: @escaping ItemTreeHandler)
@@ -13,7 +13,6 @@ protocol ItemDatabase: Database
     var messenger: EditSender { get }
     
     typealias ItemTreeHandler = (_ success: Bool, _ root: Item?) -> Void
-    typealias UpdateHandler = (_ edits: [Edit]?) -> Void
 }
 
 class EditSender: Observable

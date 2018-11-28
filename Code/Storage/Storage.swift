@@ -192,33 +192,29 @@ class Storage: Observer
                 return
             }
             
-            self.database.fetchUpdates
+            firstly
             {
-                guard let edits = $0 else
-                {
-                    handleSuccess(false)
-                    return
-                }
+                self.database.fetchUpdates()
+            }
+            .then
+            {
+                (edits: [Edit]) -> Promise<Void> in
                 
                 if edits.isEmpty
                 {
                     // Store changed but noone changed iCloud
                     
-                    firstly
-                    {
-                        self.database.resetItemTree(with: storeRoot)
-                    }
-                    .catch { log($0) }
-                    
-                    return
+                    return self.database.resetItemTree(with: storeRoot)
                 }
                 
                 // FIXME: conflicting item trees: ask user which to use!
                 
                 Store.shared.update(root: databaseRoot)
                 self.file.save(databaseRoot)
-                handleSuccess(true)
+                
+                return Promise()
             }
+            .catch { log($0) }
         }
     }
     
