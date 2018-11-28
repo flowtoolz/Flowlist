@@ -70,14 +70,6 @@ class ItemICloudDatabase: Observer
         return db.createDatabasSubscription(withID: "ItemDataBaseSubscription")
     }
     
-    func createItemQuerySubscription() -> Promise<CKSubscription>
-    {
-        return db.createQuerySubscription(forRecordType: CKRecord.itemType,
-                                          desiredKeys: fieldNames)
-    }
-    
-    private let fieldNames = CKRecord.itemFieldNames
-    
     // MARK: - Edit Items
     
     func apply(_ edit: Edit)
@@ -85,9 +77,7 @@ class ItemICloudDatabase: Observer
         switch edit
         {
         case .updateItems(let modifications):
-            let modsByRootID = modifications.byRootID
-            
-            for (rootID, mods) in modsByRootID
+            for (rootID, mods) in modifications.byRootID
             {
                 firstly
                 {
