@@ -11,13 +11,13 @@ class StorageController
     private init()
     {
         persister = Persister()
-        storage = Storage(with: jsonFile, database: iCloudDatabase)
+        storage = Storage(with: file, database: database)
     }
     
     // MARK: - System Storage
     
-    let iCloudDatabase = ItemICloudDatabase()
-    let jsonFile = ItemJSONFile()
+    let database = ItemICloudDatabase()
+    let file = ItemJSONFile()
     
     // MARK: - Storage Model
     

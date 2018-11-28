@@ -236,7 +236,7 @@ class ItemICloudDatabase: Observer
         return iCloudDatabase.fetchRecords(with: query, inZone: .item)
     }
     
-    private var db: ICloudDatabase { return iCloudDatabase }
+    private var db: ICloudDatabase { return iCloudDatabase }
     private let iCloudDatabase = ICloudDatabase()
     
     // MARK: - Observability
