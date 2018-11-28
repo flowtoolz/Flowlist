@@ -20,14 +20,8 @@ class ItemICloudDatabase: Observer
         {
         case .didNothing: break
         
-        case .didCreateRecord(let id, let notification):
-            didCreateRecord(with: id, notification: notification)
-        
-        case .didModifyRecord(let id, let notification):
-            didModifyRecord(with: id, notification: notification)
-        
-        case .didDeleteRecord(let id):
-            didDeleteRecord(with: id)
+        case .didCreateRecord, .didModifyRecord, .didDeleteRecord:
+            log(error: "Don't use query notifications since those pushs don't provide the server change token anyway!")
         
         case .didReceiveDatabaseNotification(let notification):
             didReceive(databaseNotification: notification)
@@ -63,99 +57,6 @@ class ItemICloudDatabase: Observer
         }.catch {
             log($0)
         }
-    }
-    
-    // MARK: - Handle Query Notifications
-    
-    private func didCreateRecord(with id: CKRecord.ID,
-                         notification: CKQueryNotification)
-    {
-        log(error: "Don't use query notifications as the pushs don't provide the server change token anyway!")
-        
-        /*
-        guard hasAllNewFields(notification) else
-        {
-            fetchRecord(with: id)
-            {
-                newRecord in
-                
-                guard let record = newRecord else
-                {
-                    log(error: "Fetched new record is nil.")
-                    return
-                }
-                
-                if let mod = record.modification
-                {
-                    self.messenger.send(.insertItems(withModifications: [mod],
-                                                     inRootWithID: mod.rootID))
-                }
-            }
-            
-            return
-        }
-        
-        if let mod = id.makeModification(from: notification)
-        {
-            messenger.send(.insertItems(withModifications: [mod],
-                                        inRootWithID: mod.rootID))
-        }
-         */
-    }
-    
-    private func didModifyRecord(with id: CKRecord.ID,
-                                  notification: CKQueryNotification)
-    {
-        log(error: "Don't use query notifications as the pushs don't provide the server change token anyway!")
-        
-        /*
-        guard hasAllNewFields(notification) else
-        {
-            fetchRecord(with: id)
-            {
-                modifiedRecord in
-                
-                guard let record = modifiedRecord else
-                {
-                    log(error: "Fetched modified record is nil.")
-                    return
-                }
-                
-                if let modification = record.modification
-                {
-                    self.messenger.send(.modifyItem(withModification: modification))
-                }
-            }
-            
-            return
-        }
-        
-        if let modification = id.makeModification(from: notification)
-        {
-            messenger.send(.modifyItem(withModification: modification))
-        }
-         */
-    }
-    
-    private func didDeleteRecord(with id: CKRecord.ID)
-    {
-        log(error: "Don't use query notifications as the pushs don't provide the server change token anyway!")
-        
-        // messenger.send(.removeItems(withIDs: [id.recordName]))
-    }
-    
-    private func hasAllNewFields(_ notification: CKQueryNotification) -> Bool
-    {
-        guard let fields = notification.recordFields else { return false }
-        
-        return !notification.isPruned || fields.count == fieldNames.count
-    }
-    
-    private func superItemName(from notification: CKQueryNotification) -> String?
-    {
-        let fieldName = CKRecord.ItemFieldName.superItem.rawValue
-        
-        return notification.recordFields?[fieldName] as? String
     }
     
     // MARK: - Create Subscriptions
