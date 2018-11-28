@@ -26,11 +26,7 @@ class ItemICloudDatabase: ICloudDatabase
             
             if result.changedRecords.count > 0
             {
-                let mods = result.changedRecords.compactMap
-                {
-                    $0.modification
-                }
-                
+                let mods = result.changedRecords.compactMap { $0.modification }
                 self.messenger.send(.updateItems(withModifications: mods))
             }
         }.catch {
@@ -135,23 +131,15 @@ class ItemICloudDatabase: ICloudDatabase
     
     // MARK: - Create Subscriptions
     
-    func createItemDatabaseSubscription()
+    func createItemDatabaseSubscription() -> Promise<CKSubscription>
     {
-        firstly {
-            createDatabasSubscription(withID: "ItemDataBaseSubscription")
-        }.catch {
-            log($0)
-        }
+        return createDatabasSubscription(withID: "ItemDataBaseSubscription")
     }
     
-    func createItemQuerySubscription()
+    func createItemQuerySubscription() -> Promise<CKSubscription>
     {
-        firstly {
-            createQuerySubscription(forRecordType: CKRecord.itemType,
-                                    desiredTags: fieldNames)
-        }.catch {
-            log($0)
-        }
+        return createQuerySubscription(forRecordType: CKRecord.itemType,
+                                       desiredTags: fieldNames)
     }
     
     private let fieldNames = CKRecord.itemFieldNames
