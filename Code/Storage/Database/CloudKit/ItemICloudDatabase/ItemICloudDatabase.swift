@@ -85,7 +85,7 @@ class ItemICloudDatabase: Observer
         switch edit
         {
         case .updateItems(let modifications):
-            let modsByRootID = getModsByRootID(from: modifications)
+            let modsByRootID = modifications.byRootID
             
             for (rootID, mods) in modsByRootID
             {
@@ -111,29 +111,6 @@ class ItemICloudDatabase: Observer
             }
             .catch { log($0) }
         }
-    }
-    
-    private func getModsByRootID(from mods: [Modification]) -> [String : [Modification]]
-    {
-        var resultDictionary = [String : [Modification]]()
-        
-        for mod in mods
-        {
-            guard let rootID = mod.rootID else
-            {
-                log(error: "Modification has no root ID.")
-                continue
-            }
-            
-            if resultDictionary[rootID] == nil
-            {
-                resultDictionary[rootID] = [Modification]()
-            }
-            
-            resultDictionary[rootID]?.append(mod)
-        }
-        
-        return resultDictionary
     }
     
     // MARK: - Update Items

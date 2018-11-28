@@ -1,3 +1,31 @@
+import SwiftObserver
+
+extension Array where Element == Modification
+{
+    var byRootID: [String : [Modification]]
+    {
+        var resultDictionary = [String : [Modification]]()
+        
+        for mod in self
+        {
+            guard let rootID = mod.rootID else
+            {
+                log(error: "Modification has no root ID.")
+                continue
+            }
+            
+            if resultDictionary[rootID] == nil
+            {
+                resultDictionary[rootID] = [Modification]()
+            }
+            
+            resultDictionary[rootID]?.append(mod)
+        }
+        
+        return resultDictionary
+    }
+}
+
 struct Modification
 {
     init(id: String,
