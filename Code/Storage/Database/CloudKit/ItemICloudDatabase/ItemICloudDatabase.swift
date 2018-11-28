@@ -162,14 +162,13 @@ class ItemICloudDatabase: Observer
     
     func createItemDatabaseSubscription() -> Promise<CKSubscription>
     {
-        return iCloudDatabase.createDatabasSubscription(withID: "ItemDataBaseSubscription")
+        return db.createDatabasSubscription(withID: "ItemDataBaseSubscription")
     }
     
     func createItemQuerySubscription() -> Promise<CKSubscription>
     {
-        return iCloudDatabase.createQuerySubscription(forRecordType: CKRecord.itemType,
-                                       
-                                                      desiredTags: fieldNames)
+        return db.createQuerySubscription(forRecordType: CKRecord.itemType,
+                                          desiredKeys: fieldNames)
     }
     
     private let fieldNames = CKRecord.itemFieldNames
@@ -199,8 +198,7 @@ class ItemICloudDatabase: Observer
     func removeItems(handleSuccess: @escaping (Bool) -> Void)
     {
         firstly {
-            iCloudDatabase.deleteRecords(ofType: CKRecord.itemType,
-                                         inZone: .item)
+            db.deleteRecords(ofType: CKRecord.itemType, inZone: .item)
         }.done {
             handleSuccess(true)
         }.catch {
@@ -238,6 +236,7 @@ class ItemICloudDatabase: Observer
         return iCloudDatabase.fetchRecords(with: query, inZone: .item)
     }
     
+    private var db: ICloudDatabase { return iCloudDatabase }
     private let iCloudDatabase = ICloudDatabase()
     
     // MARK: - Observability

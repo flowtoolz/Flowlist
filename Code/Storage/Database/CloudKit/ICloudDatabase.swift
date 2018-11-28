@@ -150,10 +150,10 @@ class ICloudDatabase: Observable
         send(.didReceiveDatabaseNotification(databaseNotification))
     }
     
-    // MARK: - Creating Subscriptions
+    // MARK: - Create Subscriptions
     
     func createQuerySubscription(forRecordType type: String,
-                                 desiredTags: [String]) -> Promise<CKSubscription>
+                                 desiredKeys: [String]) -> Promise<CKSubscription>
     {
         let options: CKQuerySubscription.Options =
         [
@@ -166,7 +166,7 @@ class ICloudDatabase: Observable
                                                predicate: .all,
                                                options: options)
         
-        return save(subscription)
+        return save(subscription, desiredKeys: desiredKeys)
     }
     
     func createDatabasSubscription(withID id: String) -> Promise<CKSubscription>
@@ -178,10 +178,11 @@ class ICloudDatabase: Observable
     }
     
     private func save(_ subscription: CKSubscription,
-                      desiredTags: [CKRecord.FieldKey]? = nil) -> Promise<CKSubscription>
+                      desiredKeys: [CKRecord.FieldKey]? = nil) -> Promise<CKSubscription>
     {
         let notificationInfo = CKSubscription.NotificationInfo()
         notificationInfo.shouldSendContentAvailable = true
+        notificationInfo.desiredKeys = desiredKeys
         
         subscription.notificationInfo = notificationInfo
         
