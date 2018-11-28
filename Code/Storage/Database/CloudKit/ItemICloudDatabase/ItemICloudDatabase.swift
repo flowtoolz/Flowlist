@@ -40,9 +40,14 @@ class ItemICloudDatabase: Observer
             return
         }
         
-        firstly {
+        firstly
+        {
             fetchNewUpdates()
-        }.done { result in
+        }
+        .done
+        {
+            result in
+            
             if result.idsOfDeletedRecords.count > 0
             {
                 let ids = result.idsOfDeletedRecords.map { $0.recordName }
@@ -54,9 +59,8 @@ class ItemICloudDatabase: Observer
                 let mods = result.changedRecords.compactMap { $0.modification }
                 self.messenger.send(.updateItems(withModifications: mods))
             }
-        }.catch {
-            log($0)
         }
+        .catch { log($0) }
     }
     
     // MARK: - Create Subscriptions
@@ -77,38 +81,27 @@ class ItemICloudDatabase: Observer
     // MARK: - Edit Items
     
     func updateItems(with mods: [Modification],
-                     inRootWithID rootID: String,
-                     handleSuccess: @escaping (Bool) -> Void)
+                     inRootWithID rootID: String) -> Promise<Void>
     {
         let superitemID = CKRecord.ID(itemID: rootID)
         
-        fetchSubitemRecords(withSuperItemID: superitemID)
+        return firstly
         {
-            // get sibling records
+            fetchSubitemRecords(withSuperItemID: superitemID)
+        }
+        .then
+        {
+            (siblingRecords: [CKRecord]) -> Promise<Void>  in
             
-            guard var siblingRecords = $0 else
-            {
-                log(error: "Couldn't fetch sibling records.")
-                handleSuccess(false)
-                return
-            }
+            // get sibling records
             
             guard !siblingRecords.isEmpty else
             {
                 let records = mods.map { CKRecord(modification: $0) }
                 
-                firstly {
-                    self.iCloudDatabase.save(records)
-                }.done { records in
-                    handleSuccess(true)
-                }.catch {
-                    log($0)
-                    handleSuccess(false)
-                }
-                
-                return
+                return self.iCloudDatabase.save(records)
             }
-         
+            
             // create hashmap of sibling records
             
             var siblingRecordsByID = [String : CKRecord]()
@@ -121,6 +114,7 @@ class ItemICloudDatabase: Observer
             // add new records & update existing ones
             
             var recordsToSave = Set<CKRecord>()
+            var newRecords = [CKRecord]()
             
             for mod in mods
             {
@@ -135,92 +129,64 @@ class ItemICloudDatabase: Observer
                 {
                     let newRecord = CKRecord(modification: mod)
                     
-                    siblingRecords.append(newRecord)
                     recordsToSave.insert(newRecord)
+                    newRecords.append(newRecord)
                 }
             }
             
             // update positions
             
-            siblingRecords.sort { $0.position < $1.position }
-            
-            for position in 0 ..< siblingRecords.count
+            let sortedRecords = (siblingRecords + newRecords).sorted
             {
-                if siblingRecords[position].position != position
+                $0.position < $1.position
+            }
+            
+            for position in 0 ..< sortedRecords.count
+            {
+                let record = sortedRecords[position]
+                
+                if record.position != position
                 {
-                    siblingRecords[position].position = position
-                    recordsToSave.insert(siblingRecords[position])
+                    record.position = position
+                    recordsToSave.insert(record)
                 }
             }
             
             // save records back
             
-            firstly {
-                self.iCloudDatabase.save(Array(recordsToSave))
-            }.done {
-                handleSuccess(true)
-            }.catch {
-                log($0)
-                handleSuccess(false)
-            }
+            return self.iCloudDatabase.save(Array(recordsToSave))
         }
     }
     
-    func removeItems(with ids: [String],
-                     handleSuccess: @escaping (Bool) -> Void)
+    func resetItemTree(with root: Item) -> Promise<Void>
     {
-        let recordIDs = ids.map { CKRecord.ID(itemID: $0) }
-        
-        firstly {
-            iCloudDatabase.deleteRecords(withIDs: recordIDs)
-        }.done {
-            handleSuccess(true)
-        }.catch {
-            log($0)
-            handleSuccess(false)
-        }
-    }
-    
-    func removeItems(handleSuccess: @escaping (Bool) -> Void)
-    {
-        firstly {
-            db.deleteRecords(ofType: CKRecord.itemType, inZone: .item)
-        }.done {
-            handleSuccess(true)
-        }.catch {
-            log($0)
-            handleSuccess(false)
-        }
-    }
-    
-    func resetItemTree(with root: Item,
-                       handleSuccess: @escaping (Bool) -> Void)
-    {
-        removeItems
+        return firstly
         {
-            guard $0 else
-            {
-                log(error: "Couldn't remove records.")
-                handleSuccess(false)
-                return
-            }
+            self.removeItems()
+        }
+        .then
+        {
+            _ -> Promise<Void> in
             
-            let records: [CKRecord] = root.array.map
+            let records = root.array.map
             {
                 CKRecord(modification: $0.modification())
             }
             
-            firstly {
-                self.iCloudDatabase.save(records)
-            }.then { _ in
-                self.fetchNewUpdates()
-            }.done {_ in 
-                handleSuccess(true)
-            }.catch { error in
-                log(error)
-                handleSuccess(false)
-            }
+            return self.iCloudDatabase.save(records)
         }
+    }
+    
+    func removeItems(with ids: [String]) -> Promise<Void>
+    {
+        let recordIDs = ids.map { CKRecord.ID(itemID: $0) }
+        
+        return iCloudDatabase.deleteRecords(withIDs: recordIDs)
+    }
+    
+    private func removeItems() -> Promise<Void>
+    {
+        return db.deleteRecords(ofType: CKRecord.itemType, inZone: .item)
     }
     
     // MARK: - iCloud Database
@@ -247,31 +213,22 @@ class ItemICloudDatabase: Observer
         return iCloudDatabase.fetchUpdates(fromZone: .item, oldToken: nil)
     }
     
-    func fetchSubitemRecords(withSuperItemID id: CKRecord.ID,
-                             handleResult: @escaping ([CKRecord]?) -> Void)
+    private func fetchSubitemRecords(withSuperItemID id: CKRecord.ID) -> Promise<[CKRecord]>
     {
         let predicate = NSPredicate(format: "superItem = %@", id)
         
-        fetchItemRecords(predicate, handleResult: handleResult)
+        return fetchRecords(predicate)
     }
     
-    func fetchItemRecords(_ predicate: NSPredicate,
-                          handleResult: @escaping ([CKRecord]?) -> Void)
+    private func fetchRecords(_ predicate: NSPredicate) -> Promise<[CKRecord]>
     {
         let query = CKQuery(recordType: CKRecord.itemType,
                             predicate: predicate)
         
-        firstly {
-            fetchRecords(with: query)
-        }.done {
-            handleResult($0)
-        }.catch {
-            log($0)
-            handleResult(nil)
-        }
+        return fetchRecords(with: query)
     }
     
-    func fetchRecords(with query: CKQuery) -> Promise<[CKRecord]>
+    private func fetchRecords(with query: CKQuery) -> Promise<[CKRecord]>
     {
         return iCloudDatabase.fetchRecords(with: query, inZone: .item)
     }

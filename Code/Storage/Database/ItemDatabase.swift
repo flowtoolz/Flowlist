@@ -8,9 +8,7 @@ protocol ItemDatabase: Database
     func apply(_ edit: Edit)
     
     func fetchItemTree(handleResult: @escaping ItemTreeHandler)
-    func resetItemTree(with root: Item,
-                       handleSuccess: @escaping (Bool) -> Void)
-    func removeItems(handleSuccess: @escaping (Bool) -> Void)
+    func resetItemTree(with root: Item) -> Promise<Void>
     
     var messenger: EditSender { get }
     

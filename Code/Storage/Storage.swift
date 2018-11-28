@@ -157,8 +157,11 @@ class Storage: Observer
             {
                 // no items in iCloud
                 
-                self.database.resetItemTree(with: storeRoot,
-                                            handleSuccess: handleSuccess)
+                firstly {
+                    self.database.resetItemTree(with: storeRoot)
+                }.catch {
+                    log($0)
+                }
                 
                 return
             }
@@ -193,8 +196,12 @@ class Storage: Observer
                 {
                     // Store changed but noone changed iCloud
                     
-                    self.database.resetItemTree(with: storeRoot,
-                                                handleSuccess: handleSuccess)
+                    firstly {
+                        self.database.resetItemTree(with: storeRoot)
+                    }.catch {
+                        log($0)
+                    }
+                    
                     return
                 }
                 
