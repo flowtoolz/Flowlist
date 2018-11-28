@@ -80,14 +80,72 @@ class ItemICloudDatabase: Observer
     
     // MARK: - Edit Items
     
-    func updateItems(with mods: [Modification],
-                     inRootWithID rootID: String) -> Promise<Void>
+    func apply(_ edit: Edit)
     {
-        let superitemID = CKRecord.ID(itemID: rootID)
+        switch edit
+        {
+        case .updateItems(let modifications):
+            let modsByRootID = getModsByRootID(from: modifications)
+            
+            for (rootID, mods) in modsByRootID
+            {
+                firstly
+                {
+                    self.updateItems(with: mods, inRootWithID: rootID)
+                }
+                .then
+                {
+                    self.fetchNewUpdates()
+                }
+                .catch { log($0) }
+            }
+            
+        case .removeItems(let ids):
+            firstly
+            {
+                self.removeItems(with: ids)
+            }
+            .then
+            {
+                self.fetchNewUpdates()
+            }
+            .catch { log($0) }
+        }
+    }
+    
+    private func getModsByRootID(from mods: [Modification]) -> [String : [Modification]]
+    {
+        var resultDictionary = [String : [Modification]]()
+        
+        for mod in mods
+        {
+            guard let rootID = mod.rootID else
+            {
+                log(error: "Modification has no root ID.")
+                continue
+            }
+            
+            if resultDictionary[rootID] == nil
+            {
+                resultDictionary[rootID] = [Modification]()
+            }
+            
+            resultDictionary[rootID]?.append(mod)
+        }
+        
+        return resultDictionary
+    }
+    
+    // MARK: - Update Items
+    
+    private func updateItems(with mods: [Modification],
+                             inRootWithID rootID: String) -> Promise<Void>
+    {
+        let rootRecordID = CKRecord.ID(itemID: rootID)
         
         return firstly
         {
-            fetchSubitemRecords(withSuperItemID: superitemID)
+            fetchSubitemRecords(ofItemWithID: rootRecordID)
         }
         .then
         {
@@ -158,11 +216,32 @@ class ItemICloudDatabase: Observer
         }
     }
     
+    private func fetchSubitemRecords(ofItemWithID id: CKRecord.ID) -> Promise<[CKRecord]>
+    {
+        let predicate = NSPredicate(format: "superItem = %@", id)
+        
+        let query = CKQuery(recordType: CKRecord.itemType,
+                            predicate: predicate)
+        
+        return iCloudDatabase.fetchRecords(with: query, inZone: .item)
+    }
+    
+    // MARK: - Remove Items
+    
+    private func removeItems(with ids: [String]) -> Promise<Void>
+    {
+        let recordIDs = ids.map { CKRecord.ID(itemID: $0) }
+        
+        return iCloudDatabase.deleteRecords(withIDs: recordIDs)
+    }
+    
+    // MARK: - Reset Items
+    
     func resetItemTree(with root: Item) -> Promise<Void>
     {
         return firstly
         {
-            self.removeItems()
+            self.db.deleteRecords(ofType: CKRecord.itemType, inZone: .item)
         }
         .then
         {
@@ -177,16 +256,16 @@ class ItemICloudDatabase: Observer
         }
     }
     
-    func removeItems(with ids: [String]) -> Promise<Void>
+    // MARK: - Fetch
+    
+    func fetchNewUpdates() -> Promise<ChangeFetch.Result>
     {
-        let recordIDs = ids.map { CKRecord.ID(itemID: $0) }
-        
-        return iCloudDatabase.deleteRecords(withIDs: recordIDs)
+        return iCloudDatabase.fetchUpdates(fromZone: .item)
     }
     
-    private func removeItems() -> Promise<Void>
+    func fetchAllUpdates() -> Promise<ChangeFetch.Result>
     {
-        return db.deleteRecords(ofType: CKRecord.itemType, inZone: .item)
+        return iCloudDatabase.fetchUpdates(fromZone: .item, oldToken: nil)
     }
     
     // MARK: - iCloud Database
@@ -202,36 +281,6 @@ class ItemICloudDatabase: Observer
     }
     
     var isAvailable: Bool? { return iCloudDatabase.isAvailable }
-    
-    func fetchNewUpdates() -> Promise<ChangeFetch.Result>
-    {
-        return iCloudDatabase.fetchUpdates(fromZone: .item)
-    }
-    
-    func fetchAllUpdates() -> Promise<ChangeFetch.Result>
-    {
-        return iCloudDatabase.fetchUpdates(fromZone: .item, oldToken: nil)
-    }
-    
-    private func fetchSubitemRecords(withSuperItemID id: CKRecord.ID) -> Promise<[CKRecord]>
-    {
-        let predicate = NSPredicate(format: "superItem = %@", id)
-        
-        return fetchRecords(predicate)
-    }
-    
-    private func fetchRecords(_ predicate: NSPredicate) -> Promise<[CKRecord]>
-    {
-        let query = CKQuery(recordType: CKRecord.itemType,
-                            predicate: predicate)
-        
-        return fetchRecords(with: query)
-    }
-    
-    private func fetchRecords(with query: CKQuery) -> Promise<[CKRecord]>
-    {
-        return iCloudDatabase.fetchRecords(with: query, inZone: .item)
-    }
     
     private var db: ICloudDatabase { return iCloudDatabase }
     private let iCloudDatabase = ICloudDatabase()

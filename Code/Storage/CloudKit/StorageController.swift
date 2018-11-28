@@ -22,3 +22,5 @@ class StorageController
     
     let storage: Storage
 }
+
+extension ItemICloudDatabase: ItemDatabase {}

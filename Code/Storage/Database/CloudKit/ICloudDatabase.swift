@@ -26,11 +26,11 @@ class ICloudDatabase: Observable
     func deleteRecords(ofType type: String,
                        inZone zoneID: CKRecordZone.ID) -> Promise<Void>
     {
-        let queryAll = CKQuery(recordType: type, predicate: .all)
+        let queryForType = CKQuery(recordType: type, predicate: .all)
         
         return firstly
         {
-            fetchRecords(with: queryAll, inZone: zoneID)
+            fetchRecords(with: queryForType, inZone: zoneID)
         }
         .map
         {
