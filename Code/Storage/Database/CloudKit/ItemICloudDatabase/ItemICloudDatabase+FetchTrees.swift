@@ -14,6 +14,7 @@ extension ItemICloudDatabase
         {
             (records: [CKRecord]) -> [Item] in
             
+            // TODO: get all possible roots instead of assuming there's always exactly one
             guard let root = Item(records: records) else { return [] }
             
             return [root]
