@@ -399,9 +399,7 @@
 				9EA5A897218ECC98004902F7 /* Store */,
 				9EA5A895218ECC5A004902F7 /* File */,
 				9EA5A898218ECEF5004902F7 /* Codable-Item */,
-				9E6E70AA21936A8B00BDB0BA /* Item+Modification.swift */,
-				9EF2E8902187D293008D2780 /* Edit.swift */,
-				9E6E70AC21936CD300BDB0BA /* Modification.swift */,
+				9EC5C8B421B00F9500615D20 /* Edit */,
 				9E576E362186FAB400C9F876 /* Item+Matching.swift */,
 			);
 			path = Storage;
@@ -599,6 +597,16 @@
 				9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */,
 			);
 			path = Foundation;
+			sourceTree = "<group>";
+		};
+		9EC5C8B421B00F9500615D20 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				9EF2E8902187D293008D2780 /* Edit.swift */,
+				9E6E70AA21936A8B00BDB0BA /* Item+Modification.swift */,
+				9E6E70AC21936CD300BDB0BA /* Modification.swift */,
+			);
+			path = Edit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
