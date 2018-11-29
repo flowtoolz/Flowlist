@@ -122,7 +122,7 @@ class Storage: Observer
         {
             return Promise
             {
-                $0.reject(StorageError.storeHasNoRoot("Create file and Store root before trying top sync Store with Database."))
+                $0.reject(StorageError.storeHasNoRoot("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
             }
         }
         
@@ -165,7 +165,7 @@ class Storage: Observer
         {
             return Promise
             {
-                $0.reject(StorageError.storeHasNoRoot("Create file and Store root before syncing Store with Database!"))
+                $0.reject(StorageError.storeHasNoRoot("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
             }
         }
             
