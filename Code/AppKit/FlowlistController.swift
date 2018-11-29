@@ -23,6 +23,8 @@ class FlowlistController: AppController
         window.contentViewController = viewController
         window.backgroundColor = Color.windowBackground.nsColor
         
+        Dialog.default = AlertDialog()
+        
         observe(darkMode)
         {
             [weak self] _ in

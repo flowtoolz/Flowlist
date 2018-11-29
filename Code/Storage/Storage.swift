@@ -15,6 +15,16 @@ class Storage: Observer
     
     func appDidLaunch()
     {
+        firstly
+        {
+            Dialog.default.askWhetherToPreferICloud()
+        }
+        .done
+        {
+            print("icloud: \($0)")
+        }
+        .catch { log($0) }
+        
         Store.shared.loadItems(from: file)
 
         guard isUsingDatabase else { return }
