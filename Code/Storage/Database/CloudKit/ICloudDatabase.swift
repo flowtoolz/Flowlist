@@ -4,7 +4,7 @@ import SwiftObserver
 import SwiftyToolz
 import PromiseKit
 
-class ICloudDatabase: Observable
+class ICloudDatabase: Database, Observable
 {
     // MARK: - Save
     

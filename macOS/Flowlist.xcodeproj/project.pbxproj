@@ -76,8 +76,8 @@
 		9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* Browser.swift */; };
 		9EBD41AB21AC419B00C97B99 /* ICloudDatabase+ServerChangeToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBD41AA21AC419B00C97B99 /* ICloudDatabase+ServerChangeToken.swift */; };
 		9EBD41AD21AC4A0B00C97B99 /* ChangeFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBD41AC21AC4A0A00C97B99 /* ChangeFetch.swift */; };
-		9EBD41B121ACA45400C97B99 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBD41B021ACA45400C97B99 /* Database.swift */; };
 		9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC498A521147FE1003636FE /* Item+Pasteboard.swift */; };
+		9EC5C8B021AFEA7F00615D20 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8AF21AFEA7E00615D20 /* Database.swift */; };
 		9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB5D032174AF740048D7C5 /* Item+Text.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
 		9EE60C0021ACE1AF0075109D /* ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */; };
@@ -178,8 +178,8 @@
 		9EBC70282056FD02007A1EA8 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Browser.swift; sourceTree = "<group>"; };
 		9EBD41AA21AC419B00C97B99 /* ICloudDatabase+ServerChangeToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ICloudDatabase+ServerChangeToken.swift"; sourceTree = "<group>"; };
 		9EBD41AC21AC4A0A00C97B99 /* ChangeFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeFetch.swift; sourceTree = "<group>"; };
-		9EBD41B021ACA45400C97B99 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Database.swift; path = CloudKit/Database.swift; sourceTree = "<group>"; };
 		9EC498A521147FE1003636FE /* Item+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Pasteboard.swift"; sourceTree = "<group>"; };
+		9EC5C8AF21AFEA7E00615D20 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		9EDB5D032174AF740048D7C5 /* Item+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Text.swift"; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Float+Style.swift"; sourceTree = "<group>"; };
 		9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabase.swift; sourceTree = "<group>"; };
@@ -412,7 +412,7 @@
 			children = (
 				9EA5A893218ECB45004902F7 /* CloudKit */,
 				9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */,
-				9EBD41B021ACA45400C97B99 /* Database.swift */,
+				9EC5C8AF21AFEA7E00615D20 /* Database.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -762,7 +762,6 @@
 				9E053B442188711A001B7103 /* HelpMenu.swift in Sources */,
 				9EF0AABE21883E6E00B707F4 /* HashMap.swift in Sources */,
 				9E053B62218871C4001B7103 /* ItemTableContent.swift in Sources */,
-				9EBD41B121ACA45400C97B99 /* Database.swift in Sources */,
 				9E654E0A21A431C50052607F /* Store+ItemFile.swift in Sources */,
 				9E053B3021886963001B7103 /* CKRecord.ID+Modification.swift in Sources */,
 				9E053B5D218871C4001B7103 /* Spacer.swift in Sources */,
@@ -806,6 +805,7 @@
 				9EF0AABC218838FA00B707F4 /* Store+Editing.swift in Sources */,
 				9E053B6D21887210001B7103 /* ItemView.swift in Sources */,
 				9E053B3221886963001B7103 /* ICloudDatabase.swift in Sources */,
+				9EC5C8B021AFEA7F00615D20 /* Database.swift in Sources */,
 				9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */,
 				9E053B462188711A001B7103 /* WindowMenu.swift in Sources */,
 				9E5768C020C15B6300749C0C /* Browser+Debugging.swift in Sources */,
