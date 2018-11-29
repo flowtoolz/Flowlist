@@ -109,13 +109,15 @@
 	<key>GuidesVisible</key>
 	<string>YES</string>
 	<key>ImageCounter</key>
-	<integer>9</integer>
+	<integer>12</integer>
 	<key>ImageLinkBack</key>
 	<array>
+		<dict/>
 		<dict/>
 	</array>
 	<key>ImageList</key>
 	<array>
+		<string>image11.png</string>
 		<string>image4.pdf</string>
 	</array>
 	<key>LinksVisible</key>
@@ -125,7 +127,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2018-11-23 01:37:28 +0000</string>
+	<string>2018-11-29 14:40:55 +0000</string>
 	<key>Modifier</key>
 	<string>Sebastian ********</string>
 	<key>MovementHandleVisible</key>
@@ -188,7 +190,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-932.07317073170714, -307.31707317073165}, {2459.0243902439024, 1456.5853658536585}}</string>
+				<string>{{-1923.846153846154, -1211.5384615384614}, {5036.5384615384619, 3634.6153846153843}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -237,6 +239,143 @@
 			<string>1 in = 1.00000 in</string>
 			<key>GraphicsList</key>
 			<array>
+				<dict>
+					<key>Bounds</key>
+					<string>{{1080, 648}, {144, 144}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>164</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{1089, 648}, {126, 81}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>163</integer>
+					<key>ImageID</key>
+					<integer>11</integer>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
+				<dict>
+					<key>Bounds</key>
+					<string>{{1143, 731.25}, {22.5, 60.75}}</string>
+					<key>Class</key>
+					<string>ShapedGraphic</string>
+					<key>ID</key>
+					<integer>162</integer>
+					<key>Name</key>
+					<string>Flash On</string>
+					<key>Shape</key>
+					<string>Bezier</string>
+					<key>ShapeData</key>
+					<dict>
+						<key>UnitPoints</key>
+						<array>
+							<string>{-0.5, -0.5}</string>
+							<string>{-0.5, -0.5}</string>
+							<string>{-0.5, 0.049999999999998934}</string>
+							<string>{-0.5, 0.049999999999998934}</string>
+							<string>{-0.5, 0.049999999999998934}</string>
+							<string>{-0.20000000000000018, 0.049999999999998934}</string>
+							<string>{-0.20000000000000018, 0.049999999999998934}</string>
+							<string>{-0.20000000000000018, 0.049999999999998934}</string>
+							<string>{-0.20000000000000018, 0.5}</string>
+							<string>{-0.20000000000000018, 0.5}</string>
+							<string>{-0.20000000000000018, 0.5}</string>
+							<string>{0.5, -0.099999999999999645}</string>
+							<string>{0.5, -0.099999999999999645}</string>
+							<string>{0.5, -0.099999999999999645}</string>
+							<string>{0.10000000000000053, -0.099999999999999645}</string>
+							<string>{0.10000000000000053, -0.099999999999999645}</string>
+							<string>{0.10000000000000053, -0.099999999999999645}</string>
+							<string>{0.5, -0.5}</string>
+							<string>{0.5, -0.5}</string>
+							<string>{0.5, -0.5}</string>
+							<string>{-0.5, -0.5}</string>
+						</array>
+					</dict>
+					<key>Style</key>
+					<dict>
+						<key>fill</key>
+						<dict>
+							<key>Color</key>
+							<dict>
+								<key>b</key>
+								<real>0.50487682131901845</real>
+								<key>g</key>
+								<real>0.61956954034146783</real>
+								<key>r</key>
+								<real>1</real>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>FillType</key>
+							<integer>2</integer>
+							<key>GradientAngle</key>
+							<real>90</real>
+							<key>GradientColor</key>
+							<dict>
+								<key>b</key>
+								<string>0</string>
+								<key>g</key>
+								<string>0</string>
+								<key>r</key>
+								<string>1</string>
+								<key>space</key>
+								<string>srgb</string>
+							</dict>
+							<key>MiddleFraction</key>
+							<real>0.49893465909090917</real>
+						</dict>
+						<key>shadow</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+						<key>stroke</key>
+						<dict>
+							<key>Draws</key>
+							<string>NO</string>
+						</dict>
+					</dict>
+				</dict>
 				<dict>
 					<key>Bounds</key>
 					<string>{{648, 648}, {72, 72}}</string>
@@ -5163,13 +5302,17 @@
 			</array>
 			<key>GridInfo</key>
 			<dict>
+				<key>GridSpacing</key>
+				<real>4.5</real>
+				<key>MajorGridSpacing</key>
+				<integer>16</integer>
 				<key>ShowsGrid</key>
 				<string>YES</string>
 				<key>SnapsToGrid</key>
 				<string>YES</string>
 			</dict>
 			<key>HPages</key>
-			<integer>3</integer>
+			<integer>4</integer>
 			<key>KeepToScale</key>
 			<false/>
 			<key>Layers</key>
@@ -5243,7 +5386,7 @@
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{499.39024390243918, 499.26829268292693}, {337.07317073170742, 307.31707317073165}}</string>
+		<string>{{234.80769230769215, 22.115384615384471}, {1328.8461538461534, 1211.5384615384617}}</string>
 		<key>WindowInfo_InspectorTab</key>
 		<array>
 			<string>com.omnigroup.OmniGraffle.inspectorGroup.object</string>
@@ -5252,7 +5395,7 @@
 		<array>
 			<array>
 				<string>Arbeitsfläche 1</string>
-				<real>2.0499999999999998</real>
+				<real>0.52000000000000002</real>
 				<real>1</real>
 			</array>
 		</array>
@@ -5295,7 +5438,7 @@
 	<key>resolutionForJPGKey</key>
 	<real>1</real>
 	<key>resolutionForPNGKey</key>
-	<real>28.44444465637207</real>
+	<real>0.8888888955116272</real>
 	<key>resolutionForTIFFKey</key>
 	<real>1</real>
 	<key>resolutionUnitsKey</key>
