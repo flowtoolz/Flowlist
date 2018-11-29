@@ -20,10 +20,7 @@ extension List
         }
         else
         {
-            for selectedindex in selected
-            {
-                self[selectedindex]?.data.tag <- tag
-            }
+            selected.forEach { self[$0]?.data.tag <- tag }
         }
     }
 
@@ -51,10 +48,10 @@ extension List
             return
         }
         
-        for index in indexes
+        indexes.forEach
         {
-            self[index]?.isFocused = false
-            self[index]?.isSelected = false
+            self[$0]?.isFocused = false
+            self[$0]?.isSelected = false
         }
         
         let data = ItemData()
@@ -85,10 +82,7 @@ extension List
     
     func paste(_ items: [Item])
     {
-        for item in items
-        {
-            item.isFocused = isFocused.value ?? false
-        }
+        items.forEach { $0.isFocused = isFocused.value ?? false }
         
         let index = newIndexBelowSelection
         

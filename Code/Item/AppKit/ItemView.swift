@@ -425,10 +425,7 @@ class ItemView: LayerBackedView, Observer, Observable
     {
         let itemHeight = ItemView.heightWithSingleLine
         
-        for constraint in layoutGuideSizeConstraints
-        {
-            constraint.constant = itemHeight
-        }
+        layoutGuideSizeConstraints.forEach { $0.constant = itemHeight }
         
         textView.fontSizeDidChange()
     }

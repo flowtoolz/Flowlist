@@ -81,10 +81,7 @@ extension Store
     
     private func removeItems(with ids: [String])
     {
-        for id in ids
-        {
-            removeItem(with: id)
-        }
+        ids.forEach(removeItem)
     }
     
     private func removeItem(with id: String)

@@ -359,10 +359,10 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainColumns()
     {
-        for column in columns
+        columns.forEach
         {
-            column.constrainTopToParent()
-            column.constrainBottomToParent()
+            $0.constrainTopToParent()
+            $0.constrainBottomToParent()
         }
         
         let gap: CGFloat = 39

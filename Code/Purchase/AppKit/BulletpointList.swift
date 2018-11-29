@@ -19,26 +19,21 @@ class BulletpointList: NSView
     {
         let image = checkImage
         
-        for icon in bulletpointIcons
-        {
-            icon.image = image
-        }
+        bulletpointIcons.forEach { $0.image = image }
         
         let textColor = Color.text.nsColor
         
-        for label in bulletpointLabels
-        {
-            label.textColor = textColor
-        }
+        bulletpointLabels.forEach { $0.textColor = textColor }
     }
     
     // MARK: - Bullet Points
     
     private func constrainBulletpoints()
     {
-        for index in 0 ..< bulletpointLabels.count
+        bulletpointIcons.forEachIndex
         {
-            let icon = bulletpointIcons[index]
+            icon, index in
+            
             icon.constrainLeftToParent()
             icon.constrainSize(to: defaultIconSize, defaultIconSize)
             
@@ -71,7 +66,7 @@ class BulletpointList: NSView
     {
         var icons = [Icon]()
         
-        for _ in bulletpoints
+        bulletpoints.count.times
         {
             icons.append(addForAutoLayout(Icon(with: checkImage)))
         }
@@ -91,12 +86,12 @@ class BulletpointList: NSView
     {
         var labels = [Label]()
         
-        for bulletpoint in bulletpoints
+        bulletpoints.forEach
         {
             let label = addForAutoLayout(Label())
+            label.stringValue = $0
             label.textColor = Color.text.nsColor
             label.font = Font.purchasePanel.nsFont
-            label.stringValue = bulletpoint
             label.lineBreakMode = .byWordWrapping
             labels.append(label)
         }
@@ -104,7 +99,7 @@ class BulletpointList: NSView
         return labels
     }()
     
-    private let bulletpoints =
+    private let bulletpoints: [String] =
     [
         "Infinite items, no more trial version info bar",
         "Pay once, use it forever - no subscription",

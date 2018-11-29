@@ -37,10 +37,7 @@ class BrowserView: LayerBackedView, Observer
     
     private func fontSizeDidChange()
     {
-        for listView in listViews
-        {
-            listView.fontSizeDidChange()
-        }
+        listViews.forEach { $0.fontSizeDidChange() }
     }
     
     // MARK: - Browser
@@ -106,10 +103,7 @@ class BrowserView: LayerBackedView, Observer
     
     func didEndResizing()
     {
-        for listView in listViews
-        {
-            listView.didEndResizing()
-        }
+        listViews.forEach { $0.didEndResizing() }
     }
     
     // MARK: - List Views
@@ -227,11 +221,11 @@ class BrowserView: LayerBackedView, Observer
         
         guard ongoingAnimations == 0 else { return }
         
-        for i in 0 ..< listViews.count
+        listViews.forEachIndex
         {
-            let visible = abs(browser.focusedIndex - i) < 2
+            let visible = abs(browser.focusedIndex - $1) < 2
             
-            listViews[i].set(visibleForAnimation: visible)
+            $0.set(visibleForAnimation: visible)
         }
     }
     
@@ -245,19 +239,21 @@ class BrowserView: LayerBackedView, Observer
     {
         let gap = Float.listGap.cgFloat
         
-        for guide in listLayoutGuides
+        listLayoutGuides.forEach
         {
-            guide.constrainTop(to: self, offset: gap)
-            guide.constrainBottom(to: self)
+            $0.constrainTop(to: self, offset: gap)
+            $0.constrainBottom(to: self)
         }
         
         listLayoutGuides[0].constrainWidth(toMinimum: 150)
         listLayoutGuides[0].constrainLeft(to: self, offset: gap)
         
-        listLayoutGuides[1].constrain(toTheRightOf: listLayoutGuides[0], gap: gap)
+        listLayoutGuides[1].constrain(toTheRightOf: listLayoutGuides[0],
+                                      gap: gap)
         listLayoutGuides[1].constrainWidth(to: listLayoutGuides[0])
         
-        listLayoutGuides[2].constrain(toTheRightOf: listLayoutGuides[1], gap: gap)
+        listLayoutGuides[2].constrain(toTheRightOf: listLayoutGuides[1],
+                                      gap: gap)
         listLayoutGuides[2].constrainRight(to: self, offset: -gap)
         listLayoutGuides[2].constrainWidth(to: listLayoutGuides[0])
     }

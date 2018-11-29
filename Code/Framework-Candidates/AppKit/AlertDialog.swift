@@ -16,10 +16,7 @@ class AlertDialog: Dialog
         
         let reversedOptions: [String] = question.options.reversed()
         
-        for option in reversedOptions
-        {
-            alert.addButton(withTitle: option)
-        }
+        reversedOptions.forEach { alert.addButton(withTitle: $0) }
         
         if let imageName = imageName,
             let image = NSImage(named: NSImage.Name(imageName))

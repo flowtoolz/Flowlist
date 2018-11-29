@@ -11,13 +11,13 @@ extension Tree where Data == ItemData
         
         var hashMap = [String : (CKRecord, Item)]()
         
-        for record in records
+        records.forEach
         {
-            guard let modification = record.modification else { continue }
+            guard let modification = $0.modification else { return }
             
             let id = modification.id
             
-            hashMap[id] = (record, Item(modification: modification))
+            hashMap[id] = ($0, Item(modification: modification))
         }
         
         // connect items. find root.

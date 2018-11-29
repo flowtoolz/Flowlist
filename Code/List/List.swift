@@ -83,10 +83,7 @@ class List: Observable, Observer
             observeItemsListed(in: root, at: indexes)
             
         case .removedNodes(let items, _):
-            for item in items
-            {
-                observe(listedItem: item, start: false)
-            }
+            items.forEach { observe(listedItem: $0, start: false) }
             
         case .movedNode: break
             
@@ -248,10 +245,7 @@ class List: Observable, Observer
     {
         var newSelections = Array<Bool>(repeating: false, count: count)
         
-        for selectedIndex in newIndexes
-        {
-            newSelections[selectedIndex] = true
-        }
+        newIndexes.forEach { newSelections[$0] = true }
         
         var addedIndexes = [Int]()
         var removedIndexes = [Int]()

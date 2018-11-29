@@ -55,11 +55,11 @@ extension Tree where Data == ItemData
                             count: recursionDepth + 1) + " " + result
         }
         
-        for item in branches
+        branches.forEach
         {
-            guard !item.isDone else { continue }
+            guard !$0.isDone else { return }
             
-            result += "\n\n" + item.markdown(recursionDepth: recursionDepth + 1)
+            result += "\n\n" + $0.markdown(recursionDepth: recursionDepth + 1)
         }
         
         return result

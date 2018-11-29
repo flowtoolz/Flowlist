@@ -23,7 +23,7 @@ extension Tree where Data == ItemData
         
         texts.remove { $0.count < 2 }
         
-        let result = texts.map { Item(text: $0) }
+        let result = texts.map(Item.init(text:))
         
         return result.isEmpty ? nil : result
     }

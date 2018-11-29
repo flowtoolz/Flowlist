@@ -7,10 +7,7 @@ extension Tree
     {
         var result = [self]
         
-        for branch in branches
-        {
-            result.append(contentsOf: branch.array)
-        }
+        branches.forEach { result.append(contentsOf: $0.array) }
         
         return result
     }
@@ -85,10 +82,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
         
         guard insert(group, at: groupIndex) else { return nil }
         
-        for removedNode in mergedNodes
-        {
-            group.add(removedNode)
-        }
+        mergedNodes.forEach { group.add($0) }
         
         return group
     }
@@ -156,7 +150,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
         
         branches.insert(contentsOf: nodes, at: index)
         
-        for node in nodes { node.root = self }
+        nodes.forEach { $0.root = self }
         
         updateNumberOfLeafs()
         
@@ -210,10 +204,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
         
         var subitemLeafs = 0
         
-        for subitem in branches
-        {
-            subitemLeafs += subitem.numberOfLeafs
-        }
+        branches.forEach { subitemLeafs += $0.numberOfLeafs }
         
         return subitemLeafs
     }
@@ -313,9 +304,9 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
     {
         branches.sort(by: comparator)
         
-        for branch in branches
+        branches.forEach
         {
-            branch.sortWithoutSendingUpdate(comparator: comparator)
+            $0.sortWithoutSendingUpdate(comparator: comparator)
         }
     }
     

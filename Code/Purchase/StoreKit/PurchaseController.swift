@@ -136,11 +136,11 @@ class PurchaseController: NSObject, Observable, SKProductsRequestDelegate, SKPay
     {
         productLoadingTimer?.invalidate()
         
-        for product in response.products
+        response.products.forEach
         {
-            if product.productIdentifier == fullVersionId
+            if $0.productIdentifier == fullVersionId
             {
-                fullVersionProduct = product
+                fullVersionProduct = $0
             }
         }
         

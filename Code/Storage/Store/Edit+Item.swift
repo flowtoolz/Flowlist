@@ -7,9 +7,9 @@ extension Edit
         case .insertedNodes(let nodes, _, _):
             var mods = [Modification]()
             
-            for item in nodes
+            nodes.forEach
             {
-                mods.append(contentsOf: item.modifications())
+                mods.append(contentsOf: $0.modifications())
             }
             
             self = .updateItems(withModifications: mods)

@@ -237,10 +237,7 @@ class Header: LayerBackedView, Observer
     {
         let size = layouGuideSize
         
-        for constraint in layoutGuideSizeConstraints
-        {
-            constraint.constant = size
-        }
+        layoutGuideSizeConstraints.forEach { $0.constant = size }
     }
     
     private func constrainLayoutGuides()

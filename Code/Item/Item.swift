@@ -6,10 +6,7 @@ extension Array where Element == Item
     {
         var result = [Item]()
         
-        for item in self
-        {
-            result.append(contentsOf: item.array)
-        }
+        forEach { result.append(contentsOf: $0.array) }
         
         return result
     }
@@ -27,10 +24,7 @@ extension Tree where Data == ItemData
     
     func deselectAll()
     {
-        for item in branches
-        {
-            item.isSelected = false
-        }
+        branches.forEach { $0.isSelected = false }
     }
     
     // text

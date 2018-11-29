@@ -122,7 +122,7 @@ class ItemICloudDatabase: Observer
             
             guard !siblingRecords.isEmpty else
             {
-                let records = mods.map { CKRecord(modification: $0) }
+                let records = mods.map(CKRecord.init)
                 
                 return self.iCloudDatabase.save(records)
             }
@@ -131,9 +131,9 @@ class ItemICloudDatabase: Observer
             
             var siblingRecordsByID = [String : CKRecord]()
             
-            for record in siblingRecords
+            siblingRecords.forEach
             {
-                siblingRecordsByID[record.recordID.recordName] = record
+                siblingRecordsByID[$0.recordID.recordName] = $0
             }
             
             // add new records & update existing ones
@@ -166,14 +166,12 @@ class ItemICloudDatabase: Observer
                 $0.position < $1.position
             }
             
-            for position in 0 ..< sortedRecords.count
+            sortedRecords.forEachIndex
             {
-                let record = sortedRecords[position]
-                
-                if record.position != position
+                if $0.position != $1
                 {
-                    record.position = position
-                    recordsToSave.insert(record)
+                    $0.position = $1
+                    recordsToSave.insert($0)
                 }
             }
             
@@ -197,7 +195,7 @@ class ItemICloudDatabase: Observer
     
     private func removeItems(with ids: [String]) -> Promise<Void>
     {
-        let recordIDs = ids.map { CKRecord.ID(itemID: $0) }
+        let recordIDs = ids.map(CKRecord.ID.init(itemID:))
         
         return iCloudDatabase.deleteRecords(withIDs: recordIDs)
     }
