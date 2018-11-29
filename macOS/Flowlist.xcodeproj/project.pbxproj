@@ -78,6 +78,9 @@
 		9EBD41AD21AC4A0B00C97B99 /* ChangeFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBD41AC21AC4A0A00C97B99 /* ChangeFetch.swift */; };
 		9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC498A521147FE1003636FE /* Item+Pasteboard.swift */; };
 		9EC5C8B021AFEA7F00615D20 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8AF21AFEA7E00615D20 /* Database.swift */; };
+		9EC5C8B221B00ED800615D20 /* AlertDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B121B00ED800615D20 /* AlertDialog.swift */; };
+		9EC5C8B621B00FE100615D20 /* Dialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B521B00FE100615D20 /* Dialog.swift */; };
+		9EC5C8B821B0300D00615D20 /* Dialog+ICloudConflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */; };
 		9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB5D032174AF740048D7C5 /* Item+Text.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
 		9EE60C0021ACE1AF0075109D /* ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */; };
@@ -180,6 +183,9 @@
 		9EBD41AC21AC4A0A00C97B99 /* ChangeFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeFetch.swift; sourceTree = "<group>"; };
 		9EC498A521147FE1003636FE /* Item+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Pasteboard.swift"; sourceTree = "<group>"; };
 		9EC5C8AF21AFEA7E00615D20 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		9EC5C8B121B00ED800615D20 /* AlertDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDialog.swift; sourceTree = "<group>"; };
+		9EC5C8B521B00FE100615D20 /* Dialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialog.swift; sourceTree = "<group>"; };
+		9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dialog+ICloudConflict.swift"; sourceTree = "<group>"; };
 		9EDB5D032174AF740048D7C5 /* Item+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Text.swift"; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Float+Style.swift"; sourceTree = "<group>"; };
 		9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabase.swift; sourceTree = "<group>"; };
@@ -395,6 +401,7 @@
 			children = (
 				9E654E0F21A4859C0052607F /* CloudKit */,
 				9E576E342186F85100C9F876 /* Storage.swift */,
+				9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */,
 				9EA5A892218ECB37004902F7 /* Database */,
 				9EA5A897218ECC98004902F7 /* Store */,
 				9EA5A895218ECC5A004902F7 /* File */,
@@ -571,10 +578,12 @@
 		9EA5A8AA218ED9A9004902F7 /* Framework-Candidates */ = {
 			isa = PBXGroup;
 			children = (
+				9EC5C8B321B00F5300615D20 /* AppKit */,
 				9EA5A8AC218ED9D8004902F7 /* StoreKit */,
 				9EA5A8AD218ED9FB004902F7 /* Foundation */,
 				9E5768C120C15CDF00749C0C /* Tree+Hashable.swift */,
 				9EFB86DB21662AD100985B14 /* Tree.swift */,
+				9EC5C8B521B00FE100615D20 /* Dialog.swift */,
 				9EA1D3B1219EC26F00B5943C /* PersisterInterface.swift */,
 				9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */,
 				9E22D8AE218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift */,
@@ -597,6 +606,14 @@
 				9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */,
 			);
 			path = Foundation;
+			sourceTree = "<group>";
+		};
+		9EC5C8B321B00F5300615D20 /* AppKit */ = {
+			isa = PBXGroup;
+			children = (
+				9EC5C8B121B00ED800615D20 /* AlertDialog.swift */,
+			);
+			path = AppKit;
 			sourceTree = "<group>";
 		};
 		9EC5C8B421B00F9500615D20 /* Edit */ = {
@@ -746,6 +763,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E6E70AF2193803E00BDB0BA /* Item+CodableField.swift in Sources */,
+				9EC5C8B821B0300D00615D20 /* Dialog+ICloudConflict.swift in Sources */,
 				9EA1D3B0219EBFD000B5943C /* Persister.swift in Sources */,
 				9E053B3321886963001B7103 /* ItemICloudDatabase.swift in Sources */,
 				9E053B3A218870D0001B7103 /* main.swift in Sources */,
@@ -759,6 +777,7 @@
 				9E053B5E218871C4001B7103 /* ListView.swift in Sources */,
 				9EF231AF218B99B1006E783C /* DecodableItem.swift in Sources */,
 				9EA1D3B2219EC26F00B5943C /* PersisterInterface.swift in Sources */,
+				9EC5C8B221B00ED800615D20 /* AlertDialog.swift in Sources */,
 				9E053B5F218871C4001B7103 /* Header.swift in Sources */,
 				9E053B4F2188715D001B7103 /* BulletpointList.swift in Sources */,
 				9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */,
@@ -781,6 +800,7 @@
 				9E6E70AD21936CD300BDB0BA /* Modification.swift in Sources */,
 				9EF231AD218B785A006E783C /* Item+Creating.swift in Sources */,
 				9EEBA1A72168EE860053B628 /* ItemData+Copyable.swift in Sources */,
+				9EC5C8B621B00FE100615D20 /* Dialog.swift in Sources */,
 				9EEA769F21922A5700642EE7 /* ItemFile.swift in Sources */,
 				9EBD41AD21AC4A0B00C97B99 /* ChangeFetch.swift in Sources */,
 				9EF96E7621A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift in Sources */,
