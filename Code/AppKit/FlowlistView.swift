@@ -83,7 +83,7 @@ class FlowlistView: LayerBackedView, Observer
     }
     
     private func set(purchaseViewHeight: CGFloat,
-                     completionHandler: (() -> Void)? = nil)
+                     completionHandler: Action? = nil)
     {
         NSAnimationContext.beginGrouping()
         
