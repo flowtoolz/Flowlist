@@ -15,16 +15,6 @@ class Storage: Observer
     
     func appDidLaunch()
     {
-        firstly
-        {
-            Dialog.default.askWhetherToPreferICloud()
-        }
-        .done
-        {
-            print("icloud: \($0)")
-        }
-        .catch { log($0) }
-        
         Store.shared.loadItems(from: file)
 
         guard isUsingDatabase else { return }
@@ -219,6 +209,8 @@ class Storage: Observer
             {
                 (edits: [Edit]) -> Promise<Void> in
                 
+                // TODO: how do we know the store actually changed since the last sync?
+                
                 if edits.isEmpty
                 {
                     // Store changed but noone changed iCloud
@@ -226,12 +218,27 @@ class Storage: Observer
                     return self.database.resetItemTree(with: storeRoot)
                 }
                 
-                // FIXME: conflicting item trees: ask user which to use!
+                // conflicting item trees
                 
-                Store.shared.update(root: databaseRoot)
-                self.file.save(databaseRoot)
-                
-                return Promise()
+                return firstly
+                {
+                    Dialog.default.askWhetherToPreferICloud()
+                }
+                .then
+                {
+                    (preferICloud: Bool) -> Promise<Void> in
+                    
+                    if preferICloud
+                    {
+                        Store.shared.update(root: databaseRoot)
+                        self.file.save(databaseRoot)
+                        return Promise()
+                    }
+                    else
+                    {
+                        return self.database.resetItemTree(with: storeRoot)
+                    }
+                }
             }
         }
     }
