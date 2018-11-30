@@ -2,7 +2,7 @@ import AppKit
 import PromiseKit
 import SwiftyToolz
 
-// TODO: when moving this to UIToolz: Let AppController set this as the default Dialog
+// TODO: when moving this to UIToolz: Let AppController set this as the default Dialog, and: Properly integrate Logging / Dialog / Alerts ... Make Logging independent of SwiftObserver ...
 class AlertDialog: Dialog
 {
     override func pose(_ question: Question,
