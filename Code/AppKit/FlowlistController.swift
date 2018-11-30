@@ -35,7 +35,7 @@ class FlowlistController: AppController
         registerForPushNotifications()
         registerForICloudStatusChangeNotifications()
         
-        StorageController.shared.storage.appDidLaunch()
+        storage.appDidLaunch()
     }
     
     override func applicationWillBecomeActive(_ notification: Notification)
@@ -47,7 +47,7 @@ class FlowlistController: AppController
     
     func applicationWillTerminate(_ notification: Notification)
     {
-        StorageController.shared.storage.appWillTerminate()
+        storage.appWillTerminate()
     }
     
     // MARK: - Window Delegate
@@ -71,7 +71,7 @@ class FlowlistController: AppController
     
     func windowDidResignKey(_ notification: Notification)
     {
-        StorageController.shared.storage.windowLostFocus()
+        storage.windowLostFocus()
     }
     
     // MARK: - Adjust to OSX Dark Mode Setting
@@ -114,13 +114,13 @@ class FlowlistController: AppController
     {
         DispatchQueue.main.async
         {
-            let storage = StorageController.shared.storage
-                
-            storage.databaseAvailabilityMayHaveChanged()
+            self.storage.databaseAvailabilityMayHaveChanged()
         }
     }
     
     // MARK: - Basics
+    
+    var storage: Storage { return StorageController.shared.storage }
     
     private let menu = Menu()
     private let viewController = ViewController<FlowlistView>()
