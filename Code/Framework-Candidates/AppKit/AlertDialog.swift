@@ -26,20 +26,14 @@ class AlertDialog: Dialog
        
         let response = alert.runModal()
         
-        guard !reversedOptions.isEmpty else
-        {
-            return Promise.value(Answer(options: ["OK"]))
-        }
+        if reversedOptions.isEmpty { return Promise.value(Answer(options: ["OK"])) }
         
         let lastButton = NSApplication.ModalResponse.alertFirstButtonReturn
         let reversedOptionIndex = response.rawValue - lastButton.rawValue
         
         guard reversedOptions.isValid(index: reversedOptionIndex) else
         {
-            return Promise
-            {
-                $0.reject(DialogError.custom("Unknown modal response"))
-            }
+            return Promise(error: DialogError.custom("Unknown modal response"))
         }
         
         let clickedOption = reversedOptions[reversedOptionIndex]

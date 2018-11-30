@@ -120,10 +120,7 @@ class Storage: Observer
     {
         guard Store.shared.root != nil else
         {
-            return Promise
-            {
-                $0.reject(StorageError.storeHasNoRoot("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
-            }
+            return Promise(error: StorageError.storeHasNoRoot("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
         }
         
         return firstly
@@ -163,10 +160,7 @@ class Storage: Observer
     {
         guard let storeRoot = Store.shared.root else
         {
-            return Promise
-            {
-                $0.reject(StorageError.storeHasNoRoot("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
-            }
+            return Promise(error: StorageError.storeHasNoRoot("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
         }
             
         return firstly

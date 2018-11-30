@@ -7,7 +7,7 @@ class Dialog
     func pose(_ question: Question,
               imageName: String? = nil) -> Promise<Answer>
     {
-        return Promise { $0.reject(DialogError.notImplemented) }
+        return Promise(error: DialogError.notImplemented)
     }
     
     struct Question
