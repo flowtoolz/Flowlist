@@ -78,6 +78,15 @@ class Storage: Observer
     
     private let c2aLostICloud = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account, then select the menu option \"Data → Start Using iCloud\"."
     
+    // MARK: - Keep Track of Network Reachability
+    
+    func networkBecame(reachable: Bool)
+    {
+        print("network reachability changed. is reachable: \(reachable)")
+        
+        // TODO: Implement. Be aware this is called once on app launch as well...
+    }
+    
     // MARK: - Opting In and Out of Syncing Database & Store
     
     var isUsingDatabase: Bool

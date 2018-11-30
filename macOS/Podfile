@@ -12,7 +12,6 @@ target 'Flowlist' do
     pod 'SwiftyToolz', :path=> '../../Frameworks/SwiftyToolz'
     pod 'PromiseKit', '~> 6.6.0'
     pod 'PromiseKit/CloudKit', '~> 6.6.0'
-    pod 'ReachabilitySwift', '~> 4.3.0'
 
 end
 

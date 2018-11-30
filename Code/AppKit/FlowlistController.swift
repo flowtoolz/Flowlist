@@ -16,6 +16,11 @@ class FlowlistController: AppController
     {
         super.applicationDidFinishLaunching(aNotification)
         
+        NetworkReachability.shared.notifyOfChanges(self)
+        {
+            StorageController.shared.storage.networkBecame(reachable: $0 != .none)
+        }
+        
         Color.isInDarkMode = systemIsInDarkMode
         
         purchaseController.setup()
