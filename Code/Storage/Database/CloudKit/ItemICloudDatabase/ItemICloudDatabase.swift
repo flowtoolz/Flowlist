@@ -96,7 +96,30 @@ class ItemICloudDatabase: Observer
                 {
                     (result: ChangeFetch.Result) -> Void in
                     
-                    // TODO: check and consolidate updates
+                    if !result.idsOfDeletedRecords.isEmpty
+                    {
+                        log(error: "Unexpected deletions.")
+                        
+                        let ids = result.idsOfDeletedRecords.map { $0.recordName }
+                        
+                        self.messenger.send(.removeItems(withIDs: ids))
+                    }
+                    
+                    let unexpectedChanges: [CKRecord] = result.changedRecords.compactMap
+                    {
+                        guard let rootID = $0.superItem else { return $0 }
+                        
+                        return modsByRootID[rootID] == nil ? $0 : nil
+                    }
+                    
+                    if !unexpectedChanges.isEmpty
+                    {
+                        log(error: "Unexpected changes.")
+                        
+                        let mods = unexpectedChanges.compactMap { $0.modification }
+                        
+                        self.messenger.send(.updateItems(withModifications: mods))
+                    }
                     
                     return
                 }
@@ -116,11 +139,12 @@ class ItemICloudDatabase: Observer
                 
                 switch cloudKitError
                 {
-                case CKError.networkUnavailable: log(error: "Device offline")
-                default: break
+                case CKError.networkUnavailable:
+                    log(error: "Device offline")
+                    
+                default:
+                    log(error: "CloudKit: \(cloudKitError.localizedDescription)")
                 }
-                
-                log(error: "CloudKit: \(cloudKitError.localizedDescription)")
             }
             
         case .removeItems(let ids):
