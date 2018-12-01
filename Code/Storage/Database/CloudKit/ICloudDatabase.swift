@@ -111,7 +111,6 @@ class ICloudDatabase: Database, Observable
         guard let recordId = notification.recordID else
         {
             log(error: "iCloud query notification carries no record id.")
-            // TODO: could this ever happen? how is it to be handled?? reload all data from icloud??
             return
         }
         
@@ -201,17 +200,7 @@ class ICloudDatabase: Database, Observable
         
         operation.clientChangeTokenData = appInstanceToken
         
-        operation.perRecordCompletionBlock =
-        {
-            record, error in
-            
-            if let error = error
-            {
-                log(error)
-                
-                // TODO: remember failed records and handle them / try again later...
-            }
-        }
+        operation.perRecordCompletionBlock = { if let error = $1 { log(error) } }
         
         operation.modifyRecordsCompletionBlock =
         {

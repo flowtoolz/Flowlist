@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-// TODO: use use generic class for this from Cocoalytics
+// TODO: use generic class for this from Cocoalytics
 
 class ApplicationMenu: NSMenu
 {
