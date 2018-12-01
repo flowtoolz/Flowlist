@@ -21,7 +21,7 @@ class Storage: Observer
         
         firstly
         {
-            startSyncing()
+            startIntendingToSyncing()
         }
         .done
         {
@@ -92,7 +92,7 @@ class Storage: Observer
 
         firstly
         {
-            startSyncing()
+            startIntendingToSyncing()
         }
         .done
         {
@@ -111,7 +111,7 @@ class Storage: Observer
     
     private var networkIsReachable: Bool?
     
-    // MARK: - Opting In and Out of Syncing
+    // MARK: - Start and Abort the Intention to Sync
     
     var intendsToSync: Bool
     {
@@ -126,7 +126,7 @@ class Storage: Observer
             
             firstly
             {
-                startSyncing()
+                startIntendingToSyncing()
             }
             .done
             {
@@ -144,9 +144,7 @@ class Storage: Observer
         get { return _intendsToSync.value }
     }
     
-    // MARK: - Initiate and Abort Syncing
-    
-    private func startSyncing() -> Promise<SyncStartResult>
+    private func startIntendingToSyncing() -> Promise<SyncStartResult>
     {
         guard Store.shared.root != nil else
         {
@@ -284,6 +282,16 @@ class Storage: Observer
         informUserAboutSyncProblem(error: error, callToAction: c2a)
     }
     
+    private var _intendsToSync = PersistentFlag(key: "IsUsingDatabase",
+                                                defaultValue: true)
+    
+    private func informUserAboutSyncProblem(error: String, callToAction: String)
+    {
+        log("Flowlist could not use iCloud. This issue occured: \(error)\n\(callToAction)\n\n",
+            title: "Whoops, no iCloud?",
+            forUser: true)
+    }
+    
     // MARK: - Observe Database & Store
     
     private func startObservingDatabaseAndStore()
@@ -340,26 +348,10 @@ class Storage: Observer
         database.apply(edit)
     }
     
-    // MARK: - Database
-    
-    private func informUserAboutSyncProblem(error: String,
-                                            callToAction: String)
-    {
-        log("Flowlist could not use iCloud. This issue occured: \(error)\n\(callToAction)\n\n",
-            title: "Whoops, no iCloud?",
-            forUser: true)
-    }
-    
-    private var _intendsToSync = PersistentFlag(key: "IsUsingDatabase",
-                                                defaultValue: true)
+    // MARK: - Basics
     
     let database: ItemDatabase
-    
-    // MARK: - File
-    
     let file: ItemFile
-    
-    // MARK: - Errors
     
     private enum StorageError: Error
     {
