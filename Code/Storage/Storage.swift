@@ -27,6 +27,7 @@ class Storage: Observer
         {
             if case .unavailable(let message) = $0
             {
+                self.databaseUsageFlag.value = false
                 self.stopContinuousSyncing()
                 let c2a = "Make sure your Mac is connected to your iCloud account, then retry using iCloud via the menu option \"Data → Start Using iCloud\"."
                 self.informUserDatabaseIsUnavailable(error: message,
@@ -35,6 +36,7 @@ class Storage: Observer
         }
         .catch
         {
+            self.databaseUsageFlag.value = false
             self.stopContinuousSyncing()
             log($0)
         }
@@ -63,6 +65,7 @@ class Storage: Observer
         {
             if case .unavailable(let message) = $0
             {
+                self.databaseUsageFlag.value = false
                 self.stopContinuousSyncing()
                 let c2a = self.c2aLostICloud
                 self.informUserDatabaseIsUnavailable(error: message,
@@ -71,6 +74,7 @@ class Storage: Observer
         }
         .catch
         {
+            self.databaseUsageFlag.value = false
             self.stopContinuousSyncing()
             log($0)
         }
@@ -84,18 +88,18 @@ class Storage: Observer
     {
         defer { networkIsReachable = reachable }
         
-        guard let wasReachable = networkIsReachable, wasReachable != reachable else
-        {
-            return
-        }
+        guard let wasReachable = networkIsReachable,
+            wasReachable != reachable else { return }
         
         if reachable
         {
-            print("network became reachable again.")
+            // print("network became reachable again.")
+            
+            
         }
         else
         {
-            print("network became unreachable again.")
+            // print("network became unreachable again.")
         }
     }
     
@@ -107,6 +111,7 @@ class Storage: Observer
         {
             guard newValue else
             {
+                databaseUsageFlag.value = false
                 stopContinuousSyncing()
                 return
             }
@@ -119,6 +124,7 @@ class Storage: Observer
             {
                 if case .unavailable(let message) = $0
                 {
+                    self.databaseUsageFlag.value = false
                     self.stopContinuousSyncing()
                     let c2a = "Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the menu option \"Data → Start Using iCloud\"."
                     self.informUserDatabaseIsUnavailable(error: message,
@@ -127,6 +133,7 @@ class Storage: Observer
             }
             .catch
             {
+                self.databaseUsageFlag.value = false
                 self.stopContinuousSyncing()
                 log($0)
             }
@@ -161,6 +168,7 @@ class Storage: Observer
                 }
                 .map
                 {
+                    self.databaseUsageFlag.value = true
                     self.startContinuousSyncing()
                     
                     return .success
@@ -258,25 +266,19 @@ class Storage: Observer
         }
     }
     
-    // MARK: - Continuous Syncing
+    // MARK: - Observe Database & Store
     
     private func startContinuousSyncing()
     {
-        self.databaseUsageFlag.value = true
-        
         self.observeDatabase()
         self.observeStore()
     }
     
     private func stopContinuousSyncing()
     {
-        databaseUsageFlag.value = false
-        
         stopObservingDatabase()
         stopObserving(Store.shared)
     }
-    
-    // MARK: - Observe Database & Store
     
     private func observeDatabase()
     {
