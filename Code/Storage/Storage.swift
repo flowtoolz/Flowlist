@@ -21,7 +21,7 @@ class Storage: Observer
         
         firstly
         {
-            startIntendingToSyncing()
+            startIntendingToSync()
         }
         .done
         {
@@ -86,7 +86,7 @@ class Storage: Observer
 
         firstly
         {
-            startIntendingToSyncing()
+            startIntendingToSync()
         }
         .done
         {
@@ -117,7 +117,7 @@ class Storage: Observer
             
             firstly
             {
-                startIntendingToSyncing()
+                startIntendingToSync()
             }
             .done
             {
@@ -132,7 +132,7 @@ class Storage: Observer
         get { return _intendsToSync.value }
     }
     
-    private func startIntendingToSyncing() -> Promise<SyncStartResult>
+    private func startIntendingToSync() -> Promise<SyncStartResult>
     {
         guard Store.shared.root != nil else
         {
