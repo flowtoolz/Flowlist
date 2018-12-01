@@ -30,17 +30,14 @@ class Storage: Observer
                 self.abortIntendingToSync(errorMessage: message)
             }
         }
-        .catch
-        {
-            self.abortIntendingToSync(with: $0)
-        }
+        .catch(abortIntendingToSync)
     }
     
     func windowLostFocus() { Store.shared.saveItems(to: file) }
     
     func appWillTerminate() { Store.shared.saveItems(to: file) }
     
-    // MARK: - iCloud Availability
+    // MARK: - Database Availability
     
     func databaseAvailabilityMayHaveChanged()
     {
@@ -64,10 +61,7 @@ class Storage: Observer
                 self.abortIntendingToSync(errorMessage: message, callToAction: c2a)
             }
         }
-        .catch
-        {
-            self.abortIntendingToSync(with: $0)
-        }
+        .catch(abortIntendingToSync)
     }
     
     // MARK: - Network Reachability
@@ -103,10 +97,7 @@ class Storage: Observer
                 self.abortIntendingToSync(errorMessage: message, callToAction: c2a)
             }
         }
-        .catch
-        {
-            self.abortIntendingToSync(with: $0)
-        }
+        .catch(abortIntendingToSync)
     }
     
     private var networkIsReachable: Bool?
@@ -135,10 +126,7 @@ class Storage: Observer
                     self.abortIntendingToSync(errorMessage: message)
                 }
             }
-            .catch
-            {
-                self.abortIntendingToSync(with: $0)
-            }
+            .catch(abortIntendingToSync)
         }
         
         get { return _intendsToSync.value }
