@@ -11,7 +11,7 @@ class Storage: Observer
         self.database = database
     }
     
-    // MARK: - Respond to App Life Cycle
+    // MARK: - App Life Cycle
     
     func appDidLaunch()
     {
@@ -27,11 +27,7 @@ class Storage: Observer
         {
             if case .unavailable(let message) = $0
             {
-                self.databaseUsageFlag.value = false
-                self.stopContinuousSyncing()
-                let c2a = "Make sure your Mac is connected to your iCloud account, then retry using iCloud via the menu option \"Data → Start Using iCloud\"."
-                self.informUserDatabaseIsUnavailable(error: message,
-                                                     callToAction: c2a)
+                self.abortTryingToSync(errorMessage: message)
             }
         }
         .catch
@@ -46,7 +42,7 @@ class Storage: Observer
     
     func appWillTerminate() { Store.shared.saveItems(to: file) }
     
-    // MARK: - Keep Track of Database Availability
+    // MARK: - Database Availability
     
     func databaseAvailabilityMayHaveChanged()
     {
@@ -65,11 +61,9 @@ class Storage: Observer
         {
             if case .unavailable(let message) = $0
             {
-                self.databaseUsageFlag.value = false
-                self.stopContinuousSyncing()
-                let c2a = self.c2aLostICloud
-                self.informUserDatabaseIsUnavailable(error: message,
-                                                     callToAction: c2a)
+                let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account, then select the menu option \"Data → Start Using iCloud\"."
+                
+                self.abortTryingToSync(errorMessage: message, callToAction: c2a)
             }
         }
         .catch
@@ -80,30 +74,50 @@ class Storage: Observer
         }
     }
     
-    private let c2aLostICloud = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account, then select the menu option \"Data → Start Using iCloud\"."
-    
-    // MARK: - Keep Track of Network Reachability
+    // MARK: - Network Reachability
     
     func networkBecame(reachable: Bool)
     {
         defer { networkIsReachable = reachable }
         
-        guard let wasReachable = networkIsReachable,
-            wasReachable != reachable else { return }
-        
-        if reachable
-        {
-            // print("network became reachable again.")
-            
-            
-        }
+        guard isUsingDatabase,
+            let wasReachable = networkIsReachable,
+            wasReachable != reachable
         else
         {
-            // print("network became unreachable again.")
+            return
+        }
+        
+        guard reachable else
+        {
+            stopContinuousSyncing()
+            return
+        }
+
+        firstly
+        {
+            startSyncing()
+        }
+        .done
+        {
+            if case .unavailable(let message) = $0
+            {
+                let c2a = "The device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the menu option \"Data → Start Using iCloud\"."
+                
+                self.abortTryingToSync(errorMessage: message, callToAction: c2a)
+            }
+        }
+        .catch
+        {
+            self.databaseUsageFlag.value = false
+            self.stopContinuousSyncing()
+            log($0)
         }
     }
     
-    // MARK: - Opting In and Out of Syncing Database & Store
+    private var networkIsReachable: Bool?
+    
+    // MARK: - Opting In and Out of Syncing
     
     var isUsingDatabase: Bool
     {
@@ -124,11 +138,7 @@ class Storage: Observer
             {
                 if case .unavailable(let message) = $0
                 {
-                    self.databaseUsageFlag.value = false
-                    self.stopContinuousSyncing()
-                    let c2a = "Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the menu option \"Data → Start Using iCloud\"."
-                    self.informUserDatabaseIsUnavailable(error: message,
-                                                         callToAction: c2a)
+                    self.abortTryingToSync(errorMessage: message)
                 }
             }
             .catch
@@ -142,7 +152,7 @@ class Storage: Observer
         get { return databaseUsageFlag.value }
     }
     
-    // MARK: - Initiate Database Use
+    // MARK: - Initiate and Abort Syncing
     
     private func startSyncing() -> Promise<SyncStartResult>
     {
@@ -266,6 +276,16 @@ class Storage: Observer
         }
     }
     
+    private func abortTryingToSync(errorMessage error: String,
+                                   callToAction: String? = nil)
+    {
+        let c2a = callToAction ?? "Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the menu option \"Data → Start Using iCloud\"."
+        
+        stopContinuousSyncing()
+        databaseUsageFlag.value = false
+        informUserAboutICloudProblem(error: error, callToAction: c2a)
+    }
+    
     // MARK: - Observe Database & Store
     
     private func startContinuousSyncing()
@@ -322,16 +342,12 @@ class Storage: Observer
         database.apply(edit)
     }
     
-    // MARK: - Network Reachability
-    
-    private var networkIsReachable: Bool?
-    
     // MARK: - Database
     
-    private func informUserDatabaseIsUnavailable(error: String,
-                                                 callToAction: String)
+    private func informUserAboutICloudProblem(error: String,
+                                              callToAction: String)
     {
-        log("Flowlist could not access iCloud. This issue occured: \(error)\n\(callToAction)\n\n",
+        log("Flowlist could not use iCloud. This issue occured: \(error)\n\(callToAction)\n\n",
             title: "Whoops, no iCloud?",
             forUser: true)
     }
