@@ -17,7 +17,9 @@ class DataMenu: NSMenu, NSMenuItemValidation
         
         addItem(exportItem)
         
-        let finderItem = makeItem("Show File in Finder")
+        addItem(NSMenuItem.separator())
+        
+        let finderItem = makeItem("Show JSON File in Finder")
         {
             let fileURL = StorageController.shared.file.url
             
