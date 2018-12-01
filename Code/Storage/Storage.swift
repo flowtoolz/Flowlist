@@ -32,9 +32,7 @@ class Storage: Observer
         }
         .catch
         {
-            self._intendsToSync.value = false
-            self.stopObservingDatabaseAndStore()
-            log($0)
+            self.abortIntendingToSync(with: $0)
         }
     }
     
@@ -68,9 +66,7 @@ class Storage: Observer
         }
         .catch
         {
-            self._intendsToSync.value = false
-            self.stopObservingDatabaseAndStore()
-            log($0)
+            self.abortIntendingToSync(with: $0)
         }
     }
     
@@ -109,9 +105,7 @@ class Storage: Observer
         }
         .catch
         {
-            self._intendsToSync.value = false
-            self.stopObservingDatabaseAndStore()
-            log($0)
+            self.abortIntendingToSync(with: $0)
         }
     }
     
@@ -143,9 +137,7 @@ class Storage: Observer
             }
             .catch
             {
-                self._intendsToSync.value = false
-                self.stopObservingDatabaseAndStore()
-                log($0)
+                self.abortIntendingToSync(with: $0)
             }
         }
         
@@ -274,6 +266,12 @@ class Storage: Observer
                 }
             }
         }
+    }
+    
+    private func abortIntendingToSync(with error: Error)
+    {
+        log(error)
+        abortIntendingToSync(errorMessage: error.localizedDescription)
     }
     
     private func abortIntendingToSync(errorMessage error: String,
