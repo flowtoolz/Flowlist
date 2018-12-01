@@ -78,13 +78,13 @@ class ItemICloudDatabase: Observer
         {
         case .updateItems(let modifications):
             
-            var updatesPromise = Promise()
+            var promises = [Promise<Void>]()
             
             let modsByRootID = modifications.byRootID
             
             for (rootID, mods) in modsByRootID
             {
-                updatesPromise = updatesPromise.then
+                let promise = firstly
                 {
                     self.updateItems(with: mods, inRootWithID: rootID)
                 }
@@ -123,29 +123,15 @@ class ItemICloudDatabase: Observer
                     
                     return
                 }
+                
+                promises.append(promise)
             }
             
-            updatesPromise.done
+            when(fulfilled: promises).done
             {
                 log("applied updates in \(modsByRootID.count) root items")
             }
-            .catch
-            {
-                guard case let cloudKitError as CKError = $0 else
-                {
-                    log($0)
-                    return
-                }
-                
-                switch cloudKitError
-                {
-                case CKError.networkUnavailable:
-                    log(error: "Device offline")
-                    
-                default:
-                    log(error: "CloudKit: \(cloudKitError.localizedDescription)")
-                }
-            }
+            .catch { log($0) }
             
         case .removeItems(let ids):
             firstly
