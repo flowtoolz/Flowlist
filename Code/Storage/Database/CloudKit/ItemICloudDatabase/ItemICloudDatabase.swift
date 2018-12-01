@@ -127,11 +127,7 @@ class ItemICloudDatabase: Observer
                 promises.append(promise)
             }
             
-            when(fulfilled: promises).done
-            {
-                log("applied updates in \(modsByRootID.count) root items")
-            }
-            .catch { log($0) }
+            when(fulfilled: promises).catch { log($0) }
             
         case .removeItems(let ids):
             firstly
