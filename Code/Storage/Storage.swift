@@ -82,9 +82,21 @@ class Storage: Observer
     
     func networkBecame(reachable: Bool)
     {
-        print("network reachability changed. is reachable: \(reachable)")
+        defer { networkIsReachable = reachable }
         
-        // TODO: Implement. Be aware this is called once on app launch as well...
+        guard let wasReachable = networkIsReachable, wasReachable != reachable else
+        {
+            return
+        }
+        
+        if reachable
+        {
+            print("network became reachable again.")
+        }
+        else
+        {
+            print("network became unreachable again.")
+        }
     }
     
     // MARK: - Opting In and Out of Syncing Database & Store
@@ -307,6 +319,10 @@ class Storage: Observer
         
         database.apply(edit)
     }
+    
+    // MARK: - Network Reachability
+    
+    private var networkIsReachable: Bool?
     
     // MARK: - Database
     
