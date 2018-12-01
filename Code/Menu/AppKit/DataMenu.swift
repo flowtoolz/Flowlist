@@ -50,12 +50,12 @@ class DataMenu: NSMenu, NSMenuItemValidation
     
     private lazy var cloudItem = makeItem(cloudItemTitle)
     {
-        StorageController.shared.storage.isUsingDatabase.toggle()
+        StorageController.shared.storage.intendsToSync.toggle()
     }
     
     private var cloudItemTitle: String
     {
-        let usesICloud = StorageController.shared.storage.isUsingDatabase
+        let usesICloud = StorageController.shared.storage.intendsToSync
         return "\(usesICloud ? "Stop" : "Start") Using iCloud"
     }
 }

@@ -17,7 +17,7 @@ class Storage: Observer
     {
         Store.shared.loadItems(from: file)
 
-        guard isUsingDatabase else { return }
+        guard intendsToSync else { return }
         
         firstly
         {
@@ -27,13 +27,13 @@ class Storage: Observer
         {
             if case .unavailable(let message) = $0
             {
-                self.abortTryingToSync(errorMessage: message)
+                self.abortIntendingToSync(errorMessage: message)
             }
         }
         .catch
         {
-            self.databaseUsageFlag.value = false
-            self.stopContinuousSyncing()
+            self._intendsToSync.value = false
+            self.stopObservingDatabaseAndStore()
             log($0)
         }
     }
@@ -42,11 +42,11 @@ class Storage: Observer
     
     func appWillTerminate() { Store.shared.saveItems(to: file) }
     
-    // MARK: - Database Availability
+    // MARK: - iCloud Availability
     
     func databaseAvailabilityMayHaveChanged()
     {
-        guard self.isUsingDatabase else { return }
+        guard self.intendsToSync else { return }
         
         if database.isAvailable != true
         {
@@ -63,13 +63,13 @@ class Storage: Observer
             {
                 let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account, then select the menu option \"Data → Start Using iCloud\"."
                 
-                self.abortTryingToSync(errorMessage: message, callToAction: c2a)
+                self.abortIntendingToSync(errorMessage: message, callToAction: c2a)
             }
         }
         .catch
         {
-            self.databaseUsageFlag.value = false
-            self.stopContinuousSyncing()
+            self._intendsToSync.value = false
+            self.stopObservingDatabaseAndStore()
             log($0)
         }
     }
@@ -80,7 +80,7 @@ class Storage: Observer
     {
         defer { networkIsReachable = reachable }
         
-        guard isUsingDatabase,
+        guard intendsToSync,
             let wasReachable = networkIsReachable,
             wasReachable != reachable
         else
@@ -90,7 +90,7 @@ class Storage: Observer
         
         guard reachable else
         {
-            stopContinuousSyncing()
+            stopObservingDatabaseAndStore()
             return
         }
 
@@ -104,13 +104,13 @@ class Storage: Observer
             {
                 let c2a = "The device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the menu option \"Data → Start Using iCloud\"."
                 
-                self.abortTryingToSync(errorMessage: message, callToAction: c2a)
+                self.abortIntendingToSync(errorMessage: message, callToAction: c2a)
             }
         }
         .catch
         {
-            self.databaseUsageFlag.value = false
-            self.stopContinuousSyncing()
+            self._intendsToSync.value = false
+            self.stopObservingDatabaseAndStore()
             log($0)
         }
     }
@@ -119,14 +119,14 @@ class Storage: Observer
     
     // MARK: - Opting In and Out of Syncing
     
-    var isUsingDatabase: Bool
+    var intendsToSync: Bool
     {
         set
         {
             guard newValue else
             {
-                databaseUsageFlag.value = false
-                stopContinuousSyncing()
+                _intendsToSync.value = false
+                stopObservingDatabaseAndStore()
                 return
             }
             
@@ -138,18 +138,18 @@ class Storage: Observer
             {
                 if case .unavailable(let message) = $0
                 {
-                    self.abortTryingToSync(errorMessage: message)
+                    self.abortIntendingToSync(errorMessage: message)
                 }
             }
             .catch
             {
-                self.databaseUsageFlag.value = false
-                self.stopContinuousSyncing()
+                self._intendsToSync.value = false
+                self.stopObservingDatabaseAndStore()
                 log($0)
             }
         }
         
-        get { return databaseUsageFlag.value }
+        get { return _intendsToSync.value }
     }
     
     // MARK: - Initiate and Abort Syncing
@@ -178,8 +178,8 @@ class Storage: Observer
                 }
                 .map
                 {
-                    self.databaseUsageFlag.value = true
-                    self.startContinuousSyncing()
+                    self._intendsToSync.value = true
+                    self.startObservingDatabaseAndStore()
                     
                     return .success
                 }
@@ -276,25 +276,25 @@ class Storage: Observer
         }
     }
     
-    private func abortTryingToSync(errorMessage error: String,
-                                   callToAction: String? = nil)
+    private func abortIntendingToSync(errorMessage error: String,
+                                      callToAction: String? = nil)
     {
         let c2a = callToAction ?? "Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the menu option \"Data → Start Using iCloud\"."
         
-        stopContinuousSyncing()
-        databaseUsageFlag.value = false
-        informUserAboutICloudProblem(error: error, callToAction: c2a)
+        stopObservingDatabaseAndStore()
+        _intendsToSync.value = false
+        informUserAboutSyncProblem(error: error, callToAction: c2a)
     }
     
     // MARK: - Observe Database & Store
     
-    private func startContinuousSyncing()
+    private func startObservingDatabaseAndStore()
     {
         self.observeDatabase()
         self.observeStore()
     }
     
-    private func stopContinuousSyncing()
+    private func stopObservingDatabaseAndStore()
     {
         stopObservingDatabase()
         stopObserving(Store.shared)
@@ -344,16 +344,16 @@ class Storage: Observer
     
     // MARK: - Database
     
-    private func informUserAboutICloudProblem(error: String,
-                                              callToAction: String)
+    private func informUserAboutSyncProblem(error: String,
+                                            callToAction: String)
     {
         log("Flowlist could not use iCloud. This issue occured: \(error)\n\(callToAction)\n\n",
             title: "Whoops, no iCloud?",
             forUser: true)
     }
     
-    private var databaseUsageFlag = PersistentFlag(key: "IsUsingDatabase",
-                                                   defaultValue: true)
+    private var _intendsToSync = PersistentFlag(key: "IsUsingDatabase",
+                                                defaultValue: true)
     
     let database: ItemDatabase
     
