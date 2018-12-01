@@ -275,7 +275,7 @@ class Storage: Observer
     
     private func informUserAboutSyncProblem(error: String, callToAction: String)
     {
-        log("Flowlist could not use iCloud. This issue occured: \(error)\n\(callToAction)\n\n",
+        log("This issue with iCloud came up: \(error)\n\(callToAction)\n\n",
             title: "Whoops, no iCloud?",
             forUser: true)
     }
