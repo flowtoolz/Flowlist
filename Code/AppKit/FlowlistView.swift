@@ -46,7 +46,7 @@ class FlowlistView: LayerBackedView, Observer
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
-    deinit { stopAllObserving() }
+    deinit { stopObserving() }
     
     // MARK: - Key Events
     

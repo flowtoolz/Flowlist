@@ -58,7 +58,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
     
     deinit
     {
-        stopAllObserving()
+        stopObserving()
         removeObservers()
     }
     

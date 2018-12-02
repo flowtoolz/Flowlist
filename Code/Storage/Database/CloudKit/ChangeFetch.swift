@@ -61,7 +61,7 @@ extension ChangeFetch
             
             if let error = error
             {
-                log(error)
+                log(error: error.localizedDescription)
                 return
             }
             
@@ -84,7 +84,7 @@ extension ChangeFetch
             {
                 if let error = error
                 {
-                    log(error)
+                    log(error: error.localizedDescription)
                     handleResult(nil, error)
                     return
                 }

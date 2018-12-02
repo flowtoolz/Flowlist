@@ -28,7 +28,7 @@ class PurchaseController: NSObject, Observable, SKProductsRequestDelegate, SKPay
     {
         send(.didFailToPurchaseFullVersion(message: "An error occured while restoring AppStore purchases."))
         
-        log(error)
+        log(error: error.localizedDescription)
     }
     
     // MARK: - Purchase Full Version

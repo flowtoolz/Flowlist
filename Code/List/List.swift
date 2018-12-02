@@ -17,7 +17,7 @@ class List: Observable, Observer
     
     deinit
     {
-        stopAllObserving()
+        stopObserving()
         removeObservers()
     }
     

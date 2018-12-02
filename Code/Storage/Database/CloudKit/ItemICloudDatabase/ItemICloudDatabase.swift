@@ -28,7 +28,7 @@ class ItemICloudDatabase: Observer
         }
     }
     
-    deinit { stopAllObserving() }
+    deinit { stopObserving() }
     
     // MARK: - Handle Database Notifications
     
@@ -60,7 +60,7 @@ class ItemICloudDatabase: Observer
                 self.messenger.send(.updateItems(withModifications: mods))
             }
         }
-        .catch { log($0) }
+        .catch { log(error: $0.localizedDescription) }
     }
     
     // MARK: - Create Subscriptions
@@ -127,7 +127,10 @@ class ItemICloudDatabase: Observer
                 promises.append(promise)
             }
             
-            when(fulfilled: promises).catch { log($0) }
+            when(fulfilled: promises).catch
+            {
+                log(error: $0.localizedDescription)
+            }
             
         case .removeItems(let ids):
             firstly
@@ -138,7 +141,7 @@ class ItemICloudDatabase: Observer
             {
                 self.fetchNewUpdates()
             }
-            .catch { log($0) }
+            .catch { log(error: $0.localizedDescription) }
         }
     }
     

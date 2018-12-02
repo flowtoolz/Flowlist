@@ -200,7 +200,10 @@ class ICloudDatabase: Database, Observable
         
         operation.clientChangeTokenData = appInstanceToken
         
-        operation.perRecordCompletionBlock = { if let error = $1 { log(error) } }
+        operation.perRecordCompletionBlock =
+        {
+            if let error = $1 { log(error: error.localizedDescription) }
+        }
         
         operation.modifyRecordsCompletionBlock =
         {

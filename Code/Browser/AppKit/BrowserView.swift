@@ -31,7 +31,7 @@ class BrowserView: LayerBackedView, Observer
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
-    deinit { stopAllObserving() }
+    deinit { stopObserving() }
     
     // MARK: - Adapt to Font Size Changes
     

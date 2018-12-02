@@ -46,7 +46,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     deinit
     {
-        stopAllObserving()
+        stopObserving()
         removeObservers()
     }
     

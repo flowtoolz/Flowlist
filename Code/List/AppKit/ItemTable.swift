@@ -22,7 +22,7 @@ class ItemTable: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     required init?(coder: NSCoder) { fatalError() }
     
-    deinit { stopAllObserving() }
+    deinit { stopObserving() }
     
     // MARK: - Adapt to Font Size Changes
     

@@ -32,7 +32,7 @@ class Spacer: LayerBackedView, Observer
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
-    deinit { stopAllObserving() }
+    deinit { stopObserving() }
     
     static let uiIdentifier = UIItemID(rawValue: "SpacerID")
 }

@@ -36,7 +36,7 @@ class ItemView: LayerBackedView, Observer, Observable
     
     deinit
     {
-        stopAllObserving()
+        stopObserving()
         removeObservers()
     }
     

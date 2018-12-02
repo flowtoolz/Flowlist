@@ -256,7 +256,7 @@ class Storage: Observer
     
     private func abortIntendingToSync(with error: Error)
     {
-        log(error)
+        log(error: error.localizedDescription)
         abortIntendingToSync(errorMessage: error.localizedDescription)
     }
     

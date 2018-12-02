@@ -33,7 +33,7 @@ class Browser: Observer, Observable
     
     deinit
     {
-        stopAllObserving()
+        stopObserving()
         removeObservers()
     }
     

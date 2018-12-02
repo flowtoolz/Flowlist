@@ -25,7 +25,7 @@ class PriceTag: NSView, Observer
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
-    deinit { stopAllObserving() }
+    deinit { stopObserving() }
     
     // MARK: - Present Data
     

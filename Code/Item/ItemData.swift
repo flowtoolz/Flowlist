@@ -26,7 +26,7 @@ final class ItemData: Observable, Observer
     
     deinit
     {
-        stopAllObserving()
+        stopObserving()
         removeObservers()
     }
     

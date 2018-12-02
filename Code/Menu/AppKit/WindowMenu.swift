@@ -32,7 +32,7 @@ class WindowMenu: NSMenu, NSMenuItemValidation, Observer
     
     required init(coder decoder: NSCoder) { fatalError() }
     
-    deinit { stopAllObserving() }
+    deinit { stopObserving() }
     
     // MARK: - Validate Items
     

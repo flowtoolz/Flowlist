@@ -33,7 +33,7 @@ class ListView: LayerBackedView, Observer, Observable
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
-    deinit { stopAllObserving() }
+    deinit { stopObserving() }
     
     // MARK: - Configuration
     
