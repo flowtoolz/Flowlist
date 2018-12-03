@@ -480,8 +480,8 @@ class ItemView: LayerBackedView, Observer, Observable
             set(editing: true)
             send(.willEditText)
             
-        case .didChange(let text):
-            item?.data.send(.didTypeText(text))
+        case .didChangeText:
+            item?.data.text <- String(withNonEmpty: textView.string)
             send(.didChangeText)
             
         case .wantToEndEditing:

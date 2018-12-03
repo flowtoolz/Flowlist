@@ -18,8 +18,7 @@ class ItemTableContent: NSObject, Observable, NSTableViewDataSource, NSTableView
         return Row()
     }
     
-    func tableView(_ tableView: NSTableView,
-                   heightOfRow row: Int) -> CGFloat
+    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat
     {
         if row >= (list?.count ?? 0)
         {

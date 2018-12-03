@@ -111,7 +111,6 @@ final class ItemData: Observable, Observer
         case didNothing
         case wasModified
         case wantTextInput
-        case didTypeText(_ text: String)
     }
     
     // MARK: - ID

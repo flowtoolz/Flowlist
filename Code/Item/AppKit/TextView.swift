@@ -247,7 +247,7 @@ class TextView: NSTextView, NSTextViewDelegate
     
     func textDidChange(_ notification: Notification)
     {
-        messenger.send(.didChange(text: string))
+        messenger.send(.didChangeText)
     }
 
     func textDidEndEditing(_ notification: Notification)
@@ -319,7 +319,7 @@ class TextView: NSTextView, NSTextViewDelegate
             case didNothing
             case wasClicked
             case willEdit
-            case didChange(text: String)
+            case didChangeText
             case wantToEndEditing
             case didEdit
         }
