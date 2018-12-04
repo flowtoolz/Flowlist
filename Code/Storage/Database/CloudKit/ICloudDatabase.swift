@@ -6,6 +6,28 @@ import PromiseKit
 
 class ICloudDatabase: Database, Observable
 {
+    // MARK: - Life Cycle
+    
+    init()
+    {
+        NetworkReachability.shared.notifyOfChanges(self)
+        {
+            _ in
+           
+            firstly
+            {
+                self.database.fetchUserRecord()
+            }
+            .tap(self.updateReachability).catch { _ in }
+        }
+    }
+    
+    deinit
+    {
+        removeObservers()
+        NetworkReachability.shared.stopNotifying(self)
+    }
+    
     // MARK: - Save
     
     func save(_ records: [CKRecord]) -> Promise<Void>
@@ -19,6 +41,7 @@ class ICloudDatabase: Database, Observable
                     handleCreationSuccess: $0.resolve,
                     handleDeletionSuccess: nil)
         }
+        .tap(updateReachability)
     }
     
     // MARK: - Delete
@@ -53,6 +76,7 @@ class ICloudDatabase: Database, Observable
                     handleCreationSuccess: nil,
                     handleDeletionSuccess: $0.resolve)
         }
+        .tap(updateReachability)
     }
     
     // MARK: - Fetch
@@ -61,7 +85,11 @@ class ICloudDatabase: Database, Observable
     {
         let mainQ = DispatchQueue.main
         
-        return database.fetch(withRecordID: id).map(on: mainQ) { $0 }
+        return database.fetch(withRecordID: id).map(on: mainQ)
+        {
+            $0
+        }
+        .tap(updateReachability)
     }
     
     func fetchRecords(with query: CKQuery,
@@ -69,7 +97,11 @@ class ICloudDatabase: Database, Observable
     {
         let mainQ = DispatchQueue.main
         
-        return database.perform(query, inZoneWith: zoneID).map(on: mainQ) { $0 }
+        return database.perform(query, inZoneWith: zoneID).map(on: mainQ)
+        {
+            $0
+        }
+        .tap(updateReachability)
     }
     
     // MARK: - Respond to Notifications
@@ -185,7 +217,7 @@ class ICloudDatabase: Database, Observable
         
         subscription.notificationInfo = notificationInfo
         
-        return database.save(subscription)
+        return database.save(subscription).tap(updateReachability)
     }
     
     // MARK: - Database
@@ -213,6 +245,7 @@ class ICloudDatabase: Database, Observable
             {
                 handleDeletionSuccess?(error)
                 handleCreationSuccess?(error)
+                
                 return
             }
             
@@ -235,7 +268,7 @@ class ICloudDatabase: Database, Observable
     
     // MARK: - Container
     
-    func checkAvailability() -> Promise<Availability>
+    func checkAccess() -> Promise<Accessibility>
     {
         return firstly
         {
@@ -243,32 +276,32 @@ class ICloudDatabase: Database, Observable
         }
         .ensure
         {
-            self.isAvailable = false
+            self.isAccessible = false
         }
         .map
         {
             status in
             
-            var message = "Copuld not determine iCloud account status."
+            var message = ""
             
             switch status
             {
             case .couldNotDetermine:
                 message = "Could not determine iCloud account status."
             case .available:
-                self.isAvailable = true
-                return Availability.available
+                self.isAccessible = true
+                return Accessibility.accessible
             case .restricted:
                 message = "iCloud account is restricted."
             case .noAccount:
                 message = "This device is not connected to an iCloud account."
             }
             
-            return Availability.unavailable(message)
+            return Accessibility.unaccessible(message)
         }
     }
     
-    private(set) var isAvailable: Bool?
+    private(set) var isAccessible: Bool?
     
     private let container = CKContainer.default()
     
@@ -290,6 +323,40 @@ class ICloudDatabase: Database, Observable
     
     private let appInstanceIDKey = "UserDefaultsKeyAppInstanceID"
     
+    // MARK: - Reachability
+    
+    private func updateReachability<T>(with result: Result<T>)
+    {
+        if case .rejected(let error) = result
+        {
+            updateReachability(with: error)
+        }
+        else
+        {
+            isReachable <- true
+        }
+    }
+    
+    private func updateReachability(with error: Error)
+    {
+        guard let ckError = error as? CKError else { return }
+        
+        switch ckError.code
+        {
+        case .networkUnavailable, .networkFailure:
+            isReachable <- false
+   
+        // unclear where the error originated (local / server)
+    case .internalError, .badContainer, .serviceUnavailable, .requestRateLimited, .missingEntitlement, .invalidArguments, .resultsTruncated, .incompatibleVersion, .operationCancelled, .changeTokenExpired, .badDatabase, .quotaExceeded, .managedAccountRestricted:
+            break
+            
+        // errors that suggest the server is reachable
+        default: isReachable <- true
+        }
+    }
+    
+    let isReachable = Var<Bool>()
+    
     // MARK: - Observability
     
     var latestUpdate = Event.didNothing
@@ -302,6 +369,4 @@ class ICloudDatabase: Database, Observable
         case didDeleteRecord(id: CKRecord.ID)
         case didReceiveDatabaseNotification(CKDatabaseNotification)
     }
-    
-    deinit { removeObservers() }
 }

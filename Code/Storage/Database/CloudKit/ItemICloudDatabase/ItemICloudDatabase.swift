@@ -282,12 +282,13 @@ class ItemICloudDatabase: Observer
         iCloudDatabase.handlePushNotification(with: userInfo)
     }
     
-    func checkAvailability() -> Promise<Availability>
+    func checkAccess() -> Promise<Accessibility>
     {
-        return iCloudDatabase.checkAvailability()
+        return iCloudDatabase.checkAccess()
     }
     
-    var isAvailable: Bool? { return iCloudDatabase.isAvailable }
+    var isAccessible: Bool? { return db.isAccessible }
+    var isReachable: Var<Bool> { return db.isReachable }
     
     private var db: ICloudDatabase { return iCloudDatabase }
     private let iCloudDatabase = ICloudDatabase()

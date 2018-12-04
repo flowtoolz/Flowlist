@@ -1,15 +1,27 @@
 import SwiftObserver
 import PromiseKit
 
+// TODO: Error.localizedDescription is from Foundation. Don't use that here.
+
 class Storage: Observer
 {
-    // MARK: - Initialize
+    // MARK: - Life cycle
     
     init(with file: ItemFile, database: ItemDatabase)
     {
         self.file = file
         self.database = database
+        
+        observe(database.isReachable)
+        {
+            if let reachable = $0.new
+            {
+                self.databaseReachabilityDidChange(reachable: reachable)
+            }
+        }
     }
+    
+    deinit { stopObserving() }
     
     // MARK: - App Life Cycle
     
@@ -43,18 +55,18 @@ class Storage: Observer
     {
         guard self.intendsToSync else { return }
         
-        if database.isAvailable != true
+        if database.isAccessible != true
         {
-            log(error: "Invalid state: Using database while it's POSSIBLY unavailable: Is availabe: \(String(describing: database.isAvailable))")
+            log(error: "Invalid state: Using database while it's POSSIBLY unavailable: Is availabe: \(String(describing: database.isAccessible))")
         }
     
         firstly
         {
-            database.checkAvailability()
+            database.checkAccess()
         }
         .done
         {
-            if case .unavailable(let message) = $0
+            if case .unaccessible(let message) = $0
             {
                 let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account, then select the menu option \"Data → Start Using iCloud\"."
                 
@@ -66,24 +78,16 @@ class Storage: Observer
     
     // MARK: - Network Reachability
     
-    func networkBecame(reachable: Bool)
+    func databaseReachabilityDidChange(reachable: Bool)
     {
-        defer { networkIsReachable = reachable }
-        
-        guard intendsToSync,
-            let wasReachable = networkIsReachable,
-            wasReachable != reachable
-        else
-        {
-            return
-        }
+        guard intendsToSync else { return }
         
         guard reachable else
         {
             stopObservingDatabaseAndStore()
             return
         }
-
+        
         firstly
         {
             startIntendingToSync()
@@ -92,15 +96,13 @@ class Storage: Observer
         {
             if case .unavailable(let message) = $0
             {
-                let c2a = "The device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the menu option \"Data → Start Using iCloud\"."
+                let c2a = "Seem like this device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the menu option \"Data → Start Using iCloud\"."
                 
                 self.abortIntendingToSync(errorMessage: message, callToAction: c2a)
             }
         }
         .catch(abortIntendingToSync)
     }
-    
-    private var networkIsReachable: Bool?
     
     // MARK: - Start and Abort the Intention to Sync
     
@@ -141,15 +143,15 @@ class Storage: Observer
         
         return firstly
         {
-            database.checkAvailability()
+            database.checkAccess()
         }
         .then
         {
-            (availability: Availability) -> Promise<SyncStartResult> in
+            (availability: Accessibility) -> Promise<SyncStartResult> in
             
             switch availability
             {
-            case .available:
+            case .accessible:
                 return firstly
                 {
                     self.doInitialSync()
@@ -162,7 +164,7 @@ class Storage: Observer
                     return .success
                 }
                 
-            case .unavailable(let message):
+            case .unaccessible(let message):
                 return Promise.value(.unavailable(message))
             }
         }
@@ -327,7 +329,7 @@ class Storage: Observer
     {
         //log("applying edit from store to db: \(edit)")
         
-        guard database.isAvailable == true else
+        guard database.isAccessible == true else
         {
             log(error: "Invalid state: Applying store edits to database while database is unavailable.")
             return

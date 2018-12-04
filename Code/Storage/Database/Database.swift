@@ -1,13 +1,16 @@
 import PromiseKit
+import SwiftObserver
 
 protocol Database: AnyObject
 {
-    func checkAvailability() -> Promise<Availability>
-    var isAvailable: Bool? { get }
+    func checkAccess() -> Promise<Accessibility>
+    var isAccessible: Bool? { get }
+    
+    var isReachable: Var<Bool> { get }
 }
 
-enum Availability
+enum Accessibility
 {
-    case available
-    case unavailable(_ message: String)
+    case accessible
+    case unaccessible(_ message: String)
 }
