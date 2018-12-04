@@ -74,16 +74,26 @@ class List: Observable, Observer
         }
     }
     
-    func received(_ edit: Item.Event.NodeUpdate,
-                  from root: Item)
+    func received(_ edit: Item.Event.NodeUpdate, from root: Item)
     {
         switch edit
         {
         case .insertedNodes(let indexes):
             observeItemsListed(in: root, at: indexes)
             
-        case .removedNodes(let items, _):
-            items.forEach { observe(listedItem: $0, start: false) }
+        case .removedNodes(let items, let indexes):
+            var selectionDidChange = false
+            
+            items.forEach
+            {
+                observe(listedItem: $0, start: false)
+                if $0.isSelected { selectionDidChange = true }
+            }
+            
+            if selectionDidChange
+            {
+                send(.didChangeSelection(added: [], removed: indexes))
+            }
             
         case .movedNode: break
             
