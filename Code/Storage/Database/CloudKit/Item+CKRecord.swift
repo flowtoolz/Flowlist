@@ -1,5 +1,6 @@
 import CloudKit
 import SwiftObserver
+import SwiftyToolz
 
 extension Tree where Data == ItemData
 {

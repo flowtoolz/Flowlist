@@ -1,6 +1,7 @@
 import CloudKit
-import SwiftObserver
 import PromiseKit
+import SwiftObserver
+import SwiftyToolz
 
 class ItemICloudDatabase: Observer
 {

@@ -1,4 +1,4 @@
-import SwiftObserver
+import SwiftyToolz
 
 extension Array where Element == Modification
 {

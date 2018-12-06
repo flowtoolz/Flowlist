@@ -1,4 +1,5 @@
 import SwiftObserver
+import SwiftyToolz
 
 class Store: Observer, Observable
 {

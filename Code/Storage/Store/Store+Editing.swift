@@ -1,4 +1,5 @@
 import SwiftObserver
+import SwiftyToolz
 
 extension Store
 {

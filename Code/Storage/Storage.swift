@@ -1,5 +1,6 @@
-import SwiftObserver
 import PromiseKit
+import SwiftObserver
+import SwiftyToolz
 
 // TODO: Error.localizedDescription is from Foundation. Don't use that here.
 
