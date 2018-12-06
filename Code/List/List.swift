@@ -221,9 +221,9 @@ class List: Observable, Observer
         old?.deletionStack.removeAll()
         old?.deselectAll()
         
-        title.observable = new?.data.text
-        tag.observable = new?.data.tag
-        state.observable = new?.data.state
+        title.source = new?.data.text ?? Var<String>()
+        tag.source = new?.data.tag ?? Var<ItemData.Tag>()
+        state.source = new?.data.state ?? Var<ItemData.State>()
         
         send(.did(.switchedRoot(from: old, to: new)))
     }

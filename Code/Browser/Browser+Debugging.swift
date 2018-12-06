@@ -9,7 +9,7 @@ extension Browser
             guard let list = self[i] else { continue }
             
             desc += "\(i): "
-            desc += list.title.observable?.value ?? "untitled"
+            desc += list.title.source.value ?? "untitled"
             desc += "\n"
         }
         
