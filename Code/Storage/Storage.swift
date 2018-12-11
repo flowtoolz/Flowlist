@@ -274,7 +274,7 @@ class Storage: Observer
     }
     
     private var _intendsToSync = PersistentFlag(key: "IsUsingDatabase",
-                                                defaultValue: true)
+                                                `default`: true)
     
     private func informUserAboutSyncProblem(error: String, callToAction: String)
     {

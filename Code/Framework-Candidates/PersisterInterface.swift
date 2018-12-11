@@ -2,7 +2,7 @@ public struct PersistentFlag
 {
     public var value: Bool
     {
-        get { return persister.bool(key) ?? defaultValue }
+        get { return persister.bool(key) ?? `default` }
         set { persister.set(key, newValue)}
     }
     
@@ -13,7 +13,7 @@ public struct PersistentFlag
     }
     
     let key: String
-    let defaultValue: Bool
+    let `default`: Bool
 }
 
 public var persister: PersisterInterface = DummyPersister()
