@@ -279,19 +279,25 @@ class ItemICloudDatabase: Observer
         }
         .then
         {
-            (a: Accessibility) -> Promise<Accessibility> in
+            (accessibility: Accessibility) -> Promise<Accessibility> in
             
-            guard case .accessible = a else { return Promise.value(a) }
+            guard case .accessible = accessibility else
+            {
+                return Promise.value(accessibility)
+            }
             
-            return self.ensureItemRecordZoneExists().map { .accessible }
-        }
-        .then
-        {
-            (a: Accessibility) -> Promise<Accessibility> in
-            
-            guard case .accessible = a else { return Promise.value(a) }
-            
-            return self.ensureSubscriptionExists().map { .accessible }
+            return firstly
+            {
+                self.ensureItemRecordZoneExists()
+            }
+            .then
+            {
+                self.ensureSubscriptionExists()
+            }
+            .map
+            {
+                Accessibility.accessible
+            }
         }
     }
     
