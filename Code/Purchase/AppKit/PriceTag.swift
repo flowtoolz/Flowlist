@@ -17,7 +17,7 @@ class PriceTag: NSView, Observer
         
         update()
         
-        observe(purchaseController, select: .didLoadFullVersionProduct)
+        observe(purchaseController).select(.didLoadFullVersionProduct)
         {
             [weak self] in self?.update()
         }

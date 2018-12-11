@@ -17,12 +17,12 @@ class FlowlistView: LayerBackedView, Observer
         {
             constrainPurchaseView()
             
-            observe(purchaseView, select: .expandButtonWasClicked)
+            observe(purchaseView).select(.expandButtonWasClicked)
             {
                 [weak self] in self?.togglePurchaseView()
             }
             
-            observe(purchaseController, select: .didPurchaseFullVersion)
+            observe(purchaseController).select(.didPurchaseFullVersion)
             {
                 [weak self] in self?.didPurchaseFullVersion()
             }

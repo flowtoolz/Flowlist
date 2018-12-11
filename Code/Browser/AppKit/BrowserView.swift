@@ -123,7 +123,7 @@ class BrowserView: LayerBackedView, Observer
     
     private func observe(listView: ListView)
     {
-        observe(listView, select: .didReceiveUserInput)
+        observe(listView).select(.didReceiveUserInput)
         {
             [weak listView, weak self] in
             
