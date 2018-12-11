@@ -66,10 +66,23 @@ class ItemICloudDatabase: Observer
     
     // MARK: - Create Subscriptions
     
-    func createItemDatabaseSubscription() -> Promise<CKSubscription>
+    func ensureSubscriptionExists() -> Promise<Void>
     {
-        return db.createDatabasSubscription(withID: "ItemDataBaseSubscription")
+        if subExists.value { return Promise() }
+        
+        return createItemDatabaseSubscription().map { _ in }
     }
+    
+    private func createItemDatabaseSubscription() -> Promise<CKSubscription>
+    {
+        return db.createDatabasSubscription(withID: dbSubID).tap
+        {
+            self.subExists.value = $0.isFulfilled
+        }
+    }
+    
+    private let dbSubID = "ItemDataBaseSubscription"
+    private var subExists = PersistentFlag(key: "dbSubExists", default: false)
     
     // MARK: - Edit Items
     
@@ -285,7 +298,14 @@ class ItemICloudDatabase: Observer
     
     func checkAccess() -> Promise<Accessibility>
     {
-        return iCloudDatabase.checkAccess()
+        return firstly
+        {
+            ensureSubscriptionExists()
+        }
+        .then
+        {
+            self.iCloudDatabase.checkAccess()
+        }
     }
     
     var isAccessible: Bool? { return db.isAccessible }
