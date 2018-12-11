@@ -63,7 +63,7 @@ class Storage: Observer
     
         firstly
         {
-            database.checkAccess()
+            database.ensureAccess()
         }
         .done
         {
@@ -144,7 +144,7 @@ class Storage: Observer
         
         return firstly
         {
-            database.checkAccess()
+            database.ensureAccess()
         }
         .then
         {
@@ -274,7 +274,7 @@ class Storage: Observer
     }
     
     private var _intendsToSync = PersistentFlag(key: "IsUsingDatabase",
-                                                `default`: true)
+                                                default: true)
     
     private func informUserAboutSyncProblem(error: String, callToAction: String)
     {

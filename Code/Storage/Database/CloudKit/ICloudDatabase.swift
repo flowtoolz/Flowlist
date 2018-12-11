@@ -181,6 +181,32 @@ class ICloudDatabase: Database, Observable
         send(.didReceiveDatabaseNotification(databaseNotification))
     }
     
+    // MARK: - Create Record Zones
+    
+    func createZone(with id: CKRecordZone.ID) -> Promise<CKRecordZone>
+    {
+        let zone = CKRecordZone(zoneID: id)
+        
+        let operation = CKModifyRecordZonesOperation(recordZonesToSave: [zone],
+                                                     recordZoneIDsToDelete: nil)
+        
+        operation.qualityOfService = .userInitiated
+        
+        return Promise
+        {
+            resolver in
+            
+            operation.modifyRecordZonesCompletionBlock =
+            {
+                createdZones, _, error in
+                
+                resolver.resolve(error, createdZones?.first)
+            }
+            
+            perform(operation)
+        }
+    }
+    
     // MARK: - Create Subscriptions
     
     func createQuerySubscription(forRecordType type: String,
@@ -268,7 +294,7 @@ class ICloudDatabase: Database, Observable
     
     // MARK: - Container
     
-    func checkAccess() -> Promise<Accessibility>
+    func ensureAccess() -> Promise<Accessibility>
     {
         return firstly
         {

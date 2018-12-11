@@ -64,26 +64,6 @@ class ItemICloudDatabase: Observer
         .catch { log(error: $0.localizedDescription) }
     }
     
-    // MARK: - Create Subscriptions
-    
-    func ensureSubscriptionExists() -> Promise<Void>
-    {
-        if subExists.value { return Promise() }
-        
-        return createItemDatabaseSubscription().map { _ in }
-    }
-    
-    private func createItemDatabaseSubscription() -> Promise<CKSubscription>
-    {
-        return db.createDatabasSubscription(withID: dbSubID).tap
-        {
-            self.subExists.value = $0.isFulfilled
-        }
-    }
-    
-    private let dbSubID = "ItemDataBaseSubscription"
-    private var subExists = PersistentFlag(key: "dbSubExists", default: false)
-    
     // MARK: - Edit Items
     
     func apply(_ edit: Edit)
@@ -289,6 +269,75 @@ class ItemICloudDatabase: Observer
         return iCloudDatabase.fetchUpdates(fromZone: .item, oldToken: nil)
     }
     
+    // MARK: - iCloud Database Access
+    
+    func ensureAccess() -> Promise<Accessibility>
+    {
+        return firstly
+        {
+            self.iCloudDatabase.ensureAccess()
+        }
+        .then
+        {
+            (a: Accessibility) -> Promise<Accessibility> in
+            
+            guard case .accessible = a else { return Promise.value(a) }
+            
+            return self.ensureItemRecordZoneExists().map { .accessible }
+        }
+        .then
+        {
+            (a: Accessibility) -> Promise<Accessibility> in
+            
+            guard case .accessible = a else { return Promise.value(a) }
+            
+            return self.ensureSubscriptionExists().map { .accessible }
+        }
+    }
+    
+    var isAccessible: Bool? { return db.isAccessible }
+    
+    // MARK: - Create Subscriptions
+    
+    private func ensureSubscriptionExists() -> Promise<Void>
+    {
+        guard subExists.value else { return createSubscription() }
+        
+        return Promise()
+    }
+    
+    private func createSubscription() -> Promise<Void>
+    {
+        return db.createDatabasSubscription(withID: dbSubID).tap
+        {
+            self.subExists.value = $0.isFulfilled
+        }
+        .map { _ in }
+    }
+    
+    private let dbSubID = "ItemDataBaseSubscription"
+    private var subExists = PersistentFlag(key: "itemDBSubExists", default: false)
+    
+    // MARK: - Create Zone
+    
+    private func ensureItemRecordZoneExists() -> Promise<Void>
+    {
+        guard zoneExists.value else { return createZone() }
+        
+        return Promise()
+    }
+    
+    private func createZone() -> Promise<Void>
+    {
+        return db.createZone(with: .item).tap
+        {
+            self.zoneExists.value = $0.isFulfilled
+        }
+        .map { _ in }
+    }
+    
+    private var zoneExists = PersistentFlag(key: "itemZoneExists", default: false)
+    
     // MARK: - iCloud Database
     
     func handlePushNotification(with userInfo: [String : Any])
@@ -296,19 +345,6 @@ class ItemICloudDatabase: Observer
         iCloudDatabase.handlePushNotification(with: userInfo)
     }
     
-    func checkAccess() -> Promise<Accessibility>
-    {
-        return firstly
-        {
-            ensureSubscriptionExists()
-        }
-        .then
-        {
-            self.iCloudDatabase.checkAccess()
-        }
-    }
-    
-    var isAccessible: Bool? { return db.isAccessible }
     var isReachable: Var<Bool> { return db.isReachable }
     
     private var db: ICloudDatabase { return iCloudDatabase }
