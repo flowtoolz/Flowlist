@@ -32,16 +32,25 @@ class ICloudDatabase: Database, Observable
     
     func save(_ records: [CKRecord]) -> Promise<Void>
     {
-        let operation = CKModifyRecordsOperation(recordsToSave: records,
-                                                 recordIDsToDelete: nil)
+        let slices = records.splitIntoSlices(ofSize: 400)
         
-        return Promise
+        let promises = slices.map
         {
-            perform(modifyOperation: operation,
-                    handleCreationSuccess: $0.resolve,
-                    handleDeletionSuccess: nil)
+            (slice: ArraySlice<CKRecord>) -> Promise<Void> in
+            
+            let operation = ModifyOperation(recordsToSave: Array(slice),
+                                            recordIDsToDelete: nil)
+            
+            return Promise
+            {
+                perform(modifyOperation: operation,
+                        handleCreationSuccess: $0.resolve,
+                        handleDeletionSuccess: nil)
+            }
+            .tap(updateReachability)
         }
-        .tap(updateReachability)
+        
+        return when(fulfilled: promises)
     }
     
     // MARK: - Delete
@@ -67,6 +76,8 @@ class ICloudDatabase: Database, Observable
     
     func deleteRecords(withIDs ids: [CKRecord.ID]) -> Promise<Void>
     {
+        // TODO: split into multiple operations if too many items
+        
         let operation = CKModifyRecordsOperation(recordsToSave: nil,
                                                  recordIDsToDelete: ids)
         
@@ -266,9 +277,6 @@ class ICloudDatabase: Database, Observable
         }
         
         operation.savePolicy = .changedKeys
-        
-        // TODO: The server may reject large operations. When this occurs, a block reports the CKError.Code.limitExceeded error. Your app should handle this error, and refactor the operation into multiple smaller batches.
-        
         operation.clientChangeTokenData = appInstanceToken
         
         operation.perRecordCompletionBlock =
@@ -422,3 +430,28 @@ class ICloudDatabase: Database, Observable
         case didReceiveDatabaseNotification(CKDatabaseNotification)
     }
 }
+
+extension Array
+{
+    func splitIntoSlices(ofSize size: Int) -> [ArraySlice<Element>]
+    {
+        guard size > 0 else { return [] }
+        
+        var result = [ArraySlice<Element>]()
+        
+        var sliceStart = -1
+        var sliceEnd = -1
+        
+        while sliceEnd < count - 1
+        {
+            sliceStart = sliceEnd + 1
+            sliceEnd = Swift.min(sliceEnd + size, count - 1)
+            
+            result.append(self[sliceStart ... sliceEnd])
+        }
+        
+        return result
+    }
+}
+
+fileprivate typealias ModifyOperation = CKModifyRecordsOperation
