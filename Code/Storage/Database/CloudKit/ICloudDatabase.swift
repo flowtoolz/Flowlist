@@ -252,7 +252,20 @@ class ICloudDatabase: Database, Observable
                          handleCreationSuccess: ((Error?) -> Void)?,
                          handleDeletionSuccess: ((Error?) -> Void)?)
     {
-        operation.savePolicy = .changedKeys // TODO: or if server records unchanged? handle "merge conflicts" when multiple devices changed data locally offline...
+        if (operation.recordIDsToDelete?.count ?? 0) +
+           (operation.recordsToSave?.count ?? 0) > 400
+        {
+            log(error: "Too many items in CKModifyRecordsOperation.")
+            
+            let error = ICloudDBError.message("Too many items in operation")
+            
+            handleCreationSuccess?(error)
+            handleDeletionSuccess?(error)
+            
+            return
+        }
+        
+        operation.savePolicy = .changedKeys
         
         // TODO: The server may reject large operations. When this occurs, a block reports the CKError.Code.limitExceeded error. Your app should handle this error, and refactor the operation into multiple smaller batches.
         
@@ -382,6 +395,19 @@ class ICloudDatabase: Database, Observable
     }
     
     let isReachable = Var<Bool>()
+    
+    enum ICloudDBError: Error, CustomDebugStringConvertible
+    {
+        var debugDescription: String
+        {
+            switch self
+            {
+            case .message(let string): return string
+            }
+        }
+        
+        case message(String)
+    }
     
     // MARK: - Observability
     
