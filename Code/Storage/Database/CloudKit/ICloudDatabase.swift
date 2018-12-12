@@ -76,18 +76,25 @@ class ICloudDatabase: Database, Observable
     
     func deleteRecords(withIDs ids: [CKRecord.ID]) -> Promise<Void>
     {
-        // TODO: split into multiple operations if too many items
+        let slices = ids.splitIntoSlices(ofSize: 400)
         
-        let operation = CKModifyRecordsOperation(recordsToSave: nil,
-                                                 recordIDsToDelete: ids)
-        
-        return Promise
+        let promises = slices.map
         {
-            perform(modifyOperation: operation,
-                    handleCreationSuccess: nil,
-                    handleDeletionSuccess: $0.resolve)
+            (slice: ArraySlice<CKRecord.ID>) -> Promise<Void> in
+            
+            let operation = ModifyOperation(recordsToSave: nil,
+                                            recordIDsToDelete: Array(slice))
+            
+            return Promise
+            {
+                perform(modifyOperation: operation,
+                        handleCreationSuccess: nil,
+                        handleDeletionSuccess: $0.resolve)
+            }
+            .tap(updateReachability)
         }
-        .tap(updateReachability)
+        
+        return when(fulfilled: promises)
     }
     
     // MARK: - Fetch
