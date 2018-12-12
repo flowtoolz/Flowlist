@@ -78,7 +78,7 @@ class Storage: Observer
     {
         guard intendsToSync,
             let new = update.new,
-            let old = update.new,
+            let old = update.old,
             new != old
         else { return }
         
