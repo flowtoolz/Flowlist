@@ -266,7 +266,7 @@ class Storage: Observer
     private func abortIntendingToSync(errorMessage error: String,
                                       callToAction: String? = nil)
     {
-        let c2a = callToAction ?? "Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the menu option \"Data → Start Using iCloud\"."
+        let c2a = callToAction ?? "Make sure your Mac is connected to your iCloud account, then try resuming iCloud sync via the menu:\nData → Start Using iCloud"
         
         stopObservingDatabaseAndStore()
         _intendsToSync.value = false
@@ -278,9 +278,14 @@ class Storage: Observer
     
     private func informUserAboutSyncProblem(error: String, callToAction: String)
     {
-        log("This issue with iCloud came up: \(error)\n\(callToAction)\n\n",
-            title: "Whoops, no iCloud?",
-            forUser: true)
+        log(error: "iCloud sync failed: \(error)\nc2a: \(callToAction)")
+        
+        let question = Dialog.Question(title: "Whoops, Had to Pause iCloud Sync",
+                                       text: "This issue came up: \(error)\n\n\(callToAction)",
+                                       options: ["Got it"])
+        
+        Dialog.default.pose(question, imageName: "icloud_conflict")
+            .catch { _ in }
     }
     
     // MARK: - Observe Database & Store
