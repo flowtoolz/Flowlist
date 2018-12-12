@@ -2,8 +2,6 @@ import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
-// TODO: Error.localizedDescription is from Foundation. Don't use that here.
-
 class Storage: Observer
 {
     // MARK: - Life cycle
@@ -259,8 +257,9 @@ class Storage: Observer
     
     private func abortIntendingToSync(with error: Error)
     {
-        log(error: error.localizedDescription)
-        abortIntendingToSync(errorMessage: error.localizedDescription)
+        let errorMessage = String(describing: error)
+        log(error: errorMessage)
+        abortIntendingToSync(errorMessage: errorMessage)
     }
     
     private func abortIntendingToSync(errorMessage error: String,
