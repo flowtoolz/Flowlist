@@ -49,19 +49,49 @@ extension Tree where Data == ItemData
     {
         var result = text ?? ""
         
-        if !isLeaf
+        if !isLeaf && recursionDepth < 6
         {
             result = String(repeating: "#",
                             count: recursionDepth + 1) + " " + result
         }
         
-        branches.forEach
+        if subitemsAreBulletPoints()
         {
-            guard !$0.isDone else { return }
+            result += "\n"
             
-            result += "\n\n" + $0.markdown(recursionDepth: recursionDepth + 1)
+            branches.forEach
+            {
+                guard !$0.isDone, let text = $0.text else { return }
+                
+                result += "\n* " + text
+            }
+        }
+        else
+        {
+            branches.forEach
+            {
+                guard !$0.isDone else { return }
+                
+                result += "\n\n" + $0.markdown(recursionDepth: recursionDepth + 1)
+            }
+        }
+        return result
+    }
+    
+    private func subitemsAreBulletPoints() -> Bool
+    {
+        var bulletPoints = 0
+        
+        for subitem in branches
+        {
+            guard !subitem.isDone else { continue }
+            
+            if !subitem.isLeaf { return false }
+            if (subitem.text ?? "").count > 100 { return false }
+            
+            bulletPoints += 1
         }
         
-        return result
+        return bulletPoints > 0
     }
 }
