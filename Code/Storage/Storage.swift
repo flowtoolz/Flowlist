@@ -13,10 +13,7 @@ class Storage: Observer
         
         observe(database.isReachable)
         {
-            if let reachable = $0.new
-            {
-                self.databaseReachabilityDidChange(reachable: reachable)
-            }
+            [weak self] in self?.databaseReachabilityDid(update: $0)
         }
     }
     
@@ -77,11 +74,15 @@ class Storage: Observer
     
     // MARK: - Network Reachability
     
-    func databaseReachabilityDidChange(reachable: Bool)
+    func databaseReachabilityDid(update: Update<Bool?>)
     {
-        guard intendsToSync else { return }
+        guard intendsToSync,
+            let new = update.new,
+            let old = update.new,
+            new != old
+        else { return }
         
-        guard reachable else
+        guard new else
         {
             stopObservingDatabaseAndStore()
             return
