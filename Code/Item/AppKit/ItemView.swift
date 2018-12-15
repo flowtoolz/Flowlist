@@ -120,7 +120,7 @@ class ItemView: LayerBackedView, Observer, Observable
     
     private func observe(item: Item)
     {
-        observe(item.treeMessenger).unwrap(.didNothing)
+        observe(item.treeMessenger)
         {
             [weak self, weak item] event in
             

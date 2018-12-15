@@ -59,7 +59,7 @@ class List: Observable, Observer
             return
         }
         
-        observe(root.treeMessenger).unwrap(.didNothing)
+        observe(root.treeMessenger)
         {
             [weak self, weak root] event in
             

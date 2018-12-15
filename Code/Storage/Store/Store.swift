@@ -27,7 +27,7 @@ class Store: Observer, Observable
     
     private func observe(newRoot: Item)
     {
-        observe(newRoot.treeMessenger).unwrap(.didNothing)
+        observe(newRoot.treeMessenger)
         {
             [weak self, weak newRoot] event in
             
