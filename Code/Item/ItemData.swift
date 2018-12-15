@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-final class ItemData: Observable, Observer
+final class ItemData: Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -22,12 +22,6 @@ final class ItemData: Observable, Observer
             
             self?.send(.wasModified)
         }
-    }
-    
-    deinit
-    {
-        stopObserving()
-        removeObservers()
     }
     
     // MARK: - View Model
@@ -101,10 +95,25 @@ final class ItemData: Observable, Observer
             }
         }
     }
+
+    // TODO: remove the concern of data observation from Tree and fix this:
+    // MARK: - Temporarily pretend to Tree we conform to Observable
     
-    // MARK: - Observability
+    let latestUpdate = Event.didNothing
     
-    var latestUpdate = Event.didNothing
+    func add(_ observer: AnyObject, receive: @escaping UpdateReceiver)
+    {
+        messenger.add(observer, receive: receive)
+    }
+    
+    func remove(_ observer: AnyObject) { messenger.remove(observer) }
+    func removeObservers() { messenger.removeObservers() }
+    func removeDeadObservers() { messenger.removeDeadObservers() }
+    func send(_ update: Event) { messenger.send(update) }
+    
+    // MARK: - Messenger
+    
+    let messenger = Messenger<Event>().unwrap(.didNothing)
     
     enum Event: Equatable
     {
