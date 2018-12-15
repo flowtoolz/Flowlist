@@ -15,7 +15,7 @@ extension Tree
 
 // MARK: - Tree
 
-class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
+class Tree<Data: Copyable & Observable>: Copyable, Observer
 {
     // MARK: - Copyable
     
@@ -59,7 +59,6 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
     deinit
     {
         stopObserving(data)
-        removeObservers()
     }
     
     // MARK: - Group
@@ -240,7 +239,9 @@ class Tree<Data: Copyable & Observable>: Copyable, Observable, Observer
     
     // MARK: - Observability
     
-    var latestUpdate = Event.didNothing
+    private func send(_ update: Event) { treeMessenger.send(update) }
+    
+    let treeMessenger = Messenger<Event>()
     
     enum Event
     {
