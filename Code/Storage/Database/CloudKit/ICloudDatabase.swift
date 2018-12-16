@@ -325,13 +325,13 @@ class ICloudDatabase: Database, CustomObservable
     {
         return firstly
         {
-            container.accountStatus()
+            self.container.accountStatus()
         }
-        .ensure
+        .ensure(on: backgroundQ)
         {
             self.isAccessible = false
         }
-        .map
+        .map(on: backgroundQ)
         {
             status in
             
@@ -352,6 +352,11 @@ class ICloudDatabase: Database, CustomObservable
             
             return Accessibility.unaccessible(message)
         }
+    }
+    
+    private var backgroundQ: DispatchQueue
+    {
+        return DispatchQueue.global(qos: .background)
     }
     
     private(set) var isAccessible: Bool?
@@ -403,7 +408,7 @@ class ICloudDatabase: Database, CustomObservable
     case .internalError, .badContainer, .serviceUnavailable, .requestRateLimited, .missingEntitlement, .invalidArguments, .resultsTruncated, .incompatibleVersion, .operationCancelled, .changeTokenExpired, .badDatabase, .quotaExceeded, .managedAccountRestricted:
             break
             
-        // errors that suggest the server is reachable
+        // errors that suggest the server is at least reachable
         default: isReachable <- true
         }
     }
