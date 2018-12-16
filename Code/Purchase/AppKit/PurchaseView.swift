@@ -44,11 +44,7 @@ class PurchaseView: LayerBackedView, CustomObservable, Observer
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
-    deinit
-    {
-        stopObserving()
-        removeObservers()
-    }
+    deinit { stopObserving() }
     
     // MARK: - Dark Mode
     

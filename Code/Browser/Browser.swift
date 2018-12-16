@@ -31,11 +31,7 @@ class Browser: Observer, CustomObservable
         }
     }
     
-    deinit
-    {
-        stopObserving()
-        removeObservers()
-    }
+    deinit { stopObserving() }
     
     // MARK: - Store Root
     

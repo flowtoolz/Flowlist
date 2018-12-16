@@ -162,12 +162,9 @@ class Storage: Observer
                 return firstly
                 {
                     // FIXME: going from this result to the map closure takes pretty fuckin long and freezes the app
-                    /* Problem:
+                    /* Remaining Points to Tackle:
                      * Many Item object are being deallocated cause some closure context deallocates...
                      * The deallocation unneccessarily calls stopObserving while the observed items probably also must be deallocated anyway...
-                     * Trees (Items) have no owned messenger, so stopping to observe them is less than optimal performant
-                     * ItemData also doesn't use owned messengers ...
-                     * everything that doesn't manipulate ui should be done on the global Q anyway, (with qos: .background)
                      */
                     self.doInitialSync()
                 }
@@ -231,7 +228,6 @@ class Storage: Observer
             {
                 // Store and iCloud are identical
                 
-                // FIXME: This fulfilles the promise returned by this func but it takes pretty fuckin long (and freezes the app) to arrive in the next closure at the call site
                 return Promise()
             }
             
@@ -310,8 +306,8 @@ class Storage: Observer
                                        text: "This issue came up: \(error)\n\n\(callToAction)",
                                        options: ["Got it"])
         
-        Dialog.default.pose(question, imageName: "icloud_conflict")
-            .catch { _ in }
+        Dialog.default.pose(question,
+                            imageName: "icloud_conflict").catch { _ in }
     }
     
     // MARK: - Observe Database & Store
@@ -376,7 +372,6 @@ class Storage: Observer
     {
         return DispatchQueue.global(qos: .background)
     }
-    
     
     let database: ItemDatabase
     let file: ItemFile

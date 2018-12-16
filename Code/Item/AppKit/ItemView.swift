@@ -34,11 +34,7 @@ class ItemView: LayerBackedView, Observer, CustomObservable
     
     required init?(coder: NSCoder) { fatalError() }
     
-    deinit
-    {
-        stopObserving()
-        removeObservers()
-    }
+    deinit { stopObserving() }
     
     // MARK: - Configuration
     

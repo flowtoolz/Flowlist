@@ -15,11 +15,7 @@ class List: CustomObservable, Observer
         }
     }
     
-    deinit
-    {
-        stopObserving()
-        removeObservers()
-    }
+    deinit { stopObserving() }
     
     // MARK: - Configuration
     
