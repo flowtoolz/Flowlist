@@ -214,7 +214,7 @@ class ItemView: LayerBackedView, Observer, CustomObservable
             
             guard self?.checkIsInWindow(for: itemData) ?? false else { return }
             
-            self?.set(focused: update.new ?? false)
+            self?.set(focused: update.new)
         }
         
         observe(itemData.isSelected)
@@ -223,7 +223,7 @@ class ItemView: LayerBackedView, Observer, CustomObservable
             
             guard self?.checkIsInWindow(for: itemData) ?? false else { return }
             
-            self?.set(selected: update.new ?? false)
+            self?.set(selected: update.new)
         }
     }
     

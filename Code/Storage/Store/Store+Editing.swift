@@ -7,10 +7,13 @@ extension Store
     
     func apply(_ edit: Edit)
     {
-        switch edit
+        DispatchQueue.main.async
         {
-        case .updateItems(let mods): updateItems(with: mods)
-        case .removeItems(let ids): removeItems(with: ids)
+            switch edit
+            {
+            case .updateItems(let mods): self.updateItems(with: mods)
+            case .removeItems(let ids): self.removeItems(with: ids)
+            }
         }
     }
     

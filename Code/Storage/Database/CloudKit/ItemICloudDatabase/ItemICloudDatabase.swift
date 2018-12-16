@@ -45,7 +45,7 @@ class ItemICloudDatabase: Observer
         {
             fetchNewUpdates()
         }
-        .done
+        .done(on: backgroundQ)
         {
             result in
             
@@ -61,7 +61,7 @@ class ItemICloudDatabase: Observer
                 self.messenger.send(.updateItems(withModifications: mods))
             }
         }
-        .catch { log(error: $0.localizedDescription) }
+        .catch(on: backgroundQ) { log(error: $0.localizedDescription) }
     }
     
     // MARK: - Edit Items
@@ -82,11 +82,11 @@ class ItemICloudDatabase: Observer
                 {
                     self.updateItems(with: mods, inRootWithID: rootID)
                 }
-                .then
+                .then(on: backgroundQ)
                 {
                     self.fetchNewUpdates()
                 }
-                .map
+                .map(on: backgroundQ)
                 {
                     (result: ChangeFetch.Result) -> Void in
                     
@@ -121,7 +121,7 @@ class ItemICloudDatabase: Observer
                 promises.append(promise)
             }
             
-            when(fulfilled: promises).catch
+            when(fulfilled: promises).catch(on: backgroundQ)
             {
                 log(error: $0.localizedDescription)
             }
@@ -131,11 +131,11 @@ class ItemICloudDatabase: Observer
             {
                 self.removeItems(with: ids)
             }
-            .then
+            .then(on: backgroundQ)
             {
                 self.fetchNewUpdates()
             }
-            .catch { log(error: $0.localizedDescription) }
+            .catch(on: backgroundQ) { log(error: $0.localizedDescription) }
         }
     }
     
@@ -150,7 +150,7 @@ class ItemICloudDatabase: Observer
         {
             fetchSubitemRecords(ofItemWithID: rootRecordID)
         }
-        .then
+        .then(on: backgroundQ)
         {
             (siblingRecords: [CKRecord]) -> Promise<Void>  in
             
@@ -244,7 +244,7 @@ class ItemICloudDatabase: Observer
         {
             self.db.deleteRecords(ofType: CKRecord.itemType, inZone: .item)
         }
-        .then
+        .then(on: backgroundQ)
         {
             _ -> Promise<Void> in
             
@@ -273,11 +273,12 @@ class ItemICloudDatabase: Observer
     
     func ensureAccess() -> Promise<Accessibility>
     {
+        
         return firstly
         {
             self.iCloudDatabase.ensureAccess()
         }
-        .then
+        .then(on: backgroundQ)
         {
             (accessibility: Accessibility) -> Promise<Accessibility> in
             
@@ -290,15 +291,20 @@ class ItemICloudDatabase: Observer
             {
                 self.ensureItemRecordZoneExists()
             }
-            .then
+            .then(on: self.backgroundQ)
             {
                 self.ensureSubscriptionExists()
             }
-            .map
+            .map(on: self.backgroundQ)
             {
                 Accessibility.accessible
             }
         }
+    }
+    
+    private var backgroundQ: DispatchQueue
+    {
+        return DispatchQueue.global(qos: .background)
     }
     
     var isAccessible: Bool? { return db.isAccessible }

@@ -1,3 +1,4 @@
+import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
@@ -11,7 +12,22 @@ class Store: Observer, CustomObservable
 
     // MARK: - Update Root
     
-    func update(root newRoot: Item)
+    func update(root newRoot: Item) -> Promise<Void>
+    {
+        return Promise
+        {
+            resolver in
+            
+            DispatchQueue.main.async
+            {
+                self.privateUpdate(root: newRoot)
+                
+                resolver.fulfill()
+            }
+        }
+    }
+    
+    private func privateUpdate(root newRoot: Item)
     {
         stopObserving(root?.treeMessenger)
         observe(newRoot: newRoot)
@@ -133,6 +149,11 @@ class Store: Observer, CustomObservable
     
     private(set) var root: Item?
     let itemHash = HashMap()
+    
+    enum StoreError: Error
+    {
+        case message(String)
+    }
     
     // MARK: - Observability
     

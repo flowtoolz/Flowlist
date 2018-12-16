@@ -23,19 +23,26 @@ class Storage: Observer
     
     func appDidLaunch()
     {
-        Store.shared.loadItems(from: file)
-
-        guard intendsToSync else { return }
-        
         firstly
         {
-            startIntendingToSync()
+            Store.shared.loadItems(from: file)
         }
-        .done
+        .then(on: backgroundQ)
         {
-            if case .unavailable(let message) = $0
+            _ -> Promise<Void> in
+            
+            guard self.intendsToSync else { return Promise() }
+        
+            return firstly
             {
-                self.abortIntendingToSync(errorMessage: message)
+                self.startIntendingToSync()
+            }
+            .done(on: self.backgroundQ)
+            {
+                if case .unavailable(let message) = $0
+                {
+                    self.abortIntendingToSync(errorMessage: message)
+                }
             }
         }
         .catch(abortIntendingToSync)
@@ -60,7 +67,7 @@ class Storage: Observer
         {
             database.ensureAccess()
         }
-        .done
+        .done(on: self.backgroundQ)
         {
             if case .unaccessible(let message) = $0
             {
@@ -92,7 +99,7 @@ class Storage: Observer
         {
             startIntendingToSync()
         }
-        .done
+        .done(on: backgroundQ)
         {
             if case .unavailable(let message) = $0
             {
@@ -121,7 +128,7 @@ class Storage: Observer
             {
                 startIntendingToSync()
             }
-            .done
+            .done(on: backgroundQ)
             {
                 if case .unavailable(let message) = $0
                 {
@@ -145,7 +152,7 @@ class Storage: Observer
         {
             database.ensureAccess()
         }
-        .then
+        .then(on: backgroundQ)
         {
             (availability: Accessibility) -> Promise<SyncStartResult> in
             
@@ -164,7 +171,7 @@ class Storage: Observer
                      */
                     self.doInitialSync()
                 }
-                .map
+                .map(on: self.backgroundQ)
                 {
                     self._intendsToSync.value = true
                     self.startObservingDatabaseAndStore()
@@ -195,7 +202,7 @@ class Storage: Observer
             // TODO: This takes pretty fuckin long
             self.database.fetchTrees()
         }
-        .then
+        .then(on: backgroundQ)
         {
             (roots: [Item]) -> Promise<Void> in
             
@@ -210,10 +217,14 @@ class Storage: Observer
             {
                 // no user items in Store but in iCloud
                 
-                Store.shared.update(root: databaseRoot)
-                self.file.save(databaseRoot)
-                
-                return Promise()
+                return firstly
+                {
+                    Store.shared.update(root: databaseRoot)
+                }
+                .done(on: self.backgroundQ)
+                {
+                    self.file.save(databaseRoot)
+                }
             }
             
             if storeRoot.isIdentical(to: databaseRoot)
@@ -228,7 +239,7 @@ class Storage: Observer
             {
                 self.database.fetchUpdates()
             }
-            .then
+            .then(on: self.backgroundQ)
             {
                 (edits: [Edit]) -> Promise<Void> in
                 
@@ -247,15 +258,20 @@ class Storage: Observer
                 {
                     Dialog.default.askWhetherToPreferICloud()
                 }
-                .then
+                .then(on: self.backgroundQ)
                 {
                     (preferICloud: Bool) -> Promise<Void> in
                     
                     if preferICloud
                     {
-                        Store.shared.update(root: databaseRoot)
-                        self.file.save(databaseRoot)
-                        return Promise()
+                        return firstly
+                        {
+                            Store.shared.update(root: databaseRoot)
+                        }
+                        .done(on: self.backgroundQ)
+                        {
+                            self.file.save(databaseRoot)
+                        }
                     }
                     else
                     {
@@ -355,6 +371,12 @@ class Storage: Observer
     }
     
     // MARK: - Basics
+    
+    private var backgroundQ: DispatchQueue
+    {
+        return DispatchQueue.global(qos: .background)
+    }
+    
     
     let database: ItemDatabase
     let file: ItemFile

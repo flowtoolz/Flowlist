@@ -15,7 +15,10 @@ extension ICloudDatabase
     func fetchUpdates(fromZone zoneID: CKRecordZone.ID,
                       oldToken: CKServerChangeToken?) -> Promise<ChangeFetch.Result>
     {
-        return Promise { resolver in
+        return Promise
+        {
+            resolver in
+            
             let fetch = ChangeFetch(zoneID: zoneID, token: oldToken)
             {
                 result, error in

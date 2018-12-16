@@ -82,7 +82,7 @@ extension List
     
     func paste(_ items: [Item])
     {
-        items.forEach { $0.isFocused = isFocused.value ?? false }
+        items.forEach { $0.isFocused = isFocused.value }
         
         let index = newIndexBelowSelection
         

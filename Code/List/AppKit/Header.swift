@@ -75,7 +75,7 @@ class Header: LayerBackedView, Observer
         {
             [weak self] focusUpdate in
             
-            self?.set(focused: focusUpdate.new ?? false)
+            self?.set(focused: focusUpdate.new)
         }
         
         // tag

@@ -63,11 +63,11 @@ class ICloudDatabase: Database, CustomObservable
         {
             fetchRecords(with: queryForType, inZone: zoneID)
         }
-        .map
+        .map(on: backgroundQ)
         {
             $0.map { $0.recordID }
         }
-        .then
+        .then(on: backgroundQ)
         {
             self.deleteRecords(withIDs: $0)
         }

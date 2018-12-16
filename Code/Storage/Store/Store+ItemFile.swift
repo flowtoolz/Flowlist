@@ -1,3 +1,4 @@
+import PromiseKit
 import SwiftyToolz
 
 extension Store
@@ -19,20 +20,19 @@ extension Store
         file.save(root)
     }
     
-    func loadItems(from file: ItemFile?)
+    func loadItems(from file: ItemFile?) -> Promise<Void>
     {
         guard let file = file else
         {
-            log(error: "File is nil.")
-            return
+            return Promise(error: StoreError.message("File is nil."))
         }
         
         guard let item = file.loadItem() else
         {
-            log(error: "Couldn't load items from file.")
-            return
+            let error = StoreError.message("Couldn't load items from file.")
+            return Promise(error: error)
         }
         
-        update(root: item)
+        return update(root: item)
     }
 }

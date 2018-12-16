@@ -15,7 +15,7 @@ extension Dialog
         {
             pose(question, imageName: "icloud_conflict")
         }
-        .map
+        .map(on: DispatchQueue.global(qos: .background))
         {
             guard $0.options.count == 1, let option = $0.options.first else
             {
