@@ -144,12 +144,12 @@ class WindowMenu: NSMenu, NSMenuItemValidation, Observer
     private lazy var increaseFontSizeItem = MenuItem("Bigger Font",
                                                      key: "+",
                                                      validator: self)
-    { Font.baseSizeVar += 1 }
+    { Font.baseSize.source += 1 }
     
     private lazy var decreaseFontSizeItem = MenuItem("Smaller Font",
                                                      key: "-",
                                                      validator: self)
-    { Font.baseSizeVar -= 1 }
+    { Font.baseSize.source -= 1 }
     
     // MARK: - Dark Mode
     

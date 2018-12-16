@@ -351,7 +351,7 @@ class ItemICloudDatabase: Observer
         iCloudDatabase.handlePushNotification(with: userInfo)
     }
     
-    var isReachable: Var<Bool> { return db.isReachable }
+    var isReachable: Var<Bool?> { return db.isReachable }
     
     private var db: ICloudDatabase { return iCloudDatabase }
     private let iCloudDatabase = ICloudDatabase()

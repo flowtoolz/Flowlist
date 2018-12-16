@@ -6,15 +6,13 @@ import SwiftyToolz
 
 let purchaseController = PurchaseController()
 
-class PurchaseController: NSObject, Observable, SKProductsRequestDelegate, SKPaymentTransactionObserver
+class PurchaseController: NSObject, CustomObservable, SKProductsRequestDelegate, SKPaymentTransactionObserver
 {
     // MARK: - Life Cycle
     
     fileprivate override init() { super.init() }
     
     func setup() { SKPaymentQueue.default().add(self) }
-    
-    deinit { removeObservers() }
     
     // MARK: - Restore Purchases
     
@@ -195,7 +193,9 @@ class PurchaseController: NSObject, Observable, SKProductsRequestDelegate, SKPay
     
     // MARK: - Observability
     
-    var latestUpdate: Event { return .didNothing }
+    typealias UpdateType = Event
+    
+    let messenger = Messenger(Event.didNothing)
     
     enum Event: Equatable
     {

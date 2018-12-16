@@ -4,7 +4,7 @@ import SwiftObserver
 import SwiftyToolz
 import GetLaid
 
-class ItemView: LayerBackedView, Observer, Observable
+class ItemView: LayerBackedView, Observer, CustomObservable
 {
     // MARK: - Life Cycle
     
@@ -470,7 +470,7 @@ class ItemView: LayerBackedView, Observer, Observable
         return view
     }()
     
-    private func didReceive(_ event: TextView.Messenger.Event)
+    private func didReceive(_ event: TextView.Event)
     {
         switch event
         {
@@ -659,7 +659,9 @@ class ItemView: LayerBackedView, Observer, Observable
     
     // MARK: - Observability
     
-    var latestUpdate: Event { return .didNothing }
+    typealias UpdateType = Event
+    
+    let messenger = Messenger(Event.didNothing)
     
     enum Event: Equatable
     {

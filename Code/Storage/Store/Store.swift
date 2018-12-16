@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-class Store: Observer, Observable
+class Store: Observer, CustomObservable
 {
     // MARK: - Initialization
     
@@ -127,7 +127,7 @@ class Store: Observer, Observable
         numberOfUserCreatedLeafs <- root.isLeaf ? 0 : root.numberOfLeafs
     }
     
-    let numberOfUserCreatedLeafs = Var<Int>()
+    let numberOfUserCreatedLeafs = Var(0)
     
     // MARK: - Item Storage
     
@@ -136,7 +136,9 @@ class Store: Observer, Observable
     
     // MARK: - Observability
     
-    var latestUpdate = Event.didNothing
+    typealias UpdateType = Event
+    
+    let messenger = Messenger(Event.didNothing)
     
     enum Event
     {

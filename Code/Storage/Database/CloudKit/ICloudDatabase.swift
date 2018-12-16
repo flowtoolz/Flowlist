@@ -4,7 +4,7 @@ import SwiftObserver
 import SwiftyToolz
 import PromiseKit
 
-class ICloudDatabase: Database, Observable
+class ICloudDatabase: Database, CustomObservable
 {
     // MARK: - Life Cycle
     
@@ -24,7 +24,6 @@ class ICloudDatabase: Database, Observable
     
     deinit
     {
-        removeObservers()
         NetworkReachability.shared.stopNotifying(self)
     }
     
@@ -409,7 +408,7 @@ class ICloudDatabase: Database, Observable
         }
     }
     
-    let isReachable = Var<Bool>()
+    let isReachable = Var<Bool?>()
     
     enum ICloudDBError: Error, CustomDebugStringConvertible
     {
@@ -426,7 +425,9 @@ class ICloudDatabase: Database, Observable
     
     // MARK: - Observability
     
-    var latestUpdate = Event.didNothing
+    typealias UpdateType = Event
+    
+    let messenger = Messenger(Event.didNothing)
     
     enum Event
     {

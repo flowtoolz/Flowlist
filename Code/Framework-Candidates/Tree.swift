@@ -241,7 +241,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     private func send(_ update: Event) { treeMessenger.send(update) }
     
-    let treeMessenger = Messenger<Event>().unwrap(.didNothing)
+    let treeMessenger = Messenger(Event.didNothing)
     
     enum Event
     {

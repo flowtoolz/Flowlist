@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class ItemTableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDelegate
+class ItemTableContent: NSObject, CustomObservable, NSTableViewDataSource, NSTableViewDelegate
 {
     // MARK: - Rows
     
@@ -106,7 +106,9 @@ class ItemTableContent: NSObject, Observable, NSTableViewDataSource, NSTableView
     
     // MARK: - Observability
     
-    var latestUpdate: Event { return .didNothing }
+    typealias UpdateType = Event
+    
+    let messenger = Messenger(Event.didNothing)
     
     enum Event
     {

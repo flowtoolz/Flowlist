@@ -3,7 +3,7 @@ import SwiftObserver
 import SwiftyToolz
 import UIToolz
 
-class ItemTable: AnimatedTableView, Observer, Observable, TableContentDelegate
+class ItemTable: AnimatedTableView, Observer, CustomObservable, TableContentDelegate
 {
     // MARK: - Life Cycle
     
@@ -48,7 +48,6 @@ class ItemTable: AnimatedTableView, Observer, Observable, TableContentDelegate
         guard let list = list else
         {
             if start { log(error: "Tried to observe nil list.") }
-            stopObservingDeadObservables()
             return
         }
         
@@ -383,5 +382,7 @@ class ItemTable: AnimatedTableView, Observer, Observable, TableContentDelegate
     
     // MARK: - Observability
     
-    var latestUpdate = ItemView.Event.didNothing
+    typealias UpdateType = ItemView.Event
+    
+    let messenger = Messenger(ItemView.Event.didNothing)
 }

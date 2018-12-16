@@ -11,7 +11,7 @@ var reachedItemNumberLimit: Bool
     return !isFullVersion && userCreatedLeafs >= maxNumberOfLeafsInTrial
 }
 
-let numberOfUserCreatedLeafs = Store.shared.numberOfUserCreatedLeafs.new().unwrap(0)
+let numberOfUserCreatedLeafs = Store.shared.numberOfUserCreatedLeafs.new()
 let maxNumberOfLeafsInTrial = 100
 
 // MARK: - Price

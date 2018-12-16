@@ -12,7 +12,9 @@ protocol ItemDatabase: Database
     var messenger: EditSender { get }
 }
 
-class EditSender: Observable
+class EditSender: CustomObservable
 {
-    var latestUpdate: Edit? = nil
+    typealias UpdateType = Edit?
+    
+    let messenger = Messenger<Edit?>()
 }

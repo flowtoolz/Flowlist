@@ -308,20 +308,15 @@ class TextView: NSTextView, NSTextViewDelegate
     
     // MARK: - Observability
     
-    let messenger = Messenger()
+    let messenger = Messenger(Event.didNothing)
     
-    class Messenger: Observable
+    enum Event
     {
-        var latestUpdate: Event { return .didNothing }
-        
-        enum Event
-        {
-            case didNothing
-            case wasClicked
-            case willEdit
-            case didChangeText
-            case wantToEndEditing
-            case didEdit
-        }
+        case didNothing
+        case wasClicked
+        case willEdit
+        case didChangeText
+        case wantToEndEditing
+        case didEdit
     }
 }

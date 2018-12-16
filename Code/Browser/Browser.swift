@@ -3,7 +3,7 @@ import SwiftyToolz
 
 let browser = Browser()
 
-class Browser: Observer, Observable
+class Browser: Observer, CustomObservable
 {
     // MARK: - Life Cycle
     
@@ -170,7 +170,7 @@ class Browser: Observer, Observable
     }
     
     var focusedList: List { return lists[focusedIndex] }
-    var focusedIndex: Int { return focusedIndexVariable.value ?? 0 }
+    var focusedIndex: Int { return focusedIndexVariable.value }
     let focusedIndexVariable = Var(0)
     
     var numberOfLists: Int { return lists.count }
@@ -178,7 +178,9 @@ class Browser: Observer, Observable
     
     // MARK: - Observability
     
-    var latestUpdate: Event { return .didNothing }
+    typealias UpdateType = Event
+    
+    let messenger = Messenger(Event.didNothing)
     
     enum Event
     {

@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-class List: Observable, Observer
+class List: CustomObservable, Observer
 {
     // MARK: - Life Cycle
     
@@ -39,11 +39,7 @@ class List: Observable, Observer
     
     private func observeItems(with root: Item?, start: Bool = true)
     {
-        guard let root = root else
-        {
-            if !start  { stopObservingDeadObservables() }
-            return
-        }
+        guard let root = root else { return }
         
         observe(root: root, start: start)
         observeItemsListed(in: root, start: start)
@@ -175,7 +171,7 @@ class List: Observable, Observer
     
     private func updateFocusOfItems()
     {
-        let focused = isFocused.value ?? false
+        let focused = isFocused.value
         
         for itemIndex in 0 ..< count
         {
@@ -221,19 +217,19 @@ class List: Observable, Observer
         old?.deletionStack.removeAll()
         old?.deselectAll()
         
-        title.source = new?.data.text ?? Var<String>()
-        tag.source = new?.data.tag ?? Var<ItemData.Tag>()
-        state.source = new?.data.state ?? Var<ItemData.State>()
+        title.source = new?.data.text ?? Var<String?>()
+        tag.source = new?.data.tag ?? Var<ItemData.Tag?>()
+        state.source = new?.data.state ?? Var<ItemData.State?>()
         
         send(.did(.switchedRoot(from: old, to: new)))
     }
     
     // MARK: - Mappings
     
-    let tag = Var<ItemData.Tag>().new()
-    let title = Var<String>().new().unwrap("")
+    let tag = Var<ItemData.Tag?>().new()
+    let title = Var<String?>().new().unwrap("")
     
-    let state = Var<ItemData.State>().new()
+    let state = Var<ItemData.State?>().new()
     
     // MARK: - Atomic Selection Operations
     
@@ -346,7 +342,9 @@ class List: Observable, Observer
     
     // MARK: - Observability
     
-    var latestUpdate: Event { return .didNothing }
+    typealias UpdateType = Event
+    
+    let messenger = Messenger(Event.didNothing)
     
     enum Event
     {

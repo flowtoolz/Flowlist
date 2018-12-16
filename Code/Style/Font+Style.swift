@@ -24,8 +24,8 @@ extension Font
         return Font.system(size: 14, weight: .system)
     }
     
-    static let baseSize = baseSizeVar.new().filter({ $0 != nil }).unwrap(defaultSize)
-    static let baseSizeVar = Var(defaultSize)
+    static let baseSize = Var(defaultSize).new()
+
     static let defaultSize: Int =
     {
         guard let screenSize = NSScreen.main?.frame.size else { return 14 }

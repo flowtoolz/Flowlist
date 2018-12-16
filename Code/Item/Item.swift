@@ -18,7 +18,7 @@ extension Tree where Data == ItemData
     
     var isSelected: Bool
     {
-        get { return data.isSelected.value ?? false }
+        get { return data.isSelected.value }
         set { data.isSelected <- newValue }
     }
     
@@ -37,7 +37,7 @@ extension Tree where Data == ItemData
     
     var isFocused: Bool
     {
-        get { return data.isFocused.value ?? false }
+        get { return data.isFocused.value }
         set { data.isFocused <- newValue }
     }
 }

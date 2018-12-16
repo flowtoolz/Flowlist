@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-final class ItemData: Observer, Observable
+final class ItemData: Observer, CustomObservable
 {
     // MARK: - Life Cycle
     
@@ -31,7 +31,7 @@ final class ItemData: Observer, Observable
     
     // MARK: - Text
     
-    let text = Var<String>()
+    let text = Var<String?>()
     
     func requestTextInput() { send(.wantTextInput) }
     func startedEditing() { wantsTextInput = false }
@@ -40,7 +40,7 @@ final class ItemData: Observer, Observable
     
     // MARK: - State
     
-    let state = Var<State>()
+    let state = Var<State?>()
     
     enum State: Int, Codable
     {
@@ -65,7 +65,7 @@ final class ItemData: Observer, Observable
     
     // MARK: - Tag
     
-    let tag = Var<Tag>()
+    let tag = Var<Tag?>()
     
     enum Tag: Int, Codable
     {
@@ -99,8 +99,6 @@ final class ItemData: Observer, Observable
     // TODO: remove the concern of data observation from Tree and fix this:
     // MARK: - Temporarily pretend to Tree we conform to Observable
     
-    let latestUpdate = Event.didNothing
-    
     func add(_ observer: AnyObject, receive: @escaping UpdateReceiver)
     {
         messenger.add(observer, receive: receive)
@@ -113,7 +111,9 @@ final class ItemData: Observer, Observable
     
     // MARK: - Messenger
     
-    let messenger = Messenger<Event>().unwrap(.didNothing)
+    let messenger = Messenger(Event.didNothing)
+    
+    typealias UpdateType = Event
     
     enum Event: Equatable
     {
