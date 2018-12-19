@@ -254,7 +254,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         {
             case removedNodes([Node], from: Node)
             case insertedNodes([Node], in: Node, at: [Int])
-            case receivedDataUpdate(Data.UpdateType, in: Node)
+            case receivedDataUpdate(Data.Message, in: Node)
             case movedNode(Node, from: Int, to: Int)
         }
         

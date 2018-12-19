@@ -14,7 +14,7 @@ protocol ItemDatabase: Database
 
 class EditSender: CustomObservable
 {
-    typealias UpdateType = Edit?
+    typealias Message = Edit?
     
     let messenger = Messenger<Edit?>()
 }

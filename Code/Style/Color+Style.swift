@@ -170,7 +170,7 @@ extension Color
     
     static var isInDarkMode: Bool
     {
-        get { return darkMode.latestUpdate }
+        get { return darkMode.latestMessage }
         set { darkModeVar <- newValue }
     }
 }

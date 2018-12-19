@@ -382,7 +382,7 @@ class ItemTable: AnimatedTableView, Observer, CustomObservable, TableContentDele
     
     // MARK: - Observability
     
-    typealias UpdateType = ItemView.Event
+    typealias Message = ItemView.Event
     
     let messenger = Messenger(ItemView.Event.didNothing)
 }

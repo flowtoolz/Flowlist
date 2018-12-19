@@ -66,7 +66,7 @@ class Header: LayerBackedView, Observer
             self?.updateTitleColor()
         }
         
-        set(title: list.title.latestUpdate)
+        set(title: list.title.latestMessage)
         
         // focus
         
@@ -146,7 +146,7 @@ class Header: LayerBackedView, Observer
     
     private func updateTitleColor()
     {
-        let isDone = list?.state.latestUpdate == .done
+        let isDone = list?.state.latestMessage == .done
         
         let textColor = Color.itemText(isDone: isDone || isUntitled,
                                        isSelected: false,

@@ -81,7 +81,7 @@ class Storage: Observer
     
     // MARK: - Network Reachability
     
-    func databaseReachabilityDid(update: Update<Bool?>)
+    func databaseReachabilityDid(update: Change<Bool?>)
     {
         guard intendsToSync,
             let new = update.new,

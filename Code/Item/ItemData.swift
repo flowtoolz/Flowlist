@@ -99,21 +99,21 @@ final class ItemData: Observer, CustomObservable
     // TODO: remove the concern of data observation from Tree and fix this:
     // MARK: - Temporarily pretend to Tree we conform to Observable
     
-    func add(_ observer: AnyObject, receive: @escaping UpdateReceiver)
+    func add(_ observer: AnyObject, receive: @escaping Receiver)
     {
         messenger.add(observer, receive: receive)
     }
     
     func remove(_ observer: AnyObject) { messenger.remove(observer) }
-    func removeObservers() { messenger.removeObservers() }
-    func removeDeadObservers() { messenger.removeDeadObservers() }
+    func stopObservations() { messenger.stopObservations() }
+    func stopAbandonedObservations() { messenger.stopAbandonedObservations() }
     func send(_ update: Event) { messenger.send(update) }
     
     // MARK: - Messenger
     
     let messenger = Messenger(Event.didNothing)
     
-    typealias UpdateType = Event
+    typealias Message = Event
     
     enum Event: Equatable
     {

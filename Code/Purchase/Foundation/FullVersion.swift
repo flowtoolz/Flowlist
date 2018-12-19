@@ -6,7 +6,7 @@ import Foundation
 
 var reachedItemNumberLimit: Bool
 {
-    let userCreatedLeafs = numberOfUserCreatedLeafs.latestUpdate
+    let userCreatedLeafs = numberOfUserCreatedLeafs.latestMessage
     
     return !isFullVersion && userCreatedLeafs >= maxNumberOfLeafsInTrial
 }

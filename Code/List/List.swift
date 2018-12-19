@@ -338,7 +338,7 @@ class List: CustomObservable, Observer
     
     // MARK: - Observability
     
-    typealias UpdateType = Event
+    typealias Message = Event
     
     let messenger = Messenger(Event.didNothing)
     

@@ -106,7 +106,7 @@ class ItemTableContent: NSObject, CustomObservable, NSTableViewDataSource, NSTab
     
     // MARK: - Observability
     
-    typealias UpdateType = Event
+    typealias Message = Event
     
     let messenger = Messenger(Event.didNothing)
     

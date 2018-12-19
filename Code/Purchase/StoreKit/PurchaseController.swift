@@ -193,7 +193,7 @@ class PurchaseController: NSObject, CustomObservable, SKProductsRequestDelegate,
     
     // MARK: - Observability
     
-    typealias UpdateType = Event
+    typealias Message = Event
     
     let messenger = Messenger(Event.didNothing)
     

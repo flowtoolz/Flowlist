@@ -58,7 +58,7 @@ class PurchaseView: LayerBackedView, CustomObservable, Observer
         progressBar.progressColor = .progressBar
         progressBarSeparator.backgroundColor = .progressBarSeparator
         
-        let itemNumber = numberOfUserCreatedLeafs.latestUpdate
+        let itemNumber = numberOfUserCreatedLeafs.latestMessage
         itemLabel.textColor = labelColor(for: itemNumber).nsColor
         
         expandIcon.image = isExpanded ? closeImage : expandImage
@@ -121,10 +121,10 @@ class PurchaseView: LayerBackedView, CustomObservable, Observer
         let field = addForAutoLayout(Label())
         
         field.font = Font.purchasePanel.nsFont
-        let color = labelColor(for: numberOfUserCreatedLeafs.latestUpdate)
+        let color = labelColor(for: numberOfUserCreatedLeafs.latestMessage)
         field.textColor = color.nsColor
         
-        let itemNumber = numberOfUserCreatedLeafs.latestUpdate
+        let itemNumber = numberOfUserCreatedLeafs.latestMessage
         field.stringValue = labelText(for: itemNumber)
         
         return field
@@ -196,7 +196,7 @@ class PurchaseView: LayerBackedView, CustomObservable, Observer
         bar.translatesAutoresizingMaskIntoConstraints = false
         addSubview(bar, positioned: .below, relativeTo: buttonOverlay)
         
-        let progress = CGFloat(numberOfUserCreatedLeafs.latestUpdate) / CGFloat(maxNumberOfLeafsInTrial)
+        let progress = CGFloat(numberOfUserCreatedLeafs.latestMessage) / CGFloat(maxNumberOfLeafsInTrial)
         bar.progress = progress
         bar.backgroundColor = .progressBackground
         bar.progressColor = .progressBar
@@ -257,7 +257,7 @@ class PurchaseView: LayerBackedView, CustomObservable, Observer
     
     // MARK: - Observability
     
-    typealias UpdateType = Event
+    typealias Message = Event
     
     let messenger = Messenger(Event.didNothing)
     

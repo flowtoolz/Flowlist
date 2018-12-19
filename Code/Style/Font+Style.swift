@@ -5,12 +5,12 @@ extension Font
 {
     static var text: Font
     {
-        return Font.system(size: baseSize.latestUpdate, weight: .system)
+        return Font.system(size: baseSize.latestMessage, weight: .system)
     }
     
     static var listTitle: Font
     {
-        return Font.system(size: Int(1.6 * Float(baseSize.latestUpdate)),
+        return Font.system(size: Int(1.6 * Float(baseSize.latestMessage)),
                            weight: .semibold)
     }
     

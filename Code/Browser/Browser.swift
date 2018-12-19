@@ -174,7 +174,7 @@ class Browser: Observer, CustomObservable
     
     // MARK: - Observability
     
-    typealias UpdateType = Event
+    typealias Message = Event
     
     let messenger = Messenger(Event.didNothing)
     
