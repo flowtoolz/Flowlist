@@ -100,25 +100,14 @@ class ICloudDatabase: Database, CustomObservable
     
     func fetchRecord(with id: CKRecord.ID) -> Promise<CKRecord>
     {
-        let mainQ = DispatchQueue.main
-        
-        return database.fetch(withRecordID: id).map(on: mainQ)
-        {
-            $0
-        }
-        .tap(updateReachability)
+        return database.fetch(withRecordID: id).tap(updateReachability)
     }
     
     func fetchRecords(with query: CKQuery,
                       inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
     {
-        let mainQ = DispatchQueue.main
-        
-        return database.perform(query, inZoneWith: zoneID).map(on: mainQ)
-        {
-            $0
-        }
-        .tap(updateReachability)
+        return database.perform(query,
+                                inZoneWith: zoneID).tap(updateReachability)
     }
     
     // MARK: - Respond to Notifications

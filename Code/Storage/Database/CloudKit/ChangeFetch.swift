@@ -78,19 +78,14 @@ extension ChangeFetch
         
         fetchRecordZoneChangesCompletionBlock =
         {
-            error in
-            
-            DispatchQueue.main.async
+            if let error = $0
             {
-                if let error = error
-                {
-                    log(error: error.localizedDescription)
-                    handleResult(nil, error)
-                    return
-                }
-                
-                handleResult(changes, nil)
+                log(error: error.localizedDescription)
+                handleResult(nil, error)
+                return
             }
+            
+            handleResult(changes, nil)
         }
     }
     

@@ -124,7 +124,7 @@ class Store: Observer, CustomObservable
     
     func pasteWelcomeTourIfRootIsEmpty()
     {
-        guard let root = root else
+        guard let root = self.root else
         {
             log(warning: "Root is nil.")
             return
@@ -132,7 +132,10 @@ class Store: Observer, CustomObservable
         
         if root.isLeaf
         {
-            root.insert(Item.welcomeTour, at: 0)
+            DispatchQueue.main.async
+            {
+                root.insert(Item.welcomeTour, at: 0)
+            }
         }
     }
     

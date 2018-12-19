@@ -112,10 +112,7 @@ class FlowlistController: AppController
     
     @objc private func iCloudStatusChanged()
     {
-        DispatchQueue.main.async
-        {
-            self.storage.databaseAvailabilityMayHaveChanged()
-        }
+        self.storage.databaseAvailabilityMayHaveChanged()
     }
     
     // MARK: - Basics
