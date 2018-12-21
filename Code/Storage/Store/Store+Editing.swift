@@ -11,7 +11,7 @@ extension Store
         {
             switch edit
             {
-            case .updateItems(let mods): self.updateItems(with: mods)
+            case .updateItems(let records): self.updateItems(with: records)
             case .removeItems(let ids): self.removeItems(with: ids)
             }
         }
@@ -19,46 +19,46 @@ extension Store
     
     // MARK: - Update Items
     
-    private func updateItems(with modifications: [Modification])
+    private func updateItems(with records: [Record])
     {
         // ensure items are in hash map and have updated data
         
-        for mod in modifications
+        for record in records
         {
-            if let item = itemHash[mod.id]
+            if let item = itemHash[record.id]
             {
-                item.data.text <- mod.text
-                item.data.state <- mod.state
-                item.data.tag <- mod.tag
+                item.data.text <- record.text
+                item.data.state <- record.state
+                item.data.tag <- record.tag
             }
             else
             {
-                itemHash.add([Item(modification: mod)])
+                itemHash.add([Item(record: record)])
             }
         }
         
         // connect items
         
-        for mod in modifications.sorted(by: { $0.position < $1.position })
+        for record in records.sorted(by: { $0.position < $1.position })
         {
-            guard let item = itemHash[mod.id] else
+            guard let item = itemHash[record.id] else
             {
                 log(error: "Item not in hash map.")
                 continue
             }
             
-            updateRoot(of: item, with: mod)
+            updateRoot(of: item, with: record)
         }
     }
     
-    private func updateRoot(of item: Item, with modification: Modification)
+    private func updateRoot(of item: Item, with record: Record)
     {
         // move to new root if neccessary
         
         // TODO: catch errors...nil root etc
         if let oldRoot = item.root,
             let oldIndex = oldRoot.index(of: item),
-            let newRootID = modification.rootID,
+            let newRootID = record.rootID,
             newRootID != oldRoot.data.id,
             let newRoot = itemHash[newRootID]
         {
@@ -72,7 +72,7 @@ extension Store
             let oldPosition = itemRoot.index(of: item)
         {
             let newPosition = min(itemRoot.numberOfLeafs,
-                                  modification.position)
+                                  record.position)
             
             if oldPosition != newPosition
             {

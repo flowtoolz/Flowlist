@@ -63,12 +63,12 @@ extension ItemICloudDatabase
                 
                 if result.changedRecords.count > 0
                 {
-                    let mods = result.changedRecords.compactMap
+                    let records = result.changedRecords.compactMap
                     {
-                        $0.modification
+                        $0.record
                     }
                     
-                    edits.append(.updateItems(withModifications: mods))
+                    edits.append(.updateItems(withRecords: records))
                 }
                 
                 return edits

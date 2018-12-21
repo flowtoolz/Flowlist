@@ -5,20 +5,20 @@ extension Edit
         switch treeUpdate
         {
         case .insertedNodes(let nodes, _, _):
-            var mods = [Modification]()
+            var records = [Record]()
             
             nodes.forEach
             {
-                mods.append(contentsOf: $0.modifications())
+                records.append(contentsOf: $0.makeRecords())
             }
             
-            self = .updateItems(withModifications: mods)
+            self = .updateItems(withRecords: records)
             
         case .receivedDataUpdate(let dataUpdate, let node):
             if case .wasModified = dataUpdate
             {
-                let mod = node.modification(modifiesPosition: false)
-                self = .updateItems(withModifications: [mod])
+                let record = node.makeRecord(modifiesPosition: false)
+                self = .updateItems(withRecords: [record])
             }
             else
             {
@@ -30,7 +30,7 @@ extension Edit
             self = .removeItems(withIDs: ids)
             
         case .movedNode(let node, _, _):
-            self = .updateItems(withModifications: [node.modification()])
+            self = .updateItems(withRecords: [node.makeRecord()])
         }
     }
 }

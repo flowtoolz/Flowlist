@@ -1,32 +1,32 @@
 import SwiftyToolz
 
-extension Array where Element == Modification
+extension Array where Element == Record
 {
-    var byRootID: [String : [Modification]]
+    var byRootID: [String : [Record]]
     {
-        var resultDictionary = [String : [Modification]]()
+        var resultDictionary = [String : [Record]]()
         
-        for mod in self
+        for record in self
         {
-            guard let rootID = mod.rootID else
+            guard let rootID = record.rootID else
             {
-                log(error: "Modification has no root ID.")
+                log(error: "Item record has no root ID.")
                 continue
             }
             
             if resultDictionary[rootID] == nil
             {
-                resultDictionary[rootID] = [Modification]()
+                resultDictionary[rootID] = [Record]()
             }
             
-            resultDictionary[rootID]?.append(mod)
+            resultDictionary[rootID]?.append(record)
         }
         
         return resultDictionary
     }
 }
 
-struct Modification
+struct Record
 {
     init(id: String,
          text: String? = nil,
@@ -46,11 +46,13 @@ struct Modification
     }
     
     let id: String
+    
     let text: String?
     let state: ItemData.State?
     let tag: ItemData.Tag?
     let rootID: String?
     let position: Int
+    
     let modifiesPosition: Bool
     
     enum Field: String, CaseIterable

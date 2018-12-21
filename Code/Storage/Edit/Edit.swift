@@ -1,5 +1,5 @@
 enum Edit
 {
-    case updateItems(withModifications: [Modification])
+    case updateItems(withRecords: [Record])
     case removeItems(withIDs: [String])
 }

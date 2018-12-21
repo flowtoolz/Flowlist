@@ -10,8 +10,8 @@
 		9E053B23218867E4001B7103 /* ItemJSONFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B22218867E4001B7103 /* ItemJSONFile.swift */; };
 		9E053B2521886867001B7103 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2421886867001B7103 /* FullVersion.swift */; };
 		9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */; };
-		9E053B3021886963001B7103 /* CKRecord.ID+Modification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2A21886963001B7103 /* CKRecord.ID+Modification.swift */; };
-		9E053B3121886963001B7103 /* CKRecord+Modification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2B21886963001B7103 /* CKRecord+Modification.swift */; };
+		9E053B3021886963001B7103 /* CKRecord.ID+Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2A21886963001B7103 /* CKRecord.ID+Record.swift */; };
+		9E053B3121886963001B7103 /* CKRecord+Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2B21886963001B7103 /* CKRecord+Record.swift */; };
 		9E053B3221886963001B7103 /* ICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2C21886963001B7103 /* ICloudDatabase.swift */; };
 		9E053B3321886963001B7103 /* ItemICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */; };
 		9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3421886AC4001B7103 /* PurchaseController.swift */; };
@@ -61,8 +61,8 @@
 		9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Item+State.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
 		9E6C721020B1E66D001C3D2C /* Item+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720F20B1E66D001C3D2C /* Item+Debugging.swift */; };
-		9E6E70AB21936A8B00BDB0BA /* Item+Modification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AA21936A8B00BDB0BA /* Item+Modification.swift */; };
-		9E6E70AD21936CD300BDB0BA /* Modification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AC21936CD300BDB0BA /* Modification.swift */; };
+		9E6E70AB21936A8B00BDB0BA /* Item+Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AA21936A8B00BDB0BA /* Item+Record.swift */; };
+		9E6E70AD21936CD300BDB0BA /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AC21936CD300BDB0BA /* Record.swift */; };
 		9E6E70AF2193803E00BDB0BA /* Item+CodableField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AE2193803E00BDB0BA /* Item+CodableField.swift */; };
 		9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* Store.swift */; };
 		9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* List+Editing.swift */; };
@@ -113,8 +113,8 @@
 		9E053B22218867E4001B7103 /* ItemJSONFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemJSONFile.swift; sourceTree = "<group>"; };
 		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullVersion.swift; sourceTree = "<group>"; };
 		9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Price.swift"; sourceTree = "<group>"; };
-		9E053B2A21886963001B7103 /* CKRecord.ID+Modification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CKRecord.ID+Modification.swift"; sourceTree = "<group>"; };
-		9E053B2B21886963001B7103 /* CKRecord+Modification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CKRecord+Modification.swift"; sourceTree = "<group>"; };
+		9E053B2A21886963001B7103 /* CKRecord.ID+Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CKRecord.ID+Record.swift"; sourceTree = "<group>"; };
+		9E053B2B21886963001B7103 /* CKRecord+Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CKRecord+Record.swift"; sourceTree = "<group>"; };
 		9E053B2C21886963001B7103 /* ICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudDatabase.swift; sourceTree = "<group>"; };
 		9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemICloudDatabase.swift; sourceTree = "<group>"; };
 		9E053B3421886AC4001B7103 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
@@ -165,8 +165,8 @@
 		9E6C720A20B19C88001C3D2C /* Item+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+State.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		9E6C720F20B1E66D001C3D2C /* Item+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Debugging.swift"; sourceTree = "<group>"; };
-		9E6E70AA21936A8B00BDB0BA /* Item+Modification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Modification.swift"; sourceTree = "<group>"; };
-		9E6E70AC21936CD300BDB0BA /* Modification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modification.swift; sourceTree = "<group>"; };
+		9E6E70AA21936A8B00BDB0BA /* Item+Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Record.swift"; sourceTree = "<group>"; };
+		9E6E70AC21936CD300BDB0BA /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		9E6E70AE2193803E00BDB0BA /* Item+CodableField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CodableField.swift"; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		9E82A7A81EF2A558006AEF02 /* List+Editing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "List+Editing.swift"; sourceTree = "<group>"; };
@@ -427,9 +427,9 @@
 			children = (
 				9E82C09421AAE56100152CB3 /* ItemICloudDatabase */,
 				9EA1D3AC219EB4AD00B5943C /* Item+CKRecord.swift */,
-				9E053B2B21886963001B7103 /* CKRecord+Modification.swift */,
+				9E053B2B21886963001B7103 /* CKRecord+Record.swift */,
 				9EF96E7521A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift */,
-				9E053B2A21886963001B7103 /* CKRecord.ID+Modification.swift */,
+				9E053B2A21886963001B7103 /* CKRecord.ID+Record.swift */,
 				9EF96E7321A9F516005619C7 /* CKRecordZone.ID+ItemZone.swift */,
 				9EBD41AA21AC419B00C97B99 /* ICloudDatabase+ServerChangeToken.swift */,
 				9E053B2C21886963001B7103 /* ICloudDatabase.swift */,
@@ -620,8 +620,8 @@
 			isa = PBXGroup;
 			children = (
 				9EF2E8902187D293008D2780 /* Edit.swift */,
-				9E6E70AA21936A8B00BDB0BA /* Item+Modification.swift */,
-				9E6E70AC21936CD300BDB0BA /* Modification.swift */,
+				9E6E70AA21936A8B00BDB0BA /* Item+Record.swift */,
+				9E6E70AC21936CD300BDB0BA /* Record.swift */,
 			);
 			path = Edit;
 			sourceTree = "<group>";
@@ -787,19 +787,19 @@
 				9EF231A9218B570F006E783C /* Item+Encodable.swift in Sources */,
 				9E2640FB21972941008FCD19 /* Edit+Item.swift in Sources */,
 				9E053B65218871F5001B7103 /* ItemExportPanel.swift in Sources */,
-				9E6E70AB21936A8B00BDB0BA /* Item+Modification.swift in Sources */,
+				9E6E70AB21936A8B00BDB0BA /* Item+Record.swift in Sources */,
 				9E053B442188711A001B7103 /* HelpMenu.swift in Sources */,
 				9EF0AABE21883E6E00B707F4 /* HashMap.swift in Sources */,
 				9E053B62218871C4001B7103 /* ItemTableContent.swift in Sources */,
 				9E654E0A21A431C50052607F /* Store+ItemFile.swift in Sources */,
-				9E053B3021886963001B7103 /* CKRecord.ID+Modification.swift in Sources */,
+				9E053B3021886963001B7103 /* CKRecord.ID+Record.swift in Sources */,
 				9E053B5D218871C4001B7103 /* Spacer.swift in Sources */,
 				9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */,
 				9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */,
 				9EFB86DC21662AD100985B14 /* Tree.swift in Sources */,
 				9E053B512188715D001B7103 /* PurchaseContentView.swift in Sources */,
 				9E053B422188711A001B7103 /* ApplicationMenu.swift in Sources */,
-				9E6E70AD21936CD300BDB0BA /* Modification.swift in Sources */,
+				9E6E70AD21936CD300BDB0BA /* Record.swift in Sources */,
 				9EF231AD218B785A006E783C /* Item+Creating.swift in Sources */,
 				9EEBA1A72168EE860053B628 /* ItemData+Copyable.swift in Sources */,
 				9EC5C8B621B00FE100615D20 /* Dialog.swift in Sources */,
@@ -839,7 +839,7 @@
 				9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */,
 				9E053B462188711A001B7103 /* WindowMenu.swift in Sources */,
 				9E5768C020C15B6300749C0C /* Browser+Debugging.swift in Sources */,
-				9E053B3121886963001B7103 /* CKRecord+Modification.swift in Sources */,
+				9E053B3121886963001B7103 /* CKRecord+Record.swift in Sources */,
 				9E2CCE8D20C1DE030037D755 /* List+Clipboard.swift in Sources */,
 				9EE60C0021ACE1AF0075109D /* ItemDatabase.swift in Sources */,
 				9EBD41AB21AC419B00C97B99 /* ICloudDatabase+ServerChangeToken.swift in Sources */,

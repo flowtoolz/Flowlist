@@ -6,46 +6,46 @@ extension CKRecord
 {
     // MARK: - Initialization
 
-    convenience init(modification: Modification)
+    convenience init(record: Record)
     {
         self.init(recordType: CKRecord.itemType,
-                  recordID: ID(itemID: modification.id))
+                  recordID: ID(itemID: record.id))
 
-        apply(modification)
+        apply(record)
     }
     
     @discardableResult
-    func apply(_ modification: Modification) -> Bool
+    func apply(_ record: Record) -> Bool
     {
         var didChange = false
         
-        if text != modification.text
+        if text != record.text
         {
-            text = modification.text
+            text = record.text
             didChange = true
         }
         
-        if state != modification.state
+        if state != record.state
         {
-            state = modification.state
+            state = record.state
             didChange = true
         }
         
-        if tag != modification.tag
+        if tag != record.tag
         {
-            tag = modification.tag
+            tag = record.tag
             didChange = true
         }
         
-        if superItem != modification.rootID
+        if superItem != record.rootID
         {
-            superItem = modification.rootID
+            superItem = record.rootID
             didChange = true
         }
         
-        if position != modification.position
+        if position != record.position
         {
-            position = modification.position
+            position = record.position
             didChange = true
         }
         
@@ -54,20 +54,20 @@ extension CKRecord
     
     // MARK: - Mofification
     
-    var modification: Modification?
+    var record: Record?
     {
         guard isItem else
         {
-            log(error: "Could not create item modification from record.")
+            log(error: "Could not create item record from record.")
             return nil
         }
         
-        return Modification(id: recordID.recordName,
-                            text: text,
-                            state: state,
-                            tag: tag,
-                            rootID: superItem,
-                            position: position)
+        return Record(id: recordID.recordName,
+                      text: text,
+                      state: state,
+                      tag: tag,
+                      rootID: superItem,
+                      position: position)
     }
     
     // MARK: - Storage Properties
@@ -199,7 +199,7 @@ extension CKRecord
         return ItemFieldName.allCases.map { $0.rawValue }
     }
     
-    static func modificationField(forFieldName name: String) -> Modification.Field?
+    static func recordField(forFieldName name: String) -> Record.Field?
     {
         guard let itemFieldName = ItemFieldName(rawValue: name) else
         {
@@ -207,12 +207,12 @@ extension CKRecord
             return nil
         }
         
-        return itemFieldName.modificationField
+        return itemFieldName.recordField
     }
     
     enum ItemFieldName: String, CaseIterable
     {
-        var modificationField: Modification.Field
+        var recordField: Record.Field
         {
             switch self
             {

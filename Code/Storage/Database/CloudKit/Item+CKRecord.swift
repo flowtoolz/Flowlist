@@ -4,30 +4,30 @@ import SwiftyToolz
 
 extension Tree where Data == ItemData
 {
-    convenience init?(records: [CKRecord])
+    convenience init?(records ckRecords: [CKRecord])
     {
-        guard !records.isEmpty else { return nil }
+        guard !ckRecords.isEmpty else { return nil }
         
         // create unconnected items. remember associated records.
         
         var hashMap = [String : (CKRecord, Item)]()
         
-        records.forEach
+        ckRecords.forEach
         {
-            guard let modification = $0.modification else { return }
+            guard let record = $0.record else { return }
             
-            let id = modification.id
+            let id = record.id
             
-            hashMap[id] = ($0, Item(modification: modification))
+            hashMap[id] = ($0, Item(record: record))
         }
         
         // connect items. find root.
         
         var root: Item?
         
-        for (record, item) in hashMap.values
+        for (ckRecord, item) in hashMap.values
         {
-            guard let superItemId = record.superItem else
+            guard let superItemId = ckRecord.superItem else
             {
                 if root != nil
                 {

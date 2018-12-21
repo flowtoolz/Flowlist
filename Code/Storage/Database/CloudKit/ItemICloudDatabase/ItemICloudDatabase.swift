@@ -57,8 +57,8 @@ class ItemICloudDatabase: Observer
             
             if result.changedRecords.count > 0
             {
-                let mods = result.changedRecords.compactMap { $0.modification }
-                self.messenger.send(.updateItems(withModifications: mods))
+                let records = result.changedRecords.compactMap { $0.record }
+                self.messenger.send(.updateItems(withRecords: records))
             }
         }
         .catch(on: backgroundQ) { log(error: $0.localizedDescription) }
@@ -70,17 +70,17 @@ class ItemICloudDatabase: Observer
     {
         switch edit
         {
-        case .updateItems(let modifications):
+        case .updateItems(let records):
             
             var promises = [Promise<Void>]()
             
-            let modsByRootID = modifications.byRootID
+            let recordsByRootID = records.byRootID
             
-            for (rootID, mods) in modsByRootID
+            for (rootID, records) in recordsByRootID
             {
                 let promise = firstly
                 {
-                    self.updateItems(with: mods, inRootWithID: rootID)
+                    self.updateItems(with: records, inRootWithID: rootID)
                 }
                 .then(on: backgroundQ)
                 {
@@ -94,7 +94,10 @@ class ItemICloudDatabase: Observer
                     {
                         log(warning: "Unexpected deletions.")
                         
-                        let ids = result.idsOfDeletedRecords.map { $0.recordName }
+                        let ids = result.idsOfDeletedRecords.map
+                        {
+                            $0.recordName
+                        }
                         
                         self.messenger.send(.removeItems(withIDs: ids))
                     }
@@ -103,16 +106,19 @@ class ItemICloudDatabase: Observer
                     {
                         guard let rootID = $0.superItem else { return $0 }
                         
-                        return modsByRootID[rootID] == nil ? $0 : nil
+                        return recordsByRootID[rootID] == nil ? $0 : nil
                     }
                     
                     if !unexpectedChanges.isEmpty
                     {
                         log(warning: "Unexpected changes.")
                         
-                        let mods = unexpectedChanges.compactMap { $0.modification }
+                        let records = unexpectedChanges.compactMap
+                        {
+                            $0.record
+                        }
                         
-                        self.messenger.send(.updateItems(withModifications: mods))
+                        self.messenger.send(.updateItems(withRecords: records))
                     }
                     
                     return
@@ -141,7 +147,7 @@ class ItemICloudDatabase: Observer
     
     // MARK: - Update Items
     
-    private func updateItems(with mods: [Modification],
+    private func updateItems(with records: [Record],
                              inRootWithID rootID: String) -> Promise<Void>
     {
         let rootRecordID = CKRecord.ID(itemID: rootID)
@@ -158,7 +164,7 @@ class ItemICloudDatabase: Observer
             
             guard !siblingRecords.isEmpty else
             {
-                let records = mods.map(CKRecord.init)
+                let records = records.map(CKRecord.init)
                 
                 return self.iCloudDatabase.save(records)
             }
@@ -177,18 +183,18 @@ class ItemICloudDatabase: Observer
             var recordsToSave = Set<CKRecord>()
             var newRecords = [CKRecord]()
             
-            for mod in mods
+            for record in records
             {
-                if let existingRecord = siblingRecordsByID[mod.id]
+                if let existingRecord = siblingRecordsByID[record.id]
                 {
-                    if existingRecord.apply(mod)
+                    if existingRecord.apply(record)
                     {
                         recordsToSave.insert(existingRecord)
                     }
                 }
                 else
                 {
-                    let newRecord = CKRecord(modification: mod)
+                    let newRecord = CKRecord(record: record)
                     
                     recordsToSave.insert(newRecord)
                     newRecords.append(newRecord)
@@ -250,7 +256,7 @@ class ItemICloudDatabase: Observer
             
             let records = root.array.map
             {
-                CKRecord(modification: $0.modification())
+                CKRecord(record: $0.makeRecord())
             }
             
             return self.iCloudDatabase.save(records)
