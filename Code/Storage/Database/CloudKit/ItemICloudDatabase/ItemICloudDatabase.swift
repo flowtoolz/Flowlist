@@ -92,7 +92,7 @@ class ItemICloudDatabase: Observer
                     
                     if !result.idsOfDeletedRecords.isEmpty
                     {
-                        log(error: "Unexpected deletions.")
+                        log(warning: "Unexpected deletions.")
                         
                         let ids = result.idsOfDeletedRecords.map { $0.recordName }
                         
@@ -108,7 +108,7 @@ class ItemICloudDatabase: Observer
                     
                     if !unexpectedChanges.isEmpty
                     {
-                        log(error: "Unexpected changes.")
+                        log(warning: "Unexpected changes.")
                         
                         let mods = unexpectedChanges.compactMap { $0.modification }
                         
