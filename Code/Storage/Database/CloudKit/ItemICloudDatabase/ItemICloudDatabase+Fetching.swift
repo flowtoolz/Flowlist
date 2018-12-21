@@ -29,9 +29,7 @@ extension ItemICloudDatabase
             }
             .catch
             {
-                let error = StorageError.message($0.message)
-                
-                resolver.reject(error)
+                resolver.reject($0.storageError)
             }
         }
     }
@@ -81,9 +79,7 @@ extension ItemICloudDatabase
             }
             .catch
             {
-                let error = StorageError.message($0.message)
-                
-                resolver.reject(error)
+                resolver.reject($0.storageError)
             }
         }
     }
@@ -91,8 +87,10 @@ extension ItemICloudDatabase
 
 fileprivate extension Error
 {
-    var message: String
+    var storageError: StorageError
     {
-        return "This issue came up: \(self.localizedDescription)"
+        let message = "This issue came up: \(self.localizedDescription)"
+        
+        return StorageError.message(message)
     }
 }
