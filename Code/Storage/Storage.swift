@@ -145,7 +145,7 @@ class Storage: Observer
     {
         guard Store.shared.root != nil else
         {
-            return Promise(error: StorageError.storeHasNoRoot("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
+            return Promise(error: StorageError.message("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
         }
         
         return firstly
@@ -161,11 +161,6 @@ class Storage: Observer
             case .accessible:
                 return firstly
                 {
-                    // FIXME: going from this result to the map closure takes pretty fuckin long and freezes the app
-                    /* Remaining Points to Tackle:
-                     * Many Item object are being deallocated cause some closure context deallocates...
-                     * The deallocation unneccessarily calls stopObserving while the observed items probably also must be deallocated anyway...
-                     */
                     self.doInitialSync()
                 }
                 .map(on: self.backgroundQ)
@@ -191,12 +186,16 @@ class Storage: Observer
     {
         guard let storeRoot = Store.shared.root else
         {
-            return Promise(error: StorageError.storeHasNoRoot("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
+            return Promise(error: StorageError.message("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
+        }
+        
+        guard database.isReachable.value != false else
+        {
+            return Promise(error: StorageError.message("This device seems to be offline."))
         }
             
         return firstly
         {
-            // TODO: This takes pretty fuckin long
             self.database.fetchTrees()
         }
         .then(on: backgroundQ)
@@ -280,7 +279,7 @@ class Storage: Observer
     
     private func abortIntendingToSync(with error: Error)
     {
-        let errorMessage = String(describing: error)
+        let errorMessage = error.message
         log(error: errorMessage)
         abortIntendingToSync(errorMessage: errorMessage)
     }
@@ -288,7 +287,7 @@ class Storage: Observer
     private func abortIntendingToSync(errorMessage error: String,
                                       callToAction: String? = nil)
     {
-        let c2a = callToAction ?? "Make sure your Mac is connected to your iCloud account, then try resuming iCloud sync via the menu:\nData → Start Using iCloud"
+        let c2a = callToAction ?? "Make sure your Mac is online and connected to your iCloud account, then try resuming iCloud sync via the menu: Data → Start Using iCloud"
         
         stopObservingDatabaseAndStore()
         _intendsToSync.value = false
@@ -314,8 +313,8 @@ class Storage: Observer
     
     private func startObservingDatabaseAndStore()
     {
-        self.observeDatabase()
-        self.observeStore()
+        observeDatabase()
+        observeStore()
     }
     
     private func stopObservingDatabaseAndStore()
@@ -332,7 +331,7 @@ class Storage: Observer
         {
             guard let edit = $0 else { return }
             
-            //log("applying edit from db to store: \(edit)")
+            log("applying edit from db to store: \(edit)")
             
             Store.shared.apply(edit)
         }
@@ -355,7 +354,7 @@ class Storage: Observer
     
     private func storeWasEdited(_ edit: Edit)
     {
-        //log("applying edit from store to db: \(edit)")
+        log("applying edit from store to db: \(edit)")
         
         guard database.isAccessible == true else
         {
@@ -376,8 +375,28 @@ class Storage: Observer
     let database: ItemDatabase
     let file: ItemFile
     
-    private enum StorageError: Error
+    
+}
+
+fileprivate extension Error
+{
+    var message: String
     {
-        case storeHasNoRoot(_ message: String)
+        if let error = self as? StorageError
+        {
+            switch error
+            {
+            case .message(let text): return text
+            }
+        }
+        else
+        {
+            return String(describing: self)
+        }
     }
+}
+
+enum StorageError: Error
+{
+    case message(_ text: String)
 }

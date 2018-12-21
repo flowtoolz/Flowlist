@@ -6,18 +6,33 @@ extension ItemICloudDatabase
 {
     func fetchTrees() -> Promise<[Item]>
     {
-        return firstly
+        return Promise<[Item]>
         {
-            fetchAllItemRecords()
-        }
-        .map
-        {
-            (records: [CKRecord]) -> [Item] in
-            
-            // TODO: get all possible roots instead of assuming there's always exactly one
-            guard let root = Item(records: records) else { return [] }
-            
-            return [root]
+            resolver in
+
+            firstly
+            {
+                fetchAllItemRecords()
+            }
+            .map
+            {
+                (records: [CKRecord]) -> [Item] in
+                
+                // TODO: get all possible roots instead of assuming there's always exactly one
+                guard let root = Item(records: records) else { return [] }
+                
+                return [root]
+            }
+            .done
+            {
+                resolver.fulfill($0)
+            }
+            .catch
+            {
+                let error = StorageError.message($0.localizedDescription)
+                
+                resolver.reject(error)
+            }
         }
     }
     
@@ -28,33 +43,48 @@ extension ItemICloudDatabase
     
     func fetchUpdates() -> Promise<[Edit]>
     {
-        return firstly
+        return Promise<[Edit]>
         {
-            self.fetchNewUpdates()
-        }
-        .map
-        {
-            (result: ChangeFetch.Result) -> [Edit] in
+            resolver in
             
-            var edits = [Edit]()
-            
-            if result.idsOfDeletedRecords.count > 0
+            firstly
             {
-                let ids = result.idsOfDeletedRecords.map { $0.recordName }
-                edits.append(.removeItems(withIDs: ids))
+                self.fetchNewUpdates()
             }
-            
-            if result.changedRecords.count > 0
+            .map
             {
-                let mods = result.changedRecords.compactMap
+                (result: ChangeFetch.Result) -> [Edit] in
+                
+                var edits = [Edit]()
+                
+                if result.idsOfDeletedRecords.count > 0
                 {
-                    $0.modification
+                    let ids = result.idsOfDeletedRecords.map { $0.recordName }
+                    edits.append(.removeItems(withIDs: ids))
                 }
                 
-                edits.append(.updateItems(withModifications: mods))
+                if result.changedRecords.count > 0
+                {
+                    let mods = result.changedRecords.compactMap
+                    {
+                        $0.modification
+                    }
+                    
+                    edits.append(.updateItems(withModifications: mods))
+                }
+                
+                return edits
             }
-            
-            return edits
+            .done
+            {
+                resolver.fulfill($0)
+            }
+            .catch
+            {
+                let error = StorageError.message($0.localizedDescription)
+                
+                resolver.reject(error)
+            }
         }
     }
 }
