@@ -29,7 +29,7 @@ extension ItemICloudDatabase
             }
             .catch
             {
-                let error = StorageError.message($0.localizedDescription)
+                let error = StorageError.message($0.message)
                 
                 resolver.reject(error)
             }
@@ -81,10 +81,18 @@ extension ItemICloudDatabase
             }
             .catch
             {
-                let error = StorageError.message($0.localizedDescription)
+                let error = StorageError.message($0.message)
                 
                 resolver.reject(error)
             }
         }
+    }
+}
+
+fileprivate extension Error
+{
+    var message: String
+    {
+        return "This issue came up: \(self.localizedDescription)"
     }
 }
