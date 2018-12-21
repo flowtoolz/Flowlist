@@ -302,7 +302,7 @@ class Storage: Observer
         log(error: "iCloud sync failed: \(error)\nc2a: \(callToAction)")
         
         let question = Dialog.Question(title: "Whoops, Had to Pause iCloud Sync",
-                                       text: "This issue came up: \(error)\n\n\(callToAction)",
+                                       text: "\(error)\n\n\(callToAction)",
                                        options: ["Got it"])
         
         Dialog.default.pose(question,
@@ -391,7 +391,7 @@ fileprivate extension Error
         }
         else
         {
-            return String(describing: self)
+            return "This issue came up: \(String(describing: self))"
         }
     }
 }
