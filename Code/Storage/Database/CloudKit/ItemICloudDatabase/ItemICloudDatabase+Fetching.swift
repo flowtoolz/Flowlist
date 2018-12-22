@@ -4,9 +4,9 @@ import PromiseKit
 
 extension ItemICloudDatabase
 {
-    func fetchTrees() -> Promise<[Item]>
+    func fetchTrees() -> Promise<MakeTreesResult>
     {
-        return Promise<[Item]>
+        return Promise<MakeTreesResult>
         {
             resolver in
 

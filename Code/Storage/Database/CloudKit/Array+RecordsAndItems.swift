@@ -4,9 +4,12 @@ import SwiftyToolz
 
 extension Array where Element == Record
 {
-    func makeTrees() -> [Item]
+    func makeTrees() -> MakeTreesResult
     {
-        guard !isEmpty else { return [] }
+        guard !isEmpty else
+        {
+            return MakeTreesResult(trees: [], detachedRecords: [])
+        }
         
         // create unconnected items. remember corresponding records.
         
@@ -18,6 +21,7 @@ extension Array where Element == Record
         // connect items. remember roots.
         
         var trees = [Item]()
+        var detachedRecords = [Record]()
         
         hashMap.forEach
         {
@@ -31,7 +35,7 @@ extension Array where Element == Record
             
             guard let (_, rootItem) = hashMap[rootID] else
             {
-                log(error: "Record for root item with id \(rootID) is missing.")
+                detachedRecords.append(record)
                 return
             }
             
@@ -53,6 +57,13 @@ extension Array where Element == Record
             }
         }
         
-        return trees
+        return MakeTreesResult(trees: trees,
+                               detachedRecords: detachedRecords)
     }
+}
+
+struct MakeTreesResult
+{
+    let trees: [Item]
+    let detachedRecords: [Record]
 }
