@@ -200,11 +200,14 @@ class Storage: Observer
         }
         .then(on: backgroundQ)
         {
-            (roots: [Item]) -> Promise<Void> in
+            (trees: [Item]) -> Promise<Void> in
             
-            // TODO: handle multiple trees instead of assuming there's always exactly one
+            if trees.count > 1
+            {
+                log(error: "There are multiple trees in the database.")
+            }
             
-            guard let databaseRoot = roots.first else
+            guard let databaseRoot = trees.first else
             {
                 // no items in database
                 
