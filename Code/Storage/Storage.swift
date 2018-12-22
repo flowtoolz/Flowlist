@@ -207,17 +207,19 @@ class Storage: Observer
                 log(error: "There are multiple trees in the database.")
             }
             
-            if !result.detachedRecords.isEmpty
-            {
-                // TODO: delete them in db
-                log(warning: "There are detached records in the database.")
-            }
-            
             guard let databaseRoot = result.trees.first else
             {
                 // no items in database
                 
                 return self.database.resetItemTree(with: storeRoot)
+            }
+            
+            if !result.detachedRecords.isEmpty
+            {
+                // remove detached records from db
+                
+                let ids = result.detachedRecords.map { $0.id }
+                self.database.apply(.removeItems(withIDs: ids))
             }
             
             if storeRoot.isLeaf && !databaseRoot.isLeaf
