@@ -52,24 +52,6 @@ extension CKRecord
         return didChange
     }
     
-    // MARK: - Mofification
-    
-    var record: Record?
-    {
-        guard isItem else
-        {
-            log(error: "Could not create item record from record.")
-            return nil
-        }
-        
-        return Record(id: recordID.recordName,
-                      text: text,
-                      state: state,
-                      tag: tag,
-                      rootID: superItem,
-                      position: position)
-    }
-    
     // MARK: - Storage Properties
     
     var text: String?

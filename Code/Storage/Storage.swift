@@ -202,6 +202,8 @@ class Storage: Observer
         {
             (roots: [Item]) -> Promise<Void> in
             
+            // TODO: handle multiple trees instead of assuming there's always exactly one
+            
             guard let databaseRoot = roots.first else
             {
                 // no items in database

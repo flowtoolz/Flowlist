@@ -14,20 +14,15 @@ extension ItemICloudDatabase
             {
                 fetchAllItemRecords()
             }
-            .map
+            .map(on: backgroundQ)
             {
-                (records: [CKRecord]) -> [Item] in
-                
-                // TODO: get all possible roots instead of assuming there's always exactly one
-                guard let root = Item(records: records) else { return [] }
-                
-                return [root]
+                $0.map(Record.init).makeTrees()
             }
-            .done
+            .done(on: backgroundQ)
             {
                 resolver.fulfill($0)
             }
-            .catch
+            .catch(on: backgroundQ)
             {
                 resolver.reject($0.storageError)
             }
@@ -36,7 +31,10 @@ extension ItemICloudDatabase
     
     private func fetchAllItemRecords() -> Promise<[CKRecord]>
     {
-        return firstly { fetchAllUpdates() }.map { $0.changedRecords }
+        return fetchAllUpdates().map(on: backgroundQ)
+        {
+            $0.changedRecords
+        }
     }
     
     func fetchUpdates() -> Promise<[Edit]>
@@ -49,7 +47,7 @@ extension ItemICloudDatabase
             {
                 self.fetchNewUpdates()
             }
-            .map
+            .map(on: backgroundQ)
             {
                 (result: ChangeFetch.Result) -> [Edit] in
                 
@@ -63,21 +61,18 @@ extension ItemICloudDatabase
                 
                 if result.changedRecords.count > 0
                 {
-                    let records = result.changedRecords.compactMap
-                    {
-                        $0.record
-                    }
+                    let records = result.changedRecords.map(Record.init)
                     
                     edits.append(.updateItems(withRecords: records))
                 }
                 
                 return edits
             }
-            .done
+            .done(on: backgroundQ)
             {
                 resolver.fulfill($0)
             }
-            .catch
+            .catch(on: backgroundQ)
             {
                 resolver.reject($0.storageError)
             }

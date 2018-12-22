@@ -57,7 +57,7 @@ class ItemICloudDatabase: Observer
             
             if result.changedRecords.count > 0
             {
-                let records = result.changedRecords.compactMap { $0.record }
+                let records = result.changedRecords.map(Record.init)
                 self.messenger.send(.updateItems(withRecords: records))
             }
         }
@@ -113,10 +113,7 @@ class ItemICloudDatabase: Observer
                     {
                         log(warning: "Unexpected changes.")
                         
-                        let records = unexpectedChanges.compactMap
-                        {
-                            $0.record
-                        }
+                        let records = unexpectedChanges.map(Record.init)
                         
                         self.messenger.send(.updateItems(withRecords: records))
                     }
@@ -308,7 +305,7 @@ class ItemICloudDatabase: Observer
         }
     }
     
-    private var backgroundQ: DispatchQueue
+    var backgroundQ: DispatchQueue
     {
         return DispatchQueue.global(qos: .background)
     }
