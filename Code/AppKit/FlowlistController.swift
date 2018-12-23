@@ -48,6 +48,7 @@ class FlowlistController: AppController
     func applicationWillTerminate(_ notification: Notification)
     {
         storage.appWillTerminate()
+        fileLogger.saveLogsToFile()
     }
     
     // MARK: - Window Delegate
@@ -72,6 +73,7 @@ class FlowlistController: AppController
     func windowDidResignKey(_ notification: Notification)
     {
         storage.windowLostFocus()
+        fileLogger.saveLogsToFile()
     }
     
     // MARK: - Adjust to OSX Dark Mode Setting
@@ -121,4 +123,5 @@ class FlowlistController: AppController
     
     private let menu = Menu()
     private let viewController = ViewController<FlowlistView>()
+    private let fileLogger = FileLogger()
 }
