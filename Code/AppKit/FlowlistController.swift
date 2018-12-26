@@ -96,9 +96,9 @@ class FlowlistController: AppController
     func application(_ application: NSApplication,
                      didReceiveRemoteNotification userInfo: [String : Any])
     {
-        let iCloudDatabase = StorageController.shared.database
+        let database = StorageController.shared.database
             
-        iCloudDatabase.handlePushNotification(with: userInfo)
+        database.handlePushNotification(with: userInfo)
     }
     
     private func registerForICloudStatusChangeNotifications()
@@ -114,7 +114,7 @@ class FlowlistController: AppController
     
     @objc private func iCloudStatusChanged()
     {
-        self.storage.databaseAvailabilityMayHaveChanged()
+        storage.databaseAvailabilityMayHaveChanged()
     }
     
     // MARK: - Basics
