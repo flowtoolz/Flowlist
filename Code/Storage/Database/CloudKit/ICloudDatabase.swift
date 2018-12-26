@@ -354,6 +354,7 @@ class ICloudDatabase: Database, CustomObservable
     
     // MARK: - App Installation
     
+    // TODO: we don't need this anymore so move it somewhere for re-use
     private(set) lazy var appInstanceToken: Data? =
     {
         if let id = persister.string(appInstanceIDKey)
@@ -433,6 +434,7 @@ class ICloudDatabase: Database, CustomObservable
     }
 }
 
+// TODO: move to SwiftyToolz
 extension Array
 {
     func splitIntoSlices(ofSize size: Int) -> [ArraySlice<Element>]

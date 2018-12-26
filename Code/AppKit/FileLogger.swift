@@ -1,6 +1,8 @@
 import Foundation
 import SwiftyToolz
 
+// TODO: generalize and move to FoundationToolz
+
 class FileLogger: LogObserver
 {
     init() { Log.shared.notify(self) }
