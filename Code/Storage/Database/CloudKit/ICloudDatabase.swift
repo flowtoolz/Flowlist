@@ -336,7 +336,7 @@ class ICloudDatabase: Database, CustomObservable
             case .restricted:
                 message = "iCloud account is restricted."
             case .noAccount:
-                message = "This device is not connected to an iCloud account."
+                message = "Cannot access the iCloud account."
             }
             
             return Accessibility.unaccessible(message)
@@ -404,6 +404,8 @@ class ICloudDatabase: Database, CustomObservable
     }
     
     let isReachable = Var<Bool?>()
+    
+    // MARK: - Error
     
     enum ICloudDBError: Error, CustomDebugStringConvertible
     {

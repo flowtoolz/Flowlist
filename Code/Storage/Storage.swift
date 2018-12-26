@@ -71,7 +71,7 @@ class Storage: Observer
         {
             if case .unaccessible(let message) = $0
             {
-                let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account, then select the menu option \"Data → Start Using iCloud\"."
+                let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
                 
                 self.abortIntendingToSync(errorMessage: message, callToAction: c2a)
             }
@@ -103,7 +103,7 @@ class Storage: Observer
         {
             if case .unavailable(let message) = $0
             {
-                let c2a = "Seem like this device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account, then retry activating iCloud via the menu option \"Data → Start Using iCloud\"."
+                let c2a = "Seems like this device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
                 
                 self.abortIntendingToSync(errorMessage: message, callToAction: c2a)
             }
@@ -300,7 +300,7 @@ class Storage: Observer
     private func abortIntendingToSync(errorMessage error: String,
                                       callToAction: String? = nil)
     {
-        let c2a = callToAction ?? "Make sure your Mac is online and connected to your iCloud account, then try resuming iCloud sync via the menu: Data → Start Using iCloud"
+        let c2a = callToAction ?? "Make sure that 1) Your Mac is online, 2) It is connected to your iCloud account and 3) iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
         
         stopObservingDatabaseAndStore()
         _intendsToSync.value = false
