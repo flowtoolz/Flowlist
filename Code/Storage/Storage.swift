@@ -15,6 +15,9 @@ class Storage: Observer
         {
             [weak self] in self?.databaseReachabilityDid(update: $0)
         }
+        
+        observeDatabase()
+        observeStore()
     }
     
     deinit { stopObserving() }
@@ -84,14 +87,14 @@ class Storage: Observer
     func databaseReachabilityDid(update: Change<Bool?>)
     {
         guard intendsToSync,
-            let new = update.new,
-            let old = update.old,
-            new != old
+            let isReachable = update.new,
+            let wasReachable = update.old,
+            isReachable != wasReachable
         else { return }
         
-        guard new else
+        guard isReachable else
         {
-            stopObservingDatabaseAndStore()
+            hasUnsyncedLocalChanges.value = true
             return
         }
         
@@ -120,7 +123,6 @@ class Storage: Observer
             guard newValue else
             {
                 _intendsToSync.value = false
-                stopObservingDatabaseAndStore()
                 return
             }
             
@@ -166,7 +168,7 @@ class Storage: Observer
                 .map(on: self.backgroundQ)
                 {
                     self._intendsToSync.value = true
-                    self.startObservingDatabaseAndStore()
+                    self.hasUnsyncedLocalChanges.value = false
                     
                     return .success
                 }
@@ -213,14 +215,14 @@ class Storage: Observer
             {
                 // no items in database
                 
-                return self.database.resetItemTree(with: storeRoot)
+                return self.database.reset(tree: storeRoot)
             }
             
             if !storeRoot.isLeaf && databaseRoot.isLeaf
             {
                 // no items in database root
                 
-                return self.database.resetItemTree(with: storeRoot)
+                return self.database.reset(tree: storeRoot)
             }
             
             // database has items that we can't delete
@@ -241,14 +243,7 @@ class Storage: Observer
             {
                 // no items in Store root but in database
                 
-                return firstly
-                {
-                    Store.shared.update(root: databaseRoot)
-                }
-                .done(on: self.backgroundQ)
-                {
-                    self.file.save(databaseRoot)
-                }
+                return self.resetLocal(tree: databaseRoot)
             }
             
             // store and database have items
@@ -262,14 +257,21 @@ class Storage: Observer
             
             // store and database have different items
             
-            if !result.dbWasModified
+            if self.hasUnsyncedLocalChanges.value && !result.dbWasModified
             {
-                // store changed but not database (like when offline)
+                // store changed but not database
+                // (like after editing offline)
                 
-                return self.database.resetItemTree(with: storeRoot)
+                return self.database.reset(tree: storeRoot)
             }
             
-            // TODO: if local store wasn't modified since last fetch then use database root
+            if !self.hasUnsyncedLocalChanges.value && result.dbWasModified
+            {
+                // database changed but not store
+                // (like after editing from other device)
+                
+                return self.resetLocal(tree: databaseRoot)
+            }
             
             // conflicting trees -> ask user
             
@@ -279,24 +281,29 @@ class Storage: Observer
             }
             .then(on: self.backgroundQ)
             {
-                (preferICloud: Bool) -> Promise<Void> in
+                (preferDatabase: Bool) -> Promise<Void> in
                 
-                if preferICloud
+                if preferDatabase
                 {
-                    return firstly
-                    {
-                        Store.shared.update(root: databaseRoot)
-                    }
-                    .done(on: self.backgroundQ)
-                    {
-                        self.file.save(databaseRoot)
-                    }
+                    return self.resetLocal(tree: databaseRoot)
                 }
                 else
                 {
-                    return self.database.resetItemTree(with: storeRoot)
+                    return self.database.reset(tree: storeRoot)
                 }
             }
+        }
+    }
+    
+    private func resetLocal(tree: Item) -> Promise<Void>
+    {
+        return firstly
+        {
+            Store.shared.update(root: tree)
+        }
+        .done(on: self.backgroundQ)
+        {
+            self.file.save(tree)
         }
     }
     
@@ -312,7 +319,6 @@ class Storage: Observer
     {
         let c2a = callToAction ?? "Make sure that 1) Your Mac is online, 2) It is connected to your iCloud account and 3) iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
         
-        stopObservingDatabaseAndStore()
         _intendsToSync.value = false
         informUserAboutSyncProblem(error: error, callToAction: c2a)
     }
@@ -333,19 +339,7 @@ class Storage: Observer
     }
     
     // MARK: - Observe Database & Store
-    
-    private func startObservingDatabaseAndStore()
-    {
-        observeDatabase()
-        observeStore()
-    }
-    
-    private func stopObservingDatabaseAndStore()
-    {
-        stopObservingDatabase()
-        stopObserving(Store.shared)
-    }
-    
+
     private func observeDatabase()
     {
         let databaseMessenger = database.messenger
@@ -358,11 +352,6 @@ class Storage: Observer
             
             Store.shared.apply(edit)
         }
-    }
-    
-    private func stopObservingDatabase()
-    {
-        stopObserving(database.messenger)
     }
     
     private func observeStore()
@@ -379,17 +368,31 @@ class Storage: Observer
     {
         // log("applying edit from store to db: \(edit)")
         
+        guard database.isReachable.value != false else
+        {
+            hasUnsyncedLocalChanges.value = true
+            return
+        }
+        
         guard database.isAccessible == true else
         {
+            hasUnsyncedLocalChanges.value = true
+            
             log(error: "Invalid state: Applying store edits to database while database is unavailable.")
+            
             return
         }
         
         database.apply(edit).catch
         {
+            self.hasUnsyncedLocalChanges.value = true
+            
             log(error: $0.storageError.message)
         }
     }
+    
+    private var hasUnsyncedLocalChanges = PersistentFlag(key: "UserDefaultsKeyUnsyncedLocalChanges",
+                                                         default: false)
     
     // MARK: - Basics
     
@@ -400,8 +403,6 @@ class Storage: Observer
     
     let database: ItemDatabase
     let file: ItemFile
-    
-    
 }
 
 fileprivate extension Error

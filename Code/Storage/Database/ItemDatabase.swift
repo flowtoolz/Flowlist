@@ -7,7 +7,7 @@ protocol ItemDatabase: Database
     func apply(_ edit: Edit) -> Promise<Void>
     
     func fetchRecords() -> Promise<FetchRecordsResult>
-    func resetItemTree(with root: Item) -> Promise<Void>
+    func reset(tree: Item) -> Promise<Void>
     
     var messenger: EditSender { get }
 }

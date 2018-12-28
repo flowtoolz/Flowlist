@@ -237,7 +237,7 @@ class ItemICloudDatabase: Observer
     
     // MARK: - Reset Items
     
-    func resetItemTree(with root: Item) -> Promise<Void>
+    func reset(tree root: Item) -> Promise<Void>
     {
         let records = root.array.map
         {
