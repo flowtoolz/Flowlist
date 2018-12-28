@@ -83,13 +83,3 @@ extension ItemICloudDatabase
         }
     }
 }
-
-fileprivate extension Error
-{
-    var storageError: StorageError
-    {
-        let message = "This issue came up: \(self.localizedDescription)"
-        
-        return StorageError.message(message)
-    }
-}

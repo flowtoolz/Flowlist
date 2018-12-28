@@ -243,20 +243,34 @@ class ItemICloudDatabase: Observer
     
     func resetItemTree(with root: Item) -> Promise<Void>
     {
-        return firstly
+        let records = root.array.map
         {
-            self.db.deleteRecords(ofType: CKRecord.itemType, inZone: .item)
+            CKRecord(record: $0.makeRecord())
         }
-        .then(on: backgroundQ)
+        
+        guard !records.isEmpty else { return Promise() }
+        
+        return Promise<Void>
         {
-            _ -> Promise<Void> in
+            resolver in
             
-            let records = root.array.map
+            return firstly
             {
-                CKRecord(record: $0.makeRecord())
+                self.db.deleteRecords(ofType: CKRecord.itemType,
+                                      inZone: .item)
             }
-            
-            return self.iCloudDatabase.save(records)
+            .then(on: backgroundQ)
+            {
+                self.db.save(records)
+            }
+            .done
+            {
+                resolver.fulfill()
+            }
+            .catch
+            {
+                resolver.reject($0.storageError)
+            }
         }
     }
     
@@ -368,4 +382,14 @@ class ItemICloudDatabase: Observer
     // MARK: - Observability
     
     let messenger = EditSender()
+}
+
+extension Error
+{
+    var storageError: StorageError
+    {
+        let message = "This issue came up: \(self.localizedDescription)"
+        
+        return StorageError.message(message)
+    }
 }
