@@ -297,11 +297,7 @@ class ItemICloudDatabase: Observer
                 iCloudDatabase.fetchChanges(fromZone: .item,
                                             oldToken: token)
             }
-            .done(on: backgroundQ)
-            {
-                resolver.fulfill($0)
-            }
-            .catch(on: backgroundQ)
+            .done(on: backgroundQ, resolver.fulfill).catch(on: backgroundQ)
             {
                 resolver.reject($0.storageError)
             }
@@ -342,11 +338,7 @@ class ItemICloudDatabase: Observer
                     Accessibility.accessible
                 }
             }
-            .done(on: backgroundQ)
-            {
-                resolver.fulfill($0)
-            }
-            .catch(on: backgroundQ)
+            .done(on: backgroundQ, resolver.fulfill).catch(on: backgroundQ)
             {
                 resolver.reject($0.storageError)
             }

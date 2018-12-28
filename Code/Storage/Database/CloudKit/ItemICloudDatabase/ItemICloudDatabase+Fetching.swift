@@ -26,11 +26,7 @@ extension ItemICloudDatabase
                 return FetchRecordsResult(records: records,
                                           dbWasModified: wasModified)
             }
-            .done(on: backgroundQ)
-            {
-                resolver.fulfill($0)
-            }
-            .catch(on: backgroundQ)
+            .done(on: backgroundQ, resolver.fulfill).catch(on: backgroundQ)
             {
                 resolver.reject($0.storageError)
             }
@@ -72,11 +68,7 @@ extension ItemICloudDatabase
                 
                 return edits
             }
-            .done(on: backgroundQ)
-            {
-                resolver.fulfill($0)
-            }
-            .catch(on: backgroundQ)
+            .done(on: backgroundQ, resolver.fulfill).catch(on: backgroundQ)
             {
                 resolver.reject($0.storageError)
             }
