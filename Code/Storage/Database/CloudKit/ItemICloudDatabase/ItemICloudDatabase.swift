@@ -263,11 +263,11 @@ class ItemICloudDatabase: Observer
             {
                 self.db.save(records)
             }
-            .done
+            .done(on: backgroundQ)
             {
                 resolver.fulfill()
             }
-            .catch
+            .catch(on: backgroundQ)
             {
                 resolver.reject($0.storageError)
             }
@@ -278,7 +278,23 @@ class ItemICloudDatabase: Observer
     
     func fetchNewChanges() -> Promise<ChangeFetch.Result>
     {
-        return iCloudDatabase.fetchChanges(fromZone: .item)
+        return Promise<ChangeFetch.Result>
+        {
+            resolver in
+            
+            firstly
+            {
+                iCloudDatabase.fetchChanges(fromZone: .item)
+            }
+            .done(on: backgroundQ)
+            {
+                resolver.fulfill($0)
+            }
+            .catch(on: backgroundQ)
+            {
+                resolver.reject($0.storageError)
+            }
+        }
     }
     
     func fetchAllChanges() -> Promise<ChangeFetch.Result>
