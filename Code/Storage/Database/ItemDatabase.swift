@@ -4,7 +4,7 @@ import PromiseKit
 protocol ItemDatabase: Database
 {
     func fetchUpdates() -> Promise<[Edit]>
-    func apply(_ edit: Edit)
+    func apply(_ edit: Edit) -> Promise<Void>
     
     func fetchRecords() -> Promise<FetchRecordsResult>
     func resetItemTree(with root: Item) -> Promise<Void>

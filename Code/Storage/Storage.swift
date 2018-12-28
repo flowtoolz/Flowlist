@@ -230,7 +230,11 @@ class Storage: Observer
                 // remove detached records from db
                 
                 let ids = treeResult.detachedRecords.map { $0.id }
-                self.database.apply(.removeItems(withIDs: ids))
+                
+                self.database.apply(.removeItems(withIDs: ids)).catch
+                {
+                    log(error: $0.storageError.message)
+                }
             }
             
             if storeRoot.isLeaf && !databaseRoot.isLeaf
@@ -381,7 +385,10 @@ class Storage: Observer
             return
         }
         
-        database.apply(edit)
+        database.apply(edit).catch
+        {
+            log(error: $0.storageError.message)
+        }
     }
     
     // MARK: - Basics

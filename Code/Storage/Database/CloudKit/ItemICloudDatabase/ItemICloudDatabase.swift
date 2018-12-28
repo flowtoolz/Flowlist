@@ -66,7 +66,7 @@ class ItemICloudDatabase: Observer
     
     // MARK: - Edit Items
     
-    func apply(_ edit: Edit)
+    func apply(_ edit: Edit) -> Promise<Void>
     {
         switch edit
         {
@@ -124,21 +124,17 @@ class ItemICloudDatabase: Observer
                 promises.append(promise)
             }
             
-            when(fulfilled: promises).catch(on: backgroundQ)
-            {
-                log(error: $0.localizedDescription)
-            }
+            return when(fulfilled: promises)
             
         case .removeItems(let ids):
-            firstly
+            return firstly
             {
                 self.removeItems(with: ids)
             }
             .then(on: backgroundQ)
             {
-                self.fetchNewChanges()
+                self.updateServerChangeToken()
             }
-            .catch(on: backgroundQ) { log(error: $0.localizedDescription) }
         }
     }
     
@@ -275,6 +271,11 @@ class ItemICloudDatabase: Observer
     }
     
     // MARK: - Fetch
+    
+    func updateServerChangeToken() -> Promise<Void>
+    {
+        return fetchNewChanges().map { _ in }
+    }
     
     func fetchNewChanges() -> Promise<ChangeFetch.Result>
     {
