@@ -278,13 +278,24 @@ class ItemICloudDatabase: Observer
     
     func fetchNewChanges() -> Promise<ChangeFetch.Result>
     {
+        return fetchChanges(with: db.serverChangeToken)
+    }
+    
+    func fetchAllChanges() -> Promise<ChangeFetch.Result>
+    {
+        return fetchChanges(with: nil)
+    }
+    
+    private func fetchChanges(with token: CKServerChangeToken?) -> Promise<ChangeFetch.Result>
+    {
         return Promise<ChangeFetch.Result>
         {
             resolver in
             
             firstly
             {
-                iCloudDatabase.fetchChanges(fromZone: .item)
+                iCloudDatabase.fetchChanges(fromZone: .item,
+                                            oldToken: token)
             }
             .done(on: backgroundQ)
             {
@@ -295,11 +306,6 @@ class ItemICloudDatabase: Observer
                 resolver.reject($0.storageError)
             }
         }
-    }
-    
-    func fetchAllChanges() -> Promise<ChangeFetch.Result>
-    {
-        return iCloudDatabase.fetchChanges(fromZone: .item, oldToken: nil)
     }
     
     // MARK: - iCloud Database Access

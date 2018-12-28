@@ -4,14 +4,8 @@ import PromiseKit
 
 extension ICloudDatabase
 {
-    // MARK: - Fetch Changes and Change Token
+    // MARK: - Fetch Changes and Save New Token
     
-    func fetchChanges(fromZone zoneID: CKRecordZone.ID) -> Promise<ChangeFetch.Result>
-    {
-        return fetchChanges(fromZone: zoneID,
-                            oldToken: serverChangeToken)
-    }
-                      
     func fetchChanges(fromZone zoneID: CKRecordZone.ID,
                       oldToken: CKServerChangeToken?) -> Promise<ChangeFetch.Result>
     {
