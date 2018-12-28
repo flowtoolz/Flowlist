@@ -312,31 +312,43 @@ class ItemICloudDatabase: Observer
     
     func ensureAccess() -> Promise<Accessibility>
     {
-        
-        return firstly
+        return Promise<Accessibility>
         {
-            self.iCloudDatabase.ensureAccess()
-        }
-        .then(on: backgroundQ)
-        {
-            (accessibility: Accessibility) -> Promise<Accessibility> in
+            resolver in
             
-            guard case .accessible = accessibility else
+            firstly
             {
-                return Promise.value(accessibility)
+                self.iCloudDatabase.ensureAccess()
             }
-            
-            return firstly
+            .then(on: backgroundQ)
             {
-                self.ensureItemRecordZoneExists()
+                (accessibility: Accessibility) -> Promise<Accessibility> in
+                
+                guard case .accessible = accessibility else
+                {
+                    return Promise.value(accessibility)
+                }
+                
+                return firstly
+                {
+                    self.ensureItemRecordZoneExists()
+                }
+                .then(on: self.backgroundQ)
+                {
+                    self.ensureSubscriptionExists()
+                }
+                .map(on: self.backgroundQ)
+                {
+                    Accessibility.accessible
+                }
             }
-            .then(on: self.backgroundQ)
+            .done(on: backgroundQ)
             {
-                self.ensureSubscriptionExists()
+                resolver.fulfill($0)
             }
-            .map(on: self.backgroundQ)
+            .catch(on: backgroundQ)
             {
-                Accessibility.accessible
+                resolver.reject($0.storageError)
             }
         }
     }
