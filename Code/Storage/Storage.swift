@@ -363,7 +363,7 @@ class Storage: Observer
     private var hasUnsyncedLocalChanges = PersistentFlag(key: "UserDefaultsKeyUnsyncedLocalChanges",
                                                          default: false)
     
-    // MARK: - Abort Syncing
+    // MARK: - Manage Intention to Sync
     
     private func abortIntendingToSync(with error: Error)
     {
@@ -382,7 +382,7 @@ class Storage: Observer
         informUserAboutSyncProblem(error: error, callToAction: c2a)
     }
     
-    private var _intendsToSync = PersistentFlag(key: "IsUsingDatabase",
+    private var _intendsToSync = PersistentFlag(key: "UserDefaultsKeyWantsToUseICloud",
                                                 default: true)
     
     private func informUserAboutSyncProblem(error: String,
@@ -392,8 +392,14 @@ class Storage: Observer
                                        text: "\(error)\n\n\(callToAction)",
                                        options: ["Got it"])
         
-        Dialog.default.pose(question,
-                            imageName: "icloud_conflict").catch { _ in }
+        firstly
+        {
+            Dialog.default.pose(question, imageName: "icloud_conflict")
+        }
+        .catch
+        {
+            log(error: $0.message)
+        }
     }
     
     // MARK: - Basics
@@ -406,6 +412,8 @@ class Storage: Observer
     let database: ItemDatabase
     let file: ItemFile
 }
+
+// MARK: - Error Messages
 
 fileprivate extension Error
 {
