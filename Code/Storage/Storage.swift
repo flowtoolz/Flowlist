@@ -337,7 +337,7 @@ class Storage: Observer
     {
         // log("applying edit from store to db: \(edit)")
         
-        guard database.isReachable.value != false else
+        guard database.isReachable.value != false, _intendsToSync.value else
         {
             hasUnsyncedLocalChanges.value = true
             return
