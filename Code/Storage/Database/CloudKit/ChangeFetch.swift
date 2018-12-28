@@ -16,16 +16,16 @@ extension ChangeFetch
         self.init(recordZoneIDs: [fetchZoneID],
                   optionsByRecordZoneID: options)
         
-        var changes = Result()
+        var result = Result()
         
         recordChangedBlock =
         {
-            record in changes.changedRecords.append(record)
+            record in result.changedRecords.append(record)
         }
         
         recordWithIDWasDeletedBlock =
         {
-            id, _ in changes.idsOfDeletedRecords.append(id)
+            id, _ in result.idsOfDeletedRecords.append(id)
         }
         
         recordZoneChangeTokensUpdatedBlock =
@@ -40,12 +40,12 @@ extension ChangeFetch
             
             if clientToken != nil
             {
-                changes.clientChangeToken = clientToken
+                result.clientChangeToken = clientToken
             }
             
             if serverToken != nil
             {
-                changes.serverChangeToken = serverToken
+                result.serverChangeToken = serverToken
             }
         }
         
@@ -67,12 +67,12 @@ extension ChangeFetch
             
             if clientToken != nil
             {
-                changes.clientChangeToken = clientToken
+                result.clientChangeToken = clientToken
             }
             
             if serverToken != nil
             {
-                changes.serverChangeToken = serverToken
+                result.serverChangeToken = serverToken
             }
         }
         
@@ -85,7 +85,7 @@ extension ChangeFetch
                 return
             }
             
-            handleResult(changes, nil)
+            handleResult(result, nil)
         }
     }
     

@@ -98,10 +98,7 @@ class ICloudDatabase: Database, CustomObservable
     
     // MARK: - Fetch
     
-    func fetchRecord(with id: CKRecord.ID) -> Promise<CKRecord>
-    {
-        return database.fetch(withRecordID: id).tap(updateReachability)
-    }
+    // TODO: ensure that server change token is always up to date and channel all fetches through ICloudDatabase+ServerChangeToken.swift
     
     func fetchRecords(with query: CKQuery,
                       inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>

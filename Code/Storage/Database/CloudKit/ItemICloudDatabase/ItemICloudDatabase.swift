@@ -43,7 +43,7 @@ class ItemICloudDatabase: Observer
         
         firstly
         {
-            fetchNewUpdates()
+            fetchNewChanges()
         }
         .done(on: backgroundQ)
         {
@@ -84,7 +84,7 @@ class ItemICloudDatabase: Observer
                 }
                 .then(on: backgroundQ)
                 {
-                    self.fetchNewUpdates()
+                    self.fetchNewChanges()
                 }
                 .map(on: backgroundQ)
                 {
@@ -136,7 +136,7 @@ class ItemICloudDatabase: Observer
             }
             .then(on: backgroundQ)
             {
-                self.fetchNewUpdates()
+                self.fetchNewChanges()
             }
             .catch(on: backgroundQ) { log(error: $0.localizedDescription) }
         }
@@ -262,14 +262,14 @@ class ItemICloudDatabase: Observer
     
     // MARK: - Fetch
     
-    func fetchNewUpdates() -> Promise<ChangeFetch.Result>
+    func fetchNewChanges() -> Promise<ChangeFetch.Result>
     {
-        return iCloudDatabase.fetchUpdates(fromZone: .item)
+        return iCloudDatabase.fetchChanges(fromZone: .item)
     }
     
-    func fetchAllUpdates() -> Promise<ChangeFetch.Result>
+    func fetchAllChanges() -> Promise<ChangeFetch.Result>
     {
-        return iCloudDatabase.fetchUpdates(fromZone: .item, oldToken: nil)
+        return iCloudDatabase.fetchChanges(fromZone: .item, oldToken: nil)
     }
     
     // MARK: - iCloud Database Access
@@ -362,8 +362,8 @@ class ItemICloudDatabase: Observer
     
     var isReachable: Var<Bool?> { return db.isReachable }
     
-    private var db: ICloudDatabase { return iCloudDatabase }
-    private let iCloudDatabase = ICloudDatabase()
+    var db: ICloudDatabase { return iCloudDatabase }
+    let iCloudDatabase = ICloudDatabase()
     
     // MARK: - Observability
     

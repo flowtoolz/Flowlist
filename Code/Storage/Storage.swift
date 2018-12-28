@@ -196,35 +196,46 @@ class Storage: Observer
             
         return firstly
         {
-            self.database.fetchTrees()
+            self.database.fetchRecords()
         }
         .then(on: backgroundQ)
         {
-            (result: MakeTreesResult) -> Promise<Void> in
+            (result: FetchRecordsResult) -> Promise<Void> in
             
-            if result.trees.count > 1
+            let treeResult = result.records.makeTrees()
+            
+            if treeResult.trees.count > 1
             {
                 log(error: "There are multiple trees in the database.")
             }
             
-            guard let databaseRoot = result.trees.first else
+            guard let databaseRoot = treeResult.trees.first else
             {
                 // no items in database
                 
                 return self.database.resetItemTree(with: storeRoot)
             }
             
-            if !result.detachedRecords.isEmpty
+            if !storeRoot.isLeaf && databaseRoot.isLeaf
+            {
+                // no items in database root
+                
+                return self.database.resetItemTree(with: storeRoot)
+            }
+            
+            // database has items that we can't delete
+            
+            if !treeResult.detachedRecords.isEmpty
             {
                 // remove detached records from db
                 
-                let ids = result.detachedRecords.map { $0.id }
+                let ids = treeResult.detachedRecords.map { $0.id }
                 self.database.apply(.removeItems(withIDs: ids))
             }
             
             if storeRoot.isLeaf && !databaseRoot.isLeaf
             {
-                // no user items in Store but in iCloud
+                // no items in Store root but in database
                 
                 return firstly
                 {
@@ -236,6 +247,8 @@ class Storage: Observer
                 }
             }
             
+            // store and database have items
+            
             if storeRoot.isIdentical(to: databaseRoot)
             {
                 // Store and iCloud are identical
@@ -243,48 +256,39 @@ class Storage: Observer
                 return Promise()
             }
             
+            // store and database have different items
+            
+            if !result.dbWasModified
+            {
+                // store changed but not database (like when offline)
+                
+                return self.database.resetItemTree(with: storeRoot)
+            }
+            
+            // conflicting trees -> ask user
+            
             return firstly
             {
-                self.database.fetchUpdates()
+                Dialog.default.askWhetherToPreferICloud()
             }
             .then(on: self.backgroundQ)
             {
-                (edits: [Edit]) -> Promise<Void> in
+                (preferICloud: Bool) -> Promise<Void> in
                 
-                // TODO: how do we know the store actually changed since the last sync?
-                
-                if edits.isEmpty
+                if preferICloud
                 {
-                    // Store changed but noone changed iCloud
-                    
+                    return firstly
+                    {
+                        Store.shared.update(root: databaseRoot)
+                    }
+                    .done(on: self.backgroundQ)
+                    {
+                        self.file.save(databaseRoot)
+                    }
+                }
+                else
+                {
                     return self.database.resetItemTree(with: storeRoot)
-                }
-                
-                // conflicting item trees
-                
-                return firstly
-                {
-                    Dialog.default.askWhetherToPreferICloud()
-                }
-                .then(on: self.backgroundQ)
-                {
-                    (preferICloud: Bool) -> Promise<Void> in
-                    
-                    if preferICloud
-                    {
-                        return firstly
-                        {
-                            Store.shared.update(root: databaseRoot)
-                        }
-                        .done(on: self.backgroundQ)
-                        {
-                            self.file.save(databaseRoot)
-                        }
-                    }
-                    else
-                    {
-                        return self.database.resetItemTree(with: storeRoot)
-                    }
                 }
             }
         }

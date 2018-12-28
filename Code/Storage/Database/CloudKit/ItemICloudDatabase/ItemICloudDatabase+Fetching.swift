@@ -4,19 +4,27 @@ import PromiseKit
 
 extension ItemICloudDatabase
 {
-    func fetchTrees() -> Promise<MakeTreesResult>
+    func fetchRecords() -> Promise<FetchRecordsResult>
     {
-        return Promise<MakeTreesResult>
+        return Promise<FetchRecordsResult>
         {
             resolver in
-
+            
+            let oldToken = db.serverChangeToken
+            
             firstly
             {
-                fetchAllItemRecords()
+                fetchAllChanges()
             }
             .map(on: backgroundQ)
             {
-                $0.map(Record.init).makeTrees()
+                (result: ChangeFetch.Result) -> FetchRecordsResult in
+                
+                let records = result.changedRecords.map(Record.init)
+                let wasModified = oldToken != self.db.serverChangeToken
+                
+                return FetchRecordsResult(records: records,
+                                          dbWasModified: wasModified)
             }
             .done(on: backgroundQ)
             {
@@ -28,15 +36,7 @@ extension ItemICloudDatabase
             }
         }
     }
-    
-    private func fetchAllItemRecords() -> Promise<[CKRecord]>
-    {
-        return fetchAllUpdates().map(on: backgroundQ)
-        {
-            $0.changedRecords
-        }
-    }
-    
+  
     func fetchUpdates() -> Promise<[Edit]>
     {
         return Promise<[Edit]>
@@ -45,7 +45,7 @@ extension ItemICloudDatabase
             
             firstly
             {
-                self.fetchNewUpdates()
+                self.fetchNewChanges()
             }
             .map(on: backgroundQ)
             {
@@ -55,7 +55,11 @@ extension ItemICloudDatabase
                 
                 if result.idsOfDeletedRecords.count > 0
                 {
-                    let ids = result.idsOfDeletedRecords.map { $0.recordName }
+                    let ids = result.idsOfDeletedRecords.map
+                    {
+                        $0.recordName
+                    }
+                    
                     edits.append(.removeItems(withIDs: ids))
                 }
                 

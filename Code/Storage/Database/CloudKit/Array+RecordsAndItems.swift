@@ -18,7 +18,7 @@ extension Array where Element == Record
             $0[$1.id] = ($1, Item(record: $1))
         }
         
-        // connect items. remember roots.
+        // connect items. remember roots and unconnected records.
         
         var trees = [Item]()
         var detachedRecords = [Record]()
