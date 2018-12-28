@@ -307,37 +307,6 @@ class Storage: Observer
         }
     }
     
-    private func abortIntendingToSync(with error: Error)
-    {
-        let errorMessage = error.message
-        log(error: errorMessage)
-        abortIntendingToSync(errorMessage: errorMessage)
-    }
-    
-    private func abortIntendingToSync(errorMessage error: String,
-                                      callToAction: String? = nil)
-    {
-        let c2a = callToAction ?? "Make sure that 1) Your Mac is online, 2) It is connected to your iCloud account and 3) iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
-        
-        _intendsToSync.value = false
-        informUserAboutSyncProblem(error: error, callToAction: c2a)
-    }
-    
-    private var _intendsToSync = PersistentFlag(key: "IsUsingDatabase",
-                                                default: true)
-    
-    private func informUserAboutSyncProblem(error: String, callToAction: String)
-    {
-        log(error: "iCloud sync failed: \(error)\nc2a: \(callToAction)")
-        
-        let question = Dialog.Question(title: "Whoops, Had to Pause iCloud Sync",
-                                       text: "\(error)\n\n\(callToAction)",
-                                       options: ["Got it"])
-        
-        Dialog.default.pose(question,
-                            imageName: "icloud_conflict").catch { _ in }
-    }
-    
     // MARK: - Observe Database & Store
 
     private func observeDatabase()
@@ -394,6 +363,39 @@ class Storage: Observer
     private var hasUnsyncedLocalChanges = PersistentFlag(key: "UserDefaultsKeyUnsyncedLocalChanges",
                                                          default: false)
     
+    // MARK: - Abort Syncing
+    
+    private func abortIntendingToSync(with error: Error)
+    {
+        abortIntendingToSync(errorMessage: error.message)
+    }
+    
+    private func abortIntendingToSync(errorMessage error: String,
+                                      callToAction: String? = nil)
+    {
+        _intendsToSync.value = false
+        
+        log(error: error)
+        
+        let c2a = callToAction ?? "Make sure that 1) Your Mac is online, 2) It is connected to your iCloud account and 3) iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
+        
+        informUserAboutSyncProblem(error: error, callToAction: c2a)
+    }
+    
+    private var _intendsToSync = PersistentFlag(key: "IsUsingDatabase",
+                                                default: true)
+    
+    private func informUserAboutSyncProblem(error: String,
+                                            callToAction: String)
+    {
+        let question = Dialog.Question(title: "Whoops, Had to Pause iCloud Sync",
+                                       text: "\(error)\n\n\(callToAction)",
+                                       options: ["Got it"])
+        
+        Dialog.default.pose(question,
+                            imageName: "icloud_conflict").catch { _ in }
+    }
+    
     // MARK: - Basics
     
     private var backgroundQ: DispatchQueue
@@ -421,9 +423,4 @@ fileprivate extension Error
             return "This issue came up: \(String(describing: self))"
         }
     }
-}
-
-enum StorageError: Error
-{
-    case message(_ text: String)
 }
