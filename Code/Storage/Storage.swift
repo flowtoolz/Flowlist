@@ -265,6 +265,8 @@ class Storage: Observer
                 return self.database.resetItemTree(with: storeRoot)
             }
             
+            // TODO: if local store wasn't modified since last fetch then use database root
+            
             // conflicting trees -> ask user
             
             return firstly
