@@ -356,7 +356,7 @@ class Storage: Observer
         {
             self.hasUnsyncedLocalChanges.value = true
             
-            log(error: $0.storageError.message)
+            self.abortIntendingToSync(with: $0)
         }
     }
     
