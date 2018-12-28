@@ -3,7 +3,7 @@ import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
-class ItemICloudDatabase: Observer
+class ItemICloudDatabase: Observer, CustomObservable
 {
     // MARK: - Life Cycle
     
@@ -52,13 +52,13 @@ class ItemICloudDatabase: Observer
             if result.idsOfDeletedRecords.count > 0
             {
                 let ids = result.idsOfDeletedRecords.map { $0.recordName }
-                self.messenger.send(.removeItems(withIDs: ids))
+                self.send(.removeItems(withIDs: ids))
             }
             
             if result.changedRecords.count > 0
             {
                 let records = result.changedRecords.map(Record.init)
-                self.messenger.send(.updateItems(withRecords: records))
+                self.send(.updateItems(withRecords: records))
             }
         }
         .catch(on: backgroundQ) { log(error: $0.localizedDescription) }
@@ -408,9 +408,8 @@ class ItemICloudDatabase: Observer
     
     // MARK: - Observability
     
-    // TODO: Make this a proper custom obervable (and replace messenger.send by send ...)
-    
-    let messenger = EditSender()
+    let messenger = Messenger<Edit?>()
+    typealias Message = Edit?
 }
 
 extension Error

@@ -9,14 +9,7 @@ protocol ItemDatabase: Database
     func fetchRecords() -> Promise<FetchRecordsResult>
     func reset(tree: Item) -> Promise<Void>
     
-    var messenger: EditSender { get }
-}
-
-class EditSender: CustomObservable
-{
-    typealias Message = Edit?
-    
-    let messenger = Messenger<Edit?>()
+    var messenger: Messenger<Edit?> { get }
 }
 
 struct FetchRecordsResult
