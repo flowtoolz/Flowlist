@@ -28,16 +28,16 @@ extension Tree where Data == ItemData
         {
             guard !item.isDone else { continue }
             
-            var itemRefix = prefix
-            if itemRefix.count > 0 { itemRefix += "." }
-            itemRefix += "\(sectionNumber)"
+            var itemPrefix = prefix
+            if itemPrefix.count > 0 { itemPrefix += "." }
+            itemPrefix += "\(sectionNumber)"
             
             let isParagraph = item.isLeaf
             let breaks: String = "\n\n" + (isParagraph ? "" : "\n")
             let itemDepth = recursionDepth + 1
             
             result += breaks + item.plainText(recursionDepth: itemDepth,
-                                              prefix: itemRefix)
+                                              prefix: itemPrefix)
             
             sectionNumber += isParagraph ? 0 : 1
         }
