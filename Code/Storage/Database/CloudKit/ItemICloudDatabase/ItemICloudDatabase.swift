@@ -407,6 +407,8 @@ class ItemICloudDatabase: Observer
     
     // MARK: - Observability
     
+    // TODO: Make this a proper custom obervable (and replace messenger.send by send ...)
+    
     let messenger = EditSender()
 }
 
