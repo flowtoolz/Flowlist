@@ -350,7 +350,7 @@ class Storage: Observer
         {
             guard let edit = $0 else { return }
             
-            log("applying edit from db to store: \(edit)")
+            // log("applying edit from db to store: \(edit)")
             
             Store.shared.apply(edit)
         }
@@ -373,7 +373,7 @@ class Storage: Observer
     
     private func storeWasEdited(_ edit: Edit)
     {
-        log("applying edit from store to db: \(edit)")
+        // log("applying edit from store to db: \(edit)")
         
         guard database.isAccessible == true else
         {
