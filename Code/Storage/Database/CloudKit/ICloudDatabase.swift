@@ -269,7 +269,6 @@ class ICloudDatabase: Database, CustomObservable
         }
         
         operation.savePolicy = .changedKeys
-        operation.clientChangeTokenData = appInstanceToken
         
         operation.perRecordCompletionBlock =
         {
@@ -348,25 +347,6 @@ class ICloudDatabase: Database, CustomObservable
     private(set) var isAccessible: Bool?
     
     private let container = CKContainer.default()
-    
-    // MARK: - App Installation
-    
-    // TODO: we don't need this anymore so move it somewhere for re-use
-    private(set) lazy var appInstanceToken: Data? =
-    {
-        if let id = persister.string(appInstanceIDKey)
-        {
-            return id.data(using: .utf8)
-        }
-        
-        let newID = String.makeUUID()
-        
-        persister.set(appInstanceIDKey, newID)
-        
-        return newID.data(using: .utf8)
-    }()
-    
-    private let appInstanceIDKey = "UserDefaultsKeyAppInstanceID"
     
     // MARK: - Reachability
     
