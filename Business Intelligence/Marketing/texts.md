@@ -8,6 +8,18 @@ All other languages get the secondary keyword list
 
 # Flowlist AppStore Update Text
 
+## 1.7.0
+
+This update improves various aspects and introduces iCloud synchronisation.
+
+• You can sync different Macs via iCloud. This is the first of two big leaps towards the much demanded iOS app! Flowlist does a reasonable effort to resolve conflicting versions between iCloud and local items, so in typical use cases it just works. When Flowlist can't resolve a conflict, it will ask which version you want to use.
+• You can find and backup your Flowlist data file via menu option "Data -> Show JSON File in Finder". We recommend backing up your data regularly, in particular when using iCloud sync while that is still a young feature.
+• Markdown export has improved. It now respects the maximum depth of markdown headings. It also detects items that are likely bullet points and formats them as such.
+• Fix: At least on macOS Sierra, the text export panel didn't show up due to a macOS bug. Flowlist now circumvents the issue.
+• Fix: Clicking the Flowlist icon in the doc now always shows the window, whether the window was closed or Flowlist was hidden.
+• Performance has improved a bit, in particular for large numbers of items.
+• As always, but this time to a greater extent: Many technical improvements under the hood to maintain development speed.
+
 ## 1.6.1
 
 This update improves animations and adds Markdown export.
@@ -107,7 +119,7 @@ This update brings minor fixes and performance improvements:
 
 # Flowlist AppStore Description
 
-## Version 1.6.1
+## Version 1.7.0
 
 Flowlist is an elegant tool for self-management and creative writing. Unbelievably easy yet infinitely flexible. Organize your brain in flow!
 
@@ -136,6 +148,7 @@ Features:
 • Switch to Dark Mode to give your eyes a break, sleep better, work at night and feel like a pro.
 • Paste content from any document or web page. Flowlist detects distinct items.
 • Adjust the font size and zoom level of the interface to your screen size and way of working.
+• Sync different Macs via iCloud
 • Enter monotasking mode or fullscreen.
 
 Flowlist helps you to get into flow:
