@@ -48,6 +48,11 @@ class EditMenu: NSMenu, NSMenuItemValidation, Observer
                 self?.update()
             }
         }
+        
+        observe(TextView.isEditing)
+        {
+            [weak self] _ in self?.update()
+        }
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
