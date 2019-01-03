@@ -35,7 +35,7 @@ class SelectionMenu: NSMenu, NSMenuItemValidation
     {
         guard NSApp.mainWindow?.isKeyWindow ?? false else { return false }
         
-        guard !TextView.isEditing else { return false }
+        guard !TextView.isEditing.value else { return false }
         
         switch menuItem
         {

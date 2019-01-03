@@ -259,7 +259,7 @@ class TextView: NSTextView, NSTextViewDelegate
     private func didEdit()
     {
         isEditing = false
-        TextView.isEditing = false
+        TextView.isEditing <- false
         isEditable = false
 
         messenger.send(.didEdit)
@@ -268,7 +268,7 @@ class TextView: NSTextView, NSTextViewDelegate
     private func willEdit()
     {
         isEditing = true
-        TextView.isEditing = true
+        TextView.isEditing <- true
         isEditable = true
         
         messenger.send(.willEdit)
@@ -295,7 +295,7 @@ class TextView: NSTextView, NSTextViewDelegate
     
     private(set) var isEditing = false
 
-    static var isEditing = false
+    static let isEditing = Var(false)
     
     // MARK: - Inform Item View that Text was Clicked
     

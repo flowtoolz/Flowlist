@@ -47,9 +47,9 @@ class WindowMenu: NSMenu, NSMenuItemValidation, Observer
         case fullscreenItem: return !isMonotasking
         case focusItem: return !(window?.isFullscreen ?? false)
         case increaseFontSizeItem:
-            return !TextView.isEditing
+            return !TextView.isEditing.value
         case decreaseFontSizeItem:
-            return !TextView.isEditing && Font.baseSize.latestMessage > 12
+            return !TextView.isEditing.value && Font.baseSize.latestMessage > 12
         default: return true
         }
     }

@@ -60,7 +60,7 @@ class EditMenu: NSMenu, NSMenuItemValidation, Observer
     {
         guard NSApp.mainWindow?.isKeyWindow ?? false else { return false }
         
-        guard !TextView.isEditing else { return false }
+        guard !TextView.isEditing.value else { return false }
         
         let selected = numberOfSelectedItems
         let deleted = browser.focusedList.root?.deletionStack.last?.count ?? 0
