@@ -5,7 +5,7 @@
 	<key>ApplicationVersion</key>
 	<array>
 		<string>com.omnigroup.OmniGraffle7</string>
-		<string>192.15.0.319654</string>
+		<string>192.21.0.323236</string>
 	</array>
 	<key>ColorProfiles</key>
 	<array>
@@ -148,7 +148,7 @@
 		<key>NSHorizonalPagination</key>
 		<array>
 			<string>coded</string>
-			<string>YnBsaXN0MDDUAQIDBAUGCQpYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKIHCFUkbnVsbBAAXxAPTlNLZXllZEFyY2hpdmVy0QsMVHJvb3SAAQgRGiMtMjc6QEJUV1wAAAAAAAABAQAAAAAAAAANAAAAAAAAAAAAAAAAAAAAXg==</string>
+			<string>BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU051bWJlcgCEhAdOU1ZhbHVlAISECE5TT2JqZWN0AIWEASqEhAFxlwCG</string>
 		</array>
 		<key>NSLeftMargin</key>
 		<array>
@@ -163,7 +163,7 @@
 		<key>NSPrintReverseOrientation</key>
 		<array>
 			<string>coded</string>
-			<string>YnBsaXN0MDDUAQIDBAUGCQpYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKIHCFUkbnVsbBAAXxAPTlNLZXllZEFyY2hpdmVy0QsMVHJvb3SAAQgRGiMtMjc6QEJUV1wAAAAAAAABAQAAAAAAAAANAAAAAAAAAAAAAAAAAAAAXg==</string>
+			<string>BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU051bWJlcgCEhAdOU1ZhbHVlAISECE5TT2JqZWN0AIWEASqEhAFxlwCG</string>
 		</array>
 		<key>NSRightMargin</key>
 		<array>
@@ -190,7 +190,7 @@
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{-1923.846153846154, -1211.5384615384614}, {5036.5384615384619, 3634.6153846153843}}</string>
+				<string>{{-1923.8461538461536, -1236.5384615384617}, {5036.5384615384619, 3709.6153846153848}}</string>
 				<key>Class</key>
 				<string>GraffleShapes.CanvasBackgroundGraphic</string>
 				<key>ID</key>
@@ -5386,7 +5386,7 @@
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{234.80769230769215, 22.115384615384471}, {1328.8461538461534, 1211.5384615384617}}</string>
+		<string>{{234.80769230769255, -2.1021974430772192e-13}, {1328.8461538461534, 1236.5384615384614}}</string>
 		<key>WindowInfo_InspectorTab</key>
 		<array>
 			<string>com.omnigroup.OmniGraffle.inspectorGroup.object</string>
@@ -5438,7 +5438,7 @@
 	<key>resolutionForJPGKey</key>
 	<real>1</real>
 	<key>resolutionForPNGKey</key>
-	<real>0.8888888955116272</real>
+	<real>6.6666665077209473</real>
 	<key>resolutionForTIFFKey</key>
 	<real>1</real>
 	<key>resolutionUnitsKey</key>
