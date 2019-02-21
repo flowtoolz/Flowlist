@@ -383,7 +383,7 @@ class Storage: Observer
     }
     
     private var _intendsToSync = PersistentFlag(key: "UserDefaultsKeyWantsToUseICloud",
-                                                default: true)
+                                                default: false)
     
     private func informUserAboutSyncProblem(error: String,
                                             callToAction: String)
