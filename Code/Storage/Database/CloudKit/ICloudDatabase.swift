@@ -103,9 +103,8 @@ class ICloudDatabase: Database, CustomObservable
     func fetchRecords(with query: CKQuery,
                       inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
     {
-        return database.performQuery(query,
-                                
-                                     inZoneWith: zoneID).tap(updateReachability)
+        return database.perform(query,
+                                inZoneWith: zoneID).tap(updateReachability)
     }
     
     // MARK: - Respond to Notifications
@@ -204,6 +203,11 @@ class ICloudDatabase: Database, CustomObservable
             {
                 createdZones, _, error in
                 
+                if let error = error
+                {
+                    log(error: error.localizedDescription)
+                }
+                
                 resolver.resolve(error, createdZones?.first)
             }
             
@@ -288,23 +292,23 @@ class ICloudDatabase: Database, CustomObservable
         
         operation.perRecordCompletionBlock =
         {
-            if let error = $1 { log(error: error.localizedDescription) }
+            if let error = $1
+            {
+                log(error: error.localizedDescription)
+            }
         }
         
         operation.modifyRecordsCompletionBlock =
         {
-            records, ids, error in
+            _, _, error in
             
             if let error = error
             {
-                handleDeletionSuccess?(error)
-                handleCreationSuccess?(error)
-                
-                return
+                log(error: error.localizedDescription)
             }
             
-            handleCreationSuccess?(nil)
-            handleDeletionSuccess?(nil)
+            handleDeletionSuccess?(error)
+            handleCreationSuccess?(error)
         }
         
         perform(operation)

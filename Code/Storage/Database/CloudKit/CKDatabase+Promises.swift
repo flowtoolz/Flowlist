@@ -4,15 +4,24 @@ import SwiftyToolz
 
 extension CKDatabase
 {
-    /// Searches the specified zone asynchronously for records that match the query parameters.
-    public func performQuery(_ query: CKQuery,
-                             inZoneWith zoneID: CKRecordZone.ID? = nil) -> Promise<[CKRecord]>
+    public func perform(_ query: CKQuery,
+                        inZoneWith zoneID: CKRecordZone.ID? = nil) -> Promise<[CKRecord]>
     {
         return Promise
         {
-            perform(query,
-                    inZoneWith: zoneID,
-                    completionHandler: $0.resolve)
+            resolver in
+            
+            perform(query, inZoneWith: zoneID)
+            {
+                records, error in
+                
+                if let error = error
+                {
+                    log(error: error.localizedDescription)
+                }
+                
+                resolver.resolve(records, error)
+            }
         }
     }
     
