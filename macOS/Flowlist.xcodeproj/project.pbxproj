@@ -87,6 +87,7 @@
 		9EC5C8B621B00FE100615D20 /* Dialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B521B00FE100615D20 /* Dialog.swift */; };
 		9EC5C8B821B0300D00615D20 /* Dialog+ICloudConflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */; };
 		9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB5D032174AF740048D7C5 /* Item+Text.swift */; };
+		9EE17AF12222A8F600A07E4B /* CKContainer+Promises.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE17AF02222A8F600A07E4B /* CKContainer+Promises.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
 		9EE60C0021ACE1AF0075109D /* ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */; };
 		9EEA769F21922A5700642EE7 /* ItemFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEA769E21922A5700642EE7 /* ItemFile.swift */; };
@@ -192,6 +193,7 @@
 		9EC5C8B521B00FE100615D20 /* Dialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialog.swift; sourceTree = "<group>"; };
 		9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dialog+ICloudConflict.swift"; sourceTree = "<group>"; };
 		9EDB5D032174AF740048D7C5 /* Item+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Text.swift"; sourceTree = "<group>"; };
+		9EE17AF02222A8F600A07E4B /* CKContainer+Promises.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKContainer+Promises.swift"; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Float+Style.swift"; sourceTree = "<group>"; };
 		9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabase.swift; sourceTree = "<group>"; };
 		9EEA769E21922A5700642EE7 /* ItemFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemFile.swift; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 				9EBD41AA21AC419B00C97B99 /* ICloudDatabase+ServerChangeToken.swift */,
 				9E053B2C21886963001B7103 /* ICloudDatabase.swift */,
 				9EBD41AC21AC4A0A00C97B99 /* ChangeFetch.swift */,
+				9EE17AF02222A8F600A07E4B /* CKContainer+Promises.swift */,
 			);
 			path = CloudKit;
 			sourceTree = "<group>";
@@ -812,6 +815,7 @@
 				9EBD41AD21AC4A0B00C97B99 /* ChangeFetch.swift in Sources */,
 				9EF96E7621A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift in Sources */,
 				9E053B532188717D001B7103 /* BrowserView.swift in Sources */,
+				9EE17AF12222A8F600A07E4B /* CKContainer+Promises.swift in Sources */,
 				9E053B61218871C4001B7103 /* List+NSPasteboard.swift in Sources */,
 				9E576E372186FAB400C9F876 /* Item+Matching.swift in Sources */,
 				9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */,

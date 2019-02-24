@@ -310,7 +310,7 @@ class ICloudDatabase: Database, CustomObservable
     {
         return firstly
         {
-            self.container.accountStatus()
+            self.container.requestAccountStatus()
         }
         .ensure(on: backgroundQ)
         {
