@@ -1,5 +1,6 @@
 import CloudKit
 import SwiftObserver
+import SwiftyToolz
 import PromiseKit
 
 extension ICloudDatabase
@@ -16,6 +17,11 @@ extension ICloudDatabase
             let fetch = ChangeFetch(zoneID: zoneID, token: oldToken)
             {
                 result, error in
+                
+                if let error = error
+                {
+                    log(error: error.localizedDescription)
+                }
                 
                 self.serverChangeToken = result?.serverChangeToken
                 
