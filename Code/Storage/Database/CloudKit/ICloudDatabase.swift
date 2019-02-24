@@ -16,7 +16,7 @@ class ICloudDatabase: Database, CustomObservable
            
             firstly
             {
-                self.database.fetchUserRecord()
+                self.database.requestUserRecord()
             }
             .tap(self.updateReachability).catch { _ in }
         }
@@ -103,8 +103,9 @@ class ICloudDatabase: Database, CustomObservable
     func fetchRecords(with query: CKQuery,
                       inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
     {
-        return database.perform(query,
-                                inZoneWith: zoneID).tap(updateReachability)
+        return database.performQuery(query,
+                                
+                                     inZoneWith: zoneID).tap(updateReachability)
     }
     
     // MARK: - Respond to Notifications
@@ -246,7 +247,22 @@ class ICloudDatabase: Database, CustomObservable
         
         subscription.notificationInfo = notificationInfo
         
-        return database.save(subscription).tap(updateReachability)
+        return Promise
+        {
+            resolver in
+
+            database.save(subscription)
+            {
+                subscription, error in
+                
+                if let error = error
+                {
+                    log(error: error.localizedDescription)
+                }
+                
+                resolver.resolve(subscription, error)
+            }
+        }.tap(updateReachability)
     }
     
     // MARK: - Database

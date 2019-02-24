@@ -11,7 +11,6 @@ target 'Flowlist' do
     pod 'SwiftObserver', :path=> '../../Frameworks/SwiftObserver'
     pod 'SwiftyToolz', :path=> '../../Frameworks/SwiftyToolz'
     pod 'PromiseKit', '~> 6.7'
-    pod 'PromiseKit/CloudKit', '~> 6.7'
 
 end
 
