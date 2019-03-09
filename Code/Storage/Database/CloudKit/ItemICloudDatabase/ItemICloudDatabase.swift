@@ -261,7 +261,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .done(on: backgroundQ)
             {
-                resolver.fulfill()
+                resolver.fulfill_()
             }
             .catch(on: backgroundQ)
             {

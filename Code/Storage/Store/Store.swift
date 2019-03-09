@@ -22,7 +22,7 @@ class Store: Observer, CustomObservable
             {
                 self.privateUpdate(root: newRoot)
                 
-                resolver.fulfill()
+                resolver.fulfill_()
             }
         }
     }
