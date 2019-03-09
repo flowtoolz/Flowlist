@@ -1,0 +1,9 @@
+Flowlist Debug Log
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x600000cd1380: "Zone Not Found" (26/2036); server message = "Zone 'ItemZone' does not exist"; uuid = AFB62DB8-A15C-4003-B56F-0C78DE3417CC; container ID = "iCloud.com.flowtoolz.flowlist"> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: Error fetching changes in zone <CKRecordZoneID: 0x7f93825ed1a0; ownerName=__defaultOwner__, zoneName=ItemZone>: Zone 'ItemZone' does not exist (ChangeFetch.swift, init(zoneID:token:handleResult:), line 64)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: This issue came up: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)

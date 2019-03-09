@@ -1,0 +1,169 @@
+Flowlist Debug Log
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x60000059b9f0: "Zone Busy" (23/2029); server message = "Failed to provide read-consistent view"; uuid = E3623C4B-4B21-4C8A-8941-B47600694D12; Retry after 30.0 seconds; container ID = "iCloud.com.flowtoolz.flowlist"> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x60000059ae80: "Request Rate Limited" (7/2008); "This operation has been rate limited due to an earlier error: Error Domain=CKInternalErrorDomain Code=2029 "Failed to provide read-consistent view" UserInfo={ContainerID=iCloud.com.flowtoolz.flowlist, CKErrorShouldThrottleClient=true, RequestUUID=E3623C4B-4B21-4C8A-8941-B47600694D12, errorKey=ck5azl16, ServerErrorDescription=Failed to provide read-consistent view, CKRetryAfter=30, NSLocalizedDescription=Failed to provide read-consistent view}"; Retry after 30.0 seconds> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x6000005989c0: "Request Rate Limited" (7/2008); "This operation has been rate limited due to an earlier error: Error Domain=CKInternalErrorDomain Code=2029 "Failed to provide read-consistent view" UserInfo={ContainerID=iCloud.com.flowtoolz.flowlist, CKErrorShouldThrottleClient=true, RequestUUID=E3623C4B-4B21-4C8A-8941-B47600694D12, errorKey=ck5azl16, ServerErrorDescription=Failed to provide read-consistent view, CKRetryAfter=30, NSLocalizedDescription=Failed to provide read-consistent view}"; Retry after 30.0 seconds> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x600000595380: "Request Rate Limited" (7/2008); "This operation has been rate limited due to an earlier error: Error Domain=CKInternalErrorDomain Code=2029 "Failed to provide read-consistent view" UserInfo={ContainerID=iCloud.com.flowtoolz.flowlist, CKErrorShouldThrottleClient=true, RequestUUID=E3623C4B-4B21-4C8A-8941-B47600694D12, errorKey=ck5azl16, ServerErrorDescription=Failed to provide read-consistent view, CKRetryAfter=30, NSLocalizedDescription=Failed to provide read-consistent view}"; Retry after 30.0 seconds> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)

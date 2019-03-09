@@ -1,0 +1,13 @@
+Flowlist Debug Log
+
+> FLOWLIST WARNING: Unexpected deletions. (ItemICloudDatabase.swift, apply, line 95)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST WARNING: Unexpected deletions. (ItemICloudDatabase.swift, apply, line 95)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: This issue came up: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
