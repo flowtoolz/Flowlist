@@ -2,7 +2,7 @@ import CloudKit
 import SwiftObserver
 import PromiseKit
 
-extension ItemICloudDatabase
+extension ItemICloudDatabase: ItemDatabase
 {
     func fetchRecords() -> Promise<FetchRecordsResult>
     {
