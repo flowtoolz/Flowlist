@@ -68,6 +68,13 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     func apply(_ edit: Edit) -> Promise<Void>
     {
+        if isAccessible != true
+        {
+            // TODO: buffer edits if db is currently ensuring (setting up) access
+            
+            return Promise(error: StorageError.message("Tried to edit iCloud db while db isn't accessible yet."))
+        }
+        
         switch edit
         {
         case .updateItems(let records):

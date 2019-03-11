@@ -342,16 +342,7 @@ class Storage: Observer
             hasUnsyncedLocalChanges.value = true
             return
         }
-        
-        guard database.isAccessible == true else
-        {
-            hasUnsyncedLocalChanges.value = true
-            
-            log(error: "Invalid state: Applying store edits to database while database is inaccessible.")
-            
-            return
-        }
-        
+                
         database.apply(edit).catch
         {
             self.hasUnsyncedLocalChanges.value = true
