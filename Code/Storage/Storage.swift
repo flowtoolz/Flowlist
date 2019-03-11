@@ -72,7 +72,7 @@ class Storage: Observer
         }
         .done(on: self.backgroundQ)
         {
-            if case .unaccessible(let message) = $0
+            if case .inaccessible(let message) = $0
             {
                 let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
                 
@@ -173,7 +173,7 @@ class Storage: Observer
                     return .success
                 }
                 
-            case .unaccessible(let message):
+            case .inaccessible(let message):
                 return Promise.value(.unavailable(message))
             }
         }
@@ -347,7 +347,7 @@ class Storage: Observer
         {
             hasUnsyncedLocalChanges.value = true
             
-            log(error: "Invalid state: Applying store edits to database while database is unavailable.")
+            log(error: "Invalid state: Applying store edits to database while database is inaccessible.")
             
             return
         }

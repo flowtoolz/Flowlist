@@ -26,5 +26,5 @@ struct FetchRecordsResult
 enum Accessibility
 {
     case accessible
-    case unaccessible(_ message: String)
+    case inaccessible(_ message: String)
 }

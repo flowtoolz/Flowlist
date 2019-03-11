@@ -350,7 +350,7 @@ class ICloudDatabase: CustomObservable
                 message = "Cannot access the iCloud account."
             }
             
-            return Accessibility.unaccessible(message)
+            return Accessibility.inaccessible(message)
         }
     }
     
