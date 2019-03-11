@@ -326,7 +326,7 @@ class ICloudDatabase: Database, CustomObservable
     
     // MARK: - Container
     
-    func ensureAccess() -> Promise<Accessibility>
+    func ensureAccountAccess() -> Promise<Accessibility>
     {
         return firstly
         {

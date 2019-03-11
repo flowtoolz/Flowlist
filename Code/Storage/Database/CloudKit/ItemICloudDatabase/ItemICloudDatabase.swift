@@ -315,7 +315,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             
             firstly
             {
-                self.iCloudDatabase.ensureAccess()
+                self.iCloudDatabase.ensureAccountAccess()
             }
             .then(on: backgroundQ)
             {
