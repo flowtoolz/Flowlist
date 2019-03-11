@@ -145,8 +145,6 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    // MARK: - Update Items
-    
     private func updateItems(with records: [Record],
                              inRootWithID rootID: String) -> Promise<Void>
     {
@@ -233,16 +231,12 @@ class ItemICloudDatabase: Observer, CustomObservable
         return iCloudDatabase.fetchRecords(with: query, inZone: .item)
     }
     
-    // MARK: - Remove Items
-    
     private func removeItems(with ids: [String]) -> Promise<Void>
     {
         let recordIDs = ids.map(CKRecord.ID.init(itemID:))
         
         return iCloudDatabase.deleteRecords(withIDs: recordIDs)
     }
-    
-    // MARK: - Reset Items
     
     func reset(tree root: Item) -> Promise<Void>
     {
