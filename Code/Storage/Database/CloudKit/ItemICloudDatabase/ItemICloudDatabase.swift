@@ -336,11 +336,17 @@ class ItemICloudDatabase: Observer, CustomObservable
                 }
                 .map(on: self.backgroundQ)
                 {
-                    Accessibility.accessible
+                    _ -> Accessibility in
+                    
+                    self.isAccessible = true
+                    
+                    return Accessibility.accessible
                 }
             }
             .done(on: backgroundQ, resolver.fulfill).catch(on: backgroundQ)
             {
+                self.isAccessible = false
+                
                 resolver.reject($0.storageError)
             }
         }
@@ -351,7 +357,7 @@ class ItemICloudDatabase: Observer, CustomObservable
         return DispatchQueue.global(qos: .background)
     }
     
-    var isAccessible: Bool? { return db.isAccessible }
+    private(set) var isAccessible: Bool?
     
     // MARK: - Create Subscriptions
     

@@ -10,6 +10,8 @@ protocol ItemDatabase: Database
     func reset(tree: Item) -> Promise<Void>
     
     var messenger: Messenger<Edit?> { get }
+    
+    var isAccessible: Bool? { get }
 }
 
 struct FetchRecordsResult

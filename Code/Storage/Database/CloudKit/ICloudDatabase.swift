@@ -332,10 +332,6 @@ class ICloudDatabase: Database, CustomObservable
         {
             self.container.requestAccountStatus()
         }
-        .ensure(on: backgroundQ)
-        {
-            self.isAccessible = false
-        }
         .map(on: backgroundQ)
         {
             status in
@@ -347,7 +343,6 @@ class ICloudDatabase: Database, CustomObservable
             case .couldNotDetermine:
                 message = "Could not determine iCloud account status."
             case .available:
-                self.isAccessible = true
                 return Accessibility.accessible
             case .restricted:
                 message = "iCloud account is restricted."
@@ -363,8 +358,6 @@ class ICloudDatabase: Database, CustomObservable
     {
         return DispatchQueue.global(qos: .background)
     }
-    
-    private(set) var isAccessible: Bool?
     
     private let container = CKContainer.default()
     

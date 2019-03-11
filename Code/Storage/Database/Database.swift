@@ -4,7 +4,6 @@ import SwiftObserver
 protocol Database: AnyObject
 {
     func ensureAccess() -> Promise<Accessibility>
-    var isAccessible: Bool? { get }
     
     var isReachable: Var<Bool?> { get }
 }
