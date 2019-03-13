@@ -68,13 +68,18 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     func apply(_ edit: Edit) -> Promise<Void>
     {
-        if isAccessible != true
+        guard isAccessible.value == true else
         {
-            // TODO: buffer edits if db is currently ensuring (setting up) access
+            let errorMessage = "Tried to edit iCloud database while it isn't accessible."
             
-            return Promise(error: StorageError.message("Tried to edit iCloud db while db isn't accessible yet."))
+            return Promise(error: StorageError.message(errorMessage))
         }
         
+       return makePromise(for: edit)
+    }
+    
+    private func makePromise(for edit: Edit) -> Promise<Void>
+    {
         switch edit
         {
         case .updateItems(let records):
@@ -306,25 +311,36 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    // MARK: - iCloud Database Access
+    // MARK: - Accessibility
     
-    func ensureAccess() -> Promise<Accessibility>
+    func checkAccess() -> Promise<Accessibility>
     {
+        if isCheckingAccess
+        {
+            let errorMessage = "Called \(#function) more than once in parallel."
+            
+            log(error: errorMessage)
+            
+            return Promise(error: StorageError.message(errorMessage))
+        }
+        
+        isCheckingAccess = true
+        
         return Promise<Accessibility>
         {
             resolver in
             
             firstly
             {
-                self.iCloudDatabase.ensureAccountAccess()
+                self.iCloudDatabase.checkAccountAccess()
             }
             .then(on: backgroundQ)
             {
-                (accessibility: Accessibility) -> Promise<Accessibility> in
+                (accountAccessibility: Accessibility) -> Promise<Accessibility> in
                 
-                guard case .accessible = accessibility else
+                guard case .accessible = accountAccessibility else
                 {
-                    return Promise.value(accessibility)
+                    return Promise.value(accountAccessibility)
                 }
                 
                 return firstly
@@ -337,28 +353,35 @@ class ItemICloudDatabase: Observer, CustomObservable
                 }
                 .map(on: self.backgroundQ)
                 {
-                    _ -> Accessibility in
-                    
-                    self.isAccessible = true
-                    
-                    return Accessibility.accessible
+                    Accessibility.accessible
                 }
             }
-            .done(on: backgroundQ, resolver.fulfill).catch(on: backgroundQ)
+            .done(on: backgroundQ)
             {
-                self.isAccessible = false
+                switch $0
+                {
+                case .accessible: self.isAccessible <- true
+                case .inaccessible: self.isAccessible <- false
+                }
+                
+                resolver.fulfill($0)
+            }
+            .catch(on: backgroundQ)
+            {
+                self.isAccessible <- false
                 
                 resolver.reject($0.storageError)
+            }
+            .finally(on: backgroundQ)
+            {
+                self.isCheckingAccess = false
             }
         }
     }
     
-    var backgroundQ: DispatchQueue
-    {
-        return DispatchQueue.global(qos: .background)
-    }
+    let isAccessible = Var<Bool?>()
     
-    private(set) var isAccessible: Bool?
+    private(set) var isCheckingAccess = false
     
     // MARK: - Create Subscriptions
     
@@ -417,6 +440,13 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     let messenger = Messenger<Edit?>()
     typealias Message = Edit?
+    
+    // MARK: - Background Queue
+    
+    var backgroundQ: DispatchQueue
+    {
+        return DispatchQueue.global(qos: .background)
+    }
 }
 
 extension Error

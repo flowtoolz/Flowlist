@@ -326,7 +326,7 @@ class ICloudDatabase: CustomObservable
     
     // MARK: - Container
     
-    func ensureAccountAccess() -> Promise<Accessibility>
+    func checkAccountAccess() -> Promise<Accessibility>
     {
         return firstly
         {
@@ -352,11 +352,6 @@ class ICloudDatabase: CustomObservable
             
             return Accessibility.inaccessible(message)
         }
-    }
-    
-    private var backgroundQ: DispatchQueue
-    {
-        return DispatchQueue.global(qos: .background)
     }
     
     private let container = CKContainer.default()
@@ -423,6 +418,13 @@ class ICloudDatabase: CustomObservable
         case didModifyRecord(id: CKRecord.ID, notification: CKQueryNotification)
         case didDeleteRecord(id: CKRecord.ID)
         case didReceiveDatabaseNotification(CKDatabaseNotification)
+    }
+    
+    // MARK: - Background Queue
+    
+    private var backgroundQ: DispatchQueue
+    {
+        return DispatchQueue.global(qos: .background)
     }
 }
 

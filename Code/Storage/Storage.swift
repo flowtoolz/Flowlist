@@ -55,20 +55,20 @@ class Storage: Observer
     
     func appWillTerminate() { Store.shared.saveItems(to: file) }
     
-    // MARK: - Database Availability
+    // MARK: - Database Accessibility
     
-    func databaseAvailabilityMayHaveChanged()
+    func databaseAccessibilityMayHaveChanged()
     {
         guard self.intendsToSync else { return }
         
-        if database.isAccessible != true
+        if database.isAccessible.value != true
         {
-            log(error: "Invalid state: Using database while it's POSSIBLY unavailable: Is availabe: \(String(describing: database.isAccessible))")
+            log(error: "Invalid state: Using database while it's POSSIBLY inaccessible: Is accessible: \(String(describing: database.isAccessible))")
         }
     
         firstly
         {
-            database.ensureAccess()
+            database.checkAccess()
         }
         .done(on: self.backgroundQ)
         {
@@ -77,6 +77,10 @@ class Storage: Observer
                 let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
                 
                 self.abortIntendingToSync(errorMessage: message, callToAction: c2a)
+            }
+            else if self.hasUnsyncedLocalChanges.value
+            {
+                self.doInitialSync().catch(self.abortIntendingToSync)
             }
         }
         .catch(abortIntendingToSync)
@@ -152,7 +156,7 @@ class Storage: Observer
         
         return firstly
         {
-            database.ensureAccess()
+            database.checkAccess()
         }
         .then(on: backgroundQ)
         {
@@ -311,9 +315,7 @@ class Storage: Observer
 
     private func observeDatabase()
     {
-        let databaseMessenger = database.messenger
-        
-        observe(databaseMessenger)
+        observe(database.messenger)
         {
             guard let edit = $0 else { return }
             
@@ -342,7 +344,23 @@ class Storage: Observer
             hasUnsyncedLocalChanges.value = true
             return
         }
-                
+        
+        if database.isAccessible.value != true
+        {
+            hasUnsyncedLocalChanges.value = true
+
+            if database.isCheckingAccess
+            {
+                return
+            }
+            else
+            {
+                let errorMessage = "Tried to edit iCloud database before ensuring accessibility."
+
+                abortIntendingToSync(with: StorageError.message(errorMessage))
+            }
+        }
+        
         database.apply(edit).catch
         {
             self.hasUnsyncedLocalChanges.value = true
@@ -374,7 +392,7 @@ class Storage: Observer
     }
     
     private var _intendsToSync = PersistentFlag(key: "UserDefaultsKeyWantsToUseICloud",
-                                                default: false)
+                                                default: true)
     
     private func informUserAboutSyncProblem(error: String,
                                             callToAction: String)

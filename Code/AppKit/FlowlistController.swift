@@ -114,7 +114,7 @@ class FlowlistController: AppController
     
     @objc private func iCloudStatusChanged()
     {
-        storage.databaseAvailabilityMayHaveChanged()
+        storage.databaseAccessibilityMayHaveChanged()
     }
     
     // MARK: - Basics
