@@ -1,0 +1,165 @@
+Flowlist Debug Log
+
+> FLOWLIST ERROR: Error fetching changes in zone <CKRecordZoneID: 0x7fbbb8084a30; ownerName=__defaultOwner__, zoneName=ItemZone>: Zone 'ItemZone' does not exist (ChangeFetch.swift, init(zoneID:token:handleResult:), line 64)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ICloudDatabase+ServerChangeToken.swift, fetchChanges(fromZone:oldToken:), line 23)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (ItemICloudDatabase.swift, didReceive(databaseNotification:), line 64)
+
+> FLOWLIST ERROR: Error fetching changes in zone <CKRecordZoneID: 0x7fbbb8084a30; ownerName=__defaultOwner__, zoneName=ItemZone>: Zone 'ItemZone' does not exist (ChangeFetch.swift, init(zoneID:token:handleResult:), line 64)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ICloudDatabase+ServerChangeToken.swift, fetchChanges(fromZone:oldToken:), line 23)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (ItemICloudDatabase.swift, didReceive(databaseNotification:), line 64)
+
+> FLOWLIST ERROR: Couldn’t communicate with a helper application. (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: Couldn’t communicate with a helper application. (ICloudDatabase+ServerChangeToken.swift, fetchChanges(fromZone:oldToken:), line 23)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (ItemICloudDatabase.swift, didReceive(databaseNotification:), line 64)
+
+> FLOWLIST ERROR: Invalid state: Using database while it's POSSIBLY unavailable: Is availabe: nil (Storage.swift, databaseAvailabilityMayHaveChanged(), line 66)
+
+> FLOWLIST ERROR: Error fetching changes in zone <CKRecordZoneID: 0x7fa945471a70; ownerName=__defaultOwner__, zoneName=ItemZone>: Zone 'ItemZone' does not exist (ChangeFetch.swift, init(zoneID:token:handleResult:), line 64)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ICloudDatabase+ServerChangeToken.swift, fetchChanges(fromZone:oldToken:), line 23)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (ItemICloudDatabase.swift, didReceive(databaseNotification:), line 64)
+
+> FLOWLIST ERROR: Error fetching changes in zone <CKRecordZoneID: 0x7fa945471a70; ownerName=__defaultOwner__, zoneName=ItemZone>: Zone 'ItemZone' does not exist (ChangeFetch.swift, init(zoneID:token:handleResult:), line 64)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ICloudDatabase+ServerChangeToken.swift, fetchChanges(fromZone:oldToken:), line 23)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (ItemICloudDatabase.swift, didReceive(databaseNotification:), line 64)
+
+> FLOWLIST ERROR: Error fetching changes in zone <CKRecordZoneID: 0x7fa945471a70; ownerName=__defaultOwner__, zoneName=ItemZone>: Zone 'ItemZone' does not exist (ChangeFetch.swift, init(zoneID:token:handleResult:), line 64)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ICloudDatabase+ServerChangeToken.swift, fetchChanges(fromZone:oldToken:), line 23)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (ItemICloudDatabase.swift, didReceive(databaseNotification:), line 64)
+
+> FLOWLIST ERROR: Error fetching changes in zone <CKRecordZoneID: 0x7fa945471a70; ownerName=__defaultOwner__, zoneName=ItemZone>: Zone 'ItemZone' does not exist (ChangeFetch.swift, init(zoneID:token:handleResult:), line 64)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ICloudDatabase+ServerChangeToken.swift, fetchChanges(fromZone:oldToken:), line 23)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (ItemICloudDatabase.swift, didReceive(databaseNotification:), line 64)
+
+> FLOWLIST ERROR: Error fetching changes in zone <CKRecordZoneID: 0x7fa945471a70; ownerName=__defaultOwner__, zoneName=ItemZone>: Zone 'ItemZone' does not exist (ChangeFetch.swift, init(zoneID:token:handleResult:), line 64)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ICloudDatabase+ServerChangeToken.swift, fetchChanges(fromZone:oldToken:), line 23)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (ItemICloudDatabase.swift, didReceive(databaseNotification:), line 64)
+
+> FLOWLIST ERROR: Zone 'ItemZone' does not exist (CKDatabase+Promises.swift, perform(_:inZoneWith:), line 20)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x60000170b870: "Zone Not Found" (26/2036); server message = "Zone 'ItemZone' does not exist"; uuid = 49748C4B-B216-4B58-AF8E-CB058EE2003A; container ID = "iCloud.com.flowtoolz.flowlist"> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: Could not save items to file:///Users/sebastian/Library/Containers/com.flowtoolz.flowlist/Data/Documents/flowlist.json (ItemJSONFile.swift, save, line 41)
+
+> FLOWLIST ERROR: The file “flowlist-log.txt” doesn’t exist. (FileLogger.swift, saveLogsToFile(), line 37)
+
+> FLOWLIST ERROR: Could not save items to file:///Users/sebastian/Library/Containers/com.flowtoolz.flowlist/Data/Documents/flowlist.json (ItemJSONFile.swift, save, line 41)
+
+> FLOWLIST ERROR: The file “flowlist-log.txt” doesn’t exist. (FileLogger.swift, saveLogsToFile(), line 37)
+
+> FLOWLIST ERROR: Error fetching changes in zone <CKRecordZoneID: 0x7fa945471a70; ownerName=__defaultOwner__, zoneName=ItemZone>: Zone 'ItemZone' does not exist (ChangeFetch.swift, init(zoneID:token:handleResult:), line 64)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ICloudDatabase+ServerChangeToken.swift, fetchChanges(fromZone:oldToken:), line 23)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (ItemICloudDatabase.swift, didReceive(databaseNotification:), line 64)
+
+> FLOWLIST ERROR: Error fetching changes in zone <CKRecordZoneID: 0x7fa945471a70; ownerName=__defaultOwner__, zoneName=ItemZone>: Zone 'ItemZone' does not exist (ChangeFetch.swift, init(zoneID:token:handleResult:), line 64)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ICloudDatabase+ServerChangeToken.swift, fetchChanges(fromZone:oldToken:), line 23)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (ItemICloudDatabase.swift, didReceive(databaseNotification:), line 64)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST ERROR: Error fetching changes in zone <CKRecordZoneID: 0x7fa945471a70; ownerName=__defaultOwner__, zoneName=ItemZone>: Zone 'ItemZone' does not exist (ChangeFetch.swift, init(zoneID:token:handleResult:), line 64)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ICloudDatabase+ServerChangeToken.swift, fetchChanges(fromZone:oldToken:), line 23)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (ItemICloudDatabase.swift, didReceive(databaseNotification:), line 64)
+
+> FLOWLIST ERROR: Error fetching changes in zone <CKRecordZoneID: 0x7fa945471a70; ownerName=__defaultOwner__, zoneName=ItemZone>: Zone 'ItemZone' does not exist (ChangeFetch.swift, init(zoneID:token:handleResult:), line 64)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ChangeFetch.swift, init(zoneID:token:handleResult:), line 83)
+
+> FLOWLIST ERROR: Couldn't fetch some items when fetching changes (ICloudDatabase+ServerChangeToken.swift, fetchChanges(fromZone:oldToken:), line 23)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (Flowlist.StorageError error 0.) (ItemICloudDatabase.swift, didReceive(databaseNotification:), line 64)
+
+> FLOWLIST WARNING: Unexpected changes. (ItemICloudDatabase.swift, apply, line 114)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ICloudDatabase.swift, perform(modifyOperation:handleCreationSuccess:handleDeletionSuccess:), line 307)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x600000965b60: "Network Failure" (4/NSURLErrorDomain:-1001); "The request timed out."> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ICloudDatabase.swift, perform(modifyOperation:handleCreationSuccess:handleDeletionSuccess:), line 307)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x600000931d70: "Network Failure" (4/NSURLErrorDomain:-1001); "The request timed out."> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ICloudDatabase.swift, perform(modifyOperation:handleCreationSuccess:handleDeletionSuccess:), line 307)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x6000009708a0: "Network Failure" (4/NSURLErrorDomain:-1001); "The request timed out."> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ICloudDatabase.swift, perform(modifyOperation:handleCreationSuccess:handleDeletionSuccess:), line 307)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x600000ae8150: "Network Failure" (4/NSURLErrorDomain:-1001); "The request timed out."> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ICloudDatabase.swift, perform(modifyOperation:handleCreationSuccess:handleDeletionSuccess:), line 307)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x600000961920: "Network Failure" (4/NSURLErrorDomain:-1001); "The request timed out."> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ICloudDatabase.swift, perform(modifyOperation:handleCreationSuccess:handleDeletionSuccess:), line 307)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x600000936ee0: "Network Failure" (4/NSURLErrorDomain:-1001); "The request timed out."> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ICloudDatabase.swift, perform(modifyOperation:handleCreationSuccess:handleDeletionSuccess:), line 307)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x600001626340: "Network Failure" (4/NSURLErrorDomain:-1001); "The request timed out."> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ICloudDatabase.swift, perform(modifyOperation:handleCreationSuccess:handleDeletionSuccess:), line 307)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x600001666a90: "Network Failure" (4/NSURLErrorDomain:-1001); "The request timed out."> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ICloudDatabase.swift, perform(modifyOperation:handleCreationSuccess:handleDeletionSuccess:), line 307)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x60000095f510: "Network Failure" (4/NSURLErrorDomain:-1001); "The request timed out."> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ICloudDatabase.swift, perform(modifyOperation:handleCreationSuccess:handleDeletionSuccess:), line 307)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x6000017b86c0: "Network Failure" (4/NSURLErrorDomain:-1001); "The request timed out."> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ICloudDatabase.swift, perform(modifyOperation:handleCreationSuccess:handleDeletionSuccess:), line 307)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x600000ad14d0: "Network Failure" (4/NSURLErrorDomain:-1001); "The request timed out."> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ICloudDatabase.swift, perform(modifyOperation:handleCreationSuccess:handleDeletionSuccess:), line 307)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x600000ad5c50: "Network Failure" (4/NSURLErrorDomain:-1001); "The request timed out."> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
+
+> FLOWLIST ERROR: The operation couldn’t be completed. (CKErrorDomain error 4.) (ICloudDatabase.swift, perform(modifyOperation:handleCreationSuccess:handleDeletionSuccess:), line 307)
+
+> FLOWLIST ERROR: This issue came up: <CKError 0x60000143a520: "Network Failure" (4/NSURLErrorDomain:-1001); "The request timed out."> (Storage.swift, abortIntendingToSync(errorMessage:callToAction:), line 378)
