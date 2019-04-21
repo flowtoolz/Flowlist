@@ -76,6 +76,10 @@ class WindowMenu: NSMenu, NSMenuItemValidation, Observer
     
     // MARK: - Toggle Focus
     
+    private func updateFocusItemTitle() {
+        focusItem.title = "\(self.isMonotasking ? "Multi" : "Mono")tasking"
+    }
+    
     private lazy var focusItem = MenuItem("Monotasking",
                                           key: "m",
                                           validator: self)
@@ -99,7 +103,7 @@ class WindowMenu: NSMenu, NSMenuItemValidation, Observer
         }
         
         self.isMonotasking = !self.isMonotasking
-        self.focusItem.title = "\(self.isMonotasking ? "Multi" : "Mono")tasking"
+        self.updateFocusItemTitle()
     }
     
     private var isMonotasking = false
