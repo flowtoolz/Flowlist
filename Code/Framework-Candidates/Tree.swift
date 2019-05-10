@@ -313,7 +313,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     func index(of branch: Node) -> Int?
     {
-        return branches.index { $0 === branch }
+        return branches.firstIndex { $0 === branch }
     }
     
     var isLeaf: Bool { return count == 0 }

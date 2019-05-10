@@ -135,7 +135,7 @@ class BrowserView: LayerBackedView, Observer
     
     private func listViewReceivedUserInput(_ listView: ListView)
     {
-        guard let listIndex = listViews.index(where: { $0 === listView }) else
+        guard let listIndex = listViews.firstIndex(where: { $0 === listView }) else
         {
             log(error: "Couldn't get index of list view that received user input")
             return

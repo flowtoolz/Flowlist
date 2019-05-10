@@ -2,7 +2,10 @@ import SwiftyToolz
 
 extension Tree: Hashable
 {
-    var hashValue: HashValue { return SwiftyToolz.hashValue(self) }
+    func hash(into hasher: inout Hasher)
+    {
+        hasher.combine(SwiftyToolz.hashValue(self))
+    }
     
     static func == (lhs: Tree, rhs: Tree) -> Bool
     {

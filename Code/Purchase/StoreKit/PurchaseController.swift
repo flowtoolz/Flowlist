@@ -97,6 +97,9 @@ class PurchaseController: NSObject, CustomObservable, SKProductsRequestDelegate,
             SKPaymentQueue.default().finishTransaction(transaction)
             
         case .deferred: break
+        @unknown default:
+            log(error: "unhandled case")
+            break
         }
     }
     

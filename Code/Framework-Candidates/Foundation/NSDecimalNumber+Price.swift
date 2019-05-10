@@ -2,7 +2,7 @@ import Foundation
 
 public extension NSDecimalNumber
 {
-    public func formattedPrice(in locale: Locale = Locale.current) -> String?
+    func formattedPrice(in locale: Locale = Locale.current) -> String?
     {
         let formatter = NumberFormatter()
         

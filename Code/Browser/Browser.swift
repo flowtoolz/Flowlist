@@ -116,7 +116,7 @@ class Browser: Observer, CustomObservable
     
     private func listChangedSelection(_ list: List)
     {
-        guard let index = lists.index(where: { $0 === list }) else
+        guard let index = lists.firstIndex(where: { $0 === list }) else
         {
             log(error: "Received update from unmanaged list.")
             return

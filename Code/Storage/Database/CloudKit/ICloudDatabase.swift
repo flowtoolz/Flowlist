@@ -111,7 +111,7 @@ class ICloudDatabase: CustomObservable
     
     func handlePushNotification(with userInfo: [String : Any])
     {
-        let notification = CKNotification(fromRemoteNotificationDictionary: userInfo)
+        guard let notification = CKNotification(fromRemoteNotificationDictionary: userInfo) else { return }
         
         switch notification.notificationType
         {
@@ -138,6 +138,9 @@ class ICloudDatabase: CustomObservable
             }
             
             didReceive(databaseNotification: notification)
+        @unknown default:
+            log(error: "unhandled case")
+            break
         }
     }
     
@@ -157,6 +160,8 @@ class ICloudDatabase: CustomObservable
             didModifyRecord(with: recordId, notification: notification)
         case .recordDeleted:
             didDeleteRecord(with: recordId)
+        @unknown default:
+            log(error: "unhandled case")
         }
     }
     
@@ -348,6 +353,8 @@ class ICloudDatabase: CustomObservable
                 message = "iCloud account is restricted."
             case .noAccount:
                 message = "Cannot access the iCloud account."
+            @unknown default:
+                log(error: "unhandled case")
             }
             
             return Accessibility.inaccessible(message)
