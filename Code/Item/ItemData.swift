@@ -96,20 +96,9 @@ final class ItemData: Observer, CustomObservable
         }
     }
 
-    // TODO: remove the concern of data observation from Tree and fix this:
-    // MARK: - Temporarily pretend to Tree we conform to Observable
+    // TODO: remove the concern of data observation from Tree and move it to specific ItemTree
     
-    func add(_ observer: AnyObject, receive: @escaping Receiver)
-    {
-        messenger.add(observer, receive: receive)
-    }
-    
-    func remove(_ observer: AnyObject) { messenger.remove(observer) }
-    func stopObservations() { messenger.stopObservations() }
-    func stopAbandonedObservations() { messenger.stopAbandonedObservations() }
-    func send(_ update: Event) { messenger.send(update) }
-    
-    // MARK: - Messenger
+    // MARK: - Observability
     
     let messenger = Messenger(Event.didNothing)
     
