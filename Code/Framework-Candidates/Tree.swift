@@ -52,7 +52,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
             
             guard let self = self else { return }
             
-            self.sendToRoot(.receivedDataUpdate(update, in: self))
+            self.sendToRoot(.receivedMessage(update, fromDataIn: self))
         }
     }
     
@@ -250,15 +250,15 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         case didUpdateNode(NodeUpdate)
         case didChangeLeafNumber(Int)
         
-        enum TreeUpdate
+        enum TreeUpdate // gets propagated to root (for observers of the whole tree)
         {
             case removedNodes([Node], from: Node)
             case insertedNodes([Node], in: Node, at: [Int])
-            case receivedDataUpdate(Data.Message, in: Node)
+            case receivedMessage(Data.Message, fromDataIn: Node)
             case movedNode(Node, from: Int, to: Int)
         }
         
-        enum NodeUpdate
+        enum NodeUpdate // for observers of each respective node
         {
             case switchedRoot(from: Node?, to: Node?)
             case insertedNodes(at: [Int])

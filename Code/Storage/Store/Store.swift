@@ -88,7 +88,7 @@ class Store: Observer, CustomObservable
                     sendEdit(with: treeUpdate)
                 }
                 
-            case .receivedDataUpdate, .movedNode:
+            case .receivedMessage, .movedNode:
                 // TODO: avoid sending updates back that were triggered from outside (from database)
                 sendEdit(with: treeUpdate)
                 

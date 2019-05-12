@@ -14,7 +14,7 @@ extension Edit
             
             self = .updateItems(withRecords: records)
             
-        case .receivedDataUpdate(let dataUpdate, let node):
+        case .receivedMessage(let dataUpdate, let node):
             if case .wasModified = dataUpdate
             {
                 let record = node.makeRecord(modifiesPosition: false)
