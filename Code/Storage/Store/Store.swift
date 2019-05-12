@@ -85,12 +85,12 @@ class Store: Observer, CustomObservable
                 
                 if !hadAlreadyAddedAll
                 {
-                    sendEdit(with: treeUpdate)
+                    send(.didUpdate(treeUpdate))
                 }
                 
             case .receivedMessage, .movedNode:
                 // TODO: avoid sending updates back that were triggered from outside (from database)
-                sendEdit(with: treeUpdate)
+                send(.didUpdate(treeUpdate))
                 
             case .removedNodes(let items, _):
                 var hadAlreadyRemovedAll = true
@@ -106,17 +106,9 @@ class Store: Observer, CustomObservable
                 
                 if !hadAlreadyRemovedAll
                 {
-                    sendEdit(with: treeUpdate)
+                    send(.didUpdate(treeUpdate))
                 }
             }
-        }
-    }
-    
-    private func sendEdit(with treeUpdate: Item.Event.TreeUpdate)
-    {
-        if let edit = Edit(treeUpdate: treeUpdate)
-        {
-            send(.wasEdited(edit))
         }
     }
     
@@ -166,6 +158,6 @@ class Store: Observer, CustomObservable
     
     enum Event
     {
-        case didNothing, didSwitchRoot, wasEdited(Edit)
+        case didNothing, didSwitchRoot, didUpdate(Item.Event.TreeUpdate)
     }
 }

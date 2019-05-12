@@ -3,7 +3,7 @@ import SwiftyToolz
 
 extension Store
 {
-    // MARK: - Apply Edits
+    // MARK: - Apply Edits (essentially, edits received from (iCloud-) database)
     
     func apply(_ edit: Edit)
     {

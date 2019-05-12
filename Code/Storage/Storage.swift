@@ -329,7 +329,11 @@ class Storage: Observer
     {
         observe(Store.shared)
         {
-            guard case .wasEdited(let edit) = $0 else { return }
+            [weak self] in
+            
+            guard let self = self,
+                case .didUpdate(let update) = $0,
+                let edit = Edit(treeUpdate: update) else { return }
             
             self.storeWasEdited(edit)
         }

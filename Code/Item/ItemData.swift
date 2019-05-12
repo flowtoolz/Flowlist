@@ -3,13 +3,13 @@ import SwiftyToolz
 
 final class ItemData: Observer, CustomObservable
 {
-    // MARK: - Life Cycle
+    // MARK: - Initialization
     
     init(id: String? = nil)
     {
         self.id = id ?? String.makeUUID()
         
-        wantsTextInput = id == nil
+        wantsTextInput = id == nil // TODO: comment: wants text input when created with nild id... why?
         
         observe(text, state, tag)
         {
@@ -69,7 +69,6 @@ final class ItemData: Observer, CustomObservable
     
     enum Tag: Int, Codable
     {
-        // TODO: use this everywhere where optional Ints are written to property tag... same for state...
         init?(integer: Int?)
         {
             guard let int = integer, let tag = Tag(rawValue: int) else
