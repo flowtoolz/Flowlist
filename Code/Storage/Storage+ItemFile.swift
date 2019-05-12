@@ -1,7 +1,7 @@
 import PromiseKit
 import SwiftyToolz
 
-extension Store
+extension Storage
 {
     func saveItems(to file: ItemFile?)
     {
@@ -11,9 +11,9 @@ extension Store
             return
         }
         
-        guard let root = root else
+        guard let root = Store.shared.root else
         {
-            log(error: "Store has no root item.")
+            log(error: "Store root is nil.")
             return
         }
         
@@ -24,15 +24,15 @@ extension Store
     {
         guard let file = file else
         {
-            return Promise(error: StoreError.message("File is nil."))
+            return Promise(error: StorageError.message("File is nil."))
         }
         
         guard let item = file.loadItem() else
         {
-            let error = StoreError.message("Couldn't load items from file.")
+            let error = StorageError.message("Couldn't load items from file.")
             return Promise(error: error)
         }
         
-        return update(root: item)
+        return Store.shared.update(root: item)
     }
 }

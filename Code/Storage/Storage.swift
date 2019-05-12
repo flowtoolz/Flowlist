@@ -28,7 +28,7 @@ class Storage: Observer
     {
         firstly
         {
-            Store.shared.loadItems(from: file)
+            loadItems(from: file)
         }
         .then(on: backgroundQ)
         {
@@ -51,9 +51,9 @@ class Storage: Observer
         .catch(abortIntendingToSync)
     }
     
-    func windowLostFocus() { Store.shared.saveItems(to: file) }
+    func windowLostFocus() { saveItems(to: file) }
     
-    func appWillTerminate() { Store.shared.saveItems(to: file) }
+    func appWillTerminate() { saveItems(to: file) }
     
     // MARK: - Database Accessibility
     

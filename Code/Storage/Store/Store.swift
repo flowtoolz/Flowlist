@@ -145,11 +145,6 @@ class Store: Observer, CustomObservable
     private(set) var root: Item?
     let itemHash = HashMap()
     
-    enum StoreError: Error
-    {
-        case message(String)
-    }
-    
     // MARK: - Observability
     
     typealias Message = Event
