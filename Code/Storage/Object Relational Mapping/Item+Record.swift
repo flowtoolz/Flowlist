@@ -24,19 +24,17 @@ extension Tree where Data == ItemData
                       modifiesPosition: modifiesPosition)
     }
     
-    /**
-     This avoids all but one calls to indexInRoot, whose complexity would all be linear in the number of siblings.
-     **/
     func makeRecords(position: Int? = nil) -> [Record]
     {
+        // calling indexInRoot just once in the first call, so performance is ok
         let recPosition = position ?? (indexInRoot ?? 0)
         
         let record = Record(id: data.id,
-                                text: text,
-                                state: data.state.value,
-                                tag: data.tag.value,
-                                rootID: root?.data.id,
-                                position: recPosition)
+                            text: text,
+                            state: data.state.value,
+                            tag: data.tag.value,
+                            rootID: root?.data.id,
+                            position: recPosition)
         
         var result = [record]
         

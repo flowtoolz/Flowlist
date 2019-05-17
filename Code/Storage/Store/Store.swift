@@ -8,7 +8,7 @@ class Store: Observer, CustomObservable
     
     static let shared = Store() 
     
-    fileprivate init() {}
+    private init() {}
 
     // MARK: - Update Root
     

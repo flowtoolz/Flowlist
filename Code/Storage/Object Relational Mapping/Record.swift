@@ -50,9 +50,9 @@ struct Record
     let text: String?
     let state: ItemData.State?
     let tag: ItemData.Tag?
+    
     let rootID: String?
     let position: Int
-    
     let modifiesPosition: Bool
     
     enum Field: String, CaseIterable

@@ -51,7 +51,7 @@
 		9E1F2CF42184476B00DFFD73 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1F2CF32184476B00DFFD73 /* CloudKit.framework */; };
 		9E22D8AD218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */; };
 		9E22D8AF218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22D8AE218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift */; };
-		9E2640FB21972941008FCD19 /* Edit+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2640FA21972941008FCD19 /* Edit+Item.swift */; };
+		9E2640FB21972941008FCD19 /* Item+Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2640FA21972941008FCD19 /* Item+Edit.swift */; };
 		9E2B20CB21CE65BC0071D4FF /* Record+CKRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B20CA21CE65BC0071D4FF /* Record+CKRecord.swift */; };
 		9E2CCE8D20C1DE030037D755 /* List+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CCE8C20C1DE030037D755 /* List+Clipboard.swift */; };
 		9E3EB55E2181E89200681953 /* TextFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EB55D2181E89200681953 /* TextFormat.swift */; };
@@ -61,7 +61,6 @@
 		9E5768C220C15CDF00749C0C /* Tree+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768C120C15CDF00749C0C /* Tree+Hashable.swift */; };
 		9E576E352186F85100C9F876 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E342186F85100C9F876 /* Storage.swift */; };
 		9E576E372186FAB400C9F876 /* Item+Matching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E362186FAB400C9F876 /* Item+Matching.swift */; };
-		9E654E0A21A431C50052607F /* Storage+ItemFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E654E0921A431C50052607F /* Storage+ItemFile.swift */; };
 		9E654E1121A487070052607F /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E654E1021A485B30052607F /* StorageController.swift */; };
 		9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Item+State.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
@@ -155,7 +154,7 @@
 		9E1F2CF32184476B00DFFD73 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyedEncodingContainer+SwiftyToolz.swift"; sourceTree = "<group>"; };
 		9E22D8AE218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer+SwiftyToolz.swift"; sourceTree = "<group>"; };
-		9E2640FA21972941008FCD19 /* Edit+Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Edit+Item.swift"; sourceTree = "<group>"; };
+		9E2640FA21972941008FCD19 /* Item+Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Edit.swift"; sourceTree = "<group>"; };
 		9E2B20CA21CE65BC0071D4FF /* Record+CKRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+CKRecord.swift"; sourceTree = "<group>"; };
 		9E2CCE8C20C1DE030037D755 /* List+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+Clipboard.swift"; sourceTree = "<group>"; };
 		9E3EB55D2181E89200681953 /* TextFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormat.swift; sourceTree = "<group>"; };
@@ -166,7 +165,6 @@
 		9E5768C120C15CDF00749C0C /* Tree+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tree+Hashable.swift"; sourceTree = "<group>"; };
 		9E576E342186F85100C9F876 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		9E576E362186FAB400C9F876 /* Item+Matching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Matching.swift"; sourceTree = "<group>"; };
-		9E654E0921A431C50052607F /* Storage+ItemFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Storage+ItemFile.swift"; sourceTree = "<group>"; };
 		9E654E1021A485B30052607F /* StorageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageController.swift; sourceTree = "<group>"; };
 		9E6C720A20B19C88001C3D2C /* Item+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+State.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
@@ -244,6 +242,18 @@
 				E46682D8127B754B09986C90 /* Pods-Flowlist.beta.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		9E0C5BFD228F1B0200DC3460 /* General iCloud Stuff */ = {
+			isa = PBXGroup;
+			children = (
+				9EBD41AA21AC419B00C97B99 /* ICloudDatabase+ServerChangeToken.swift */,
+				9EBD41AC21AC4A0A00C97B99 /* ChangeFetch.swift */,
+				9E053B2C21886963001B7103 /* ICloudDatabase.swift */,
+				9EE17AF22222B29000A07E4B /* CKDatabase+Promises.swift */,
+				9EE17AF02222A8F600A07E4B /* CKContainer+Promises.swift */,
+			);
+			path = "General iCloud Stuff";
 			sourceTree = "<group>";
 		};
 		9E132D2321D3C36200B61D2D /* Foundation */ = {
@@ -405,14 +415,14 @@
 			children = (
 				9E654E0F21A4859C0052607F /* CloudKit */,
 				9E576E342186F85100C9F876 /* Storage.swift */,
-				9E654E0921A431C50052607F /* Storage+ItemFile.swift */,
-				9E18C3DB21D6604A00363F48 /* StorageError.swift */,
 				9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */,
+				9EF0AABB218838FA00B707F4 /* Store+Edit.swift */,
 				9EA5A892218ECB37004902F7 /* Database */,
+				9E18C3DB21D6604A00363F48 /* StorageError.swift */,
+				9EC5C8B421B00F9500615D20 /* Object Relational Mapping */,
 				9EA5A897218ECC98004902F7 /* Store */,
 				9EA5A895218ECC5A004902F7 /* File */,
-				9EA5A898218ECEF5004902F7 /* Codable-Item */,
-				9EC5C8B421B00F9500615D20 /* Edit */,
+				9EA5A898218ECEF5004902F7 /* Codable Item */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -436,11 +446,7 @@
 				9EF96E7521A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift */,
 				9E053B2A21886963001B7103 /* CKRecord.ID+Record.swift */,
 				9EF96E7321A9F516005619C7 /* CKRecordZone.ID+ItemZone.swift */,
-				9EBD41AA21AC419B00C97B99 /* ICloudDatabase+ServerChangeToken.swift */,
-				9E053B2C21886963001B7103 /* ICloudDatabase.swift */,
-				9EE17AF22222B29000A07E4B /* CKDatabase+Promises.swift */,
-				9EBD41AC21AC4A0A00C97B99 /* ChangeFetch.swift */,
-				9EE17AF02222A8F600A07E4B /* CKContainer+Promises.swift */,
+				9E0C5BFD228F1B0200DC3460 /* General iCloud Stuff */,
 			);
 			path = CloudKit;
 			sourceTree = "<group>";
@@ -457,22 +463,20 @@
 		9EA5A897218ECC98004902F7 /* Store */ = {
 			isa = PBXGroup;
 			children = (
-				9EF0AABB218838FA00B707F4 /* Store+Edit.swift */,
 				9E7651951EEF4DA200DE2B07 /* Store.swift */,
-				9E2640FA21972941008FCD19 /* Edit+Item.swift */,
 				9EF0AABD21883E6E00B707F4 /* HashMap.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
 		};
-		9EA5A898218ECEF5004902F7 /* Codable-Item */ = {
+		9EA5A898218ECEF5004902F7 /* Codable Item */ = {
 			isa = PBXGroup;
 			children = (
 				9EF231AE218B99B0006E783C /* DecodableItem.swift */,
 				9EF231A8218B570F006E783C /* Item+Encodable.swift */,
 				9E6E70AE2193803E00BDB0BA /* Item+CodableField.swift */,
 			);
-			path = "Codable-Item";
+			path = "Codable Item";
 			sourceTree = "<group>";
 		};
 		9EA5A89B218ED21B004902F7 /* Foundation */ = {
@@ -624,14 +628,15 @@
 			path = AppKit;
 			sourceTree = "<group>";
 		};
-		9EC5C8B421B00F9500615D20 /* Edit */ = {
+		9EC5C8B421B00F9500615D20 /* Object Relational Mapping */ = {
 			isa = PBXGroup;
 			children = (
-				9EF2E8902187D293008D2780 /* Edit.swift */,
+				9E2640FA21972941008FCD19 /* Item+Edit.swift */,
 				9E6E70AA21936A8B00BDB0BA /* Item+Record.swift */,
+				9EF2E8902187D293008D2780 /* Edit.swift */,
 				9E6E70AC21936CD300BDB0BA /* Record.swift */,
 			);
-			path = Edit;
+			path = "Object Relational Mapping";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -793,13 +798,12 @@
 				9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */,
 				9EF231A9218B570F006E783C /* Item+Encodable.swift in Sources */,
-				9E2640FB21972941008FCD19 /* Edit+Item.swift in Sources */,
+				9E2640FB21972941008FCD19 /* Item+Edit.swift in Sources */,
 				9E053B65218871F5001B7103 /* Item+Export.swift in Sources */,
 				9E6E70AB21936A8B00BDB0BA /* Item+Record.swift in Sources */,
 				9E053B442188711A001B7103 /* HelpMenu.swift in Sources */,
 				9EF0AABE21883E6E00B707F4 /* HashMap.swift in Sources */,
 				9E053B62218871C4001B7103 /* ItemTableContent.swift in Sources */,
-				9E654E0A21A431C50052607F /* Storage+ItemFile.swift in Sources */,
 				9E053B3021886963001B7103 /* CKRecord.ID+Record.swift in Sources */,
 				9E053B5D218871C4001B7103 /* Spacer.swift in Sources */,
 				9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */,

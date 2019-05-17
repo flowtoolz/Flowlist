@@ -333,7 +333,7 @@ class Storage: Observer
             
             guard let self = self,
                 case .didUpdate(let update) = $0,
-                let edit = Edit(treeUpdate: update) else { return }
+                let edit = update.makeEdit() else { return }
             
             self.storeWasEdited(edit)
         }
@@ -415,6 +415,41 @@ class Storage: Observer
         }
     }
     
+    // MARK: - File
+    
+    private func saveItems(to file: ItemFile?)
+    {
+        guard let file = file else
+        {
+            log(error: "File is nil.")
+            return
+        }
+        
+        guard let root = Store.shared.root else
+        {
+            log(error: "Store root is nil.")
+            return
+        }
+        
+        file.save(root)
+    }
+    
+    private func loadItems(from file: ItemFile?) -> Promise<Void>
+    {
+        guard let file = file else
+        {
+            return Promise(error: StorageError.message("File is nil."))
+        }
+        
+        guard let item = file.loadItem() else
+        {
+            let error = StorageError.message("Couldn't load items from file.")
+            return Promise(error: error)
+        }
+        
+        return Store.shared.update(root: item)
+    }
+    
     // MARK: - Basics
     
     private var backgroundQ: DispatchQueue
@@ -424,24 +459,4 @@ class Storage: Observer
     
     let database: ItemDatabase
     let file: ItemFile
-}
-
-// MARK: - Error Messages
-
-fileprivate extension Error
-{
-    var message: String
-    {
-        if let error = self as? StorageError
-        {
-            switch error
-            {
-            case .message(let text): return text
-            }
-        }
-        else
-        {
-            return "This issue came up: \(String(describing: self))"
-        }
-    }
 }
