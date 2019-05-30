@@ -1,5 +1,11 @@
 public struct PersistentFlag
 {
+    init(_ key: String, default: Bool = false)
+    {
+        self.key = key
+        self.default = `default`
+    }
+    
     public var value: Bool
     {
         get { return persister.bool(key) ?? `default` }

@@ -402,7 +402,7 @@ class ItemICloudDatabase: Observer, CustomObservable
     }
     
     private let dbSubID = "ItemDataBaseSubscription"
-    private var subExists = PersistentFlag(key: "itemDBSubExists", default: false)
+    private var subExists = PersistentFlag("itemDBSubExists")
     
     // MARK: - Create Zone
     
@@ -422,7 +422,7 @@ class ItemICloudDatabase: Observer, CustomObservable
         .map { _ in }
     }
     
-    private var zoneExists = PersistentFlag(key: "itemZoneExists", default: false)
+    private var zoneExists = PersistentFlag("itemZoneExists")
     
     // MARK: - iCloud Database
     

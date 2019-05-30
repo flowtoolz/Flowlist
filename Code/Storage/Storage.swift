@@ -362,8 +362,7 @@ class Storage: Observer
         }
     }
     
-    private var hasUnsyncedLocalChanges = PersistentFlag(key: "UserDefaultsKeyUnsyncedLocalChanges",
-                                                         default: false)
+    private var hasUnsyncedLocalChanges = PersistentFlag("UserDefaultsKeyUnsyncedLocalChanges")
     
     // MARK: - Intention to Sync
     
@@ -386,8 +385,7 @@ class Storage: Observer
     
     var isIntendingToSync: Bool { return syncIntentionPersistentFlag.value }
     
-    private var syncIntentionPersistentFlag = PersistentFlag(key: "UserDefaultsKeyWantsToUseICloud",
-                                                             default: false)
+    private var syncIntentionPersistentFlag = PersistentFlag("UserDefaultsKeyWantsToUseICloud")
     
     private func informUserAboutSyncProblem(error: String, callToAction: String)
     {
