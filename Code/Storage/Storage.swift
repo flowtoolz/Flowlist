@@ -26,7 +26,7 @@ class Storage: Observer
     
     func appDidLaunch()
     {
-        guard loadItems(from: file), isIntendingToSyncWithDatabase else { return }
+        guard loadItems(from: file), isIntendingToSync else { return }
         
         firstly
         {
@@ -40,7 +40,7 @@ class Storage: Observer
             {
                 if case .unavailable(let message) = $0
                 {
-                    self.abortIntendingToSync(errorMessage: message)
+                    self.abortIntendingToSync(withErrorMessage: message)
                 }
             }
         }
@@ -55,7 +55,7 @@ class Storage: Observer
     
     func databaseAccessibilityMayHaveChanged()
     {
-        guard isIntendingToSyncWithDatabase else { return }
+        guard isIntendingToSync else { return }
         
         if database.isAccessible.value != true
         {
@@ -72,7 +72,7 @@ class Storage: Observer
             {
                 let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
                 
-                self.abortIntendingToSync(errorMessage: message, callToAction: c2a)
+                self.abortIntendingToSync(withErrorMessage: message, callToAction: c2a)
             }
             else if self.hasUnsyncedLocalChanges.value
             {
@@ -86,7 +86,7 @@ class Storage: Observer
     
     func databaseReachabilityDid(update: Change<Bool?>)
     {
-        guard isIntendingToSyncWithDatabase,
+        guard isIntendingToSync,
             let isReachable = update.new,
             let wasReachable = update.old,
             isReachable != wasReachable
@@ -108,7 +108,7 @@ class Storage: Observer
             {
                 let c2a = "Seems like this device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
                 
-                self.abortIntendingToSync(errorMessage: message, callToAction: c2a)
+                self.abortIntendingToSync(withErrorMessage: message, callToAction: c2a)
             }
         }
         .catch(abortIntendingToSync)
@@ -118,7 +118,7 @@ class Storage: Observer
     
     func toggleIntentionToSyncWithDatabase()
     {
-        if isIntendingToSyncWithDatabase
+        if isIntendingToSync
         {
             syncIntentionPersistentFlag.value = false
         }
@@ -132,7 +132,7 @@ class Storage: Observer
             {
                 if case .unavailable(let message) = $0
                 {
-                    self.abortIntendingToSync(errorMessage: message)
+                    self.abortIntendingToSync(withErrorMessage: message)
                 }
             }
             .catch(abortIntendingToSync)
@@ -332,7 +332,7 @@ class Storage: Observer
     {
         // log("applying edit from store to db: \(edit)")
         
-        guard database.isReachable.value != false, isIntendingToSyncWithDatabase else
+        guard database.isReachable.value != false, isIntendingToSync else
         {
             hasUnsyncedLocalChanges.value = true
             return
@@ -365,26 +365,26 @@ class Storage: Observer
     private var hasUnsyncedLocalChanges = PersistentFlag(key: "UserDefaultsKeyUnsyncedLocalChanges",
                                                          default: false)
     
-    // MARK: - Manage Intention to Sync
+    // MARK: - Intention to Sync
     
     private func abortIntendingToSync(with error: Error)
     {
-        abortIntendingToSync(errorMessage: error.message)
+        abortIntendingToSync(withErrorMessage: error.message)
     }
     
-    private func abortIntendingToSync(errorMessage error: String,
+    private func abortIntendingToSync(withErrorMessage message: String,
                                       callToAction: String? = nil)
     {
         syncIntentionPersistentFlag.value = false
         
-        log(error: error)
+        log(error: message)
         
         let c2a = callToAction ?? "Make sure that 1) Your Mac is online, 2) It is connected to your iCloud account and 3) iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
         
-        informUserAboutSyncProblem(error: error, callToAction: c2a)
+        informUserAboutSyncProblem(error: message, callToAction: c2a)
     }
     
-    var isIntendingToSyncWithDatabase: Bool { return syncIntentionPersistentFlag.value }
+    var isIntendingToSync: Bool { return syncIntentionPersistentFlag.value }
     
     private var syncIntentionPersistentFlag = PersistentFlag(key: "UserDefaultsKeyWantsToUseICloud",
                                                              default: true)

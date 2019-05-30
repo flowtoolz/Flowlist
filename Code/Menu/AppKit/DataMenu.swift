@@ -57,7 +57,7 @@ class DataMenu: NSMenu, NSMenuItemValidation
     
     private var cloudItemTitle: String
     {
-        let isUsingICloud = StorageController.shared.storage.isIntendingToSyncWithDatabase
+        let isUsingICloud = StorageController.shared.storage.isIntendingToSync
         return "\(isUsingICloud ? "Stop" : "Start") Using iCloud"
     }
 }
