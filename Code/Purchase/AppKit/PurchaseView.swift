@@ -32,14 +32,17 @@ class PurchaseView: LayerBackedView, CustomObservable, Observer
         {
             [weak self] itemNumber in
             
-            guard let self = self else { return }
-            
-            self.itemLabel.stringValue = self.labelText(for: itemNumber)
-            self.itemLabel.textColor = self.labelColor(for: itemNumber).nsColor
-            
-            let progress = CGFloat(itemNumber) / CGFloat(maxNumberOfLeafsInTrial)
-            self.progressBar.progress = progress
+            DispatchQueue.main.async { self?.update(itemNumber: itemNumber) }
         }
+    }
+    
+    private func update(itemNumber: Int)
+    {
+        itemLabel.stringValue = labelText(for: itemNumber)
+        itemLabel.textColor = labelColor(for: itemNumber).nsColor
+        
+        let progress = CGFloat(itemNumber) / CGFloat(maxNumberOfLeafsInTrial)
+        progressBar.progress = progress
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }

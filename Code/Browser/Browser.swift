@@ -25,13 +25,7 @@ class Browser: Observer, CustomObservable
         
         observe(Store.shared)
         {
-            [weak self] event in
-            
-            if case .didSwitchRoot = event {
-                DispatchQueue.main.async {
-                    self?.storeGotNewRoot()
-                }
-            }
+            [weak self] in if case .didSwitchRoot = $0 { self?.storeGotNewRoot() }
         }
     }
     

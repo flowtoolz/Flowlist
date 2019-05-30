@@ -20,10 +20,12 @@ class Store: Observer, CustomObservable
         updateUserCreatedLeafs(with: newRoot)
         
         root = newRoot
-        
-        pasteWelcomeTourIfRootIsEmpty()
-        
-        send(.didSwitchRoot)
+    
+        DispatchQueue.main.async
+        {
+            self.send(.didSwitchRoot)
+            self.pasteWelcomeTourIfRootIsEmpty()
+        }
     }
     
     private func observeTreeMessenger(of newRoot: Item)
@@ -109,10 +111,7 @@ class Store: Observer, CustomObservable
         
         if root.isLeaf
         {
-            DispatchQueue.main.async
-            {
-                root.insert(Item.welcomeTour, at: 0)
-            }
+            root.insert(Item.welcomeTour, at: 0)
         }
     }
     
