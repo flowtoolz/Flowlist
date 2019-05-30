@@ -9,7 +9,7 @@ final class ItemData: Observer, CustomObservable
     {
         self.id = id ?? String.makeUUID()
         
-        wantsTextInput = id == nil // TODO: comment: wants text input when created with nild id... why?
+        wantsTextInput = id == nil // TODO: comment: wants text input when created with nil id... why?
         
         observe(text, state, tag)
         {

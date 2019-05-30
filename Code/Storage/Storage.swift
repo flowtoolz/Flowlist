@@ -26,15 +26,11 @@ class Storage: Observer
     
     func appDidLaunch()
     {
+        guard loadItems(from: file), intendsToSync else { return }
+        
         firstly
         {
-            loadItems(from: file)
-        }
-        .then(on: backgroundQ)
-        {
-            _ -> Promise<Void> in
-            
-            guard self.intendsToSync else { return Promise() }
+            () -> Promise<Void> in
         
             return firstly
             {
@@ -247,7 +243,8 @@ class Storage: Observer
             {
                 // no items in Store root but in database
                 
-                return self.resetLocal(tree: databaseRoot)
+                self.resetLocal(tree: databaseRoot)
+                return Promise()
             }
             
             // store and database have items
@@ -274,7 +271,8 @@ class Storage: Observer
                 // database changed but not store
                 // (like after editing from other device)
                 
-                return self.resetLocal(tree: databaseRoot)
+                self.resetLocal(tree: databaseRoot)
+                return Promise()
             }
             
             // conflicting trees -> ask user
@@ -289,7 +287,8 @@ class Storage: Observer
                 
                 if preferDatabase
                 {
-                    return self.resetLocal(tree: databaseRoot)
+                    self.resetLocal(tree: databaseRoot)
+                    return Promise()
                 }
                 else
                 {
@@ -299,16 +298,10 @@ class Storage: Observer
         }
     }
     
-    private func resetLocal(tree: Item) -> Promise<Void>
+    private func resetLocal(tree: Item)
     {
-        return firstly
-        {
-            Store.shared.update(root: tree)
-        }
-        .done(on: self.backgroundQ)
-        {
-            self.file.save(tree)
-        }
+        Store.shared.update(root: tree)
+        file.save(tree)
     }
     
     // MARK: - Observe Database & Store
@@ -417,37 +410,42 @@ class Storage: Observer
     
     // MARK: - File
     
-    private func saveItems(to file: ItemFile?)
+    @discardableResult
+    private func saveItems(to file: ItemFile?) -> Bool
     {
         guard let file = file else
         {
             log(error: "File is nil.")
-            return
+            return false
         }
         
         guard let root = Store.shared.root else
         {
             log(error: "Store root is nil.")
-            return
+            return false
         }
         
         file.save(root)
+        return true
     }
     
-    private func loadItems(from file: ItemFile?) -> Promise<Void>
+    @discardableResult
+    private func loadItems(from file: ItemFile?) -> Bool
     {
         guard let file = file else
         {
-            return Promise(error: StorageError.message("File is nil."))
+            log(error: "File is nil.")
+            return false
         }
         
         guard let item = file.loadItem() else
         {
-            let error = StorageError.message("Couldn't load items from file.")
-            return Promise(error: error)
+            log(error: "Couldn't load items from file.")
+            return false
         }
         
-        return Store.shared.update(root: item)
+        Store.shared.update(root: item)
+        return true
     }
     
     // MARK: - Basics

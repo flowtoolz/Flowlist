@@ -12,25 +12,10 @@ class Store: Observer, CustomObservable
 
     // MARK: - Update Root
     
-    func update(root newRoot: Item) -> Promise<Void>
-    {
-        return Promise
-        {
-            resolver in
-            
-            DispatchQueue.main.async
-            {
-                self.privateUpdate(root: newRoot)
-                
-                resolver.fulfill_()
-            }
-        }
-    }
-    
-    private func privateUpdate(root newRoot: Item)
+    func update(root newRoot: Item)
     {
         stopObserving(root?.treeMessenger)
-        observe(newRoot: newRoot)
+        observeTreeMessenger(of: newRoot)
         itemHash.reset(with: newRoot.array)
         updateUserCreatedLeafs(with: newRoot)
         
@@ -41,7 +26,7 @@ class Store: Observer, CustomObservable
         send(.didSwitchRoot)
     }
     
-    private func observe(newRoot: Item)
+    private func observeTreeMessenger(of newRoot: Item)
     {
         observe(newRoot.treeMessenger)
         {

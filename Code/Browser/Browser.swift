@@ -27,7 +27,11 @@ class Browser: Observer, CustomObservable
         {
             [weak self] event in
             
-            if case .didSwitchRoot = event { self?.storeGotNewRoot() }
+            if case .didSwitchRoot = event {
+                DispatchQueue.main.async {
+                    self?.storeGotNewRoot()
+                }
+            }
         }
     }
     
