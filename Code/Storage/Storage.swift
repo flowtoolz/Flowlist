@@ -26,7 +26,7 @@ class Storage: Observer
     
     func appDidLaunch()
     {
-        guard loadItems(from: file), intendsToSync else { return }
+        guard loadItems(from: file), isIntendingToSyncWithDatabase else { return }
         
         firstly
         {
@@ -55,7 +55,7 @@ class Storage: Observer
     
     func databaseAccessibilityMayHaveChanged()
     {
-        guard self.intendsToSync else { return }
+        guard isIntendingToSyncWithDatabase else { return }
         
         if database.isAccessible.value != true
         {
@@ -86,7 +86,7 @@ class Storage: Observer
     
     func databaseReachabilityDid(update: Change<Bool?>)
     {
-        guard intendsToSync,
+        guard isIntendingToSyncWithDatabase,
             let isReachable = update.new,
             let wasReachable = update.old,
             isReachable != wasReachable
@@ -114,18 +114,16 @@ class Storage: Observer
         .catch(abortIntendingToSync)
     }
     
-    // MARK: - Start and Abort the Intention to Sync
+    // MARK: - Start and Stop the Intention to Sync
     
-    var intendsToSync: Bool
+    func toggleIntentionToSyncWithDatabase()
     {
-        set
+        if isIntendingToSyncWithDatabase
         {
-            guard newValue else
-            {
-                _intendsToSync.value = false
-                return
-            }
-            
+            syncIntentionPersistentFlag.value = false
+        }
+        else
+        {
             firstly
             {
                 startIntendingToSync()
@@ -139,8 +137,6 @@ class Storage: Observer
             }
             .catch(abortIntendingToSync)
         }
-        
-        get { return _intendsToSync.value }
     }
     
     private func startIntendingToSync() -> Promise<SyncStartResult>
@@ -167,7 +163,7 @@ class Storage: Observer
                 }
                 .map(on: self.backgroundQ)
                 {
-                    self._intendsToSync.value = true
+                    self.syncIntentionPersistentFlag.value = true
                     self.hasUnsyncedLocalChanges.value = false
                     
                     return .success
@@ -336,7 +332,7 @@ class Storage: Observer
     {
         // log("applying edit from store to db: \(edit)")
         
-        guard database.isReachable.value != false, _intendsToSync.value else
+        guard database.isReachable.value != false, isIntendingToSyncWithDatabase else
         {
             hasUnsyncedLocalChanges.value = true
             return
@@ -379,7 +375,7 @@ class Storage: Observer
     private func abortIntendingToSync(errorMessage error: String,
                                       callToAction: String? = nil)
     {
-        _intendsToSync.value = false
+        syncIntentionPersistentFlag.value = false
         
         log(error: error)
         
@@ -388,11 +384,12 @@ class Storage: Observer
         informUserAboutSyncProblem(error: error, callToAction: c2a)
     }
     
-    private var _intendsToSync = PersistentFlag(key: "UserDefaultsKeyWantsToUseICloud",
-                                                default: true)
+    var isIntendingToSyncWithDatabase: Bool { return syncIntentionPersistentFlag.value }
     
-    private func informUserAboutSyncProblem(error: String,
-                                            callToAction: String)
+    private var syncIntentionPersistentFlag = PersistentFlag(key: "UserDefaultsKeyWantsToUseICloud",
+                                                             default: true)
+    
+    private func informUserAboutSyncProblem(error: String, callToAction: String)
     {
         let question = Dialog.Question(title: "Whoops, Had to Pause iCloud Sync",
                                        text: "\(error)\n\n\(callToAction)",
