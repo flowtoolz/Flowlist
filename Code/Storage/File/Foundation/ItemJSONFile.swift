@@ -35,11 +35,10 @@ class ItemJSONFile: ItemFile
     
     func save(_ item: Item)
     {
-        guard let _ = item.save(to: url) else
+        if item.save(to: url) == nil
         {
             let fileString = self.url.absoluteString
             log(error: "Could not save items to " + fileString)
-            return
         }
     }
     

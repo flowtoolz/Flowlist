@@ -26,7 +26,15 @@ class Storage: Observer
     
     func appDidLaunch()
     {
-        guard loadItems(from: file), isIntendingToSync else { return }
+        guard let root = file.loadItem() else
+        {
+            log(error: "Couldn't load items from file.")
+            return
+        }
+        
+        Store.shared.update(root: root)
+        
+        guard isIntendingToSync else { return }
         
         firstly
         {
@@ -47,9 +55,20 @@ class Storage: Observer
         .catch(abortIntendingToSync)
     }
     
-    func windowLostFocus() { saveItems(to: file) }
+    func windowLostFocus() { saveItemsToFile() }
     
-    func appWillTerminate() { saveItems(to: file) }
+    func appWillTerminate() { saveItemsToFile() }
+    
+    private func saveItemsToFile()
+    {
+        guard let root = Store.shared.root else
+        {
+            log(error: "Store root is nil.")
+            return
+        }
+        
+        file.save(root)
+    }
     
     // MARK: - Database Accessibility
     
@@ -114,30 +133,93 @@ class Storage: Observer
         .catch(abortIntendingToSync)
     }
     
-    // MARK: - Start and Stop the Intention to Sync
+    // MARK: - Observe Database & Store
+
+    private func observeDatabase()
+    {
+        observe(database.messenger)
+        {
+            guard let edit = $0 else { return }
+            
+            // log("applying edit from db to store: \(edit)")
+            
+            Store.shared.apply(edit)
+        }
+    }
+    
+    private func observeStore()
+    {
+        observe(Store.shared)
+        {
+            [weak self] in
+            
+            guard let self = self,
+                case .didUpdate(let update) = $0,
+                let edit = update.makeEdit() else { return }
+            
+            self.storeWasEdited(edit)
+        }
+    }
+    
+    private func storeWasEdited(_ edit: Edit)
+    {
+        // log("applying edit from store to db: \(edit)")
+        
+        guard database.isReachable.value != false, isIntendingToSync else
+        {
+            hasUnsyncedLocalChanges.value = true
+            return
+        }
+        
+        if database.isAccessible.value != true
+        {
+            hasUnsyncedLocalChanges.value = true
+
+            if database.isCheckingAccess
+            {
+                return
+            }
+            else
+            {
+                let errorMessage = "Tried to edit iCloud database before ensuring accessibility."
+
+                abortIntendingToSync(with: StorageError.message(errorMessage))
+            }
+        }
+        
+        database.apply(edit).catch
+        {
+            self.hasUnsyncedLocalChanges.value = true
+            
+            self.abortIntendingToSync(with: $0)
+        }
+    }
+    
+    // MARK: - Toggle Intention to Sync
     
     func toggleIntentionToSyncWithDatabase()
     {
-        if isIntendingToSync
+        guard !isIntendingToSync else
         {
             syncIntentionPersistentFlag.value = false
+            return
         }
-        else
+        
+        firstly
         {
-            firstly
-            {
-                startIntendingToSync()
-            }
-            .done(on: backgroundQ)
-            {
-                if case .unavailable(let message) = $0
-                {
-                    self.abortIntendingToSync(withErrorMessage: message)
-                }
-            }
-            .catch(abortIntendingToSync)
+            startIntendingToSync()
         }
+        .done(on: backgroundQ)
+        {
+            if case .unavailable(let message) = $0
+            {
+                self.abortIntendingToSync(withErrorMessage: message)
+            }
+        }
+        .catch(abortIntendingToSync)
     }
+    
+    // MARK: - Start Intending to Sync
     
     private func startIntendingToSync() -> Promise<SyncStartResult>
     {
@@ -191,7 +273,7 @@ class Storage: Observer
         {
             return Promise(error: StorageError.message("This device seems to be offline."))
         }
-            
+        
         return firstly
         {
             self.database.fetchRecords()
@@ -294,77 +376,9 @@ class Storage: Observer
         }
     }
     
-    private func resetLocal(tree: Item)
-    {
-        Store.shared.update(root: tree)
-        file.save(tree)
-    }
-    
-    // MARK: - Observe Database & Store
-
-    private func observeDatabase()
-    {
-        observe(database.messenger)
-        {
-            guard let edit = $0 else { return }
-            
-            // log("applying edit from db to store: \(edit)")
-            
-            Store.shared.apply(edit)
-        }
-    }
-    
-    private func observeStore()
-    {
-        observe(Store.shared)
-        {
-            [weak self] in
-            
-            guard let self = self,
-                case .didUpdate(let update) = $0,
-                let edit = update.makeEdit() else { return }
-            
-            self.storeWasEdited(edit)
-        }
-    }
-    
-    private func storeWasEdited(_ edit: Edit)
-    {
-        // log("applying edit from store to db: \(edit)")
-        
-        guard database.isReachable.value != false, isIntendingToSync else
-        {
-            hasUnsyncedLocalChanges.value = true
-            return
-        }
-        
-        if database.isAccessible.value != true
-        {
-            hasUnsyncedLocalChanges.value = true
-
-            if database.isCheckingAccess
-            {
-                return
-            }
-            else
-            {
-                let errorMessage = "Tried to edit iCloud database before ensuring accessibility."
-
-                abortIntendingToSync(with: StorageError.message(errorMessage))
-            }
-        }
-        
-        database.apply(edit).catch
-        {
-            self.hasUnsyncedLocalChanges.value = true
-            
-            self.abortIntendingToSync(with: $0)
-        }
-    }
-    
     private var hasUnsyncedLocalChanges = PersistentFlag("UserDefaultsKeyUnsyncedLocalChanges")
     
-    // MARK: - Intention to Sync
+    // MARK: - Abort Intending to Sync When Errors Occur
     
     private func abortIntendingToSync(with error: Error)
     {
@@ -383,10 +397,6 @@ class Storage: Observer
         informUserAboutSyncProblem(error: message, callToAction: c2a)
     }
     
-    var isIntendingToSync: Bool { return syncIntentionPersistentFlag.value }
-    
-    private var syncIntentionPersistentFlag = PersistentFlag("UserDefaultsKeyWantsToUseICloud")
-    
     private func informUserAboutSyncProblem(error: String, callToAction: String)
     {
         let question = Dialog.Question(title: "Whoops, Had to Pause iCloud Sync",
@@ -403,53 +413,24 @@ class Storage: Observer
         }
     }
     
-    // MARK: - File
+    // MARK: - Persist the User's Intention to Sync
     
-    @discardableResult
-    private func saveItems(to file: ItemFile?) -> Bool
-    {
-        guard let file = file else
-        {
-            log(error: "File is nil.")
-            return false
-        }
-        
-        guard let root = Store.shared.root else
-        {
-            log(error: "Store root is nil.")
-            return false
-        }
-        
-        file.save(root)
-        return true
-    }
-    
-    @discardableResult
-    private func loadItems(from file: ItemFile?) -> Bool
-    {
-        guard let file = file else
-        {
-            log(error: "File is nil.")
-            return false
-        }
-        
-        guard let item = file.loadItem() else
-        {
-            log(error: "Couldn't load items from file.")
-            return false
-        }
-        
-        Store.shared.update(root: item)
-        return true
-    }
+    var isIntendingToSync: Bool { return syncIntentionPersistentFlag.value }
+    private var syncIntentionPersistentFlag = PersistentFlag("UserDefaultsKeyWantsToUseICloud")
     
     // MARK: - Basics
+    
+    private func resetLocal(tree: Item)
+    {
+        Store.shared.update(root: tree)
+        file.save(tree)
+    }
+    
+    let database: ItemDatabase
+    let file: ItemFile
     
     private var backgroundQ: DispatchQueue
     {
         return DispatchQueue.global(qos: .background)
     }
-    
-    let database: ItemDatabase
-    let file: ItemFile
 }
