@@ -387,7 +387,7 @@ class Storage: Observer
     var isIntendingToSync: Bool { return syncIntentionPersistentFlag.value }
     
     private var syncIntentionPersistentFlag = PersistentFlag(key: "UserDefaultsKeyWantsToUseICloud",
-                                                             default: true)
+                                                             default: false)
     
     private func informUserAboutSyncProblem(error: String, callToAction: String)
     {
