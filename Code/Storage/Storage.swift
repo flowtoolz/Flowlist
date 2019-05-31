@@ -133,22 +133,23 @@ class Storage: Observer
         switch event
         {
         case .didUpdate(let update):
-            if let edit = update.makeEdit()
-            {
-                self.applyEditToDatabase(edit)
-            }
-            else
+            guard let edit = update.makeEdit() else
             {
                 self.hasUnsyncedLocalChanges.value = true
-                
                 let errorMessage = "Couldn't interpret Store event `.didUpdate` as editing operation."
                 log(error: errorMessage)
                 self.abortIntendingToSync(withErrorMessage: errorMessage)
+                break
             }
+            self.applyEditToDatabase(edit)
+            
         case .didSwitchRoot:
-            // TODO: why do we not propagate this to the database?
+            // TODO: should we propagate this to the database, i.e. could it happen anytime?
+            log(warning: "Store did switch root. The Storage should respond if this happens not just on app launch.")
             break
-        case .didNothing: break
+            
+        case .didNothing:
+            break
         }
     }
     
