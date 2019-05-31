@@ -174,13 +174,12 @@ class Storage: Observer
     {
         self.isReachable = isReachable
         
-        guard isIntendingToSync else { return }
-        
-        guard isReachable else
-        {
-            hasUnsyncedLocalChanges.value = true
-            return
-        }
+        if isReachable { deviceProbablyWentOnline() }
+    }
+    
+    private func deviceProbablyWentOnline()
+    {
+        guard isIntendingToSync && hasUnsyncedLocalChanges.value else { return }
         
         firstly
         {
