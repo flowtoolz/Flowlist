@@ -13,7 +13,7 @@ protocol ItemDatabase
     
     func ensureAccess() -> Promise<Void>
     var isCheckingAccess: Bool { get }
-    var isAccessible: Var<Bool?> { get }
+    var didEnsureAccess: Bool { get }
 }
 
 struct FetchRecordsResult

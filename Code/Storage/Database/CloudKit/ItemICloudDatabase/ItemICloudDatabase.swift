@@ -68,14 +68,13 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     func apply(_ edit: Edit) -> Promise<Void>
     {
-        guard isAccessible.value == true else
+        guard didEnsureAccess else
         {
             let errorMessage = "Tried to edit iCloud database while it isn't accessible."
-            
             return Promise(error: StorageError.message(errorMessage))
         }
         
-       return makePromise(for: edit)
+        return makePromise(for: edit)
     }
     
     private func makePromise(for edit: Edit) -> Promise<Void>
@@ -318,9 +317,8 @@ class ItemICloudDatabase: Observer, CustomObservable
         guard !isCheckingAccess else
         {
             let errorMessage = "Called \(#function) more than once in parallel."
-            
             log(error: errorMessage)
-            
+            // TODO: better return the promise chain that currently ensures access ... and then we don't need isCheckingAccess anymore and clients can just attach anything to the promise
             return Promise(error: StorageError.message(errorMessage))
         }
         
@@ -344,7 +342,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .done(on: backgroundQ)
             {
-                self.isAccessible <- true
+                self.didEnsureAccess = true
                 resolver.fulfill_()
             }
             .ensure
@@ -353,14 +351,13 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .catch
             {
-                self.isAccessible <- false
+                self.didEnsureAccess = false
                 resolver.reject($0)
             }
         }
     }
     
-    let isAccessible = Var<Bool?>()
-    
+    private(set) var didEnsureAccess = false
     private(set) var isCheckingAccess = false
     
     // MARK: - Create Subscriptions

@@ -41,7 +41,7 @@ class FlowlistController: AppController
         }
         
         registerForPushNotifications()
-        registerForICloudStatusChangeNotifications()
+        registerForICloudAccountChangeNotifications()
         
         storage.appDidLaunch()
     }
@@ -109,22 +109,22 @@ class FlowlistController: AppController
         database.handlePushNotification(with: userInfo)
     }
     
-    private func registerForICloudStatusChangeNotifications()
+    private func registerForICloudAccountChangeNotifications()
     {
         let name = Notification.Name.CKAccountChanged
         let center = NotificationCenter.default
         
         center.addObserver(self,
-                           selector: #selector(iCloudStatusDidChange),
+                           selector: #selector(iCloudAccountDidChange),
                            name: name,
                            object: nil)
     }
     
     // MARK: - Storage
     
-    @objc private func iCloudStatusDidChange()
+    @objc private func iCloudAccountDidChange()
     {
-        storage.databaseAccessibilityMayHaveChanged()
+        storage.databaseAccountDidChange()
     }
     
     private func networkReachabilityDid(update: NetworkReachability.Update)

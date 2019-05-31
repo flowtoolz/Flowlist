@@ -37,7 +37,7 @@ class Storage: Observer
             }
             .then
             {
-                self.synchronizeStoreAndDatabase()
+                self.syncStoreAndDatabase()
             }
             .catch(abortIntendingToSync)
         }
@@ -58,15 +58,15 @@ class Storage: Observer
         file.save(root)
     }
     
-    // MARK: - Database Accessibility
+    // MARK: - Database Account Status
     
-    func databaseAccessibilityMayHaveChanged()
+    func databaseAccountDidChange()
     {
         guard isIntendingToSync else { return }
         
-        if database.isAccessible.value != true
+        if !database.didEnsureAccess && !database.isCheckingAccess
         {
-            log(error: "Invalid state: Syncing with database while it's POSSIBLY inaccessible: Is accessible: \(String(describing: database.isAccessible))")
+            log(warning: "Syncing with database while db hasn't yet ensured access.")
         }
     
         firstly
@@ -75,10 +75,8 @@ class Storage: Observer
         }
         .done(on: self.backgroundQ)
         {
-            if self.hasUnsyncedLocalChanges.value
-            {
-                self.synchronizeStoreAndDatabase().catch(self.abortIntendingToSync)
-            }
+            log(#"DB account status changed while we were in sync but now we still (or again?) do have access. This is a weird situation. To be totally sure we didn't miss out on db updates, we're gonna resync everything."#)
+            self.syncStoreAndDatabase().catch(self.abortIntendingToSync)
         }
         .catch
         {
@@ -114,11 +112,12 @@ class Storage: Observer
             return
         }
         
-        guard database.isAccessible.value == true else
+        // TODO: understand and comment: this was for the app launch when welcome tour paste or edit happens before accessibility check is through.... RIGHT??? otherwise, we could remove this whole block ... actually there should be a transaction queue to disentangle editing from db availability ...
+        guard database.didEnsureAccess else
         {
             if !database.isCheckingAccess
             {
-                let errorMessage = "Tried to edit iCloud database before ensuring accessibility."
+                let errorMessage = "Tried to edit iCloud database before ensuring access."
                 abortIntendingToSync(withErrorMessage: errorMessage)
             }
             
@@ -187,7 +186,7 @@ class Storage: Observer
         }
         .then
         {
-            self.synchronizeStoreAndDatabase()
+            self.syncStoreAndDatabase()
         }
         .catch
         {
@@ -215,7 +214,7 @@ class Storage: Observer
         }
         .then(on: backgroundQ)
         {
-            self.synchronizeStoreAndDatabase()
+            self.syncStoreAndDatabase()
         }
         .done(on: backgroundQ)
         {
@@ -226,7 +225,7 @@ class Storage: Observer
     
     // MARK: - Ensure Store and DB Are in Sync
     
-    private func synchronizeStoreAndDatabase() -> Promise<Void>
+    private func syncStoreAndDatabase() -> Promise<Void>
     {
         guard let storeRoot = Store.shared.root else
         {

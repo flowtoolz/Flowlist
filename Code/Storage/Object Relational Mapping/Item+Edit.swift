@@ -9,6 +9,7 @@ extension Tree.Event.TreeUpdate where Data == ItemData
             return .updateItems(withRecords: records)
             
         case .receivedMessage(let dataUpdate, let node):
+            // TODO: could we avoid the nil return and make this func non optional?
             guard case .wasModified = dataUpdate else { return nil }
             let record = node.makeRecord(modifiesPosition: false)
             return .updateItems(withRecords: [record])
