@@ -178,15 +178,15 @@ class Storage: Observer
     
     private func deviceProbablyWentOnline()
     {
-        guard isIntendingToSync && hasUnsyncedLocalChanges.value else { return }
+        guard isIntendingToSync else { return }
         
         firstly
         {
             self.database.ensureAccess()
         }
-        .then
+        .done(on: backgroundQ)
         {
-            self.syncStoreAndDatabase()
+            self.syncStoreAndDatabase().catch(self.abortIntendingToSync)
         }
         .catch
         {
@@ -244,7 +244,8 @@ class Storage: Observer
             
             if treeResult.trees.count > 1
             {
-                log(error: "There are multiple trees in the database.")
+                // TODO: Merge those trees by creating a new root for them so that nothing gets lost in this weird situation
+                log(warning: "There are multiple trees in the database.")
             }
             
             guard let databaseRoot = treeResult.trees.first else
