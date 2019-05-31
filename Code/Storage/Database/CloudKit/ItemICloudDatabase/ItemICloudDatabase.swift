@@ -313,7 +313,7 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     // MARK: - Accessibility
     
-    func checkAccess() -> Promise<Void>
+    func ensureAccess() -> Promise<Void>
     {
         guard !isCheckingAccess else
         {

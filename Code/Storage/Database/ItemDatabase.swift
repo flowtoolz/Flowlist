@@ -11,7 +11,7 @@ protocol ItemDatabase
     
     var messenger: Messenger<Edit?> { get }
     
-    func checkAccess() -> Promise<Void>
+    func ensureAccess() -> Promise<Void>
     var isCheckingAccess: Bool { get }
     var isAccessible: Var<Bool?> { get }
     

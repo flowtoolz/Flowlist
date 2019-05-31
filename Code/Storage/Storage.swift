@@ -67,7 +67,7 @@ class Storage: Observer
     
         firstly
         {
-            database.checkAccess()
+            database.ensureAccess()
         }
         .done(on: self.backgroundQ)
         {
@@ -199,7 +199,7 @@ class Storage: Observer
         
         return firstly
         {
-            database.checkAccess()
+            database.ensureAccess()
         }
         .then(on: backgroundQ)
         {
