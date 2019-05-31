@@ -8,26 +8,21 @@ class FlowlistController: AppController
 {
     // MARK: - Life Cycle
     
-    init()
-    {
-        super.init(withMainMenu: menu)
-        
-        NetworkReachability.shared.notifyOfChanges(self)
-        {
-            [weak self] in self?.networkReachabilityDid(update: $0)
-        }
-    }
+    // super.init starts the app run loop, so nothing after super.init will execute
+    init() { super.init(withMainMenu: menu) }
     
-    deinit
-    {
-        NetworkReachability.shared.stopNotifying(self)
-    }
+    deinit { NetworkReachability.shared.stopNotifying(self) }
     
     // MARK: - App Delegate
     
     override func applicationDidFinishLaunching(_ aNotification: Notification)
     {
         super.applicationDidFinishLaunching(aNotification)
+        
+        NetworkReachability.shared.notifyOfChanges(self)
+        {
+            [weak self] in self?.networkReachabilityDid(update: $0)
+        }
         
         Color.isInDarkMode = systemIsInDarkMode
         
