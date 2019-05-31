@@ -341,10 +341,6 @@ class ICloudDatabase: CustomObservable
     
     private let container = CKContainer.default()
     
-    // MARK: - Reachability
-    
-    let isReachable = Var<Bool?>()
-    
     // MARK: - Error
     
     enum ICloudDBError: Error, CustomDebugStringConvertible

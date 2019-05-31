@@ -404,8 +404,6 @@ class ItemICloudDatabase: Observer, CustomObservable
         iCloudDatabase.handlePushNotification(with: userInfo)
     }
     
-    var isReachable: Var<Bool?> { return db.isReachable }
-    
     var db: ICloudDatabase { return iCloudDatabase }
     let iCloudDatabase = ICloudDatabase()
     

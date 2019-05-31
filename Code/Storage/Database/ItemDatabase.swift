@@ -14,8 +14,6 @@ protocol ItemDatabase
     func ensureAccess() -> Promise<Void>
     var isCheckingAccess: Bool { get }
     var isAccessible: Var<Bool?> { get }
-    
-    var isReachable: Var<Bool?> { get }
 }
 
 struct FetchRecordsResult

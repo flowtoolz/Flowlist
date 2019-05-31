@@ -161,32 +161,31 @@ class Storage: Observer
     {
         // log("applying edit from store to db: \(edit)")
         
-        guard database.isReachable.value != false, isIntendingToSync else
+        guard isIntendingToSync else
         {
             hasUnsyncedLocalChanges.value = true
             return
         }
         
-        if database.isAccessible.value != true
+        guard database.isAccessible.value == true else
         {
-            hasUnsyncedLocalChanges.value = true
-
-            if database.isCheckingAccess
-            {
-                return
-            }
-            else
+            if !database.isCheckingAccess
             {
                 let errorMessage = "Tried to edit iCloud database before ensuring accessibility."
-
-                abortIntendingToSync(with: StorageError.message(errorMessage))
+                abortIntendingToSync(withErrorMessage: errorMessage)
             }
+            
+            hasUnsyncedLocalChanges.value = true
+            return
         }
         
-        database.apply(edit).catch
+        firstly
+        {
+            self.database.apply(edit)
+        }
+        .catch
         {
             self.hasUnsyncedLocalChanges.value = true
-            
             self.abortIntendingToSync(with: $0)
         }
     }
@@ -223,11 +222,6 @@ class Storage: Observer
         guard let storeRoot = Store.shared.root else
         {
             return Promise(error: StorageError.message("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
-        }
-        
-        guard database.isReachable.value != false else
-        {
-            return Promise(error: StorageError.message("This device seems to be offline."))
         }
         
         return firstly
