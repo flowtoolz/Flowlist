@@ -326,29 +326,36 @@ class ItemICloudDatabase: Observer, CustomObservable
         
         isCheckingAccess = true
         
-        return firstly
+        return Promise
         {
-            self.iCloudDatabase.checkAccountAccess()
-        }
-        .then(on: backgroundQ)
-        {
-            self.ensureItemRecordZoneExists()
-        }
-        .then(on: self.backgroundQ)
-        {
-            self.ensureSubscriptionExists()
-        }
-        .tap
-        {
-            switch $0 {
-            case .fulfilled:
-                self.isAccessible <- true
-            case .rejected(let error):
-                log(error: error.localizedDescription)
-                self.isAccessible <- false
+            resolver in
+            
+            firstly
+            {
+                self.iCloudDatabase.checkAccountAccess()
             }
-
-            self.isCheckingAccess = false
+            .then(on: backgroundQ)
+            {
+                self.ensureItemRecordZoneExists()
+            }
+            .then(on: backgroundQ)
+            {
+                self.ensureSubscriptionExists()
+            }
+            .done(on: backgroundQ)
+            {
+                self.isAccessible <- true
+                resolver.fulfill_()
+            }
+            .ensure
+            {
+                self.isCheckingAccess = false
+            }
+            .catch
+            {
+                self.isAccessible <- false
+                resolver.reject($0)
+            }
         }
     }
     
@@ -360,42 +367,17 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     private func ensureSubscriptionExists() -> Promise<Void>
     {
-        guard subExists.value else { return createSubscription() }
-        
-        return Promise()
-    }
-    
-    private func createSubscription() -> Promise<Void>
-    {
-        return db.createDatabasSubscription(withID: dbSubID).tap
-        {
-            self.subExists.value = $0.isFulfilled
-        }
-        .map { _ in }
+        return db.createDatabaseSubscription(withID: dbSubID).map { _ in }
     }
     
     private let dbSubID = "ItemDataBaseSubscription"
-    private var subExists = PersistentFlag("itemDBSubExists")
     
     // MARK: - Create Zone
     
     private func ensureItemRecordZoneExists() -> Promise<Void>
     {
-        guard zoneExists.value else { return createZone() }
-        
-        return Promise()
+        return db.createZone(with: .item).map { _ in }
     }
-    
-    private func createZone() -> Promise<Void>
-    {
-        return db.createZone(with: .item).tap
-        {
-            self.zoneExists.value = $0.isFulfilled
-        }
-        .map { _ in }
-    }
-    
-    private var zoneExists = PersistentFlag("itemZoneExists")
     
     // MARK: - iCloud Database
     

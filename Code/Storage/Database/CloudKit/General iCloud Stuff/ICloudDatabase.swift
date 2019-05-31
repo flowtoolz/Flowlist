@@ -215,7 +215,7 @@ class ICloudDatabase: CustomObservable
         return save(subscription, desiredKeys: desiredKeys)
     }
     
-    func createDatabasSubscription(withID id: String) -> Promise<CKSubscription>
+    func createDatabaseSubscription(withID id: String) -> Promise<CKSubscription>
     {
         let subID = CKSubscription.ID(id)
         let sub = CKDatabaseSubscription(subscriptionID: subID)
