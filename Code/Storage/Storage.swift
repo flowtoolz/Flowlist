@@ -11,11 +11,6 @@ class Storage: Observer
         self.file = file
         self.database = database
         
-        observe(database.isReachable)
-        {
-            [weak self] in self?.databaseReachabilityDid(update: $0)
-        }
-        
         observeDatabase()
         observe(Store.shared) { [weak self] in self?.didReceive(storeEvent: $0) }
     }
@@ -97,13 +92,9 @@ class Storage: Observer
     
     // TODO: Simplify this concern and don't conflate network reachability with "db reachability", what is the latter anyway really. Can't we just use our reachability wrapper for this?
     
-    func databaseReachabilityDid(update: Change<Bool?>)
+    func networkReachabilityDidUpdate(isReachable: Bool)
     {
-        guard isIntendingToSync,
-            let isReachable = update.new,
-            let wasReachable = update.old,
-            isReachable != wasReachable
-        else { return }
+        guard isIntendingToSync else { return }
         
         guard isReachable else
         {

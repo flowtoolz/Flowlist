@@ -6,9 +6,22 @@ import SwiftyToolz
 
 class FlowlistController: AppController
 {
-    // MARK: - Initialization
+    // MARK: - Life Cycle
     
-    init() { super.init(withMainMenu: menu) }
+    init()
+    {
+        super.init(withMainMenu: menu)
+        
+        NetworkReachability.shared.notifyOfChanges(self)
+        {
+            [weak self] in self?.networkReachabilityDid(update: $0)
+        }
+    }
+    
+    deinit
+    {
+        NetworkReachability.shared.stopNotifying(self)
+    }
     
     // MARK: - App Delegate
     
@@ -107,19 +120,32 @@ class FlowlistController: AppController
         let center = NotificationCenter.default
         
         center.addObserver(self,
-                           selector: #selector(iCloudStatusChanged),
+                           selector: #selector(iCloudStatusDidChange),
                            name: name,
                            object: nil)
     }
     
-    @objc private func iCloudStatusChanged()
+    // MARK: - Storage
+    
+    @objc private func iCloudStatusDidChange()
     {
         storage.databaseAccessibilityMayHaveChanged()
     }
     
-    // MARK: - Basics
+    private func networkReachabilityDid(update: NetworkReachability.Update)
+    {
+        switch update
+        {
+        case .noInternet:
+            storage.networkReachabilityDidUpdate(isReachable: false)
+        case .expensiveInternet, .fullInternet:
+            storage.networkReachabilityDidUpdate(isReachable: true)
+        }
+    }
     
     var storage: Storage { return StorageController.shared.storage }
+    
+    // MARK: - Basics
     
     private let menu = Menu()
     private let viewController = ViewController<FlowlistView>()

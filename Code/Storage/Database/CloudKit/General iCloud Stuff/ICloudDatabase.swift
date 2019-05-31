@@ -6,27 +6,6 @@ import PromiseKit
 
 class ICloudDatabase: CustomObservable
 {
-    // MARK: - Life Cycle
-    
-    init()
-    {
-        NetworkReachability.shared.notifyOfChanges(self)
-        {
-            _ in
-           
-            firstly
-            {
-                self.database.requestUserRecord()
-            }
-            .tap(self.updateReachability).catch { _ in }
-        }
-    }
-    
-    deinit
-    {
-        NetworkReachability.shared.stopNotifying(self)
-    }
-    
     // MARK: - Save
     
     func save(_ records: [CKRecord]) -> Promise<Void>
@@ -46,7 +25,6 @@ class ICloudDatabase: CustomObservable
                         handleCreationSuccess: $0.resolve,
                         handleDeletionSuccess: nil)
             }
-            .tap(updateReachability)
         }
         
         return when(fulfilled: promises)
@@ -90,7 +68,6 @@ class ICloudDatabase: CustomObservable
                         handleCreationSuccess: nil,
                         handleDeletionSuccess: $0.resolve)
             }
-            .tap(updateReachability)
         }
         
         return when(fulfilled: promises)
@@ -103,8 +80,7 @@ class ICloudDatabase: CustomObservable
     func fetchRecords(with query: CKQuery,
                       inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
     {
-        return database.perform(query,
-                                inZoneWith: zoneID).tap(updateReachability)
+        return database.perform(query, inZoneWith: zoneID)
     }
     
     // MARK: - Respond to Notifications
@@ -271,7 +247,7 @@ class ICloudDatabase: CustomObservable
                 
                 resolver.resolve(subscription, error)
             }
-        }.tap(updateReachability)
+        }
     }
     
     // MARK: - Database
@@ -366,36 +342,6 @@ class ICloudDatabase: CustomObservable
     private let container = CKContainer.default()
     
     // MARK: - Reachability
-    
-    private func updateReachability<T>(with result: Result<T>)
-    {
-        if case .rejected(let error) = result
-        {
-            updateReachability(with: error)
-        }
-        else
-        {
-            isReachable <- true
-        }
-    }
-    
-    private func updateReachability(with error: Error)
-    {
-        guard let ckError = error as? CKError else { return }
-        
-        switch ckError.code
-        {
-        case .networkUnavailable, .networkFailure:
-            isReachable <- false
-   
-        // unclear where the error originated (local / server)
-    case .internalError, .badContainer, .serviceUnavailable, .requestRateLimited, .missingEntitlement, .invalidArguments, .resultsTruncated, .incompatibleVersion, .operationCancelled, .changeTokenExpired, .badDatabase, .quotaExceeded, .managedAccountRestricted:
-            break
-            
-        // errors that suggest the server is at least reachable
-        default: isReachable <- true
-        }
-    }
     
     let isReachable = Var<Bool?>()
     
