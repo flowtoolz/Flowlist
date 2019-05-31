@@ -433,7 +433,7 @@ class ICloudDatabase: CustomObservable
     
     private var backgroundQ: DispatchQueue
     {
-        return DispatchQueue.global(qos: .background)
+        return DispatchQueue.global(qos: .userInitiated)
     }
 }
 

@@ -31,7 +31,7 @@ extension CKDatabase
         {
             CKContainer.default().requestUserRecordID()
         }
-        .then(on: DispatchQueue.global(qos: .background))
+        .then(on: DispatchQueue.global(qos: .userInitiated))
         {
             return self.requestRecord(withID: $0)
         }

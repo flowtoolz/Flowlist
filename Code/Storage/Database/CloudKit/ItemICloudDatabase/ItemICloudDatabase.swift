@@ -418,7 +418,7 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     var backgroundQ: DispatchQueue
     {
-        return DispatchQueue.global(qos: .background)
+        return DispatchQueue.global(qos: .userInitiated)
     }
 }
 
