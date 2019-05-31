@@ -331,15 +331,15 @@ class ICloudDatabase: CustomObservable
     
     // MARK: - Container
     
-    func checkAccountAccess() -> Promise<Accessibility>
+    func checkAccountAccess() -> Promise<Void>
     {
         return firstly
         {
             self.container.requestAccountStatus()
         }
-        .map(on: backgroundQ)
+        .then(on: backgroundQ)
         {
-            status in
+            status -> Promise<Void> in
             
             var message = ""
             
@@ -348,16 +348,18 @@ class ICloudDatabase: CustomObservable
             case .couldNotDetermine:
                 message = "Could not determine iCloud account status."
             case .available:
-                return Accessibility.accessible
+                return Promise()
             case .restricted:
                 message = "iCloud account is restricted."
             case .noAccount:
                 message = "Cannot access the iCloud account."
             @unknown default:
-                log(error: "unhandled case")
+                message = "Unknown account status."
             }
             
-            return Accessibility.inaccessible(message)
+            log(error: message)
+            
+            return Promise(error: StorageError.message(message))
         }
     }
     

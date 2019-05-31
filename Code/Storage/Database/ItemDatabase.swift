@@ -11,7 +11,7 @@ protocol ItemDatabase
     
     var messenger: Messenger<Edit?> { get }
     
-    func checkAccess() -> Promise<Accessibility>
+    func checkAccess() -> Promise<Void>
     var isCheckingAccess: Bool { get }
     var isAccessible: Var<Bool?> { get }
     
@@ -22,10 +22,4 @@ struct FetchRecordsResult
 {
     let records: [Record]
     let dbWasModified: Bool
-}
-
-enum Accessibility
-{
-    case accessible
-    case inaccessible(_ message: String)
 }

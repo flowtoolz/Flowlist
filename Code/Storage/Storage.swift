@@ -36,23 +36,7 @@ class Storage: Observer
         
         guard isIntendingToSync else { return }
         
-        firstly
-        {
-            () -> Promise<Void> in
-        
-            return firstly
-            {
-                self.startIntendingToSync()
-            }
-            .done(on: self.backgroundQ)
-            {
-                if case .unavailable(let message) = $0
-                {
-                    self.abortIntendingToSync(withErrorMessage: message)
-                }
-            }
-        }
-        .catch(abortIntendingToSync)
+        startIntendingToSync().catch(abortIntendingToSync)
     }
     
     func windowLostFocus() { saveItemsToFile() }
@@ -87,18 +71,17 @@ class Storage: Observer
         }
         .done(on: self.backgroundQ)
         {
-            if case .inaccessible(let message) = $0
-            {
-                let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
-                
-                self.abortIntendingToSync(withErrorMessage: message, callToAction: c2a)
-            }
-            else if self.hasUnsyncedLocalChanges.value
+            if self.hasUnsyncedLocalChanges.value
             {
                 self.doInitialSync().catch(self.abortIntendingToSync)
             }
         }
-        .catch(abortIntendingToSync)
+        .catch
+        {
+            let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
+            
+            self.abortIntendingToSync(withErrorMessage: $0.message, callToAction: c2a)
+        }
     }
     
     // MARK: - Network Reachability
@@ -121,16 +104,12 @@ class Storage: Observer
         {
             startIntendingToSync()
         }
-        .done(on: backgroundQ)
+        .catch
         {
-            if case .unavailable(let message) = $0
-            {
-                let c2a = "Seems like this device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
-                
-                self.abortIntendingToSync(withErrorMessage: message, callToAction: c2a)
-            }
+            let c2a = "Seems like this device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
+            
+            self.abortIntendingToSync(withErrorMessage: $0.message, callToAction: c2a)
         }
-        .catch(abortIntendingToSync)
     }
     
     // MARK: - Observe Database & Store
@@ -199,29 +178,19 @@ class Storage: Observer
     
     func toggleIntentionToSyncWithDatabase()
     {
-        guard !isIntendingToSync else
+        if isIntendingToSync
         {
             syncIntentionPersistentFlag.value = false
-            return
         }
-        
-        firstly
+        else
         {
-            startIntendingToSync()
+            startIntendingToSync().catch(abortIntendingToSync)
         }
-        .done(on: backgroundQ)
-        {
-            if case .unavailable(let message) = $0
-            {
-                self.abortIntendingToSync(withErrorMessage: message)
-            }
-        }
-        .catch(abortIntendingToSync)
     }
     
     // MARK: - Start Intending to Sync
     
-    private func startIntendingToSync() -> Promise<SyncStartResult>
+    private func startIntendingToSync() -> Promise<Void>
     {
         guard Store.shared.root != nil else
         {
@@ -234,32 +203,13 @@ class Storage: Observer
         }
         .then(on: backgroundQ)
         {
-            (availability: Accessibility) -> Promise<SyncStartResult> in
-            
-            switch availability
-            {
-            case .accessible:
-                return firstly
-                {
-                    self.doInitialSync()
-                }
-                .map(on: self.backgroundQ)
-                {
-                    self.syncIntentionPersistentFlag.value = true
-                    self.hasUnsyncedLocalChanges.value = false
-                    
-                    return .success
-                }
-                
-            case .inaccessible(let message):
-                return Promise.value(.unavailable(message))
-            }
+            self.doInitialSync()
         }
-    }
-    
-    private enum SyncStartResult
-    {
-        case success, unavailable(_ message: String)
+        .done(on: backgroundQ)
+        {
+            self.syncIntentionPersistentFlag.value = true
+            self.hasUnsyncedLocalChanges.value = false
+        }
     }
     
     private func doInitialSync() -> Promise<Void>

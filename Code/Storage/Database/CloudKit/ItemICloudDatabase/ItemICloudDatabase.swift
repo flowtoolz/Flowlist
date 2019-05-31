@@ -313,9 +313,9 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     // MARK: - Accessibility
     
-    func checkAccess() -> Promise<Accessibility>
+    func checkAccess() -> Promise<Void>
     {
-        if isCheckingAccess
+        guard !isCheckingAccess else
         {
             let errorMessage = "Called \(#function) more than once in parallel."
             
@@ -326,56 +326,29 @@ class ItemICloudDatabase: Observer, CustomObservable
         
         isCheckingAccess = true
         
-        return Promise<Accessibility>
+        return firstly
         {
-            resolver in
-            
-            firstly
-            {
-                self.iCloudDatabase.checkAccountAccess()
-            }
-            .then(on: backgroundQ)
-            {
-                (accountAccessibility: Accessibility) -> Promise<Accessibility> in
-                
-                guard case .accessible = accountAccessibility else
-                {
-                    return Promise.value(accountAccessibility)
-                }
-                
-                return firstly
-                {
-                    self.ensureItemRecordZoneExists()
-                }
-                .then(on: self.backgroundQ)
-                {
-                    self.ensureSubscriptionExists()
-                }
-                .map(on: self.backgroundQ)
-                {
-                    Accessibility.accessible
-                }
-            }
-            .done(on: backgroundQ)
-            {
-                switch $0
-                {
-                case .accessible: self.isAccessible <- true
-                case .inaccessible: self.isAccessible <- false
-                }
-                
-                resolver.fulfill($0)
-            }
-            .catch(on: backgroundQ)
-            {
+            self.iCloudDatabase.checkAccountAccess()
+        }
+        .then(on: backgroundQ)
+        {
+            self.ensureItemRecordZoneExists()
+        }
+        .then(on: self.backgroundQ)
+        {
+            self.ensureSubscriptionExists()
+        }
+        .tap
+        {
+            switch $0 {
+            case .fulfilled:
+                self.isAccessible <- true
+            case .rejected(let error):
+                log(error: error.localizedDescription)
                 self.isAccessible <- false
-                
-                resolver.reject($0.storageError)
             }
-            .finally(on: backgroundQ)
-            {
-                self.isCheckingAccess = false
-            }
+
+            self.isCheckingAccess = false
         }
     }
     
