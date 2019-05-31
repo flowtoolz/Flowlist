@@ -17,7 +17,7 @@ class Storage: Observer
         }
         
         observeDatabase()
-        observeStore()
+        observe(Store.shared) { [weak self] in self?.didReceive(storeEvent: $0) }
     }
     
     deinit { stopObserving() }
@@ -34,9 +34,18 @@ class Storage: Observer
         
         Store.shared.update(root: root)
         
-        guard isIntendingToSync else { return }
-        
-        startIntendingToSync().catch(abortIntendingToSync)
+        if isIntendingToSync
+        {
+            firstly
+            {
+                self.database.ensureAccess()
+            }
+            .then
+            {
+                self.synchronizeStoreAndDatabase()
+            }
+            .catch(abortIntendingToSync)
+        }
     }
     
     func windowLostFocus() { saveItemsToFile() }
@@ -62,7 +71,7 @@ class Storage: Observer
         
         if database.isAccessible.value != true
         {
-            log(error: "Invalid state: Using database while it's POSSIBLY inaccessible: Is accessible: \(String(describing: database.isAccessible))")
+            log(error: "Invalid state: Syncing with database while it's POSSIBLY inaccessible: Is accessible: \(String(describing: database.isAccessible))")
         }
     
         firstly
@@ -73,7 +82,7 @@ class Storage: Observer
         {
             if self.hasUnsyncedLocalChanges.value
             {
-                self.doInitialSync().catch(self.abortIntendingToSync)
+                self.synchronizeStoreAndDatabase().catch(self.abortIntendingToSync)
             }
         }
         .catch
@@ -86,6 +95,8 @@ class Storage: Observer
     
     // MARK: - Network Reachability
     
+    // TODO: Simplify this concern and don't conflate network reachability with "db reachability", what is the latter anyway really. Can't we just use our reachability wrapper for this?
+    
     func databaseReachabilityDid(update: Change<Bool?>)
     {
         guard isIntendingToSync,
@@ -96,13 +107,18 @@ class Storage: Observer
         
         guard isReachable else
         {
+            // TODO: why??? just because the device went offline doesn't mean we immediately have unsynced changes without changing anything
             hasUnsyncedLocalChanges.value = true
             return
         }
         
         firstly
         {
-            startIntendingToSync()
+            self.database.ensureAccess()
+        }
+        .then
+        {
+            self.synchronizeStoreAndDatabase()
         }
         .catch
         {
@@ -126,17 +142,27 @@ class Storage: Observer
         }
     }
     
-    private func observeStore()
+    private func didReceive(storeEvent: Store.Event)
     {
-        observe(Store.shared)
+        switch storeEvent
         {
-            [weak self] in
-            
-            guard let self = self,
-                case .didUpdate(let update) = $0,
-                let edit = update.makeEdit() else { return }
-            
-            self.storeWasEdited(edit)
+        case .didUpdate(let update):
+            if let edit = update.makeEdit()
+            {
+                self.storeWasEdited(edit)
+            }
+            else
+            {
+                self.hasUnsyncedLocalChanges.value = true
+                
+                let errorMessage = "Couldn't interpret Store event `.didUpdate` as editing operation."
+                log(error: errorMessage)
+                self.abortIntendingToSync(withErrorMessage: errorMessage)
+            }
+        case .didSwitchRoot:
+            // TODO: why do we not propagate this to the database?
+            break
+        case .didNothing: break
         }
     }
     
@@ -174,45 +200,34 @@ class Storage: Observer
         }
     }
     
-    // MARK: - Toggle Intention to Sync
+    // MARK: - Let User Toggle Intention to Sync
     
     func toggleIntentionToSyncWithDatabase()
     {
-        if isIntendingToSync
+        guard !isIntendingToSync else
         {
             syncIntentionPersistentFlag.value = false
-        }
-        else
-        {
-            startIntendingToSync().catch(abortIntendingToSync)
-        }
-    }
-    
-    // MARK: - Start Intending to Sync
-    
-    private func startIntendingToSync() -> Promise<Void>
-    {
-        guard Store.shared.root != nil else
-        {
-            return Promise(error: StorageError.message("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
+            return
         }
         
-        return firstly
+        firstly
         {
-            database.ensureAccess()
+            self.database.ensureAccess()
         }
         .then(on: backgroundQ)
         {
-            self.doInitialSync()
+            self.synchronizeStoreAndDatabase()
         }
         .done(on: backgroundQ)
         {
             self.syncIntentionPersistentFlag.value = true
-            self.hasUnsyncedLocalChanges.value = false
         }
+        .catch(abortIntendingToSync)
     }
     
-    private func doInitialSync() -> Promise<Void>
+    // MARK: - Ensure Store and DB Are in Sync
+    
+    private func synchronizeStoreAndDatabase() -> Promise<Void>
     {
         guard let storeRoot = Store.shared.root else
         {
@@ -324,9 +339,14 @@ class Storage: Observer
                 }
             }
         }
+        .done
+        {
+            self.hasUnsyncedLocalChanges.value = false
+        }
     }
     
-    private var hasUnsyncedLocalChanges = PersistentFlag("UserDefaultsKeyUnsyncedLocalChanges")
+    private var hasUnsyncedLocalChanges = PersistentFlag("UserDefaultsKeyUnsyncedLocalChanges",
+                                                         default: true)
     
     // MARK: - Abort Intending to Sync When Errors Occur
     
