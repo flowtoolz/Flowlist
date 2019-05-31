@@ -88,17 +88,96 @@ class Storage: Observer
         }
     }
     
-    // MARK: - Network Reachability
+    // MARK: - Transmit Database Changes to Local Store
+
+    private func observeDatabase()
+    {
+        observe(database.messenger)
+        {
+            guard let edit = $0 else { return }
+            
+            // log("applying edit from db to store: \(edit)")
+            
+            Store.shared.apply(edit)
+        }
+    }
     
-    // TODO: Simplify this concern and don't conflate network reachability with "db reachability", what is the latter anyway really. Can't we just use our reachability wrapper for this?
+    // MARK: - Transmit Local Changes to Database
+    
+    private func didReceive(storeEvent: Store.Event)
+    {
+        // TODO: should we ignore root switch events here and return?
+        
+        guard isIntendingToSync, isReachable != false else
+        {
+            hasUnsyncedLocalChanges.value = true
+            return
+        }
+        
+        guard database.isAccessible.value == true else
+        {
+            if !database.isCheckingAccess
+            {
+                let errorMessage = "Tried to edit iCloud database before ensuring accessibility."
+                abortIntendingToSync(withErrorMessage: errorMessage)
+            }
+            
+            hasUnsyncedLocalChanges.value = true
+            return
+        }
+        
+        applyStoreEventToDatabase(storeEvent)
+    }
+    
+    private func applyStoreEventToDatabase(_ event: Store.Event)
+    {
+        switch event
+        {
+        case .didUpdate(let update):
+            if let edit = update.makeEdit()
+            {
+                self.applyEditToDatabase(edit)
+            }
+            else
+            {
+                self.hasUnsyncedLocalChanges.value = true
+                
+                let errorMessage = "Couldn't interpret Store event `.didUpdate` as editing operation."
+                log(error: errorMessage)
+                self.abortIntendingToSync(withErrorMessage: errorMessage)
+            }
+        case .didSwitchRoot:
+            // TODO: why do we not propagate this to the database?
+            break
+        case .didNothing: break
+        }
+    }
+    
+    private func applyEditToDatabase(_ edit: Edit)
+    {
+        // log("applying edit from store to db: \(edit)")
+
+        firstly
+        {
+            self.database.apply(edit)
+        }
+        .catch
+        {
+            self.hasUnsyncedLocalChanges.value = true
+            self.abortIntendingToSync(with: $0)
+        }
+    }
+    
+    // MARK: - Network Reachability
     
     func networkReachabilityDidUpdate(isReachable: Bool)
     {
+        self.isReachable = isReachable
+        
         guard isIntendingToSync else { return }
         
         guard isReachable else
         {
-            // TODO: why??? just because the device went offline doesn't mean we immediately have unsynced changes without changing anything
             hasUnsyncedLocalChanges.value = true
             return
         }
@@ -119,76 +198,7 @@ class Storage: Observer
         }
     }
     
-    // MARK: - Observe Database & Store
-
-    private func observeDatabase()
-    {
-        observe(database.messenger)
-        {
-            guard let edit = $0 else { return }
-            
-            // log("applying edit from db to store: \(edit)")
-            
-            Store.shared.apply(edit)
-        }
-    }
-    
-    private func didReceive(storeEvent: Store.Event)
-    {
-        switch storeEvent
-        {
-        case .didUpdate(let update):
-            if let edit = update.makeEdit()
-            {
-                self.storeWasEdited(edit)
-            }
-            else
-            {
-                self.hasUnsyncedLocalChanges.value = true
-                
-                let errorMessage = "Couldn't interpret Store event `.didUpdate` as editing operation."
-                log(error: errorMessage)
-                self.abortIntendingToSync(withErrorMessage: errorMessage)
-            }
-        case .didSwitchRoot:
-            // TODO: why do we not propagate this to the database?
-            break
-        case .didNothing: break
-        }
-    }
-    
-    private func storeWasEdited(_ edit: Edit)
-    {
-        // log("applying edit from store to db: \(edit)")
-        
-        guard isIntendingToSync else
-        {
-            hasUnsyncedLocalChanges.value = true
-            return
-        }
-        
-        guard database.isAccessible.value == true else
-        {
-            if !database.isCheckingAccess
-            {
-                let errorMessage = "Tried to edit iCloud database before ensuring accessibility."
-                abortIntendingToSync(withErrorMessage: errorMessage)
-            }
-            
-            hasUnsyncedLocalChanges.value = true
-            return
-        }
-        
-        firstly
-        {
-            self.database.apply(edit)
-        }
-        .catch
-        {
-            self.hasUnsyncedLocalChanges.value = true
-            self.abortIntendingToSync(with: $0)
-        }
-    }
+    private var isReachable: Bool?
     
     // MARK: - Let User Toggle Intention to Sync
     
