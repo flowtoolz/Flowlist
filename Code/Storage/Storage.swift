@@ -172,12 +172,15 @@ class Storage: Observer
     
     func networkReachabilityDidUpdate(isReachable: Bool)
     {
+        let reachabilityDidChange = self.isReachable != nil && self.isReachable != isReachable
+        let deviceWentOnline = reachabilityDidChange && isReachable
+        
         self.isReachable = isReachable
         
-        if isReachable { deviceProbablyWentOnline() }
+        if deviceWentOnline { syncStoreAndDatabaseAfterDeviceWentOnline() }
     }
     
-    private func deviceProbablyWentOnline()
+    private func syncStoreAndDatabaseAfterDeviceWentOnline()
     {
         guard isIntendingToSync else { return }
         
@@ -191,7 +194,7 @@ class Storage: Observer
         }
         .catch
         {
-            let c2a = "Seems like this device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
+            let c2a = "Seems like your device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
             
             self.abortIntendingToSync(withErrorMessage: $0.message, callToAction: c2a)
         }
