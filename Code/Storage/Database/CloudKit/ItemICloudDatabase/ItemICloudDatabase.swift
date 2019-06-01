@@ -314,17 +314,13 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     func ensureAccess() -> Promise<Void>
     {
-        guard !isCheckingAccess else
+        if let currentlyRunningPromise = ensuringAccessPromise
         {
-            let errorMessage = "Called \(#function) more than once in parallel."
-            log(error: errorMessage)
-            // TODO: better return the promise chain that currently ensures access ... and then we don't need isCheckingAccess anymore and clients can just attach anything to the promise
-            return Promise(error: StorageError.message(errorMessage))
+            log(warning: "Called \(#function) more than once in parallel. Gonna return the active promise.")
+            return currentlyRunningPromise
         }
         
-        isCheckingAccess = true
-        
-        return Promise
+        let newPromise: Promise<Void> = Promise
         {
             resolver in
             
@@ -347,7 +343,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .ensure
             {
-                self.isCheckingAccess = false
+                self.ensuringAccessPromise = nil
             }
             .catch
             {
@@ -355,10 +351,14 @@ class ItemICloudDatabase: Observer, CustomObservable
                 resolver.reject($0)
             }
         }
+        
+        ensuringAccessPromise = newPromise
+        return newPromise
     }
     
     private(set) var didEnsureAccess = false
-    private(set) var isCheckingAccess = false
+    var isCheckingAccess: Bool { return ensuringAccessPromise != nil }
+    private var ensuringAccessPromise: Promise<Void>?
     
     // MARK: - Create Subscriptions
     
