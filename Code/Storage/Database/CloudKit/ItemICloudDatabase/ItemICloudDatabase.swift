@@ -22,6 +22,7 @@ class ItemICloudDatabase: Observer, CustomObservable
         case .didNothing: break
         
         case .didCreateRecord, .didModifyRecord, .didDeleteRecord:
+            // TODO: well, maybe go back to using query notifications, since the server change token never seems to actually change!
             log(error: "Don't use query notifications since those pushs don't provide the server change token anyway!")
         
         case .didReceiveDatabaseNotification(let notification):
@@ -300,8 +301,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             
             firstly
             {
-                iCloudDatabase.fetchChanges(fromZone: .item,
-                                            oldToken: token)
+                db.fetchChanges(fromZone: .item, oldToken: token)
             }
             .done(on: backgroundQ, resolver.fulfill).catch(on: backgroundQ)
             {

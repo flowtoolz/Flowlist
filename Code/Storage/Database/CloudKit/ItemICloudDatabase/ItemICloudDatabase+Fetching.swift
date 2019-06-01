@@ -12,6 +12,8 @@ extension ItemICloudDatabase: ItemDatabase
             
             let oldToken = db.serverChangeToken
             
+            print("locally cashed server change token before fetching records:\n\(oldToken?.description)")
+            
             firstly
             {
                 fetchAllChanges()
@@ -21,10 +23,12 @@ extension ItemICloudDatabase: ItemDatabase
                 (result: ChangeFetch.Result) -> FetchRecordsResult in
                 
                 let records = result.changedRecords.map(Record.init)
+                
+                print("fetched server change token:\n\(self.db.serverChangeToken?.description)")
+                
                 let wasModified = oldToken != self.db.serverChangeToken
                 
-                return FetchRecordsResult(records: records,
-                                          dbWasModified: wasModified)
+                return FetchRecordsResult(records: records, dbWasModified: wasModified)
             }
             .done(on: backgroundQ, resolver.fulfill).catch(on: backgroundQ)
             {

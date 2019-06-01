@@ -45,6 +45,7 @@ extension ChangeFetch
             
             if serverToken != nil
             {
+                print("saving change token from ZONE CHANGE TOKENS UPDATED in result:\n\(serverToken?.description)")
                 result.serverChangeToken = serverToken
             }
         }
@@ -72,6 +73,7 @@ extension ChangeFetch
             
             if serverToken != nil
             {
+                print("saving change token from ZONE fetch in result:\n\(serverToken?.description)")
                 result.serverChangeToken = serverToken
             }
         }

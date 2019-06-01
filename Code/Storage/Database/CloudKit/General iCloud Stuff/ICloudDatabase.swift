@@ -270,6 +270,7 @@ class ICloudDatabase: CustomObservable
         }
         
         operation.savePolicy = .changedKeys
+        operation.queuePriority = .high
         
         operation.perRecordCompletionBlock =
         {
