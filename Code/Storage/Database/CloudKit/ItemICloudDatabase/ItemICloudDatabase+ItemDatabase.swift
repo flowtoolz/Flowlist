@@ -40,22 +40,13 @@ extension ItemICloudDatabase: ItemDatabase
   
     func fetchRecords() -> Promise<[Record]>
     {
-        return Promise<[Record]>
+        return firstly
         {
-            resolver in
-            
-            firstly
-            {
-                fetchItemCKRecords()
-            }
-            .map(on: backgroundQ)
-            {
-                $0.map(Record.init)
-            }
-            .done(on: backgroundQ, resolver.fulfill).catch(on: backgroundQ)
-            {
-                resolver.reject($0.storageError)
-            }
+            fetchItemCKRecords()
+        }
+        .map(on: backgroundQ)
+        {
+            $0.map(Record.init)
         }
     }
 }
