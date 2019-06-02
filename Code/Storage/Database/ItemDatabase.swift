@@ -6,7 +6,6 @@ protocol ItemDatabase
     func reset(root: Item) -> Promise<Void>
     func apply(_ edit: Edit) -> Promise<Void>
     func fetchRecords() -> Promise<[Record]>
-    func fetchEdits() -> Promise<[Edit]>
     
     var messenger: Messenger<Edit?> { get }
     

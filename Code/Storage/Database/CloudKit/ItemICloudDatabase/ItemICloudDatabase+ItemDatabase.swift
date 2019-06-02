@@ -58,47 +58,4 @@ extension ItemICloudDatabase: ItemDatabase
             }
         }
     }
-    
-    // TODO: this is nowhere being used anymore. what's goin on?
-    func fetchEdits() -> Promise<[Edit]>
-    {
-        return Promise<[Edit]>
-        {
-            resolver in
-            
-            firstly
-            {
-                self.fetchChanges()
-            }
-            .map(on: backgroundQ)
-            {
-                (result: ChangeFetchResult) -> [Edit] in
-                
-                var edits = [Edit]()
-                
-                if result.idsOfDeletedCKRecords.count > 0
-                {
-                    let ids = result.idsOfDeletedCKRecords.map
-                    {
-                        $0.recordName
-                    }
-                    
-                    edits.append(.removeItems(withIDs: ids))
-                }
-                
-                if result.changedCKRecords.count > 0
-                {
-                    let records = result.changedCKRecords.map(Record.init)
-                    
-                    edits.append(.updateItems(withRecords: records))
-                }
-                
-                return edits
-            }
-            .done(on: backgroundQ, resolver.fulfill).catch(on: backgroundQ)
-            {
-                resolver.reject($0.storageError)
-            }
-        }
-    }
 }

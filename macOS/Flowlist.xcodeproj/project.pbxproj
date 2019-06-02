@@ -102,6 +102,7 @@
 		9EF96E7421A9F516005619C7 /* CKRecordZone.ID+ItemZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF96E7321A9F516005619C7 /* CKRecordZone.ID+ItemZone.swift */; };
 		9EF96E7621A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF96E7521A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift */; };
 		9EFB86DC21662AD100985B14 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFB86DB21662AD100985B14 /* Tree.swift */; };
+		9EFE6DF122A3F64A005C224E /* ChangeFetchResult+Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFE6DF022A3F64A005C224E /* ChangeFetchResult+Edit.swift */; };
 		C932DAFCC628909A261C9DC7 /* Pods_Flowlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D591083E3159C05E29673835 /* Pods_Flowlist.framework */; };
 /* End PBXBuildFile section */
 
@@ -206,6 +207,7 @@
 		9EF96E7321A9F516005619C7 /* CKRecordZone.ID+ItemZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecordZone.ID+ItemZone.swift"; sourceTree = "<group>"; };
 		9EF96E7521A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord.Reference+ItemZone.swift"; sourceTree = "<group>"; };
 		9EFB86DB21662AD100985B14 /* Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
+		9EFE6DF022A3F64A005C224E /* ChangeFetchResult+Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChangeFetchResult+Edit.swift"; sourceTree = "<group>"; };
 		D591083E3159C05E29673835 /* Pods_Flowlist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flowlist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E46682D8127B754B09986C90 /* Pods-Flowlist.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flowlist.beta.xcconfig"; path = "Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist.beta.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -272,6 +274,7 @@
 		9E13400922A2D85800434FD8 /* CloudKit-Item Mapping */ = {
 			isa = PBXGroup;
 			children = (
+				9EFE6DF022A3F64A005C224E /* ChangeFetchResult+Edit.swift */,
 				9E053B2B21886963001B7103 /* CKRecord+Record.swift */,
 				9E2B20CA21CE65BC0071D4FF /* Record+CKRecord.swift */,
 				9EF96E7521A9F63C005619C7 /* CKRecord.Reference+ItemZone.swift */,
@@ -815,6 +818,7 @@
 				9E053B65218871F5001B7103 /* Item+Export.swift in Sources */,
 				9E6E70AB21936A8B00BDB0BA /* Item+Record.swift in Sources */,
 				9E053B442188711A001B7103 /* HelpMenu.swift in Sources */,
+				9EFE6DF122A3F64A005C224E /* ChangeFetchResult+Edit.swift in Sources */,
 				9EF0AABE21883E6E00B707F4 /* HashMap.swift in Sources */,
 				9E053B62218871C4001B7103 /* ItemTableContent.swift in Sources */,
 				9E053B3021886963001B7103 /* CKRecord.ID+Record.swift in Sources */,
