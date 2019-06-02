@@ -82,7 +82,7 @@ class Storage: Observer
         {
             let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
             
-            self.abortIntendingToSync(withErrorMessage: $0.storageErrorMessage, callToAction: c2a)
+            self.abortIntendingToSync(withErrorMessage: $0.storageError.message, callToAction: c2a)
         }
     }
     
@@ -191,7 +191,7 @@ class Storage: Observer
         {
             let c2a = "Seems like your device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
             
-            self.abortIntendingToSync(withErrorMessage: $0.storageErrorMessage, callToAction: c2a)
+            self.abortIntendingToSync(withErrorMessage: $0.storageError.message, callToAction: c2a)
         }
     }
     
@@ -347,7 +347,7 @@ class Storage: Observer
     
     private func abortIntendingToSync(with error: Error)
     {
-        abortIntendingToSync(withErrorMessage: error.storageErrorMessage)
+        abortIntendingToSync(withErrorMessage: error.storageError.message)
     }
     
     private func abortIntendingToSync(withErrorMessage message: String,
@@ -374,7 +374,7 @@ class Storage: Observer
         }
         .catch
         {
-            log(error: $0.storageErrorMessage)
+            log(error: $0.storageError.message)
         }
     }
     

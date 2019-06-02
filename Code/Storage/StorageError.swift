@@ -1,10 +1,5 @@
 extension Error
 {
-    var storageErrorMessage: String
-    {
-        return storageError.message
-    }
-
     var storageError: StorageError
     {
         if let error = self as? StorageError
