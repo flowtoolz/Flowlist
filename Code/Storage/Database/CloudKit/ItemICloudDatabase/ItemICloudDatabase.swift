@@ -9,7 +9,7 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     init()
     {
-        observe(iCloudDatabase)
+        observe(db)
         {
             [weak self] event in self?.didReceive(databaseEvent: event)
         }
@@ -44,21 +44,21 @@ class ItemICloudDatabase: Observer, CustomObservable
         
         firstly
         {
-            fetchNewChanges()
+            fetchChanges()
         }
         .done(on: backgroundQ)
         {
             result in
             
-            if result.idsOfDeletedRecords.count > 0
+            if result.idsOfDeletedCKRecords.count > 0
             {
-                let ids = result.idsOfDeletedRecords.map { $0.recordName }
+                let ids = result.idsOfDeletedCKRecords.map { $0.recordName }
                 self.send(.removeItems(withIDs: ids))
             }
             
-            if result.changedRecords.count > 0
+            if result.changedCKRecords.count > 0
             {
-                let records = result.changedRecords.map(Record.init)
+                let records = result.changedCKRecords.map(Record.init)
                 self.send(.updateItems(withRecords: records))
             }
         }
@@ -67,118 +67,92 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     // MARK: - Edit Items
     
-    func apply(_ edit: Edit) -> Promise<Void>
+    func update(_ records: [Record]) -> Promise<Void>
     {
-        guard didEnsureAccess else
-        {
-            let errorMessage = "Tried to edit iCloud database while it isn't accessible."
-            return Promise(error: StorageError.message(errorMessage))
-        }
+        var promises = [Promise<Void>]()
         
-        return makePromise(for: edit)
-    }
+        let recordsByRootID = records.byRootID
     
-    private func makePromise(for edit: Edit) -> Promise<Void>
-    {
-        switch edit
+        for (rootID, records) in recordsByRootID
         {
-        case .updateItems(let records):
-            
-            var promises = [Promise<Void>]()
-            
-            let recordsByRootID = records.byRootID
-            
-            for (rootID, records) in recordsByRootID
+            let promise = firstly
             {
-                let promise = firstly
-                {
-                    self.updateItems(with: records, inRootWithID: rootID)
-                }
-                .then(on: backgroundQ)
-                {
-                    self.fetchNewChanges()
-                }
-                .map(on: backgroundQ)
-                {
-                    (result: ChangeFetch.Result) -> Void in
-                    
-                    if !result.idsOfDeletedRecords.isEmpty
-                    {
-                        log(warning: "Unexpected deletions.")
-                        
-                        let ids = result.idsOfDeletedRecords.map
-                        {
-                            $0.recordName
-                        }
-                        
-                        self.messenger.send(.removeItems(withIDs: ids))
-                    }
-                    
-                    let unexpectedChanges: [CKRecord] = result.changedRecords.compactMap
-                    {
-                        guard let rootID = $0.superItem else { return $0 }
-                        
-                        return recordsByRootID[rootID] == nil ? $0 : nil
-                    }
-                    
-                    if !unexpectedChanges.isEmpty
-                    {
-                        log(warning: "Unexpected changes.")
-                        
-                        let records = unexpectedChanges.map(Record.init)
-                        
-                        self.messenger.send(.updateItems(withRecords: records))
-                    }
-                    
-                    return
-                }
-                
-                promises.append(promise)
-            }
-            
-            return when(fulfilled: promises)
-            
-        case .removeItems(let ids):
-            return firstly
-            {
-                self.removeItems(with: ids)
+                self.update(records, inRootWithID: rootID)
             }
             .then(on: backgroundQ)
             {
-                self.updateServerChangeToken()
+                self.fetchChanges()
             }
+            .map(on: backgroundQ)
+            {
+                (result: ChangeFetchResult) -> Void in
+                
+                if !result.idsOfDeletedCKRecords.isEmpty
+                {
+                    log(warning: "Unexpected deletions.")
+                    
+                    let ids = result.idsOfDeletedCKRecords.map
+                    {
+                        $0.recordName
+                    }
+                    
+                    self.messenger.send(.removeItems(withIDs: ids))
+                }
+                
+                let unexpectedChanges: [CKRecord] = result.changedCKRecords.compactMap
+                {
+                    guard let rootID = $0.superItem else { return $0 }
+                    
+                    return recordsByRootID[rootID] == nil ? $0 : nil
+                }
+                
+                if !unexpectedChanges.isEmpty
+                {
+                    log(warning: "Unexpected changes.")
+                    
+                    let records = unexpectedChanges.map(Record.init)
+                    
+                    self.messenger.send(.updateItems(withRecords: records))
+                }
+                
+                return
+            }
+            
+            promises.append(promise)
         }
+    
+        return when(fulfilled: promises)
     }
     
-    private func updateItems(with records: [Record],
-                             inRootWithID rootID: String) -> Promise<Void>
+    private func update(_ records: [Record],
+                        inRootWithID rootID: String) -> Promise<Void>
     {
         let rootRecordID = CKRecord.ID(itemID: rootID)
         
         return firstly
         {
-            fetchSubitemRecords(ofItemWithID: rootRecordID)
+            // fetch all records in that root record, including those updated records that already exist and their siblings that are not being updated
+            
+            fetchSubitemCKRecords(ofItemWithID: rootRecordID)
         }
         .then(on: backgroundQ)
         {
-            (siblingRecords: [CKRecord]) -> Promise<Void>  in
+            (allSubitemRecords: [CKRecord]) -> Promise<Void>  in
             
-            // get sibling records
+            // if there are no records yet in that root, just save the updated records
             
-            guard !siblingRecords.isEmpty else
+            guard !allSubitemRecords.isEmpty else
             {
-                let records = records.map(CKRecord.init)
-                
-                return self.iCloudDatabase.save(records)
+                return self.save(records)
             }
             
-            // create hashmap of sibling records
+            // create hashmap of all subitem records
             
-            var siblingRecordsByID = [String : CKRecord]()
+            var subitemRecordsByID = [String : CKRecord]()
             
-            siblingRecords.forEach
+            allSubitemRecords.forEach
             {
-                siblingRecordsByID[$0.recordID.recordName] = $0
+                subitemRecordsByID[$0.recordID.recordName] = $0
             }
             
             // add new records & update existing ones
@@ -188,7 +162,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             
             for record in records
             {
-                if let existingRecord = siblingRecordsByID[record.id]
+                if let existingRecord = subitemRecordsByID[record.id]
                 {
                     if existingRecord.apply(record)
                     {
@@ -206,7 +180,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             
             // update positions
             
-            let sortedRecords = (siblingRecords + newRecords).sorted
+            let sortedRecords = (allSubitemRecords + newRecords).sorted
             {
                 $0.position < $1.position
             }
@@ -222,95 +196,53 @@ class ItemICloudDatabase: Observer, CustomObservable
             
             // save records back
             
-            return self.iCloudDatabase.save(Array(recordsToSave))
+            return self.db.save(Array(recordsToSave))
         }
     }
     
-    private func fetchSubitemRecords(ofItemWithID id: CKRecord.ID) -> Promise<[CKRecord]>
+    private func save(_ records: [Record]) -> Promise<Void>
     {
-        let predicate = NSPredicate(format: "superItem = %@", id)
-        
-        let query = CKQuery(recordType: CKRecord.itemType,
-                            predicate: predicate)
-        
-        return iCloudDatabase.fetchRecords(with: query, inZone: .item)
+        return save(records.map(CKRecord.init))
     }
     
-    private func removeItems(with ids: [String]) -> Promise<Void>
+    func removeRecords(with ids: [String]) -> Promise<Void>
     {
-        let recordIDs = ids.map(CKRecord.ID.init(itemID:))
+        let ckRecordIDs = ids.map(CKRecord.ID.init(itemID:))
         
-        return iCloudDatabase.deleteRecords(withIDs: recordIDs)
+        return db.deleteCKRecords(withIDs: ckRecordIDs)
     }
     
-    func reset(tree root: Item) -> Promise<Void>
+    func save(_ records: [CKRecord]) -> Promise<Void>
     {
-        let records = root.array.map
-        {
-            CKRecord(record: $0.makeRecord())
-        }
-        
-        guard !records.isEmpty else { return Promise() }
-        
-        return Promise<Void>
-        {
-            resolver in
-            
-            return firstly
-            {
-                self.db.deleteRecords(ofType: CKRecord.itemType,
-                                      inZone: .item)
-            }
-            .then(on: backgroundQ)
-            {
-                self.db.save(records)
-            }
-            .done(on: backgroundQ)
-            {
-                resolver.fulfill_()
-            }
-            .catch(on: backgroundQ)
-            {
-                resolver.reject($0.storageError)
-            }
-        }
+        return db.save(records)
+    }
+    
+    func deleteRecords() -> Promise<Void>
+    {
+        return db.deleteCKRecords(ofType: CKRecord.itemType, inZone: .item)
     }
     
     // MARK: - Fetch
     
-    func updateServerChangeToken() -> Promise<Void>
+    func fetchChanges() -> Promise<ChangeFetchResult>
     {
-        return fetchNewChanges().map { _ in }
+        return db.fetchChanges(fromZone: .item)
     }
     
-    func fetchNewChanges() -> Promise<ChangeFetch.Result>
+    func fetchItemCKRecords() -> Promise<[CKRecord]>
     {
-        return fetchChanges(with: db.serverChangeToken)
+        return db.fetchCKRecords(ofType: CKRecord.itemType, inZone: .item)
     }
     
-    func fetchAllChanges() -> Promise<ChangeFetch.Result>
+    private func fetchSubitemCKRecords(ofItemWithID id: CKRecord.ID) -> Promise<[CKRecord]>
     {
-        return fetchChanges(with: nil)
+        let predicate = NSPredicate(format: "superItem = %@", id)
+        let query = CKQuery(recordType: CKRecord.itemType, predicate: predicate)
+        
+        return db.fetchCKRecords(with: query, inZone: .item)
     }
     
-    private func fetchChanges(with token: CKServerChangeToken?) -> Promise<ChangeFetch.Result>
-    {
-        return Promise<ChangeFetch.Result>
-        {
-            resolver in
-            
-            firstly
-            {
-                db.fetchChanges(fromZone: .item, oldToken: token)
-            }
-            .done(on: backgroundQ, resolver.fulfill).catch(on: backgroundQ)
-            {
-                resolver.reject($0.storageError)
-            }
-        }
-    }
-    
-    // MARK: - Accessibility
+    // MARK: - Ensure Access
     
     func ensureAccess() -> Promise<Void>
     {
@@ -326,7 +258,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             
             firstly
             {
-                self.iCloudDatabase.checkAccountAccess()
+                self.db.checkAccountAccess()
             }
             .then(on: backgroundQ)
             {
@@ -380,11 +312,10 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     func handlePushNotification(with userInfo: [String : Any])
     {
-        iCloudDatabase.handlePushNotification(with: userInfo)
+        db.handlePushNotification(with: userInfo)
     }
     
-    var db: ICloudDatabase { return iCloudDatabase }
-    let iCloudDatabase = ICloudDatabase()
+    private let db = ICloudDatabase()
     
     // MARK: - Observability
     
@@ -396,15 +327,5 @@ class ItemICloudDatabase: Observer, CustomObservable
     var backgroundQ: DispatchQueue
     {
         return DispatchQueue.global(qos: .userInitiated)
-    }
-}
-
-extension Error
-{
-    var storageError: StorageError
-    {
-        let message = "This issue came up: \(self.localizedDescription)"
-        
-        return StorageError.message(message)
     }
 }

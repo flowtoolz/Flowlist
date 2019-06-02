@@ -1,22 +1,38 @@
 extension Error
 {
-    var message: String
+    var storageErrorMessage: String
+    {
+        return storageError.message
+    }
+
+    var storageError: StorageError
     {
         if let error = self as? StorageError
         {
-            switch error
-            {
-            case .message(let text): return text
-            }
+            return error
         }
         else
         {
-            return "This issue came up: \(String(describing: self))"
+            let message = "This issue came up: \(self.localizedDescription)"
+            return StorageError.message(message)
         }
     }
 }
 
-enum StorageError: Error
+enum StorageError: Error, CustomDebugStringConvertible
 {
+    var debugDescription: String
+    {
+        return message
+    }
+    
+    var message: String
+    {
+        switch self
+        {
+        case .message(let text): return text
+        }
+    }
+    
     case message(_ text: String)
 }

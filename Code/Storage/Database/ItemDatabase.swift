@@ -3,21 +3,14 @@ import PromiseKit
 
 protocol ItemDatabase
 {
-    func fetchUpdates() -> Promise<[Edit]>
+    func reset(root: Item) -> Promise<Void>
     func apply(_ edit: Edit) -> Promise<Void>
-    
-    func fetchRecords() -> Promise<FetchRecordsResult>
-    func reset(tree: Item) -> Promise<Void>
+    func fetchRecords() -> Promise<[Record]>
+    func fetchEdits() -> Promise<[Edit]>
     
     var messenger: Messenger<Edit?> { get }
     
     func ensureAccess() -> Promise<Void>
     var isCheckingAccess: Bool { get }
     var didEnsureAccess: Bool { get }
-}
-
-struct FetchRecordsResult
-{
-    let records: [Record]
-    let dbWasModified: Bool
 }

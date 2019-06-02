@@ -32,14 +32,12 @@ class ICloudDatabase: CustomObservable
     
     // MARK: - Delete
     
-    func deleteRecords(ofType type: String,
-                       inZone zoneID: CKRecordZone.ID) -> Promise<Void>
+    func deleteCKRecords(ofType type: String,
+                         inZone zoneID: CKRecordZone.ID) -> Promise<Void>
     {
-        let queryForType = CKQuery(recordType: type, predicate: .all)
-        
         return firstly
         {
-            fetchRecords(with: queryForType, inZone: zoneID)
+            fetchCKRecords(ofType: type, inZone: zoneID)
         }
         .map(on: backgroundQ)
         {
@@ -47,14 +45,14 @@ class ICloudDatabase: CustomObservable
         }
         .then(on: backgroundQ)
         {
-            self.deleteRecords(withIDs: $0)
+            self.deleteCKRecords(withIDs: $0)
         }
     }
     
-    func deleteRecords(withIDs ids: [CKRecord.ID]) -> Promise<Void>
+    func deleteCKRecords(withIDs ids: [CKRecord.ID]) -> Promise<Void>
     {
         let slices = ids.splitIntoSlices(ofSize: 400)
-        
+
         let promises = slices.map
         {
             (slice: ArraySlice<CKRecord.ID>) -> Promise<Void> in
@@ -75,10 +73,15 @@ class ICloudDatabase: CustomObservable
     
     // MARK: - Fetch
     
-    // TODO: ensure that server change token is always up to date and channel all fetches through ICloudDatabase+ServerChangeToken.swift
+    func fetchCKRecords(ofType type: CKRecord.RecordType,
+                        inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
+    {
+        let query = CKQuery(recordType: type, predicate: .all)
+        return fetchCKRecords(with: query, inZone: zoneID)
+    }
     
-    func fetchRecords(with query: CKQuery,
-                      inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
+    func fetchCKRecords(with query: CKQuery,
+                        inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
     {
         return database.perform(query, inZoneWith: zoneID)
     }
@@ -184,9 +187,9 @@ class ICloudDatabase: CustomObservable
             {
                 createdZones, _, error in
                 
-                if let error = error
+                if let error = error?.storageError
                 {
-                    log(error: error.localizedDescription)
+                    log(error: error.message)
                 }
                 
                 resolver.resolve(error, createdZones?.first)
@@ -196,7 +199,7 @@ class ICloudDatabase: CustomObservable
         }
     }
     
-    // MARK: - Create Subscriptions
+    // MARK: - Create Subscription
     
     func createQuerySubscription(forRecordType type: String,
                                  desiredKeys: [String]) -> Promise<CKSubscription>
@@ -240,9 +243,9 @@ class ICloudDatabase: CustomObservable
             {
                 subscription, error in
                 
-                if let error = error
+                if let error = error?.storageError
                 {
-                    log(error: error.localizedDescription)
+                    log(error: error.message)
                 }
                 
                 resolver.resolve(subscription, error)
@@ -252,16 +255,18 @@ class ICloudDatabase: CustomObservable
     
     // MARK: - Database
     
-    private func perform(modifyOperation operation: CKModifyRecordsOperation,
+    private func perform(modifyOperation operation: ModifyOperation,
                          handleCreationSuccess: ((Error?) -> Void)?,
                          handleDeletionSuccess: ((Error?) -> Void)?)
     {
         if (operation.recordIDsToDelete?.count ?? 0) +
            (operation.recordsToSave?.count ?? 0) > 400
         {
-            log(error: "Too many items in CKModifyRecordsOperation.")
+            let message = "Too many items in CKModifyRecordsOperation."
             
-            let error = ICloudDBError.message("Too many items in operation")
+            log(error: message)
+
+            let error = StorageError.message(message)
             
             handleCreationSuccess?(error)
             handleDeletionSuccess?(error)
@@ -269,7 +274,7 @@ class ICloudDatabase: CustomObservable
             return
         }
         
-        operation.savePolicy = .changedKeys
+        operation.savePolicy = .allKeys
         operation.queuePriority = .high
         
         operation.perRecordCompletionBlock =
@@ -284,9 +289,9 @@ class ICloudDatabase: CustomObservable
         {
             _, _, error in
             
-            if let error = error
+            if let error = error?.storageError
             {
-                log(error: error.localizedDescription)
+                log(error: error.message)
             }
             
             handleDeletionSuccess?(error)
@@ -312,7 +317,7 @@ class ICloudDatabase: CustomObservable
     {
         return firstly
         {
-            self.container.requestAccountStatus()
+            self.container.fetchAccountStatus()
         }
         .then(on: backgroundQ)
         {
@@ -341,21 +346,6 @@ class ICloudDatabase: CustomObservable
     }
     
     private let container = CKContainer.default()
-    
-    // MARK: - Error
-    
-    enum ICloudDBError: Error, CustomDebugStringConvertible
-    {
-        var debugDescription: String
-        {
-            switch self
-            {
-            case .message(let string): return string
-            }
-        }
-        
-        case message(String)
-    }
     
     // MARK: - Observability
     

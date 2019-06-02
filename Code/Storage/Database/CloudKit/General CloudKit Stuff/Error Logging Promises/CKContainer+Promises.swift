@@ -4,7 +4,7 @@ import SwiftyToolz
 
 extension CKContainer
 {
-    public func requestUserRecordID() -> Promise<CKRecord.ID>
+    public func fetchUserCKRecordID() -> Promise<CKRecord.ID>
     {
         return Promise
         {
@@ -12,19 +12,19 @@ extension CKContainer
             
             fetchUserRecordID
             {
-                record, error in
+                id, error in
                 
                 if let error = error
                 {
                     log(error: error.localizedDescription)
                 }
                 
-                resolver.resolve(record, error)
+                resolver.resolve(id, error?.storageError)
             }
         }
     }
     
-    public func requestAccountStatus() -> Promise<CKAccountStatus>
+    public func fetchAccountStatus() -> Promise<CKAccountStatus>
     {
         return Promise
         {
@@ -39,7 +39,7 @@ extension CKContainer
                     log(error: error.localizedDescription)
                 }
                 
-                resolver.resolve(status, error)
+                resolver.resolve(status, error?.storageError)
             }
         }
     }

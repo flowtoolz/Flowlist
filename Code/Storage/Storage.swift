@@ -82,7 +82,7 @@ class Storage: Observer
         {
             let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
             
-            self.abortIntendingToSync(withErrorMessage: $0.message, callToAction: c2a)
+            self.abortIntendingToSync(withErrorMessage: $0.storageErrorMessage, callToAction: c2a)
         }
     }
     
@@ -191,7 +191,7 @@ class Storage: Observer
         {
             let c2a = "Seems like your device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
             
-            self.abortIntendingToSync(withErrorMessage: $0.message, callToAction: c2a)
+            self.abortIntendingToSync(withErrorMessage: $0.storageErrorMessage, callToAction: c2a)
         }
     }
     
@@ -237,9 +237,9 @@ class Storage: Observer
         }
         .then(on: backgroundQ)
         {
-            (result: FetchRecordsResult) -> Promise<Void> in
+            (records: [Record]) -> Promise<Void> in
             
-            let treeResult = result.records.makeTrees()
+            let treeResult = records.makeTrees()
             
             if treeResult.trees.count > 1
             {
@@ -251,14 +251,14 @@ class Storage: Observer
             {
                 // no items in database
                 
-                return self.database.reset(tree: storeRoot)
+                return self.database.reset(root: storeRoot)
             }
             
             if !storeRoot.isLeaf && databaseRoot.isLeaf
             {
                 // no items in database root
                 
-                return self.database.reset(tree: storeRoot)
+                return self.database.reset(root: storeRoot)
             }
             
             // database has items that we can't delete
@@ -292,6 +292,8 @@ class Storage: Observer
                 return Promise()
             }
             
+            // FIXME: comparing new and old server change token doesn't work to detect whether the db was modified. so `dbWasModified` doesn't work. the server change token doesn't need to advance for every db change. fetch records should just fetch all records. fetch updates should fetch updates with token. if fetch updates returns updates but we haven't updated the db since our last fetch updates call, then some other device did modify the db.
+           /*
             // store and database have different items
             
             if self.hasUnsyncedLocalChanges.value && !result.dbWasModified
@@ -310,7 +312,7 @@ class Storage: Observer
                 self.resetLocal(tree: databaseRoot)
                 return Promise()
             }
-            
+            */
             // conflicting trees -> ask user
             
             return firstly
@@ -328,7 +330,7 @@ class Storage: Observer
                 }
                 else
                 {
-                    return self.database.reset(tree: storeRoot)
+                    return self.database.reset(root: storeRoot)
                 }
             }
         }
@@ -345,7 +347,7 @@ class Storage: Observer
     
     private func abortIntendingToSync(with error: Error)
     {
-        abortIntendingToSync(withErrorMessage: error.message)
+        abortIntendingToSync(withErrorMessage: error.storageErrorMessage)
     }
     
     private func abortIntendingToSync(withErrorMessage message: String,
@@ -372,7 +374,7 @@ class Storage: Observer
         }
         .catch
         {
-            log(error: $0.message)
+            log(error: $0.storageErrorMessage)
         }
     }
     

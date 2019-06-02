@@ -20,24 +20,24 @@ extension CKDatabase
                     log(error: error.localizedDescription)
                 }
                 
-                resolver.resolve(records, error)
+                resolver.resolve(records, error?.storageError)
             }
         }
     }
     
-    public func requestUserRecord() -> Promise<CKRecord>
+    public func fetchUserCKRecord() -> Promise<CKRecord>
     {
         return firstly
         {
-            CKContainer.default().requestUserRecordID()
+            CKContainer.default().fetchUserCKRecordID()
         }
         .then(on: DispatchQueue.global(qos: .userInitiated))
         {
-            return self.requestRecord(withID: $0)
+            self.fetchCKRecord(withID: $0)
         }
     }
     
-    public func requestRecord(withID recordID: CKRecord.ID) -> Promise<CKRecord>
+    public func fetchCKRecord(withID recordID: CKRecord.ID) -> Promise<CKRecord>
     {
         return Promise
         {
@@ -52,7 +52,7 @@ extension CKDatabase
                     log(error: error.localizedDescription)
                 }
                 
-                resolver.resolve(record, error)
+                resolver.resolve(record, error?.storageError)
             }
         }
     }

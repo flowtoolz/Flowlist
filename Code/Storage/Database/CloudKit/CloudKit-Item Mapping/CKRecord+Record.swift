@@ -172,7 +172,7 @@ extension CKRecord
         return result
     }
     
-    static var itemType: String { return "Item" }
+    static var itemType: RecordType { return "Item" }
     
     // MARK: - Fields
     
