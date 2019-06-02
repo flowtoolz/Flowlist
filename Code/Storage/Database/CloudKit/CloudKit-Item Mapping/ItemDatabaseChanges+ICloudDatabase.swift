@@ -2,7 +2,7 @@ import CloudKit
 
 extension ItemDatabaseChanges
 {
-    init(_ ckChangeFetchResult: CKChangeFetchResult)
+    init(_ ckChangeFetchResult: ICloudDatabase.Changes)
     {
         if let clientToken = ckChangeFetchResult.clientChangeToken,
             let clientTokenString = String(data: clientToken, encoding: .utf8)

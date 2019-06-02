@@ -7,7 +7,7 @@ extension ICloudDatabase
 {
     // MARK: - Fetch Changes
     
-    func fetchChanges(fromZone zoneID: CKRecordZone.ID) -> Promise<CKChangeFetchResult>
+    func fetchChanges(fromZone zoneID: CKRecordZone.ID) -> Promise<Changes>
     {
         return Promise
         {
@@ -16,16 +16,16 @@ extension ICloudDatabase
             let fetch = CKFetchRecordZoneChangesOperation(zoneID: zoneID,
                                                           token: serverChangeToken)
             {
-                result, error in
+                changes, error in
                 
                 if let error = error
                 {
                     log(error: error.localizedDescription)
                 }
                 
-                self.serverChangeToken = result?.serverChangeToken
+                self.serverChangeToken = changes?.serverChangeToken
                 
-                resolver.resolve(result, error)
+                resolver.resolve(changes, error)
             }
             
             perform(fetch)
@@ -70,7 +70,7 @@ private extension CKFetchRecordZoneChangesOperation
 {
     convenience init(zoneID fetchZoneID: CKRecordZone.ID,
                      token: CKServerChangeToken?,
-                     handleResult: @escaping (CKChangeFetchResult?, Error?) -> Void)
+                     handleResult: @escaping (ICloudDatabase.Changes?, Error?) -> Void)
     {
         let zoneOptions = CKFetchRecordZoneChangesOperation.ZoneOptions()
         
@@ -81,16 +81,16 @@ private extension CKFetchRecordZoneChangesOperation
         self.init(recordZoneIDs: [fetchZoneID],
                   optionsByRecordZoneID: options)
         
-        var result = CKChangeFetchResult()
+        var changes = ICloudDatabase.Changes()
         
         recordChangedBlock =
         {
-            record in result.changedCKRecords.append(record)
+            record in changes.changedCKRecords.append(record)
         }
         
         recordWithIDWasDeletedBlock =
         {
-            id, _ in result.idsOfDeletedCKRecords.append(id)
+            id, _ in changes.idsOfDeletedCKRecords.append(id)
         }
         
         recordZoneChangeTokensUpdatedBlock =
@@ -105,12 +105,12 @@ private extension CKFetchRecordZoneChangesOperation
             
             if clientToken != nil
             {
-                result.clientChangeToken = clientToken
+                changes.clientChangeToken = clientToken
             }
             
             if serverToken != nil
             {
-                result.serverChangeToken = serverToken
+                changes.serverChangeToken = serverToken
             }
         }
         
@@ -132,12 +132,12 @@ private extension CKFetchRecordZoneChangesOperation
             
             if clientToken != nil
             {
-                result.clientChangeToken = clientToken
+                changes.clientChangeToken = clientToken
             }
             
             if serverToken != nil
             {
-                result.serverChangeToken = serverToken
+                changes.serverChangeToken = serverToken
             }
         }
         
@@ -150,15 +150,18 @@ private extension CKFetchRecordZoneChangesOperation
                 return
             }
             
-            handleResult(result, nil)
+            handleResult(changes, nil)
         }
     }
 }
 
-struct CKChangeFetchResult
+extension ICloudDatabase
 {
-    var changedCKRecords = [CKRecord]()
-    var idsOfDeletedCKRecords = [CKRecord.ID]()
-    var serverChangeToken: CKServerChangeToken? = nil
-    var clientChangeToken: Data? = nil
+    struct Changes
+    {
+        var changedCKRecords = [CKRecord]()
+        var idsOfDeletedCKRecords = [CKRecord.ID]()
+        var serverChangeToken: CKServerChangeToken? = nil
+        var clientChangeToken: Data? = nil
+    }
 }
