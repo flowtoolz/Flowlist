@@ -4,26 +4,11 @@ extension TextFormat
 {
     static var preferred: TextFormat
     {
-        get
-        {
-            guard let string = defaults.string(forKey: formatKey) else
-            {
-                return .plain
-            }
-            
-            return TextFormat(rawValue: string) ?? .plain
-        }
+        get { return TextFormat(rawValue: persistentTextFormat.value) ?? .plain }
         
-        set
-        {
-            defaults.set(newValue.rawValue, forKey: formatKey)
-        }
-    }
-    
-    private static var defaults: UserDefaults { return .standard }
-    
-    private static var formatKey: String
-    {
-        return "UserDefaultsKeyExportFormat"
+        set { persistentTextFormat.value = newValue.rawValue }
     }
 }
+
+private var persistentTextFormat = PersistentString("UserDefaultsKeyExportFormat",
+                                                    default: TextFormat.plain.rawValue)

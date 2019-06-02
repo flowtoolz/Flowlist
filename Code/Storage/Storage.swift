@@ -11,8 +11,8 @@ class Storage: Observer
         self.file = file
         self.database = database
         
-        observeDatabase()
-        observe(Store.shared) { [weak self] in self?.didReceive(storeEvent: $0) }
+        observe(database.messenger) { [weak self] in self?.didReceive($0) }
+        observe(Store.shared) { [weak self] in self?.didReceive($0) }
     }
     
     deinit { stopObserving() }
@@ -87,22 +87,44 @@ class Storage: Observer
     }
     
     // MARK: - Transmit Database Changes to Local Store
-
-    private func observeDatabase()
+    
+    private func didReceive(_ databaseUpdate: ItemDatabaseUpdate)
     {
-        observe(database.messenger)
+        switch databaseUpdate
         {
-            guard let edit = $0 else { return }
-            
-            // log("applying edit from db to store: \(edit)")
-            
-            Store.shared.apply(edit)
+        case .mayHaveChanged: databaseMayHaveChanged()
+        }
+    }
+    
+    private func databaseMayHaveChanged()
+    {
+        firstly
+        {
+            database.fetchChanges()
+        }
+        .done(on: backgroundQ)
+        {
+            self.applyDatabaseChangesToStore($0)
+        }
+        .catch(abortIntendingToSync)
+    }
+    
+    private func applyDatabaseChangesToStore(_ changes: ItemDatabaseChanges)
+    {
+        if changes.idsOfDeletedRecords.count > 0
+        {
+            Store.shared.apply(.removeItems(withIDs: changes.idsOfDeletedRecords))
+        }
+        
+        if changes.modifiedRecords.count > 0
+        {
+            Store.shared.apply(.updateItems(withRecords: changes.modifiedRecords))
         }
     }
     
     // MARK: - Transmit Local Changes to Database
     
-    private func didReceive(storeEvent: Store.Event)
+    private func didReceive(_ storeEvent: Store.Event)
     {
         // TODO: should we ignore root switch events here and return?
         
@@ -226,47 +248,115 @@ class Storage: Observer
     
     private func syncStoreAndDatabase() -> Promise<Void>
     {
-        guard let storeRoot = Store.shared.root else
+        guard Store.shared.root != nil else
         {
             return Promise(error: StorageError.message("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
         }
         
         return firstly
         {
-            self.database.fetchRecords()
+            self.database.fetchChanges()
         }
         .then(on: backgroundQ)
         {
-            (records: [Record]) -> Promise<Void> in
+            (databaseChanges: ItemDatabaseChanges) -> Promise<Void> in
+           
+            if !databaseChanges.hasChanges
+            {
+                // database did not change
+                
+                if self.hasUnsyncedLocalChanges.value
+                {
+                    // ... but store did change (like after editing offline)
+                    
+                    return self.database.reset(root: Store.shared.root)
+                }
+                else
+                {
+                    // neither db nor local store have changed. we're done.
+                    
+                    return Promise()
+                }
+            }
+            else
+            {
+                guard !databaseChanges.thisAppDidTheChanges else { return Promise() }
+                
+                // some other Flowlist installation did change the database
+                
+                if !self.hasUnsyncedLocalChanges.value
+                {
+                    // ... but the local store did not change (like after coming back from other device)
+                    
+                    self.applyDatabaseChangesToStore(databaseChanges)
+                    
+                    return Promise()
+                }
+                else
+                {
+                    // conflicting changes -> ask user
+                    
+                    return firstly
+                    {
+                        Dialog.default.askWhetherToPreferICloud()
+                    }
+                    .then(on: self.backgroundQ)
+                    {
+                        (preferDatabase: Bool) -> Promise<Void> in
+                        
+                        if preferDatabase
+                        {
+                            return self.resetStoreWithItemsFromDatabase()
+                        }
+                        else
+                        {
+                            return self.database.reset(root: Store.shared.root)
+                        }
+                    }
+                }
+            }
+        }
+        .done
+        {
+            self.hasUnsyncedLocalChanges.value = false
+        }
+    }
+    
+    private func resetStoreWithItemsFromDatabase() -> Promise<Void>
+    {
+        guard Store.shared.root != nil else
+        {
+            return Promise(error: StorageError.message("Create file and Store root before resetting Store with Database items! file \(#file) line \(#line)"))
+        }
+        
+        return firstly
+        {
+            database.fetchRecords()
+        }
+        .then(on: backgroundQ)
+        {
+            records -> Promise<Void> in
+            
+            // retrieve database root
             
             let treeResult = records.makeTrees()
             
             if treeResult.trees.count > 1
             {
-                // TODO: Merge those trees by creating a new root for them so that nothing gets lost in this weird situation
+                // TODO: Merge those trees by creating a new root for them so that nothing gets lost in this weird situation ... or ask user
                 log(warning: "There are multiple trees in the database.")
             }
             
-            guard let databaseRoot = treeResult.trees.first else
+            guard let databaseRoot = treeResult.largestTree else
             {
                 // no items in database
-                
-                return self.database.reset(root: storeRoot)
+                return self.database.reset(root: Store.shared.root)
             }
             
-            if !storeRoot.isLeaf && databaseRoot.isLeaf
-            {
-                // no items in database root
-                
-                return self.database.reset(root: storeRoot)
-            }
-            
-            // database has items that we can't delete
+            // if database has unconnected items -> delete them
             
             if !treeResult.detachedRecords.isEmpty
             {
-                // remove detached records from db
-                
                 let ids = treeResult.detachedRecords.map { $0.id }
                 
                 self.database.apply(.removeItems(withIDs: ids)).catch
@@ -275,68 +365,17 @@ class Storage: Observer
                 }
             }
             
-            if storeRoot.isLeaf && !databaseRoot.isLeaf
+            // Store and database tree are identical -> No need to reset Store
+            
+            if Store.shared.root?.isIdentical(to: databaseRoot) ?? false
             {
-                // no items in Store root but in database
-                
-                self.resetLocal(tree: databaseRoot)
                 return Promise()
             }
             
-            // store and database have items
+            // Overwrite Store
             
-            if storeRoot.isIdentical(to: databaseRoot)
-            {
-                // Store and iCloud are identical
-                
-                return Promise()
-            }
-            
-            // FIXME: comparing new and old server change token doesn't work to detect whether the db was modified. so `dbWasModified` doesn't work. the server change token doesn't need to advance for every db change. fetch records should just fetch all records. fetch updates should fetch updates with token. if fetch updates returns updates but we haven't updated the db since our last fetch updates call, then some other device did modify the db.
-           /*
-            // store and database have different items
-            
-            if self.hasUnsyncedLocalChanges.value && !result.dbWasModified
-            {
-                // store changed but not database
-                // (like after editing offline)
-                
-                return self.database.reset(tree: storeRoot)
-            }
-            
-            if !self.hasUnsyncedLocalChanges.value && result.dbWasModified
-            {
-                // database changed but not store
-                // (like after editing from other device)
-                
-                self.resetLocal(tree: databaseRoot)
-                return Promise()
-            }
-            */
-            // conflicting trees -> ask user
-            
-            return firstly
-            {
-                Dialog.default.askWhetherToPreferICloud()
-            }
-            .then(on: self.backgroundQ)
-            {
-                (preferDatabase: Bool) -> Promise<Void> in
-                
-                if preferDatabase
-                {
-                    self.resetLocal(tree: databaseRoot)
-                    return Promise()
-                }
-                else
-                {
-                    return self.database.reset(root: storeRoot)
-                }
-            }
-        }
-        .done
-        {
-            self.hasUnsyncedLocalChanges.value = false
+            self.resetLocal(tree: databaseRoot)
+            return Promise()
         }
     }
     
@@ -399,3 +438,45 @@ class Storage: Observer
         return DispatchQueue.global(qos: .userInitiated)
     }
 }
+
+/* Was used to fetch and check changes after applying edits to db:
+
+ .then(on: backgroundQ)
+            {
+                self.fetchChanges()
+            }
+            .map(on: backgroundQ)
+            {
+                (result: ChangeFetchResult) -> Void in
+                
+                if !result.idsOfDeletedCKRecords.isEmpty
+                {
+                    log(warning: "Unexpected deletions.")
+                    
+                    let ids = result.idsOfDeletedCKRecords.map
+                    {
+                        $0.recordName
+                    }
+                    
+                    self.messenger.send(.removeItems(withIDs: ids))
+                }
+                
+                let unexpectedChanges: [CKRecord] = result.changedCKRecords.compactMap
+                {
+                    guard let rootID = $0.superItem else { return $0 }
+                    
+                    return recordsByRootID[rootID] == nil ? $0 : nil
+                }
+                
+                if !unexpectedChanges.isEmpty
+                {
+                    log(warning: "Unexpected changes.")
+                    
+                    let records = unexpectedChanges.map(Record.init)
+                    
+                    self.messenger.send(.updateItems(withRecords: records))
+                }
+                
+                return
+            }
+ */

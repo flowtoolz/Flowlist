@@ -38,7 +38,7 @@ var isFullVersion: Bool
         
         if let fullVersion = isFullVersion_Cached { return fullVersion }
         
-        let fullVersion = persister.string(userNameKey) != nil
+        let fullVersion = Persistent.string[userNameKey] != nil
         
         isFullVersion_Cached = fullVersion
         
@@ -49,9 +49,9 @@ var isFullVersion: Bool
     {
         isFullVersion_Cached = newValue
         
-        persister.set(userNameKey, newValue ? NSFullUserName() : nil)
+        Persistent.string[userNameKey] = newValue ? NSFullUserName() : nil
     }
 }
 
-fileprivate var isFullVersion_Cached: Bool?
-fileprivate let userNameKey = "UserName"
+private var isFullVersion_Cached: Bool?
+private let userNameKey = "UserName"

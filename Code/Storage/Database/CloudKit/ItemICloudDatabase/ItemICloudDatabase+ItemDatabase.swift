@@ -4,7 +4,7 @@ import PromiseKit
 
 extension ItemICloudDatabase: ItemDatabase
 {
-    func reset(root: Item) -> Promise<Void>
+    func reset(root: Item?) -> Promise<Void>
     {
         return firstly
         {
@@ -13,6 +13,8 @@ extension ItemICloudDatabase: ItemDatabase
         .then(on: backgroundQ)
         {
             () -> Promise<Void> in
+            
+            guard let root = root else { return Promise() }
             
             let ckRecords = root.array.map
             {

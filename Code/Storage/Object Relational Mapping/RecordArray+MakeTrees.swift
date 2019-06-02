@@ -63,6 +63,13 @@ extension Array where Element == Record
 
 struct MakeTreesResult
 {
+    var largestTree: Item?
+    {
+        if trees.count == 1 { return trees[0] }
+        trees.forEach { _ = $0.calculateNumberOfLeafs() }
+        return (trees.sorted { $0.numberOfLeafs > $1.numberOfLeafs }).first
+    }
+    
     let trees: [Item]
     let detachedRecords: [Record]
 }

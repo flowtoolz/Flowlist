@@ -8,9 +8,9 @@ class ICloudDatabase: CustomObservable
 {
     // MARK: - Save
     
-    func save(_ records: [CKRecord]) -> Promise<Void>
+    func save(_ ckRecords: [CKRecord]) -> Promise<Void>
     {
-        let slices = records.splitIntoSlices(ofSize: 400)
+        let slices = ckRecords.splitIntoSlices(ofSize: 400)
         
         let promises = slices.map
         {
@@ -83,7 +83,7 @@ class ICloudDatabase: CustomObservable
     func fetchCKRecords(with query: CKQuery,
                         inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
     {
-        return database.perform(query, inZoneWith: zoneID)
+        return ckDatabase.perform(query, inZoneWith: zoneID)
     }
     
     // MARK: - Respond to Notifications
@@ -239,7 +239,7 @@ class ICloudDatabase: CustomObservable
         {
             resolver in
 
-            database.save(subscription)
+            ckDatabase.save(subscription)
             {
                 subscription, error in
                 
@@ -277,6 +277,11 @@ class ICloudDatabase: CustomObservable
         operation.savePolicy = .allKeys
         operation.queuePriority = .high
         
+        if let token = appInstallationID.data(using: .utf8)
+        {
+            operation.clientChangeTokenData = token
+        }
+        
         operation.perRecordCompletionBlock =
         {
             if let error = $1
@@ -303,10 +308,10 @@ class ICloudDatabase: CustomObservable
     
     func perform(_ operation: CKDatabaseOperation)
     {
-        database.add(operation)
+        ckDatabase.add(operation)
     }
     
-    private var database: CKDatabase
+    private var ckDatabase: CKDatabase
     {
         return container.privateCloudDatabase
     }
@@ -371,3 +376,12 @@ class ICloudDatabase: CustomObservable
 }
 
 fileprivate typealias ModifyOperation = CKModifyRecordsOperation
+
+let appInstallationID: String =
+{
+    let key = "UserDefaultsKeyAppInstallationID"
+    if let storedID = Persistent.string[key] { return storedID }
+    let id = String.makeUUID()
+    Persistent.string[key] = id
+    return id
+}()

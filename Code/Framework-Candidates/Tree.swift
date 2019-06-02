@@ -187,7 +187,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     func updateNumberOfLeafs()
     {
         // TODO: make sure no unnecessary nodes get updated... don't traverse the whole subtree after editing operations...
-        let newNumber = numberOfLeafsRecursively()
+        let newNumber = numberOfLeafsRecursivelyCashed()
         
         guard newNumber != numberOfLeafs else { return }
         
@@ -197,7 +197,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         send(.didChangeLeafNumber(numberOfLeafs))
     }
     
-    func numberOfLeafsRecursively() -> Int
+    func numberOfLeafsRecursivelyCashed() -> Int
     {
         if isLeaf { return 1 }
         
@@ -206,6 +206,24 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         branches.forEach { subitemLeafs += $0.numberOfLeafs }
         
         return subitemLeafs
+    }
+    
+    func calculateNumberOfLeafs() -> Int
+    {
+        if isLeaf
+        {
+            numberOfLeafs = 1
+        }
+        else
+        {
+            var subitemLeafs = 0
+            
+            branches.forEach { subitemLeafs += $0.calculateNumberOfLeafs() }
+            
+            numberOfLeafs = 1 + subitemLeafs
+        }
+        
+        return numberOfLeafs
     }
     
     private(set) var numberOfLeafs = 1

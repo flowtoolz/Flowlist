@@ -15,113 +15,15 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    private func didReceive(databaseEvent event: ICloudDatabase.Event)
-    {
-        switch event
-        {
-        case .didNothing: break
-        
-        case .didCreateRecord, .didModifyRecord, .didDeleteRecord:
-            // TODO: well, maybe go back to using query notifications, since the server change token never seems to actually change!
-            log(error: "Don't use query notifications since those pushs don't provide the server change token anyway!")
-        
-        case .didReceiveDatabaseNotification(let notification):
-            didReceive(databaseNotification: notification)
-        }
-    }
-    
     deinit { stopObserving() }
-    
-    // MARK: - Handle Database Notifications
-    
-    private func didReceive(databaseNotification: CKDatabaseNotification)
-    {
-        guard databaseNotification.databaseScope == .private else
-        {
-            log(error: "Unexpected database scope: \(databaseNotification.databaseScope.rawValue)")
-            return
-        }
-        
-        firstly
-        {
-            fetchChanges()
-        }
-        .done(on: backgroundQ)
-        {
-            result in
-            
-            if result.idsOfDeletedCKRecords.count > 0
-            {
-                let ids = result.idsOfDeletedCKRecords.map { $0.recordName }
-                self.send(.removeItems(withIDs: ids))
-            }
-            
-            if result.changedCKRecords.count > 0
-            {
-                let records = result.changedCKRecords.map(Record.init)
-                self.send(.updateItems(withRecords: records))
-            }
-        }
-        .catch(on: backgroundQ) { log(error: $0.localizedDescription) }
-    }
     
     // MARK: - Edit Items
     
     func update(_ records: [Record]) -> Promise<Void>
     {
-        var promises = [Promise<Void>]()
-        
         let recordsByRootID = records.byRootID
-    
-        for (rootID, records) in recordsByRootID
-        {
-            let promise = firstly
-            {
-                self.update(records, inRootWithID: rootID)
-            }
-            .then(on: backgroundQ)
-            {
-                self.fetchChanges()
-            }
-            .map(on: backgroundQ)
-            {
-                (result: ChangeFetchResult) -> Void in
-                
-                if !result.idsOfDeletedCKRecords.isEmpty
-                {
-                    log(warning: "Unexpected deletions.")
-                    
-                    let ids = result.idsOfDeletedCKRecords.map
-                    {
-                        $0.recordName
-                    }
-                    
-                    self.messenger.send(.removeItems(withIDs: ids))
-                }
-                
-                let unexpectedChanges: [CKRecord] = result.changedCKRecords.compactMap
-                {
-                    guard let rootID = $0.superItem else { return $0 }
-                    
-                    return recordsByRootID[rootID] == nil ? $0 : nil
-                }
-                
-                if !unexpectedChanges.isEmpty
-                {
-                    log(warning: "Unexpected changes.")
-                    
-                    let records = unexpectedChanges.map(Record.init)
-                    
-                    self.messenger.send(.updateItems(withRecords: records))
-                }
-                
-                return
-            }
-            
-            promises.append(promise)
-        }
-    
-        return when(fulfilled: promises)
+        let updates = recordsByRootID.compactMap { update($1, inRootWithID: $0) }
+        return when(fulfilled: updates)
     }
     
     private func update(_ records: [Record],
@@ -212,9 +114,9 @@ class ItemICloudDatabase: Observer, CustomObservable
         return db.deleteCKRecords(withIDs: ckRecordIDs)
     }
     
-    func save(_ records: [CKRecord]) -> Promise<Void>
+    func save(_ ckRecords: [CKRecord]) -> Promise<Void>
     {
-        return db.save(records)
+        return db.save(ckRecords)
     }
     
     func deleteRecords() -> Promise<Void>
@@ -224,9 +126,9 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     // MARK: - Fetch
     
-    func fetchChanges() -> Promise<ChangeFetchResult>
+    func fetchChanges() -> Promise<ItemDatabaseChanges>
     {
-        return db.fetchChanges(fromZone: .item)
+        return db.fetchChanges(fromZone: .item).map(ItemDatabaseChanges.init)
     }
     
     func fetchItemCKRecords() -> Promise<[CKRecord]>
@@ -292,7 +194,7 @@ class ItemICloudDatabase: Observer, CustomObservable
     var isCheckingAccess: Bool { return ensuringAccessPromise != nil }
     private var ensuringAccessPromise: Promise<Void>?
     
-    // MARK: - Create Subscriptions
+    // MARK: - Use a Database Subscription
     
     private func ensureSubscriptionExists() -> Promise<Void>
     {
@@ -300,6 +202,32 @@ class ItemICloudDatabase: Observer, CustomObservable
     }
     
     private let dbSubID = "ItemDataBaseSubscription"
+    
+    private func didReceive(databaseEvent event: ICloudDatabase.Event)
+    {
+        switch event
+        {
+        case .didNothing: break
+        
+        case .didCreateRecord, .didModifyRecord, .didDeleteRecord:
+            // TODO: in case some users still have a query subscription going, delete it!
+            log(error: "Did receive a query subscription event but we only created a database subscription.")
+        
+        case .didReceiveDatabaseNotification(let notification):
+            didReceive(databaseNotification: notification)
+        }
+    }
+    
+    private func didReceive(databaseNotification: CKDatabaseNotification)
+    {
+        guard databaseNotification.databaseScope == .private else
+        {
+            log(error: "Unexpected database scope: \(databaseNotification.databaseScope.rawValue)")
+            return
+        }
+
+        send(.mayHaveChanged)
+    }
     
     // MARK: - Create Zone
     
@@ -319,8 +247,8 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Edit?>()
-    typealias Message = Edit?
+    let messenger = Messenger(ItemDatabaseUpdate.mayHaveChanged)
+    typealias Message = ItemDatabaseUpdate
     
     // MARK: - Background Queue
     

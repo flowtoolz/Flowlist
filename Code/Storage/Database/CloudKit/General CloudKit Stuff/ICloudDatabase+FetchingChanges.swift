@@ -7,7 +7,7 @@ extension ICloudDatabase
 {
     // MARK: - Fetch Changes
     
-    func fetchChanges(fromZone zoneID: CKRecordZone.ID) -> Promise<ChangeFetchResult>
+    func fetchChanges(fromZone zoneID: CKRecordZone.ID) -> Promise<CKChangeFetchResult>
     {
         return Promise
         {
@@ -38,8 +38,6 @@ extension ICloudDatabase
     {
         get
         {
-            let defaults = UserDefaults.standard
-            
             guard let tokenData = defaults.data(forKey: tokenKey) else
             {
                 return nil
@@ -52,8 +50,6 @@ extension ICloudDatabase
         
         set
         {
-            let defaults = UserDefaults.standard
-            
             guard let newToken = newValue else
             {
                 defaults.removeObject(forKey: tokenKey)
@@ -66,17 +62,15 @@ extension ICloudDatabase
         }
     }
     
-    private var tokenKey: String
-    {
-        return "UserDefaultsKeyItemZoneLastServerChangeToken"
-    }
+    private var defaults: UserDefaults { return UserDefaults.standard }
+    private var tokenKey: String { return "UserDefaultsKeyItemZoneLastServerChangeToken" }
 }
 
 private extension CKFetchRecordZoneChangesOperation
 {
     convenience init(zoneID fetchZoneID: CKRecordZone.ID,
                      token: CKServerChangeToken?,
-                     handleResult: @escaping (ChangeFetchResult?, Error?) -> Void)
+                     handleResult: @escaping (CKChangeFetchResult?, Error?) -> Void)
     {
         let zoneOptions = CKFetchRecordZoneChangesOperation.ZoneOptions()
         
@@ -87,7 +81,7 @@ private extension CKFetchRecordZoneChangesOperation
         self.init(recordZoneIDs: [fetchZoneID],
                   optionsByRecordZoneID: options)
         
-        var result = ChangeFetchResult()
+        var result = CKChangeFetchResult()
         
         recordChangedBlock =
         {
@@ -116,7 +110,6 @@ private extension CKFetchRecordZoneChangesOperation
             
             if serverToken != nil
             {
-                print("saving change token from ZONE CHANGE TOKENS UPDATED in result:\n\(serverToken?.description)")
                 result.serverChangeToken = serverToken
             }
         }
@@ -144,7 +137,6 @@ private extension CKFetchRecordZoneChangesOperation
             
             if serverToken != nil
             {
-                print("saving change token from ZONE fetch in result:\n\(serverToken?.description)")
                 result.serverChangeToken = serverToken
             }
         }
@@ -163,7 +155,7 @@ private extension CKFetchRecordZoneChangesOperation
     }
 }
 
-struct ChangeFetchResult
+struct CKChangeFetchResult
 {
     var changedCKRecords = [CKRecord]()
     var idsOfDeletedCKRecords = [CKRecord.ID]()
