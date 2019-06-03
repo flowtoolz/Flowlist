@@ -275,6 +275,7 @@ class Storage: Observer
                 {
                     // neither db nor local store have changed. we're done.
                     
+                    // TODO: should be reset db or Store here to be totally sure?
                     return Promise()
                 }
             }
