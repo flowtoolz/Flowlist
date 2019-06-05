@@ -1,12 +1,18 @@
 import SwiftUI
 
 #if DEBUG
-struct ListView_Previews : PreviewProvider {
+struct ItemListView_Previews : PreviewProvider {
     static var previews: some View {
-        ItemListView(root: TestItem.root).colorScheme(.dark)
+        ItemListView(root: testItem).colorScheme(.dark)
     }
 }
 #endif
+
+let testItem = Item("Home", [
+    Item("Today"),
+    Item("Lexoffice"),
+    Item("Projects")
+    ])
 
 struct ItemListView : View {
     var body: some View {
@@ -19,7 +25,7 @@ struct ItemListView : View {
         }
     }
     
-    var root: TestItem
+    var root: Item
 }
 
 

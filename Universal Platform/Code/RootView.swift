@@ -1,7 +1,7 @@
 import SwiftUI
 
 #if DEBUG
-struct ContentView_Previews : PreviewProvider {
+struct RootView_Previews : PreviewProvider {
     static var previews: some View {
         RootView().colorScheme(.dark)
     }
@@ -10,8 +10,6 @@ struct ContentView_Previews : PreviewProvider {
 
 struct RootView : View {
     var body: some View {
-        ItemListView(root: TestItem.root)
+        ItemListView(root: testItem)
     }
 }
-
-

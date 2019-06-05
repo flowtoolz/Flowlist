@@ -1,7 +1,7 @@
 import UIKit
 import SwiftUI
 
-/// Be carefil with renaming. The plist references this class by name.
+/// Be careful with renaming. The plist references this class by name.
 class SceneController: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?

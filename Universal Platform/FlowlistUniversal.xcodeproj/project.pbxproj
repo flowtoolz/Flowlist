@@ -3,20 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		9E31317722A71CFF001C5A7A /* ItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31317622A71CFF001C5A7A /* ItemListView.swift */; };
 		9E31317A22A721A1001C5A7A /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31317922A721A1001C5A7A /* ItemView.swift */; };
+		9E31317C22A73473001C5A7A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31317B22A73473001C5A7A /* Item.swift */; };
 		9E39467822A7190100153367 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39467722A7190100153367 /* AppDelegate.swift */; };
 		9E39467A22A7190100153367 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39467922A7190100153367 /* SceneDelegate.swift */; };
-		9E39467C22A7190100153367 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39467B22A7190100153367 /* ContentView.swift */; };
+		9E39467C22A7190100153367 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39467B22A7190100153367 /* RootView.swift */; };
 		9E39467E22A7190200153367 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E39467D22A7190200153367 /* Assets.xcassets */; };
 		9E39468122A7190200153367 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E39468022A7190200153367 /* Preview Assets.xcassets */; };
 		9E39468422A7190200153367 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E39468222A7190200153367 /* LaunchScreen.storyboard */; };
 		9E39468F22A7190200153367 /* FlowlistUniversalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39468E22A7190200153367 /* FlowlistUniversalTests.swift */; };
 		9E39469A22A7190200153367 /* FlowlistUniversalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39469922A7190200153367 /* FlowlistUniversalUITests.swift */; };
+		9E7195A222A8618600381BB5 /* SwiftObserver in Frameworks */ = {isa = PBXBuildFile; productRef = 9E7195A122A8618600381BB5 /* SwiftObserver */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,10 +41,11 @@
 /* Begin PBXFileReference section */
 		9E31317622A71CFF001C5A7A /* ItemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListView.swift; sourceTree = "<group>"; };
 		9E31317922A721A1001C5A7A /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
+		9E31317B22A73473001C5A7A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		9E39467422A7190100153367 /* FlowlistUniversal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowlistUniversal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E39467722A7190100153367 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E39467922A7190100153367 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9E39467B22A7190100153367 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9E39467B22A7190100153367 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		9E39467D22A7190200153367 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9E39468022A7190200153367 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9E39468322A7190200153367 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -60,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E7195A222A8618600381BB5 /* SwiftObserver in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,9 +121,10 @@
 			children = (
 				9E39467722A7190100153367 /* AppDelegate.swift */,
 				9E39467922A7190100153367 /* SceneDelegate.swift */,
-				9E39467B22A7190100153367 /* ContentView.swift */,
+				9E39467B22A7190100153367 /* RootView.swift */,
 				9E31317622A71CFF001C5A7A /* ItemListView.swift */,
 				9E31317922A721A1001C5A7A /* ItemView.swift */,
+				9E31317B22A73473001C5A7A /* Item.swift */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -166,6 +171,9 @@
 			dependencies = (
 			);
 			name = FlowlistUniversal;
+			packageProductDependencies = (
+				9E7195A122A8618600381BB5 /* SwiftObserver */,
+			);
 			productName = FlowlistUniversal;
 			productReference = 9E39467422A7190100153367 /* FlowlistUniversal.app */;
 			productType = "com.apple.product-type.application";
@@ -238,6 +246,9 @@
 				Base,
 			);
 			mainGroup = 9E39466B22A7190100153367;
+			packageReferences = (
+				9E7195A022A8618600381BB5 /* XCRemoteSwiftPackageReference "SwiftObserver" */,
+			);
 			productRefGroup = 9E39467522A7190100153367 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -283,9 +294,10 @@
 			files = (
 				9E31317722A71CFF001C5A7A /* ItemListView.swift in Sources */,
 				9E39467822A7190100153367 /* AppDelegate.swift in Sources */,
+				9E31317C22A73473001C5A7A /* Item.swift in Sources */,
 				9E39467A22A7190100153367 /* SceneDelegate.swift in Sources */,
 				9E31317A22A721A1001C5A7A /* ItemView.swift in Sources */,
-				9E39467C22A7190100153367 /* ContentView.swift in Sources */,
+				9E39467C22A7190100153367 /* RootView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,6 +620,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9E7195A022A8618600381BB5 /* XCRemoteSwiftPackageReference "SwiftObserver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/flowtoolz/SwiftObserver.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9E7195A122A8618600381BB5 /* SwiftObserver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9E7195A022A8618600381BB5 /* XCRemoteSwiftPackageReference "SwiftObserver" */;
+			productName = SwiftObserver;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9E39466C22A7190100153367 /* Project object */;
 }
