@@ -9,20 +9,19 @@ struct ItemListView_Previews : PreviewProvider {
 #endif
 
 let testItem = Item("Home", [
-    Item("Today"),
+    Item("Today", [Item("Learn SwiftUI")]),
     Item("Lexoffice"),
     Item("Projects")
     ])
 
 struct ItemListView : View {
     var body: some View {
-        NavigationView {
-            List(root.children) { item in
-                NavigationButton(destination: ItemListView(root: item)) {
-                    ItemView(item: item)
-                }
-            }.navigationBarTitle(Text(root.text))
-        }
+        List(root.children) { item in
+            NavigationButton(destination: ItemListView(root: item)) {
+                ItemView(item: item)
+            }
+        }.navigationBarTitle(Text(root.text),
+                             displayMode: .inline)
     }
     
     var root: Item
