@@ -12,7 +12,7 @@ struct ItemView_Previews : PreviewProvider {
 struct ItemView : View {
     var body: some View {
         HStack() {
-            Image(systemName: "checkmark.circle")
+            Image(systemName: "checkmark.circle").imageScale(.large)
             Text(item.text)
             Spacer()
         }.frame(minWidth: 0, // makes the view "stretch out" like a spacer
