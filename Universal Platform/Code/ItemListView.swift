@@ -16,15 +16,36 @@ let testItem = Item("Home", [
 
 struct ItemListView : View {
     var body: some View {
-        List(root.children) { item in
-            NavigationButton(destination: ItemListView(root: item)) {
-                ItemView(item: item)
+        List {
+            Section {
+                Button(action: addItem) {
+                    Text("Neues Item")
+                }
+            }
+            Section {
+                ForEach(root.children) { item in
+                    NavigationButton(destination: ItemListView(root: item)) {
+                        ItemView(item: item)
+                    }
+                }
+                .onDelete(perform: removeItems)
             }
         }.navigationBarTitle(Text(root.text),
                              displayMode: .inline)
+        .listStyle(.grouped)
     }
     
-    var root: Item
+    func removeItems(at offsets: IndexSet) {
+        Array(offsets).forEach {
+            root.children.remove(at: $0)
+        }
+    }
+    
+    func addItem() {
+        root.children.append(Item("Neues Item"))
+    }
+    
+    @ObjectBinding var root: Item
 }
 
 

@@ -15,7 +15,10 @@ struct ItemView : View {
             Image(systemName: "checkmark.circle")
             Text(item.text)
             Spacer()
-        }
+        }.frame(minWidth: 0, // makes the view "stretch out" like a spacer
+                maxWidth: .infinity,
+                minHeight: 0,
+                maxHeight: .infinity)
     }
     
     var item: Item
