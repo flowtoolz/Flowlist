@@ -29,9 +29,11 @@ struct ItemListView : View {
                     }
                 }
                 .onDelete(perform: removeItems)
+                .onMove(perform: moveItems)
             }
         }.navigationBarTitle(Text(root.text),
                              displayMode: .inline)
+            .navigationBarItems(trailing: EditButton())
         .listStyle(.grouped)
     }
     
@@ -39,6 +41,10 @@ struct ItemListView : View {
         Array(offsets).forEach {
             root.children.remove(at: $0)
         }
+    }
+    
+    func moveItems(from source: IndexSet, to destination: Int) {
+        root.children.move(from: source, to: destination)
     }
     
     func addItem() {
@@ -49,3 +55,10 @@ struct ItemListView : View {
 }
 
 
+extension Array {
+    mutating func move(from source: IndexSet, to destination: Int) {
+        Array<Int>(source).forEach {
+            insert(remove(at: $0), at: destination)
+        }
+    }
+}
