@@ -4,7 +4,7 @@ import UIObserver
 import SwiftObserver
 import SwiftyToolz
 
-class BrowserView: LayerBackedView, Observer
+class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout
 {
     // MARK: - Life Cycle
     
@@ -12,12 +12,10 @@ class BrowserView: LayerBackedView, Observer
     {
         super.init(frame: frameRect)
         
-        constrainListLayoutGuides()
-        
         for index in 0 ..< browser.numberOfLists
         {
             guard let list = browser[index] else { continue }
-
+            
             pushListView(for: list)
         }
         
@@ -27,6 +25,8 @@ class BrowserView: LayerBackedView, Observer
         {
             [weak self] _ in self?.fontSizeDidChange()
         }
+        
+        initializeCollectionView()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -98,7 +98,7 @@ class BrowserView: LayerBackedView, Observer
     
     func didResize()
     {
-        moveToFocusedList(animated: false)
+        collectionView.collectionViewLayout?.invalidateLayout()
     }
     
     func didEndResizing()
@@ -110,13 +110,11 @@ class BrowserView: LayerBackedView, Observer
     
     private func pushListView(for list: List)
     {
-        let newListView = addForAutoLayout(ListView())
+        let newListView = ListView()
         
         newListView.configure(with: list)
         
         listViews.append(newListView)
-        
-        constrainLastListView()
         
         observe(listView: newListView)
     }
@@ -144,121 +142,99 @@ class BrowserView: LayerBackedView, Observer
         browser.move(to: listIndex)
     }
     
-    private func constrainLastListView()
-    {
-        guard let listView = listViews.last else { return }
-        
-        let gap = Float.listGap.cgFloat
-        
-        let index = listViews.count - 1
-        
-        if index == 0
-        {
-            listView.constrainCenterXToParent()
-        }
-        else
-        {
-            let leftView = listViews[index - 1]
-            listView.constrain(toTheRightOf: leftView, gap: gap)
-        }
-        
-        listView.constrainWidth(to: listLayoutGuides[index % 3])
-        
-        listView.constrainTopToParent(inset: gap)
-        listView.constrainBottomToParent()
-    }
-    
     private func moveToFocusedList(from: Int? = nil,
                                    to: Int? = nil,
                                    animated: Bool = true)
     {
-        let newIndex = to ?? browser.focusedIndex
+        let toIndex = to ?? browser.focusedIndex
         
-        guard listViews.isValid(index: newIndex) else { return }
+        guard listViews.isValid(index: toIndex),
+            let fromIndex = from else { return }
         
-        var targetPosition: CGFloat = 0
-        
-        if newIndex > 0
+        if fromIndex > toIndex
         {
-            let leftListPosition = listViews[newIndex - 1].frame.origin.x
-            
-            targetPosition = leftListPosition - Float.listGap.cgFloat
+            self.collectionView.animator().performBatchUpdates({
+                self.collectionView.deleteItems(at: Set([IndexPath(item: 4, section: 0)]))
+                self.collectionView.insertItems(at: Set([IndexPath(item: 0, section: 0)]))
+            }, completionHandler: nil)
         }
-        
-        guard animated else
+        else
         {
-            bounds.origin.x = targetPosition
-            return
-        }
-        
-        if listViews.isValid(index: newIndex - 1)
-        {
-            listViews[newIndex - 1].set(visibleForAnimation: true)
-        }
-        
-        if listViews.isValid(index: newIndex + 1)
-        {
-            listViews[newIndex + 1].set(visibleForAnimation: true)
-        }
-        
-        NSAnimationContext.beginGrouping()
-        NSAnimationContext.current.duration = 0.3
-        NSAnimationContext.current.completionHandler =
-        {
-            self.animatioDidEnd()
-        }
-        
-        animator().bounds.origin.x = targetPosition
-        
-        NSAnimationContext.endGrouping()
-        
-        ongoingAnimations += 1
-    }
-    
-    private func animatioDidEnd()
-    {
-        ongoingAnimations -= 1
-        
-        guard ongoingAnimations == 0 else { return }
-        
-        listViews.forEachIndex
-        {
-            let visible = abs(browser.focusedIndex - $1) < 2
-            
-            $0.set(visibleForAnimation: visible)
+            self.collectionView.animator().performBatchUpdates({
+                self.collectionView.deleteItems(at: Set([IndexPath(item: 0, section: 0)]))
+                self.collectionView.insertItems(at: Set([IndexPath(item: 4, section: 0)]))
+            }, completionHandler: nil)
         }
     }
-    
-    private var ongoingAnimations = 0
     
     private var listViews = [ListView]()
     
-    // MARK: - Layout Guides For List Width
+    // MARK: - Collection View
     
-    private func constrainListLayoutGuides()
-    {
-        let gap = Float.listGap.cgFloat
+    private func initializeCollectionView() {
+        let guide = addLayoutGuide()
+        guide.constrainRight(to: self, offset: -40)
+        guide.constrainLeft(to: self)
         
-        listLayoutGuides.forEach
-        {
-            $0.constrainTop(to: self, offset: gap)
-            $0.constrainBottom(to: self)
-        }
-        
-        listLayoutGuides[0].constrainWidth(toMinimum: 150)
-        listLayoutGuides[0].constrainLeft(to: self, offset: gap)
-        
-        listLayoutGuides[1].constrain(toTheRightOf: listLayoutGuides[0],
-                                      gap: gap)
-        listLayoutGuides[1].constrainWidth(to: listLayoutGuides[0])
-        
-        listLayoutGuides[2].constrain(toTheRightOf: listLayoutGuides[1],
-                                      gap: gap)
-        listLayoutGuides[2].constrainRight(to: self, offset: -gap)
-        listLayoutGuides[2].constrainWidth(to: listLayoutGuides[0])
+        collectionView.constrainTopToParent(inset: 10)
+        collectionView.constrainBottomToParent()
+        collectionView.constrainCenterXToParent()
+        collectionView.widthAnchor.constraint(equalTo: guide.widthAnchor,
+                                              multiplier: 1.66666,
+                                              constant: 40).isActive = true
+        collectionView.collectionViewLayout = NSCollectionViewFlowLayout()
+        collectionView.register(ListViewCell.self,
+                                forItemWithIdentifier: NSUserInterfaceItemIdentifier("TestCollectionViewID"))
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColors.removeAll()
     }
     
-    private lazy var listLayoutGuides = [addLayoutGuide(),
-                                         addLayoutGuide(),
-                                         addLayoutGuide()]
+    private lazy var collectionView = addForAutoLayout(NSCollectionView())
+    
+    // MARK: - Collection View Data Source and Delegate
+    
+    func collectionView(_ collectionView: NSCollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView,
+                        itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+        
+        let listIndex = (indexPath.item - 2) + browser.focusedIndex
+        
+        guard listViews.isValid(index: listIndex) else
+        {
+            log(error: "list index \(listIndex) is invalid. We have \(listViews.count) list views.")
+            return ListViewCell(listView: nil)
+        }
+        
+        return ListViewCell(listView: listViews[listIndex])
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView,
+                        layout collectionViewLayout: NSCollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> NSSize {
+        return NSSize(width: ((collectionView.bounds.size.width - 40) / 5.0),
+                      height: collectionView.bounds.size.height)
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView,
+                        layout collectionViewLayout: NSCollectionViewLayout,
+                        insetForSectionAt section: Int) -> NSEdgeInsets {
+        return NSEdgeInsetsZero
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView,
+                        layout collectionViewLayout: NSCollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView,
+                        layout collectionViewLayout: NSCollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
 }

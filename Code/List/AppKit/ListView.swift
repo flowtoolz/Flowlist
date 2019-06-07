@@ -59,15 +59,6 @@ class ListView: LayerBackedView, Observer, CustomObservable
         isHidden = new == nil
     }
     
-    // MARK: - Change with Browser Moves
-    
-    func set(visibleForAnimation visible: Bool)
-    {
-        let shouldBeVisible = visible && list?.root != nil
-        
-        isHidden = !shouldBeVisible
-    }
-    
     // MARK: - Mouse Input
     
     override func mouseDown(with event: NSEvent)
