@@ -12,21 +12,10 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
     {
         super.init(frame: frameRect)
         
-        for index in 0 ..< browser.numberOfLists
-        {
-            guard let list = browser[index] else { continue }
-            
-            pushListView(for: list)
-        }
-        
+        browser.lists.forEach { pushListView(for: $0) }
         observeBrowser()
-        
-        observe(Font.baseSize)
-        {
-            [weak self] _ in self?.fontSizeDidChange()
-        }
-        
-        initializeCollectionView()
+        observe(Font.baseSize) { [weak self] _ in self?.fontSizeDidChange() }
+        constrainCollectionView()
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
@@ -41,6 +30,8 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
     }
     
     // MARK: - Browser
+    
+    // TODO: do we necessarily have to do this here? can we forward these key events to the browser somewhere else? this doesn't have much to do with the view...
     
     open override func performKeyEquivalent(with event: NSEvent) -> Bool
     {
@@ -69,6 +60,8 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
         return true
     }
     
+    /////////////// ->
+    
     private func observeBrowser()
     {
         observe(browser)
@@ -78,11 +71,9 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
         
         observe(browser.focusedIndexVariable)
         {
-            [unowned self] indexUpdate in
+            [unowned self] indexChange in
             
-            self.moveToFocusedList(from: indexUpdate.old,
-                                   to: indexUpdate.new,
-                                   animated: true)
+            self.moveToFocusedList(from: indexChange.old, to: indexChange.new)
         }
     }
     
@@ -142,36 +133,31 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
         browser.move(to: listIndex)
     }
     
-    private func moveToFocusedList(from: Int? = nil,
-                                   to: Int? = nil,
-                                   animated: Bool = true)
+    private func moveToFocusedList(from: Int, to: Int)
     {
-        let toIndex = to ?? browser.focusedIndex
+        guard listViews.isValid(index: to) else { return }
         
-        guard listViews.isValid(index: toIndex),
-            let fromIndex = from else { return }
-        
-        if fromIndex > toIndex
+        let moveListsRight = from > to
+        let deleteIndex = moveListsRight ? 4 : 0
+        let insertIndex = moveListsRight ? 0 : 4
+
+        collectionView.animator().performBatchUpdates(
         {
-            self.collectionView.animator().performBatchUpdates({
-                self.collectionView.deleteItems(at: Set([IndexPath(item: 4, section: 0)]))
-                self.collectionView.insertItems(at: Set([IndexPath(item: 0, section: 0)]))
-            }, completionHandler: nil)
-        }
-        else
-        {
-            self.collectionView.animator().performBatchUpdates({
-                self.collectionView.deleteItems(at: Set([IndexPath(item: 0, section: 0)]))
-                self.collectionView.insertItems(at: Set([IndexPath(item: 4, section: 0)]))
-            }, completionHandler: nil)
-        }
+            // TODO: this actually slows down the animation and is also perfect to reproduce crashes ... also: see logged errors: > FLOWLIST ERROR: list index -2 is invalid. We have 3 list views. (BrowserView.swift, collectionView(_:itemForRepresentedObjectAt:), line 198)
+            self.collectionView.layer?.speed = 0.75
+            self.collectionView.deleteItems(at: Set([IndexPath(item: deleteIndex, section: 0)]))
+            self.collectionView.insertItems(at: Set([IndexPath(item: insertIndex, section: 0)]))
+        })
     }
     
-    private var listViews = [ListView]()
+    ////////////////////////// <-
     
+    private var listViews = [ListView]()
+  
     // MARK: - Collection View
     
-    private func initializeCollectionView() {
+    private func constrainCollectionView()
+    {
         let guide = addLayoutGuide()
         guide.constrainRight(to: self, offset: -40)
         guide.constrainLeft(to: self)
@@ -182,26 +168,29 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
         collectionView.widthAnchor.constraint(equalTo: guide.widthAnchor,
                                               multiplier: 1.66666,
                                               constant: 40).isActive = true
-        collectionView.collectionViewLayout = NSCollectionViewFlowLayout()
-        collectionView.register(ListViewCell.self,
-                                forItemWithIdentifier: NSUserInterfaceItemIdentifier("TestCollectionViewID"))
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.backgroundColors.removeAll()
     }
     
-    private lazy var collectionView = addForAutoLayout(NSCollectionView())
+    private lazy var collectionView: NSCollectionView =
+    {
+        let view = addForAutoLayout(NSCollectionView())
+        view.collectionViewLayout = NSCollectionViewFlowLayout()
+        view.dataSource = self
+        view.delegate = self
+        view.backgroundColors.removeAll()
+        return view
+    }()
     
     // MARK: - Collection View Data Source and Delegate
     
     func collectionView(_ collectionView: NSCollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
+                        numberOfItemsInSection section: Int) -> Int
+    {
         return 5
     }
     
     func collectionView(_ collectionView: NSCollectionView,
-                        itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-        
+                        itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem
+    {
         let listIndex = (indexPath.item - 2) + browser.focusedIndex
         
         guard listViews.isValid(index: listIndex) else
@@ -215,26 +204,30 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
     
     func collectionView(_ collectionView: NSCollectionView,
                         layout collectionViewLayout: NSCollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> NSSize {
+                        sizeForItemAt indexPath: IndexPath) -> NSSize
+    {
         return NSSize(width: ((collectionView.bounds.size.width - 40) / 5.0),
                       height: collectionView.bounds.size.height)
     }
     
     func collectionView(_ collectionView: NSCollectionView,
                         layout collectionViewLayout: NSCollectionViewLayout,
-                        insetForSectionAt section: Int) -> NSEdgeInsets {
+                        insetForSectionAt section: Int) -> NSEdgeInsets
+    {
         return NSEdgeInsetsZero
     }
     
     func collectionView(_ collectionView: NSCollectionView,
                         layout collectionViewLayout: NSCollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat
+    {
         return 0
     }
     
     func collectionView(_ collectionView: NSCollectionView,
                         layout collectionViewLayout: NSCollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
+    {
         return 10
     }
 }

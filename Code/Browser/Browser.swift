@@ -168,7 +168,7 @@ class Browser: Observer, CustomObservable
     let focusedIndexVariable = Var(0)
     
     var numberOfLists: Int { return lists.count }
-    private var lists = [List]()
+    private(set) var lists = [List]()
     
     // MARK: - Observability
     
