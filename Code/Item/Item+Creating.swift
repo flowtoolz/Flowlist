@@ -5,7 +5,7 @@ extension Tree where Data == ItemData
     @discardableResult
     func createSubitem(at index: Int) -> Item?
     {
-        let data = ItemData()
+        let data = ItemData(wantsTextInput: true)
         
         let belowIsInProgress = count == index ? false : (self[index]?.isInProgress ?? false)
         

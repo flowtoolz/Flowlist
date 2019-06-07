@@ -5,17 +5,16 @@ final class ItemData: Observer, CustomObservable
 {
     // MARK: - Initialization
     
-    init(id: String? = nil)
+    init(id: String? = nil, wantsTextInput: Bool = false)
     {
         self.id = id ?? String.makeUUID()
-        
-        wantsTextInput = id == nil // TODO: comment: wants text input when created with nil id... why?
+        self.wantsTextInput = wantsTextInput
         
         observe(text, state, tag)
         {
-            [weak self] textUpdate, _, _ in
+            [weak self] textChange, _, _ in
             
-            if textUpdate.old != textUpdate.new
+            if textChange.valueChanged
             {
                 self?.wantsTextInput = false
             }
@@ -36,7 +35,7 @@ final class ItemData: Observer, CustomObservable
     func requestTextInput() { send(.wantTextInput) }
     func startedEditing() { wantsTextInput = false }
     
-    private(set) var wantsTextInput = false
+    private(set) var wantsTextInput: Bool
     
     // MARK: - State
     

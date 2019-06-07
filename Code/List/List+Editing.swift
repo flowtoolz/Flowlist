@@ -54,7 +54,7 @@ extension List
             self[$0]?.isSelected = false
         }
         
-        let data = ItemData()
+        let data = ItemData(wantsTextInput: true)
         data.state <- root?.highestPriorityState(at: indexes)
         
         let item = Item(data: data)
