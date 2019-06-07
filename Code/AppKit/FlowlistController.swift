@@ -4,6 +4,8 @@ import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
+import UIObserver
+
 class FlowlistController: AppController
 {
     // MARK: - Life Cycle
@@ -143,6 +145,96 @@ class FlowlistController: AppController
     // MARK: - Basics
     
     private let menu = Menu()
-    private let viewController = ViewController<FlowlistView>()
+    private let viewController = ViewController<TestView>() //FlowlistView>()
     private let fileLogger = FileLogger()
+}
+
+class TestView: NSView, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout, Observer {
+    
+    override init(frame frameRect: NSRect) {
+        
+        super.init(frame: frameRect)
+
+        collectionView.constrainTopToParent()
+        collectionView.constrainBottomToParent()
+        collectionView.constrainCenterXToParent()
+        collectionView.constrainWidthToParent(with: 1.66666666)
+        collectionView.collectionViewLayout = NSCollectionViewFlowLayout()
+        collectionView.register(CollectionCell.self,
+                                forItemWithIdentifier: NSUserInterfaceItemIdentifier("TestCollectionViewID"))
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        observe(keyboard)
+        {
+            event in
+            
+            if event.key == .left {
+                self.collectionView.animator().performBatchUpdates({
+                    self.collectionView.deleteItems(at: Set([IndexPath(item: 4, section: 0)]))
+                    self.collectionView.insertItems(at: Set([IndexPath(item: 0, section: 0)]))
+                }, completionHandler: nil)
+            }
+            
+            if event.key == .right {
+                self.collectionView.animator().performBatchUpdates({
+                    self.collectionView.deleteItems(at: Set([IndexPath(item: 0, section: 0)]))
+                    self.collectionView.insertItems(at: Set([IndexPath(item: 4, section: 0)]))
+                }, completionHandler: nil)
+            }
+        }
+    }
+
+    required init?(coder decoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func didResize() {
+        collectionView.collectionViewLayout?.invalidateLayout()
+    }
+    
+    lazy var collectionView = addForAutoLayout(NSCollectionView())
+    
+    func collectionView(_ collectionView: NSCollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+
+    func collectionView(_ collectionView: NSCollectionView,
+                        itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+        let item = CollectionCell()
+        return item
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView,
+                        layout collectionViewLayout: NSCollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> NSSize {
+        return NSSize(width: (collectionView.bounds.size.width / 5.0),
+                      height: collectionView.bounds.size.height)
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, insetForSectionAt section: Int) -> NSEdgeInsets {
+        return NSEdgeInsetsZero
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+}
+
+final class CollectionCell: NSCollectionViewItem {
+    override func loadView() {
+        self.view = NSView()
+        self.view.wantsLayer = true
+        self.view.layer?.backgroundColor = NSColor(calibratedRed: CGFloat(Float(arc4random()) / Float(UINT32_MAX)),
+                                                   green: CGFloat(Float(arc4random()) / Float(UINT32_MAX)),
+                                                   blue: CGFloat(Float(arc4random()) / Float(UINT32_MAX)),
+                                                   alpha: 1).cgColor
+        
+        
+    }
 }

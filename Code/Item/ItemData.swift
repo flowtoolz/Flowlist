@@ -14,7 +14,7 @@ final class ItemData: Observer, CustomObservable
         {
             [weak self] textChange, _, _ in
             
-            if textChange.valueChanged
+            if textChange.old != textChange.new
             {
                 self?.wantsTextInput = false
             }

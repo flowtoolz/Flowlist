@@ -60,6 +60,8 @@ class ItemJSONFile: ItemFile
     {
         #if DEBUG
         return "flowlist_debug.json"
+        #elseif BETA
+        return "flowlist_beta.json"
         #else
         return "flowlist.json"
         #endif
