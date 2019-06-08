@@ -1,7 +1,13 @@
 import Combine
-import SwiftUI
 
-class Item : BindableObject {
+let testItem = Item("Home", [
+    Item("Today", [Item("Learn SwiftUI")]),
+    Item("Lexoffice"),
+    Item("We need one item with a really long text to see how the app handles multi line items, in particular how they effect layout."),
+    Item("Projects")
+    ])
+
+class Item {
     
     init(_ text: String, _ children: [Item] = []) {
         self.text = text
@@ -11,10 +17,11 @@ class Item : BindableObject {
     var text: String
     var children: [Item] {
         didSet {
-            self.didChange.send(())
+            didChange.send(())
         }
     }
     
-    var didChange = PassthroughSubject<Void, Never>()
+    // TODO: proof concept: make model class independent of Combine and use SwiftObserver instead. Let the View then care about having some view specific and SwiftUI-specific bindings
+    let didChange = PassthroughSubject<Void, Never>()
 }
 

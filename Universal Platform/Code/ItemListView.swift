@@ -1,5 +1,6 @@
 import SwiftUI
-
+import Combine
+ 
 #if DEBUG
 struct ItemListView_Previews : PreviewProvider {
     static var previews: some View {
@@ -7,14 +8,9 @@ struct ItemListView_Previews : PreviewProvider {
     }
 }
 #endif
-
-let testItem = Item("Home", [
-    Item("Today", [Item("Learn SwiftUI")]),
-    Item("Lexoffice"),
-    Item("Projects")
-    ])
-
+ 
 struct ItemListView : View {
+    
     var body: some View {
         List {
             Section {
@@ -23,17 +19,17 @@ struct ItemListView : View {
                 }
             }
             Section {
-                ForEach(root.children) { item in
-                    NavigationButton(destination: ItemListView(root: item)) {
-                        ItemView(item: item)
+                ForEach(root.children) { child in
+                    NavigationButton(destination: ItemListView(root: child)) {
+                        ItemView(item: child)
                     }
                 }
                 .onDelete(perform: removeItems)
                 .onMove(perform: moveItems)
             }
-        }.navigationBarTitle(Text(root.text),
-                             displayMode: .inline)
-            .navigationBarItems(trailing: EditButton())
+        }
+        .navigationBarTitle(Text(root.text), displayMode: .inline)
+        .navigationBarItems(trailing: EditButton())
         .listStyle(.grouped)
     }
     
@@ -54,7 +50,6 @@ struct ItemListView : View {
     @ObjectBinding var root: Item
 }
 
-
 extension Array {
     mutating func move(from source: IndexSet, to destination: Int) {
         Array<Int>(source).forEach {
@@ -62,3 +57,7 @@ extension Array {
         }
     }
 }
+
+// TODO: apparently classes don't need to conform to Identifiable in order to be displayed in a list... where is that documented and how is it technically achieved? how do classes auto-comply to identifiable?
+extension Item: BindableObject {}
+
