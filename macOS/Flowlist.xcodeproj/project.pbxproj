@@ -45,7 +45,7 @@
 		9E0D5AA120C160C800F0D827 /* Color+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0D5AA020C160C800F0D827 /* Color+Style.swift */; };
 		9E132D2521D3C38200B61D2D /* TextFormat+Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E132D2421D3C38200B61D2D /* TextFormat+Foundation.swift */; };
 		9E132D2721D3C40600B61D2D /* ExportAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E132D2621D3C40600B61D2D /* ExportAccessoryView.swift */; };
-		9E18C3DC21D6604A00363F48 /* StorageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E18C3DB21D6604A00363F48 /* StorageError.swift */; };
+		9E18C3DC21D6604A00363F48 /* ReadableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E18C3DB21D6604A00363F48 /* ReadableError.swift */; };
 		9E1ECC2421CFE79100D2E439 /* FileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1ECC2321CFE79100D2E439 /* FileLogger.swift */; };
 		9E1F2CF42184476B00DFFD73 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1F2CF32184476B00DFFD73 /* CloudKit.framework */; };
 		9E22D8AD218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */; };
@@ -69,6 +69,7 @@
 		9E6E70AB21936A8B00BDB0BA /* Item+Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AA21936A8B00BDB0BA /* Item+Record.swift */; };
 		9E6E70AD21936CD300BDB0BA /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AC21936CD300BDB0BA /* Record.swift */; };
 		9E6E70AF2193803E00BDB0BA /* Item+CodableField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AE2193803E00BDB0BA /* Item+CodableField.swift */; };
+		9E713C9A22AC2864002EB1D4 /* CKError+ReadableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E713C9922AC2864002EB1D4 /* CKError+ReadableError.swift */; };
 		9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* Store.swift */; };
 		9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* List+Editing.swift */; };
 		9E91651520551E5600A438FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E91651320551E5500A438FB /* Assets.xcassets */; };
@@ -149,7 +150,7 @@
 		9E0D5AA020C160C800F0D827 /* Color+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Style.swift"; sourceTree = "<group>"; };
 		9E132D2421D3C38200B61D2D /* TextFormat+Foundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextFormat+Foundation.swift"; sourceTree = "<group>"; };
 		9E132D2621D3C40600B61D2D /* ExportAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportAccessoryView.swift; sourceTree = "<group>"; };
-		9E18C3DB21D6604A00363F48 /* StorageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageError.swift; sourceTree = "<group>"; };
+		9E18C3DB21D6604A00363F48 /* ReadableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadableError.swift; sourceTree = "<group>"; };
 		9E1ECC2321CFE79100D2E439 /* FileLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogger.swift; sourceTree = "<group>"; };
 		9E1F2CF32184476B00DFFD73 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyedEncodingContainer+SwiftyToolz.swift"; sourceTree = "<group>"; };
@@ -174,6 +175,7 @@
 		9E6E70AA21936A8B00BDB0BA /* Item+Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Record.swift"; sourceTree = "<group>"; };
 		9E6E70AC21936CD300BDB0BA /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		9E6E70AE2193803E00BDB0BA /* Item+CodableField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CodableField.swift"; sourceTree = "<group>"; };
+		9E713C9922AC2864002EB1D4 /* CKError+ReadableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKError+ReadableError.swift"; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		9E82A7A81EF2A558006AEF02 /* List+Editing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "List+Editing.swift"; sourceTree = "<group>"; };
 		9E91651320551E5500A438FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 			children = (
 				9EE17AF22222B29000A07E4B /* CKDatabase+Promises.swift */,
 				9EE17AF02222A8F600A07E4B /* CKContainer+Promises.swift */,
+				9E713C9922AC2864002EB1D4 /* CKError+ReadableError.swift */,
 			);
 			path = "Error Logging Promises";
 			sourceTree = "<group>";
@@ -441,7 +444,6 @@
 				9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */,
 				9EF0AABB218838FA00B707F4 /* Store+Edit.swift */,
 				9EA5A892218ECB37004902F7 /* Database */,
-				9E18C3DB21D6604A00363F48 /* StorageError.swift */,
 				9EC5C8B421B00F9500615D20 /* Object Relational Mapping */,
 				9EA5A897218ECC98004902F7 /* Store */,
 				9EA5A895218ECC5A004902F7 /* File */,
@@ -614,6 +616,7 @@
 				9E5768C120C15CDF00749C0C /* Tree+Hashable.swift */,
 				9EFB86DB21662AD100985B14 /* Tree.swift */,
 				9EC5C8B521B00FE100615D20 /* Dialog.swift */,
+				9E18C3DB21D6604A00363F48 /* ReadableError.swift */,
 				9EA1D3B1219EC26F00B5943C /* Persistent.swift */,
 				9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */,
 				9E22D8AE218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift */,
@@ -815,6 +818,7 @@
 				9EC5C8B221B00ED800615D20 /* AlertDialog.swift in Sources */,
 				9E053B5F218871C4001B7103 /* Header.swift in Sources */,
 				9E053B4F2188715D001B7103 /* BulletpointList.swift in Sources */,
+				9E713C9A22AC2864002EB1D4 /* CKError+ReadableError.swift in Sources */,
 				9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */,
 				9EF231A9218B570F006E783C /* Item+Encodable.swift in Sources */,
@@ -853,7 +857,7 @@
 				9E053B23218867E4001B7103 /* ItemJSONFile.swift in Sources */,
 				9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */,
 				9EA1D3A5219EA60500B5943C /* ItemICloudDatabase+ItemDatabase.swift in Sources */,
-				9E18C3DC21D6604A00363F48 /* StorageError.swift in Sources */,
+				9E18C3DC21D6604A00363F48 /* ReadableError.swift in Sources */,
 				9E22D8AD218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift in Sources */,
 				9E6C721020B1E66D001C3D2C /* Item+Debugging.swift in Sources */,
 				9E053B2521886867001B7103 /* FullVersion.swift in Sources */,

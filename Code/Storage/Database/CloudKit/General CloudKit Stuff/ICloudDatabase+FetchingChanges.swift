@@ -20,12 +20,12 @@ extension ICloudDatabase
                 
                 if let error = error
                 {
-                    log(error: error.localizedDescription)
+                    log(error: error.ckReadable.message)
                 }
                 
                 self.serverChangeToken = changes?.serverChangeToken
                 
-                resolver.resolve(changes, error)
+                resolver.resolve(changes, error?.ckReadable)
             }
             
             perform(fetch)
@@ -78,8 +78,9 @@ private extension CKFetchRecordZoneChangesOperation
         
         let options = [fetchZoneID : zoneOptions]
 
-        self.init(recordZoneIDs: [fetchZoneID],
-                  optionsByRecordZoneID: options)
+        self.init(recordZoneIDs: [fetchZoneID], optionsByRecordZoneID: options)
+        
+        queuePriority = .high
         
         var changes = ICloudDatabase.Changes()
         
@@ -126,7 +127,7 @@ private extension CKFetchRecordZoneChangesOperation
             
             if let error = error
             {
-                log(error: error.localizedDescription)
+                log(error: error.ckReadable.message)
                 return
             }
             
@@ -143,10 +144,10 @@ private extension CKFetchRecordZoneChangesOperation
         
         fetchRecordZoneChangesCompletionBlock =
         {
-            if let error = $0?.storageError
+            if let error = $0
             {
-                log(error: error.message)
-                handleResult(nil, error)
+                log(error: error.ckReadable.message)
+                handleResult(nil, error.ckReadable)
                 return
             }
             

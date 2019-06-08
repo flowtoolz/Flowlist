@@ -30,7 +30,7 @@ extension ItemICloudDatabase: ItemDatabase
         guard didEnsureAccess else
         {
             let errorMessage = "Tried to edit iCloud database while it hasn't yet ensured access."
-            return Promise(error: StorageError.message(errorMessage))
+            return Promise(error: ReadableError.message(errorMessage))
         }
         
         switch edit

@@ -37,7 +37,7 @@ class Storage: Observer
             }
             .then
             {
-                self.syncStoreAndDatabase()
+                self.syncStoreAndDatabaseFetchingOnlyChanges()
             }
             .catch(abortIntendingToSync)
         }
@@ -75,14 +75,14 @@ class Storage: Observer
         }
         .done(on: self.backgroundQ)
         {
-            log(#"DB account status changed while we were in sync but now we still (or again?) do have access. This is a weird situation. To be totally sure we didn't miss out on db updates, we're gonna resync everything."#)
-            self.syncStoreAndDatabase().catch(self.abortIntendingToSync)
+            log(warning: "DB account status changed while we were in sync but now we still (or again?) do have access. This is a weird situation. To be totally sure we didn't miss out on db updates, we're gonna resync everything.")
+            self.syncStoreAndDatabaseFetchingOnlyChanges().catch(self.abortIntendingToSync)
         }
         .catch
         {
             let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
             
-            self.abortIntendingToSync(withErrorMessage: $0.storageError.message, callToAction: c2a)
+            self.abortIntendingToSync(withErrorMessage: $0.readable.message, callToAction: c2a)
         }
     }
     
@@ -207,13 +207,13 @@ class Storage: Observer
         }
         .done(on: backgroundQ)
         {
-            self.syncStoreAndDatabase().catch(self.abortIntendingToSync)
+            self.syncStoreAndDatabaseFetchingOnlyChanges().catch(self.abortIntendingToSync)
         }
         .catch
         {
             let c2a = "Seems like your device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
             
-            self.abortIntendingToSync(withErrorMessage: $0.storageError.message, callToAction: c2a)
+            self.abortIntendingToSync(withErrorMessage: $0.readable.message, callToAction: c2a)
         }
     }
     
@@ -235,7 +235,7 @@ class Storage: Observer
         }
         .then(on: backgroundQ)
         {
-            self.syncStoreAndDatabase()
+            self.syncStoreAndDatabaseFetchingAllItems()
         }
         .done(on: backgroundQ)
         {
@@ -246,11 +246,11 @@ class Storage: Observer
     
     // MARK: - Ensure Store and DB Are in Sync
     
-    private func syncStoreAndDatabase() -> Promise<Void>
+    private func syncStoreAndDatabaseFetchingOnlyChanges() -> Promise<Void>
     {
         guard Store.shared.root != nil else
         {
-            return Promise(error: StorageError.message("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
+            return Promise(error: ReadableError.message("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
         }
         
         return firstly
@@ -307,7 +307,7 @@ class Storage: Observer
                         
                         if preferDatabase
                         {
-                            return self.resetStoreWithItemsFromDatabase()
+                            return self.fetchAllDatabaseItemsAndResetLocalStore()
                         }
                         else
                         {
@@ -323,11 +323,77 @@ class Storage: Observer
         }
     }
     
-    private func resetStoreWithItemsFromDatabase() -> Promise<Void>
+    private func syncStoreAndDatabaseFetchingAllItems() -> Promise<Void>
     {
         guard Store.shared.root != nil else
         {
-            return Promise(error: StorageError.message("Create file and Store root before resetting Store with Database items! file \(#file) line \(#line)"))
+            return Promise(error: ReadableError.message("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
+        }
+        
+        return firstly
+        {
+            self.database.fetchRecords()
+        }
+        .map(on: backgroundQ)
+        {
+            records -> Item? in
+            
+            return records.makeTrees().largestTree
+        }
+        .then(on: backgroundQ)
+        {
+            dbRoot -> Promise<Void> in
+            
+            guard let dbRoot = dbRoot, dbRoot.numberOfLeafs > 1 else
+            {
+                return self.database.reset(root: Store.shared.root)
+            }
+            
+            guard let storeRoot = Store.shared.root, storeRoot.numberOfLeafs > 1 else
+            {
+                self.resetLocal(tree: dbRoot)
+                return Promise()
+            }
+            
+            if storeRoot.isIdentical(to: dbRoot)
+            {
+                return Promise()
+            }
+            
+            // FIXME: we would need to detect whether one of both places did NOT change since we last were in sync. for 2 cases: 1) we come back to this device after exclusively editing on another. and 2) we come back online after exclusively editing on this device.
+            
+            // conflicting changes -> ask user
+            
+            return firstly
+            {
+                Dialog.default.askWhetherToPreferICloud()
+            }
+            .then(on: self.backgroundQ)
+            {
+                (preferDatabase: Bool) -> Promise<Void> in
+                
+                if preferDatabase
+                {
+                    self.resetLocal(tree: dbRoot)
+                    return Promise()
+                }
+                else
+                {
+                    return self.database.reset(root: storeRoot)
+                }
+            }
+        }
+        .done
+        {
+            self.hasUnsyncedLocalChanges.value = false
+        }
+    }
+    
+    private func fetchAllDatabaseItemsAndResetLocalStore() -> Promise<Void>
+    {
+        guard Store.shared.root != nil else
+        {
+            return Promise(error: ReadableError.message("Create file and Store root before resetting Store with Database items! file \(#file) line \(#line)"))
         }
         
         return firstly
@@ -362,7 +428,7 @@ class Storage: Observer
                 
                 self.database.apply(.removeItems(withIDs: ids)).catch
                 {
-                    log(error: $0.storageError.message)
+                    log(error: $0.readable.message)
                 }
             }
             
@@ -387,7 +453,7 @@ class Storage: Observer
     
     private func abortIntendingToSync(with error: Error)
     {
-        abortIntendingToSync(withErrorMessage: error.storageError.message)
+        abortIntendingToSync(withErrorMessage: error.readable.message)
     }
     
     private func abortIntendingToSync(withErrorMessage message: String,
@@ -414,7 +480,7 @@ class Storage: Observer
         }
         .catch
         {
-            log(error: $0.storageError.message)
+            log(error: $0.readable.message)
         }
     }
     

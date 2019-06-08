@@ -34,7 +34,7 @@ class FileLogger: LogObserver
         }
         catch let error
         {
-            log(error: error.localizedDescription)
+            log(error: error.readable.message)
         }
     }
     

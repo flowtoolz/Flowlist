@@ -16,10 +16,10 @@ extension CKContainer
                 
                 if let error = error
                 {
-                    log(error: error.localizedDescription)
+                    log(error: error.ckReadable.message)
                 }
                 
-                resolver.resolve(id, error?.storageError)
+                resolver.resolve(id, error?.ckReadable)
             }
         }
     }
@@ -36,10 +36,10 @@ extension CKContainer
                 
                 if let error = error
                 {
-                    log(error: error.localizedDescription)
+                    log(error: error.ckReadable.message)
                 }
                 
-                resolver.resolve(status, error?.storageError)
+                resolver.resolve(status, error?.ckReadable)
             }
         }
     }

@@ -24,6 +24,7 @@ class PurchaseController: NSObject, CustomObservable, SKProductsRequestDelegate,
     func paymentQueue(_ queue: SKPaymentQueue,
                       restoreCompletedTransactionsFailedWithError error: Error)
     {
+        // TODO: build more precise error message, like we did with CKError and ReadableError
         send(.didFailToPurchaseFullVersion(message: "An error occured while restoring AppStore purchases."))
         
         log(error: error.localizedDescription)
@@ -91,6 +92,7 @@ class PurchaseController: NSObject, CustomObservable, SKProductsRequestDelegate,
                 return
             }
             
+            // TODO: build more precise error message, like we did with CKError and ReadableError
             let message = "Purchasing full version failed with error: \(error.localizedDescription)"
             log(error: message)
             send(.didFailToPurchaseFullVersion(message: message))

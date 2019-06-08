@@ -83,7 +83,7 @@ class ICloudDatabase: CustomObservable
     func fetchCKRecords(with query: CKQuery,
                         inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
     {
-        return ckDatabase.perform(query, inZoneWith: zoneID)
+        return ckDatabase.perform(query, inZone: zoneID)
     }
     
     // MARK: - Respond to Notifications
@@ -140,7 +140,7 @@ class ICloudDatabase: CustomObservable
         case .recordDeleted:
             didDeleteRecord(with: recordId)
         @unknown default:
-            log(error: "unhandled case")
+            log(error: "Unknown case of CKQueryNotification.Reason")
         }
     }
     
@@ -187,12 +187,12 @@ class ICloudDatabase: CustomObservable
             {
                 createdZones, _, error in
                 
-                if let error = error?.storageError
+                if let error = error
                 {
-                    log(error: error.message)
+                    log(error: error.ckReadable.message)
                 }
                 
-                resolver.resolve(error, createdZones?.first)
+                resolver.resolve(error?.ckReadable, createdZones?.first)
             }
             
             perform(operation)
@@ -243,12 +243,12 @@ class ICloudDatabase: CustomObservable
             {
                 subscription, error in
                 
-                if let error = error?.storageError
+                if let error = error
                 {
-                    log(error: error.message)
+                    log(error: error.ckReadable.message)
                 }
                 
-                resolver.resolve(subscription, error)
+                resolver.resolve(subscription, error?.ckReadable)
             }
         }
     }
@@ -266,7 +266,7 @@ class ICloudDatabase: CustomObservable
             
             log(error: message)
 
-            let error = StorageError.message(message)
+            let error = ReadableError.message(message)
             
             handleCreationSuccess?(error)
             handleDeletionSuccess?(error)
@@ -286,7 +286,7 @@ class ICloudDatabase: CustomObservable
         {
             if let error = $1
             {
-                log(error: error.localizedDescription)
+                log(error: error.ckReadable.message)
             }
         }
         
@@ -294,13 +294,13 @@ class ICloudDatabase: CustomObservable
         {
             _, _, error in
             
-            if let error = error?.storageError
+            if let error = error
             {
-                log(error: error.message)
+                log(error: error.ckReadable.message)
             }
             
-            handleDeletionSuccess?(error)
-            handleCreationSuccess?(error)
+            handleDeletionSuccess?(error?.ckReadable)
+            handleCreationSuccess?(error?.ckReadable)
         }
         
         perform(operation)
@@ -346,7 +346,7 @@ class ICloudDatabase: CustomObservable
             
             log(error: message)
             
-            return Promise(error: StorageError.message(message))
+            return Promise(error: ReadableError.message(message))
         }
     }
     

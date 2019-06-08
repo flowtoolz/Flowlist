@@ -1,21 +1,25 @@
 extension Error
 {
-    var storageError: StorageError
+    var readable: ReadableError
     {
-        if let error = self as? StorageError
+        if let readableError = self as? ReadableError
         {
-            return error
+            return readableError
         }
         else
         {
-            let message = "This issue came up: \(self.localizedDescription)"
-            return StorageError.message(message)
+            return .message(localizedDescription)
         }
     }
 }
 
-enum StorageError: Error, CustomDebugStringConvertible
+enum ReadableError: Error, CustomDebugStringConvertible
 {
+    var localizedDescription: String
+    {
+        return message
+    }
+    
     var debugDescription: String
     {
         return message

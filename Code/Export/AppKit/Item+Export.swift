@@ -43,10 +43,10 @@ class Exporter
             }
             catch let error
             {
-                log(error: error.localizedDescription)
+                log(error: error.readable.message)
                 
                 let title = "Couldn't write \"\(fileUrl.lastPathComponent)\""
-                show(alert: error.localizedDescription, title: title)
+                show(alert: error.readable.message, title: title)
             }
         }
     }
