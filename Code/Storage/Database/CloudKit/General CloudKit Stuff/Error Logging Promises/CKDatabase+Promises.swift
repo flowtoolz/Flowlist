@@ -49,8 +49,8 @@ extension CKDatabase
             
             if #available(OSX 10.13, *)
             {
-                queryOperation.configuration.timeoutIntervalForRequest = 1.0
-                queryOperation.configuration.timeoutIntervalForResource = 1.0
+                queryOperation.configuration.timeoutIntervalForRequest = CKDatabase.timeoutAfterSeconds
+                queryOperation.configuration.timeoutIntervalForResource = CKDatabase.timeoutAfterSeconds
             }
             
             var records = [CKRecord]()
@@ -67,6 +67,7 @@ extension CKDatabase
                 if let error = error
                 {
                     log(error: error.ckReadable.message)
+                    log("Fetched \(records.count) records before the error occured.")
                 }
                 
                 resolver.resolve((records, cursor), error?.ckReadable)
@@ -75,6 +76,12 @@ extension CKDatabase
             self.add(queryOperation)
         }
     }
+    
+    #if DEBUG
+    static let timeoutAfterSeconds: Double = 5
+    #else
+    static let timeoutAfterSeconds: Double = 20
+    #endif
     
     public func fetchUserCKRecord() -> Promise<CKRecord>
     {

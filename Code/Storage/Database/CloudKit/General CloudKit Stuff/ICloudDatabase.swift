@@ -308,6 +308,12 @@ class ICloudDatabase: CustomObservable
     
     func perform(_ operation: CKDatabaseOperation)
     {
+        if #available(OSX 10.13, *)
+        {
+            operation.configuration.timeoutIntervalForRequest = CKDatabase.timeoutAfterSeconds
+            operation.configuration.timeoutIntervalForResource = CKDatabase.timeoutAfterSeconds
+        }
+        
         ckDatabase.add(operation)
     }
     
