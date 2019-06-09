@@ -21,7 +21,7 @@ class Item {
         }
     }
     
-    // TODO: proof concept: make model class independent of Combine and use SwiftObserver instead. Let the View then care about having some view specific and SwiftUI-specific bindings
+    // TODO: proof concept: make model class independent of Combine and use SwiftObserver instead. Let the View then care about binding to some view-specific and SwiftUI-specific data source.
     let didChange = PassthroughSubject<Void, Never>()
 }
 

@@ -58,6 +58,16 @@ extension Array {
     }
 }
 
-// TODO: apparently classes don't need to conform to Identifiable in order to be displayed in a list... where is that documented and how is it technically achieved? how do classes auto-comply to identifiable?
+/*
+ Item is Identifiable since classes automatically conform to Identifiable, via this in the SwiftUI API:
+ 
+ extension Identifiable where Self : AnyObject {
+     public var id: ObjectIdentifier { get }
+ }
+ 
+ BindableObject conforms to Identifiable. And the above extension of Identifiable is applied to Item before the conformance of Item to that protocol even gets checked.
+ 
+ Just by adopting/knowing a protocol extension you can gain conformance to that same protocol 🤯
+*/
 extension Item: BindableObject {}
 
