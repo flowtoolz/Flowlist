@@ -11,6 +11,6 @@ extension Record
                   state: ckRecord.state,
                   tag: ckRecord.tag,
                   rootID: ckRecord.superItem,
-                  position: ckRecord.position)
+                  position: ckRecord.position ?? 0)
     }
 }

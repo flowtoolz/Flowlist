@@ -37,7 +37,7 @@ class Storage: Observer
             }
             .then
             {
-                self.syncStoreAndDatabaseFetchingOnlyChanges()
+                self.syncStoreAndDatabaseFetchingAllItems()
             }
             .catch(abortIntendingToSync)
         }
@@ -336,9 +336,7 @@ class Storage: Observer
         }
         .map(on: backgroundQ)
         {
-            records -> Item? in
-            
-            return records.makeTrees().largestTree
+            $0.makeTrees().largestTree
         }
         .then(on: backgroundQ)
         {

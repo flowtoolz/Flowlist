@@ -11,45 +11,11 @@ extension CKRecord
         self.init(recordType: CKRecord.itemType,
                   recordID: ID(itemID: record.id))
 
-        apply(record)
-    }
-    
-    @discardableResult
-    func apply(_ record: Record) -> Bool
-    {
-        var didChange = false
-        
-        if text != record.text
-        {
-            text = record.text
-            didChange = true
-        }
-        
-        if state != record.state
-        {
-            state = record.state
-            didChange = true
-        }
-        
-        if tag != record.tag
-        {
-            tag = record.tag
-            didChange = true
-        }
-        
-        if superItem != record.rootID
-        {
-            superItem = record.rootID
-            didChange = true
-        }
-        
-        if position != record.position
-        {
-            position = record.position
-            didChange = true
-        }
-        
-        return didChange
+        text = record.text
+        state = record.state
+        tag = record.tag
+        superItem = record.rootID
+        position = record.position
     }
     
     // MARK: - Storage Properties
@@ -143,12 +109,12 @@ extension CKRecord
         }
     }
     
-    var position: Int
+    var position: Int?
     {
         get
         {
-            guard isItem else { return 0 }
-            return self[ItemFieldName.position.rawValue] ?? 0
+            guard isItem else { return nil }
+            return self[ItemFieldName.position.rawValue]
         }
         
         set

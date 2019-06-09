@@ -35,7 +35,7 @@ extension ItemICloudDatabase: ItemDatabase
         
         switch edit
         {
-        case .updateItems(let records): return update(records)
+        case .updateItems(let records): return save(records)
         case .removeItems(let ids): return removeRecords(with: ids)
         }
     }

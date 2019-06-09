@@ -24,7 +24,7 @@ extension Tree where Data == ItemData
                       modifiesPosition: modifiesPosition)
     }
     
-    func makeRecords(position: Int? = nil) -> [Record]
+    func makeRecordsRecursively(position: Int? = nil) -> [Record]
     {
         // calling indexInRoot just once in the first call, so performance is ok
         let recPosition = position ?? (indexInRoot ?? 0)
@@ -42,7 +42,7 @@ extension Tree where Data == ItemData
         {
             guard let subitem = self[index] else { continue }
             
-            let subRecords = subitem.makeRecords(position: index)
+            let subRecords = subitem.makeRecordsRecursively(position: index)
             
             result.append(contentsOf: subRecords)
         }

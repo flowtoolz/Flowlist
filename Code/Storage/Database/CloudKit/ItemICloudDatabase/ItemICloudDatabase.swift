@@ -9,102 +9,21 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     init()
     {
-        observe(db)
-        {
-            [weak self] event in self?.didReceive(databaseEvent: event)
-        }
+        observe(db) { [weak self] in self?.didReceive(databaseEvent: $0) }
     }
     
     deinit { stopObserving() }
     
     // MARK: - Edit Items
     
-    func update(_ records: [Record]) -> Promise<Void>
-    {
-        let recordsByRootID = records.byRootID
-        let updates = recordsByRootID.compactMap { update($1, inRootWithID: $0) }
-        return when(fulfilled: updates)
-    }
-    
-    private func update(_ records: [Record],
-                        inRootWithID rootID: String) -> Promise<Void>
-    {
-        let rootRecordID = CKRecord.ID(itemID: rootID)
-        
-        return firstly
-        {
-            // fetch all records in that root record, including those updated records that already exist and their siblings that are not being updated
-            
-            fetchSubitemCKRecords(ofItemWithID: rootRecordID)
-        }
-        .then(on: backgroundQ)
-        {
-            (allSubitemRecords: [CKRecord]) -> Promise<Void>  in
-            
-            // if there are no records yet in that root, just save the updated records
-            
-            guard !allSubitemRecords.isEmpty else
-            {
-                return self.save(records)
-            }
-            
-            // create hashmap of all subitem records
-            
-            var subitemRecordsByID = [String : CKRecord]()
-            
-            allSubitemRecords.forEach
-            {
-                subitemRecordsByID[$0.recordID.recordName] = $0
-            }
-            
-            // add new records & update existing ones
-            
-            var recordsToSave = Set<CKRecord>()
-            var newRecords = [CKRecord]()
-            
-            for record in records
-            {
-                if let existingRecord = subitemRecordsByID[record.id]
-                {
-                    if existingRecord.apply(record)
-                    {
-                        recordsToSave.insert(existingRecord)
-                    }
-                }
-                else
-                {
-                    let newRecord = CKRecord(record: record)
-                    
-                    recordsToSave.insert(newRecord)
-                    newRecords.append(newRecord)
-                }
-            }
-            
-            // update positions
-            
-            let sortedRecords = (allSubitemRecords + newRecords).sorted
-            {
-                $0.position < $1.position
-            }
-            
-            sortedRecords.forEachIndex
-            {
-                if $0.position != $1
-                {
-                    $0.position = $1
-                    recordsToSave.insert($0)
-                }
-            }
-            
-            // save records back
-            
-            return self.db.save(Array(recordsToSave))
-        }
-    }
-    
-    private func save(_ records: [Record]) -> Promise<Void>
+    func save(_ records: [Record]) -> Promise<Void>
     {
         return save(records.map(CKRecord.init))
+    }
+    
+    func save(_ ckRecords: [CKRecord]) -> Promise<Void>
+    {
+        return db.save(ckRecords)
     }
     
     func removeRecords(with ids: [String]) -> Promise<Void>
@@ -112,11 +31,6 @@ class ItemICloudDatabase: Observer, CustomObservable
         let ckRecordIDs = ids.map(CKRecord.ID.init(itemID:))
         
         return db.deleteCKRecords(withIDs: ckRecordIDs)
-    }
-    
-    func save(_ ckRecords: [CKRecord]) -> Promise<Void>
-    {
-        return db.save(ckRecords)
     }
     
     func deleteRecords() -> Promise<Void>
