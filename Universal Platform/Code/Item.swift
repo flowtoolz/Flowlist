@@ -1,4 +1,4 @@
-import Combine
+import SwiftObserver
 
 let testItem = Item("Home", [
     Item("Today", [Item("Learn SwiftUI")]),
@@ -7,7 +7,7 @@ let testItem = Item("Home", [
     Item("Projects")
     ])
 
-class Item {
+class Item: CustomObservable {
     
     init(_ text: String, _ children: [Item] = []) {
         self.text = text
@@ -16,12 +16,10 @@ class Item {
     
     var text: String
     var children: [Item] {
-        didSet {
-            didChange.send(())
-        }
+        didSet { send() }
     }
     
-    // TODO: proof concept: make model class independent of Combine and use SwiftObserver instead. Let the View then care about binding to some view-specific and SwiftUI-specific data source.
-    let didChange = PassthroughSubject<Void, Never>()
+    let messenger = Messenger<Message>()
+    typealias Message = String?
 }
 

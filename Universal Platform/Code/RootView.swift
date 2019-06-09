@@ -11,7 +11,7 @@ struct RootView_Previews : PreviewProvider {
 struct RootView : View {
     var body: some View {
         NavigationView {
-            ItemListView(root: testItem)
+            ItemListView(item: testItem)
         }
     }
 }
