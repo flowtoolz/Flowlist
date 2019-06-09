@@ -78,7 +78,7 @@ extension CKDatabase
     }
     
     #if DEBUG
-    static let timeoutAfterSeconds: Double = 5
+    static let timeoutAfterSeconds: Double = 30
     #else
     static let timeoutAfterSeconds: Double = 20
     #endif
