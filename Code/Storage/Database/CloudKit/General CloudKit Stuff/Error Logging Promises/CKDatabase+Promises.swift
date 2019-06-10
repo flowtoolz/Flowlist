@@ -118,7 +118,7 @@ extension CKDatabase
         {
             after(.seconds(Int(seconds))).done
             {
-                resolver.reject(ReadableError.message("iCloud query operation didn't respond and was cancelled after \(seconds) seconds."))
+                resolver.reject(ReadableError.message("iCloud database operation didn't respond and was cancelled after \(seconds) seconds."))
             }
         }
     }
