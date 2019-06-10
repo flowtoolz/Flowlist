@@ -275,7 +275,7 @@ class Storage: Observer
                 {
                     // neither db nor local store have changed. we're done.
                     
-                    // TODO: should be reset db or Store here to be totally sure?
+                    // TODO: should we reset db or Store here to be totally sure? If so, we could just always retrieve the whole tree from the db and then would compare if they are identical at this point ...
                     return Promise()
                 }
             }
@@ -332,11 +332,7 @@ class Storage: Observer
         
         return firstly
         {
-            self.database.fetchRecords()
-        }
-        .map(on: backgroundQ)
-        {
-            $0.makeTrees().largestTree
+            fetchWholeTreeFromDatabase()
         }
         .then(on: backgroundQ)
         {
@@ -396,29 +392,47 @@ class Storage: Observer
         
         return firstly
         {
-            database.fetchRecords()
+            fetchWholeTreeFromDatabase()
         }
         .then(on: backgroundQ)
         {
-            records -> Promise<Void> in
+            dbRoot -> Promise<Void> in
             
-            // retrieve database root
+            // no items in database -> reset db with store items
             
-            let treeResult = records.makeTrees()
-            
-            if treeResult.trees.count > 1
+            guard let dbRoot = dbRoot else
             {
-                // TODO: Merge those trees by creating a new root for them so that nothing gets lost in this weird situation ... or ask user
-                log(warning: "There are multiple trees in the database.")
-            }
-            
-            guard let databaseRoot = treeResult.largestTree else
-            {
-                // no items in database
                 return self.database.reset(root: Store.shared.root)
             }
             
-            // if database has unconnected items -> delete them
+            // store and db are identical -> no need to reset store
+            
+            if Store.shared.root?.isIdentical(to: dbRoot) ?? false
+            {
+                return Promise()
+            }
+            
+            // reset store with db items
+            
+            self.resetLocal(tree: dbRoot)
+            return Promise()
+        }
+    }
+    
+    private func fetchWholeTreeFromDatabase() -> Promise<Item?>
+    {
+        return firstly
+        {
+            database.fetchRecords()
+        }
+        .map(on: backgroundQ)
+        {
+            records -> Item? in
+            
+            let treeResult = records.makeTrees()
+            
+            // if database has detached items -> delete them.
+            // (detached items have a root that is not in the database.)
             
             if !treeResult.detachedRecords.isEmpty
             {
@@ -430,17 +444,15 @@ class Storage: Observer
                 }
             }
             
-            // Store and database tree are identical -> No need to reset Store
+            // return largest tree
             
-            if Store.shared.root?.isIdentical(to: databaseRoot) ?? false
+            if treeResult.trees.count > 1
             {
-                return Promise()
+                // TODO: Merge those trees by creating a new root for them so that nothing gets lost in this weird situation ... or ask user
+                log(warning: "There are multiple trees in the database.")
             }
             
-            // Overwrite Store
-            
-            self.resetLocal(tree: databaseRoot)
-            return Promise()
+            return treeResult.largestTree
         }
     }
     
