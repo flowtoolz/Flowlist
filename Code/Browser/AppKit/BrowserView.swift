@@ -195,7 +195,10 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
         
         guard listViews.isValid(index: listIndex) else
         {
-            log(error: "list index \(listIndex) is invalid. We have \(listViews.count) list views.")
+            if listIndex > 0
+            {
+                log(error: "list index \(listIndex) is invalid. We have \(listViews.count) list views.")
+            }
             return ListViewCell(listView: nil)
         }
         
