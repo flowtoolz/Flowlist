@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E0850D622AEC7F300FCC68B /* Array+IndexSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0850D522AEC7F300FCC68B /* Array+IndexSet.swift */; };
 		9E31317722A71CFF001C5A7A /* ItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31317622A71CFF001C5A7A /* ItemListView.swift */; };
 		9E31317A22A721A1001C5A7A /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31317922A721A1001C5A7A /* ItemView.swift */; };
 		9E31317C22A73473001C5A7A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31317B22A73473001C5A7A /* Item.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9E0850D522AEC7F300FCC68B /* Array+IndexSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+IndexSet.swift"; sourceTree = "<group>"; };
 		9E31317622A71CFF001C5A7A /* ItemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListView.swift; sourceTree = "<group>"; };
 		9E31317922A721A1001C5A7A /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		9E31317B22A73473001C5A7A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				9E39467922A7190100153367 /* SceneDelegate.swift */,
 				9E39467B22A7190100153367 /* RootView.swift */,
 				9E31317622A71CFF001C5A7A /* ItemListView.swift */,
+				9E0850D522AEC7F300FCC68B /* Array+IndexSet.swift */,
 				9E31317922A721A1001C5A7A /* ItemView.swift */,
 				9E31317B22A73473001C5A7A /* Item.swift */,
 			);
@@ -296,6 +299,7 @@
 				9E39467822A7190100153367 /* AppDelegate.swift in Sources */,
 				9E31317C22A73473001C5A7A /* Item.swift in Sources */,
 				9E39467A22A7190100153367 /* SceneDelegate.swift in Sources */,
+				9E0850D622AEC7F300FCC68B /* Array+IndexSet.swift in Sources */,
 				9E31317A22A721A1001C5A7A /* ItemView.swift in Sources */,
 				9E39467C22A7190100153367 /* RootView.swift in Sources */,
 			);

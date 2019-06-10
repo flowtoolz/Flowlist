@@ -35,13 +35,11 @@ struct ItemListView : View {
     }
     
     func removeItems(at offsets: IndexSet) {
-        Array(offsets).forEach {
-            source.children.remove(at: $0)
-        }
+        source.children.remove(from: offsets)
     }
     
-    func moveItems(from sourceIndexes: IndexSet, to destination: Int) {
-        source.children.move(from: sourceIndexes, to: destination)
+    func moveItems(from offsets: IndexSet, to destination: Int) {
+        source.children.move(from: offsets, to: destination)
     }
     
     func addItem() {
@@ -55,15 +53,6 @@ struct ItemListView : View {
     @ObjectBinding private var source: Source
 }
 
-extension Array {
-    mutating func move(from source: IndexSet,
-                       to destination: Int) {
-        Array<Int>(source).forEach {
-            insert(remove(at: $0), at: destination)
-        }
-    }
-}
-
 /*
  Item is Identifiable since classes that declare conformance to Identifiable get the required implementation via this in the SwiftUI API:
  
@@ -75,7 +64,7 @@ extension Array {
 */
 extension Item: Identifiable {}
 
-// we have this extra layer so our model class does not have to depend SwiftUI and so the view does not have to hold the model strongly
+// we have this extra layer so our model class does not have to depend on SwiftUI and so the view does not have to hold the model strongly
 private class Source: Observer, BindableObject {
     
     // MARK: - Notify Subscribing View of Item Updates
