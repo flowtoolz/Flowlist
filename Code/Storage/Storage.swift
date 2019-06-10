@@ -37,6 +37,7 @@ class Storage: Observer
             }
             .then
             {
+                // TODO: fetching all items won't allow to detect where data changed since last sync, but fetching only updates won't suffice for initial sync or complete resync. we need a sync func that combines both...
                 self.syncStoreAndDatabaseFetchingAllItems()
             }
             .catch(abortIntendingToSync)
