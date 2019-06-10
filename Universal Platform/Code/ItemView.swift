@@ -12,13 +12,17 @@ struct ItemView_Previews : PreviewProvider {
 #endif
 
 struct ItemView : View {
+    @State var isChecked = false
     
     var body: some View {
         HStack {
-            Image(systemName: "checkmark.circle")
-                .imageScale(.large)
-            Text(item.text)
-            Spacer()
+            Button(action: { self.isChecked.toggle() } ) {
+                Image(systemName: isChecked ? "checkmark.circle" : "circle")
+                    .imageScale(.large)
+            }
+            NavigationButton(destination: ItemListView(item: item)) {
+                Text(item.text)
+            }
         }
     }
     

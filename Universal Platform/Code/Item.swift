@@ -14,7 +14,7 @@ class Item: CustomObservable {
         self.children = children
     }
     
-    var text: String
+    var text: String { didSet { send() } }
     var children: [Item] { didSet { send() } }
     
     let messenger = Messenger<Message>()

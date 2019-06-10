@@ -13,25 +13,44 @@ struct ItemListView_Previews : PreviewProvider {
 struct ItemListView : View {
     
     var body: some View {
-        List {
-            Section {
-                Button(action: addItem) {
-                    Text("Neues Item")
-                }
-            }
-            Section {
-                ForEach(source.children) { child in
-                    NavigationButton(destination: ItemListView(item: child)) {
+        VStack {
+            List {
+                Section {
+                    ForEach(source.children) { child in
                         ItemView(item: child)
                     }
+                    .onDelete(perform: removeItems)
+                    .onMove(perform: moveItems)
                 }
-                .onDelete(perform: removeItems)
-                .onMove(perform: moveItems)
+            }
+                .navigationBarTitle(Text(source.text),
+                                    displayMode: .inline)
+                .navigationBarItems(trailing: EditButton())
+                .listStyle(.grouped)
+            
+            VStack {
+                HStack {
+                    Image(systemName: "pencil.circle")
+                        .imageScale(.large)
+                    TextField($source.text) {
+                        UIApplication.shared.keyWindow?.endEditing(true)
+                    }
+                }.padding()
+                HStack {
+                    Button(action: addItem) {
+                        Image(systemName: "checkmark.circle")
+                            .imageScale(.large)
+                    }
+                    Text("Check Off")
+                    Spacer()
+                    Button(action: addItem) {
+                        Image(systemName: "plus.circle")
+                            .imageScale(.large)
+                    }
+                    Text("Add")
+                }.padding()
             }
         }
-        .navigationBarTitle(Text(source.item?.text ?? ""), displayMode: .inline)
-        .navigationBarItems(trailing: EditButton())
-        .listStyle(.grouped)
     }
     
     func removeItems(at offsets: IndexSet) {
@@ -43,7 +62,7 @@ struct ItemListView : View {
     }
     
     func addItem() {
-        source.children.append(Item("Neues Item"))
+        source.children.append(Item("New Item"))
     }
     
     init(item: Item) {
@@ -81,6 +100,11 @@ private class Source: Observer, BindableObject {
     let didChange = PassthroughSubject<Void, Never>()
     
     // MARK: - Provide Access to Item
+    
+    var text: String {
+        set { item?.text = newValue }
+        get { item?.text ?? "" }
+    }
     
     var children: [Item] {
         set { item?.children = newValue }
