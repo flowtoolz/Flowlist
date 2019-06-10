@@ -41,17 +41,13 @@ extension CKDatabase
         return Promise
         {
             resolver in
-            
+        
             let queryOperation = CKQueryOperation(query: query)
             queryOperation.zoneID = zoneID
             queryOperation.queuePriority = .high
             queryOperation.database = self
             
-            if #available(OSX 10.13, *)
-            {
-                queryOperation.configuration.timeoutIntervalForRequest = CKDatabase.timeoutAfterSeconds
-                queryOperation.configuration.timeoutIntervalForResource = CKDatabase.timeoutAfterSeconds
-            }
+            setTimeout(on: queryOperation, or: resolver)
             
             var records = [CKRecord]()
             
@@ -76,12 +72,6 @@ extension CKDatabase
             self.add(queryOperation)
         }
     }
-    
-    #if DEBUG
-    static let timeoutAfterSeconds: Double = 30
-    #else
-    static let timeoutAfterSeconds: Double = 20
-    #endif
     
     public func fetchUserCKRecord() -> Promise<CKRecord>
     {
@@ -114,4 +104,29 @@ extension CKDatabase
             }
         }
     }
+    
+    func setTimeout<T>(of seconds: Double = CKDatabase.timeoutAfterSeconds,
+                       on operation: CKDatabaseOperation,
+                       or resolver: Resolver<T>)
+    {
+        // TODO: prepare availability checks for iOS as well
+        if #available(OSX 10.13, *)
+        {
+            operation.configuration.timeoutIntervalForRequest = seconds
+            operation.configuration.timeoutIntervalForResource = seconds
+        }
+        else
+        {
+            after(.seconds(Int(seconds))).done
+            {
+                resolver.reject(ReadableError.message("iCloud query operation didn't respond and was cancelled after \(seconds) seconds."))
+            }
+        }
+    }
+    
+    #if DEBUG
+    static let timeoutAfterSeconds: Double = 5
+    #else
+    static let timeoutAfterSeconds: Double = 20
+    #endif
 }

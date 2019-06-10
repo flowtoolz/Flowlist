@@ -29,8 +29,12 @@ class ICloudDatabase: CustomObservable
         
         return Promise
         {
+            resolver in
+            
+            ckDatabase.setTimeout(on: operation, or: resolver)
+            
             perform(modifyOperation: operation,
-                    handleCreationSuccess: $0.resolve,
+                    handleCreationSuccess: resolver.resolve,
                     handleDeletionSuccess: nil)
         }
     }
@@ -75,9 +79,13 @@ class ICloudDatabase: CustomObservable
         
         return Promise
         {
+            resolver in
+            
+            ckDatabase.setTimeout(on: operation, or: resolver)
+            
             perform(modifyOperation: operation,
                     handleCreationSuccess: nil,
-                    handleDeletionSuccess: $0.resolve)
+                    handleDeletionSuccess: resolver.resolve)
         }
     }
     
@@ -320,12 +328,6 @@ class ICloudDatabase: CustomObservable
     
     func perform(_ operation: CKDatabaseOperation)
     {
-        if #available(OSX 10.13, *)
-        {
-            operation.configuration.timeoutIntervalForRequest = CKDatabase.timeoutAfterSeconds
-            operation.configuration.timeoutIntervalForResource = CKDatabase.timeoutAfterSeconds
-        }
-        
         ckDatabase.add(operation)
     }
     
