@@ -13,15 +13,14 @@ extension Tree where Data == ItemData
         self.init(data: data)
     }
     
-    func makeRecord(modifiesPosition: Bool = true) -> Record
+    func makeRecord() -> Record
     {
         return Record(id: data.id,
                       text: text,
                       state: data.state.value,
                       tag: data.tag.value,
                       rootID: root?.data.id,
-                      position: indexInRoot ?? 0,
-                      modifiesPosition: modifiesPosition)
+                      position: indexInRoot ?? 0)
     }
     
     func makeRecordsRecursively(position: Int? = nil) -> [Record]

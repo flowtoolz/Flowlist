@@ -33,8 +33,7 @@ struct Record
          state: ItemData.State? = nil,
          tag: ItemData.Tag? = nil,
          rootID: String?,
-         position: Int,
-         modifiesPosition: Bool = true)
+         position: Int)
     {
         self.id = id
         self.text = text
@@ -42,7 +41,6 @@ struct Record
         self.tag = tag
         self.rootID = rootID
         self.position = position
-        self.modifiesPosition = modifiesPosition
     }
     
     let id: String
@@ -53,7 +51,6 @@ struct Record
     
     let rootID: String?
     let position: Int
-    let modifiesPosition: Bool
     
     enum Field: String, CaseIterable
     {

@@ -16,7 +16,7 @@ extension Tree.Event.TreeUpdate where Data == ItemData
             case .didNothing, .wantTextInput:
                 return nil
             case .wasModified:
-                let record = node.makeRecord(modifiesPosition: false)
+                let record = node.makeRecord()
                 return .updateItems(withRecords: [record])
             }
 
