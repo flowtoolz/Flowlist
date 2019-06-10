@@ -15,9 +15,7 @@ class Item: CustomObservable {
     }
     
     var text: String
-    var children: [Item] {
-        didSet { send() }
-    }
+    var children: [Item] { didSet { send() } }
     
     let messenger = Messenger<Message>()
     typealias Message = String?

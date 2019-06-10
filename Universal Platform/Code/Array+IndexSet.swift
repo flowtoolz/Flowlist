@@ -2,11 +2,11 @@ import Foundation
 
 extension Array {
     
-    mutating func move(from offsets: IndexSet, to destination: Index) {
+    mutating func move(from offsets: IndexSet,
+                       to destination: Index) {
+        let removedElements = remove(from: offsets)
         let validDestination = Swift.min(destination, count)
-        let numberOfOffsetsBeforeDestination = offsets.filter { $0 < validDestination }.count
-        let destinationAfterRemovingElements = validDestination - numberOfOffsetsBeforeDestination
-        insert(contentsOf: remove(from: offsets), at: destinationAfterRemovingElements)
+        insert(contentsOf: removedElements, at: validDestination)
     }
     
     @discardableResult
