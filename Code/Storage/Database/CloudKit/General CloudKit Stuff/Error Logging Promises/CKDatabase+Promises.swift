@@ -109,7 +109,6 @@ extension CKDatabase
                        on operation: CKDatabaseOperation,
                        or resolver: Resolver<T>)
     {
-        // TODO: prepare availability checks for iOS as well
         if #available(OSX 10.13, *)
         {
             operation.configuration.timeoutIntervalForRequest = seconds
