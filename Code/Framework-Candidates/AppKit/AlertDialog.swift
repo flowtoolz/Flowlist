@@ -43,7 +43,9 @@ class AlertDialog: Dialog
                 
                 guard reversedOptions.isValid(index: reversedOptionIndex) else
                 {
-                    resolver.reject(DialogError.custom("Unknown modal response"))
+                    let message = "Unknown modal response"
+                    log(error: message)
+                    resolver.reject(ReadableError.message(message))
                     return
                 }
                 

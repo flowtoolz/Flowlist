@@ -484,14 +484,7 @@ class Storage: Observer
                                        text: "\(error)\n\n\(callToAction)",
                                        options: ["Got it"])
         
-        firstly
-        {
-            Dialog.default.pose(question, imageName: "icloud_conflict")
-        }
-        .catch
-        {
-            log(error: $0.readable.message)
-        }
+        Dialog.default.pose(question, imageName: "icloud_conflict").catch { _ in }
     }
     
     // MARK: - Persist the User's Intention to Sync

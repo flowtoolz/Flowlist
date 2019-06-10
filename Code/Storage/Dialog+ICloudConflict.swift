@@ -19,7 +19,7 @@ extension Dialog
         {
             guard $0.options.count == 1, let option = $0.options.first else
             {
-                throw DialogError.custom("Unexpected # of answer options")
+                throw ReadableError.message("Unexpected # of answer options")
             }
             
             return option == iCloudOption

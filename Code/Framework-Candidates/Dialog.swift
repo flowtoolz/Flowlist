@@ -1,13 +1,15 @@
 import PromiseKit
+import SwiftyToolz
 
 class Dialog
 {
     static var `default` = Dialog()
     
-    func pose(_ question: Question,
-              imageName: String? = nil) -> Promise<Answer>
+    func pose(_ question: Question, imageName: String? = nil) -> Promise<Answer>
     {
-        return Promise(error: DialogError.notImplemented)
+        let message = "Dialog is an abstract class that needs to be subclassed. Don't use Dialog directly as it has no implementation of \(#function)"
+        log(error: message)
+        return Promise(error: ReadableError.message(message))
     }
     
     struct Question
@@ -20,11 +22,5 @@ class Dialog
     struct Answer
     {
         let options: [String]
-    }
-    
-    enum DialogError: Error
-    {
-        case notImplemented
-        case custom(_ message: String)
     }
 }
