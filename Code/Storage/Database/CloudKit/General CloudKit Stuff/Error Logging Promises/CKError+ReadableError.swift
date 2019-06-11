@@ -7,6 +7,11 @@ extension Error
         return ckError?.readable ?? readable
     }
     
+    var ckShouldRetry: Bool
+    {
+        return ckError?.retryAfterSeconds != nil
+    }
+    
     var ckError: CKError? { return self as? CKError }
 }
 

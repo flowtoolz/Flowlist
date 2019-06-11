@@ -160,6 +160,15 @@ extension CKDatabase
     static let timeoutAfterSeconds: Double = 20
     #endif
     
+    // TODO: Retry requests if error has ckShouldRetry, wait ckError.retryAfterSeconds ...
+    
+    func retry(after seconds: Double, action: @escaping () -> Void)
+    {
+        let retryTime = DispatchTime.now() + seconds
+        
+        globalQ.asyncAfter(deadline: retryTime, execute: action)
+    }
+    
     var globalQ: DispatchQueue { return iCloudQueue }
 }
 
