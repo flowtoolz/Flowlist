@@ -160,7 +160,7 @@ extension CKDatabase
     static let timeoutAfterSeconds: Double = 20
     #endif
     
-    var globalQ: DispatchQueue { return referenceToGlobalQueue }
+    var globalQ: DispatchQueue { return iCloudQueue }
 }
 
-private let referenceToGlobalQueue = DispatchQueue.global(qos: .userInitiated)
+private let iCloudQueue = DispatchQueue(label: "iCloud", qos: .userInitiated)
