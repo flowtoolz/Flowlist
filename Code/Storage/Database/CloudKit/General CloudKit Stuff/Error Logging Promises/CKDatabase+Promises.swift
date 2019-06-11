@@ -4,32 +4,30 @@ import SwiftyToolz
 
 extension CKDatabase
 {
-    public func perform(_ query: CKQuery,
-                        inZone zoneID: CKRecordZone.ID,
-                        cursor: CKQueryOperation.Cursor? = nil) -> Promise<[CKRecord]>
+    func perform(_ query: CKQuery,
+                 inZone zoneID: CKRecordZone.ID,
+                 cursor: CKQueryOperation.Cursor? = nil) -> Promise<[CKRecord]>
     {
         return firstly
         {
             performAndReturnCursor(query, inZone: zoneID, cursor: cursor)
         }
-        .then
+        .then(on: globalQ)
         {
             (records, newCursor) -> Promise<[CKRecord]> in
             
-            if let newCursor = newCursor
-            {
-                return firstly
-                {
-                    self.perform(query, inZone: zoneID, cursor: newCursor)
-                }
-                .map
-                {
-                    $0 + records
-                }
-            }
-            else
+            guard let newCursor = newCursor else
             {
                 return .value(records)
+            }
+            
+            return firstly
+            {
+                self.perform(query, inZone: zoneID, cursor: newCursor)
+            }
+            .map(on: self.globalQ)
+            {
+                records + $0
             }
         }
     }
@@ -44,8 +42,6 @@ extension CKDatabase
         
             let queryOperation = CKQueryOperation(query: query)
             queryOperation.zoneID = zoneID
-            queryOperation.queuePriority = .high
-            queryOperation.database = self
             
             setTimeout(on: queryOperation, or: resolver)
             
@@ -69,40 +65,75 @@ extension CKDatabase
                 resolver.resolve((records, cursor), error?.ckReadable)
             }
             
-            self.add(queryOperation)
+            self.perform(queryOperation)
         }
     }
     
-    public func fetchUserCKRecord() -> Promise<CKRecord>
+    func fetchUserCKRecord() -> Promise<CKRecord>
     {
         return firstly
         {
             CKContainer.default().fetchUserCKRecordID()
         }
-        .then(on: DispatchQueue.global(qos: .userInitiated))
+        .then(on: globalQ)
         {
-            self.fetchCKRecord(withID: $0)
+            self.fetchCKRecords(withIDs: [$0])
+        }
+        .map(on: globalQ)
+        {
+            guard let record = $0.first else
+            {
+                throw ReadableError.message("No user record found")
+            }
+            
+            return record
         }
     }
     
-    private func fetchCKRecord(withID recordID: CKRecord.ID) -> Promise<CKRecord>
+    func fetchCKRecords(withIDs ids: [CKRecord.ID]) -> Promise<[CKRecord]>
     {
+        let operation = CKFetchRecordsOperation(recordIDs: ids)
+        
         return Promise
         {
             resolver in
             
-            fetch(withRecordID: recordID)
+            setTimeout(on: operation, or: resolver)
+
+            operation.perRecordCompletionBlock =
             {
-                record, error in
+                record, id, error in
+                
+                // for overall progress updates
+            }
+            
+            operation.fetchRecordsCompletionBlock =
+            {
+                recordsByID, error in
                 
                 if let error = error
                 {
                     log(error: error.ckReadable.message)
                 }
                 
-                resolver.resolve(record, error?.ckReadable)
+                guard let recordsByID = recordsByID else
+                {
+                    resolver.resolve([], error?.ckReadable)
+                    return
+                }
+        
+                resolver.resolve(Array(recordsByID.values), error?.ckReadable)
             }
+            
+            perform(operation)
         }
+    }
+    
+    func perform(_ operation: CKDatabaseOperation)
+    {
+        operation.queuePriority = .high
+        operation.qualityOfService = .userInitiated
+        add(operation)
     }
     
     func setTimeout<T>(of seconds: Double = CKDatabase.timeoutAfterSeconds,
@@ -128,4 +159,8 @@ extension CKDatabase
     #else
     static let timeoutAfterSeconds: Double = 20
     #endif
+    
+    var globalQ: DispatchQueue { return referenceToGlobalQueue }
 }
+
+private let referenceToGlobalQueue = DispatchQueue.global(qos: .userInitiated)

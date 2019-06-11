@@ -48,11 +48,11 @@ class ICloudDatabase: CustomObservable
         {
             fetchCKRecords(ofType: type, inZone: zoneID)
         }
-        .map(on: backgroundQ)
+        .map(on: globalQ)
         {
             $0.map { $0.recordID }
         }
-        .then(on: backgroundQ)
+        .then(on: globalQ)
         {
             self.deleteCKRecords(withIDs: $0)
         }
@@ -195,8 +195,6 @@ class ICloudDatabase: CustomObservable
         let operation = CKModifyRecordZonesOperation(recordZonesToSave: [zone],
                                                      recordZoneIDsToDelete: nil)
         
-        operation.qualityOfService = .userInitiated
-        
         return Promise
         {
             resolver in
@@ -257,6 +255,8 @@ class ICloudDatabase: CustomObservable
         {
             resolver in
 
+            // TODO: use CKModifySubscriptionsOperation instead
+            
             ckDatabase.save(subscription)
             {
                 subscription, error in
@@ -293,7 +293,6 @@ class ICloudDatabase: CustomObservable
         }
         
         operation.savePolicy = .allKeys
-        operation.queuePriority = .high
         
         if let token = appInstallationID.data(using: .utf8)
         {
@@ -328,7 +327,7 @@ class ICloudDatabase: CustomObservable
     
     func perform(_ operation: CKDatabaseOperation)
     {
-        ckDatabase.add(operation)
+        ckDatabase.perform(operation)
     }
     
     private var ckDatabase: CKDatabase
@@ -344,7 +343,7 @@ class ICloudDatabase: CustomObservable
         {
             self.container.fetchAccountStatus()
         }
-        .then(on: backgroundQ)
+        .then(on: globalQ)
         {
             status -> Promise<Void> in
             
@@ -372,6 +371,8 @@ class ICloudDatabase: CustomObservable
     
     private let container = CKContainer.default()
     
+    var globalQ: DispatchQueue { return ckDatabase.globalQ }
+    
     // MARK: - Observability
     
     typealias Message = Event
@@ -385,13 +386,6 @@ class ICloudDatabase: CustomObservable
         case didModifyRecord(id: CKRecord.ID, notification: CKQueryNotification)
         case didDeleteRecord(id: CKRecord.ID)
         case didReceiveDatabaseNotification(CKDatabaseNotification)
-    }
-    
-    // MARK: - Background Queue
-    
-    private var backgroundQ: DispatchQueue
-    {
-        return DispatchQueue.global(qos: .userInitiated)
     }
 }
 

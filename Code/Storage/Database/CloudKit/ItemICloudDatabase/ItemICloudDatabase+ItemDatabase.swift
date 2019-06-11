@@ -10,7 +10,7 @@ extension ItemICloudDatabase: ItemDatabase
         {
             self.deleteRecords()
         }
-        .then(on: backgroundQ)
+        .then(on: globalQ)
         {
             () -> Promise<Void> in
             
@@ -46,7 +46,7 @@ extension ItemICloudDatabase: ItemDatabase
         {
             fetchItemCKRecords()
         }
-        .map(on: backgroundQ)
+        .map(on: globalQ)
         {
             $0.map(Record.init)
         }

@@ -76,15 +76,15 @@ class ItemICloudDatabase: Observer, CustomObservable
             {
                 self.db.checkAccountAccess()
             }
-            .then(on: backgroundQ)
+            .then(on: globalQ)
             {
                 self.ensureItemRecordZoneExists()
             }
-            .then(on: backgroundQ)
+            .then(on: globalQ)
             {
                 self.ensureSubscriptionExists()
             }
-            .done(on: backgroundQ)
+            .done(on: globalQ)
             {
                 self.didEnsureAccess = true
                 resolver.fulfill_()
@@ -157,17 +157,12 @@ class ItemICloudDatabase: Observer, CustomObservable
         db.handlePushNotification(with: userInfo)
     }
     
+    var globalQ: DispatchQueue { return db.globalQ }
+    
     private let db = ICloudDatabase()
     
     // MARK: - Observability
     
     let messenger = Messenger(ItemDatabaseUpdate.mayHaveChanged)
     typealias Message = ItemDatabaseUpdate
-    
-    // MARK: - Background Queue
-    
-    var backgroundQ: DispatchQueue
-    {
-        return DispatchQueue.global(qos: .userInitiated)
-    }
 }

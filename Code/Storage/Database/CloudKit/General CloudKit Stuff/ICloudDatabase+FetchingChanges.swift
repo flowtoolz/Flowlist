@@ -80,8 +80,6 @@ private extension CKFetchRecordZoneChangesOperation
 
         self.init(recordZoneIDs: [fetchZoneID], optionsByRecordZoneID: options)
         
-        queuePriority = .high
-        
         var changes = ICloudDatabase.Changes()
         
         recordChangedBlock =
