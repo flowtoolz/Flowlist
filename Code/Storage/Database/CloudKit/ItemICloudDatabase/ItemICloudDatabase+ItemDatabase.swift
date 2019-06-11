@@ -16,12 +16,7 @@ extension ItemICloudDatabase: ItemDatabase
             
             guard let root = root else { return Promise() }
             
-            let ckRecords = root.array.map
-            {
-                CKRecord(record: $0.makeRecord())
-            }
-            
-            return self.save(ckRecords)
+            return self.save(root.makeRecordsRecursively())
         }
     }
     
