@@ -8,7 +8,7 @@ extension CKRecord.ID
         guard let fields = notificaton.recordFields else { return nil }
         
         var newRootID: String?
-        var newPosition: Int?
+        var newPosition: Int = 0
         var newText: String?
         var newState: ItemData.State?
         var newTag: ItemData.Tag?
@@ -26,7 +26,7 @@ extension CKRecord.ID
             case .state: newState = ItemData.State(integer: value as? Int)
             case .tag: newTag = ItemData.Tag(integer: value as? Int)
             case .root: newRootID = value as? String
-            case .position: newPosition = value as? Int
+            case .position: if let intValue = value as? Int { newPosition = intValue }
             }
         }
         
@@ -35,7 +35,7 @@ extension CKRecord.ID
                       state: newState,
                       tag: newTag,
                       rootID: newRootID,
-                      position: newPosition ?? 0)
+                      position: newPosition)
     }
     
     convenience init(itemID: String)
