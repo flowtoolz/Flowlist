@@ -100,7 +100,8 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
         }
         
-        ensuringAccessPromise = newPromise
+        ensuringAccessPromise = newPromise.isPending ? newPromise : nil
+        
         return newPromise
     }
     
