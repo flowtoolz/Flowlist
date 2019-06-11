@@ -4,7 +4,7 @@ import SwiftyToolz
 
 extension CKContainer
 {
-    public func fetchUserCKRecordID() -> Promise<CKRecord.ID>
+    func fetchUserCKRecordID() -> Promise<CKRecord.ID>
     {
         return Promise
         {
@@ -24,7 +24,7 @@ extension CKContainer
         }
     }
     
-    public func fetchAccountStatus() -> Promise<CKAccountStatus>
+    func fetchAccountStatus() -> Promise<CKAccountStatus>
     {
         return Promise
         {
