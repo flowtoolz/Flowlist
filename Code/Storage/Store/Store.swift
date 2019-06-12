@@ -127,6 +127,8 @@ class Store: Observer, CustomObservable
     // MARK: - Item Storage
     
     private(set) var root: Item?
+    
+    // TODO: make hash map private, provide Item based API for updating Items
     let itemHash = HashMap()
     
     // MARK: - Observability

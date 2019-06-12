@@ -21,7 +21,7 @@ extension Store
     
     private func updateItems(with updatedRecords: [Record])
     {
-        var updatedItemsAndRecordsByID = [String: (Item, Record)]()
+        var arrayOfItemRootIDPosition = [(Item, String?, Int)]()
         
         // ensure items are in hash map and have updated data
         
@@ -29,36 +29,43 @@ extension Store
         {
             if let existingItem = itemHash[updatedRecord.id]
             {
-                updatedItemsAndRecordsByID[updatedRecord.id] = (existingItem, updatedRecord)
-                
                 existingItem.data.text <- updatedRecord.text
                 existingItem.data.state <- updatedRecord.state
                 existingItem.data.tag <- updatedRecord.tag
+                
+                arrayOfItemRootIDPosition.append((existingItem,
+                                                  updatedRecord.rootID,
+                                                  updatedRecord.position))
             }
             else
             {
                 let newItem = Item(record: updatedRecord)
-                
-                updatedItemsAndRecordsByID[updatedRecord.id] = (newItem, updatedRecord)
-                
                 itemHash.add([newItem])
+                
+                arrayOfItemRootIDPosition.append((newItem,
+                                                  updatedRecord.rootID,
+                                                  updatedRecord.position))
             }
         }
         
         // connect items
         
-        let updatedItemsAndRecordsSortedByPosition = updatedItemsAndRecordsByID.values.sorted
-        {
-            $0.1.position < $1.1.position
-        }
+        updateItemsWithNewRootAndPosition(arrayOfItemRootIDPosition)
+    }
+    
+    private func updateItemsWithNewRootAndPosition(_ array: [(Item, String?, Int)])
+    {
+        let sortedByPosition = array.sorted { $0.2 < $1.2 }
         
-        for (item, record) in updatedItemsAndRecordsSortedByPosition
+        for (item, rootID, position) in sortedByPosition
         {
-            insert(item, intoRootWithID: record.rootID, at: record.position)
+            update(item, withNewRootID: rootID, newPosition: position)
         }
     }
     
-    private func insert(_ item: Item, intoRootWithID rootID: String?, at position: Int)
+    private func update(_ item: Item,
+                        withNewRootID rootID: String?,
+                        newPosition position: Int)
     {
         // move to new root if neccessary
         
