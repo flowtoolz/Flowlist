@@ -19,46 +19,53 @@ extension Store
     
     // MARK: - Update Items
     
-    private func updateItems(with records: [Record])
+    private func updateItems(with updatedRecords: [Record])
     {
+        var updatedItemsAndRecordsByID = [String: (Item, Record)]()
+        
         // ensure items are in hash map and have updated data
         
-        for record in records
+        for updatedRecord in updatedRecords
         {
-            if let item = itemHash[record.id]
+            if let existingItem = itemHash[updatedRecord.id]
             {
-                item.data.text <- record.text
-                item.data.state <- record.state
-                item.data.tag <- record.tag
+                updatedItemsAndRecordsByID[updatedRecord.id] = (existingItem, updatedRecord)
+                
+                existingItem.data.text <- updatedRecord.text
+                existingItem.data.state <- updatedRecord.state
+                existingItem.data.tag <- updatedRecord.tag
             }
             else
             {
-                itemHash.add([Item(record: record)])
+                let newItem = Item(record: updatedRecord)
+                
+                updatedItemsAndRecordsByID[updatedRecord.id] = (newItem, updatedRecord)
+                
+                itemHash.add([newItem])
             }
         }
         
         // connect items
         
-        for record in records.sorted(by: { $0.position < $1.position })
+        let updatedItemsAndRecordsSortedByPosition = updatedItemsAndRecordsByID.values.sorted
         {
-            guard let item = itemHash[record.id] else
-            {
-                log(error: "Item not in hash map.")
-                continue
-            }
-            
-            updateRoot(of: item, with: record)
+            $0.1.position < $1.1.position
+        }
+        
+        for (item, record) in updatedItemsAndRecordsSortedByPosition
+        {
+            insert(item, intoRootWithID: record.rootID, at: record.position)
         }
     }
     
-    private func updateRoot(of item: Item, with record: Record)
+    private func insert(_ item: Item, intoRootWithID rootID: String?, at position: Int)
     {
         // move to new root if neccessary
         
         // TODO: catch errors...nil root etc
         if let oldRoot = item.root,
             let oldIndex = oldRoot.index(of: item),
-            let newRootID = record.rootID,
+            let newRootID = rootID,
             newRootID != oldRoot.data.id,
             let newRoot = itemHash[newRootID]
         {
@@ -71,8 +78,7 @@ extension Store
         if let itemRoot = item.root,
             let oldPosition = itemRoot.index(of: item)
         {
-            let newPosition = min(itemRoot.numberOfLeafs,
-                                  record.position)
+            let newPosition = min(itemRoot.numberOfLeafs, position)
             
             if oldPosition != newPosition
             {
