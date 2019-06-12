@@ -38,12 +38,7 @@ class ItemICloudDatabase: Observer, CustomObservable
         return db.deleteCKRecords(ofType: CKRecord.itemType, inZone: .item)
     }
     
-    // MARK: - Fetch
-    
-    func fetchChanges() -> Promise<ItemDatabaseChanges>
-    {
-        return db.fetchChanges(fromZone: .item).map(ItemDatabaseChanges.init)
-    }
+    // MARK: - Fetch Records
     
     func fetchItemCKRecords() -> Promise<[CKRecord]>
     {
@@ -57,6 +52,17 @@ class ItemICloudDatabase: Observer, CustomObservable
         
         return db.fetchCKRecords(with: query, inZone: .item)
     }
+    
+    // MARK: - Fetch Changes
+    
+    func fetchChanges() -> Promise<ItemDatabaseChanges>
+    {
+        return db.fetchChanges(fromZone: .item).map(ItemDatabaseChanges.init)
+    }
+    
+    var hasChangeToken: Bool { return db.hasServerChangeToken }
+    
+    func deleteChangeToken() { db.deleteServerChangeToken() }
     
     // MARK: - Ensure Access
     

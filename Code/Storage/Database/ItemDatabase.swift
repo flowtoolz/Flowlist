@@ -3,17 +3,20 @@ import PromiseKit
 
 protocol ItemDatabase
 {
-    func reset(root: Item?) -> Promise<Void>
-    func apply(_ edit: Edit) -> Promise<Void>
-    
-    func fetchRecords() -> Promise<[Record]>
-    func fetchChanges() -> Promise<ItemDatabaseChanges>
-    
-    var messenger: Messenger<ItemDatabaseUpdate> { get }
-    
     func ensureAccess() -> Promise<Void>
     var isCheckingAccess: Bool { get }
     var didEnsureAccess: Bool { get }
+    
+    func fetchRecords() -> Promise<[Record]>
+    
+    func fetchChanges() -> Promise<ItemDatabaseChanges>
+    var hasChangeToken: Bool { get }
+    func deleteChangeToken()
+    
+    func reset(root: Item?) -> Promise<Void>
+    func apply(_ edit: Edit) -> Promise<Void>
+    
+    var messenger: Messenger<ItemDatabaseUpdate> { get }
 }
 
 enum ItemDatabaseUpdate { case mayHaveChanged }
