@@ -57,18 +57,19 @@ extension Store
     {
         let sortedByPosition = array.sorted { $0.2 < $1.2 }
         
-        for (item, rootID, position) in sortedByPosition
+        for (item, rootID, _) in sortedByPosition
         {
-            update(item, withNewRootID: rootID, newPosition: position)
+            move(item, toNewRootID: rootID)
+        }
+        
+        for (item, _, position) in sortedByPosition
+        {
+            move(item, toNewPosition: position)
         }
     }
     
-    private func update(_ item: Item,
-                        withNewRootID rootID: String?,
-                        newPosition position: Int)
+    private func move(_ item: Item, toNewRootID rootID: String?)
     {
-        // move to new root if neccessary
-        
         // TODO: catch errors...nil root etc
         if let oldRoot = item.root,
             let oldIndex = oldRoot.index(of: item),
@@ -77,11 +78,12 @@ extension Store
             let newRoot = itemHash[newRootID]
         {
             oldRoot.removeNodes(from: [oldIndex])
-            newRoot.insert(item, at: 0)
+            newRoot.add(item)
         }
-        
-        // move to new position if necessary
-        
+    }
+    
+    private func move(_ item: Item, toNewPosition position: Int)
+    {
         if let itemRoot = item.root,
             let oldPosition = itemRoot.index(of: item)
         {
