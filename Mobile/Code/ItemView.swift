@@ -1,6 +1,7 @@
 import SwiftUI
 import Combine
 import SwiftObserver
+import FlowlistKit
 
 #if DEBUG
 struct ItemView_Previews : PreviewProvider {

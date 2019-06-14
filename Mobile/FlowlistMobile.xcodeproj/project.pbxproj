@@ -11,7 +11,6 @@
 		9E0850D822AEE4E100FCC68B /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0850D722AEE4E100FCC68B /* TodoList.swift */; };
 		9E31317722A71CFF001C5A7A /* ItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31317622A71CFF001C5A7A /* ItemListView.swift */; };
 		9E31317A22A721A1001C5A7A /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31317922A721A1001C5A7A /* ItemView.swift */; };
-		9E31317C22A73473001C5A7A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E31317B22A73473001C5A7A /* Item.swift */; };
 		9E39467822A7190100153367 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39467722A7190100153367 /* AppDelegate.swift */; };
 		9E39467A22A7190100153367 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39467922A7190100153367 /* SceneDelegate.swift */; };
 		9E39467C22A7190100153367 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39467B22A7190100153367 /* RootView.swift */; };
@@ -21,6 +20,7 @@
 		9E39468F22A7190200153367 /* FlowlistMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39468E22A7190200153367 /* FlowlistMobileTests.swift */; };
 		9E39469A22A7190200153367 /* FlowlistUniversalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39469922A7190200153367 /* FlowlistUniversalUITests.swift */; };
 		9E7195A222A8618600381BB5 /* SwiftObserver in Frameworks */ = {isa = PBXBuildFile; productRef = 9E7195A122A8618600381BB5 /* SwiftObserver */; };
+		9EABE66222B4534D0023A6DF /* FlowlistKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9EABE66122B4534D0023A6DF /* FlowlistKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +45,6 @@
 		9E0850D722AEE4E100FCC68B /* TodoList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
 		9E31317622A71CFF001C5A7A /* ItemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListView.swift; sourceTree = "<group>"; };
 		9E31317922A721A1001C5A7A /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
-		9E31317B22A73473001C5A7A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		9E39467422A7190100153367 /* FlowlistMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowlistMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E39467722A7190100153367 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E39467922A7190100153367 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +59,7 @@
 		9E39469522A7190200153367 /* FlowlistMobileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowlistMobileUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E39469922A7190200153367 /* FlowlistUniversalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowlistUniversalUITests.swift; sourceTree = "<group>"; };
 		9E39469B22A7190200153367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9EABE65F22B4528D0023A6DF /* FlowlistKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FlowlistKit; path = ../../Code/FlowlistKit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +68,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E7195A222A8618600381BB5 /* SwiftObserver in Frameworks */,
+				9EABE66222B4534D0023A6DF /* FlowlistKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +116,7 @@
 				9E39468D22A7190200153367 /* FlowlistMobileTests */,
 				9E39469822A7190200153367 /* FlowlistMobileUITests */,
 				9E39467522A7190100153367 /* Products */,
+				9EABE66022B4534D0023A6DF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,13 +133,13 @@
 		9E39467622A7190100153367 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				9EABE65F22B4528D0023A6DF /* FlowlistKit */,
 				9E39467722A7190100153367 /* AppDelegate.swift */,
 				9E39467922A7190100153367 /* SceneDelegate.swift */,
 				9E39467B22A7190100153367 /* RootView.swift */,
 				9E31317622A71CFF001C5A7A /* ItemListView.swift */,
 				9E0850D522AEC7F300FCC68B /* Array+IndexSet.swift */,
 				9E31317922A721A1001C5A7A /* ItemView.swift */,
-				9E31317B22A73473001C5A7A /* Item.swift */,
 				9E0850D922AEE5FE00FCC68B /* SwiftUI Examples */,
 			);
 			path = Code;
@@ -169,6 +171,13 @@
 			path = FlowlistMobileUITests;
 			sourceTree = "<group>";
 		};
+		9EABE66022B4534D0023A6DF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -187,6 +196,7 @@
 			name = FlowlistMobile;
 			packageProductDependencies = (
 				9E7195A122A8618600381BB5 /* SwiftObserver */,
+				9EABE66122B4534D0023A6DF /* FlowlistKit */,
 			);
 			productName = FlowlistUniversal;
 			productReference = 9E39467422A7190100153367 /* FlowlistMobile.app */;
@@ -308,7 +318,6 @@
 			files = (
 				9E31317722A71CFF001C5A7A /* ItemListView.swift in Sources */,
 				9E39467822A7190100153367 /* AppDelegate.swift in Sources */,
-				9E31317C22A73473001C5A7A /* Item.swift in Sources */,
 				9E0850D822AEE4E100FCC68B /* TodoList.swift in Sources */,
 				9E39467A22A7190100153367 /* SceneDelegate.swift in Sources */,
 				9E0850D622AEC7F300FCC68B /* Array+IndexSet.swift in Sources */,
@@ -655,6 +664,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9E7195A022A8618600381BB5 /* XCRemoteSwiftPackageReference "SwiftObserver" */;
 			productName = SwiftObserver;
+		};
+		9EABE66122B4534D0023A6DF /* FlowlistKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FlowlistKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
