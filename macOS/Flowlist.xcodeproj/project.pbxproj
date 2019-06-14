@@ -316,6 +316,23 @@
 			path = CloudKit;
 			sourceTree = "<group>";
 		};
+		9E7B876422B44EC20012FF48 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				9EA5A89F218ED324004902F7 /* AppKit */,
+				9EA5A886218EC5E3004902F7 /* Menu */,
+				9EA5A8A4218ED837004902F7 /* Purchase */,
+				9EA5A88E218ECA2C004902F7 /* Export */,
+				9EA5A887218EC703004902F7 /* Browser */,
+				9EA5A88A218EC885004902F7 /* List */,
+				9EA5A891218ECB1C004902F7 /* Storage */,
+				9EA5A8A1218ED38B004902F7 /* Item */,
+				9EA5A8A8218ED8DE004902F7 /* Style */,
+				9EA5A8AA218ED9A9004902F7 /* Framework-Candidates */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
 		9E82C09421AAE56100152CB3 /* ItemICloudDatabase */ = {
 			isa = PBXGroup;
 			children = (
@@ -338,16 +355,7 @@
 		9EA5A884218EC546004902F7 /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				9EA5A89F218ED324004902F7 /* AppKit */,
-				9EA5A886218EC5E3004902F7 /* Menu */,
-				9EA5A8A4218ED837004902F7 /* Purchase */,
-				9EA5A88E218ECA2C004902F7 /* Export */,
-				9EA5A887218EC703004902F7 /* Browser */,
-				9EA5A88A218EC885004902F7 /* List */,
-				9EA5A891218ECB1C004902F7 /* Storage */,
-				9EA5A8A1218ED38B004902F7 /* Item */,
-				9EA5A8A8218ED8DE004902F7 /* Style */,
-				9EA5A8AA218ED9A9004902F7 /* Framework-Candidates */,
+				9E7B876422B44EC20012FF48 /* macOS */,
 			);
 			name = Code;
 			path = ../Code;
