@@ -18,7 +18,7 @@
 		9E39467E22A7190200153367 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E39467D22A7190200153367 /* Assets.xcassets */; };
 		9E39468122A7190200153367 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E39468022A7190200153367 /* Preview Assets.xcassets */; };
 		9E39468422A7190200153367 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E39468222A7190200153367 /* LaunchScreen.storyboard */; };
-		9E39468F22A7190200153367 /* FlowlistUniversalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39468E22A7190200153367 /* FlowlistUniversalTests.swift */; };
+		9E39468F22A7190200153367 /* FlowlistMobileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39468E22A7190200153367 /* FlowlistMobileTests.swift */; };
 		9E39469A22A7190200153367 /* FlowlistUniversalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E39469922A7190200153367 /* FlowlistUniversalUITests.swift */; };
 		9E7195A222A8618600381BB5 /* SwiftObserver in Frameworks */ = {isa = PBXBuildFile; productRef = 9E7195A122A8618600381BB5 /* SwiftObserver */; };
 /* End PBXBuildFile section */
@@ -46,7 +46,7 @@
 		9E31317622A71CFF001C5A7A /* ItemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListView.swift; sourceTree = "<group>"; };
 		9E31317922A721A1001C5A7A /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		9E31317B22A73473001C5A7A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		9E39467422A7190100153367 /* FlowlistUniversal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowlistUniversal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E39467422A7190100153367 /* FlowlistMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowlistMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E39467722A7190100153367 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E39467922A7190100153367 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9E39467B22A7190100153367 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -54,10 +54,10 @@
 		9E39468022A7190200153367 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9E39468322A7190200153367 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9E39468522A7190200153367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9E39468A22A7190200153367 /* FlowlistUniversalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowlistUniversalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9E39468E22A7190200153367 /* FlowlistUniversalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowlistUniversalTests.swift; sourceTree = "<group>"; };
+		9E39468A22A7190200153367 /* FlowlistMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowlistMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E39468E22A7190200153367 /* FlowlistMobileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowlistMobileTests.swift; sourceTree = "<group>"; };
 		9E39469022A7190200153367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9E39469522A7190200153367 /* FlowlistUniversalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowlistUniversalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E39469522A7190200153367 /* FlowlistMobileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowlistMobileUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E39469922A7190200153367 /* FlowlistUniversalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowlistUniversalUITests.swift; sourceTree = "<group>"; };
 		9E39469B22A7190200153367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,8 +112,8 @@
 			children = (
 				9E39467622A7190100153367 /* Code */,
 				9E31317822A71D1F001C5A7A /* Resources */,
-				9E39468D22A7190200153367 /* FlowlistUniversalTests */,
-				9E39469822A7190200153367 /* FlowlistUniversalUITests */,
+				9E39468D22A7190200153367 /* FlowlistMobileTests */,
+				9E39469822A7190200153367 /* FlowlistMobileUITests */,
 				9E39467522A7190100153367 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -121,9 +121,9 @@
 		9E39467522A7190100153367 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9E39467422A7190100153367 /* FlowlistUniversal.app */,
-				9E39468A22A7190200153367 /* FlowlistUniversalTests.xctest */,
-				9E39469522A7190200153367 /* FlowlistUniversalUITests.xctest */,
+				9E39467422A7190100153367 /* FlowlistMobile.app */,
+				9E39468A22A7190200153367 /* FlowlistMobileTests.xctest */,
+				9E39469522A7190200153367 /* FlowlistMobileUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,30 +151,30 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		9E39468D22A7190200153367 /* FlowlistUniversalTests */ = {
+		9E39468D22A7190200153367 /* FlowlistMobileTests */ = {
 			isa = PBXGroup;
 			children = (
-				9E39468E22A7190200153367 /* FlowlistUniversalTests.swift */,
+				9E39468E22A7190200153367 /* FlowlistMobileTests.swift */,
 				9E39469022A7190200153367 /* Info.plist */,
 			);
-			path = FlowlistUniversalTests;
+			path = FlowlistMobileTests;
 			sourceTree = "<group>";
 		};
-		9E39469822A7190200153367 /* FlowlistUniversalUITests */ = {
+		9E39469822A7190200153367 /* FlowlistMobileUITests */ = {
 			isa = PBXGroup;
 			children = (
 				9E39469922A7190200153367 /* FlowlistUniversalUITests.swift */,
 				9E39469B22A7190200153367 /* Info.plist */,
 			);
-			path = FlowlistUniversalUITests;
+			path = FlowlistMobileUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9E39467322A7190100153367 /* FlowlistUniversal */ = {
+		9E39467322A7190100153367 /* FlowlistMobile */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9E39469E22A7190200153367 /* Build configuration list for PBXNativeTarget "FlowlistUniversal" */;
+			buildConfigurationList = 9E39469E22A7190200153367 /* Build configuration list for PBXNativeTarget "FlowlistMobile" */;
 			buildPhases = (
 				9E39467022A7190100153367 /* Sources */,
 				9E39467122A7190100153367 /* Frameworks */,
@@ -184,17 +184,17 @@
 			);
 			dependencies = (
 			);
-			name = FlowlistUniversal;
+			name = FlowlistMobile;
 			packageProductDependencies = (
 				9E7195A122A8618600381BB5 /* SwiftObserver */,
 			);
 			productName = FlowlistUniversal;
-			productReference = 9E39467422A7190100153367 /* FlowlistUniversal.app */;
+			productReference = 9E39467422A7190100153367 /* FlowlistMobile.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9E39468922A7190200153367 /* FlowlistUniversalTests */ = {
+		9E39468922A7190200153367 /* FlowlistMobileTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9E3946A122A7190200153367 /* Build configuration list for PBXNativeTarget "FlowlistUniversalTests" */;
+			buildConfigurationList = 9E3946A122A7190200153367 /* Build configuration list for PBXNativeTarget "FlowlistMobileTests" */;
 			buildPhases = (
 				9E39468622A7190200153367 /* Sources */,
 				9E39468722A7190200153367 /* Frameworks */,
@@ -205,14 +205,14 @@
 			dependencies = (
 				9E39468C22A7190200153367 /* PBXTargetDependency */,
 			);
-			name = FlowlistUniversalTests;
+			name = FlowlistMobileTests;
 			productName = FlowlistUniversalTests;
-			productReference = 9E39468A22A7190200153367 /* FlowlistUniversalTests.xctest */;
+			productReference = 9E39468A22A7190200153367 /* FlowlistMobileTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		9E39469422A7190200153367 /* FlowlistUniversalUITests */ = {
+		9E39469422A7190200153367 /* FlowlistMobileUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9E3946A422A7190200153367 /* Build configuration list for PBXNativeTarget "FlowlistUniversalUITests" */;
+			buildConfigurationList = 9E3946A422A7190200153367 /* Build configuration list for PBXNativeTarget "FlowlistMobileUITests" */;
 			buildPhases = (
 				9E39469122A7190200153367 /* Sources */,
 				9E39469222A7190200153367 /* Frameworks */,
@@ -223,9 +223,9 @@
 			dependencies = (
 				9E39469722A7190200153367 /* PBXTargetDependency */,
 			);
-			name = FlowlistUniversalUITests;
+			name = FlowlistMobileUITests;
 			productName = FlowlistUniversalUITests;
-			productReference = 9E39469522A7190200153367 /* FlowlistUniversalUITests.xctest */;
+			productReference = 9E39469522A7190200153367 /* FlowlistMobileUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -251,7 +251,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9E39466F22A7190100153367 /* Build configuration list for PBXProject "FlowlistUniversal" */;
+			buildConfigurationList = 9E39466F22A7190100153367 /* Build configuration list for PBXProject "FlowlistMobile" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -267,9 +267,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9E39467322A7190100153367 /* FlowlistUniversal */,
-				9E39468922A7190200153367 /* FlowlistUniversalTests */,
-				9E39469422A7190200153367 /* FlowlistUniversalUITests */,
+				9E39467322A7190100153367 /* FlowlistMobile */,
+				9E39468922A7190200153367 /* FlowlistMobileTests */,
+				9E39469422A7190200153367 /* FlowlistMobileUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -321,7 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E39468F22A7190200153367 /* FlowlistUniversalTests.swift in Sources */,
+				9E39468F22A7190200153367 /* FlowlistMobileTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,12 +338,12 @@
 /* Begin PBXTargetDependency section */
 		9E39468C22A7190200153367 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9E39467322A7190100153367 /* FlowlistUniversal */;
+			target = 9E39467322A7190100153367 /* FlowlistMobile */;
 			targetProxy = 9E39468B22A7190200153367 /* PBXContainerItemProxy */;
 		};
 		9E39469722A7190200153367 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9E39467322A7190100153367 /* FlowlistUniversal */;
+			target = 9E39467322A7190100153367 /* FlowlistMobile */;
 			targetProxy = 9E39469622A7190200153367 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -417,6 +417,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -470,6 +471,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -487,7 +489,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.FlowlistUniversal;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.FlowlistMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -507,7 +509,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.FlowlistUniversal;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.FlowlistMobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -521,17 +523,17 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
-				INFOPLIST_FILE = FlowlistUniversalTests/Info.plist;
+				INFOPLIST_FILE = FlowlistMobileTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.FlowlistUniversalTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.FlowlistMobileTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlowlistUniversal.app/FlowlistUniversal";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlowlistMobile.app/FlowlistMobile";
 			};
 			name = Debug;
 		};
@@ -542,17 +544,17 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
-				INFOPLIST_FILE = FlowlistUniversalTests/Info.plist;
+				INFOPLIST_FILE = FlowlistMobileTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.FlowlistUniversalTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.FlowlistMobileTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlowlistUniversal.app/FlowlistUniversal";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FlowlistMobile.app/FlowlistMobile";
 			};
 			name = Release;
 		};
@@ -599,7 +601,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9E39466F22A7190100153367 /* Build configuration list for PBXProject "FlowlistUniversal" */ = {
+		9E39466F22A7190100153367 /* Build configuration list for PBXProject "FlowlistMobile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9E39469C22A7190200153367 /* Debug */,
@@ -608,7 +610,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9E39469E22A7190200153367 /* Build configuration list for PBXNativeTarget "FlowlistUniversal" */ = {
+		9E39469E22A7190200153367 /* Build configuration list for PBXNativeTarget "FlowlistMobile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9E39469F22A7190200153367 /* Debug */,
@@ -617,7 +619,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9E3946A122A7190200153367 /* Build configuration list for PBXNativeTarget "FlowlistUniversalTests" */ = {
+		9E3946A122A7190200153367 /* Build configuration list for PBXNativeTarget "FlowlistMobileTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9E3946A222A7190200153367 /* Debug */,
@@ -626,7 +628,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9E3946A422A7190200153367 /* Build configuration list for PBXNativeTarget "FlowlistUniversalUITests" */ = {
+		9E3946A422A7190200153367 /* Build configuration list for PBXNativeTarget "FlowlistMobileUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9E3946A522A7190200153367 /* Debug */,
