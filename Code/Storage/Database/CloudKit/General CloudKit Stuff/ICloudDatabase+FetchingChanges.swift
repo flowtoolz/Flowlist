@@ -21,9 +21,14 @@ extension ICloudDatabase
                 if let error = error
                 {
                     log(error: error.ckReadable.message)
+                    
+                    // if this failed, it's unclear whether we've "used up" the change token, so we have to resync completely
+                    self.serverChangeToken = nil
                 }
-                
-                self.serverChangeToken = changes?.serverChangeToken
+                else
+                {
+                    self.serverChangeToken = changes?.serverChangeToken
+                }
                 
                 resolver.resolve(changes, error?.ckReadable)
             }
@@ -91,9 +96,12 @@ private extension CKFetchRecordZoneChangesOperation
             record in changes.changedCKRecords.append(record)
         }
         
-        recordWithIDWasDeletedBlock =
+        if token != nil // don't report past deletions when fetching changes for the first time
         {
-            id, _ in changes.idsOfDeletedCKRecords.append(id)
+            recordWithIDWasDeletedBlock =
+            {
+                id, _ in changes.idsOfDeletedCKRecords.append(id)
+            }
         }
         
         recordZoneChangeTokensUpdatedBlock =

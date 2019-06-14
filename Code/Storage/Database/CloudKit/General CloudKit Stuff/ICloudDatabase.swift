@@ -343,29 +343,27 @@ class ICloudDatabase: CustomObservable
         {
             self.container.fetchAccountStatus()
         }
-        .then(on: globalQ)
+        .map(on: globalQ)
         {
-            status -> Promise<Void> in
+            status -> Void in
             
-            var message = ""
-            
-            switch status
+            let errorMessage: String? =
             {
-            case .couldNotDetermine:
-                message = "Could not determine iCloud account status."
-            case .available:
-                return Promise()
-            case .restricted:
-                message = "iCloud account is restricted."
-            case .noAccount:
-                message = "Cannot access the iCloud account."
-            @unknown default:
-                message = "Unknown account status."
+                switch status
+                {
+                case .couldNotDetermine: return "Could not determine iCloud account status."
+                case .available: return nil
+                case .restricted: return "iCloud account is restricted."
+                case .noAccount: return "Cannot access the iCloud account."
+                @unknown default: return "Unknown account status."
+                }
+            }()
+            
+            if let errorMessage = errorMessage
+            {
+                log(error: errorMessage)
+                throw ReadableError.message(errorMessage)
             }
-            
-            log(error: message)
-            
-            return Promise(error: ReadableError.message(message))
         }
     }
     

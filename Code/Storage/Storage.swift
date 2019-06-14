@@ -37,8 +37,7 @@ class Storage: Observer
             }
             .then
             {
-                // TODO: fetching all items won't allow to detect where data changed since last sync, but fetching only updates won't suffice for initial sync or complete resync. we need a sync func that combines both...
-                self.syncStoreAndDatabaseFetchingAllItems()
+                self.syncStoreAndDatabase()
             }
             .catch(abortIntendingToSync)
         }
@@ -77,7 +76,7 @@ class Storage: Observer
         .done(on: self.backgroundQ)
         {
             log(warning: "DB account status changed while we were in sync but now we still (or again?) do have access. This is a weird situation. To be totally sure we didn't miss out on db updates, we're gonna resync everything.")
-            self.syncStoreAndDatabaseFetchingOnlyChanges().catch(self.abortIntendingToSync)
+            self.syncStoreAndDatabaseBasedOnChangeToken().catch(self.abortIntendingToSync)
         }
         .catch
         {
@@ -208,7 +207,7 @@ class Storage: Observer
         }
         .done(on: backgroundQ)
         {
-            self.syncStoreAndDatabaseFetchingOnlyChanges().catch(self.abortIntendingToSync)
+            self.syncStoreAndDatabaseBasedOnChangeToken().catch(self.abortIntendingToSync)
         }
         .catch
         {
@@ -236,7 +235,7 @@ class Storage: Observer
         }
         .then(on: backgroundQ)
         {
-            self.syncStoreAndDatabaseFetchingAllItems()
+            self.syncStoreAndDatabaseWithoutChangeToken()
         }
         .done(on: backgroundQ)
         {
@@ -247,7 +246,19 @@ class Storage: Observer
     
     // MARK: - Ensure Store and DB Are in Sync
     
-    private func syncStoreAndDatabaseFetchingOnlyChanges() -> Promise<Void>
+    private func syncStoreAndDatabase() -> Promise<Void>
+    {
+        if database.hasChangeToken
+        {
+            return self.syncStoreAndDatabaseBasedOnChangeToken()
+        }
+        else
+        {
+            return self.syncStoreAndDatabaseWithoutChangeToken()
+        }
+    }
+    
+    private func syncStoreAndDatabaseBasedOnChangeToken() -> Promise<Void>
     {
         guard Store.shared.root != nil else
         {
@@ -260,9 +271,9 @@ class Storage: Observer
         }
         .then(on: backgroundQ)
         {
-            (databaseChanges: ItemDatabaseChanges) -> Promise<Void> in
-           
-            if !databaseChanges.hasChanges
+            (dbChanges: ItemDatabaseChanges) -> Promise<Void> in
+            
+            if !dbChanges.hasChanges
             {
                 // database did not change
                 
@@ -270,19 +281,21 @@ class Storage: Observer
                 {
                     // ... but store did change (like after editing offline)
                     
+                    // TODO: we should persist a local cash of changed unsynced records, so we don't have to reset the whole db at this point
                     return self.database.reset(root: Store.shared.root)
                 }
                 else
                 {
                     // neither db nor local store have changed. we're done.
                     
-                    // TODO: should we reset db or Store here to be totally sure? If so, we could just always retrieve the whole tree from the db and then would compare if they are identical at this point ...
                     return Promise()
                 }
             }
             else
             {
-                guard !databaseChanges.thisAppDidTheChanges else { return Promise() }
+                // database did change
+                
+                if dbChanges.thisAppDidTheChanges { return Promise() }
                 
                 // some other Flowlist installation did change the database
                 
@@ -290,7 +303,7 @@ class Storage: Observer
                 {
                     // ... but the local store did not change (like after coming back from other device)
                     
-                    self.applyDatabaseChangesToStore(databaseChanges)
+                    self.applyDatabaseChangesToStore(dbChanges)
                     
                     return Promise()
                 }
@@ -324,7 +337,7 @@ class Storage: Observer
         }
     }
     
-    private func syncStoreAndDatabaseFetchingAllItems() -> Promise<Void>
+    private func syncStoreAndDatabaseWithoutChangeToken() -> Promise<Void>
     {
         guard Store.shared.root != nil else
         {
@@ -333,9 +346,13 @@ class Storage: Observer
         
         return firstly
         {
-            fetchWholeTreeFromDatabase()
+            database.fetchChanges()
         }
-        .then(on: backgroundQ)
+        .map
+        {
+            self.getTreeRoot(fromFetchedRecords: $0.modifiedRecords)
+        }
+        .then
         {
             dbRoot -> Promise<Void> in
             
@@ -355,9 +372,9 @@ class Storage: Observer
                 return Promise()
             }
             
-            // FIXME: we would need to detect whether one of both places did NOT change since we last were in sync. for 2 cases: 1) we come back to this device after exclusively editing on another. and 2) we come back online after exclusively editing on this device.
+            // conflicting trees -> ask user
             
-            // conflicting changes -> ask user
+            // TODO: are there simple cases where we can safely say the differences are not in conflict? -> apply db changes locally AND then write local tree (or preferrably only the local changes) to db
             
             return firstly
             {
@@ -393,17 +410,28 @@ class Storage: Observer
         
         return firstly
         {
-            fetchWholeTreeFromDatabase()
+            database.fetchRecords()
+        }
+        .map(on: backgroundQ)
+        {
+            self.getTreeRoot(fromFetchedRecords: $0)
         }
         .then(on: backgroundQ)
         {
             dbRoot -> Promise<Void> in
             
+            guard let storeRoot = Store.shared.root else
+            {
+                let errorMessage = "Did proceed into \(#function) while local store has no root item."
+                log(error: errorMessage)
+                throw ReadableError.message(errorMessage)
+            }
+            
             // no items in database -> reset db with store items
             
             guard let dbRoot = dbRoot else
             {
-                return self.database.reset(root: Store.shared.root)
+                return self.database.reset(root: storeRoot)
             }
             
             // store and db are identical -> no need to reset store
@@ -420,40 +448,44 @@ class Storage: Observer
         }
     }
     
-    private func fetchWholeTreeFromDatabase() -> Promise<Item?>
+    private func getTreeRoot(fromFetchedRecords records: [Record]) -> Item?
     {
-        return firstly
+        let treeResult = records.makeTrees()
+        
+        /* Do we really wanna clear the db just because this client only deals with 1 consistent tree?
+        // if database has detached items -> delete them.
+        // (detached items have a root that is not in the database.)
+        
+         if !treeResult.detachedRecords.isEmpty
+         {
+         let ids = treeResult.detachedRecords.map { $0.id }
+         
+         self.database.apply(.removeItems(withIDs: ids)).catch
+         {
+         log(error: $0.readable.message)
+         }
+         }
+         */
+        
+        // return tree
+        
+        if treeResult.trees.count > 1
         {
-            database.fetchRecords()
-        }
-        .map(on: backgroundQ)
-        {
-            records -> Item? in
-            
-            let treeResult = records.makeTrees()
-            
-            // if database has detached items -> delete them.
-            // (detached items have a root that is not in the database.)
-            
-            if !treeResult.detachedRecords.isEmpty
+            log(warning: "There are multiple trees in iCloud.")
+        
+            if let storeRootID = Store.shared.root?.data.id,
+                let matchingRoot = treeResult.trees.first(where: { $0.data.id == storeRootID })
             {
-                let ids = treeResult.detachedRecords.map { $0.id }
-                
-                self.database.apply(.removeItems(withIDs: ids)).catch
-                {
-                    log(error: $0.readable.message)
-                }
+                log("... We found a tree in iCloud whos root ID matches the local tree's root ID, so we're gonna use that tree.")
+                return matchingRoot
             }
             
-            // return largest tree
-            
-            if treeResult.trees.count > 1
-            {
-                // TODO: Merge those trees by creating a new root for them so that nothing gets lost in this weird situation ... or ask user
-                log(warning: "There are multiple trees in the database.")
-            }
-            
+            log("... We found no matching root ID in iCloud, so we're gonna use the largest tree from iCloud.")
             return treeResult.largestTree
+        }
+        else
+        {
+            return treeResult.trees.first
         }
     }
     

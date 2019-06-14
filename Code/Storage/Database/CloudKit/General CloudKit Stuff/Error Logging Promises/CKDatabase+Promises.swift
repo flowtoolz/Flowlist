@@ -83,7 +83,9 @@ extension CKDatabase
         {
             guard let record = $0.first else
             {
-                throw ReadableError.message("No user record found")
+                let errorMessage = "No user record found"
+                log(error: errorMessage)
+                throw ReadableError.message(errorMessage)
             }
             
             return record

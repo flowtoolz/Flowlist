@@ -1,4 +1,5 @@
 import SwiftObserver
+import SwiftyToolz
 import PromiseKit
 
 extension Dialog
@@ -19,7 +20,9 @@ extension Dialog
         {
             guard $0.options.count == 1, let option = $0.options.first else
             {
-                throw ReadableError.message("Unexpected # of answer options")
+                let errorMessage = "Unexpected # of answer options"
+                log(error: errorMessage)
+                throw ReadableError.message(errorMessage)
             }
             
             return option == iCloudOption
