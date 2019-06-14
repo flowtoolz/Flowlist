@@ -1,9 +1,7 @@
 import Foundation
 
 extension Array {
-    
-    mutating func move(from offsets: IndexSet,
-                       to destination: Index) {
+    mutating func move(from offsets: IndexSet, to destination: Index) {
         let removedElements = remove(from: offsets)
         let validDestination = Swift.min(destination, count)
         insert(contentsOf: removedElements, at: validDestination)
@@ -11,8 +9,8 @@ extension Array {
     
     @discardableResult
     mutating func remove(from offsets: IndexSet) -> [Element] {
-        return offsets.reversed().compactMap {
-            isValid(index: $0) ? remove(at: $0) : nil
-        }
+        offsets.reversed()
+            .compactMap { isValid(index: $0) ? remove(at: $0) : nil }
+            .reversed()
     }
 }
