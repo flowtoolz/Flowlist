@@ -59,7 +59,7 @@
 		9E39469522A7190200153367 /* FlowlistMobileUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowlistMobileUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E39469922A7190200153367 /* FlowlistUniversalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowlistUniversalUITests.swift; sourceTree = "<group>"; };
 		9E39469B22A7190200153367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9EABE65F22B4528D0023A6DF /* FlowlistKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FlowlistKit; path = ../../Code/FlowlistKit; sourceTree = "<group>"; };
+		9EABE65F22B4528D0023A6DF /* FlowlistKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FlowlistKit; path = ../Code/FlowlistKit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +111,8 @@
 		9E39466B22A7190100153367 = {
 			isa = PBXGroup;
 			children = (
-				9E39467622A7190100153367 /* Code */,
+				9EABE66422B459020023A6DF /* Mobile */,
+				9EABE65F22B4528D0023A6DF /* FlowlistKit */,
 				9E31317822A71D1F001C5A7A /* Resources */,
 				9E39468D22A7190200153367 /* FlowlistMobileTests */,
 				9E39469822A7190200153367 /* FlowlistMobileUITests */,
@@ -128,21 +129,6 @@
 				9E39469522A7190200153367 /* FlowlistMobileUITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		9E39467622A7190100153367 /* Code */ = {
-			isa = PBXGroup;
-			children = (
-				9EABE65F22B4528D0023A6DF /* FlowlistKit */,
-				9E39467722A7190100153367 /* AppDelegate.swift */,
-				9E39467922A7190100153367 /* SceneDelegate.swift */,
-				9E39467B22A7190100153367 /* RootView.swift */,
-				9E31317622A71CFF001C5A7A /* ItemListView.swift */,
-				9E0850D522AEC7F300FCC68B /* Array+IndexSet.swift */,
-				9E31317922A721A1001C5A7A /* ItemView.swift */,
-				9E0850D922AEE5FE00FCC68B /* SwiftUI Examples */,
-			);
-			path = Code;
 			sourceTree = "<group>";
 		};
 		9E39467F22A7190200153367 /* Preview Content */ = {
@@ -176,6 +162,21 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9EABE66422B459020023A6DF /* Mobile */ = {
+			isa = PBXGroup;
+			children = (
+				9E39467722A7190100153367 /* AppDelegate.swift */,
+				9E39467922A7190100153367 /* SceneDelegate.swift */,
+				9E39467B22A7190100153367 /* RootView.swift */,
+				9E31317622A71CFF001C5A7A /* ItemListView.swift */,
+				9E0850D522AEC7F300FCC68B /* Array+IndexSet.swift */,
+				9E31317922A721A1001C5A7A /* ItemView.swift */,
+				9E0850D922AEE5FE00FCC68B /* SwiftUI Examples */,
+			);
+			name = Mobile;
+			path = ../Code/Mobile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
