@@ -21,15 +21,15 @@ extension Store
     
     private func updateItems(with updatedRecords: [Record])
     {
-        let differingRecords = differingRecords(in: updatedRecords)
+        let differingRecs = differingRecords(in: updatedRecords)
         
-        guard !differingRecords.isEmpty else { return }
+        guard !differingRecs.isEmpty else { return }
         
         var arrayOfItemRootIDPosition = [(Item, String?, Int)]()
         
         // ensure items are in hash map and have updated data
         
-        for differingRecord in differingRecords
+        for differingRecord in differingRecs
         {
             if let existingItem = itemHash[differingRecord.id]
             {
