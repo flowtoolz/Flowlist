@@ -112,11 +112,6 @@ private extension CKFetchRecordZoneChangesOperation
                 return
             }
             
-            if clientToken != nil
-            {
-                changes.clientChangeToken = clientToken
-            }
-            
             if serverToken != nil
             {
                 changes.serverChangeToken = serverToken
@@ -137,11 +132,6 @@ private extension CKFetchRecordZoneChangesOperation
             {
                 log(error: error.ckReadable.message)
                 return
-            }
-            
-            if clientToken != nil
-            {
-                changes.clientChangeToken = clientToken
             }
             
             if serverToken != nil
@@ -171,6 +161,5 @@ extension ICloudDatabase
         var changedCKRecords = [CKRecord]()
         var idsOfDeletedCKRecords = [CKRecord.ID]()
         var serverChangeToken: CKServerChangeToken? = nil
-        var clientChangeToken: Data? = nil
     }
 }

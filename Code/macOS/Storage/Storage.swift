@@ -248,13 +248,12 @@ class Storage: Observer
             {
                 // database did change
                 
-                if dbChanges.thisAppDidTheChanges { return Promise() }
-                
-                // some other Flowlist installation did change the database
+                // TODO: if we had a way to detect that these are our own changes, we coud return Promise() her in that case
                 
                 if !self.hasUnsyncedLocalChanges.value
                 {
-                    // ... but the local store did not change (like after coming back from other device)
+                    // ... the local store did not change
+                    // like after working on other device or when we changed the db ourselves
                     
                     self.applyDatabaseChangesToStore(dbChanges)
                     

@@ -2,19 +2,9 @@ import CloudKit
 
 extension ItemDatabaseChanges
 {
-    init(_ ckChangeFetchResult: ICloudDatabase.Changes)
+    init(_ iCloudDatabaseChanges: ICloudDatabase.Changes)
     {
-        if let clientToken = ckChangeFetchResult.clientChangeToken,
-            let clientTokenString = String(data: clientToken, encoding: .utf8)
-        {
-            thisAppDidTheChanges = clientTokenString == appInstallationID
-        }
-        else
-        {
-            thisAppDidTheChanges = false
-        }
-        
-        idsOfDeletedRecords = ckChangeFetchResult.idsOfDeletedCKRecords.map { $0.recordName }
-        modifiedRecords = ckChangeFetchResult.changedCKRecords.map(Record.init)
+        idsOfDeletedRecords = iCloudDatabaseChanges.idsOfDeletedCKRecords.map { $0.recordName }
+        modifiedRecords = iCloudDatabaseChanges.changedCKRecords.map(Record.init)
     }
 }

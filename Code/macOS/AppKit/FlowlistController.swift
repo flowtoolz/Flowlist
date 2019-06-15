@@ -106,9 +106,7 @@ class FlowlistController: AppController
     func application(_ application: NSApplication,
                      didReceiveRemoteNotification userInfo: [String : Any])
     {
-        let database = StorageController.shared.database
-            
-        database.handlePushNotification(with: userInfo)
+        StorageController.shared.database.handlePushNotification(with: userInfo)
     }
     
     private func registerForICloudAccountChangeNotifications()

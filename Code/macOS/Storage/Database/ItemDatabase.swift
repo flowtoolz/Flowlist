@@ -22,6 +22,5 @@ struct ItemDatabaseChanges
 {
     let modifiedRecords: [Record]
     let idsOfDeletedRecords: [String]
-    let thisAppDidTheChanges: Bool
     var hasChanges: Bool { return modifiedRecords.count + idsOfDeletedRecords.count > 0 }
 }
