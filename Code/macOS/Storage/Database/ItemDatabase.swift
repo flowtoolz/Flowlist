@@ -11,6 +11,8 @@ protocol ItemDatabase
     func reset(root: Item?) -> Promise<Void>
     func apply(_ edit: Edit) -> Promise<Void>
     
+    var queue: DispatchQueue { get }
+    
     var messenger: Messenger<ItemDatabaseUpdate> { get }
 }
 

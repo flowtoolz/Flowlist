@@ -12,7 +12,7 @@ extension CKDatabase
         {
             performAndReturnCursor(query, inZone: zoneID, cursor: cursor)
         }
-        .then(on: globalQ)
+        .then(on: queue)
         {
             (records, newCursor) -> Promise<[CKRecord]> in
             
@@ -25,7 +25,7 @@ extension CKDatabase
             {
                 self.perform(query, inZone: zoneID, cursor: newCursor)
             }
-            .map(on: self.globalQ)
+            .map(on: self.queue)
             {
                 records + $0
             }
@@ -75,11 +75,11 @@ extension CKDatabase
         {
             CKContainer.default().fetchUserCKRecordID()
         }
-        .then(on: globalQ)
+        .then(on: queue)
         {
             self.fetchCKRecords(withIDs: [$0])
         }
-        .map(on: globalQ)
+        .map(on: queue)
         {
             guard let record = $0.first else
             {
@@ -168,10 +168,10 @@ extension CKDatabase
     {
         let retryTime = DispatchTime.now() + seconds
         
-        globalQ.asyncAfter(deadline: retryTime, execute: action)
+        queue.asyncAfter(deadline: retryTime, execute: action)
     }
     
-    var globalQ: DispatchQueue { return iCloudQueue }
+    var queue: DispatchQueue { return iCloudQueue }
 }
 
 private let iCloudQueue = DispatchQueue(label: "iCloud", qos: .userInitiated)

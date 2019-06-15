@@ -31,11 +31,11 @@ class ItemICloudDatabase: Observer, CustomObservable
             {
                 ensureAccess()
             }
-            .then(on: globalQ)
+            .then(on: queue)
             {
                 self.db.save(ckRecords)
             }
-            .done
+            .done(on: queue)
             {
                 resolver.fulfill_()
             }
@@ -59,11 +59,11 @@ class ItemICloudDatabase: Observer, CustomObservable
             {
                 ensureAccess()
             }
-            .then(on: globalQ)
+            .then(on: queue)
             {
                 self.db.deleteCKRecords(withIDs: ckRecordIDs)
             }
-            .done
+            .done(on: queue)
             {
                 resolver.fulfill_()
             }
@@ -85,11 +85,11 @@ class ItemICloudDatabase: Observer, CustomObservable
             {
                 ensureAccess()
             }
-            .then(on: globalQ)
+            .then(on: queue)
             {
                 self.db.deleteCKRecords(ofType: CKRecord.itemType, inZone: .item)
             }
-            .done
+            .done(on: queue)
             {
                 resolver.fulfill_()
             }
@@ -113,11 +113,11 @@ class ItemICloudDatabase: Observer, CustomObservable
             {
                 ensureAccess()
             }
-            .then(on: globalQ)
+            .then(on: queue)
             {
                 self.db.fetchCKRecords(ofType: CKRecord.itemType, inZone: .item)
             }
-            .done
+            .done(on: queue)
             {
                 resolver.fulfill($0)
             }
@@ -142,11 +142,11 @@ class ItemICloudDatabase: Observer, CustomObservable
             {
                 ensureAccess()
             }
-            .then(on: globalQ)
+            .then(on: queue)
             {
                 self.db.fetchCKRecords(with: query, inZone: .item)
             }
-            .done
+            .done(on: queue)
             {
                 resolver.fulfill($0)
             }
@@ -170,11 +170,11 @@ class ItemICloudDatabase: Observer, CustomObservable
             {
                 ensureAccess()
             }
-            .then(on: globalQ)
+            .then(on: queue)
             {
                 self.db.fetchChanges(fromZone: .item).map(ItemDatabaseChanges.init)
             }
-            .done
+            .done(on: queue)
             {
                 resolver.fulfill($0)
             }
@@ -208,20 +208,20 @@ class ItemICloudDatabase: Observer, CustomObservable
             {
                 self.db.checkAccountAccess()
             }
-            .then(on: globalQ)
+            .then(on: queue)
             {
                 self.ensureItemRecordZoneExists()
             }
-            .then(on: globalQ)
+            .then(on: queue)
             {
                 self.ensureSubscriptionExists()
             }
-            .done(on: globalQ)
+            .done(on: queue)
             {
                 self.didEnsureAccess = true
                 resolver.fulfill_()
             }
-            .ensure
+            .ensure(on: queue)
             {
                 self.ensuringAccessPromise = nil
             }
@@ -289,7 +289,7 @@ class ItemICloudDatabase: Observer, CustomObservable
         db.handlePushNotification(with: userInfo)
     }
     
-    var globalQ: DispatchQueue { return db.globalQ }
+    var queue: DispatchQueue { return db.queue }
     
     private let db = ICloudDatabase()
     

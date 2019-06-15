@@ -48,11 +48,11 @@ class ICloudDatabase: CustomObservable
         {
             fetchCKRecords(ofType: type, inZone: zoneID)
         }
-        .map(on: globalQ)
+        .map(on: queue)
         {
             $0.map { $0.recordID }
         }
-        .then(on: globalQ)
+        .then(on: queue)
         {
             self.deleteCKRecords(withIDs: $0)
         }
@@ -343,7 +343,7 @@ class ICloudDatabase: CustomObservable
         {
             self.container.fetchAccountStatus()
         }
-        .map(on: globalQ)
+        .map(on: queue)
         {
             status -> Void in
             
@@ -369,7 +369,7 @@ class ICloudDatabase: CustomObservable
     
     private let container = CKContainer.default()
     
-    var globalQ: DispatchQueue { return ckDatabase.globalQ }
+    var queue: DispatchQueue { return ckDatabase.queue }
     
     // MARK: - Observability
     

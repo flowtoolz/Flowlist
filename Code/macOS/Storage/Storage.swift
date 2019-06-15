@@ -56,7 +56,7 @@ class Storage: Observer
     {
         guard isIntendingToSync else { return }
     
-        syncStoreAndDatabase().catch(self.abortIntendingToSync)
+        syncStoreAndDatabase().catch(abortIntendingToSync)
     }
     
     // MARK: - Transmit Database Changes to Local Store
@@ -75,7 +75,7 @@ class Storage: Observer
         {
             database.fetchChanges()
         }
-        .done(on: backgroundQ)
+        .done(on: dbQueue)
         {
             self.applyDatabaseChangesToStore($0)
         }
@@ -183,9 +183,9 @@ class Storage: Observer
         
         firstly
         {
-            self.syncStoreAndDatabase()
+            syncStoreAndDatabase()
         }
-        .done(on: backgroundQ)
+        .done(on: dbQueue)
         {
             self.syncIntentionPersistentFlag.value = true
         }
@@ -222,7 +222,7 @@ class Storage: Observer
         {
             self.database.fetchChanges()
         }
-        .then(on: backgroundQ)
+        .then(on: dbQueue)
         {
             (dbChanges: ItemDatabaseChanges) -> Promise<Void> in
             
@@ -264,11 +264,13 @@ class Storage: Observer
                 {
                     // conflicting changes -> ask user
                     
+                    // TODO: are there simple cases where we can safely say the differences are not in conflict? -> apply db changes locally AND then write local tree (or preferrably only the local changes) to db
+                    
                     return firstly
                     {
                         Dialog.default.askWhetherToPreferICloud()
                     }
-                    .then(on: self.backgroundQ)
+                    .then(on: self.dbQueue)
                     {
                         (preferDatabase: Bool) -> Promise<Void> in
                         
@@ -301,11 +303,11 @@ class Storage: Observer
         {
             database.fetchChanges()
         }
-        .map
+        .map(on: dbQueue)
         {
             self.getTreeRoot(fromFetchedRecords: $0.modifiedRecords)
         }
-        .then
+        .then(on: dbQueue)
         {
             dbRoot -> Promise<Void> in
             
@@ -333,7 +335,7 @@ class Storage: Observer
             {
                 Dialog.default.askWhetherToPreferICloud()
             }
-            .then(on: self.backgroundQ)
+            .then(on: self.dbQueue)
             {
                 (preferDatabase: Bool) -> Promise<Void> in
                 
@@ -365,11 +367,11 @@ class Storage: Observer
         {
             database.fetchRecords()
         }
-        .map(on: backgroundQ)
+        .map(on: dbQueue)
         {
             self.getTreeRoot(fromFetchedRecords: $0)
         }
-        .then(on: backgroundQ)
+        .then(on: dbQueue)
         {
             dbRoot -> Promise<Void> in
             
@@ -486,11 +488,8 @@ class Storage: Observer
         file.save(tree)
     }
     
+    private var dbQueue: DispatchQueue { return database.queue }
+    
     let database: ItemDatabase
     let file: ItemFile
-    
-    private var backgroundQ: DispatchQueue
-    {
-        return DispatchQueue.global(qos: .userInitiated)
-    }
 }
