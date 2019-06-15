@@ -1,3 +1,5 @@
+// TODO: do this with property wrappers when we migrate to Swift 5.1 ... also add PersistentInt or make this generic somehow
+
 public struct PersistentString
 {
     init(_ key: String, default: String = "")

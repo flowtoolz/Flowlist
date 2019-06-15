@@ -9,8 +9,7 @@ class StorageController
     
     private init()
     {
-        Persistent.bool = UDBoolPersister()
-        Persistent.string = UDStringPersister()
+        Persistent.setupUsingUserDefaults()
         storage = Storage(with: file, database: database)
     }
     

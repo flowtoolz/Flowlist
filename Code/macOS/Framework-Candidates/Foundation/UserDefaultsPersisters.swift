@@ -1,5 +1,14 @@
 import Foundation
 
+extension Persistent
+{
+    static func setupUsingUserDefaults()
+    {
+        bool = UDBoolPersister()
+        string = UDStringPersister()
+    }
+}
+
 class UDBoolPersister: BoolPersisterInterface
 {
     subscript(_ key: String) -> Bool?
