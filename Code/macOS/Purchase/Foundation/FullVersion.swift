@@ -34,7 +34,7 @@ var isFullVersion: Bool
 
         return true
         
-        #endif
+        #else
         
         if let fullVersion = isFullVersion_Cached { return fullVersion }
         
@@ -43,6 +43,8 @@ var isFullVersion: Bool
         isFullVersion_Cached = fullVersion
         
         return fullVersion
+        
+        #endif
     }
     
     set
