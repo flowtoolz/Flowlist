@@ -29,6 +29,8 @@ extension Store
         {
             if let existingItem = itemHash[updatedRecord.id]
             {
+                guard !item(existingItem, isEquivalentTo: updatedRecord) else { continue }
+                
                 existingItem.data.text <- updatedRecord.text
                 existingItem.data.state <- updatedRecord.state
                 existingItem.data.tag <- updatedRecord.tag
@@ -51,6 +53,19 @@ extension Store
         // connect items
         
         updateItemsWithNewRootAndPosition(arrayOfItemRootIDPosition)
+    }
+    
+    private func item(_ item: Item, isEquivalentTo record: Record) -> Bool
+    {
+        let itemData = item.data
+        if itemData.id != record.id { return false }
+        if item.indexInRoot ?? 0 != record.position { return false }
+        if itemData.text.value != record.text { return false }
+        if itemData.tag.value != record.tag { return false }
+        if itemData.state.value != record.state { return false }
+        if item.root?.data.id != record.rootID { return false }
+        
+        return true
     }
     
     private func updateItemsWithNewRootAndPosition(_ array: [(Item, String?, Int)])
