@@ -23,26 +23,110 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     func save(_ ckRecords: [CKRecord]) -> Promise<Void>
     {
-        return db.save(ckRecords)
+        return Promise<Void>
+        {
+            resolver in
+            
+            firstly
+            {
+                ensureAccess()
+            }
+            .then(on: globalQ)
+            {
+                self.db.save(ckRecords)
+            }
+            .done
+            {
+                resolver.fulfill_()
+            }
+            .catch
+            {
+                self.didEnsureAccess = false
+                resolver.reject($0)
+            }
+        }
     }
     
     func removeRecords(with ids: [String]) -> Promise<Void>
     {
         let ckRecordIDs = ids.map(CKRecord.ID.init(itemID:))
         
-        return db.deleteCKRecords(withIDs: ckRecordIDs)
+        return Promise<Void>
+        {
+            resolver in
+            
+            firstly
+            {
+                ensureAccess()
+            }
+            .then(on: globalQ)
+            {
+                self.db.deleteCKRecords(withIDs: ckRecordIDs)
+            }
+            .done
+            {
+                resolver.fulfill_()
+            }
+            .catch
+            {
+                self.didEnsureAccess = false
+                resolver.reject($0)
+            }
+        }
     }
     
     func deleteRecords() -> Promise<Void>
     {
-        return db.deleteCKRecords(ofType: CKRecord.itemType, inZone: .item)
+        return Promise<Void>
+        {
+            resolver in
+            
+            firstly
+            {
+                ensureAccess()
+            }
+            .then(on: globalQ)
+            {
+                self.db.deleteCKRecords(ofType: CKRecord.itemType, inZone: .item)
+            }
+            .done
+            {
+                resolver.fulfill_()
+            }
+            .catch
+            {
+                self.didEnsureAccess = false
+                resolver.reject($0)
+            }
+        }
     }
     
     // MARK: - Fetch Records
     
     func fetchItemCKRecords() -> Promise<[CKRecord]>
     {
-        return db.fetchCKRecords(ofType: CKRecord.itemType, inZone: .item)
+        return Promise<[CKRecord]>
+        {
+            resolver in
+            
+            firstly
+            {
+                ensureAccess()
+            }
+            .then(on: globalQ)
+            {
+                self.db.fetchCKRecords(ofType: CKRecord.itemType, inZone: .item)
+            }
+            .done
+            {
+                resolver.fulfill($0)
+            }
+            .catch
+            {
+                self.didEnsureAccess = false
+                resolver.reject($0)
+            }
+        }
     }
     
     private func fetchSubitemCKRecords(ofItemWithID id: CKRecord.ID) -> Promise<[CKRecord]>
@@ -50,22 +134,66 @@ class ItemICloudDatabase: Observer, CustomObservable
         let predicate = NSPredicate(format: "superItem = %@", id)
         let query = CKQuery(recordType: CKRecord.itemType, predicate: predicate)
         
-        return db.fetchCKRecords(with: query, inZone: .item)
+        return Promise<[CKRecord]>
+        {
+            resolver in
+            
+            firstly
+            {
+                ensureAccess()
+            }
+            .then(on: globalQ)
+            {
+                self.db.fetchCKRecords(with: query, inZone: .item)
+            }
+            .done
+            {
+                resolver.fulfill($0)
+            }
+            .catch
+            {
+                self.didEnsureAccess = false
+                resolver.reject($0)
+            }
+        }
     }
     
     // MARK: - Fetch Changes
     
     func fetchChanges() -> Promise<ItemDatabaseChanges>
     {
-        return db.fetchChanges(fromZone: .item).map(ItemDatabaseChanges.init)
+        return Promise<ItemDatabaseChanges>
+        {
+            resolver in
+            
+            firstly
+            {
+                ensureAccess()
+            }
+            .then(on: globalQ)
+            {
+                self.db.fetchChanges(fromZone: .item).map(ItemDatabaseChanges.init)
+            }
+            .done
+            {
+                resolver.fulfill($0)
+            }
+            .catch
+            {
+                self.didEnsureAccess = false
+                resolver.reject($0)
+            }
+        }
     }
     
     var hasChangeToken: Bool { return db.hasServerChangeToken }
     
     // MARK: - Ensure Access
     
-    func ensureAccess() -> Promise<Void>
+    private func ensureAccess() -> Promise<Void>
     {
+        if didEnsureAccess { return Promise() }
+        
         if let currentlyRunningPromise = ensuringAccessPromise
         {
             log(warning: "Called \(#function) more than once in parallel. Gonna return the active promise.")
@@ -109,8 +237,7 @@ class ItemICloudDatabase: Observer, CustomObservable
         return newPromise
     }
     
-    private(set) var didEnsureAccess = false
-    var isCheckingAccess: Bool { return ensuringAccessPromise != nil }
+    private var didEnsureAccess = false
     private var ensuringAccessPromise: Promise<Void>?
     
     // MARK: - Use a Database Subscription

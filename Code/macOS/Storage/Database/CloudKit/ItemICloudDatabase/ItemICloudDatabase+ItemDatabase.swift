@@ -22,12 +22,6 @@ extension ItemICloudDatabase: ItemDatabase
     
     func apply(_ edit: Edit) -> Promise<Void>
     {
-        guard didEnsureAccess else
-        {
-            let errorMessage = "Tried to edit iCloud database while it hasn't yet ensured access."
-            return Promise(error: ReadableError.message(errorMessage))
-        }
-        
         switch edit
         {
         case .updateItems(let records): return save(records)

@@ -31,15 +31,7 @@ class Storage: Observer
         
         if isIntendingToSync
         {
-            firstly
-            {
-                self.database.ensureAccess()
-            }
-            .then
-            {
-                self.syncStoreAndDatabase()
-            }
-            .catch(abortIntendingToSync)
+            syncStoreAndDatabase().catch(abortIntendingToSync)
         }
     }
     
@@ -63,27 +55,8 @@ class Storage: Observer
     func databaseAccountDidChange()
     {
         guard isIntendingToSync else { return }
-        
-        if !database.didEnsureAccess && !database.isCheckingAccess
-        {
-            log(warning: "Syncing with database while db hasn't yet ensured access.")
-        }
     
-        firstly
-        {
-            database.ensureAccess()
-        }
-        .done(on: self.backgroundQ)
-        {
-            log(warning: "DB account status changed while we were in sync but now we still (or again?) do have access. This is a weird situation. To be totally sure we didn't miss out on db updates, we're gonna resync everything.")
-            self.syncStoreAndDatabaseBasedOnChangeToken().catch(self.abortIntendingToSync)
-        }
-        .catch
-        {
-            let c2a = "Looks like you lost iCloud access. If you'd like to continue syncing devices via iCloud, make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
-            
-            self.abortIntendingToSync(withErrorMessage: $0.readable.message, callToAction: c2a)
-        }
+        syncStoreAndDatabase().catch(self.abortIntendingToSync)
     }
     
     // MARK: - Transmit Database Changes to Local Store
@@ -134,54 +107,37 @@ class Storage: Observer
             return
         }
         
-        // TODO: understand and comment: this was for the app launch when welcome tour paste or edit happens before accessibility check is through.... RIGHT??? otherwise, we could remove this whole block ... actually there should be a transaction queue to disentangle editing from db availability ...
-        guard database.didEnsureAccess else
+        firstly
         {
-            if !database.isCheckingAccess
-            {
-                let errorMessage = "Tried to edit iCloud database before ensuring access."
-                abortIntendingToSync(withErrorMessage: errorMessage)
-            }
-            
-            hasUnsyncedLocalChanges.value = true
-            return
+            applyStoreEventToDatabase(storeEvent)
         }
-        
-        applyStoreEventToDatabase(storeEvent)
+        .catch
+        {
+            self.hasUnsyncedLocalChanges.value = true
+            self.abortIntendingToSync(with: $0)
+        }
     }
     
-    private func applyStoreEventToDatabase(_ event: Store.Event)
+    private func applyStoreEventToDatabase(_ event: Store.Event) ->  Promise<Void>
     {
         switch event
         {
         case .didUpdate(let update):
             if let edit = update.makeEdit()
             {
-                applyEditToDatabase(edit)
+                return database.apply(edit)
+            }
+            else
+            {
+                return Promise()
             }
 
         case .didSwitchRoot:
             // TODO: should we propagate this to the database, i.e. could it happen anytime?
             log(warning: "Store did switch root. The Storage should respond if this happens not just on app launch.")
-            break
+            return Promise()
             
-        case .didNothing:
-            break
-        }
-    }
-    
-    private func applyEditToDatabase(_ edit: Edit)
-    {
-        // log("applying edit from store to db: \(edit)")
-
-        firstly
-        {
-            self.database.apply(edit)
-        }
-        .catch
-        {
-            self.hasUnsyncedLocalChanges.value = true
-            self.abortIntendingToSync(with: $0)
+        case .didNothing: return Promise()
         }
     }
     
@@ -203,15 +159,11 @@ class Storage: Observer
         
         firstly
         {
-            self.database.ensureAccess()
-        }
-        .done(on: backgroundQ)
-        {
-            self.syncStoreAndDatabaseBasedOnChangeToken().catch(self.abortIntendingToSync)
+            syncStoreAndDatabase()
         }
         .catch
         {
-            let c2a = "Seems like your device just went online but iCloud is unavailable. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
+            let c2a = "Your device just went online but iCloud sync failed. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
             
             self.abortIntendingToSync(withErrorMessage: $0.readable.message, callToAction: c2a)
         }
@@ -231,11 +183,7 @@ class Storage: Observer
         
         firstly
         {
-            self.database.ensureAccess()
-        }
-        .then(on: backgroundQ)
-        {
-            self.syncStoreAndDatabaseWithoutChangeToken()
+            self.syncStoreAndDatabase()
         }
         .done(on: backgroundQ)
         {
@@ -250,16 +198,21 @@ class Storage: Observer
     {
         if database.hasChangeToken
         {
-            return self.syncStoreAndDatabaseBasedOnChangeToken()
+            return syncStoreAndDatabaseBasedOnChangeToken()
         }
         else
         {
-            return self.syncStoreAndDatabaseWithoutChangeToken()
+            return syncStoreAndDatabaseWithoutChangeToken()
         }
     }
     
     private func syncStoreAndDatabaseBasedOnChangeToken() -> Promise<Void>
     {
+        guard database.hasChangeToken else
+        {
+            return Promise(error: ReadableError.message("Tried to sync with database based in change token while database has no change token."))
+        }
+        
         guard Store.shared.root != nil else
         {
             return Promise(error: ReadableError.message("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))

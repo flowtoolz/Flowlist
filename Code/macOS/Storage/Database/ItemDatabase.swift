@@ -3,10 +3,6 @@ import PromiseKit
 
 protocol ItemDatabase
 {
-    func ensureAccess() -> Promise<Void>
-    var isCheckingAccess: Bool { get }
-    var didEnsureAccess: Bool { get }
-    
     func fetchRecords() -> Promise<[Record]>
     
     func fetchChanges() -> Promise<ItemDatabaseChanges>
