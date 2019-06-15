@@ -21,51 +21,40 @@ extension Store
     
     private func updateItems(with updatedRecords: [Record])
     {
+        let differingRecords = differingRecords(in: updatedRecords)
+        
+        guard !differingRecords.isEmpty else { return }
+        
         var arrayOfItemRootIDPosition = [(Item, String?, Int)]()
         
         // ensure items are in hash map and have updated data
         
-        for updatedRecord in updatedRecords
+        for differingRecord in differingRecords
         {
-            if let existingItem = itemHash[updatedRecord.id]
+            if let existingItem = itemHash[differingRecord.id]
             {
-                guard !item(existingItem, isEquivalentTo: updatedRecord) else { continue }
-                
-                existingItem.data.text <- updatedRecord.text
-                existingItem.data.state <- updatedRecord.state
-                existingItem.data.tag <- updatedRecord.tag
+                existingItem.data.text <- differingRecord.text
+                existingItem.data.state <- differingRecord.state
+                existingItem.data.tag <- differingRecord.tag
                 
                 arrayOfItemRootIDPosition.append((existingItem,
-                                                  updatedRecord.rootID,
-                                                  updatedRecord.position))
+                                                  differingRecord.rootID,
+                                                  differingRecord.position))
             }
             else
             {
-                let newItem = Item(record: updatedRecord)
+                let newItem = Item(record: differingRecord)
                 itemHash.add([newItem])
                 
                 arrayOfItemRootIDPosition.append((newItem,
-                                                  updatedRecord.rootID,
-                                                  updatedRecord.position))
+                                                  differingRecord.rootID,
+                                                  differingRecord.position))
             }
         }
         
         // connect items
         
         updateItemsWithNewRootAndPosition(arrayOfItemRootIDPosition)
-    }
-    
-    private func item(_ item: Item, isEquivalentTo record: Record) -> Bool
-    {
-        let itemData = item.data
-        if itemData.id != record.id { return false }
-        if item.indexInRoot ?? 0 != record.position { return false }
-        if itemData.text.value != record.text { return false }
-        if itemData.tag.value != record.tag { return false }
-        if itemData.state.value != record.state { return false }
-        if item.root?.data.id != record.rootID { return false }
-        
-        return true
     }
     
     private func updateItemsWithNewRootAndPosition(_ array: [(Item, String?, Int)])
@@ -109,6 +98,35 @@ extension Store
                 itemRoot.moveNode(from: oldPosition, to: newPosition)
             }
         }
+    }
+    
+    // MARK: - Avoid Redundant Edits
+    
+    func differingRecords(in records: [Record]) -> [Record]
+    {
+        return records.compactMap
+        {
+            item(itemHash[$0.id], isEquivalentTo: $0) ? nil : $0
+        }
+    }
+    
+    func existingIDs(in ids: [String]) -> [String]
+    {
+        return ids.compactMap { itemHash[$0]?.data.id }
+    }
+    
+    private func item(_ item: Item?, isEquivalentTo record: Record) -> Bool
+    {
+        guard let item = item else { return false }
+        let itemData = item.data
+        if itemData.id != record.id { return false }
+        if item.indexInRoot ?? 0 != record.position { return false }
+        if itemData.text.value != record.text { return false }
+        if itemData.tag.value != record.tag { return false }
+        if itemData.state.value != record.state { return false }
+        if item.root?.data.id != record.rootID { return false }
+        
+        return true
     }
     
     // MARK: - Remove Items

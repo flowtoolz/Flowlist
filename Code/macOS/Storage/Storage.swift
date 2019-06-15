@@ -261,9 +261,20 @@ class Storage: Observer
                 }
                 else
                 {
-                    // conflicting changes -> ask user
+                    // db and local items changed
                     
-                    // TODO: are there simple cases where we can safely say the differences are not in conflict? -> apply db changes locally AND then write local tree (or preferrably only the local changes) to db
+                    // db changes are redundant? -> we're done
+                    
+                    let updatesAreRedundant = Store.shared.differingRecords(in: dbChanges.modifiedRecords).isEmpty
+                    let deletionsAreRedundant = Store.shared.existingIDs(in: dbChanges.idsOfDeletedRecords).isEmpty
+                    
+                    if updatesAreRedundant && deletionsAreRedundant { return Promise() }
+                    
+                    // conflicting db changes -> ask user
+                    
+                    // TODO: are there simple cases where we can safely say the differences are not in conflict?
+                        // a) if there are only insertions of entirely new items, the changes can be merged
+                        // b) otherwise we'd need to know at least WHICH items locally changed to avoid overwriting them
                     
                     return firstly
                     {
