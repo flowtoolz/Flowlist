@@ -11,7 +11,6 @@ protocol ItemDatabase
     
     func fetchChanges() -> Promise<ItemDatabaseChanges>
     var hasChangeToken: Bool { get }
-    func deleteChangeToken()
     
     func reset(root: Item?) -> Promise<Void>
     func apply(_ edit: Edit) -> Promise<Void>

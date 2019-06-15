@@ -41,8 +41,6 @@ extension ICloudDatabase
     
     var hasServerChangeToken: Bool { return serverChangeToken != nil }
     
-    func deleteServerChangeToken() { serverChangeToken = nil }
-    
     private var serverChangeToken: CKServerChangeToken?
     {
         get

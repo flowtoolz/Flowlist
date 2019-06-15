@@ -62,8 +62,6 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     var hasChangeToken: Bool { return db.hasServerChangeToken }
     
-    func deleteChangeToken() { db.deleteServerChangeToken() }
-    
     // MARK: - Ensure Access
     
     func ensureAccess() -> Promise<Void>
