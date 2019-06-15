@@ -388,12 +388,3 @@ class ICloudDatabase: CustomObservable
 }
 
 fileprivate typealias ModifyOperation = CKModifyRecordsOperation
-
-let appInstallationID: String =
-{
-    let key = "UserDefaultsKeyAppInstallationID"
-    if let storedID = Persistent.string[key] { return storedID }
-    let id = String.makeUUID()
-    Persistent.string[key] = id
-    return id
-}()
