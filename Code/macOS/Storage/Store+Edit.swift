@@ -72,32 +72,35 @@ extension Store
         }
     }
     
-    private func move(_ item: Item, toNewRootID rootID: String?)
+    private func move(_ item: Item, toNewRootID newRootID: String?)
     {
-        // TODO: catch errors...nil root etc
-        if let oldRoot = item.root,
-            let oldIndex = oldRoot.index(of: item),
-            let newRootID = rootID,
-            newRootID != oldRoot.data.id,
-            let newRoot = itemHash[newRootID]
+        guard item.root?.data.id != newRootID else { return }
+        
+        if let oldRoot = item.root, let oldIndex = item.indexInRoot
         {
             oldRoot.removeNodes(from: [oldIndex])
+        }
+        
+        if let newRootID = newRootID
+        {
+            guard let newRoot = itemHash[newRootID] else
+            {
+                log(error: "Tried to move item with id \(item.data.id) to non-existing root with id \(newRootID)")
+                return
+            }
+            
             newRoot.add(item)
         }
     }
     
-    private func move(_ item: Item, toNewPosition position: Int)
+    private func move(_ item: Item, toNewPosition newPosition: Int)
     {
-        if let itemRoot = item.root,
-            let oldPosition = itemRoot.index(of: item)
-        {
-            let newPosition = min(itemRoot.numberOfLeafs, position)
-            
-            if oldPosition != newPosition
-            {
-                itemRoot.moveNode(from: oldPosition, to: newPosition)
-            }
-        }
+        guard let root = item.root,
+            let oldPosition = item.indexInRoot,
+            oldPosition != newPosition else { return }
+        
+        root.moveNode(from: oldPosition,
+                      to: min(root.branches.count, newPosition))
     }
     
     // MARK: - Avoid Redundant Edits

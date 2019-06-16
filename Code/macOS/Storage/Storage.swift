@@ -210,7 +210,7 @@ class Storage: Observer
     {
         guard database.hasChangeToken else
         {
-            return Promise(error: ReadableError.message("Tried to sync with database based in change token while database has no change token."))
+            return Promise(error: ReadableError.message("Tried to sync with database based on change token while database has no change token."))
         }
         
         guard Store.shared.root != nil else
