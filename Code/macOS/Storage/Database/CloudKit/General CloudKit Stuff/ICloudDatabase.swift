@@ -294,11 +294,6 @@ class ICloudDatabase: CustomObservable
         
         operation.savePolicy = .allKeys
         
-        if let token = appInstallationID.data(using: .utf8)
-        {
-            operation.clientChangeTokenData = token
-        }
-        
         operation.perRecordCompletionBlock =
         {
             if let error = $1
