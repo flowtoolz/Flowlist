@@ -81,7 +81,7 @@
 		9EA63839216F8BB100D1503C /* List+Selection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA63838216F8BB100D1503C /* List+Selection.swift */; };
 		9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7F99B20C19B210059166B /* Item+Clipboard.swift */; };
 		9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* Browser.swift */; };
-		9EBD41AB21AC419B00C97B99 /* ICloudDatabase+FetchingChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBD41AA21AC419B00C97B99 /* ICloudDatabase+FetchingChanges.swift */; };
+		9EBD41AB21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBD41AA21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift */; };
 		9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC498A521147FE1003636FE /* Item+Pasteboard.swift */; };
 		9EC5C8B221B00ED800615D20 /* AlertDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B121B00ED800615D20 /* AlertDialog.swift */; };
 		9EC5C8B621B00FE100615D20 /* Dialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B521B00FE100615D20 /* Dialog.swift */; };
@@ -189,7 +189,7 @@
 		9EA63838216F8BB100D1503C /* List+Selection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+Selection.swift"; sourceTree = "<group>"; };
 		9EA7F99B20C19B210059166B /* Item+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Clipboard.swift"; sourceTree = "<group>"; };
 		9EBC70282056FD02007A1EA8 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Browser.swift; sourceTree = "<group>"; };
-		9EBD41AA21AC419B00C97B99 /* ICloudDatabase+FetchingChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ICloudDatabase+FetchingChanges.swift"; sourceTree = "<group>"; };
+		9EBD41AA21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+FetchingChanges.swift"; sourceTree = "<group>"; };
 		9EC498A521147FE1003636FE /* Item+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Pasteboard.swift"; sourceTree = "<group>"; };
 		9EC5C8B121B00ED800615D20 /* AlertDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDialog.swift; sourceTree = "<group>"; };
 		9EC5C8B521B00FE100615D20 /* Dialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialog.swift; sourceTree = "<group>"; };
@@ -253,9 +253,8 @@
 		9E0C5BFD228F1B0200DC3460 /* General CloudKit Stuff */ = {
 			isa = PBXGroup;
 			children = (
-				9EBD41AA21AC419B00C97B99 /* ICloudDatabase+FetchingChanges.swift */,
 				9E053B2C21886963001B7103 /* ICloudDatabase.swift */,
-				9E13400822A2CDAA00434FD8 /* Error Logging Promises */,
+				9E13400822A2CDAA00434FD8 /* CloudKit+Promises+ErrorLogging */,
 			);
 			path = "General CloudKit Stuff";
 			sourceTree = "<group>";
@@ -268,14 +267,15 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
-		9E13400822A2CDAA00434FD8 /* Error Logging Promises */ = {
+		9E13400822A2CDAA00434FD8 /* CloudKit+Promises+ErrorLogging */ = {
 			isa = PBXGroup;
 			children = (
+				9EBD41AA21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift */,
 				9EE17AF22222B29000A07E4B /* CKDatabase+Promises.swift */,
 				9EE17AF02222A8F600A07E4B /* CKContainer+Promises.swift */,
 				9E713C9922AC2864002EB1D4 /* CKError+ReadableError.swift */,
 			);
-			path = "Error Logging Promises";
+			path = "CloudKit+Promises+ErrorLogging";
 			sourceTree = "<group>";
 		};
 		9E13400922A2D85800434FD8 /* CloudKit-Item Mapping */ = {
@@ -896,7 +896,7 @@
 				9E132D2521D3C38200B61D2D /* TextFormat+Foundation.swift in Sources */,
 				9E2CCE8D20C1DE030037D755 /* List+Clipboard.swift in Sources */,
 				9EE60C0021ACE1AF0075109D /* ItemDatabase.swift in Sources */,
-				9EBD41AB21AC419B00C97B99 /* ICloudDatabase+FetchingChanges.swift in Sources */,
+				9EBD41AB21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift in Sources */,
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,
 				9E053B4921887133001B7103 /* FlowlistView.swift in Sources */,
 				9E22D8AF218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift in Sources */,

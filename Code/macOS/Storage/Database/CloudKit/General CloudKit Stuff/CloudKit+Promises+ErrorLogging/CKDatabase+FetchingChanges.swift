@@ -3,7 +3,7 @@ import SwiftObserver
 import SwiftyToolz
 import PromiseKit
 
-extension ICloudDatabase
+extension CKDatabase
 {
     // MARK: - Fetch Changes
     
@@ -40,9 +40,11 @@ extension ICloudDatabase
     // MARK: - Server Change Token
     
     var hasServerChangeToken: Bool { return serverChangeToken != nil }
-    
+
     private var serverChangeToken: CKServerChangeToken?
     {
+        // TODO: save server change token with zone specific key. if there's one token per zone....
+        
         get
         {
             guard let tokenData = defaults.data(forKey: tokenKey) else
@@ -70,14 +72,14 @@ extension ICloudDatabase
     }
     
     private var defaults: UserDefaults { return UserDefaults.standard }
-    private var tokenKey: String { return "UserDefaultsKeyItemZoneLastServerChangeToken" }
+    private var tokenKey: String { return "UserDefaultsKeyCloudKitServerChangeToken" }
 }
 
 private extension CKFetchRecordZoneChangesOperation
 {
     convenience init(zoneID fetchZoneID: CKRecordZone.ID,
                      token: CKServerChangeToken?,
-                     handleResult: @escaping (ICloudDatabase.Changes?, Error?) -> Void)
+                     handleResult: @escaping (CKDatabase.Changes?, Error?) -> Void)
     {
         let zoneOptions = CKFetchRecordZoneChangesOperation.ZoneOptions()
         
@@ -87,7 +89,7 @@ private extension CKFetchRecordZoneChangesOperation
 
         self.init(recordZoneIDs: [fetchZoneID], optionsByRecordZoneID: options)
         
-        var changes = ICloudDatabase.Changes()
+        var changes = CKDatabase.Changes()
         
         recordChangedBlock =
         {
@@ -154,7 +156,7 @@ private extension CKFetchRecordZoneChangesOperation
     }
 }
 
-extension ICloudDatabase
+extension CKDatabase
 {
     struct Changes
     {

@@ -2,9 +2,9 @@ import CloudKit
 
 extension ItemDatabaseChanges
 {
-    init(_ iCloudDatabaseChanges: ICloudDatabase.Changes)
+    init(_ ckDatabaseChanges: CKDatabase.Changes)
     {
-        idsOfDeletedRecords = iCloudDatabaseChanges.idsOfDeletedCKRecords.map { $0.recordName }
-        modifiedRecords = iCloudDatabaseChanges.changedCKRecords.map(Record.init)
+        idsOfDeletedRecords = ckDatabaseChanges.idsOfDeletedCKRecords.map { $0.recordName }
+        modifiedRecords = ckDatabaseChanges.changedCKRecords.map(Record.init)
     }
 }

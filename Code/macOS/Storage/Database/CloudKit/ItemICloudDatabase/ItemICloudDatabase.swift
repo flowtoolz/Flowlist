@@ -186,7 +186,7 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    var hasChangeToken: Bool { return db.hasServerChangeToken }
+    var hasChangeToken: Bool { return db.hasChangeToken }
     
     // MARK: - Ensure Access
     

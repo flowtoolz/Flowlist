@@ -108,6 +108,13 @@ class ICloudDatabase: CustomObservable
         return ckDatabase.perform(query, inZone: zoneID)
     }
     
+    func fetchChanges(fromZone zoneID: CKRecordZone.ID) -> Promise<CKDatabase.Changes>
+    {
+        return ckDatabase.fetchChanges(fromZone: zoneID)
+    }
+    
+    var hasChangeToken: Bool { return ckDatabase.hasServerChangeToken }
+    
     // MARK: - Respond to Notifications
     
     func handlePushNotification(with userInfo: [String : Any])
