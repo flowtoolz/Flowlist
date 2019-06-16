@@ -33,6 +33,8 @@ class ICloudDatabase: CustomObservable
             
             ckDatabase.setTimeout(on: operation, or: resolver)
             
+            // TODO: possibly catch CKError.serverRecordChanged and handle that explicitly since it means we have a conflict between the modify operation and db changes from another device
+            
             perform(modifyOperation: operation,
                     handleCreationSuccess: resolver.resolve,
                     handleDeletionSuccess: nil)
@@ -82,6 +84,8 @@ class ICloudDatabase: CustomObservable
             resolver in
             
             ckDatabase.setTimeout(on: operation, or: resolver)
+            
+            // TODO: possibly catch CKError.serverRecordChanged and handle that explicitly since it means we have a conflict between the modify operation and db changes from another device
             
             perform(modifyOperation: operation,
                     handleCreationSuccess: nil,
@@ -292,7 +296,7 @@ class ICloudDatabase: CustomObservable
             return
         }
         
-        operation.savePolicy = .allKeys
+        operation.savePolicy = .ifServerRecordUnchanged
         
         operation.perRecordCompletionBlock =
         {
