@@ -65,21 +65,8 @@ class Storage: Observer
     {
         switch databaseUpdate
         {
-        case .mayHaveChanged: databaseMayHaveChanged()
+        case .mayHaveChanged: fetchChangesAndApplyToStore().catch(abortIntendingToSync)
         }
-    }
-    
-    private func databaseMayHaveChanged()
-    {
-        firstly
-        {
-            database.fetchChanges()
-        }
-        .done(on: dbQueue)
-        {
-            self.applyDatabaseChangesToStore($0)
-        }
-        .catch(abortIntendingToSync)
     }
     
     private func applyDatabaseChangesToStore(_ changes: ItemDatabaseChanges)
@@ -111,10 +98,29 @@ class Storage: Observer
         {
             applyStoreEventToDatabase(storeEvent)
         }
+        .then(on: dbQueue)
+        {
+            self.fetchChangesAndApplyToStore()
+        }
         .catch
         {
             self.hasUnsyncedLocalChanges.value = true
             self.abortIntendingToSync(with: $0)
+        }
+    }
+    
+    private func fetchChangesAndApplyToStore() -> Promise<Void>
+    {
+        return firstly
+        {
+            database.fetchChanges()
+        }
+        .done(on: dbQueue)
+        {
+            if !Store.shared.changesAreRedundant($0)
+            {
+                self.applyDatabaseChangesToStore($0)
+            }
         }
     }
     
@@ -265,10 +271,7 @@ class Storage: Observer
                     
                     // db changes are redundant? -> we're done
                     
-                    let updatesAreRedundant = Store.shared.differingRecords(in: dbChanges.modifiedRecords).isEmpty
-                    let deletionsAreRedundant = Store.shared.existingIDs(in: dbChanges.idsOfDeletedRecords).isEmpty
-                    
-                    if updatesAreRedundant && deletionsAreRedundant { return Promise() }
+                    if Store.shared.changesAreRedundant(dbChanges) { return Promise() }
                     
                     // conflicting db changes -> ask user
                     
@@ -502,4 +505,15 @@ class Storage: Observer
     
     let database: ItemDatabase
     let file: ItemFile
+}
+
+extension Store
+{
+    func changesAreRedundant(_ changes: ItemDatabaseChanges) -> Bool
+    {
+        let updatesAreRedundant = differingRecords(in: changes.modifiedRecords).isEmpty
+        let deletionsAreRedundant = existingIDs(in: changes.idsOfDeletedRecords).isEmpty
+        
+        return updatesAreRedundant && deletionsAreRedundant
+    }
 }

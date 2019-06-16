@@ -10,6 +10,12 @@ class ICloudDatabase: CustomObservable
     
     func save(_ ckRecords: [CKRecord]) -> Promise<Void>
     {
+        guard !ckRecords.isEmpty else
+        {
+            log(warning: "Tried to save empty array of CKRecords to iCloud.")
+            return Promise()
+        }
+        
         return ckRecords.count > maxBatchSize
             ? saveInBatches(ckRecords)
             : saveInOneBatch(ckRecords)
