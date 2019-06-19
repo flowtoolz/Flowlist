@@ -118,39 +118,6 @@ class ICloudDatabase: CustomObservable
     
     var hasChangeToken: Bool { return ckDatabase.hasServerChangeToken }
     
-    // MARK: - Respond to Notifications
-    
-    func handlePushNotification(with userInfo: [String : Any])
-    {
-        guard let notification = CKNotification(fromRemoteNotificationDictionary: userInfo) else
-        {
-            return
-        }
-        
-        switch notification.notificationType
-        {
-        case .query:
-            log(error: "Unexpectedly received iCloud query notification.")
-            
-        case .recordZone:
-            log(error: "Unexpectedly received iCloud record zone notification.")
-            
-        case .readNotification:
-            log(error: "Unexpectedly received iCloud read notification.")
-            
-        case .database:
-            guard let notification = notification as? CKDatabaseNotification else
-            {
-                log(error: "Couldn't cast database notification to CKDatabaseNotification.")
-                break
-            }
-            send(.didReceiveNotification(notification))
-            
-        @unknown default:
-            log(error: "Unknown CloudKit notification type")
-        }
-    }
-    
     // MARK: - Setup
     
     func createZone(with id: CKRecordZone.ID) -> Promise<CKRecordZone>
@@ -186,15 +153,40 @@ class ICloudDatabase: CustomObservable
     
     private let ckContainer = CKContainer.default()
     
-    // MARK: - Observability
+    // MARK: - Observability of Notifications
     
-    typealias Message = Event
-    
-    let messenger = Messenger(Event.didNothing)
-    
-    enum Event
+    func handlePushNotification(with userInfo: [String : Any])
     {
-        case didNothing
-        case didReceiveNotification(CKDatabaseNotification)
+        guard let notification = CKNotification(fromRemoteNotificationDictionary: userInfo) else
+        {
+            return
+        }
+        
+        switch notification.notificationType
+        {
+        case .query:
+            log(error: "Unexpectedly received iCloud query notification.")
+            
+        case .recordZone:
+            log(error: "Unexpectedly received iCloud record zone notification.")
+            
+        case .readNotification:
+            log(error: "Unexpectedly received iCloud read notification.")
+            
+        case .database:
+            guard let notification = notification as? CKDatabaseNotification else
+            {
+                log(error: "Couldn't cast database notification to CKDatabaseNotification.")
+                break
+            }
+            send(notification)
+            
+        @unknown default:
+            log(error: "Unknown CloudKit notification type")
+        }
     }
+    
+    typealias Message = CKDatabaseNotification?
+    
+    let messenger = Messenger<CKDatabaseNotification?>()
 }

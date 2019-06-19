@@ -9,7 +9,7 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     init()
     {
-        observe(db) { [weak self] in self?.didReceive(databaseEvent: $0) }
+        observe(db) { [weak self] in self?.didReceive(notification: $0) }
     }
     
     deinit { stopObserving() }
@@ -268,21 +268,13 @@ class ItemICloudDatabase: Observer, CustomObservable
         return db.createDatabaseSubscription(withID: dbSubID).map { _ in }
     }
     
-    private func didReceive(databaseEvent event: ICloudDatabase.Event)
+    private func didReceive(notification: CKDatabaseNotification?)
     {
-        switch event
+        guard let notification = notification else { return }
+        
+        guard notification.databaseScope == .private else
         {
-        case .didNothing: break
-        case .didReceiveNotification(let notification):
-            didReceive(databaseNotification: notification)
-        }
-    }
-    
-    private func didReceive(databaseNotification: CKDatabaseNotification)
-    {
-        guard databaseNotification.databaseScope == .private else
-        {
-            log(error: "Unexpected database scope: \(databaseNotification.databaseScope.rawValue)")
+            log(error: "Unexpected database scope: \(notification.databaseScope.rawValue)")
             return
         }
 
