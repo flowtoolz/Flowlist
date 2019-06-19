@@ -134,7 +134,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.db.fetchCKRecords(ofType: CKRecord.itemType, inZone: .item)
+                self.db.queryCKRecords(ofType: CKRecord.itemType, inZone: .item)
             }
             .done(on: queue)
             {
@@ -151,7 +151,7 @@ class ItemICloudDatabase: Observer, CustomObservable
     private func fetchSubitemCKRecords(ofItemWithID id: CKRecord.ID) -> Promise<[CKRecord]>
     {
         let predicate = NSPredicate(format: "superItem = %@", id)
-        let query = CKQuery(recordType: CKRecord.itemType, predicate: predicate)
+        let fetchQuery = CKQuery(recordType: CKRecord.itemType, predicate: predicate)
         
         return Promise<[CKRecord]>
         {
@@ -163,7 +163,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.db.fetchCKRecords(with: query, inZone: .item)
+                self.db.perform(fetchQuery, inZone: .item)
             }
             .done(on: queue)
             {

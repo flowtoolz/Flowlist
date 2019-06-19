@@ -55,7 +55,7 @@ class ICloudDatabase: CustomObservable
     {
         return firstly
         {
-            fetchCKRecords(ofType: type, inZone: zoneID)
+            queryCKRecords(ofType: type, inZone: zoneID)
         }
         .map(on: queue)
         {
@@ -98,15 +98,13 @@ class ICloudDatabase: CustomObservable
     
     // MARK: - Fetch
     
-    func fetchCKRecords(ofType type: CKRecord.RecordType,
+    func queryCKRecords(ofType type: CKRecord.RecordType,
                         inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
     {
-        let query = CKQuery(recordType: type, predicate: .all)
-        return fetchCKRecords(with: query, inZone: zoneID)
+        return ckDatabase.queryCKRecords(ofType: type, inZone: zoneID)
     }
     
-    func fetchCKRecords(with query: CKQuery,
-                        inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
+    func perform(_ query: CKQuery, inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
     {
         return ckDatabase.perform(query, inZone: zoneID)
     }

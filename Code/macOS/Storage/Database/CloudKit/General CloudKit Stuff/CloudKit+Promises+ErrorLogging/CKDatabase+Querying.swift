@@ -4,9 +4,21 @@ import PromiseKit
 
 extension CKDatabase
 {
-    func perform(_ query: CKQuery,
-                 inZone zoneID: CKRecordZone.ID,
-                 cursor: CKQueryOperation.Cursor? = nil) -> Promise<[CKRecord]>
+    func queryCKRecords(ofType type: CKRecord.RecordType,
+                        inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
+    {
+        let query = CKQuery(recordType: type, predicate: .all)
+        return perform(query, inZone: zoneID)
+    }
+    
+    func perform(_ query: CKQuery, inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
+    {
+        return perform(query, inZone: zoneID, cursor: nil)
+    }
+    
+    private func perform(_ query: CKQuery,
+                         inZone zoneID: CKRecordZone.ID,
+                         cursor: CKQueryOperation.Cursor?) -> Promise<[CKRecord]>
     {
         return firstly
         {
