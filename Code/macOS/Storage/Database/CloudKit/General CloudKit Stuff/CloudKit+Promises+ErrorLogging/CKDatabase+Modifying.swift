@@ -7,7 +7,7 @@ extension CKDatabase
     func modify(with operation: CKModification) -> Promise<CKModification.Result>
     {
         if (operation.recordIDsToDelete?.count ?? 0) +
-           (operation.recordsToSave?.count ?? 0) > maxBatchSize
+           (operation.recordsToSave?.count ?? 0) > CKModification.maxBatchSize
         {
             let message = "Too many items in CKModifyRecordsOperation."
             log(error: message)
@@ -56,8 +56,6 @@ extension CKDatabase
             perform(operation)
         }
     }
-
-    var maxBatchSize: Int { return 400 }
 }
 
 extension CKModification
@@ -67,6 +65,8 @@ extension CKModification
         case success
         case conflictingRecords([CKRecord])
     }
+    
+    static var maxBatchSize: Int { return 400 }
 }
 
 typealias CKModification = CKModifyRecordsOperation

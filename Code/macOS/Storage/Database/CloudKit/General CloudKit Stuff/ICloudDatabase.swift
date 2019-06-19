@@ -282,7 +282,7 @@ class ICloudDatabase: CustomObservable
     
     // MARK: - Database
     
-    private var maxBatchSize: Int { return ckDatabase.maxBatchSize }
+    private var maxBatchSize: Int { return CKModification.maxBatchSize }
     
     func perform(_ operation: CKDatabaseOperation)
     {

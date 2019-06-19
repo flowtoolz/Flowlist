@@ -64,6 +64,8 @@
 		9E576E352186F85100C9F876 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E342186F85100C9F876 /* Storage.swift */; };
 		9E576E372186FAB400C9F876 /* Item+Matching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E362186FAB400C9F876 /* Item+Matching.swift */; };
 		9E612F5B22BA54E100BAEE19 /* CKDatabase+Modifying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F5A22BA54E100BAEE19 /* CKDatabase+Modifying.swift */; };
+		9E612F5D22BA594B00BAEE19 /* CKDatabase+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F5C22BA594B00BAEE19 /* CKDatabase+Operations.swift */; };
+		9E612F5F22BA59D500BAEE19 /* CKDatabase+Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F5E22BA59D500BAEE19 /* CKDatabase+Querying.swift */; };
 		9E654E1121A487070052607F /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E654E1021A485B30052607F /* StorageController.swift */; };
 		9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Item+State.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
@@ -89,7 +91,7 @@
 		9EC5C8B821B0300D00615D20 /* Dialog+ICloudConflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */; };
 		9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB5D032174AF740048D7C5 /* Item+Text.swift */; };
 		9EE17AF12222A8F600A07E4B /* CKContainer+Promises.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE17AF02222A8F600A07E4B /* CKContainer+Promises.swift */; };
-		9EE17AF32222B29000A07E4B /* CKDatabase+Promises.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE17AF22222B29000A07E4B /* CKDatabase+Promises.swift */; };
+		9EE17AF32222B29000A07E4B /* CKDatabase+Fetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE17AF22222B29000A07E4B /* CKDatabase+Fetching.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
 		9EE60C0021ACE1AF0075109D /* ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */; };
 		9EEA769F21922A5700642EE7 /* ItemFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEA769E21922A5700642EE7 /* ItemFile.swift */; };
@@ -172,6 +174,8 @@
 		9E576E342186F85100C9F876 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		9E576E362186FAB400C9F876 /* Item+Matching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Matching.swift"; sourceTree = "<group>"; };
 		9E612F5A22BA54E100BAEE19 /* CKDatabase+Modifying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Modifying.swift"; sourceTree = "<group>"; };
+		9E612F5C22BA594B00BAEE19 /* CKDatabase+Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Operations.swift"; sourceTree = "<group>"; };
+		9E612F5E22BA59D500BAEE19 /* CKDatabase+Querying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Querying.swift"; sourceTree = "<group>"; };
 		9E654E1021A485B30052607F /* StorageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageController.swift; sourceTree = "<group>"; };
 		9E6C720A20B19C88001C3D2C /* Item+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+State.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
@@ -198,7 +202,7 @@
 		9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dialog+ICloudConflict.swift"; sourceTree = "<group>"; };
 		9EDB5D032174AF740048D7C5 /* Item+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Text.swift"; sourceTree = "<group>"; };
 		9EE17AF02222A8F600A07E4B /* CKContainer+Promises.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKContainer+Promises.swift"; sourceTree = "<group>"; };
-		9EE17AF22222B29000A07E4B /* CKDatabase+Promises.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Promises.swift"; sourceTree = "<group>"; };
+		9EE17AF22222B29000A07E4B /* CKDatabase+Fetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Fetching.swift"; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Float+Style.swift"; sourceTree = "<group>"; };
 		9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabase.swift; sourceTree = "<group>"; };
 		9EEA769E21922A5700642EE7 /* ItemFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemFile.swift; sourceTree = "<group>"; };
@@ -274,7 +278,9 @@
 			children = (
 				9E612F5A22BA54E100BAEE19 /* CKDatabase+Modifying.swift */,
 				9EBD41AA21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift */,
-				9EE17AF22222B29000A07E4B /* CKDatabase+Promises.swift */,
+				9EE17AF22222B29000A07E4B /* CKDatabase+Fetching.swift */,
+				9E612F5E22BA59D500BAEE19 /* CKDatabase+Querying.swift */,
+				9E612F5C22BA594B00BAEE19 /* CKDatabase+Operations.swift */,
 				9EE17AF02222A8F600A07E4B /* CKContainer+Promises.swift */,
 				9E713C9922AC2864002EB1D4 /* CKError+ReadableError.swift */,
 			);
@@ -865,9 +871,11 @@
 				9E053B3B218870D0001B7103 /* FlowlistController.swift in Sources */,
 				9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */,
 				9E576E352186F85100C9F876 /* Storage.swift in Sources */,
+				9E612F5D22BA594B00BAEE19 /* CKDatabase+Operations.swift in Sources */,
 				9E2B20CB21CE65BC0071D4FF /* Record+CKRecord.swift in Sources */,
+				9E612F5F22BA59D500BAEE19 /* CKDatabase+Querying.swift in Sources */,
 				9E053B63218871C4001B7103 /* Row.swift in Sources */,
-				9EE17AF32222B29000A07E4B /* CKDatabase+Promises.swift in Sources */,
+				9EE17AF32222B29000A07E4B /* CKDatabase+Fetching.swift in Sources */,
 				9EF37C4E21A08EED00A43AA9 /* DataMenu.swift in Sources */,
 				9E053B452188711A001B7103 /* Menu.swift in Sources */,
 				9E053B23218867E4001B7103 /* ItemJSONFile.swift in Sources */,
