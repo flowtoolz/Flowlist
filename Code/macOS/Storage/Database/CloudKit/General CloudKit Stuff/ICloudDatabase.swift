@@ -200,43 +200,24 @@ class ICloudDatabase: CustomObservable
         send(.didReceiveDatabaseNotification(databaseNotification))
     }
     
-    // MARK: - Create Record Zones
+    // MARK: - Setup
     
     func createZone(with id: CKRecordZone.ID) -> Promise<CKRecordZone>
     {
-        let zone = CKRecordZone(zoneID: id)
-        
-        let operation = CKModifyRecordZonesOperation(recordZonesToSave: [zone],
-                                                     recordZoneIDsToDelete: nil)
-        
-        return Promise
-        {
-            resolver in
-            
-            operation.modifyRecordZonesCompletionBlock =
-            {
-                createdZones, _, error in
-                
-                if let error = error
-                {
-                    log(error: error.ckReadable.message)
-                }
-                
-                resolver.resolve(error?.ckReadable, createdZones?.first)
-            }
-            
-            perform(operation)
-        }
+        return ckDatabase.createZone(with: id)
     }
-    
-    // MARK: - Create Subscription
     
     func createDatabaseSubscription(withID id: String) -> Promise<CKSubscription>
     {
         return ckDatabase.createSubscription(withID: id)
     }
+    
+    func ensureAccountAccess() -> Promise<Void>
+    {
+        return container.ensureAccountAccess()
+    }
 
-    // MARK: - Database + Performing Operations
+    // MARK: - Basics: Container and Database
     
     func perform(_ operation: CKDatabaseOperation)
     {
@@ -250,13 +231,6 @@ class ICloudDatabase: CustomObservable
     private var ckDatabase: CKDatabase
     {
         return container.privateCloudDatabase
-    }
-    
-    // MARK: - Container + Account Status
-    
-    func ensureAccountAccess() -> Promise<Void>
-    {
-        return container.ensureAccountAccess()
     }
     
     private let container = CKContainer.default()

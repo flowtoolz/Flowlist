@@ -67,6 +67,7 @@
 		9E612F5D22BA594B00BAEE19 /* CKDatabase+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F5C22BA594B00BAEE19 /* CKDatabase+Operations.swift */; };
 		9E612F5F22BA59D500BAEE19 /* CKDatabase+Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F5E22BA59D500BAEE19 /* CKDatabase+Querying.swift */; };
 		9E612F6122BA73DC00BAEE19 /* CKDatabase+Subscribing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F6022BA73DC00BAEE19 /* CKDatabase+Subscribing.swift */; };
+		9E612F6322BA779600BAEE19 /* CKDatabase+CreatingZones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F6222BA779600BAEE19 /* CKDatabase+CreatingZones.swift */; };
 		9E654E1121A487070052607F /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E654E1021A485B30052607F /* StorageController.swift */; };
 		9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Item+State.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
@@ -178,6 +179,7 @@
 		9E612F5C22BA594B00BAEE19 /* CKDatabase+Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Operations.swift"; sourceTree = "<group>"; };
 		9E612F5E22BA59D500BAEE19 /* CKDatabase+Querying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Querying.swift"; sourceTree = "<group>"; };
 		9E612F6022BA73DC00BAEE19 /* CKDatabase+Subscribing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Subscribing.swift"; sourceTree = "<group>"; };
+		9E612F6222BA779600BAEE19 /* CKDatabase+CreatingZones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+CreatingZones.swift"; sourceTree = "<group>"; };
 		9E654E1021A485B30052607F /* StorageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageController.swift; sourceTree = "<group>"; };
 		9E6C720A20B19C88001C3D2C /* Item+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+State.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				9EBD41AA21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift */,
 				9EE17AF22222B29000A07E4B /* CKDatabase+FetchingRecords.swift */,
 				9E612F5E22BA59D500BAEE19 /* CKDatabase+Querying.swift */,
+				9E612F6222BA779600BAEE19 /* CKDatabase+CreatingZones.swift */,
 				9E612F6022BA73DC00BAEE19 /* CKDatabase+Subscribing.swift */,
 				9E612F5C22BA594B00BAEE19 /* CKDatabase+Operations.swift */,
 				9EE17AF02222A8F600A07E4B /* CKContainer+AccountAccess.swift */,
@@ -849,6 +852,7 @@
 				9E2640FB21972941008FCD19 /* Item+Edit.swift in Sources */,
 				9E053B65218871F5001B7103 /* Item+Export.swift in Sources */,
 				9E6E70AB21936A8B00BDB0BA /* Item+Record.swift in Sources */,
+				9E612F6322BA779600BAEE19 /* CKDatabase+CreatingZones.swift in Sources */,
 				9E053B442188711A001B7103 /* HelpMenu.swift in Sources */,
 				9EFE6DF122A3F64A005C224E /* ItemDatabaseChanges+ICloudDatabase.swift in Sources */,
 				9EF0AABE21883E6E00B707F4 /* HashMap.swift in Sources */,
