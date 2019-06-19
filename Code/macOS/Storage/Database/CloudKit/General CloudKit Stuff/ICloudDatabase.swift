@@ -4,6 +4,11 @@ import SwiftObserver
 import SwiftyToolz
 import PromiseKit
 
+// TODO: move all the saving, fetching, deleting to CKDatabase extensions. and possibly even the setup stuff. move account status check to CKContainer extension.
+
+/**
+ A wrapper around CKDatabase **and** CKContainer. It provides observability, setup and availability ckecking.
+ */
 class ICloudDatabase: CustomObservable
 {
     // MARK: - Save

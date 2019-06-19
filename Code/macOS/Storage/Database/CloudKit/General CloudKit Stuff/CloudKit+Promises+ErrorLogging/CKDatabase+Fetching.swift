@@ -4,31 +4,6 @@ import SwiftyToolz
 
 extension CKDatabase
 {
-    
-    
-    func fetchUserCKRecord() -> Promise<CKRecord>
-    {
-        return firstly
-        {
-            CKContainer.default().fetchUserCKRecordID()
-        }
-        .then(on: queue)
-        {
-            self.fetchCKRecords(withIDs: [$0])
-        }
-        .map(on: queue)
-        {
-            guard let record = $0.first else
-            {
-                let errorMessage = "No user record found"
-                log(error: errorMessage)
-                throw ReadableError.message(errorMessage)
-            }
-            
-            return record
-        }
-    }
-    
     func fetchCKRecords(withIDs ids: [CKRecord.ID]) -> Promise<[CKRecord]>
     {
         let operation = CKFetchRecordsOperation(recordIDs: ids)
