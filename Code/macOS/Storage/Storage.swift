@@ -98,6 +98,19 @@ class Storage: Observer
         {
             applyStoreEventToDatabase(storeEvent)
         }
+        .then
+        {
+            modificationResult -> Promise<Void> in
+            
+            switch modificationResult
+            {
+            case .success:
+                return Promise()
+            case .conflictingRecords(_):
+                // TODO: if the user decides to use database version, does the following fetch and apply always achieve what we would expect? 
+                return self.handleConflictingStoreEventByAskingUser(storeEvent)
+            }
+        }
         .then(on: dbQueue)
         {
             self.fetchChangesAndApplyToStore()
@@ -107,6 +120,32 @@ class Storage: Observer
             self.hasUnsyncedLocalChanges.value = true
             self.abortIntendingToSync(with: $0)
         }
+    }
+    
+    private func handleConflictingStoreEventByAskingUser(_ edit: Store.Event) -> Promise<Void>
+    {
+        // TODO: Implement, using forced save if necessary. Also implement force option for save.
+        /*
+        return firstly
+        {
+            Dialog.default.askWhetherToPreferICloud()
+        }
+        .then(on: self.dbQueue)
+        {
+            (preferDatabase: Bool) -> Promise<Void> in
+            
+            if preferDatabase
+            {
+                return self.fetchAllDatabaseItemsAndResetLocalStore()
+            }
+            else
+            {
+                return self.database.reset(root: Store.shared.root)
+            }
+        }
+        */
+        
+        return Promise()
     }
     
     private func fetchChangesAndApplyToStore() -> Promise<Void>
@@ -124,7 +163,7 @@ class Storage: Observer
         }
     }
     
-    private func applyStoreEventToDatabase(_ event: Store.Event) ->  Promise<Void>
+    private func applyStoreEventToDatabase(_ event: Store.Event) ->  Promise<ItemDatabaseModificationResult>
     {
         switch event
         {
@@ -133,18 +172,16 @@ class Storage: Observer
             {
                 return database.apply(edit)
             }
-            else
-            {
-                return Promise()
-            }
 
         case .didSwitchRoot:
             // TODO: should we propagate this to the database, i.e. could it happen anytime?
             log(warning: "Store did switch root. The Storage should respond if this happens not just on app launch.")
-            return Promise()
+            break
             
-        case .didNothing: return Promise()
+        case .didNothing: break
         }
+        
+        return .value(.success)
     }
     
     // MARK: - Network Reachability

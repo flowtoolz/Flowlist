@@ -9,7 +9,7 @@ protocol ItemDatabase
     var hasChangeToken: Bool { get }
     
     func reset(root: Item?) -> Promise<Void>
-    func apply(_ edit: Edit) -> Promise<Void>
+    func apply(_ edit: Edit) -> Promise<ItemDatabaseModificationResult>
     
     var queue: DispatchQueue { get }
     
@@ -23,4 +23,10 @@ struct ItemDatabaseChanges
     let modifiedRecords: [Record]
     let idsOfDeletedRecords: [String]
     var hasChanges: Bool { return modifiedRecords.count + idsOfDeletedRecords.count > 0 }
+}
+
+enum ItemDatabaseModificationResult
+{
+    case success
+    case conflictingRecords([Record])
 }

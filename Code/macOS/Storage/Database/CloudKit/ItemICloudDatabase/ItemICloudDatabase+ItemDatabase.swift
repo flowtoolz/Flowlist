@@ -1,5 +1,6 @@
 import CloudKit
 import SwiftObserver
+import SwiftyToolz
 import PromiseKit
 
 extension ItemICloudDatabase: ItemDatabase
@@ -8,19 +9,28 @@ extension ItemICloudDatabase: ItemDatabase
     {
         return firstly
         {
+            // TODO: enforce deletion here via parameter force: Bool and internally adjusting save policy. Or better: add force parameter to this func. also return ItemDatabaseModificationResult instead of void. pass force parameter to both following sub routines: delete and save. thereby avoid problem of ignoring conflicting records on delete and save... move that problem outside
             self.deleteRecords()
         }
         .then(on: queue)
         {
-            () -> Promise<Void> in
+            modificationResult -> Promise<Void> in
             
             guard let root = root else { return Promise() }
             
-            return self.save(root.makeRecordsRecursively())
+            switch modificationResult
+            {
+            case .success:
+                return self.save(root.makeRecordsRecursively()).map { _ in }
+            case .conflictingRecords(_):
+                let message = "Could not reset iCloud database because there are conflicts. Resetting the db should force deletion!"
+                log(error: message)
+                return Promise(error: ReadableError.message(message))
+            }
         }
     }
     
-    func apply(_ edit: Edit) -> Promise<Void>
+    func apply(_ edit: Edit) -> Promise<ItemDatabaseModificationResult>
     {
         switch edit
         {

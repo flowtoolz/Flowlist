@@ -16,14 +16,25 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     // MARK: - Edit Items
     
-    func save(_ records: [Record]) -> Promise<Void>
+    func save(_ records: [Record]) -> Promise<ItemDatabaseModificationResult>
     {
-        return save(records.map(CKRecord.init))
+        return firstly
+        {
+            save(records.map(CKRecord.init))
+        }
+        .map
+        {
+            ckModificationResult in
+            
+            // TODO: map properly
+            
+            return ItemDatabaseModificationResult.success
+        }
     }
     
-    func save(_ ckRecords: [CKRecord]) -> Promise<Void>
+    func save(_ ckRecords: [CKRecord]) -> Promise<ModificationResult>
     {
-        return Promise<Void>
+        return Promise<ModificationResult>
         {
             resolver in
             
@@ -37,7 +48,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .done(on: queue)
             {
-                resolver.fulfill_()
+                resolver.fulfill($0)
             }
             .catch
             {
@@ -47,11 +58,11 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    func removeRecords(with ids: [String]) -> Promise<Void>
+    func removeRecords(with ids: [String]) -> Promise<ItemDatabaseModificationResult>
     {
         let ckRecordIDs = ids.map(CKRecord.ID.init(itemID:))
         
-        return Promise<Void>
+        return Promise<ItemDatabaseModificationResult>
         {
             resolver in
             
@@ -63,9 +74,17 @@ class ItemICloudDatabase: Observer, CustomObservable
             {
                 self.db.deleteCKRecords(withIDs: ckRecordIDs)
             }
+            .map
+            {
+                ckModificationResult -> ItemDatabaseModificationResult in
+                
+                // TODO: map properly
+                
+                return ItemDatabaseModificationResult.success
+            }
             .done(on: queue)
             {
-                resolver.fulfill_()
+                resolver.fulfill($0)
             }
             .catch
             {
@@ -75,9 +94,9 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    func deleteRecords() -> Promise<Void>
+    func deleteRecords() -> Promise<ModificationResult>
     {
-        return Promise<Void>
+        return Promise<ModificationResult>
         {
             resolver in
             
@@ -91,7 +110,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .done(on: queue)
             {
-                resolver.fulfill_()
+                resolver.fulfill($0)
             }
             .catch
             {
