@@ -29,6 +29,7 @@ enum ReadableError: Error, CustomDebugStringConvertible
     {
         switch self
         {
+        // TODO: can we make this more readable with https://github.com/mxcl/LegibleError ?
         case .message(let text): return text
         }
     }
