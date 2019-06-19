@@ -285,55 +285,30 @@ class ICloudDatabase: CustomObservable
         }
     }
     
-    // MARK: - Database
-    
-    private var maxBatchSize: Int { return CKModification.maxBatchSize }
+    // MARK: - Database + Performing Operations
     
     func perform(_ operation: CKDatabaseOperation)
     {
         ckDatabase.perform(operation)
     }
     
+    var queue: DispatchQueue { return iCloudQueue }
+    
+    private var maxBatchSize: Int { return CKModification.maxBatchSize }
+    
     private var ckDatabase: CKDatabase
     {
         return container.privateCloudDatabase
     }
     
-    // MARK: - Container
+    // MARK: - Container + Account Status
     
-    func checkAccountAccess() -> Promise<Void>
+    func ensureAccountAccess() -> Promise<Void>
     {
-        return firstly
-        {
-            self.container.fetchAccountStatus()
-        }
-        .map(on: queue)
-        {
-            status -> Void in
-            
-            let errorMessage: String? =
-            {
-                switch status
-                {
-                case .couldNotDetermine: return "Could not determine iCloud account status."
-                case .available: return nil
-                case .restricted: return "iCloud account is restricted."
-                case .noAccount: return "Cannot access the iCloud account."
-                @unknown default: return "Unknown account status."
-                }
-            }()
-            
-            if let errorMessage = errorMessage
-            {
-                log(error: errorMessage)
-                throw ReadableError.message(errorMessage)
-            }
-        }
+        return container.ensureAccountAccess()
     }
     
     private let container = CKContainer.default()
-    
-    var queue: DispatchQueue { return ckDatabase.queue }
     
     // MARK: - Observability
     

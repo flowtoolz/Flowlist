@@ -225,7 +225,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             
             firstly
             {
-                self.db.checkAccountAccess()
+                self.db.ensureAccountAccess()
             }
             .then(on: queue)
             {

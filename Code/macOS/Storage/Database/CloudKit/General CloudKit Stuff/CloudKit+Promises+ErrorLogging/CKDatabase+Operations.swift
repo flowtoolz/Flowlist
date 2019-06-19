@@ -46,5 +46,3 @@ extension CKDatabase
     
     var queue: DispatchQueue { return iCloudQueue }
 }
-
-private let iCloudQueue = DispatchQueue(label: "iCloud", qos: .userInitiated)
