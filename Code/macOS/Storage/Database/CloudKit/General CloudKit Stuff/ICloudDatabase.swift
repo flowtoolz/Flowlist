@@ -8,7 +8,7 @@ class ICloudDatabase: CustomObservable
 {
     // MARK: - Save
     
-    func save(_ ckRecords: [CKRecord]) -> Promise<ModificationResult>
+    func save(_ ckRecords: [CKRecord]) -> Promise<CKModification.Result>
     {
         guard !ckRecords.isEmpty else
         {
@@ -21,13 +21,13 @@ class ICloudDatabase: CustomObservable
             : saveInOneBatch(ckRecords)
     }
     
-    private func saveInBatches(_ ckRecords: [CKRecord]) -> Promise<ModificationResult>
+    private func saveInBatches(_ ckRecords: [CKRecord]) -> Promise<CKModification.Result>
     {
         let batches = ckRecords.splitIntoSlices(ofSize: maxBatchSize).map(Array.init)
 
         return when(resolved: batches.map(saveInOneBatch)).map
         {
-            (promiseResults: [Result<ModificationResult>]) -> ModificationResult in
+            (promiseResults: [Result<CKModification.Result>]) -> CKModification.Result in
             
             // TODO: map properly
             
@@ -35,18 +35,18 @@ class ICloudDatabase: CustomObservable
         }
     }
     
-    private func saveInOneBatch(_ ckRecords: [CKRecord]) -> Promise<ModificationResult>
+    private func saveInOneBatch(_ ckRecords: [CKRecord]) -> Promise<CKModification.Result>
     {
-        let operation = ModifyOperation(recordsToSave: ckRecords,
+        let operation = CKModification(recordsToSave: ckRecords,
                                         recordIDsToDelete: nil)
         
-        return perform(modifyOperation: operation)
+        return ckDatabase.modify(with: operation)
     }
     
     // MARK: - Delete
     
     func deleteCKRecords(ofType type: String,
-                         inZone zoneID: CKRecordZone.ID) -> Promise<ModificationResult>
+                         inZone zoneID: CKRecordZone.ID) -> Promise<CKModification.Result>
     {
         return firstly
         {
@@ -62,20 +62,20 @@ class ICloudDatabase: CustomObservable
         }
     }
     
-    func deleteCKRecords(withIDs ids: [CKRecord.ID]) -> Promise<ModificationResult>
+    func deleteCKRecords(withIDs ids: [CKRecord.ID]) -> Promise<CKModification.Result>
     {
         return ids.count > maxBatchSize
             ? deleteInBatches(ids)
             : deleteInOneBatch(ids)
     }
     
-    private func deleteInBatches(_ ckRecordIDs: [CKRecord.ID]) -> Promise<ModificationResult>
+    private func deleteInBatches(_ ckRecordIDs: [CKRecord.ID]) -> Promise<CKModification.Result>
     {
         let batches = ckRecordIDs.splitIntoSlices(ofSize: maxBatchSize).map(Array.init)
         
         return when(resolved: batches.map(deleteInOneBatch)).map
         {
-            (promiseResults: [Result<ModificationResult>]) -> ModificationResult in
+            (promiseResults: [Result<CKModification.Result>]) -> CKModification.Result in
             
             // TODO: properly map
             
@@ -83,12 +83,12 @@ class ICloudDatabase: CustomObservable
         }
     }
     
-    private func deleteInOneBatch(_ ckRecordIDs: [CKRecord.ID]) -> Promise<ModificationResult>
+    private func deleteInOneBatch(_ ckRecordIDs: [CKRecord.ID]) -> Promise<CKModification.Result>
     {
-        let operation = ModifyOperation(recordsToSave: nil,
+        let operation = CKModification(recordsToSave: nil,
                                         recordIDsToDelete: ckRecordIDs)
         
-        return perform(modifyOperation: operation)
+        return ckDatabase.modify(with: operation)
     }
     
     // MARK: - Fetch
@@ -282,60 +282,7 @@ class ICloudDatabase: CustomObservable
     
     // MARK: - Database
     
-    private func perform(modifyOperation operation: ModifyOperation) -> Promise<ModificationResult>
-    {
-        if (operation.recordIDsToDelete?.count ?? 0) +
-           (operation.recordsToSave?.count ?? 0) > maxBatchSize
-        {
-            let message = "Too many items in CKModifyRecordsOperation."
-            log(error: message)
-            return Promise(error: ReadableError.message(message))
-        }
-        
-        operation.perRecordCompletionBlock =
-        {
-            if let error = $1
-            {
-                log(error: error.ckReadable.message)
-            }
-        }
-        
-        return Promise
-        {
-            resolver in
-            
-            ckDatabase.setTimeout(on: operation, or: resolver)
-            
-            operation.modifyRecordsCompletionBlock =
-            {
-                _, _, error in
-                
-                if let error = error
-                {
-                    log(error: error.ckReadable.message)
-                    
-                    if let ckError = error.ckError
-                    {
-                        if case .serverRecordChanged = ckError.code
-                        {
-                            // TODO: retrieve conflicting CKRecords from ckError and propagate them to Storage where they must arrive as type Record
-                            resolver.fulfill(.conflictingRecords([]))
-                            return
-                        }
-                    }
-                    
-                    resolver.reject(error.ckReadable)
-                    return
-                }
-                
-                resolver.fulfill(.success)
-            }
-            
-            perform(operation)
-        }
-    }
-    
-    private let maxBatchSize = 400
+    private var maxBatchSize: Int { return ckDatabase.maxBatchSize }
     
     func perform(_ operation: CKDatabaseOperation)
     {
@@ -398,11 +345,3 @@ class ICloudDatabase: CustomObservable
         case didReceiveDatabaseNotification(CKDatabaseNotification)
     }
 }
-
-enum ModificationResult
-{
-    case success
-    case conflictingRecords([CKRecord])
-}
-
-private typealias ModifyOperation = CKModifyRecordsOperation

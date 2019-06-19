@@ -63,6 +63,7 @@
 		9E5768C220C15CDF00749C0C /* Tree+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768C120C15CDF00749C0C /* Tree+Hashable.swift */; };
 		9E576E352186F85100C9F876 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E342186F85100C9F876 /* Storage.swift */; };
 		9E576E372186FAB400C9F876 /* Item+Matching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E362186FAB400C9F876 /* Item+Matching.swift */; };
+		9E612F5B22BA54E100BAEE19 /* CKDatabase+Modifying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F5A22BA54E100BAEE19 /* CKDatabase+Modifying.swift */; };
 		9E654E1121A487070052607F /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E654E1021A485B30052607F /* StorageController.swift */; };
 		9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Item+State.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
@@ -170,6 +171,7 @@
 		9E5768C120C15CDF00749C0C /* Tree+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tree+Hashable.swift"; sourceTree = "<group>"; };
 		9E576E342186F85100C9F876 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		9E576E362186FAB400C9F876 /* Item+Matching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Matching.swift"; sourceTree = "<group>"; };
+		9E612F5A22BA54E100BAEE19 /* CKDatabase+Modifying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Modifying.swift"; sourceTree = "<group>"; };
 		9E654E1021A485B30052607F /* StorageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageController.swift; sourceTree = "<group>"; };
 		9E6C720A20B19C88001C3D2C /* Item+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+State.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 		9E13400822A2CDAA00434FD8 /* CloudKit+Promises+ErrorLogging */ = {
 			isa = PBXGroup;
 			children = (
+				9E612F5A22BA54E100BAEE19 /* CKDatabase+Modifying.swift */,
 				9EBD41AA21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift */,
 				9EE17AF22222B29000A07E4B /* CKDatabase+Promises.swift */,
 				9EE17AF02222A8F600A07E4B /* CKContainer+Promises.swift */,
@@ -843,6 +846,7 @@
 				9E053B62218871C4001B7103 /* ItemTableContent.swift in Sources */,
 				9E053B3021886963001B7103 /* CKRecord.ID+Record.swift in Sources */,
 				9E053B5D218871C4001B7103 /* Spacer.swift in Sources */,
+				9E612F5B22BA54E100BAEE19 /* CKDatabase+Modifying.swift in Sources */,
 				9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */,
 				9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */,
 				9EFB86DC21662AD100985B14 /* Tree.swift in Sources */,
