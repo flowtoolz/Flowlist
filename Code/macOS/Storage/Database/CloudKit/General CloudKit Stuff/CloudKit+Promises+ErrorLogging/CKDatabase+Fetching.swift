@@ -8,19 +8,19 @@ extension CKDatabase
     {
         let operation = CKFetchRecordsOperation(recordIDs: ids)
         
+        operation.perRecordCompletionBlock =
+        {
+            record, id, error in
+            
+            // for overall progress updates
+        }
+        
         return Promise
         {
             resolver in
             
             setTimeout(on: operation, or: resolver)
 
-            operation.perRecordCompletionBlock =
-            {
-                record, id, error in
-                
-                // for overall progress updates
-            }
-            
             operation.fetchRecordsCompletionBlock =
             {
                 recordsByID, error in
