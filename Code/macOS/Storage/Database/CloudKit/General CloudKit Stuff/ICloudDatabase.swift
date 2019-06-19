@@ -231,60 +231,11 @@ class ICloudDatabase: CustomObservable
     
     // MARK: - Create Subscription
     
-    func createQuerySubscription(forRecordType type: String,
-                                 desiredKeys: [String]) -> Promise<CKSubscription>
-    {
-        let options: CKQuerySubscription.Options =
-        [
-            .firesOnRecordUpdate,
-            .firesOnRecordCreation,
-            .firesOnRecordDeletion
-        ]
-        
-        let subscription = CKQuerySubscription(recordType: type,
-                                               predicate: .all,
-                                               options: options)
-        
-        return save(subscription, desiredKeys: desiredKeys)
-    }
-    
     func createDatabaseSubscription(withID id: String) -> Promise<CKSubscription>
     {
-        let subID = CKSubscription.ID(id)
-        let sub = CKDatabaseSubscription(subscriptionID: subID)
-        
-        return save(sub)
+        return ckDatabase.createSubscription(withID: id)
     }
-    
-    private func save(_ subscription: CKSubscription,
-                      desiredKeys: [CKRecord.FieldKey]? = nil) -> Promise<CKSubscription>
-    {
-        let notificationInfo = CKSubscription.NotificationInfo()
-        notificationInfo.shouldSendContentAvailable = true
-        notificationInfo.desiredKeys = desiredKeys
-        
-        subscription.notificationInfo = notificationInfo
-        
-        return Promise
-        {
-            resolver in
 
-            // TODO: use CKModifySubscriptionsOperation instead
-            
-            ckDatabase.save(subscription)
-            {
-                subscription, error in
-                
-                if let error = error
-                {
-                    log(error: error.ckReadable.message)
-                }
-                
-                resolver.resolve(subscription, error?.ckReadable)
-            }
-        }
-    }
-    
     // MARK: - Database + Performing Operations
     
     func perform(_ operation: CKDatabaseOperation)

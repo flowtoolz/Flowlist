@@ -263,10 +263,10 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     private func ensureSubscriptionExists() -> Promise<Void>
     {
+        let dbSubID = "ItemDataBaseSubscription"
+        
         return db.createDatabaseSubscription(withID: dbSubID).map { _ in }
     }
-    
-    private let dbSubID = "ItemDataBaseSubscription"
     
     private func didReceive(databaseEvent event: ICloudDatabase.Event)
     {
