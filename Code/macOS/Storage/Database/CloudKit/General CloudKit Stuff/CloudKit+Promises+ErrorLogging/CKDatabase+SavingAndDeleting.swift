@@ -91,12 +91,11 @@ extension CKDatabase
     
     // MARK: - Mapping Promise Results
     
-    private func modificationResult(from batchPromiseResults: [Result<CKModification.Result>]) throws -> CKModification.Result
+    private func modificationResult(from promiseResults: [Result<CKModification.Result>]) throws -> CKModification.Result
     {
-        var conflictingRecords = [CKRecord]()
-        var errors = [Error]()
+        var conflicts = [CKRecord]()
         
-        for promiseResult in batchPromiseResults
+        for promiseResult in promiseResults
         {
             switch promiseResult
             {
@@ -104,24 +103,13 @@ extension CKDatabase
                 switch modificationResult
                 {
                 case .success: break
-                case .conflictingRecords(let records): conflictingRecords += records
+                case .conflictingRecords(let records): conflicts += records
                 }
             case .rejected(let error):
-                errors.append(error)
+                throw error
             }
         }
         
-        if let error = errors.first
-        {
-            throw error
-        }
-        else if !conflictingRecords.isEmpty
-        {
-            return .conflictingRecords(conflictingRecords)
-        }
-        else
-        {
-            return .success
-        }
+        return conflicts.isEmpty ? .success : .conflictingRecords(conflicts)
     }
 }
