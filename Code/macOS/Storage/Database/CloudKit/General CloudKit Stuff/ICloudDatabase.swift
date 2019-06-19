@@ -53,47 +53,12 @@ class ICloudDatabase: CustomObservable
     func deleteCKRecords(ofType type: String,
                          inZone zoneID: CKRecordZone.ID) -> Promise<CKModification.Result>
     {
-        return firstly
-        {
-            queryCKRecords(ofType: type, inZone: zoneID)
-        }
-        .map(on: queue)
-        {
-            $0.map { $0.recordID }
-        }
-        .then(on: queue)
-        {
-            self.deleteCKRecords(withIDs: $0)
-        }
+        return ckDatabase.deleteCKRecords(ofType: type, inZone: zoneID)
     }
     
     func deleteCKRecords(withIDs ids: [CKRecord.ID]) -> Promise<CKModification.Result>
     {
-        return ids.count > maxBatchSize
-            ? deleteInBatches(ids)
-            : deleteInOneBatch(ids)
-    }
-    
-    private func deleteInBatches(_ ckRecordIDs: [CKRecord.ID]) -> Promise<CKModification.Result>
-    {
-        let batches = ckRecordIDs.splitIntoSlices(ofSize: maxBatchSize).map(Array.init)
-        
-        return when(resolved: batches.map(deleteInOneBatch)).map
-        {
-            (promiseResults: [Result<CKModification.Result>]) -> CKModification.Result in
-            
-            // TODO: properly map
-            
-            return .success
-        }
-    }
-    
-    private func deleteInOneBatch(_ ckRecordIDs: [CKRecord.ID]) -> Promise<CKModification.Result>
-    {
-        let operation = CKModification(recordsToSave: nil,
-                                        recordIDsToDelete: ckRecordIDs)
-        
-        return ckDatabase.modify(with: operation)
+        return ckDatabase.deleteCKRecords(with: ids)
     }
     
     // MARK: - Fetch
