@@ -273,12 +273,7 @@ class ItemICloudDatabase: Observer, CustomObservable
         switch event
         {
         case .didNothing: break
-        
-        case .didCreateRecord, .didModifyRecord, .didDeleteRecord:
-            // TODO: in case some users still have a query subscription going, delete it!
-            log(error: "Did receive a query subscription event but we only created a database subscription.")
-        
-        case .didReceiveDatabaseNotification(let notification):
+        case .didReceiveNotification(let notification):
             didReceive(databaseNotification: notification)
         }
     }

@@ -122,18 +122,15 @@ class ICloudDatabase: CustomObservable
     
     func handlePushNotification(with userInfo: [String : Any])
     {
-        guard let notification = CKNotification(fromRemoteNotificationDictionary: userInfo) else { return }
+        guard let notification = CKNotification(fromRemoteNotificationDictionary: userInfo) else
+        {
+            return
+        }
         
         switch notification.notificationType
         {
         case .query:
-            guard let notification = notification as? CKQueryNotification else
-            {
-                log(error: "Couldn't cast query notification to CKQueryNotification.")
-                break
-            }
-            
-            didReceive(queryNotification: notification)
+            log(error: "Unexpectedly received iCloud query notification.")
             
         case .recordZone:
             log(error: "Unexpectedly received iCloud record zone notification.")
@@ -147,57 +144,11 @@ class ICloudDatabase: CustomObservable
                 log(error: "Couldn't cast database notification to CKDatabaseNotification.")
                 break
             }
+            send(.didReceiveNotification(notification))
             
-            didReceive(databaseNotification: notification)
         @unknown default:
-            log(error: "unhandled case")
-            break
+            log(error: "Unknown CloudKit notification type")
         }
-    }
-    
-    private func didReceive(queryNotification notification: CKQueryNotification)
-    {
-        guard let recordId = notification.recordID else
-        {
-            log(error: "iCloud query notification carries no record id.")
-            return
-        }
-        
-        switch notification.queryNotificationReason
-        {
-        case .recordCreated:
-            didCreateRecord(with: recordId, notification: notification)
-        case .recordUpdated:
-            didModifyRecord(with: recordId, notification: notification)
-        case .recordDeleted:
-            didDeleteRecord(with: recordId)
-        @unknown default:
-            log(error: "Unknown case of CKQueryNotification.Reason")
-        }
-    }
-    
-    // MARK: - Send Updates to Observers
-    
-    private func didCreateRecord(with id: CKRecord.ID,
-                                 notification: CKQueryNotification)
-    {
-        send(.didCreateRecord(id: id, notification: notification))
-    }
-    
-    private func didModifyRecord(with id: CKRecord.ID,
-                         notification: CKQueryNotification)
-    {
-        send(.didModifyRecord(id: id, notification: notification))
-    }
-    
-    private func didDeleteRecord(with id: CKRecord.ID)
-    {
-        send(.didDeleteRecord(id: id))
-    }
-    
-    private func didReceive(databaseNotification: CKDatabaseNotification)
-    {
-        send(.didReceiveDatabaseNotification(databaseNotification))
     }
     
     // MARK: - Setup
@@ -214,7 +165,7 @@ class ICloudDatabase: CustomObservable
     
     func ensureAccountAccess() -> Promise<Void>
     {
-        return container.ensureAccountAccess()
+        return ckContainer.ensureAccountAccess()
     }
 
     // MARK: - Basics: Container and Database
@@ -230,10 +181,10 @@ class ICloudDatabase: CustomObservable
     
     private var ckDatabase: CKDatabase
     {
-        return container.privateCloudDatabase
+        return ckContainer.privateCloudDatabase
     }
     
-    private let container = CKContainer.default()
+    private let ckContainer = CKContainer.default()
     
     // MARK: - Observability
     
@@ -244,9 +195,6 @@ class ICloudDatabase: CustomObservable
     enum Event
     {
         case didNothing
-        case didCreateRecord(id: CKRecord.ID, notification: CKQueryNotification)
-        case didModifyRecord(id: CKRecord.ID, notification: CKQueryNotification)
-        case didDeleteRecord(id: CKRecord.ID)
-        case didReceiveDatabaseNotification(CKDatabaseNotification)
+        case didReceiveNotification(CKDatabaseNotification)
     }
 }
