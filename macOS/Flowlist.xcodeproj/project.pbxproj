@@ -266,22 +266,6 @@
 			isa = PBXGroup;
 			children = (
 				9E053B2C21886963001B7103 /* ICloudDatabase.swift */,
-				9E13400822A2CDAA00434FD8 /* CloudKit+Promises+ErrorLogging */,
-			);
-			path = "General CloudKit Stuff";
-			sourceTree = "<group>";
-		};
-		9E132D2321D3C36200B61D2D /* Foundation */ = {
-			isa = PBXGroup;
-			children = (
-				9E132D2421D3C38200B61D2D /* TextFormat+Foundation.swift */,
-			);
-			path = Foundation;
-			sourceTree = "<group>";
-		};
-		9E13400822A2CDAA00434FD8 /* CloudKit+Promises+ErrorLogging */ = {
-			isa = PBXGroup;
-			children = (
 				9E612F6422BA8C3600BAEE19 /* CKDatabase+SavingAndDeleting.swift */,
 				9E612F5A22BA54E100BAEE19 /* CKDatabase+Modifying.swift */,
 				9EBD41AA21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift */,
@@ -293,7 +277,15 @@
 				9EE17AF02222A8F600A07E4B /* CKContainer+AccountAccess.swift */,
 				9E713C9922AC2864002EB1D4 /* CKError+ReadableError.swift */,
 			);
-			path = "CloudKit+Promises+ErrorLogging";
+			path = "General CloudKit Stuff";
+			sourceTree = "<group>";
+		};
+		9E132D2321D3C36200B61D2D /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				9E132D2421D3C38200B61D2D /* TextFormat+Foundation.swift */,
+			);
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 		9E13400922A2D85800434FD8 /* CloudKit-Item Mapping */ = {

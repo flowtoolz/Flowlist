@@ -8,14 +8,12 @@ import SwiftyToolz
  */
 class ICloudDatabase: CustomObservable
 {
-    // MARK: - Save
+    // MARK: - Save and Delete
     
     func save(_ ckRecords: [CKRecord]) -> Promise<CKModification.Result>
     {
         return ckDatabase.save(ckRecords)
     }
-    
-    // MARK: - Delete
     
     func deleteCKRecords(ofType type: String,
                          inZone zoneID: CKRecordZone.ID) -> Promise<CKModification.Result>
