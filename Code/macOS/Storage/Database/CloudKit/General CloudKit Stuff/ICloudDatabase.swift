@@ -1,10 +1,7 @@
 import CloudKit
-import FoundationToolz
+import PromiseKit
 import SwiftObserver
 import SwiftyToolz
-import PromiseKit
-
-// TODO: move all the saving, fetching, deleting to CKDatabase extensions. and possibly even the setup stuff. move account status check to CKContainer extension.
 
 /**
  A wrapper around CKDatabase **and** CKContainer. It provides observability, setup and availability ckecking.
@@ -15,37 +12,7 @@ class ICloudDatabase: CustomObservable
     
     func save(_ ckRecords: [CKRecord]) -> Promise<CKModification.Result>
     {
-        guard !ckRecords.isEmpty else
-        {
-            log(warning: "Tried to save empty array of CKRecords to iCloud.")
-            return .value(.success)
-        }
-        
-        return ckRecords.count > maxBatchSize
-            ? saveInBatches(ckRecords)
-            : saveInOneBatch(ckRecords)
-    }
-    
-    private func saveInBatches(_ ckRecords: [CKRecord]) -> Promise<CKModification.Result>
-    {
-        let batches = ckRecords.splitIntoSlices(ofSize: maxBatchSize).map(Array.init)
-
-        return when(resolved: batches.map(saveInOneBatch)).map
-        {
-            (promiseResults: [Result<CKModification.Result>]) -> CKModification.Result in
-            
-            // TODO: map properly
-            
-            return .success
-        }
-    }
-    
-    private func saveInOneBatch(_ ckRecords: [CKRecord]) -> Promise<CKModification.Result>
-    {
-        let operation = CKModification(recordsToSave: ckRecords,
-                                        recordIDsToDelete: nil)
-        
-        return ckDatabase.modify(with: operation)
+        return ckDatabase.save(ckRecords)
     }
     
     // MARK: - Delete
@@ -125,31 +92,16 @@ class ICloudDatabase: CustomObservable
             return
         }
         
-        switch notification.notificationType
+        guard case .database = notification.notificationType,
+            let dbNotification = notification as? CKDatabaseNotification
+        else
         {
-        case .query:
-            log(error: "Unexpectedly received iCloud query notification.")
-            
-        case .recordZone:
-            log(error: "Unexpectedly received iCloud record zone notification.")
-            
-        case .readNotification:
-            log(error: "Unexpectedly received iCloud read notification.")
-            
-        case .database:
-            guard let notification = notification as? CKDatabaseNotification else
-            {
-                log(error: "Couldn't cast database notification to CKDatabaseNotification.")
-                break
-            }
-            send(notification)
-            
-        @unknown default:
-            log(error: "Unknown CloudKit notification type")
+            return log(error: "Received unexpected iCloud notification: \(notification.debugDescription).")
         }
+        
+        send(dbNotification)
     }
     
     typealias Message = CKDatabaseNotification?
-    
     let messenger = Messenger<CKDatabaseNotification?>()
 }
