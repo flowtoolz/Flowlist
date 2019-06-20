@@ -9,9 +9,7 @@ class CKRecordSystemFieldsCache
 {
     // MARK: - Get CKRecord That Has Correct System Fields
     
-    func getCKRecord(with id: String,
-                     type: CKRecord.RecordType,
-                     zoneID: CKRecordZone.ID) -> CKRecord
+    func getCKRecord(with id: String) -> CKRecord
     {
         if let existingCKRecord = loadCKRecord(with: id)
         {
@@ -19,7 +17,7 @@ class CKRecordSystemFieldsCache
         }
         
         let newRecordID = CKRecord.ID(recordName: id, zoneID: zoneID)
-        let newCKRecord = CKRecord(recordType: type, recordID: newRecordID)
+        let newCKRecord = CKRecord(recordType: recordType, recordID: newRecordID)
         
         save(newCKRecord)
         
@@ -100,8 +98,10 @@ class CKRecordSystemFieldsCache
     private(set) lazy var directory: URL? =
     {
         guard let docDirectory = URL.documentDirectory else { return nil }
-        let cacheDirName = "iCloud Cache"
-        let cacheDir = docDirectory.appendingPathComponent(cacheDirName)
+        let cacheDir = docDirectory
+            .appendingPathComponent(name)
+            .appendingPathComponent(zoneID.zoneName)
+            .appendingPathComponent(recordType)
         let fileManager = FileManager.default
         let cacheDirectoryExists = fileManager.fileExists(atPath: cacheDir.path)
         
@@ -121,4 +121,19 @@ class CKRecordSystemFieldsCache
         
         return cacheDir
     }()
+    
+    // MARK: - Configuration
+    
+    init(name: String,
+         zoneID: CKRecordZone.ID,
+         recordType: CKRecord.RecordType)
+    {
+        self.name = name
+        self.zoneID = zoneID
+        self.recordType = recordType
+    }
+    
+    private let name: String
+    private let zoneID: CKRecordZone.ID
+    private let recordType: CKRecord.RecordType
 }

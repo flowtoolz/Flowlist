@@ -32,9 +32,7 @@ class CKRecordSystemFieldsCacheTests: XCTestCase
             return XCTFail("Couldn't get file URL")
         }
         
-        let newRecord = cache.getCKRecord(with: id,
-                                          type: CKRecord.itemType,
-                                          zoneID: .item)
+        let newRecord = cache.getCKRecord(with: id)
         
         XCTAssertEqual(newRecord.recordID.recordName, id)
         XCTAssert(FileManager.default.fileExists(atPath: file.path))
@@ -56,6 +54,7 @@ class CKRecordSystemFieldsCacheTests: XCTestCase
     
     // MARK: - The Cache Being Tested
     
-    // TODO: parameterize cache with name (will be folder name), record type and zone id ... then use a dedicated cache for testing ...
-    private let cache = CKRecordSystemFieldsCache()
+    private let cache = CKRecordSystemFieldsCache(name: "iCloud Cache Test",
+                                                  zoneID: .item,
+                                                  recordType: CKRecord.itemType)
 }
