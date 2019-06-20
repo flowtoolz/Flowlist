@@ -191,7 +191,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.db.fetchChanges(fromZone: .item).map(ItemDatabaseChanges.init)
+                self.db.fetchChanges(fromZone: .item).map { $0.makeItemDatabaseChanges() }
             }
             .done(on: queue)
             {

@@ -4,7 +4,7 @@ import SwiftyToolz
 
 extension CKRecord
 {
-    // MARK: - Initialization
+    // MARK: - Convert between CKRecord and Record
 
     convenience init(record: Record)
     {
@@ -16,6 +16,16 @@ extension CKRecord
         tag = record.tag
         superItem = record.rootID
         position = record.position
+    }
+    
+    func makeItemRecord() -> Record
+    {
+        return Record(id: recordID.recordName,
+                      text: text,
+                      state: state,
+                      tag: tag,
+                      rootID: superItem,
+                      position: position ?? 0)
     }
     
     // MARK: - Storage Properties
@@ -173,5 +183,23 @@ extension CKRecord
         }
         
         case text, state, tag, superItem, position
+    }
+}
+
+extension CKRecord.ID
+{
+    convenience init(itemID: String)
+    {
+        self.init(recordName: itemID, zoneID: .item)
+    }
+}
+
+extension CKRecord.Reference
+{
+    // TODO: start using CKRecord.parent reference property in addition so we can migrate to that property at some point
+    convenience init(itemOwnerName: String)
+    {
+        self.init(recordID: CKRecord.ID(itemID: itemOwnerName),
+                  action: .deleteSelf)
     }
 }

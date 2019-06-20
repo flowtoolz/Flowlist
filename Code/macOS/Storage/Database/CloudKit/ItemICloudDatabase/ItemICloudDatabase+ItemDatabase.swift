@@ -47,7 +47,7 @@ extension ItemICloudDatabase: ItemDatabase
         }
         .map(on: queue)
         {
-            $0.map(Record.init)
+            $0.map { $0.makeItemRecord() }
         }
     }
 }
