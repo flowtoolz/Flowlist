@@ -3,6 +3,8 @@ import Foundation
 import FoundationToolz
 import SwiftyToolz
 
+// TODO: Possibly improve performance: Load all CKRecords to memory at launch and store them back typically when we save the JSON file
+
 class CKRecordSystemFieldsCache
 {
     // MARK: - Loading CloudKit Records
@@ -55,7 +57,7 @@ class CKRecordSystemFieldsCache
     
     // MARK: - The CloudKit Record Cache Directory
     
-    private var cacheDirectory: URL?
+    private lazy var cacheDirectory: URL? =
     {
         guard let docDirectory = URL.documentDirectory else { return nil }
         let cacheDirName = "iCloud Cache"
@@ -81,5 +83,5 @@ class CKRecordSystemFieldsCache
         }
         
         return cacheDir
-    }
+    }()
 }
