@@ -14,6 +14,7 @@ extension CKDatabase
             return Promise(error: ReadableError.message(message))
         }
         
+        // TODO: since .serverRecordChanged signifies one conflicting record it's probably being reported here on a per record basis. if that is so and a .serverRecordChanged occurs here, then what happens in the modifyRecordsCompletionBlock?
         operation.perRecordCompletionBlock =
         {
             if let error = $1
@@ -41,13 +42,13 @@ extension CKDatabase
                         if case .serverRecordChanged = ckError.code
                         {
                             // TODO: retrieve conflicting CKRecords from ckError and propagate them to Storage where they must arrive as type Record
-                            resolver.fulfill(.conflictingRecords([]))
-                            return
+                            
+ // https://developer.apple.com/documentation/cloudkit/ckerror/code/serverrecordchanged
+                            return resolver.fulfill(.conflictingRecords([]))
                         }
                     }
                     
-                    resolver.reject(error.ckReadable)
-                    return
+                    return resolver.reject(error.ckReadable)
                 }
                 
                 resolver.fulfill(.success)
