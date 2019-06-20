@@ -7,60 +7,55 @@ class CKRecordSystemFieldsCacheTests: XCTestCase
     func testThatCKRecordsCanBeSavedToCacheFolder()
     {
         let id = "\(#function)"
+        
+        removeCachedFile(with: id)
+        
         let data = ItemData(id: id)
         let item = Item(data: data)
         let record = Record(item: item)
         let ckRecord = CKRecord(record: record)
         
-        let urlOfSavedFile = cache.save(ckRecord)
-        XCTAssertNotNil(urlOfSavedFile)
-    }
-    
-    func testThatCKRecordsCanBeLoadedFromCacheFolder()
-    {
-        let id = "\(#function)"
-        let data = ItemData(id: id)
-        let item = Item(data: data)
-        let record = Record(item: item)
-        let ckRecord = CKRecord(record: record)
-        cache.save(ckRecord)
+        guard let savedFile = cache.save(ckRecord) else
+        {
+            return XCTFail("Couldn't save record to cache")
+        }
         
-        let loadedCKRecord = cache.loadCKRecord(with: id)
-        XCTAssertNotNil(loadedCKRecord)
+        XCTAssert(FileManager.default.fileExists(atPath: savedFile.path))
     }
     
     func testThatRetrievingUncachedRecordCreatesANewOne()
     {
         let id = "\(#function)"
         
-        guard let file = cache.directory?.appendingPathComponent(id) else
+        guard let file = removeCachedFile(with: id) else
         {
-            return XCTFail("Couldn't get cache directory URL")
+            return XCTFail("Couldn't get file URL")
         }
-        
-        try? FileManager.default.removeItem(at: file)
-        
-        XCTAssertNil(cache.loadCKRecord(with: id))
         
         let newRecord = cache.getCKRecord(with: id,
                                           type: CKRecord.itemType,
                                           zoneID: .item)
         
         XCTAssertEqual(newRecord.recordID.recordName, id)
-        XCTAssertNotNil(cache.loadCKRecord(with: id))
+        XCTAssert(FileManager.default.fileExists(atPath: file.path))
     }
     
-    override func setUp()
+    @discardableResult
+    private func removeCachedFile(with id: String) -> URL?
     {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown()
-    {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        guard let file = cache.directory?.appendingPathComponent(id) else
+        {
+            return nil
+        }
+        
+        try? FileManager.default.removeItem(at: file)
+        XCTAssert(!FileManager.default.fileExists(atPath: file.path))
+        
+        return file
     }
     
-    // TODO: parameterize cache with name (will be folder name), record type and zone id ... then use a dedicated cache for testing ... then clean the test folder before and after this test suite (in the static funcs...)
-    // cache.clean()
+    // MARK: - The Cache Being Tested
+    
+    // TODO: parameterize cache with name (will be folder name), record type and zone id ... then use a dedicated cache for testing ...
     private let cache = CKRecordSystemFieldsCache()
 }

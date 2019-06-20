@@ -28,8 +28,7 @@ class CKRecordSystemFieldsCache
     
     // MARK: - Loading CloudKit Records
     
-    // TODO: make this private and rather test file existence in unit tests
-    func loadCKRecord(with id: String) -> CKRecord?
+    private func loadCKRecord(with id: String) -> CKRecord?
     {
         guard let directory = directory else { return nil }
         let file = directory.appendingPathComponent(id)
