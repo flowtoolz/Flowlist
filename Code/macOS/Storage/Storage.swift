@@ -168,7 +168,7 @@ class Storage: Observer
         switch event
         {
         case .didUpdate(let update):
-            if let edit = update.makeEdit()
+            if let edit = Edit(update)
             {
                 return database.apply(edit)
             }

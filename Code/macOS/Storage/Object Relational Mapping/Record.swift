@@ -1,31 +1,5 @@
 import SwiftyToolz
 
-extension Array where Element == Record
-{
-    var byRootID: [String : [Record]]
-    {
-        var resultDictionary = [String : [Record]]()
-        
-        for record in self
-        {
-            guard let rootID = record.rootID else
-            {
-                log(error: "Item record has no root ID.")
-                continue
-            }
-            
-            if resultDictionary[rootID] == nil
-            {
-                resultDictionary[rootID] = [Record]()
-            }
-            
-            resultDictionary[rootID]?.append(record)
-        }
-        
-        return resultDictionary
-    }
-}
-
 struct Record
 {
     init(id: String,
