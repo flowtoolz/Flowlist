@@ -35,22 +35,13 @@ class CKRecordSystemFieldsCache
         do
         {
             let data = try Data(contentsOf: file)
-            return decodeCKRecord(fromSystemFieldEncoding: data)
+            return CKRecord(fromSystemFieldEncoding: data)
         }
         catch
         {
             log(error: error.localizedDescription)
             return nil
         }
-    }
-    
-    private func decodeCKRecord(fromSystemFieldEncoding ckRecordData: Data) -> CKRecord?
-    {
-        let decoder = NSKeyedUnarchiver(forReadingWith: ckRecordData)
-        decoder.requiresSecureCoding = true
-        let ckRecord = CKRecord(coder: decoder)
-        decoder.finishDecoding()
-        return ckRecord
     }
     
     // MARK: - Saving CloudKit Records
@@ -61,17 +52,7 @@ class CKRecordSystemFieldsCache
         guard let directory = directory else { return nil }
         let recordUUID = ckRecord.recordID.recordName
         let file = directory.appendingPathComponent(recordUUID)
-        return encodeWithSystemFields(ckRecord).save(to: file)
-    }
-    
-    private func encodeWithSystemFields(_ ckRecord: CKRecord) -> Data
-    {
-        let data = NSMutableData()
-        let encoder = NSKeyedArchiver(forWritingWith: data)
-        encoder.requiresSecureCoding = true
-        ckRecord.encodeSystemFields(with: encoder)
-        encoder.finishEncoding()
-        return data as Data
+        return ckRecord.systemFieldEncoding.save(to: file)
     }
     
     // MARK: - Delete All Files
@@ -137,3 +118,5 @@ class CKRecordSystemFieldsCache
     private let zoneID: CKRecordZone.ID
     private let recordType: CKRecord.RecordType
 }
+
+
