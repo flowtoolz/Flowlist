@@ -3,16 +3,38 @@ import Foundation
 import FoundationToolz
 import SwiftyToolz
 
-// TODO: Possibly improve performance: Load all CKRecords to memory at launch and store them back typically when we save the JSON file
+// TODO: Possibly improve performance: Load all CKRecords to memory at launch and store them back typically when we save the JSON file ... or/and: do file saving on background thread
 
 class CKRecordSystemFieldsCache
 {
+    // MARK: - Get CKRecord That Has Correct System Fields
+    
+    func getCKRecord(with id: String,
+                     type: CKRecord.RecordType,
+                     zoneID: CKRecordZone.ID) -> CKRecord
+    {
+        if let existingCKRecord = loadCKRecord(with: id)
+        {
+            return existingCKRecord
+        }
+        
+        let newRecordID = CKRecord.ID(recordName: id, zoneID: zoneID)
+        let newCKRecord = CKRecord(recordType: type, recordID: newRecordID)
+        
+        save(newCKRecord)
+        
+        return newCKRecord
+    }
+    
     // MARK: - Loading CloudKit Records
     
+    // TODO: make this private and rather test file existence in unit tests
     func loadCKRecord(with id: String) -> CKRecord?
     {
-        guard let directory = cacheDirectory else { return nil }
+        guard let directory = directory else { return nil }
         let file = directory.appendingPathComponent(id)
+        guard FileManager.default.fileExists(atPath: file.path) else { return nil }
+        
         do
         {
             let data = try Data(contentsOf: file)
@@ -39,7 +61,7 @@ class CKRecordSystemFieldsCache
     @discardableResult
     func save(_ ckRecord: CKRecord) -> URL?
     {
-        guard let directory = cacheDirectory else { return nil }
+        guard let directory = directory else { return nil }
         let recordUUID = ckRecord.recordID.recordName
         let file = directory.appendingPathComponent(recordUUID)
         return encodeWithSystemFields(ckRecord).save(to: file)
@@ -55,18 +77,34 @@ class CKRecordSystemFieldsCache
         return data as Data
     }
     
+    // MARK: - Delete All Files
+    
+    @discardableResult
+    func clean() -> Bool
+    {
+        guard let directory = directory else { return false }
+        
+        do
+        {
+            try FileManager.default.removeItem(at: directory)
+            return true
+        }
+        catch
+        {
+            log(error: error.localizedDescription)
+            return false
+        }
+    }
+    
     // MARK: - The CloudKit Record Cache Directory
     
-    private lazy var cacheDirectory: URL? =
+    private(set) lazy var directory: URL? =
     {
         guard let docDirectory = URL.documentDirectory else { return nil }
         let cacheDirName = "iCloud Cache"
         let cacheDir = docDirectory.appendingPathComponent(cacheDirName)
-
         let fileManager = FileManager.default
-        
-        let cacheDirectoryExists = fileManager.fileExists(atPath: cacheDir.path,
-                                                          isDirectory: nil)
+        let cacheDirectoryExists = fileManager.fileExists(atPath: cacheDir.path)
         
         if !cacheDirectoryExists
         {
