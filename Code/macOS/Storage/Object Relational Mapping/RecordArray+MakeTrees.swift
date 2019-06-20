@@ -14,7 +14,7 @@ extension Array where Element == Record
         
         let hashMap = reduce(into: [String : (Record, Item)]())
         {
-            $0[$1.id] = ($1, Item(record: $1))
+            $0[$1.id] = ($1, $1.makeItem())
         }
         
         // connect items. remember roots and unconnected records.

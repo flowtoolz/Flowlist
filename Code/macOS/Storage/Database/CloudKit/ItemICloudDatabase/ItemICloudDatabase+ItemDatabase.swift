@@ -21,7 +21,7 @@ extension ItemICloudDatabase: ItemDatabase
             switch modificationResult
             {
             case .success:
-                return self.save(root.makeRecordsRecursively()).map { _ in }
+                return self.save(Record.makeRecordsRecursively(for: root)).map { _ in }
             case .conflictingRecords(_):
                 let message = "Could not reset iCloud database because there are conflicts. Resetting the db should force deletion!"
                 log(error: message)

@@ -43,7 +43,7 @@ extension Store
             }
             else
             {
-                let newItem = Item(record: differingRecord)
+                let newItem = differingRecord.makeItem()
                 itemHash.add([newItem])
                 
                 arrayOfItemRootIDPosition.append((newItem,

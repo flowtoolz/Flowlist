@@ -7,7 +7,7 @@ extension Tree.Event.TreeUpdate where Data == ItemData
         switch self
         {
         case .insertedNodes(let nodes, _, _):
-            let records = nodes.flatMap { $0.makeRecordsRecursively() }
+            let records = nodes.flatMap { Record.makeRecordsRecursively(for: $0) }
             return .updateItems(withRecords: records)
             
         case .receivedMessage(let dataUpdate, let node):
@@ -16,8 +16,7 @@ extension Tree.Event.TreeUpdate where Data == ItemData
             case .didNothing, .wantTextInput:
                 return nil
             case .wasModified:
-                let record = node.makeRecord()
-                return .updateItems(withRecords: [record])
+                return .updateItems(withRecords: [Record(item: node)])
             }
 
         case .removedNodes(let nodes, _):
@@ -42,7 +41,7 @@ extension Tree.Event.TreeUpdate where Data == ItemData
             }
             
             let movedItems = parent.branches[firstMovedIndex ... lastMovedIndex]
-            let movedRecords = movedItems.map { $0.makeRecord() }
+            let movedRecords = movedItems.map(Record.init)
             
             return .updateItems(withRecords: movedRecords)
         }

@@ -18,7 +18,7 @@ class DecodableItem: Tree<ItemData>, Decodable
 
 // MARK: - Decoding
 
-fileprivate extension Decoder
+private extension Decoder
 {
     func itemContainer() throws -> KeyedDecodingContainer<Item.CodableField>
     {
@@ -26,7 +26,7 @@ fileprivate extension Decoder
     }
 }
 
-fileprivate extension KeyedDecodingContainer where K == Item.CodableField
+private extension KeyedDecodingContainer where K == Item.CodableField
 {
     var itemData: ItemData
     {
