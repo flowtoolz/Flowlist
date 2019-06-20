@@ -88,7 +88,8 @@
 		9EC5C8B221B00ED800615D20 /* AlertDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B121B00ED800615D20 /* AlertDialog.swift */; };
 		9EC5C8B621B00FE100615D20 /* Dialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B521B00FE100615D20 /* Dialog.swift */; };
 		9EC5C8B821B0300D00615D20 /* Dialog+ICloudConflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */; };
-		9ED6963C22BBDFB6006D275E /* CKRecordSystemFieldsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED6963B22BBDFB6006D275E /* CKRecordSystemFieldsService.swift */; };
+		9ED6963C22BBDFB6006D275E /* CKRecordSystemFieldsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED6963B22BBDFB6006D275E /* CKRecordSystemFieldsCache.swift */; };
+		9ED6964D22BC0412006D275E /* CKRecordSystemFieldsCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED6964322BBF13A006D275E /* CKRecordSystemFieldsCacheTests.swift */; };
 		9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB5D032174AF740048D7C5 /* Item+Text.swift */; };
 		9EE17AF12222A8F600A07E4B /* CKContainer+AccountAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE17AF02222A8F600A07E4B /* CKContainer+AccountAccess.swift */; };
 		9EE17AF32222B29000A07E4B /* CKDatabase+FetchingRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE17AF22222B29000A07E4B /* CKDatabase+FetchingRecords.swift */; };
@@ -110,6 +111,16 @@
 		9EFE6DF122A3F64A005C224E /* CKDatabase+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFE6DF022A3F64A005C224E /* CKDatabase+Item.swift */; };
 		C932DAFCC628909A261C9DC7 /* Pods_Flowlist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D591083E3159C05E29673835 /* Pods_Flowlist.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9ED6964622BBF13A006D275E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9E542E891EEEE41C00534981 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9E542E901EEEE41C00534981;
+			remoteInfo = Flowlist;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		31D7BF377971DCFFFFB9F309 /* Pods-Flowlist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flowlist.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist.release.xcconfig"; sourceTree = "<group>"; };
@@ -198,7 +209,10 @@
 		9EC5C8B121B00ED800615D20 /* AlertDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDialog.swift; sourceTree = "<group>"; };
 		9EC5C8B521B00FE100615D20 /* Dialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialog.swift; sourceTree = "<group>"; };
 		9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dialog+ICloudConflict.swift"; sourceTree = "<group>"; };
-		9ED6963B22BBDFB6006D275E /* CKRecordSystemFieldsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKRecordSystemFieldsService.swift; sourceTree = "<group>"; };
+		9ED6963B22BBDFB6006D275E /* CKRecordSystemFieldsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKRecordSystemFieldsCache.swift; sourceTree = "<group>"; };
+		9ED6964122BBF13A006D275E /* FlowlistTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowlistTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9ED6964322BBF13A006D275E /* CKRecordSystemFieldsCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKRecordSystemFieldsCacheTests.swift; sourceTree = "<group>"; };
+		9ED6964522BBF13A006D275E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EDB5D032174AF740048D7C5 /* Item+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Text.swift"; sourceTree = "<group>"; };
 		9EE17AF02222A8F600A07E4B /* CKContainer+AccountAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKContainer+AccountAccess.swift"; sourceTree = "<group>"; };
 		9EE17AF22222B29000A07E4B /* CKDatabase+FetchingRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+FetchingRecords.swift"; sourceTree = "<group>"; };
@@ -229,6 +243,13 @@
 			files = (
 				C932DAFCC628909A261C9DC7 /* Pods_Flowlist.framework in Frameworks */,
 				9E1F2CF42184476B00DFFD73 /* CloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9ED6963E22BBF13A006D275E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,7 +287,8 @@
 				9E612F6222BA779600BAEE19 /* CKDatabase+CreatingZones.swift */,
 				9E612F6022BA73DC00BAEE19 /* CKDatabase+Subscribing.swift */,
 				9E612F5C22BA594B00BAEE19 /* CKDatabase+Operations.swift */,
-				9ED6963B22BBDFB6006D275E /* CKRecordSystemFieldsService.swift */,
+				9ED6964322BBF13A006D275E /* CKRecordSystemFieldsCacheTests.swift */,
+				9ED6963B22BBDFB6006D275E /* CKRecordSystemFieldsCache.swift */,
 				9EE17AF02222A8F600A07E4B /* CKContainer+AccountAccess.swift */,
 				9E713C9922AC2864002EB1D4 /* CKError+ReadableError.swift */,
 			);
@@ -296,6 +318,7 @@
 			children = (
 				9EA5A884218EC546004902F7 /* Code */,
 				9E91651620551E6F00A438FB /* Resources */,
+				9ED6964222BBF13A006D275E /* FlowlistTests */,
 				9E542E921EEEE41C00534981 /* Products */,
 				355124306BC9502BB1F4B052 /* Pods */,
 				214596B4A8859C616CE520C0 /* Frameworks */,
@@ -306,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				9E542E911EEEE41C00534981 /* Flowlist.app */,
+				9ED6964122BBF13A006D275E /* FlowlistTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -670,6 +694,14 @@
 			path = "Object Relational Mapping";
 			sourceTree = "<group>";
 		};
+		9ED6964222BBF13A006D275E /* FlowlistTests */ = {
+			isa = PBXGroup;
+			children = (
+				9ED6964522BBF13A006D275E /* Info.plist */,
+			);
+			path = FlowlistTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -692,13 +724,31 @@
 			productReference = 9E542E911EEEE41C00534981 /* Flowlist.app */;
 			productType = "com.apple.product-type.application";
 		};
+		9ED6964022BBF13A006D275E /* FlowlistTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9ED6964822BBF13A006D275E /* Build configuration list for PBXNativeTarget "FlowlistTests" */;
+			buildPhases = (
+				9ED6963D22BBF13A006D275E /* Sources */,
+				9ED6963E22BBF13A006D275E /* Frameworks */,
+				9ED6963F22BBF13A006D275E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9ED6964722BBF13A006D275E /* PBXTargetDependency */,
+			);
+			name = FlowlistTests;
+			productName = FlowlistTests;
+			productReference = 9ED6964122BBF13A006D275E /* FlowlistTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		9E542E891EEEE41C00534981 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0820;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Flowtoolz;
 				TargetAttributes = {
@@ -719,6 +769,12 @@
 							};
 						};
 					};
+					9ED6964022BBF13A006D275E = {
+						CreatedOnToolsVersion = 10.2.1;
+						DevelopmentTeam = 8T3R57GCBV;
+						ProvisioningStyle = Manual;
+						TestTargetID = 9E542E901EEEE41C00534981;
+					};
 				};
 			};
 			buildConfigurationList = 9E542E8C1EEEE41C00534981 /* Build configuration list for PBXProject "Flowlist" */;
@@ -735,6 +791,7 @@
 			projectRoot = "";
 			targets = (
 				9E542E901EEEE41C00534981 /* Flowlist */,
+				9ED6964022BBF13A006D275E /* FlowlistTests */,
 			);
 		};
 /* End PBXProject section */
@@ -745,6 +802,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E91651520551E5600A438FB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9ED6963F22BBF13A006D275E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -811,7 +875,7 @@
 				9E6E70AF2193803E00BDB0BA /* Item+CodableField.swift in Sources */,
 				9EC5C8B821B0300D00615D20 /* Dialog+ICloudConflict.swift in Sources */,
 				9EA1D3B0219EBFD000B5943C /* UserDefaultsPersisters.swift in Sources */,
-				9ED6963C22BBDFB6006D275E /* CKRecordSystemFieldsService.swift in Sources */,
+				9ED6963C22BBDFB6006D275E /* CKRecordSystemFieldsCache.swift in Sources */,
 				9E053B3321886963001B7103 /* ItemICloudDatabase.swift in Sources */,
 				9E47E32422AAC0A20068088A /* ListViewCell.swift in Sources */,
 				9E053B3A218870D0001B7103 /* main.swift in Sources */,
@@ -910,7 +974,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9ED6963D22BBF13A006D275E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9ED6964D22BC0412006D275E /* CKRecordSystemFieldsCacheTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9ED6964722BBF13A006D275E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9E542E901EEEE41C00534981 /* Flowlist */;
+			targetProxy = 9ED6964622BBF13A006D275E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		9E1BFE8320DBD6BD00D09EE2 /* Beta */ = {
@@ -1162,6 +1242,82 @@
 			};
 			name = Release;
 		};
+		9ED6964922BBF13A006D275E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 8T3R57GCBV;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = FlowlistTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.FlowlistTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flowlist.app/Contents/MacOS/Flowlist";
+			};
+			name = Debug;
+		};
+		9ED6964A22BBF13A006D275E /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 8T3R57GCBV;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = FlowlistTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.FlowlistTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flowlist.app/Contents/MacOS/Flowlist";
+			};
+			name = Beta;
+		};
+		9ED6964B22BBF13A006D275E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 8T3R57GCBV;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = FlowlistTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.FlowlistTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Flowlist.app/Contents/MacOS/Flowlist";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1181,6 +1337,16 @@
 				9E542EAD1EEEE41C00534981 /* Debug */,
 				9E1BFE8420DBD6BD00D09EE2 /* Beta */,
 				9E542EAE1EEEE41C00534981 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9ED6964822BBF13A006D275E /* Build configuration list for PBXNativeTarget "FlowlistTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9ED6964922BBF13A006D275E /* Debug */,
+				9ED6964A22BBF13A006D275E /* Beta */,
+				9ED6964B22BBF13A006D275E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
