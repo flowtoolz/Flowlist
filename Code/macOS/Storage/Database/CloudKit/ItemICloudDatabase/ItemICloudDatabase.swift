@@ -32,9 +32,9 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    func save(_ ckRecords: [CKRecord]) -> Promise<CKModification.Result>
+    func save(_ ckRecords: [CKRecord]) -> Promise<SaveResult>
     {
-        return Promise<CKModification.Result>
+        return Promise<SaveResult>
         {
             resolver in
             
@@ -94,9 +94,9 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    func deleteRecords() -> Promise<CKModification.Result>
+    func deleteRecords() -> Promise<DeletionResult>
     {
-        return Promise<CKModification.Result>
+        return Promise<DeletionResult>
         {
             resolver in
             

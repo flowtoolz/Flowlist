@@ -10,18 +10,18 @@ class ICloudDatabase: CustomObservable
 {
     // MARK: - Save and Delete
     
-    func save(_ ckRecords: [CKRecord]) -> Promise<CKModification.Result>
+    func save(_ ckRecords: [CKRecord]) -> Promise<SaveResult>
     {
         return ckDatabase.save(ckRecords)
     }
     
     func deleteCKRecords(ofType type: String,
-                         inZone zoneID: CKRecordZone.ID) -> Promise<CKModification.Result>
+                         inZone zoneID: CKRecordZone.ID) -> Promise<DeletionResult>
     {
         return ckDatabase.deleteCKRecords(ofType: type, inZone: zoneID)
     }
     
-    func deleteCKRecords(withIDs ids: [CKRecord.ID]) -> Promise<CKModification.Result>
+    func deleteCKRecords(withIDs ids: [CKRecord.ID]) -> Promise<DeletionResult>
     {
         return ckDatabase.deleteCKRecords(with: ids)
     }
@@ -71,8 +71,6 @@ class ICloudDatabase: CustomObservable
     }
     
     var queue: DispatchQueue { return iCloudQueue }
-    
-    private var maxBatchSize: Int { return CKModification.maxBatchSize }
     
     private var ckDatabase: CKDatabase
     {

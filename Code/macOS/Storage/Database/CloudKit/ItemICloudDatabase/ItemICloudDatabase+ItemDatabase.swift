@@ -18,15 +18,15 @@ extension ItemICloudDatabase: ItemDatabase
             
             guard let root = root else { return Promise() }
             
-            switch modificationResult
-            {
-            case .success:
-                return self.save(Record.makeRecordsRecursively(for: root)).map { _ in }
-            case .conflictingRecords(_):
-                let message = "Could not reset iCloud database because there are conflicts. Resetting the db should force deletion!"
-                log(error: message)
-                return Promise(error: ReadableError.message(message))
-            }
+            // TODO: conflicts should not occur after a force delete, so throw/log an error in that case
+//            if !modificationResult.conflicts.isEmpty
+//            {
+//                let message = "Could not reset iCloud database because there are conflicts. Resetting the db should force deletion!"
+//                log(error: message)
+//                return Promise(error: ReadableError.message(message))
+//            }
+            
+            return self.save(Record.makeRecordsRecursively(for: root)).map { _ in }
         }
     }
     

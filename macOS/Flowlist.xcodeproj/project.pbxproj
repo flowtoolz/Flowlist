@@ -60,12 +60,12 @@
 		9E5768C220C15CDF00749C0C /* Tree+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768C120C15CDF00749C0C /* Tree+Hashable.swift */; };
 		9E576E352186F85100C9F876 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E342186F85100C9F876 /* Storage.swift */; };
 		9E576E372186FAB400C9F876 /* Item+Matching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E362186FAB400C9F876 /* Item+Matching.swift */; };
-		9E612F5B22BA54E100BAEE19 /* CKDatabase+Modifying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F5A22BA54E100BAEE19 /* CKDatabase+Modifying.swift */; };
+		9E612F5B22BA54E100BAEE19 /* CKDatabase+Deleting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F5A22BA54E100BAEE19 /* CKDatabase+Deleting.swift */; };
 		9E612F5D22BA594B00BAEE19 /* CKDatabase+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F5C22BA594B00BAEE19 /* CKDatabase+Operations.swift */; };
 		9E612F5F22BA59D500BAEE19 /* CKDatabase+Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F5E22BA59D500BAEE19 /* CKDatabase+Querying.swift */; };
 		9E612F6122BA73DC00BAEE19 /* CKDatabase+Subscribing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F6022BA73DC00BAEE19 /* CKDatabase+Subscribing.swift */; };
 		9E612F6322BA779600BAEE19 /* CKDatabase+CreatingZones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F6222BA779600BAEE19 /* CKDatabase+CreatingZones.swift */; };
-		9E612F6522BA8C3600BAEE19 /* CKDatabase+SavingAndDeleting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F6422BA8C3600BAEE19 /* CKDatabase+SavingAndDeleting.swift */; };
+		9E612F6522BA8C3600BAEE19 /* CKDatabase+Saving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F6422BA8C3600BAEE19 /* CKDatabase+Saving.swift */; };
 		9E654E1121A487070052607F /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E654E1021A485B30052607F /* StorageController.swift */; };
 		9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Item+State.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
@@ -181,12 +181,12 @@
 		9E5768C120C15CDF00749C0C /* Tree+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tree+Hashable.swift"; sourceTree = "<group>"; };
 		9E576E342186F85100C9F876 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		9E576E362186FAB400C9F876 /* Item+Matching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Matching.swift"; sourceTree = "<group>"; };
-		9E612F5A22BA54E100BAEE19 /* CKDatabase+Modifying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Modifying.swift"; sourceTree = "<group>"; };
+		9E612F5A22BA54E100BAEE19 /* CKDatabase+Deleting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Deleting.swift"; sourceTree = "<group>"; };
 		9E612F5C22BA594B00BAEE19 /* CKDatabase+Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Operations.swift"; sourceTree = "<group>"; };
 		9E612F5E22BA59D500BAEE19 /* CKDatabase+Querying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Querying.swift"; sourceTree = "<group>"; };
 		9E612F6022BA73DC00BAEE19 /* CKDatabase+Subscribing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Subscribing.swift"; sourceTree = "<group>"; };
 		9E612F6222BA779600BAEE19 /* CKDatabase+CreatingZones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+CreatingZones.swift"; sourceTree = "<group>"; };
-		9E612F6422BA8C3600BAEE19 /* CKDatabase+SavingAndDeleting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+SavingAndDeleting.swift"; sourceTree = "<group>"; };
+		9E612F6422BA8C3600BAEE19 /* CKDatabase+Saving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Saving.swift"; sourceTree = "<group>"; };
 		9E654E1021A485B30052607F /* StorageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageController.swift; sourceTree = "<group>"; };
 		9E6C720A20B19C88001C3D2C /* Item+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+State.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
@@ -282,7 +282,7 @@
 			children = (
 				9E053B2C21886963001B7103 /* ICloudDatabase.swift */,
 				9ED6964E22BC2EED006D275E /* CKDatabase Extensions */,
-				9ED6965122BC32FE006D275E /* Caching CKRecord System Fields */,
+				9ED6965122BC32FE006D275E /* CKRecord System Fields Cache */,
 				9EE17AF02222A8F600A07E4B /* CKContainer+AccountAccess.swift */,
 				9E713C9922AC2864002EB1D4 /* CKError+ReadableError.swift */,
 			);
@@ -699,8 +699,8 @@
 		9ED6964E22BC2EED006D275E /* CKDatabase Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				9E612F6422BA8C3600BAEE19 /* CKDatabase+SavingAndDeleting.swift */,
-				9E612F5A22BA54E100BAEE19 /* CKDatabase+Modifying.swift */,
+				9E612F6422BA8C3600BAEE19 /* CKDatabase+Saving.swift */,
+				9E612F5A22BA54E100BAEE19 /* CKDatabase+Deleting.swift */,
 				9EBD41AA21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift */,
 				9EE17AF22222B29000A07E4B /* CKDatabase+FetchingRecords.swift */,
 				9E612F5E22BA59D500BAEE19 /* CKDatabase+Querying.swift */,
@@ -711,14 +711,14 @@
 			path = "CKDatabase Extensions";
 			sourceTree = "<group>";
 		};
-		9ED6965122BC32FE006D275E /* Caching CKRecord System Fields */ = {
+		9ED6965122BC32FE006D275E /* CKRecord System Fields Cache */ = {
 			isa = PBXGroup;
 			children = (
 				9ED6964322BBF13A006D275E /* CKRecordSystemFieldsCacheTests.swift */,
 				9ED6963B22BBDFB6006D275E /* CKRecordSystemFieldsCache.swift */,
 				9ED6964F22BC32D5006D275E /* CKRecord+CodableSystemFields.swift */,
 			);
-			path = "Caching CKRecord System Fields";
+			path = "CKRecord System Fields Cache";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -922,7 +922,7 @@
 				9EF0AABE21883E6E00B707F4 /* HashMap.swift in Sources */,
 				9E053B62218871C4001B7103 /* ItemTableContent.swift in Sources */,
 				9E053B5D218871C4001B7103 /* Spacer.swift in Sources */,
-				9E612F5B22BA54E100BAEE19 /* CKDatabase+Modifying.swift in Sources */,
+				9E612F5B22BA54E100BAEE19 /* CKDatabase+Deleting.swift in Sources */,
 				9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */,
 				9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */,
 				9EFB86DC21662AD100985B14 /* Tree.swift in Sources */,
@@ -943,7 +943,7 @@
 				9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */,
 				9E576E352186F85100C9F876 /* Storage.swift in Sources */,
 				9E612F5D22BA594B00BAEE19 /* CKDatabase+Operations.swift in Sources */,
-				9E612F6522BA8C3600BAEE19 /* CKDatabase+SavingAndDeleting.swift in Sources */,
+				9E612F6522BA8C3600BAEE19 /* CKDatabase+Saving.swift in Sources */,
 				9E612F5F22BA59D500BAEE19 /* CKDatabase+Querying.swift in Sources */,
 				9E053B63218871C4001B7103 /* Row.swift in Sources */,
 				9EE17AF32222B29000A07E4B /* CKDatabase+FetchingRecords.swift in Sources */,
