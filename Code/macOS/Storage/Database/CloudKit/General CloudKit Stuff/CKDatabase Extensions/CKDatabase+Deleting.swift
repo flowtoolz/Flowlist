@@ -42,15 +42,12 @@ extension CKDatabase
         {
             (promiseResults: [Result<DeletionResult>]) -> DeletionResult in
             
-            return try self.deletionResult(from: promiseResults)
+            // TODO: map properly. throw error only if ALL batches failed. if at least one batch succeeded, create an integrated modification result that expresses everything that failed and everything that succeeded, merging the returned modification results into one
+            // from PromiseKit docs: "The array is ordered the same as the input, ie. the result order is *not* resolution order."
+            // ... so we can identify batches by index in order to merge results
+            
+            return .ok
         }
-    }
-    
-    private func deletionResult(from promiseResults: [Result<DeletionResult>]) throws -> DeletionResult
-    {
-        // TODO: throw error only if ALL batches failed. if at least one batch succeeded, create an integrated modification result that expresses everything that failed and everything that succeeded, merging the returned modification results into one
-        
-        return .ok
     }
 
     private func deleteCKRecordsInOneBatch(with ids: [CKRecord.ID]) -> Promise<DeletionResult>

@@ -25,15 +25,11 @@ extension CKDatabase
         {
             (promiseResults: [Result<SaveResult>]) -> SaveResult in
             
-            return try self.saveResult(from: promiseResults)
+            // TODO: map properly. throw error only if ALL batches failed. if at least one batch succeeded, create an integrated modification result that expresses everything that failed and everything that succeeded, merging the returned modification results into one
+            // from PromiseKit docs: "The array is ordered the same as the input, ie. the result order is *not* resolution order."
+            // ... so we can identify batches by index in order to merge results
+            return .ok
         }
-    }
-    
-    private func saveResult(from promiseResults: [Result<SaveResult>]) throws -> SaveResult
-    {
-        // TODO: throw error only if ALL batches failed. if at least one batch succeeded, create an integrated modification result that expresses everything that failed and everything that succeeded, merging the returned modification results into one
-        
-        return .ok
     }
 
     private func saveInOneBatch(_ ckRecords: [CKRecord]) -> Promise<SaveResult>
