@@ -9,26 +9,26 @@ extension CKDatabase
         guard !ckRecords.isEmpty else
         {
             log(warning: "Tried to save empty array of CKRecords to iCloud.")
-            return .value(.ok)
+            return .value(.empty)
         }
         
-        return ckRecords.count > maxSaveBatchSize
+        return ckRecords.count > maxBatchSize
             ? saveInBatches(ckRecords)
             : saveInOneBatch(ckRecords)
     }
     
     private func saveInBatches(_ ckRecords: [CKRecord]) -> Promise<SaveResult>
     {
-        let batches = ckRecords.splitIntoSlices(ofSize: maxSaveBatchSize).map(Array.init)
+        let batches = ckRecords.splitIntoSlices(ofSize: maxBatchSize).map(Array.init)
+        let batchPromises = batches.map(saveInOneBatch)
         
-        return when(resolved: batches.map(saveInOneBatch)).map
+        return firstly
         {
-            (promiseResults: [Result<SaveResult>]) -> SaveResult in
-            
-            // TODO: map properly. throw error only if ALL batches failed. if at least one batch succeeded, create an integrated modification result that expresses everything that failed and everything that succeeded, merging the returned modification results into one
-            // from PromiseKit docs: "The array is ordered the same as the input, ie. the result order is *not* resolution order."
-            // ... so we can identify batches by index in order to merge results
-            return .ok
+            when(resolved: batchPromises)
+        }
+        .map(on: queue)
+        {
+            self.merge(batchPromiseResults: $0, from: batches)
         }
     }
 
@@ -37,19 +37,22 @@ extension CKDatabase
         let operation = CKModifyRecordsOperation(recordsToSave: ckRecords,
                                                  recordIDsToDelete: nil)
 
-        var result = SaveResult()
+        var conflicts = [SaveConflict]()
+        var failures = [SaveFailure]()
         
         operation.perRecordCompletionBlock =
         {
-            guard let error = $1 else { return }
+            record, error in
+            
+            guard let error = error else { return }
             
             if let conflict = SaveConflict(from: error)
             {
-                result.conflicts.append(conflict)
+                conflicts.append(conflict)
             }
             else
             {
-                result.failedUpdates.append($0)
+                failures.append(SaveFailure(record, error))
             }
         }
         
@@ -67,28 +70,59 @@ extension CKDatabase
                 {
                     log(error: error.ckReadable.message)
                     
-                    guard let ckError = error.ckError, ckError.code == .partialFailure else
+                    guard error.ckError?.code == .partialFailure else
                     {
                         return resolver.reject(error.ckReadable)
                     }
                 }
 
-                result.updatedRecords = updatedRecords ?? []
-                resolver.fulfill(result)
+                resolver.fulfill(SaveResult(successes: updatedRecords ?? [],
+                                            conflicts: conflicts,
+                                            failures: failures))
             }
             
             perform(operation)
         }
     }
+    
+    private func merge(batchPromiseResults: [PromiseKit.Result<SaveResult>],
+                       from batches: [[CKRecord]]) -> SaveResult
+    {
+        var successes = [CKRecord]()
+        var conflicts = [SaveConflict]()
+        var failures = [SaveFailure]()
+        
+        for batchIndex in 0 ..< batchPromiseResults.count
+        {
+            let batchPromiseResult = batchPromiseResults[batchIndex]
+            
+            switch batchPromiseResult
+            {
+            case .fulfilled(let saveResult):
+                successes += saveResult.successes
+                conflicts += saveResult.conflicts
+                failures += saveResult.failures
+            case .rejected(let error):
+                failures += batches[batchIndex].map { SaveFailure($0, error) }
+            }
+        }
+        
+        return SaveResult(successes: successes,
+                          conflicts: conflicts,
+                          failures: failures)
+    }
 }
 
 struct SaveResult
 {
-    static var ok: SaveResult { return SaveResult() }
+    static var empty: SaveResult
+    {
+        return SaveResult(successes: [], conflicts: [], failures: [])
+    }
     
-    var updatedRecords = [CKRecord]()
-    var conflicts = [SaveConflict]()
-    var failedUpdates = [CKRecord]()
+    let successes: [CKRecord]
+    let conflicts: [SaveConflict]
+    let failures: [SaveFailure]
 }
 
 // TODO: when the conflict is being resolved, the resolved version should be written to the server record and that record should be written back to the server
@@ -104,12 +138,26 @@ struct SaveConflict
         
         self.clientRecord = clientRecord
         self.serverRecord = serverRecord
+        
+        // server can't provide ancestor when client record wasn't fetched from server, because the client record's change tag wouldn't match any previous change tag of that record on the server
         self.ancestorRecord = ckError.ancestorRecord
     }
     
     let clientRecord: CKRecord
     let serverRecord: CKRecord
-    let ancestorRecord: CKRecord? // can't be provided if the client didn't fetch the record from the db but re-created it, in which case the client record's change tag doesn't match any previous change tag of that record on the server
+    let ancestorRecord: CKRecord?
 }
 
-private let maxSaveBatchSize = 400
+struct SaveFailure
+{
+    init(_ record: CKRecord, _ error: Error)
+    {
+        self.record = record
+        self.error = error
+    }
+    
+    let record: CKRecord
+    let error: Error
+}
+
+private let maxBatchSize = 400
