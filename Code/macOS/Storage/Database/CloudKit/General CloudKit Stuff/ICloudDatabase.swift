@@ -4,7 +4,7 @@ import SwiftObserver
 import SwiftyToolz
 
 /**
- A wrapper around CKDatabase **and** CKContainer. It provides observability, setup and availability ckecking.
+ A wrapper around CKDatabase **and** CKContainer. It provides observability, setup, availability ckecking and cashing of CKRecord system fields
  */
 class ICloudDatabase: CustomObservable
 {
@@ -65,18 +65,30 @@ class ICloudDatabase: CustomObservable
 
     // MARK: - Basics: Container and Database
     
+    init(scope: CKDatabase.Scope)
+    {
+        switch scope
+        {
+        case .public:
+            ckDatabase = ckContainer.publicCloudDatabase
+        case .private:
+            ckDatabase = ckContainer.privateCloudDatabase
+        case .shared:
+            ckDatabase = ckContainer.sharedCloudDatabase
+        @unknown default:
+            log(error: "Unknown CKDatabase.Scope: \(scope)")
+            ckDatabase = ckContainer.privateCloudDatabase
+        }
+    }
+    
     func perform(_ operation: CKDatabaseOperation)
     {
         ckDatabase.perform(operation)
     }
     
-    var queue: DispatchQueue { return iCloudQueue }
+    var queue: DispatchQueue { return ckDatabase.queue }
     
-    private var ckDatabase: CKDatabase
-    {
-        return ckContainer.privateCloudDatabase
-    }
-    
+    private let ckDatabase: CKDatabase
     private let ckContainer = CKContainer.default()
     
     // MARK: - Observability of Notifications

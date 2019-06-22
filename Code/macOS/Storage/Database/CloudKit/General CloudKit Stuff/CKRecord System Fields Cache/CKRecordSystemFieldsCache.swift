@@ -16,8 +16,8 @@ class CKRecordSystemFieldsCache
             return existingCKRecord
         }
         
-        let newRecordID = CKRecord.ID(recordName: id, zoneID: zoneID)
-        let newCKRecord = CKRecord(recordType: recordType, recordID: newRecordID)
+        let newCKRecordID = CKRecord.ID(recordName: id, zoneID: zoneID)
+        let newCKRecord = CKRecord(recordType: recordType, recordID: newCKRecordID)
         
         save(newCKRecord)
         

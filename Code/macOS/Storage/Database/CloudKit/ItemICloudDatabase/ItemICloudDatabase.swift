@@ -297,7 +297,7 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     var queue: DispatchQueue { return db.queue }
     
-    private let db = ICloudDatabase()
+    private let db = ICloudDatabase(scope: .private)
     
     // MARK: - Observability
     
