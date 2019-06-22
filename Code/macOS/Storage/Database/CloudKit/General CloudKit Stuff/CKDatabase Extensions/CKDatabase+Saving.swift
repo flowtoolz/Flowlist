@@ -8,7 +8,7 @@ extension CKDatabase
     {
         guard !ckRecords.isEmpty else
         {
-            log(warning: "Tried to save empty array of CKRecords to iCloud.")
+            log(warning: "Tried to save empty array of CKRecords.")
             return .value(.empty)
         }
         
@@ -70,15 +70,17 @@ extension CKDatabase
                 {
                     log(error: error.ckReadable.message)
                     
-                    guard error.ckError?.code == .partialFailure else
+                    if error.ckError?.code != .partialFailure
                     {
                         return resolver.reject(error.ckReadable)
                     }
                 }
-
-                resolver.fulfill(SaveResult(successes: updatedRecords ?? [],
-                                            conflicts: conflicts,
-                                            failures: failures))
+                
+                let result = SaveResult(successes: updatedRecords ?? [],
+                                        conflicts: conflicts,
+                                        failures: failures)
+                
+                resolver.fulfill(result)
             }
             
             perform(operation)
