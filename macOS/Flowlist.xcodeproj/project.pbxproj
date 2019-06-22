@@ -11,7 +11,7 @@
 		9E053B2521886867001B7103 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2421886867001B7103 /* FullVersion.swift */; };
 		9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */; };
 		9E053B3121886963001B7103 /* CKRecord+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2B21886963001B7103 /* CKRecord+Item.swift */; };
-		9E053B3221886963001B7103 /* ICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2C21886963001B7103 /* ICloudDatabase.swift */; };
+		9E053B3221886963001B7103 /* CKDatabaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2C21886963001B7103 /* CKDatabaseController.swift */; };
 		9E053B3321886963001B7103 /* ItemICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */; };
 		9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3421886AC4001B7103 /* PurchaseController.swift */; };
 		9E053B3721886BD4001B7103 /* SKProduct+FormattedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */; };
@@ -131,7 +131,7 @@
 		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullVersion.swift; sourceTree = "<group>"; };
 		9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Price.swift"; sourceTree = "<group>"; };
 		9E053B2B21886963001B7103 /* CKRecord+Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CKRecord+Item.swift"; sourceTree = "<group>"; };
-		9E053B2C21886963001B7103 /* ICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudDatabase.swift; sourceTree = "<group>"; };
+		9E053B2C21886963001B7103 /* CKDatabaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKDatabaseController.swift; sourceTree = "<group>"; };
 		9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemICloudDatabase.swift; sourceTree = "<group>"; };
 		9E053B3421886AC4001B7103 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKProduct+FormattedPrice.swift"; sourceTree = "<group>"; };
@@ -280,7 +280,7 @@
 		9E0C5BFD228F1B0200DC3460 /* General CloudKit Stuff */ = {
 			isa = PBXGroup;
 			children = (
-				9E053B2C21886963001B7103 /* ICloudDatabase.swift */,
+				9E053B2C21886963001B7103 /* CKDatabaseController.swift */,
 				9ED6964E22BC2EED006D275E /* CKDatabase Extensions */,
 				9ED6965122BC32FE006D275E /* CKRecord System Fields Cache */,
 				9EE17AF02222A8F600A07E4B /* CKContainer+AccountAccess.swift */,
@@ -971,7 +971,7 @@
 				9E053B6C21887210001B7103 /* GroupIcon.swift in Sources */,
 				9EF0AABC218838FA00B707F4 /* Store+Edit.swift in Sources */,
 				9E053B6D21887210001B7103 /* ItemView.swift in Sources */,
-				9E053B3221886963001B7103 /* ICloudDatabase.swift in Sources */,
+				9E053B3221886963001B7103 /* CKDatabaseController.swift in Sources */,
 				9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */,
 				9E053B462188711A001B7103 /* WindowMenu.swift in Sources */,
 				9E5768C020C15B6300749C0C /* Browser+Debugging.swift in Sources */,

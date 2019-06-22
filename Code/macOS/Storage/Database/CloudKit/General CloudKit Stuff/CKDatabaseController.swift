@@ -4,26 +4,43 @@ import SwiftObserver
 import SwiftyToolz
 
 /**
- A wrapper around CKDatabase **and** CKContainer. It provides observability, setup, availability ckecking and cashing of CKRecord system fields
+ A wrapper around a CKDatabase in the default CKContainer
+ 
+ It provides controlled access to the CKDatabase and cares for observability, setup, availability checking and cashing of CKRecord system fields.
  */
-class ICloudDatabase: CustomObservable
+class CKDatabaseController: CustomObservable
 {
-    // MARK: - Save and Delete
+    // MARK: - Setup
     
-    func save(_ ckRecords: [CKRecord]) -> Promise<SaveResult>
+    init(databaseScope: CKDatabase.Scope)
     {
-        return ckDatabase.save(ckRecords)
+        switch databaseScope
+        {
+        case .public:
+            ckDatabase = ckContainer.publicCloudDatabase
+        case .private:
+            ckDatabase = ckContainer.privateCloudDatabase
+        case .shared:
+            ckDatabase = ckContainer.sharedCloudDatabase
+        @unknown default:
+            log(error: "Unknown CKDatabase.Scope: \(databaseScope)")
+            ckDatabase = ckContainer.privateCloudDatabase
+        }
     }
     
-    func deleteCKRecords(ofType type: String,
-                         inZone zoneID: CKRecordZone.ID) -> Promise<DeletionResult>
+    func createZone(with id: CKRecordZone.ID) -> Promise<CKRecordZone>
     {
-        return ckDatabase.deleteCKRecords(ofType: type, inZone: zoneID)
+        return ckDatabase.createZone(with: id)
     }
     
-    func deleteCKRecords(withIDs ids: [CKRecord.ID]) -> Promise<DeletionResult>
+    func createDatabaseSubscription(withID id: String) -> Promise<CKSubscription>
     {
-        return ckDatabase.deleteCKRecords(with: ids)
+        return ckDatabase.createSubscription(withID: id)
+    }
+    
+    func ensureAccountAccess() -> Promise<Void>
+    {
+        return ckContainer.ensureAccountAccess()
     }
     
     // MARK: - Fetch
@@ -46,40 +63,25 @@ class ICloudDatabase: CustomObservable
     
     var hasChangeToken: Bool { return ckDatabase.hasServerChangeToken }
     
-    // MARK: - Setup
+    // MARK: - Save and Delete
     
-    func createZone(with id: CKRecordZone.ID) -> Promise<CKRecordZone>
+    func save(_ ckRecords: [CKRecord]) -> Promise<SaveResult>
     {
-        return ckDatabase.createZone(with: id)
+        return ckDatabase.save(ckRecords)
     }
     
-    func createDatabaseSubscription(withID id: String) -> Promise<CKSubscription>
+    func deleteCKRecords(ofType type: String,
+                         inZone zoneID: CKRecordZone.ID) -> Promise<DeletionResult>
     {
-        return ckDatabase.createSubscription(withID: id)
+        return ckDatabase.deleteCKRecords(ofType: type, inZone: zoneID)
     }
     
-    func ensureAccountAccess() -> Promise<Void>
+    func deleteCKRecords(withIDs ids: [CKRecord.ID]) -> Promise<DeletionResult>
     {
-        return ckContainer.ensureAccountAccess()
+        return ckDatabase.deleteCKRecords(with: ids)
     }
 
     // MARK: - Basics: Container and Database
-    
-    init(scope: CKDatabase.Scope)
-    {
-        switch scope
-        {
-        case .public:
-            ckDatabase = ckContainer.publicCloudDatabase
-        case .private:
-            ckDatabase = ckContainer.privateCloudDatabase
-        case .shared:
-            ckDatabase = ckContainer.sharedCloudDatabase
-        @unknown default:
-            log(error: "Unknown CKDatabase.Scope: \(scope)")
-            ckDatabase = ckContainer.privateCloudDatabase
-        }
-    }
     
     func perform(_ operation: CKDatabaseOperation)
     {

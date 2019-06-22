@@ -9,7 +9,10 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     init()
     {
-        observe(db) { [weak self] in self?.didReceive(notification: $0) }
+        observe(ckDatabaseController)
+        {
+            [weak self] in self?.didReceive(notification: $0)
+        }
     }
     
     deinit { stopObserving() }
@@ -44,7 +47,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.db.save(ckRecords)
+                self.ckDatabaseController.save(ckRecords)
             }
             .done(on: queue)
             {
@@ -72,7 +75,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.db.deleteCKRecords(withIDs: ckRecordIDs)
+                self.ckDatabaseController.deleteCKRecords(withIDs: ckRecordIDs)
             }
             .map
             {
@@ -106,7 +109,8 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.db.deleteCKRecords(ofType: CKRecord.itemType, inZone: .item)
+                self.ckDatabaseController.deleteCKRecords(ofType: CKRecord.itemType,
+                                                          inZone: .item)
             }
             .done(on: queue)
             {
@@ -134,7 +138,8 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.db.queryCKRecords(ofType: CKRecord.itemType, inZone: .item)
+                self.ckDatabaseController.queryCKRecords(ofType: CKRecord.itemType,
+                                                         inZone: .item)
             }
             .done(on: queue)
             {
@@ -163,7 +168,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.db.perform(fetchQuery, inZone: .item)
+                self.ckDatabaseController.perform(fetchQuery, inZone: .item)
             }
             .done(on: queue)
             {
@@ -191,7 +196,10 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.db.fetchChanges(fromZone: .item).map { $0.makeItemDatabaseChanges() }
+                self.ckDatabaseController.fetchChanges(fromZone: .item).map
+                {
+                    $0.makeItemDatabaseChanges()
+                }
             }
             .done(on: queue)
             {
@@ -205,7 +213,7 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    var hasChangeToken: Bool { return db.hasChangeToken }
+    var hasChangeToken: Bool { return ckDatabaseController.hasChangeToken }
     
     // MARK: - Ensure Access
     
@@ -225,7 +233,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             
             firstly
             {
-                self.db.ensureAccountAccess()
+                self.ckDatabaseController.ensureAccountAccess()
             }
             .then(on: queue)
             {
@@ -265,7 +273,7 @@ class ItemICloudDatabase: Observer, CustomObservable
     {
         let dbSubID = "ItemDataBaseSubscription"
         
-        return db.createDatabaseSubscription(withID: dbSubID).map { _ in }
+        return ckDatabaseController.createDatabaseSubscription(withID: dbSubID).map { _ in }
     }
     
     private func didReceive(notification: CKDatabaseNotification?)
@@ -285,19 +293,19 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     private func ensureItemRecordZoneExists() -> Promise<Void>
     {
-        return db.createZone(with: .item).map { _ in }
+        return ckDatabaseController.createZone(with: .item).map { _ in }
     }
     
     // MARK: - iCloud Database
     
     func handlePushNotification(with userInfo: [String : Any])
     {
-        db.handlePushNotification(with: userInfo)
+        ckDatabaseController.handlePushNotification(with: userInfo)
     }
     
-    var queue: DispatchQueue { return db.queue }
+    var queue: DispatchQueue { return ckDatabaseController.queue }
     
-    private let db = ICloudDatabase(scope: .private)
+    private let ckDatabaseController = CKDatabaseController(databaseScope: .private)
     
     // MARK: - Observability
     
