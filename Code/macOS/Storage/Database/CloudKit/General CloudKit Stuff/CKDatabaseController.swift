@@ -12,7 +12,7 @@ class CKDatabaseController: CustomObservable
 {
     // MARK: - Setup
     
-    init(databaseScope: CKDatabase.Scope)
+    init(databaseScope: CKDatabase.Scope, cacheName: String)
     {
         switch databaseScope
         {
@@ -26,6 +26,8 @@ class CKDatabaseController: CustomObservable
             log(error: "Unknown CKDatabase.Scope: \(databaseScope)")
             ckDatabase = ckContainer.privateCloudDatabase
         }
+        
+        ckRecordSystemFieldsCache = CKRecordSystemFieldsCache(name: cacheName)
     }
     
     func createZone(with id: CKRecordZone.ID) -> Promise<CKRecordZone>
@@ -65,6 +67,13 @@ class CKDatabaseController: CustomObservable
     
     // MARK: - Save and Delete
     
+    func getCKRecordWithCachedSystemFields(id: String,
+                                           type: CKRecord.RecordType,
+                                           zoneID: CKRecordZone.ID) -> CKRecord
+    {
+        return ckRecordSystemFieldsCache.getCKRecord(with: id, type: type, zoneID: zoneID)
+    }
+    
     func save(_ ckRecords: [CKRecord]) -> Promise<SaveResult>
     {
         return ckDatabase.save(ckRecords)
@@ -90,6 +99,7 @@ class CKDatabaseController: CustomObservable
     
     var queue: DispatchQueue { return ckDatabase.queue }
     
+    private let ckRecordSystemFieldsCache: CKRecordSystemFieldsCache
     private let ckDatabase: CKDatabase
     private let ckContainer = CKContainer.default()
     

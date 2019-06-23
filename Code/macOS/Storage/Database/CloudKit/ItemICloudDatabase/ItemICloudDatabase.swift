@@ -303,7 +303,8 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     var queue: DispatchQueue { return ckDatabaseController.queue }
     
-    private let ckDatabaseController = CKDatabaseController(databaseScope: .private)
+    private let ckDatabaseController = CKDatabaseController(databaseScope: .private,
+                                                            cacheName: "Flowlist iCloud Cache")
     
     // MARK: - Observability
     

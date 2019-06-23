@@ -10,8 +10,8 @@ class CKRecordSystemFieldsCache
     // MARK: - Get CKRecord That Has Correct System Fields
     
     func getCKRecord(with id: String,
-                     zoneID: CKRecordZone.ID,
-                     type: CKRecord.RecordType) -> CKRecord
+                     type: CKRecord.RecordType,
+                     zoneID: CKRecordZone.ID) -> CKRecord
     {
         if let existingCKRecord = loadCKRecord(with: id)
         {

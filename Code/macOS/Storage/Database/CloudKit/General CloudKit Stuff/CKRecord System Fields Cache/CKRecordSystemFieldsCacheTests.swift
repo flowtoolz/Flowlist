@@ -33,8 +33,8 @@ class CKRecordSystemFieldsCacheTests: XCTestCase
         }
         
         let newRecord = cache.getCKRecord(with: id,
-                                          zoneID: .item,
-                                          type: CKRecord.itemType)
+                                          type: .item,
+                                          zoneID: .item)
         
         XCTAssertEqual(newRecord.recordID.recordName, id)
         XCTAssert(FileManager.default.fileExists(atPath: file.path))
