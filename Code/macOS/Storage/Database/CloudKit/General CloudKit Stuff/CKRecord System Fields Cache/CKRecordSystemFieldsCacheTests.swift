@@ -13,7 +13,9 @@ class CKRecordSystemFieldsCacheTests: XCTestCase
         let data = ItemData(id: id)
         let item = Item(data: data)
         let record = Record(item: item)
-        let ckRecord = CKRecord(record: record)
+        let ckRecord = CKRecord(recordType: .item,
+                                recordID: CKRecord.ID(recordName: id,
+                                                      zoneID: .item))
         
         guard let savedFile = cache.save(ckRecord) else
         {

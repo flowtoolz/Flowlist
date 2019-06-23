@@ -23,7 +23,7 @@ class ItemICloudDatabase: Observer, CustomObservable
     {
         return firstly
         {
-            save(records.map(CKRecord.init))
+            save(records.map(makeCKRecord))
         }
         .map
         {
@@ -35,7 +35,23 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    func save(_ ckRecords: [CKRecord]) -> Promise<SaveResult>
+    private func makeCKRecord(for record: Record) -> CKRecord
+    {
+        let ckRecord = ckDatabaseController.getCKRecordWithCachedSystemFields(id: record.id,
+                                                                              type: .item,
+                                                                              zoneID: .item)
+        
+        ckRecord.text = record.text
+        ckRecord.state = record.state
+        ckRecord.tag = record.tag
+        
+        ckRecord.superItem = record.rootID
+        ckRecord.position = record.position
+        
+        return ckRecord
+    }
+    
+    private func save(_ ckRecords: [CKRecord]) -> Promise<SaveResult>
     {
         return Promise<SaveResult>
         {

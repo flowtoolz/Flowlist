@@ -4,18 +4,7 @@ import SwiftyToolz
 
 extension CKRecord
 {
-    // MARK: - Convert between CKRecord and Record
-
-    convenience init(record: Record)
-    {
-        self.init(recordType: .item, recordID: ID(itemID: record.id))
-
-        text = record.text
-        state = record.state
-        tag = record.tag
-        superItem = record.rootID
-        position = record.position
-    }
+    // MARK: - Convert to Record
     
     func makeItemRecord() -> Record
     {
