@@ -9,7 +9,9 @@ class CKRecordSystemFieldsCache
 {
     // MARK: - Get CKRecord That Has Correct System Fields
     
-    func getCKRecord(with id: String) -> CKRecord
+    func getCKRecord(with id: String,
+                     zoneID: CKRecordZone.ID,
+                     type: CKRecord.RecordType) -> CKRecord
     {
         if let existingCKRecord = loadCKRecord(with: id)
         {
@@ -17,7 +19,7 @@ class CKRecordSystemFieldsCache
         }
         
         let newCKRecordID = CKRecord.ID(recordName: id, zoneID: zoneID)
-        let newCKRecord = CKRecord(recordType: recordType, recordID: newCKRecordID)
+        let newCKRecord = CKRecord(recordType: type, recordID: newCKRecordID)
         
         save(newCKRecord)
         
@@ -79,10 +81,7 @@ class CKRecordSystemFieldsCache
     private(set) lazy var directory: URL? =
     {
         guard let docDirectory = URL.documentDirectory else { return nil }
-        let cacheDir = docDirectory
-            .appendingPathComponent(name)
-            .appendingPathComponent(zoneID.zoneName)
-            .appendingPathComponent(recordType)
+        let cacheDir = docDirectory.appendingPathComponent(name)
         let fileManager = FileManager.default
         let cacheDirectoryExists = fileManager.fileExists(atPath: cacheDir.path)
         
@@ -105,18 +104,12 @@ class CKRecordSystemFieldsCache
     
     // MARK: - Configuration
     
-    init(name: String,
-         zoneID: CKRecordZone.ID,
-         recordType: CKRecord.RecordType)
+    init(name: String)
     {
         self.name = name
-        self.zoneID = zoneID
-        self.recordType = recordType
     }
     
     private let name: String
-    private let zoneID: CKRecordZone.ID
-    private let recordType: CKRecord.RecordType
 }
 
 
