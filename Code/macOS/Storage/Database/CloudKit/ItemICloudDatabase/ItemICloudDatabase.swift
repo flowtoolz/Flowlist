@@ -109,8 +109,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.ckDatabaseController.deleteCKRecords(ofType: CKRecord.itemType,
-                                                          inZone: .item)
+                self.ckDatabaseController.deleteCKRecords(ofType: .item, inZone: .item)
             }
             .done(on: queue)
             {
@@ -138,8 +137,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.ckDatabaseController.queryCKRecords(ofType: CKRecord.itemType,
-                                                         inZone: .item)
+                self.ckDatabaseController.queryCKRecords(ofType: .item, inZone: .item)
             }
             .done(on: queue)
             {
@@ -156,7 +154,7 @@ class ItemICloudDatabase: Observer, CustomObservable
     private func fetchSubitemCKRecords(ofItemWithID id: CKRecord.ID) -> Promise<[CKRecord]>
     {
         let predicate = NSPredicate(format: "superItem = %@", id)
-        let fetchQuery = CKQuery(recordType: CKRecord.itemType, predicate: predicate)
+        let fetchQuery = CKQuery(recordType: .item, predicate: predicate)
         
         return Promise<[CKRecord]>
         {

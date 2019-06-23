@@ -8,8 +8,7 @@ extension CKRecord
 
     convenience init(record: Record)
     {
-        self.init(recordType: CKRecord.itemType,
-                  recordID: ID(itemID: record.id))
+        self.init(recordType: .item, recordID: ID(itemID: record.id))
 
         text = record.text
         state = record.state
@@ -138,17 +137,15 @@ extension CKRecord
     
     var isItem: Bool
     {
-        let result = recordType == CKRecord.itemType
+        let result = recordType == .item
         
         if !result
         {
-            log(warning: "Type is \"\(recordType)\" but expected \"\(CKRecord.itemType)\".")
+            log(warning: "Type is \"\(recordType)\" but expected \"\(CKRecord.RecordType.item)\".")
         }
         
         return result
     }
-    
-    static var itemType: RecordType { return "Item" }
     
     // MARK: - Fields
     
@@ -184,6 +181,11 @@ extension CKRecord
         
         case text, state, tag, superItem, position
     }
+}
+
+extension CKRecord.RecordType
+{
+    static var item: CKRecord.RecordType { return "Item" }
 }
 
 extension CKRecord.ID
