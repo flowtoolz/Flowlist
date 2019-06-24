@@ -11,7 +11,6 @@
 		9E053B2521886867001B7103 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2421886867001B7103 /* FullVersion.swift */; };
 		9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */; };
 		9E053B3121886963001B7103 /* CKRecord+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2B21886963001B7103 /* CKRecord+Item.swift */; };
-		9E053B3221886963001B7103 /* CKDatabaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2C21886963001B7103 /* CKDatabaseController.swift */; };
 		9E053B3321886963001B7103 /* ItemICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */; };
 		9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3421886AC4001B7103 /* PurchaseController.swift */; };
 		9E053B3721886BD4001B7103 /* SKProduct+FormattedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */; };
@@ -60,12 +59,6 @@
 		9E5768C220C15CDF00749C0C /* Tree+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5768C120C15CDF00749C0C /* Tree+Hashable.swift */; };
 		9E576E352186F85100C9F876 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E342186F85100C9F876 /* Storage.swift */; };
 		9E576E372186FAB400C9F876 /* Item+Matching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E576E362186FAB400C9F876 /* Item+Matching.swift */; };
-		9E612F5B22BA54E100BAEE19 /* CKDatabase+Deleting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F5A22BA54E100BAEE19 /* CKDatabase+Deleting.swift */; };
-		9E612F5D22BA594B00BAEE19 /* CKDatabase+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F5C22BA594B00BAEE19 /* CKDatabase+Operations.swift */; };
-		9E612F5F22BA59D500BAEE19 /* CKDatabase+Querying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F5E22BA59D500BAEE19 /* CKDatabase+Querying.swift */; };
-		9E612F6122BA73DC00BAEE19 /* CKDatabase+Subscribing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F6022BA73DC00BAEE19 /* CKDatabase+Subscribing.swift */; };
-		9E612F6322BA779600BAEE19 /* CKDatabase+CreatingZones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F6222BA779600BAEE19 /* CKDatabase+CreatingZones.swift */; };
-		9E612F6522BA8C3600BAEE19 /* CKDatabase+Saving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E612F6422BA8C3600BAEE19 /* CKDatabase+Saving.swift */; };
 		9E654E1121A487070052607F /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E654E1021A485B30052607F /* StorageController.swift */; };
 		9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Item+State.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
@@ -73,7 +66,6 @@
 		9E6E70AB21936A8B00BDB0BA /* Record+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AA21936A8B00BDB0BA /* Record+Item.swift */; };
 		9E6E70AD21936CD300BDB0BA /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AC21936CD300BDB0BA /* Record.swift */; };
 		9E6E70AF2193803E00BDB0BA /* Item+CodableField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AE2193803E00BDB0BA /* Item+CodableField.swift */; };
-		9E713C9A22AC2864002EB1D4 /* CKError+ReadableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E713C9922AC2864002EB1D4 /* CKError+ReadableError.swift */; };
 		9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* Store.swift */; };
 		9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* List+Editing.swift */; };
 		9E91651520551E5600A438FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E91651320551E5500A438FB /* Assets.xcassets */; };
@@ -83,17 +75,11 @@
 		9EA63839216F8BB100D1503C /* List+Selection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA63838216F8BB100D1503C /* List+Selection.swift */; };
 		9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7F99B20C19B210059166B /* Item+Clipboard.swift */; };
 		9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* Browser.swift */; };
-		9EBD41AB21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBD41AA21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift */; };
 		9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC498A521147FE1003636FE /* Item+Pasteboard.swift */; };
 		9EC5C8B221B00ED800615D20 /* AlertDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B121B00ED800615D20 /* AlertDialog.swift */; };
 		9EC5C8B621B00FE100615D20 /* Dialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B521B00FE100615D20 /* Dialog.swift */; };
 		9EC5C8B821B0300D00615D20 /* Dialog+ICloudConflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */; };
-		9ED6964D22BC0412006D275E /* CKRecordSystemFieldsCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED6964322BBF13A006D275E /* CKRecordSystemFieldsCacheTests.swift */; };
-		9ED6965422BC33C7006D275E /* CKRecord+CodableSystemFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED6964F22BC32D5006D275E /* CKRecord+CodableSystemFields.swift */; };
-		9ED6965522BC33D0006D275E /* CKRecordSystemFieldsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED6963B22BBDFB6006D275E /* CKRecordSystemFieldsCache.swift */; };
 		9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB5D032174AF740048D7C5 /* Item+Text.swift */; };
-		9EE17AF12222A8F600A07E4B /* CKContainer+AccountAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE17AF02222A8F600A07E4B /* CKContainer+AccountAccess.swift */; };
-		9EE17AF32222B29000A07E4B /* CKDatabase+FetchingRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE17AF22222B29000A07E4B /* CKDatabase+FetchingRecords.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
 		9EE60C0021ACE1AF0075109D /* ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */; };
 		9EEA769F21922A5700642EE7 /* ItemFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEA769E21922A5700642EE7 /* ItemFile.swift */; };
@@ -131,7 +117,6 @@
 		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullVersion.swift; sourceTree = "<group>"; };
 		9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Price.swift"; sourceTree = "<group>"; };
 		9E053B2B21886963001B7103 /* CKRecord+Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CKRecord+Item.swift"; sourceTree = "<group>"; };
-		9E053B2C21886963001B7103 /* CKDatabaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKDatabaseController.swift; sourceTree = "<group>"; };
 		9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemICloudDatabase.swift; sourceTree = "<group>"; };
 		9E053B3421886AC4001B7103 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKProduct+FormattedPrice.swift"; sourceTree = "<group>"; };
@@ -181,12 +166,6 @@
 		9E5768C120C15CDF00749C0C /* Tree+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tree+Hashable.swift"; sourceTree = "<group>"; };
 		9E576E342186F85100C9F876 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		9E576E362186FAB400C9F876 /* Item+Matching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Matching.swift"; sourceTree = "<group>"; };
-		9E612F5A22BA54E100BAEE19 /* CKDatabase+Deleting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Deleting.swift"; sourceTree = "<group>"; };
-		9E612F5C22BA594B00BAEE19 /* CKDatabase+Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Operations.swift"; sourceTree = "<group>"; };
-		9E612F5E22BA59D500BAEE19 /* CKDatabase+Querying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Querying.swift"; sourceTree = "<group>"; };
-		9E612F6022BA73DC00BAEE19 /* CKDatabase+Subscribing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Subscribing.swift"; sourceTree = "<group>"; };
-		9E612F6222BA779600BAEE19 /* CKDatabase+CreatingZones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+CreatingZones.swift"; sourceTree = "<group>"; };
-		9E612F6422BA8C3600BAEE19 /* CKDatabase+Saving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+Saving.swift"; sourceTree = "<group>"; };
 		9E654E1021A485B30052607F /* StorageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageController.swift; sourceTree = "<group>"; };
 		9E6C720A20B19C88001C3D2C /* Item+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+State.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
@@ -194,7 +173,6 @@
 		9E6E70AA21936A8B00BDB0BA /* Record+Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+Item.swift"; sourceTree = "<group>"; };
 		9E6E70AC21936CD300BDB0BA /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		9E6E70AE2193803E00BDB0BA /* Item+CodableField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CodableField.swift"; sourceTree = "<group>"; };
-		9E713C9922AC2864002EB1D4 /* CKError+ReadableError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKError+ReadableError.swift"; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		9E82A7A81EF2A558006AEF02 /* List+Editing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "List+Editing.swift"; sourceTree = "<group>"; };
 		9E91651320551E5500A438FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
@@ -205,19 +183,13 @@
 		9EA63838216F8BB100D1503C /* List+Selection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+Selection.swift"; sourceTree = "<group>"; };
 		9EA7F99B20C19B210059166B /* Item+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Clipboard.swift"; sourceTree = "<group>"; };
 		9EBC70282056FD02007A1EA8 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Browser.swift; sourceTree = "<group>"; };
-		9EBD41AA21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+FetchingChanges.swift"; sourceTree = "<group>"; };
 		9EC498A521147FE1003636FE /* Item+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Pasteboard.swift"; sourceTree = "<group>"; };
 		9EC5C8B121B00ED800615D20 /* AlertDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDialog.swift; sourceTree = "<group>"; };
 		9EC5C8B521B00FE100615D20 /* Dialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialog.swift; sourceTree = "<group>"; };
 		9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dialog+ICloudConflict.swift"; sourceTree = "<group>"; };
-		9ED6963B22BBDFB6006D275E /* CKRecordSystemFieldsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKRecordSystemFieldsCache.swift; sourceTree = "<group>"; };
 		9ED6964122BBF13A006D275E /* FlowlistTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowlistTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9ED6964322BBF13A006D275E /* CKRecordSystemFieldsCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKRecordSystemFieldsCacheTests.swift; sourceTree = "<group>"; };
 		9ED6964522BBF13A006D275E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9ED6964F22BC32D5006D275E /* CKRecord+CodableSystemFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKRecord+CodableSystemFields.swift"; sourceTree = "<group>"; };
 		9EDB5D032174AF740048D7C5 /* Item+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Text.swift"; sourceTree = "<group>"; };
-		9EE17AF02222A8F600A07E4B /* CKContainer+AccountAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKContainer+AccountAccess.swift"; sourceTree = "<group>"; };
-		9EE17AF22222B29000A07E4B /* CKDatabase+FetchingRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKDatabase+FetchingRecords.swift"; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Float+Style.swift"; sourceTree = "<group>"; };
 		9EE60BFF21ACE1AF0075109D /* ItemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDatabase.swift; sourceTree = "<group>"; };
 		9EEA769E21922A5700642EE7 /* ItemFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemFile.swift; sourceTree = "<group>"; };
@@ -275,18 +247,6 @@
 				E46682D8127B754B09986C90 /* Pods-Flowlist.beta.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		9E0C5BFD228F1B0200DC3460 /* General CloudKit Stuff */ = {
-			isa = PBXGroup;
-			children = (
-				9E053B2C21886963001B7103 /* CKDatabaseController.swift */,
-				9ED6964E22BC2EED006D275E /* CKDatabase Extensions */,
-				9ED6965122BC32FE006D275E /* CKRecord System Fields Cache */,
-				9EE17AF02222A8F600A07E4B /* CKContainer+AccountAccess.swift */,
-				9E713C9922AC2864002EB1D4 /* CKError+ReadableError.swift */,
-			);
-			path = "General CloudKit Stuff";
 			sourceTree = "<group>";
 		};
 		9E132D2321D3C36200B61D2D /* Foundation */ = {
@@ -494,7 +454,6 @@
 			children = (
 				9E82C09421AAE56100152CB3 /* ItemICloudDatabase */,
 				9E13400922A2D85800434FD8 /* CloudKit-Item Mapping */,
-				9E0C5BFD228F1B0200DC3460 /* General CloudKit Stuff */,
 			);
 			path = CloudKit;
 			sourceTree = "<group>";
@@ -696,31 +655,6 @@
 			path = FlowlistTests;
 			sourceTree = "<group>";
 		};
-		9ED6964E22BC2EED006D275E /* CKDatabase Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				9E612F6422BA8C3600BAEE19 /* CKDatabase+Saving.swift */,
-				9E612F5A22BA54E100BAEE19 /* CKDatabase+Deleting.swift */,
-				9EBD41AA21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift */,
-				9EE17AF22222B29000A07E4B /* CKDatabase+FetchingRecords.swift */,
-				9E612F5E22BA59D500BAEE19 /* CKDatabase+Querying.swift */,
-				9E612F6222BA779600BAEE19 /* CKDatabase+CreatingZones.swift */,
-				9E612F6022BA73DC00BAEE19 /* CKDatabase+Subscribing.swift */,
-				9E612F5C22BA594B00BAEE19 /* CKDatabase+Operations.swift */,
-			);
-			path = "CKDatabase Extensions";
-			sourceTree = "<group>";
-		};
-		9ED6965122BC32FE006D275E /* CKRecord System Fields Cache */ = {
-			isa = PBXGroup;
-			children = (
-				9ED6964322BBF13A006D275E /* CKRecordSystemFieldsCacheTests.swift */,
-				9ED6963B22BBDFB6006D275E /* CKRecordSystemFieldsCache.swift */,
-				9ED6964F22BC32D5006D275E /* CKRecord+CodableSystemFields.swift */,
-			);
-			path = "CKRecord System Fields Cache";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -859,6 +793,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Flowlist/Pods-Flowlist-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CloudKid/CloudKid.framework",
 				"${BUILT_PRODUCTS_DIR}/FoundationToolz/FoundationToolz.framework",
 				"${BUILT_PRODUCTS_DIR}/GetLaid/GetLaid.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
@@ -870,6 +805,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CloudKid.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FoundationToolz.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GetLaid.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
@@ -909,20 +845,17 @@
 				9EC5C8B221B00ED800615D20 /* AlertDialog.swift in Sources */,
 				9E053B5F218871C4001B7103 /* Header.swift in Sources */,
 				9E053B4F2188715D001B7103 /* BulletpointList.swift in Sources */,
-				9E713C9A22AC2864002EB1D4 /* CKError+ReadableError.swift in Sources */,
 				9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */,
 				9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */,
 				9EF231A9218B570F006E783C /* Item+Encodable.swift in Sources */,
 				9E51C14A22B5182700510EC8 /* AppInstallationID.swift in Sources */,
 				9E053B65218871F5001B7103 /* Item+Export.swift in Sources */,
 				9E6E70AB21936A8B00BDB0BA /* Record+Item.swift in Sources */,
-				9E612F6322BA779600BAEE19 /* CKDatabase+CreatingZones.swift in Sources */,
 				9E053B442188711A001B7103 /* HelpMenu.swift in Sources */,
 				9EFE6DF122A3F64A005C224E /* CKDatabase+Item.swift in Sources */,
 				9EF0AABE21883E6E00B707F4 /* HashMap.swift in Sources */,
 				9E053B62218871C4001B7103 /* ItemTableContent.swift in Sources */,
 				9E053B5D218871C4001B7103 /* Spacer.swift in Sources */,
-				9E612F5B22BA54E100BAEE19 /* CKDatabase+Deleting.swift in Sources */,
 				9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */,
 				9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */,
 				9EFB86DC21662AD100985B14 /* Tree.swift in Sources */,
@@ -930,23 +863,16 @@
 				9E053B422188711A001B7103 /* ApplicationMenu.swift in Sources */,
 				9E6E70AD21936CD300BDB0BA /* Record.swift in Sources */,
 				9EF231AD218B785A006E783C /* Item+Creating.swift in Sources */,
-				9ED6965522BC33D0006D275E /* CKRecordSystemFieldsCache.swift in Sources */,
 				9EEBA1A72168EE860053B628 /* ItemData+Copyable.swift in Sources */,
 				9EC5C8B621B00FE100615D20 /* Dialog.swift in Sources */,
 				9EEA769F21922A5700642EE7 /* ItemFile.swift in Sources */,
-				9EE17AF12222A8F600A07E4B /* CKContainer+AccountAccess.swift in Sources */,
-				9ED6965422BC33C7006D275E /* CKRecord+CodableSystemFields.swift in Sources */,
 				9E053B61218871C4001B7103 /* List+NSPasteboard.swift in Sources */,
 				9E576E372186FAB400C9F876 /* Item+Matching.swift in Sources */,
 				9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */,
 				9E053B3B218870D0001B7103 /* FlowlistController.swift in Sources */,
 				9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */,
 				9E576E352186F85100C9F876 /* Storage.swift in Sources */,
-				9E612F5D22BA594B00BAEE19 /* CKDatabase+Operations.swift in Sources */,
-				9E612F6522BA8C3600BAEE19 /* CKDatabase+Saving.swift in Sources */,
-				9E612F5F22BA59D500BAEE19 /* CKDatabase+Querying.swift in Sources */,
 				9E053B63218871C4001B7103 /* Row.swift in Sources */,
-				9EE17AF32222B29000A07E4B /* CKDatabase+FetchingRecords.swift in Sources */,
 				9EF37C4E21A08EED00A43AA9 /* DataMenu.swift in Sources */,
 				9E053B452188711A001B7103 /* Menu.swift in Sources */,
 				9E053B23218867E4001B7103 /* ItemJSONFile.swift in Sources */,
@@ -971,7 +897,6 @@
 				9E053B6C21887210001B7103 /* GroupIcon.swift in Sources */,
 				9EF0AABC218838FA00B707F4 /* Store+Edit.swift in Sources */,
 				9E053B6D21887210001B7103 /* ItemView.swift in Sources */,
-				9E053B3221886963001B7103 /* CKDatabaseController.swift in Sources */,
 				9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */,
 				9E053B462188711A001B7103 /* WindowMenu.swift in Sources */,
 				9E5768C020C15B6300749C0C /* Browser+Debugging.swift in Sources */,
@@ -979,7 +904,6 @@
 				9E132D2521D3C38200B61D2D /* TextFormat+Foundation.swift in Sources */,
 				9E2CCE8D20C1DE030037D755 /* List+Clipboard.swift in Sources */,
 				9EE60C0021ACE1AF0075109D /* ItemDatabase.swift in Sources */,
-				9EBD41AB21AC419B00C97B99 /* CKDatabase+FetchingChanges.swift in Sources */,
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,
 				9E053B4921887133001B7103 /* FlowlistView.swift in Sources */,
 				9E22D8AF218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift in Sources */,
@@ -988,7 +912,6 @@
 				9E053B6A21887210001B7103 /* CheckBox.swift in Sources */,
 				9EEBA1A32168DAE40053B628 /* ItemData.swift in Sources */,
 				9E0D5AA120C160C800F0D827 /* Color+Style.swift in Sources */,
-				9E612F6122BA73DC00BAEE19 /* CKDatabase+Subscribing.swift in Sources */,
 				9E053B472188711A001B7103 /* EditMenu.swift in Sources */,
 				9EF2E8912187D293008D2780 /* Edit.swift in Sources */,
 			);
@@ -998,7 +921,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9ED6964D22BC0412006D275E /* CKRecordSystemFieldsCacheTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

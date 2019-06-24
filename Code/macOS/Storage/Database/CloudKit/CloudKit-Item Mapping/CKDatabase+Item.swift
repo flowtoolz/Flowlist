@@ -1,4 +1,5 @@
 import CloudKit
+import CloudKid
 
 extension CKDatabase.Changes
 {

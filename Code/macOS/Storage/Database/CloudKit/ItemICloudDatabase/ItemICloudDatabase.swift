@@ -1,4 +1,5 @@
 import CloudKit
+import CloudKid
 import PromiseKit
 import SwiftObserver
 import SwiftyToolz
