@@ -49,6 +49,21 @@ class CKRecordSystemFieldsCache
     // MARK: - Saving CloudKit Records
     
     @discardableResult
+    func save(_ ckRecords: [CKRecord]) -> [URL?]?
+    {
+        guard let directory = directory else { return nil }
+        
+        return ckRecords.map
+        {
+            ckRecord in
+            
+            let recordUUID = ckRecord.recordID.recordName
+            let file = directory.appendingPathComponent(recordUUID)
+            return ckRecord.systemFieldEncoding.save(to: file)
+        }
+    }
+    
+    @discardableResult
     func save(_ ckRecord: CKRecord) -> URL?
     {
         guard let directory = directory else { return nil }
