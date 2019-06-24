@@ -50,22 +50,83 @@ class CKDatabaseController: CustomObservable
     func queryCKRecords(ofType type: CKRecord.RecordType,
                         inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
     {
-        return ckDatabase.queryCKRecords(ofType: type, inZone: zoneID)
+        return firstly
+        {
+            ckDatabase.queryCKRecords(ofType: type, inZone: zoneID)
+        }
+        .get(on: ckDatabase.queue)
+        {
+            self.ckRecordSystemFieldsCache.save($0)
+        }
     }
     
     func perform(_ query: CKQuery, inZone zoneID: CKRecordZone.ID) -> Promise<[CKRecord]>
     {
-        return ckDatabase.perform(query, inZone: zoneID)
+        return firstly
+        {
+            ckDatabase.perform(query, inZone: zoneID)
+        }
+        .get(on: ckDatabase.queue)
+        {
+            self.ckRecordSystemFieldsCache.save($0)
+        }
     }
     
     func fetchChanges(fromZone zoneID: CKRecordZone.ID) -> Promise<CKDatabase.Changes>
     {
-        return ckDatabase.fetchChanges(fromZone: zoneID)
+        return firstly
+        {
+            ckDatabase.fetchChanges(fromZone: zoneID)
+        }
+        .get(on: ckDatabase.queue)
+        {
+            self.ckRecordSystemFieldsCache.save($0.changedCKRecords)
+            self.ckRecordSystemFieldsCache.deleteCKRecords(with: $0.idsOfDeletedCKRecords)
+        }
     }
     
     var hasChangeToken: Bool { return ckDatabase.hasServerChangeToken }
     
     // MARK: - Save and Delete
+    
+    func save(_ ckRecords: [CKRecord]) -> Promise<SaveResult>
+    {
+        return firstly
+        {
+            ckDatabase.save(ckRecords)
+        }
+        .get(on: ckDatabase.queue)
+        {
+            self.ckRecordSystemFieldsCache.save($0.successes)
+        }
+    }
+    
+    func deleteCKRecords(ofType type: String,
+                         inZone zoneID: CKRecordZone.ID) -> Promise<DeletionResult>
+    {
+        return firstly
+        {
+            ckDatabase.deleteCKRecords(ofType: type, inZone: zoneID)
+        }
+        .get(on: ckDatabase.queue)
+        {
+            self.ckRecordSystemFieldsCache.deleteCKRecords(with: $0.successes)
+        }
+    }
+    
+    func deleteCKRecords(withIDs ids: [CKRecord.ID]) -> Promise<DeletionResult>
+    {
+        return firstly
+        {
+            ckDatabase.deleteCKRecords(with: ids)
+        }
+        .get(on: ckDatabase.queue)
+        {
+            self.ckRecordSystemFieldsCache.deleteCKRecords(with: $0.successes)
+        }
+    }
+    
+    // MARK: - System Fields Cache
     
     func getCKRecordWithCachedSystemFields(id: String,
                                            type: CKRecord.RecordType,
@@ -74,21 +135,7 @@ class CKDatabaseController: CustomObservable
         return ckRecordSystemFieldsCache.getCKRecord(with: id, type: type, zoneID: zoneID)
     }
     
-    func save(_ ckRecords: [CKRecord]) -> Promise<SaveResult>
-    {
-        return ckDatabase.save(ckRecords)
-    }
-    
-    func deleteCKRecords(ofType type: String,
-                         inZone zoneID: CKRecordZone.ID) -> Promise<DeletionResult>
-    {
-        return ckDatabase.deleteCKRecords(ofType: type, inZone: zoneID)
-    }
-    
-    func deleteCKRecords(withIDs ids: [CKRecord.ID]) -> Promise<DeletionResult>
-    {
-        return ckDatabase.deleteCKRecords(with: ids)
-    }
+    private let ckRecordSystemFieldsCache: CKRecordSystemFieldsCache
 
     // MARK: - Basics: Container and Database
     
@@ -99,7 +146,6 @@ class CKDatabaseController: CustomObservable
     
     var queue: DispatchQueue { return ckDatabase.queue }
     
-    private let ckRecordSystemFieldsCache: CKRecordSystemFieldsCache
     private let ckDatabase: CKDatabase
     private let ckContainer = CKContainer.default()
     

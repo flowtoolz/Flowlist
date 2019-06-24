@@ -72,7 +72,33 @@ class CKRecordSystemFieldsCache
         return ckRecord.systemFieldEncoding.save(to: file)
     }
     
-    // MARK: - Delete All Files
+    // MARK: - Deleting CloudKit Records
+    
+    // TODO: write unit test for deletion funcs
+    @discardableResult
+    func deleteCKRecords(with ids: [CKRecord.ID]) -> Bool
+    {
+        guard let directory = directory else { return false }
+        
+        var allGood = true
+        
+        for id in ids
+        {
+            let file = directory.appendingPathComponent(id.recordName)
+            
+            do
+            {
+                try FileManager.default.removeItem(at: file)
+            }
+            catch
+            {
+                log(error: error.readable.message)
+                allGood = false
+            }
+        }
+        
+        return allGood
+    }
     
     @discardableResult
     func clean() -> Bool
@@ -109,7 +135,7 @@ class CKRecordSystemFieldsCache
             }
             catch
             {
-                log(error: error.localizedDescription)
+                log(error: error.readable.message)
                 return nil
             }
         }
