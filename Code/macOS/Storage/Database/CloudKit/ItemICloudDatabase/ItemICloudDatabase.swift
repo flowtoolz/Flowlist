@@ -228,7 +228,10 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    var hasChangeToken: Bool { return ckDatabaseController.hasChangeToken }
+    var hasChangeToken: Bool
+    {
+        return ckDatabaseController.hasChangeToken(forZone: .item)
+    }
     
     // MARK: - Ensure Access
     
