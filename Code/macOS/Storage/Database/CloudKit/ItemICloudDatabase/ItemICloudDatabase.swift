@@ -46,9 +46,9 @@ class ItemICloudDatabase: Observer, CustomObservable
         return ckRecord
     }
     
-    private func save(_ ckRecords: [CKRecord]) -> Promise<SaveResult>
+    private func save(_ ckRecords: [CKRecord]) -> Promise<CKSaveResult>
     {
-        return Promise<SaveResult>
+        return Promise<CKSaveResult>
         {
             resolver in
             
@@ -72,7 +72,7 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    func removeRecords(with ids: [String]) -> Promise<ItemDatabaseModificationResult>
+    func deleteRecords(with ids: [String]) -> Promise<ItemDatabaseModificationResult>
     {
         let ckRecordIDs = ids.map(CKRecord.ID.init(itemID:))
         
@@ -90,9 +90,11 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .map
             {
-                ckModificationResult -> ItemDatabaseModificationResult in
+                ckDeletionResult -> ItemDatabaseModificationResult in
                 
                 // TODO: map properly
+                
+                
                 
                 return ItemDatabaseModificationResult.success
             }
@@ -108,9 +110,9 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    func deleteRecords() -> Promise<DeletionResult>
+    func deleteRecords() -> Promise<CKDeletionResult>
     {
-        return Promise<DeletionResult>
+        return Promise<CKDeletionResult>
         {
             resolver in
             
