@@ -13,7 +13,7 @@ protocol ItemDatabase
     
     var queue: DispatchQueue { get }
     
-    var messenger: Messenger<ItemDatabaseUpdate> { get }
+    var messenger: Messenger<ItemDatabaseUpdate?> { get }
 }
 
 enum ItemDatabaseUpdate { case mayHaveChanged }

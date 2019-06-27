@@ -8,13 +8,7 @@ class ItemICloudDatabase: Observer, CustomObservable
 {
     // MARK: - Life Cycle
     
-    init()
-    {
-        observe(ckDatabaseController)
-        {
-            [weak self] in self?.didReceive(notification: $0)
-        }
-    }
+    init() { observeCKDatabaseController() }
     
     deinit { stopObserving() }
     
@@ -259,7 +253,7 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.ensureSubscriptionExists()
+                self.ensureDatabaseSubscriptionExists()
             }
             .done(on: queue)
             {
@@ -285,27 +279,30 @@ class ItemICloudDatabase: Observer, CustomObservable
     private var didEnsureAccess = false
     private var ensuringAccessPromise: Promise<Void>?
     
-    // MARK: - Use a Database Subscription
+    // MARK: - Observable Database Subscription 
     
-    private func ensureSubscriptionExists() -> Promise<Void>
+    private func ensureDatabaseSubscriptionExists() -> Promise<Void>
     {
         let dbSubID = "ItemDataBaseSubscription"
         
         return ckDatabaseController.createDatabaseSubscription(withID: dbSubID).map { _ in }
     }
     
-    private func didReceive(notification: CKDatabaseNotification?)
+    func handleDatabaseNotification(with userInfo: [String : Any])
     {
-        guard let notification = notification else { return }
-        
-        guard notification.databaseScope == .private else
-        {
-            log(error: "Unexpected database scope: \(notification.databaseScope.rawValue)")
-            return
-        }
-
-        send(.mayHaveChanged)
+        ckDatabaseController.handleDatabaseNotification(with: userInfo)
     }
+    
+    private func observeCKDatabaseController()
+    {
+        observe(ckDatabaseController).select(.didReceiveDatabaseNotification)
+        {
+            [weak self] in self?.send(.mayHaveChanged)
+        }
+    }
+    
+    let messenger = Messenger<ItemDatabaseUpdate?>()
+    typealias Message = ItemDatabaseUpdate?
     
     // MARK: - Create Zone
     
@@ -314,20 +311,10 @@ class ItemICloudDatabase: Observer, CustomObservable
         return ckDatabaseController.createZone(with: .item).map { _ in }
     }
     
-    // MARK: - iCloud Database
-    
-    func handlePushNotification(with userInfo: [String : Any])
-    {
-        ckDatabaseController.handlePushNotification(with: userInfo)
-    }
+    // MARK: - CloudKit Database Controller
     
     var queue: DispatchQueue { return ckDatabaseController.queue }
     
     private let ckDatabaseController = CKDatabaseController(databaseScope: .private,
                                                             cacheName: "Flowlist iCloud Cache")
-    
-    // MARK: - Observability
-    
-    let messenger = Messenger(ItemDatabaseUpdate.mayHaveChanged)
-    typealias Message = ItemDatabaseUpdate
 }

@@ -15,7 +15,11 @@ class Storage: Observer
         self.file = file
         self.database = database
         
-        observe(database.messenger) { [weak self] in self?.didReceive($0) }
+        observe(database.messenger).select(.mayHaveChanged)
+        {
+            [weak self] in self?.databaseMayHaveChanged()
+        }
+        
         observe(Store.shared) { [weak self] in self?.didReceive($0) }
     }
     
@@ -65,12 +69,9 @@ class Storage: Observer
     
     // MARK: - Transmit Database Changes to Local Store
     
-    private func didReceive(_ databaseUpdate: ItemDatabaseUpdate)
+    private func databaseMayHaveChanged()
     {
-        switch databaseUpdate
-        {
-        case .mayHaveChanged: fetchChangesAndApplyToStore().catch(abortIntendingToSync)
-        }
+        fetchChangesAndApplyToStore().catch(abortIntendingToSync)
     }
     
     private func applyDatabaseChangesToStore(_ changes: ItemDatabaseChanges)
