@@ -12,3 +12,20 @@ extension CKDatabase.Changes
                                    idsOfDeletedRecords: idsOfDeletedRecords)
     }
 }
+
+extension CKDatabase.DeletionResult
+{
+    func makeItemDatabaseDeletionResult() -> ItemDatabaseDeletionResult
+    {
+        let idsOfDeletedRecords = successes.map { $0.recordName }
+        
+        let failures = self.failures.map
+        {
+            ItemDatabaseDeletionFailure(recordID: $0.recordID.recordName,
+                                        error: $0.error)
+        }
+        
+        return ItemDatabaseDeletionResult(idsOfDeletedRecords: idsOfDeletedRecords,
+                                          failures: failures)
+    }
+}

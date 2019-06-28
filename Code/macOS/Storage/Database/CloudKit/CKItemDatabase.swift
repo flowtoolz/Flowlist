@@ -88,20 +88,9 @@ class CKItemDatabase: Observer, CustomObservable
             {
                 self.ckDatabaseController.deleteCKRecords(withIDs: ckRecordIDs)
             }
-            .map
+            .map(on: queue)
             {
-                (ckDeletionResult: CKDatabase.DeletionResult) -> ItemDatabaseDeletionResult in
-
-                let idsOfDeletedRecords = ckDeletionResult.successes.map { $0.recordName }
-                
-                let failures = ckDeletionResult.failures.map
-                {
-                    ItemDatabaseDeletionFailure(recordID: $0.recordID.recordName,
-                                                error: $0.error)
-                }
-
-                return ItemDatabaseDeletionResult(idsOfDeletedRecords: idsOfDeletedRecords,
-                                                  failures: failures)
+                $0.makeItemDatabaseDeletionResult()
             }
             .done(on: queue)
             {
