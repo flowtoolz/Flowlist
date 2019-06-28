@@ -4,7 +4,7 @@ import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
-class CKItemDatabase: Observer, CustomObservable
+class CKItemDatabase: ItemDatabase, Observer, CustomObservable
 {
     // MARK: - Life Cycle
     
@@ -12,17 +12,69 @@ class CKItemDatabase: Observer, CustomObservable
     
     deinit { stopObserving() }
     
-    // MARK: - Edit Items
+    // MARK: - Reset All Records
+    
+    func reset(with records: [Record]) -> Promise<ItemDatabaseSaveResult>
+    {
+        return Promise<ItemDatabaseSaveResult>
+        {
+            resolver in
+            
+            firstly
+            {
+                ensureAccess()
+            }
+            .then(on: queue)
+            {
+                self.ckDatabaseController.deleteCKRecords(ofType: .item,
+                                                          inZone: .item).map { _ in }
+            }
+            .then(on: queue)
+            {
+                // TODO: conflicts should not occur after deleting all records, so throw/log an error in that case
+                self.save(records)
+            }
+            .done(on: queue)
+            {
+                resolver.fulfill($0)
+            }
+            .catch
+            {
+                self.didEnsureAccess = false
+                resolver.reject($0)
+            }
+        }
+    }
+    
+    // MARK: - Save Records
     
     func save(_ records: [Record]) -> Promise<ItemDatabaseSaveResult>
     {
-        return firstly
+        return Promise<ItemDatabaseSaveResult>
         {
-            save(records.map(makeCKRecord))
-        }
-        .map(on: queue)
-        {
-            $0.makeItemDatabaseSaveResult()
+            resolver in
+            
+            return firstly
+            {
+                ensureAccess()
+            }
+            .then(on: queue)
+            {
+                self.ckDatabaseController.save(records.map(self.makeCKRecord))
+            }
+            .map(on: queue)
+            {
+                $0.makeItemDatabaseSaveResult()
+            }
+            .done(on: queue)
+            {
+                resolver.fulfill($0)
+            }
+            .catch
+            {
+                self.didEnsureAccess = false
+                resolver.reject($0)
+            }
         }
     }
     
@@ -42,36 +94,10 @@ class CKItemDatabase: Observer, CustomObservable
         return ckRecord
     }
     
-    private func save(_ ckRecords: [CKRecord]) -> Promise<CKDatabase.SaveResult>
-    {
-        return Promise<CKDatabase.SaveResult>
-        {
-            resolver in
-            
-            firstly
-            {
-                ensureAccess()
-            }
-            .then(on: queue)
-            {
-                self.ckDatabaseController.save(ckRecords)
-            }
-            .done(on: queue)
-            {
-                resolver.fulfill($0)
-            }
-            .catch
-            {
-                self.didEnsureAccess = false
-                resolver.reject($0)
-            }
-        }
-    }
+    // MARK: - Delete Records
     
-    func deleteRecords(with ids: [String]) -> Promise<ItemDatabaseDeletionResult>
+    func deleteRecords(withIDs ids: [String]) -> Promise<ItemDatabaseDeletionResult>
     {
-        let ckRecordIDs = ids.map(CKRecord.ID.init(itemID:))
-        
         return Promise<ItemDatabaseDeletionResult>
         {
             resolver in
@@ -82,7 +108,7 @@ class CKItemDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.ckDatabaseController.deleteCKRecords(withIDs: ckRecordIDs)
+                self.ckDatabaseController.deleteCKRecords(withIDs: ids.itemCKRecordIDs)
             }
             .map(on: queue)
             {
@@ -100,37 +126,11 @@ class CKItemDatabase: Observer, CustomObservable
         }
     }
     
-    func deleteRecords() -> Promise<CKDatabase.DeletionResult>
-    {
-        return Promise<CKDatabase.DeletionResult>
-        {
-            resolver in
-            
-            firstly
-            {
-                ensureAccess()
-            }
-            .then(on: queue)
-            {
-                self.ckDatabaseController.deleteCKRecords(ofType: .item, inZone: .item)
-            }
-            .done(on: queue)
-            {
-                resolver.fulfill($0)
-            }
-            .catch
-            {
-                self.didEnsureAccess = false
-                resolver.reject($0)
-            }
-        }
-    }
+    // MARK: - Fetch Stuff
     
-    // MARK: - Fetch Records
-    
-    func fetchItemCKRecords() -> Promise<[CKRecord]>
+    func fetchRecords() -> Promise<[Record]>
     {
-        return Promise<[CKRecord]>
+        return Promise<[Record]>
         {
             resolver in
             
@@ -142,34 +142,9 @@ class CKItemDatabase: Observer, CustomObservable
             {
                 self.ckDatabaseController.queryCKRecords(ofType: .item, inZone: .item)
             }
-            .done(on: queue)
+            .map(on: queue)
             {
-                resolver.fulfill($0)
-            }
-            .catch
-            {
-                self.didEnsureAccess = false
-                resolver.reject($0)
-            }
-        }
-    }
-    
-    private func fetchSubitemCKRecords(ofItemWithID id: CKRecord.ID) -> Promise<[CKRecord]>
-    {
-        let predicate = NSPredicate(format: "superItem = %@", id)
-        let fetchQuery = CKQuery(recordType: .item, predicate: predicate)
-        
-        return Promise<[CKRecord]>
-        {
-            resolver in
-            
-            firstly
-            {
-                ensureAccess()
-            }
-            .then(on: queue)
-            {
-                self.ckDatabaseController.perform(fetchQuery, inZone: .item)
+                $0.map { $0.makeItemRecord() }
             }
             .done(on: queue)
             {
@@ -182,8 +157,6 @@ class CKItemDatabase: Observer, CustomObservable
             }
         }
     }
-    
-    // MARK: - Fetch Changes
     
     func fetchChanges() -> Promise<ItemDatabaseChanges>
     {
@@ -197,10 +170,11 @@ class CKItemDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.ckDatabaseController.fetchChanges(fromZone: .item).map
-                {
-                    $0.makeItemDatabaseChanges()
-                }
+                self.ckDatabaseController.fetchChanges(fromZone: .item)
+            }
+            .map(on: queue)
+            {
+                $0.makeItemDatabaseChanges()
             }
             .done(on: queue)
             {
@@ -309,4 +283,12 @@ class CKItemDatabase: Observer, CustomObservable
     
     private let ckDatabaseController = CKDatabaseController(databaseScope: .private,
                                                             cacheName: "Flowlist iCloud Cache")
+}
+
+private extension Array where Element == String
+{
+    var itemCKRecordIDs: [CKRecord.ID]
+    {
+        return map(CKRecord.ID.init(itemID:))
+    }
 }

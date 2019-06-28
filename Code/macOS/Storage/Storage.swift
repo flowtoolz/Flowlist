@@ -163,7 +163,7 @@ class Storage: Observer
                 switch edit
                 {
                 case .updateItems(let records): return database.save(records).map { _ in }
-                case .removeItems(let ids): return database.deleteRecords(with: ids).map { _ in }
+                case .removeItems(let ids): return database.deleteRecords(withIDs: ids).map { _ in }
                 }
             }
 
@@ -272,7 +272,7 @@ class Storage: Observer
                     // ... but store did change (like after editing offline)
                     
                     // TODO: we should persist a local cash of changed unsynced records, so we don't have to reset the whole db at this point
-                    return self.database.reset(root: Store.shared.root)
+                    return self.database.reset(withRoot: Store.shared.root)
                 }
                 else
                 {
@@ -324,7 +324,7 @@ class Storage: Observer
                         }
                         else
                         {
-                            return self.database.reset(root: Store.shared.root)
+                            return self.database.reset(withRoot: Store.shared.root)
                         }
                     }
                 }
@@ -357,7 +357,7 @@ class Storage: Observer
             
             guard let dbRoot = dbRoot, dbRoot.numberOfLeafs > 1 else
             {
-                return self.database.reset(root: Store.shared.root)
+                return self.database.reset(withRoot: Store.shared.root)
             }
             
             guard let storeRoot = Store.shared.root, storeRoot.numberOfLeafs > 1 else
@@ -390,7 +390,7 @@ class Storage: Observer
                 }
                 else
                 {
-                    return self.database.reset(root: storeRoot)
+                    return self.database.reset(withRoot: storeRoot)
                 }
             }
         }
@@ -430,7 +430,7 @@ class Storage: Observer
             
             guard let dbRoot = dbRoot else
             {
-                return self.database.reset(root: storeRoot)
+                return self.database.reset(withRoot: storeRoot)
             }
             
             // store and db are identical -> no need to reset store
@@ -546,5 +546,14 @@ extension Store
         let deletionsAreRedundant = existingIDs(in: changes.idsOfDeletedRecords).isEmpty
         
         return updatesAreRedundant && deletionsAreRedundant
+    }
+}
+
+private extension ItemDatabase
+{
+    func reset(withRoot root: Item?) -> Promise<Void>
+    {
+        let records = Record.makeRecordsRecursively(for: root)
+        return reset(with: records).map { _ in }
     }
 }

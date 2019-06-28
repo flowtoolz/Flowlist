@@ -25,8 +25,10 @@ extension Record
         return Item(data: data)
     }
     
-    static func makeRecordsRecursively(for item: Item, at position: Int? = nil) -> [Record]
+    static func makeRecordsRecursively(for item: Item?, at position: Int? = nil) -> [Record]
     {
+        guard let item = item else { return [] }
+        
         // calling indexInRoot just once in the first call, so performance is ok
         let recPosition = position ?? (item.indexInRoot ?? 0)
         

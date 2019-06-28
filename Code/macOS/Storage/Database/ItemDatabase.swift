@@ -8,9 +8,9 @@ protocol ItemDatabase
     func fetchChanges() -> Promise<ItemDatabaseChanges>
     var hasChangeToken: Bool { get }
     
-    func reset(root: Item?) -> Promise<Void>
+    func reset(with records: [Record]) -> Promise<ItemDatabaseSaveResult>
     func save(_ records: [Record]) -> Promise<ItemDatabaseSaveResult>
-    func deleteRecords(with ids: [String]) -> Promise<ItemDatabaseDeletionResult>
+    func deleteRecords(withIDs ids: [String]) -> Promise<ItemDatabaseDeletionResult>
     
     var queue: DispatchQueue { get }
     
