@@ -90,11 +90,18 @@ class CKItemDatabase: Observer, CustomObservable
             }
             .map
             {
-                ckDeletionResult -> ItemDatabaseDeletionResult in
+                (ckDeletionResult: CKDeletionResult) -> ItemDatabaseDeletionResult in
+
+                let idsOfDeletedRecords = ckDeletionResult.successes.map { $0.recordName }
                 
-                // TODO: map properly
-                
-                return ItemDatabaseDeletionResult.success
+                let failures = ckDeletionResult.failures.map
+                {
+                    ItemDatabaseDeletionFailure(recordID: $0.recordID.recordName,
+                                                error: $0.error)
+                }
+
+                return ItemDatabaseDeletionResult(idsOfDeletedRecords: idsOfDeletedRecords,
+                                                  failures: failures)
             }
             .done(on: queue)
             {

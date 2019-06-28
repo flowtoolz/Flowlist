@@ -27,4 +27,20 @@ struct ItemDatabaseChanges
 }
 
 enum ItemDatabaseSaveResult { case success }
-enum ItemDatabaseDeletionResult { case success }
+
+struct ItemDatabaseDeletionResult
+{
+    static var empty: ItemDatabaseDeletionResult
+    {
+        return ItemDatabaseDeletionResult(idsOfDeletedRecords: [], failures: [])
+    }
+    
+    let idsOfDeletedRecords: [String]
+    let failures: [ItemDatabaseDeletionFailure]
+}
+
+struct ItemDatabaseDeletionFailure
+{
+    let recordID: String
+    let error: Error
+}
