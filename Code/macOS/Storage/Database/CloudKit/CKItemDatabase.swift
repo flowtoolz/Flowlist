@@ -46,9 +46,9 @@ class CKItemDatabase: Observer, CustomObservable
         return ckRecord
     }
     
-    private func save(_ ckRecords: [CKRecord]) -> Promise<CKSaveResult>
+    private func save(_ ckRecords: [CKRecord]) -> Promise<CKDatabase.SaveResult>
     {
-        return Promise<CKSaveResult>
+        return Promise<CKDatabase.SaveResult>
         {
             resolver in
             
