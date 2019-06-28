@@ -257,16 +257,6 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
-		9E13400922A2D85800434FD8 /* CloudKit-Item Mapping */ = {
-			isa = PBXGroup;
-			children = (
-				9EFE6DF022A3F64A005C224E /* CKDatabase+Item.swift */,
-				9E053B2B21886963001B7103 /* CKRecord+Item.swift */,
-				9EF96E7321A9F516005619C7 /* CKRecordZone+Item.swift */,
-			);
-			path = "CloudKit-Item Mapping";
-			sourceTree = "<group>";
-		};
 		9E542E881EEEE41C00534981 = {
 			isa = PBXGroup;
 			children = (
@@ -311,15 +301,6 @@
 				9EA5A8AA218ED9A9004902F7 /* Framework-Candidates */,
 			);
 			path = macOS;
-			sourceTree = "<group>";
-		};
-		9E82C09421AAE56100152CB3 /* CKItemDatabase */ = {
-			isa = PBXGroup;
-			children = (
-				9EA1D3A4219EA60500B5943C /* CKItemDatabase+ItemDatabase.swift */,
-				9E053B2D21886963001B7103 /* CKItemDatabase.swift */,
-			);
-			path = CKItemDatabase;
 			sourceTree = "<group>";
 		};
 		9E91651620551E6F00A438FB /* Resources */ = {
@@ -452,8 +433,11 @@
 		9EA5A893218ECB45004902F7 /* CloudKit */ = {
 			isa = PBXGroup;
 			children = (
-				9E82C09421AAE56100152CB3 /* CKItemDatabase */,
-				9E13400922A2D85800434FD8 /* CloudKit-Item Mapping */,
+				9EA1D3A4219EA60500B5943C /* CKItemDatabase+ItemDatabase.swift */,
+				9E053B2D21886963001B7103 /* CKItemDatabase.swift */,
+				9EFE6DF022A3F64A005C224E /* CKDatabase+Item.swift */,
+				9E053B2B21886963001B7103 /* CKRecord+Item.swift */,
+				9EF96E7321A9F516005619C7 /* CKRecordZone+Item.swift */,
 			);
 			path = CloudKit;
 			sourceTree = "<group>";
