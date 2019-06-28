@@ -29,15 +29,6 @@ extension ItemICloudDatabase: ItemDatabase
             return self.save(Record.makeRecordsRecursively(for: root)).map { _ in }
         }
     }
-    
-    func apply(_ edit: Edit) -> Promise<ItemDatabaseModificationResult>
-    {
-        switch edit
-        {
-        case .updateItems(let records): return save(records)
-        case .removeItems(let ids): return deleteRecords(with: ids)
-        }
-    }
   
     func fetchRecords() -> Promise<[Record]>
     {

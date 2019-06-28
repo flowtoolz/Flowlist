@@ -103,23 +103,6 @@ class Storage: Observer
         {
             applyStoreEventToDatabase(storeEvent)
         }
-        .then
-        {
-            modificationResult -> Promise<Void> in
-            
-            switch modificationResult
-            {
-            case .success:
-                return Promise()
-            case .conflictingRecords(_):
-                // TODO: if the user decides to use database version, does the following fetch and apply always achieve what we would expect? 
-                return self.handleConflictingStoreEventByAskingUser(storeEvent)
-            }
-        }
-        .then(on: dbQueue)
-        {
-            self.fetchChangesAndApplyToStore()
-        }
         .catch
         {
             self.hasUnsyncedLocalChanges.value = true
@@ -127,6 +110,7 @@ class Storage: Observer
         }
     }
     
+    // TODO: apply this, but based on CK agnostic SaveConflict type, not store event
     private func handleConflictingStoreEventByAskingUser(_ edit: Store.Event) -> Promise<Void>
     {
         // TODO: Implement, using forced save if necessary. Also implement force option for save.
@@ -168,14 +152,19 @@ class Storage: Observer
         }
     }
     
-    private func applyStoreEventToDatabase(_ event: Store.Event) ->  Promise<ItemDatabaseModificationResult>
+    private func applyStoreEventToDatabase(_ event: Store.Event) -> Promise<Void>
     {
         switch event
         {
         case .didUpdate(let update):
             if let edit = Edit(update)
             {
-                return database.apply(edit)
+                // TODO: handle partial failures and conflicts
+                switch edit
+                {
+                case .updateItems(let records): return database.save(records).map { _ in }
+                case .removeItems(let ids): return database.deleteRecords(with: ids).map { _ in }
+                }
             }
 
         case .didSwitchRoot:
@@ -186,7 +175,7 @@ class Storage: Observer
         case .didNothing: break
         }
         
-        return .value(.success)
+        return Promise()
     }
     
     // MARK: - Network Reachability

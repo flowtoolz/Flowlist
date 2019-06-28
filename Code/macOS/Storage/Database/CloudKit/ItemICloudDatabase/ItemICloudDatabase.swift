@@ -14,7 +14,7 @@ class ItemICloudDatabase: Observer, CustomObservable
     
     // MARK: - Edit Items
     
-    func save(_ records: [Record]) -> Promise<ItemDatabaseModificationResult>
+    func save(_ records: [Record]) -> Promise<ItemDatabaseSaveResult>
     {
         return firstly
         {
@@ -22,11 +22,11 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
         .map
         {
-            ckModificationResult in
+            ckSaveResult -> ItemDatabaseSaveResult in
             
             // TODO: map properly
             
-            return ItemDatabaseModificationResult.success
+            return .success
         }
     }
     
@@ -72,11 +72,11 @@ class ItemICloudDatabase: Observer, CustomObservable
         }
     }
     
-    func deleteRecords(with ids: [String]) -> Promise<ItemDatabaseModificationResult>
+    func deleteRecords(with ids: [String]) -> Promise<ItemDatabaseDeletionResult>
     {
         let ckRecordIDs = ids.map(CKRecord.ID.init(itemID:))
         
-        return Promise<ItemDatabaseModificationResult>
+        return Promise<ItemDatabaseDeletionResult>
         {
             resolver in
             
@@ -90,13 +90,11 @@ class ItemICloudDatabase: Observer, CustomObservable
             }
             .map
             {
-                ckDeletionResult -> ItemDatabaseModificationResult in
+                ckDeletionResult -> ItemDatabaseDeletionResult in
                 
                 // TODO: map properly
                 
-                
-                
-                return ItemDatabaseModificationResult.success
+                return ItemDatabaseDeletionResult.success
             }
             .done(on: queue)
             {
