@@ -90,7 +90,7 @@ class CKItemDatabase: Observer, CustomObservable
             }
             .map
             {
-                (ckDeletionResult: CKDeletionResult) -> ItemDatabaseDeletionResult in
+                (ckDeletionResult: CKDatabase.DeletionResult) -> ItemDatabaseDeletionResult in
 
                 let idsOfDeletedRecords = ckDeletionResult.successes.map { $0.recordName }
                 
@@ -115,9 +115,9 @@ class CKItemDatabase: Observer, CustomObservable
         }
     }
     
-    func deleteRecords() -> Promise<CKDeletionResult>
+    func deleteRecords() -> Promise<CKDatabase.DeletionResult>
     {
-        return Promise<CKDeletionResult>
+        return Promise<CKDatabase.DeletionResult>
         {
             resolver in
             
