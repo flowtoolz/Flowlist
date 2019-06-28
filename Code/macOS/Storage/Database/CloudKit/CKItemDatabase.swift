@@ -20,13 +20,9 @@ class CKItemDatabase: Observer, CustomObservable
         {
             save(records.map(makeCKRecord))
         }
-        .map
+        .map(on: queue)
         {
-            ckSaveResult -> ItemDatabaseSaveResult in
-            
-            // TODO: map properly
-            
-            return .success
+            $0.makeItemDatabaseSaveResult()
         }
     }
     

@@ -29,3 +29,30 @@ extension CKDatabase.DeletionResult
                                           failures: failures)
     }
 }
+
+extension CKDatabase.SaveResult
+{
+    func makeItemDatabaseSaveResult() -> ItemDatabaseSaveResult
+    {
+        let successes = self.successes.map
+        {
+            $0.makeItemRecord()
+        }
+        
+        let failures = self.failures.map
+        {
+            ItemDatabaseSaveFailure($0.record.makeItemRecord(), $0.error)
+        }
+        
+        let conflicts = self.conflicts.map
+        {
+            ItemDatabaseSaveConflict(clientRecord: $0.clientRecord.makeItemRecord(),
+                                     serverRecord: $0.serverRecord.makeItemRecord(),
+                                     ancestorRecord: $0.ancestorRecord?.makeItemRecord())
+        }
+        
+        return ItemDatabaseSaveResult(successes: successes,
+                                      conflicts: conflicts,
+                                      failures: failures)
+    }
+}

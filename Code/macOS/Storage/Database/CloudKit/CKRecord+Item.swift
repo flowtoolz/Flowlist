@@ -8,6 +8,11 @@ extension CKRecord
     
     func makeItemRecord() -> Record
     {
+        if recordType != .item
+        {
+            log(error: "Attempting to make item record from a CKRecord of type \(recordType). Excpected type \(CKRecord.RecordType.item)")
+        }
+        
         return Record(id: recordID.recordName,
                       text: text,
                       state: state,
