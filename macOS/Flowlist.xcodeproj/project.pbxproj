@@ -11,7 +11,7 @@
 		9E053B2521886867001B7103 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2421886867001B7103 /* FullVersion.swift */; };
 		9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */; };
 		9E053B3121886963001B7103 /* CKRecord+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2B21886963001B7103 /* CKRecord+Item.swift */; };
-		9E053B3321886963001B7103 /* ItemICloudDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */; };
+		9E053B3321886963001B7103 /* CKItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2D21886963001B7103 /* CKItemDatabase.swift */; };
 		9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3421886AC4001B7103 /* PurchaseController.swift */; };
 		9E053B3721886BD4001B7103 /* SKProduct+FormattedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */; };
 		9E053B3A218870D0001B7103 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B38218870D0001B7103 /* main.swift */; };
@@ -69,7 +69,7 @@
 		9E7651961EEF4DA200DE2B07 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* Store.swift */; };
 		9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* List+Editing.swift */; };
 		9E91651520551E5600A438FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E91651320551E5500A438FB /* Assets.xcassets */; };
-		9EA1D3A5219EA60500B5943C /* ItemICloudDatabase+ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3A4219EA60500B5943C /* ItemICloudDatabase+ItemDatabase.swift */; };
+		9EA1D3A5219EA60500B5943C /* CKItemDatabase+ItemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3A4219EA60500B5943C /* CKItemDatabase+ItemDatabase.swift */; };
 		9EA1D3B0219EBFD000B5943C /* UserDefaultsPersisters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3AF219EBFD000B5943C /* UserDefaultsPersisters.swift */; };
 		9EA1D3B2219EC26F00B5943C /* Persistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3B1219EC26F00B5943C /* Persistent.swift */; };
 		9EA63839216F8BB100D1503C /* List+Selection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA63838216F8BB100D1503C /* List+Selection.swift */; };
@@ -117,7 +117,7 @@
 		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullVersion.swift; sourceTree = "<group>"; };
 		9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Price.swift"; sourceTree = "<group>"; };
 		9E053B2B21886963001B7103 /* CKRecord+Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CKRecord+Item.swift"; sourceTree = "<group>"; };
-		9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemICloudDatabase.swift; sourceTree = "<group>"; };
+		9E053B2D21886963001B7103 /* CKItemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKItemDatabase.swift; sourceTree = "<group>"; };
 		9E053B3421886AC4001B7103 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKProduct+FormattedPrice.swift"; sourceTree = "<group>"; };
 		9E053B38218870D0001B7103 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -177,7 +177,7 @@
 		9E82A7A81EF2A558006AEF02 /* List+Editing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "List+Editing.swift"; sourceTree = "<group>"; };
 		9E91651320551E5500A438FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		9E916518205520B800A438FB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
-		9EA1D3A4219EA60500B5943C /* ItemICloudDatabase+ItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemICloudDatabase+ItemDatabase.swift"; sourceTree = "<group>"; };
+		9EA1D3A4219EA60500B5943C /* CKItemDatabase+ItemDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CKItemDatabase+ItemDatabase.swift"; sourceTree = "<group>"; };
 		9EA1D3AF219EBFD000B5943C /* UserDefaultsPersisters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsPersisters.swift; sourceTree = "<group>"; };
 		9EA1D3B1219EC26F00B5943C /* Persistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistent.swift; sourceTree = "<group>"; };
 		9EA63838216F8BB100D1503C /* List+Selection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+Selection.swift"; sourceTree = "<group>"; };
@@ -313,13 +313,13 @@
 			path = macOS;
 			sourceTree = "<group>";
 		};
-		9E82C09421AAE56100152CB3 /* ItemICloudDatabase */ = {
+		9E82C09421AAE56100152CB3 /* CKItemDatabase */ = {
 			isa = PBXGroup;
 			children = (
-				9EA1D3A4219EA60500B5943C /* ItemICloudDatabase+ItemDatabase.swift */,
-				9E053B2D21886963001B7103 /* ItemICloudDatabase.swift */,
+				9EA1D3A4219EA60500B5943C /* CKItemDatabase+ItemDatabase.swift */,
+				9E053B2D21886963001B7103 /* CKItemDatabase.swift */,
 			);
-			path = ItemICloudDatabase;
+			path = CKItemDatabase;
 			sourceTree = "<group>";
 		};
 		9E91651620551E6F00A438FB /* Resources */ = {
@@ -452,7 +452,7 @@
 		9EA5A893218ECB45004902F7 /* CloudKit */ = {
 			isa = PBXGroup;
 			children = (
-				9E82C09421AAE56100152CB3 /* ItemICloudDatabase */,
+				9E82C09421AAE56100152CB3 /* CKItemDatabase */,
 				9E13400922A2D85800434FD8 /* CloudKit-Item Mapping */,
 			);
 			path = CloudKit;
@@ -830,7 +830,7 @@
 				9E6E70AF2193803E00BDB0BA /* Item+CodableField.swift in Sources */,
 				9EC5C8B821B0300D00615D20 /* Dialog+ICloudConflict.swift in Sources */,
 				9EA1D3B0219EBFD000B5943C /* UserDefaultsPersisters.swift in Sources */,
-				9E053B3321886963001B7103 /* ItemICloudDatabase.swift in Sources */,
+				9E053B3321886963001B7103 /* CKItemDatabase.swift in Sources */,
 				9E47E32422AAC0A20068088A /* ListViewCell.swift in Sources */,
 				9E053B3A218870D0001B7103 /* main.swift in Sources */,
 				9E053B502188715D001B7103 /* PurchaseView.swift in Sources */,
@@ -877,7 +877,7 @@
 				9E053B452188711A001B7103 /* Menu.swift in Sources */,
 				9E053B23218867E4001B7103 /* ItemJSONFile.swift in Sources */,
 				9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */,
-				9EA1D3A5219EA60500B5943C /* ItemICloudDatabase+ItemDatabase.swift in Sources */,
+				9EA1D3A5219EA60500B5943C /* CKItemDatabase+ItemDatabase.swift in Sources */,
 				9E18C3DC21D6604A00363F48 /* ReadableError.swift in Sources */,
 				9E22D8AD218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift in Sources */,
 				9E6C721020B1E66D001C3D2C /* Item+Debugging.swift in Sources */,

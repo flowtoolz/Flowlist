@@ -15,7 +15,7 @@ class StorageController
     
     // MARK: - System Storage
     
-    let database = ItemICloudDatabase()
+    let database = CKItemDatabase()
     let file = ItemJSONFile()
     
     // MARK: - Storage Model

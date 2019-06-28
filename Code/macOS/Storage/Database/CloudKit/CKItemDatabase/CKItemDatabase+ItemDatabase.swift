@@ -3,7 +3,7 @@ import SwiftObserver
 import SwiftyToolz
 import PromiseKit
 
-extension ItemICloudDatabase: ItemDatabase
+extension CKItemDatabase: ItemDatabase
 {
     func reset(root: Item?) -> Promise<Void>
     {

@@ -4,7 +4,7 @@ import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
-class ItemICloudDatabase: Observer, CustomObservable
+class CKItemDatabase: Observer, CustomObservable
 {
     // MARK: - Life Cycle
     
