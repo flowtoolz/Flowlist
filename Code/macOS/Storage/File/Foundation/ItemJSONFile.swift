@@ -4,34 +4,71 @@ import SwiftyToolz
 
 class ItemJSONFile: ItemFile
 {
-    init(url: URL = ItemJSONFile.defaultURL) { self.url = url }
+    /// Experimental Loading of Records
     
-    func loadItem() -> Item?
+    func loadRecords() -> [Record]
     {
-        let manager = FileManager.default
-        
-        guard manager.fileExists(atPath: url.path) else
+        guard FileManager.default.fileExists(atPath: url.path) else
         {
-            let item = Item(text: NSFullUserName())
-            
-            save(item)
-            
-            return item
+            let rootRecord = newRootRecord
+            save(rootRecord.makeItem())
+            return [rootRecord]
         }
         
-        guard let item = DecodableItem(fileURL: url) else
+        do
         {
-            let title = "Couldn't Read From \"\(url.lastPathComponent)\""
-            
-            let message = "Please ensure your file at \(url.path) is formatted correctly. Then restart Flowlist.\n\nBe careful to retain the JSON format when editing the file outside of Flowlist."
-            
-            log(error: message, title: title, forUser: true)
-            
-            return nil
+            let data = try Data(contentsOf: url)
+            if let json = try JSONSerialization.jsonObject(with: data) as? JSON
+            {
+                return records(from: json, withRootID: nil, position: 0)
+            }
+        }
+        catch
+        {
+            log(error: error.readable.message)
         }
         
-        return item
+        return [newRootRecord]
     }
+    
+    private func records(from json: JSON,
+                         withRootID rootID: String?,
+                         position: Int) -> [Record]
+    {
+        guard let id = json["id"] as? String else { return [] }
+        
+        let loadedRecord = Record(id: id,
+                                  text: json["title"] as? String,
+                                  state: ItemData.State(integer: json["state"] as? Int),
+                                  tag: ItemData.Tag(integer: json["tag"] as? Int),
+                                  rootID: rootID,
+                                  position: position)
+        
+        //print("loaded record: \(loadedRecord.text ?? "<nil text>")")
+        
+        var loadedRecords = [loadedRecord]
+        
+        if let subJSONs = json["subtasks"] as? [JSON]
+        {
+            for position in 0 ..< subJSONs.count
+            {
+                loadedRecords += records(from: subJSONs[position],
+                                         withRootID: id,
+                                         position: position)
+            }
+        }
+        
+        return loadedRecords
+    }
+    
+    private var newRootRecord: Record
+    {
+        return Record(id: .makeUUID(), text: NSFullUserName(), rootID: nil, position: 0)
+    }
+    
+    ///
+    
+    init(url: URL = ItemJSONFile.defaultURL) { self.url = url }
     
     func save(_ item: Item)
     {

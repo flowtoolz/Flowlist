@@ -29,7 +29,7 @@ class Storage: Observer
     
     func appDidLaunch()
     {
-        guard let root = file.loadItem() else
+        guard let root = file.loadRecords().makeTrees().largestTree else
         {
             log(error: "Couldn't load items from file.")
             return
