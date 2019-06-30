@@ -33,10 +33,19 @@ class DeprecatedJSONFile
     {
         guard let id = json["id"] as? String else { return [] }
         
+        let textObject = json["title"]
+        let text = (textObject as? String) ?? ((textObject as? JSON)?["storedValue"] as? String)
+        
+        let stateObject = json["state"]
+        let stateInt = (stateObject as? Int) ?? ((stateObject as? JSON)?["storedValue"] as? Int)
+        
+        let tagObject = json["tag"]
+        let tagInt = (tagObject as? Int) ?? ((tagObject as? JSON)?["storedValue"] as? Int)
+        
         let loadedRecord = Record(id: id,
-                                  text: json["title"] as? String,
-                                  state: ItemData.State(integer: json["state"] as? Int),
-                                  tag: ItemData.Tag(integer: json["tag"] as? Int),
+                                  text: text,
+                                  state: ItemData.State(integer: stateInt),
+                                  tag: ItemData.Tag(integer: tagInt),
                                   rootID: rootID,
                                   position: position)
         
