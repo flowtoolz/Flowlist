@@ -28,15 +28,14 @@ class FileSystemRecordPersister: RecordPersister
     let recordFileDirectory: URL? =
     {
         let directoryName = "Flowlist Item Record Files"
+        
         guard let directory = URL.documentDirectory?.appendingPathComponent(directoryName) else
         {
             log(error: "Couldn't get URL of document directory")
             return nil
         }
         
-        FileManager.default.ensureDirectoryExists(directory)
-        
-        return directory
+        return FileManager.default.ensureDirectoryExists(directory)
     }()
     
     private var newRootRecord: Record
