@@ -8,7 +8,6 @@ class DeprecatedJSONFile
     {
         guard FileManager.default.fileExists(atPath: jsonFile.path) else
         {
-            save(initialRoot.makeItem())
             return [initialRoot]
         }
         
@@ -56,15 +55,6 @@ class DeprecatedJSONFile
         }
         
         return loadedRecords
-    }
-    
-    func save(_ item: Item)
-    {
-        if item.save(to: jsonFile) == nil
-        {
-            let fileString = jsonFile.absoluteString
-            log(error: "Could not save items to " + fileString)
-        }
     }
     
     private lazy var jsonFile: URL =
