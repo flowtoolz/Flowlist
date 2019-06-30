@@ -2,29 +2,35 @@ import Foundation
 import FoundationToolz
 import SwiftyToolz
 
-class DeprecatedJSONFile
+class JSONFileMigrator
 {
-    func loadRecords(initialRoot: Record) -> [Record]
+    func loadRecordsFromJSONFile() -> [Record]?
     {
-        guard FileManager.default.fileExists(atPath: jsonFile.path) else
-        {
-            return [initialRoot]
-        }
+        guard jsonFileExists else { return [] }
         
         do
         {
             let data = try Data(contentsOf: jsonFile)
+            
             if let json = try JSONSerialization.jsonObject(with: data) as? JSON
             {
                 return records(from: json, withRootID: nil, position: 0)
+            }
+            else
+            {
+                return nil
             }
         }
         catch
         {
             log(error: error.readable.message)
+            return nil
         }
-        
-        return [initialRoot]
+    }
+    
+    var jsonFileExists: Bool
+    {
+        return FileManager.default.itemExists(jsonFile)
     }
     
     private func records(from json: JSON,
@@ -49,8 +55,6 @@ class DeprecatedJSONFile
                                   rootID: rootID,
                                   position: position)
         
-        //print("loaded record: \(loadedRecord.text ?? "<nil text>")")
-        
         var loadedRecords = [loadedRecord]
         
         if let subJSONs = json["subtasks"] as? [JSON]
@@ -64,6 +68,11 @@ class DeprecatedJSONFile
         }
         
         return loadedRecords
+    }
+    
+    func removeJSONFile()
+    {
+        FileManager.default.remove(item: jsonFile)
     }
     
     private lazy var jsonFile: URL =

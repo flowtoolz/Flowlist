@@ -1,5 +1,7 @@
 protocol RecordPersister: AnyObject
 {
-    func save(_ records: [Record])
+    @discardableResult
+    func save(_ records: [Record]) -> Bool
+    
     func loadRecords() -> [Record]
 }

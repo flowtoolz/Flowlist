@@ -8,19 +8,47 @@ class FileSystemRecordPersister: RecordPersister
     
     func loadRecords() -> [Record]
     {
-        // TODO: migrate data from JSON ...DeprecatedJSONFile().loadRecords(initialRoot: newRootRecord)
+        guard let recordFileDirectory = recordFileDirectory else { return [] }
         
-        return FileManager.default.files(in: recordFileDirectory).compactMap(Record.init)
+        let recordFiles = FileManager.default.items(in: recordFileDirectory)
+        
+        if !recordFiles.isEmpty { return recordFiles.compactMap(Record.init) }
+        
+        // no records -> migrate json file?
+        
+        let jsonMigrator = JSONFileMigrator()
+        
+        guard jsonMigrator.jsonFileExists,
+            let jsonFileRecords = jsonMigrator.loadRecordsFromJSONFile(),
+            !jsonFileRecords.isEmpty,
+            save(jsonFileRecords)
+        else
+        {
+            return save([newRootRecord]) ? [newRootRecord] : []
+        }
+        
+        // successful migration -> delete json and reload records
+        
+        jsonMigrator.removeJSONFile()
+
+        return FileManager.default.items(in: recordFileDirectory).compactMap(Record.init)
     }
     
-    func save(_ records: [Record])
+    @discardableResult
+    func save(_ records: [Record]) -> Bool
     {
-        guard let recordFileDirectory = recordFileDirectory else { return }
+        guard let recordFileDirectory = recordFileDirectory else { return false }
+        
+        var saveFailed = false
         
         for record in records
         {
-            record.save(to: recordFileDirectory.appendingPathComponent(record.id))
+            let file = recordFileDirectory.appendingPathComponent(record.id)
+            
+            if record.save(to: file) == nil { saveFailed = true }
         }
+        
+        return !saveFailed
     }
     
     // MARK: - Basics
