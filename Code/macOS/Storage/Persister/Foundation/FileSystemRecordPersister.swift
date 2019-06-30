@@ -48,19 +48,7 @@ class FileSystemRecordPersister: RecordPersister
             return nil
         }
         
-        if !FileManager.default.fileExists(atPath: directory.path)
-        {
-            do
-            {
-                try FileManager.default.createDirectory(at: directory,
-                                                        withIntermediateDirectories: true)
-            }
-            catch
-            {
-                log(error: error.readable.message)
-                return nil
-            }
-        }
+        FileManager.default.ensureDirectoryExists(directory)
         
         return directory
     }()
