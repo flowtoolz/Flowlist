@@ -2,7 +2,7 @@ import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
-class ItemJSONFile: ItemFile
+class FileSystemRecordPersister: RecordPersister
 {
     /// Experimental Loading of Records
     
@@ -68,7 +68,7 @@ class ItemJSONFile: ItemFile
     
     ///
     
-    init(url: URL = ItemJSONFile.defaultURL) { self.url = url }
+    init(url: URL = FileSystemRecordPersister.defaultURL) { self.url = url }
     
     func save(_ item: Item)
     {
@@ -88,7 +88,7 @@ class ItemJSONFile: ItemFile
     static var defaultURL: URL
     {
         let directory = URL.documentDirectory ?? Bundle.main.bundleURL
-        let fileName = ItemJSONFile.defaultFileName
+        let fileName = FileSystemRecordPersister.defaultFileName
         
         return directory.appendingPathComponent(fileName)
     }

@@ -10,9 +10,9 @@ class Storage: Observer
 {
     // MARK: - Life cycle
     
-    init(with file: ItemFile, database: ItemDatabase)
+    init(with persister: RecordPersister, database: ItemDatabase)
     {
-        self.file = file
+        self.persister = persister
         self.database = database
         
         observe(database.messenger).select(.mayHaveChanged)
@@ -29,7 +29,7 @@ class Storage: Observer
     
     func appDidLaunch()
     {
-        guard let root = file.loadRecords().makeTrees().largestTree else
+        guard let root = persister.loadRecords().makeTrees().largestTree else
         {
             log(error: "Couldn't load items from file.")
             return
@@ -55,7 +55,7 @@ class Storage: Observer
             return
         }
         
-        file.save(root)
+        persister.save(root)
     }
     
     // MARK: - Database Account Status
@@ -529,13 +529,13 @@ class Storage: Observer
     private func resetLocal(tree: Item)
     {
         Store.shared.update(root: tree)
-        file.save(tree)
+        persister.save(tree)
     }
     
     private var dbQueue: DispatchQueue { return database.queue }
     
     let database: ItemDatabase
-    let file: ItemFile
+    let persister: RecordPersister
 }
 
 extension Store

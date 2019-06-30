@@ -10,13 +10,13 @@ class StorageController
     private init()
     {
         Persistent.setupUsingUserDefaults()
-        storage = Storage(with: file, database: database)
+        storage = Storage(with: persister, database: database)
     }
     
     // MARK: - System Storage
     
     let database = CKItemDatabase()
-    let file = ItemJSONFile()
+    let persister = FileSystemRecordPersister()
     
     // MARK: - Storage Model
     

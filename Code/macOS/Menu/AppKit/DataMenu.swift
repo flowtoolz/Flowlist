@@ -21,7 +21,7 @@ class DataMenu: NSMenu, NSMenuItemValidation
         
         let finderItem = makeItem("Show JSON File in Finder")
         {
-            let fileURL = StorageController.shared.file.url
+            let fileURL = StorageController.shared.persister.url
             
             NSWorkspace.shared.activateFileViewerSelecting([fileURL])
         }
