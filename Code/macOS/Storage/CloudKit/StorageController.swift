@@ -10,13 +10,15 @@ class StorageController
     private init()
     {
         Persistent.setupUsingUserDefaults()
-        storage = Storage(with: persister, database: database)
+        
+        storage = Storage(recordStore: RecordStore(localDatabase: fileSystemDatabase,
+                                                   cloudDatabase: cloudKitDatabase))
     }
     
-    // MARK: - System Storage
+    // MARK: - Database Implementations
     
-    let database = CKItemDatabase()
-    let persister = FileSystemRecordPersister()
+    let cloudKitDatabase = CloudKitDatabase()
+    let fileSystemDatabase = FileSystemDatabase()
     
     // MARK: - Storage Model
     

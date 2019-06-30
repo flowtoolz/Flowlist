@@ -1,4 +1,4 @@
-protocol RecordPersister: AnyObject
+protocol LocalDatabase: AnyObject
 {
     @discardableResult
     func save(_ records: [Record]) -> Bool

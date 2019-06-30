@@ -4,7 +4,7 @@ import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
-class CKItemDatabase: ItemDatabase, Observer, CustomObservable
+class CloudKitDatabase: CloudDatabase, Observer, CustomObservable
 {
     // MARK: - Life Cycle
     
@@ -14,9 +14,9 @@ class CKItemDatabase: ItemDatabase, Observer, CustomObservable
     
     // MARK: - Reset All Records
     
-    func reset(with records: [Record]) -> Promise<ItemDatabaseSaveResult>
+    func reset(with records: [Record]) -> Promise<CloudDatabaseSaveResult>
     {
-        return Promise<ItemDatabaseSaveResult>
+        return Promise<CloudDatabaseSaveResult>
         {
             resolver in
             
@@ -48,9 +48,9 @@ class CKItemDatabase: ItemDatabase, Observer, CustomObservable
     
     // MARK: - Save Records
     
-    func save(_ records: [Record]) -> Promise<ItemDatabaseSaveResult>
+    func save(_ records: [Record]) -> Promise<CloudDatabaseSaveResult>
     {
-        return Promise<ItemDatabaseSaveResult>
+        return Promise<CloudDatabaseSaveResult>
         {
             resolver in
             
@@ -64,7 +64,7 @@ class CKItemDatabase: ItemDatabase, Observer, CustomObservable
             }
             .map(on: queue)
             {
-                $0.makeItemDatabaseSaveResult()
+                $0.makeCloudDatabaseSaveResult()
             }
             .done(on: queue)
             {
@@ -96,9 +96,9 @@ class CKItemDatabase: ItemDatabase, Observer, CustomObservable
     
     // MARK: - Delete Records
     
-    func deleteRecords(withIDs ids: [String]) -> Promise<ItemDatabaseDeletionResult>
+    func deleteRecords(withIDs ids: [String]) -> Promise<CloudDatabaseDeletionResult>
     {
-        return Promise<ItemDatabaseDeletionResult>
+        return Promise<CloudDatabaseDeletionResult>
         {
             resolver in
             
@@ -112,7 +112,7 @@ class CKItemDatabase: ItemDatabase, Observer, CustomObservable
             }
             .map(on: queue)
             {
-                $0.makeItemDatabaseDeletionResult()
+                $0.makeCloudDatabaseDeletionResult()
             }
             .done(on: queue)
             {
@@ -144,7 +144,7 @@ class CKItemDatabase: ItemDatabase, Observer, CustomObservable
             }
             .map(on: queue)
             {
-                $0.map { $0.makeItemRecord() }
+                $0.map { $0.makeRecord() }
             }
             .done(on: queue)
             {
@@ -158,9 +158,9 @@ class CKItemDatabase: ItemDatabase, Observer, CustomObservable
         }
     }
     
-    func fetchChanges() -> Promise<ItemDatabaseChanges>
+    func fetchChanges() -> Promise<CloudDatabaseChanges>
     {
-        return Promise<ItemDatabaseChanges>
+        return Promise<CloudDatabaseChanges>
         {
             resolver in
             
@@ -174,7 +174,7 @@ class CKItemDatabase: ItemDatabase, Observer, CustomObservable
             }
             .map(on: queue)
             {
-                $0.makeItemDatabaseChanges()
+                $0.makeCloudDatabaseChanges()
             }
             .done(on: queue)
             {
@@ -267,8 +267,8 @@ class CKItemDatabase: ItemDatabase, Observer, CustomObservable
         }
     }
     
-    let messenger = Messenger<ItemDatabaseUpdate?>()
-    typealias Message = ItemDatabaseUpdate?
+    let messenger = Messenger<CloudDatabaseUpdate?>()
+    typealias Message = CloudDatabaseUpdate?
     
     // MARK: - Create Zone
     

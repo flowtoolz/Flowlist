@@ -6,7 +6,7 @@ extension CKRecord
 {
     // MARK: - Convert to Record
     
-    func makeItemRecord() -> Record
+    func makeRecord() -> Record
     {
         if recordType != .item
         {

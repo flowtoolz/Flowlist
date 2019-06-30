@@ -2,7 +2,7 @@ import Foundation
 import FoundationToolz
 import SwiftyToolz
 
-class FileSystemRecordPersister: RecordPersister
+class FileSystemDatabase: LocalDatabase
 {
     // MARK: - Load & Save
     

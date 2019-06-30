@@ -1,25 +1,25 @@
 // TODO: ultimately reduce these types to what the storage model really needs
 
-struct ItemDatabaseSaveResult
+struct CloudDatabaseSaveResult
 {
-    static var empty: ItemDatabaseSaveResult
+    static var empty: CloudDatabaseSaveResult
     {
-        return ItemDatabaseSaveResult(successes: [], conflicts: [], failures: [])
+        return CloudDatabaseSaveResult(successes: [], conflicts: [], failures: [])
     }
     
     let successes: [Record]
-    let conflicts: [ItemDatabaseSaveConflict]
-    let failures: [ItemDatabaseSaveFailure]
+    let conflicts: [CloudDatabaseSaveConflict]
+    let failures: [CloudDatabaseSaveFailure]
 }
 
-struct ItemDatabaseSaveConflict
+struct CloudDatabaseSaveConflict
 {
     let clientRecord: Record
     let serverRecord: Record
     let ancestorRecord: Record?
 }
 
-struct ItemDatabaseSaveFailure
+struct CloudDatabaseSaveFailure
 {
     init(_ record: Record, _ error: Error)
     {

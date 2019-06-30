@@ -10,12 +10,11 @@ class Storage: Observer
 {
     // MARK: - Life cycle
     
-    init(with persister: RecordPersister, database: ItemDatabase)
+    init(recordStore: RecordStore)
     {
-        self.persister = persister
-        self.database = database
+        self.recordStore = recordStore
         
-        observe(database.messenger).select(.mayHaveChanged)
+        observe(recordStore.cloudDatabase.messenger).select(.mayHaveChanged)
         {
             [weak self] in self?.databaseMayHaveChanged()
         }
@@ -29,7 +28,7 @@ class Storage: Observer
     
     func appDidLaunch()
     {
-        guard let root = persister.loadRecords().makeTrees().largestTree else
+        guard let root = recordStore.localDatabase.loadRecords().makeTrees().largestTree else
         {
             log(error: "Couldn't load items from file.")
             return
@@ -55,7 +54,7 @@ class Storage: Observer
             return
         }
         
-        persister.save(root.array.map(Record.init))
+        recordStore.localDatabase.save(root.array.map(Record.init))
     }
     
     // MARK: - Database Account Status
@@ -74,7 +73,7 @@ class Storage: Observer
         fetchChangesAndApplyToStore().catch(abortIntendingToSync)
     }
     
-    private func applyDatabaseChangesToStore(_ changes: ItemDatabaseChanges)
+    private func applyDatabaseChangesToStore(_ changes: CloudDatabaseChanges)
     {
         if changes.idsOfDeletedRecords.count > 0
         {
@@ -141,7 +140,7 @@ class Storage: Observer
     {
         return firstly
         {
-            database.fetchChanges()
+            recordStore.cloudDatabase.fetchChanges()
         }
         .done(on: dbQueue)
         {
@@ -162,8 +161,10 @@ class Storage: Observer
                 // TODO: handle partial failures and conflicts
                 switch edit
                 {
-                case .updateItems(let records): return database.save(records).map { _ in }
-                case .removeItems(let ids): return database.deleteRecords(withIDs: ids).map { _ in }
+                case .updateItems(let records):
+                    return recordStore.cloudDatabase.save(records).map { _ in }
+                case .removeItems(let ids):
+                    return recordStore.cloudDatabase.deleteRecords(withIDs: ids).map { _ in }
                 }
             }
 
@@ -233,7 +234,7 @@ class Storage: Observer
     
     private func syncStoreAndDatabase() -> Promise<Void>
     {
-        if database.hasChangeToken
+        if recordStore.cloudDatabase.hasChangeToken
         {
             return syncStoreAndDatabaseBasedOnChangeToken()
         }
@@ -245,7 +246,7 @@ class Storage: Observer
     
     private func syncStoreAndDatabaseBasedOnChangeToken() -> Promise<Void>
     {
-        guard database.hasChangeToken else
+        guard recordStore.cloudDatabase.hasChangeToken else
         {
             return Promise(error: ReadableError.message("Tried to sync with database based on change token while database has no change token."))
         }
@@ -257,11 +258,11 @@ class Storage: Observer
         
         return firstly
         {
-            self.database.fetchChanges()
+            recordStore.cloudDatabase.fetchChanges()
         }
         .then(on: dbQueue)
         {
-            (dbChanges: ItemDatabaseChanges) -> Promise<Void> in
+            (dbChanges: CloudDatabaseChanges) -> Promise<Void> in
             
             if !dbChanges.hasChanges
             {
@@ -272,7 +273,7 @@ class Storage: Observer
                     // ... but store did change (like after editing offline)
                     
                     // TODO: we should persist a local cash of changed unsynced records, so we don't have to reset the whole db at this point
-                    return self.database.reset(withRoot: Store.shared.root)
+                    return self.recordStore.cloudDatabase.reset(withRoot: Store.shared.root)
                 }
                 else
                 {
@@ -324,7 +325,7 @@ class Storage: Observer
                         }
                         else
                         {
-                            return self.database.reset(withRoot: Store.shared.root)
+                            return self.recordStore.cloudDatabase.reset(withRoot: Store.shared.root)
                         }
                     }
                 }
@@ -345,7 +346,7 @@ class Storage: Observer
         
         return firstly
         {
-            database.fetchChanges()
+            recordStore.cloudDatabase.fetchChanges()
         }
         .map(on: dbQueue)
         {
@@ -357,7 +358,7 @@ class Storage: Observer
             
             guard let dbRoot = dbRoot, dbRoot.numberOfLeafs > 1 else
             {
-                return self.database.reset(withRoot: Store.shared.root)
+                return self.recordStore.cloudDatabase.reset(withRoot: Store.shared.root)
             }
             
             guard let storeRoot = Store.shared.root, storeRoot.numberOfLeafs > 1 else
@@ -390,7 +391,7 @@ class Storage: Observer
                 }
                 else
                 {
-                    return self.database.reset(withRoot: storeRoot)
+                    return self.recordStore.cloudDatabase.reset(withRoot: storeRoot)
                 }
             }
         }
@@ -409,7 +410,7 @@ class Storage: Observer
         
         return firstly
         {
-            database.fetchRecords()
+            recordStore.cloudDatabase.fetchRecords()
         }
         .map(on: dbQueue)
         {
@@ -430,7 +431,7 @@ class Storage: Observer
             
             guard let dbRoot = dbRoot else
             {
-                return self.database.reset(withRoot: storeRoot)
+                return self.recordStore.cloudDatabase.reset(withRoot: storeRoot)
             }
             
             // store and db are identical -> no need to reset store
@@ -529,18 +530,17 @@ class Storage: Observer
     private func resetLocal(tree: Item)
     {
         Store.shared.update(root: tree)
-        persister.save(tree.array.map(Record.init))
+        recordStore.localDatabase.save(tree.array.map(Record.init))
     }
     
-    private var dbQueue: DispatchQueue { return database.queue }
+    private var dbQueue: DispatchQueue { return recordStore.cloudDatabase.queue }
     
-    let database: ItemDatabase
-    let persister: RecordPersister
+    let recordStore: RecordStore
 }
 
 extension Store
 {
-    func changesAreRedundant(_ changes: ItemDatabaseChanges) -> Bool
+    func changesAreRedundant(_ changes: CloudDatabaseChanges) -> Bool
     {
         let updatesAreRedundant = differingRecords(in: changes.modifiedRecords).isEmpty
         let deletionsAreRedundant = existingIDs(in: changes.idsOfDeletedRecords).isEmpty
@@ -549,7 +549,7 @@ extension Store
     }
 }
 
-private extension ItemDatabase
+private extension CloudDatabase
 {
     func reset(withRoot root: Item?) -> Promise<Void>
     {
