@@ -10,21 +10,7 @@ class FileSystemRecordPersister: RecordPersister
     {
         // TODO: migrate data from JSON ...DeprecatedJSONFile().loadRecords(initialRoot: newRootRecord)
         
-        guard let recordFileDirectory = recordFileDirectory else { return [] }
-        
-        do
-        {
-            let files = try FileManager.default.contentsOfDirectory(at: recordFileDirectory,
-                                                                    includingPropertiesForKeys: nil,
-                                                                    options: [])
-            
-            return files.compactMap(Record.init)
-        }
-        catch
-        {
-            log(error: error.readable.message)
-            return []
-        }
+        return FileManager.default.files(in: recordFileDirectory).compactMap(Record.init)
     }
     
     func save(_ records: [Record])
