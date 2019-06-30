@@ -55,7 +55,7 @@ class Storage: Observer
             return
         }
         
-        persister.save(root)
+        persister.save(root.array.map(Record.init))
     }
     
     // MARK: - Database Account Status
@@ -529,7 +529,7 @@ class Storage: Observer
     private func resetLocal(tree: Item)
     {
         Store.shared.update(root: tree)
-        persister.save(tree)
+        persister.save(tree.array.map(Record.init))
     }
     
     private var dbQueue: DispatchQueue { return database.queue }

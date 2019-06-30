@@ -1,4 +1,6 @@
 import Foundation
+import FoundationToolz
+import SwiftyToolz
 
 class FileSystemRecordPersister: RecordPersister
 {
@@ -6,18 +8,62 @@ class FileSystemRecordPersister: RecordPersister
     
     func loadRecords() -> [Record]
     {
-        return DeprecatedJSONFile().loadRecords(initialRoot: newRootRecord)
+        // TODO: migrate data from JSON ...DeprecatedJSONFile().loadRecords(initialRoot: newRootRecord)
+        
+        guard let recordFileDirectory = recordFileDirectory else { return [] }
+        
+        do
+        {
+            let files = try FileManager.default.contentsOfDirectory(at: recordFileDirectory,
+                                                                    includingPropertiesForKeys: nil,
+                                                                    options: [])
+            
+            return files.compactMap(Record.init)
+        }
+        catch
+        {
+            log(error: error.readable.message)
+            return []
+        }
     }
     
-    // TODO: save N records to N files rather than 1 item to 1 json file ...
-    func save(_ item: Item)
+    func save(_ records: [Record])
     {
-        DeprecatedJSONFile().save(item)
+        guard let recordFileDirectory = recordFileDirectory else { return }
+        
+        for record in records
+        {
+            record.save(to: recordFileDirectory.appendingPathComponent(record.id))
+        }
     }
     
     // MARK: - Basics
     
-    let directory: URL? = .documentDirectory
+    let recordFileDirectory: URL? =
+    {
+        let directoryName = "Flowlist Item Record Files"
+        guard let directory = URL.documentDirectory?.appendingPathComponent(directoryName) else
+        {
+            log(error: "Couldn't get URL of document directory")
+            return nil
+        }
+        
+        if !FileManager.default.fileExists(atPath: directory.path)
+        {
+            do
+            {
+                try FileManager.default.createDirectory(at: directory,
+                                                        withIntermediateDirectories: true)
+            }
+            catch
+            {
+                log(error: error.readable.message)
+                return nil
+            }
+        }
+        
+        return directory
+    }()
     
     private var newRootRecord: Record
     {

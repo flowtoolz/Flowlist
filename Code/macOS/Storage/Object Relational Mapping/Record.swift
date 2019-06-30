@@ -1,6 +1,6 @@
 import SwiftyToolz
 
-struct Record
+struct Record : Codable
 {
     init(id: String,
          text: String? = nil,

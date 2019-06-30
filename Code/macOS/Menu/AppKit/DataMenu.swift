@@ -31,7 +31,7 @@ class DataMenu: NSMenu, NSMenuItemValidation
         switch menuItem.id
         {
         case exportItem.id: return mainWindowIsKey
-        case finderItem.id: return StorageController.shared.persister.directory != nil
+        case finderItem.id: return StorageController.shared.persister.recordFileDirectory != nil
         default: return true
         }
     }
@@ -50,7 +50,7 @@ class DataMenu: NSMenu, NSMenuItemValidation
     private lazy var finderItem = makeItem("Show Item File Folder in Finder",
                                            id: "show folder")
     {
-        if let folder = StorageController.shared.persister.directory
+        if let folder = StorageController.shared.persister.recordFileDirectory
         {
             NSWorkspace.shared.activateFileViewerSelecting([folder])
         }
