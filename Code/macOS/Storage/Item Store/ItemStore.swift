@@ -2,11 +2,11 @@ import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
-class Store: Observer, CustomObservable
+class ItemStore: Observer, CustomObservable
 {
     // MARK: - Initialization
     
-    static let shared = Store() 
+    static let shared = ItemStore() 
     
     private init() {}
 

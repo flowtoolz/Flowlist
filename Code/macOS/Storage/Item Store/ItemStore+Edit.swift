@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-extension Store
+extension ItemStore
 {
     // MARK: - Apply Edits (essentially, edits received from (iCloud-) database)
     

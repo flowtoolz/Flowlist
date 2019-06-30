@@ -18,12 +18,12 @@ class Browser: Observer, CustomObservable
             fatalError()
         }
         
-        if Store.shared.root != nil
+        if ItemStore.shared.root != nil
         {
             storeGotNewRoot()
         }
         
-        observe(Store.shared)
+        observe(ItemStore.shared)
         {
             [weak self] in if case .didSwitchRoot = $0 { self?.storeGotNewRoot() }
         }
@@ -35,7 +35,7 @@ class Browser: Observer, CustomObservable
     
     private func storeGotNewRoot()
     {
-        lists[0].set(root: Store.shared.root)
+        lists[0].set(root: ItemStore.shared.root)
         move(to: 0)
         focusedList.isFocused <- true
         focusedList.select()

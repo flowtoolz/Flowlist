@@ -19,7 +19,7 @@ class Storage: Observer
             [weak self] in self?.databaseMayHaveChanged()
         }
         
-        observe(Store.shared) { [weak self] in self?.didReceive($0) }
+        observe(ItemStore.shared) { [weak self] in self?.didReceive($0) }
     }
     
     deinit { stopObserving() }
@@ -34,7 +34,7 @@ class Storage: Observer
             return
         }
         
-        Store.shared.update(root: root)
+        ItemStore.shared.update(root: root)
         
         if isIntendingToSync
         {
@@ -48,7 +48,7 @@ class Storage: Observer
     
     private func saveItemsToFile()
     {
-        guard let root = Store.shared.root else
+        guard let root = ItemStore.shared.root else
         {
             log(error: "Store root is nil.")
             return
@@ -70,25 +70,25 @@ class Storage: Observer
     
     private func databaseMayHaveChanged()
     {
-        fetchChangesAndApplyToStore().catch(abortIntendingToSync)
+        fetchChangesAndApplyToItemStore().catch(abortIntendingToSync)
     }
     
-    private func applyDatabaseChangesToStore(_ changes: CloudDatabaseChanges)
+    private func applyCloudChangesToItemStore(_ changes: CloudDatabaseChanges)
     {
         if changes.idsOfDeletedRecords.count > 0
         {
-            Store.shared.apply(.removeItems(withIDs: changes.idsOfDeletedRecords))
+            ItemStore.shared.apply(.removeItems(withIDs: changes.idsOfDeletedRecords))
         }
         
         if changes.modifiedRecords.count > 0
         {
-            Store.shared.apply(.updateItems(withRecords: changes.modifiedRecords))
+            ItemStore.shared.apply(.updateItems(withRecords: changes.modifiedRecords))
         }
     }
     
     // MARK: - Transmit Local Changes to Database
     
-    private func didReceive(_ storeEvent: Store.Event)
+    private func didReceive(_ storeEvent: ItemStore.Event)
     {
         // TODO: should we ignore root switch events here and return?
         
@@ -100,7 +100,7 @@ class Storage: Observer
         
         firstly
         {
-            applyStoreEventToDatabase(storeEvent)
+            applyItemStoreEventToCloudDatabase(storeEvent)
         }
         .catch
         {
@@ -110,7 +110,7 @@ class Storage: Observer
     }
     
     // TODO: apply this, but based on CK agnostic SaveConflict type, not store event
-    private func handleConflictingStoreEventByAskingUser(_ edit: Store.Event) -> Promise<Void>
+    private func handleConflictingStoreEventByAskingUser(_ edit: ItemStore.Event) -> Promise<Void>
     {
         // TODO: Implement, using forced save if necessary. Also implement force option for save.
         /*
@@ -136,7 +136,7 @@ class Storage: Observer
         return Promise()
     }
     
-    private func fetchChangesAndApplyToStore() -> Promise<Void>
+    private func fetchChangesAndApplyToItemStore() -> Promise<Void>
     {
         return firstly
         {
@@ -144,14 +144,14 @@ class Storage: Observer
         }
         .done(on: dbQueue)
         {
-            if !Store.shared.changesAreRedundant($0)
+            if !ItemStore.shared.changesAreRedundant($0)
             {
-                self.applyDatabaseChangesToStore($0)
+                self.applyCloudChangesToItemStore($0)
             }
         }
     }
     
-    private func applyStoreEventToDatabase(_ event: Store.Event) -> Promise<Void>
+    private func applyItemStoreEventToCloudDatabase(_ event: ItemStore.Event) -> Promise<Void>
     {
         switch event
         {
@@ -251,7 +251,7 @@ class Storage: Observer
             return Promise(error: ReadableError.message("Tried to sync with database based on change token while database has no change token."))
         }
         
-        guard Store.shared.root != nil else
+        guard ItemStore.shared.root != nil else
         {
             return Promise(error: ReadableError.message("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
         }
@@ -273,7 +273,7 @@ class Storage: Observer
                     // ... but store did change (like after editing offline)
                     
                     // TODO: we should persist a local cash of changed unsynced records, so we don't have to reset the whole db at this point
-                    return self.recordStore.cloudDatabase.reset(withRoot: Store.shared.root)
+                    return self.recordStore.cloudDatabase.reset(withRoot: ItemStore.shared.root)
                 }
                 else
                 {
@@ -293,7 +293,7 @@ class Storage: Observer
                     // ... the local store did not change
                     // like after working on other device or when we changed the db ourselves
                     
-                    self.applyDatabaseChangesToStore(dbChanges)
+                    self.applyCloudChangesToItemStore(dbChanges)
                     
                     return Promise()
                 }
@@ -303,7 +303,7 @@ class Storage: Observer
                     
                     // db changes are redundant? -> we're done
                     
-                    if Store.shared.changesAreRedundant(dbChanges) { return Promise() }
+                    if ItemStore.shared.changesAreRedundant(dbChanges) { return Promise() }
                     
                     // conflicting db changes -> ask user
                     
@@ -325,7 +325,7 @@ class Storage: Observer
                         }
                         else
                         {
-                            return self.recordStore.cloudDatabase.reset(withRoot: Store.shared.root)
+                            return self.recordStore.cloudDatabase.reset(withRoot: ItemStore.shared.root)
                         }
                     }
                 }
@@ -339,7 +339,7 @@ class Storage: Observer
     
     private func syncStoreAndDatabaseWithoutChangeToken() -> Promise<Void>
     {
-        guard Store.shared.root != nil else
+        guard ItemStore.shared.root != nil else
         {
             return Promise(error: ReadableError.message("Create file and Store root before syncing Store with Database! file \(#file) line \(#line)"))
         }
@@ -358,10 +358,10 @@ class Storage: Observer
             
             guard let dbRoot = dbRoot, dbRoot.numberOfLeafs > 1 else
             {
-                return self.recordStore.cloudDatabase.reset(withRoot: Store.shared.root)
+                return self.recordStore.cloudDatabase.reset(withRoot: ItemStore.shared.root)
             }
             
-            guard let storeRoot = Store.shared.root, storeRoot.numberOfLeafs > 1 else
+            guard let storeRoot = ItemStore.shared.root, storeRoot.numberOfLeafs > 1 else
             {
                 self.resetLocal(tree: dbRoot)
                 return Promise()
@@ -403,7 +403,7 @@ class Storage: Observer
     
     private func fetchAllDatabaseItemsAndResetLocalStore() -> Promise<Void>
     {
-        guard Store.shared.root != nil else
+        guard ItemStore.shared.root != nil else
         {
             return Promise(error: ReadableError.message("Create file and Store root before resetting Store with Database items! file \(#file) line \(#line)"))
         }
@@ -420,7 +420,7 @@ class Storage: Observer
         {
             dbRoot -> Promise<Void> in
             
-            guard let storeRoot = Store.shared.root else
+            guard let storeRoot = ItemStore.shared.root else
             {
                 let errorMessage = "Did proceed into \(#function) while local store has no root item."
                 log(error: errorMessage)
@@ -436,7 +436,7 @@ class Storage: Observer
             
             // store and db are identical -> no need to reset store
             
-            if Store.shared.root?.isIdentical(to: dbRoot) ?? false
+            if ItemStore.shared.root?.isIdentical(to: dbRoot) ?? false
             {
                 return Promise()
             }
@@ -473,7 +473,7 @@ class Storage: Observer
         {
             log(warning: "There are multiple trees in iCloud.")
         
-            if let storeRootID = Store.shared.root?.data.id,
+            if let storeRootID = ItemStore.shared.root?.data.id,
                 let matchingRoot = treeResult.trees.first(where: { $0.data.id == storeRootID })
             {
                 log("... We found a tree in iCloud whos root ID matches the local tree's root ID, so we're gonna use that tree.")
@@ -529,7 +529,7 @@ class Storage: Observer
     
     private func resetLocal(tree: Item)
     {
-        Store.shared.update(root: tree)
+        ItemStore.shared.update(root: tree)
         recordStore.localDatabase.save(tree.array.map(Record.init))
     }
     
@@ -538,7 +538,7 @@ class Storage: Observer
     let recordStore: RecordStore
 }
 
-extension Store
+extension ItemStore
 {
     func changesAreRedundant(_ changes: CloudDatabaseChanges) -> Bool
     {
