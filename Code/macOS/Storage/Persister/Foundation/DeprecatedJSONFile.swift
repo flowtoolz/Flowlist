@@ -1,23 +1,20 @@
+import Foundation
 import FoundationToolz
-import SwiftObserver
 import SwiftyToolz
 
-class FileSystemRecordPersister: RecordPersister
+class DeprecatedJSONFile
 {
-    /// Experimental Loading of Records
-    
-    func loadRecords() -> [Record]
+    func loadRecords(initialRoot: Record) -> [Record]
     {
-        guard FileManager.default.fileExists(atPath: url.path) else
+        guard FileManager.default.fileExists(atPath: jsonFile.path) else
         {
-            let rootRecord = newRootRecord
-            save(rootRecord.makeItem())
-            return [rootRecord]
+            save(initialRoot.makeItem())
+            return [initialRoot]
         }
         
         do
         {
-            let data = try Data(contentsOf: url)
+            let data = try Data(contentsOf: jsonFile)
             if let json = try JSONSerialization.jsonObject(with: data) as? JSON
             {
                 return records(from: json, withRootID: nil, position: 0)
@@ -28,7 +25,7 @@ class FileSystemRecordPersister: RecordPersister
             log(error: error.readable.message)
         }
         
-        return [newRootRecord]
+        return [initialRoot]
     }
     
     private func records(from json: JSON,
@@ -61,39 +58,22 @@ class FileSystemRecordPersister: RecordPersister
         return loadedRecords
     }
     
-    private var newRootRecord: Record
-    {
-        return Record(id: .makeUUID(), text: NSFullUserName(), rootID: nil, position: 0)
-    }
-    
-    ///
-    
-    init(url: URL = FileSystemRecordPersister.defaultURL) { self.url = url }
-    
     func save(_ item: Item)
     {
-        if item.save(to: url) == nil
+        if item.save(to: jsonFile) == nil
         {
-            let fileString = self.url.absoluteString
+            let fileString = jsonFile.absoluteString
             log(error: "Could not save items to " + fileString)
         }
     }
     
-    // MARK: - URL
-    
-    let url: URL
-    
-    // MARK: - Default URL
-    
-    static var defaultURL: URL
+    private lazy var jsonFile: URL =
     {
-        let directory = URL.documentDirectory ?? Bundle.main.bundleURL
-        let fileName = FileSystemRecordPersister.defaultFileName
-        
-        return directory.appendingPathComponent(fileName)
-    }
+        let jsonFileDirectory = directory ?? Bundle.main.bundleURL
+        return jsonFileDirectory.appendingPathComponent(jsonFileName)
+    }()
     
-    private static let defaultFileName: String =
+    private let jsonFileName: String =
     {
         #if DEBUG
         return "flowlist_debug.json"
@@ -103,4 +83,6 @@ class FileSystemRecordPersister: RecordPersister
         return "flowlist.json"
         #endif
     }()
+    
+    private let directory: URL? = .documentDirectory
 }

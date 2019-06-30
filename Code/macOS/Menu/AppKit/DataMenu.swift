@@ -10,30 +10,17 @@ class DataMenu: NSMenu, NSMenuItemValidation
     {
         super.init(title: "Data")
         
-        let exportItem = makeItem("Export List as Text...", key: "e", id: "export")
-        {
-            browser.focusedList.root?.export()
-        }
-        
         addItem(exportItem)
+        addItem(finderItem)
         
         addItem(NSMenuItem.separator())
-        
-        let finderItem = makeItem("Show JSON File in Finder")
-        {
-            let fileURL = StorageController.shared.persister.url
-            
-            NSWorkspace.shared.activateFileViewerSelecting([fileURL])
-        }
-        
-        addItem(finderItem)
         
         addItem(cloudItem)
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
     
-    // MARK: - Item Validation and Titles
+    // MARK: - Item Validation
     
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
@@ -43,8 +30,29 @@ class DataMenu: NSMenu, NSMenuItemValidation
         
         switch menuItem.id
         {
-        case "export": return mainWindowIsKey
+        case exportItem.id: return mainWindowIsKey
+        case finderItem.id: return StorageController.shared.persister.directory != nil
         default: return true
+        }
+    }
+    
+    // Export Item
+    
+    private lazy var exportItem = makeItem("Export List as Text...",
+                                           key: "e",
+                                           id: "export")
+    {
+        browser.focusedList.root?.export()
+    }
+    
+    // Finder Item
+    
+    private lazy var finderItem = makeItem("Show Item File Folder in Finder",
+                                           id: "show folder")
+    {
+        if let folder = StorageController.shared.persister.directory
+        {
+            NSWorkspace.shared.activateFileViewerSelecting([folder])
         }
     }
     
