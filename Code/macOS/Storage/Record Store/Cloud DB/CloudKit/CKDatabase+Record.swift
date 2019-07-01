@@ -3,12 +3,12 @@ import CloudKid
 
 extension CKDatabase.Changes
 {
-    func makeCloudDatabaseChanges() -> CloudDatabaseChanges
+    func makeCloudDatabaseChanges() -> RecordChanges
     {
         let idsOfDeletedRecords = idsOfDeletedCKRecords.map { $0.recordName }
         let modifiedRecords = changedCKRecords.map { $0.makeRecord() }
         
-        return CloudDatabaseChanges(modifiedRecords: modifiedRecords,
+        return RecordChanges(modifiedRecords: modifiedRecords,
                                    idsOfDeletedRecords: idsOfDeletedRecords)
     }
 }

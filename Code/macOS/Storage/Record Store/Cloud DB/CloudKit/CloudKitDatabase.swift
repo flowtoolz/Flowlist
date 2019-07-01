@@ -158,9 +158,9 @@ class CloudKitDatabase: CloudDatabase, Observer, CustomObservable
         }
     }
     
-    func fetchChanges() -> Promise<CloudDatabaseChanges>
+    func fetchChanges() -> Promise<RecordChanges>
     {
-        return Promise<CloudDatabaseChanges>
+        return Promise<RecordChanges>
         {
             resolver in
             

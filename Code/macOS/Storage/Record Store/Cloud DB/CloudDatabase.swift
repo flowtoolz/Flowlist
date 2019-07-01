@@ -5,7 +5,7 @@ protocol CloudDatabase
 {
     func fetchRecords() -> Promise<[Record]>
     
-    func fetchChanges() -> Promise<CloudDatabaseChanges>
+    func fetchChanges() -> Promise<RecordChanges>
     var hasChangeToken: Bool { get }
     
     func reset(with records: [Record]) -> Promise<CloudDatabaseSaveResult>
@@ -18,10 +18,3 @@ protocol CloudDatabase
 }
 
 enum CloudDatabaseUpdate { case mayHaveChanged }
-
-struct CloudDatabaseChanges
-{
-    let modifiedRecords: [Record]
-    let idsOfDeletedRecords: [String]
-    var hasChanges: Bool { return modifiedRecords.count + idsOfDeletedRecords.count > 0 }
-}

@@ -14,9 +14,30 @@ class Storage: Observer
     {
         self.recordStore = recordStore
         
-        observe(recordStore.cloudDatabase.messenger).select(.mayHaveChanged)
+        observe(recordStore)
         {
-            [weak self] in self?.databaseMayHaveChanged()
+            [weak self] in
+            
+            guard let self = self, let event = $0 else { return }
+            
+            switch event
+            {
+            case .cloudDatabaseDidChange:
+                self.databaseMayHaveChanged()
+                
+            case .didDeleteRecordsWithIDs(_):
+                break
+                
+            case .didUpdateRecords(_):
+                break
+                
+            case .didApplyRecordChanges(let changes):
+                if !ItemStore.shared.changesAreRedundant(changes)
+                {
+                    self.applyCloudChangesToItemStore(changes)
+                }
+            }
+            
         }
         
         observe(ItemStore.shared) { [weak self] in self?.didReceive($0) }
@@ -70,10 +91,10 @@ class Storage: Observer
     
     private func databaseMayHaveChanged()
     {
-        fetchChangesAndApplyToItemStore().catch(abortIntendingToSync)
+        recordStore.fetchChanges().catch(abortIntendingToSync)
     }
     
-    private func applyCloudChangesToItemStore(_ changes: CloudDatabaseChanges)
+    private func applyCloudChangesToItemStore(_ changes: RecordChanges)
     {
         if changes.idsOfDeletedRecords.count > 0
         {
@@ -88,7 +109,7 @@ class Storage: Observer
     
     // MARK: - Transmit Local Changes to Database
     
-    private func didReceive(_ storeEvent: ItemStore.Event)
+    private func didReceive(_ itemStoreEvent: ItemStore.Event)
     {
         // TODO: should we ignore root switch events here and return?
         
@@ -100,7 +121,7 @@ class Storage: Observer
         
         firstly
         {
-            applyItemStoreEventToCloudDatabase(storeEvent)
+            applyItemStoreEventToCloudDatabase(itemStoreEvent)
         }
         .catch
         {
@@ -134,21 +155,6 @@ class Storage: Observer
         */
         
         return Promise()
-    }
-    
-    private func fetchChangesAndApplyToItemStore() -> Promise<Void>
-    {
-        return firstly
-        {
-            recordStore.cloudDatabase.fetchChanges()
-        }
-        .done(on: dbQueue)
-        {
-            if !ItemStore.shared.changesAreRedundant($0)
-            {
-                self.applyCloudChangesToItemStore($0)
-            }
-        }
     }
     
     private func applyItemStoreEventToCloudDatabase(_ event: ItemStore.Event) -> Promise<Void>
@@ -223,7 +229,7 @@ class Storage: Observer
         {
             syncStoreAndDatabase()
         }
-        .done(on: dbQueue)
+        .done(on: queue)
         {
             self.syncIntentionPersistentFlag.value = true
         }
@@ -260,9 +266,9 @@ class Storage: Observer
         {
             recordStore.cloudDatabase.fetchChanges()
         }
-        .then(on: dbQueue)
+        .then(on: queue)
         {
-            (dbChanges: CloudDatabaseChanges) -> Promise<Void> in
+            (dbChanges: RecordChanges) -> Promise<Void> in
             
             if !dbChanges.hasChanges
             {
@@ -315,7 +321,7 @@ class Storage: Observer
                     {
                         Dialog.default.askWhetherToPreferICloud()
                     }
-                    .then(on: self.dbQueue)
+                    .then(on: self.queue)
                     {
                         (preferDatabase: Bool) -> Promise<Void> in
                         
@@ -348,11 +354,11 @@ class Storage: Observer
         {
             recordStore.cloudDatabase.fetchChanges()
         }
-        .map(on: dbQueue)
+        .map(on: queue)
         {
             self.getTreeRoot(fromFetchedRecords: $0.modifiedRecords)
         }
-        .then(on: dbQueue)
+        .then(on: queue)
         {
             dbRoot -> Promise<Void> in
             
@@ -380,7 +386,7 @@ class Storage: Observer
             {
                 Dialog.default.askWhetherToPreferICloud()
             }
-            .then(on: self.dbQueue)
+            .then(on: self.queue)
             {
                 (preferDatabase: Bool) -> Promise<Void> in
                 
@@ -412,11 +418,11 @@ class Storage: Observer
         {
             recordStore.cloudDatabase.fetchRecords()
         }
-        .map(on: dbQueue)
+        .map(on: queue)
         {
             self.getTreeRoot(fromFetchedRecords: $0)
         }
-        .then(on: dbQueue)
+        .then(on: queue)
         {
             dbRoot -> Promise<Void> in
             
@@ -533,14 +539,14 @@ class Storage: Observer
         recordStore.localDatabase.save(tree.array.map(Record.init))
     }
     
-    private var dbQueue: DispatchQueue { return recordStore.cloudDatabase.queue }
+    private var queue: DispatchQueue { return recordStore.queue }
     
     let recordStore: RecordStore
 }
 
 extension ItemStore
 {
-    func changesAreRedundant(_ changes: CloudDatabaseChanges) -> Bool
+    func changesAreRedundant(_ changes: RecordChanges) -> Bool
     {
         let updatesAreRedundant = differingRecords(in: changes.modifiedRecords).isEmpty
         let deletionsAreRedundant = existingIDs(in: changes.idsOfDeletedRecords).isEmpty

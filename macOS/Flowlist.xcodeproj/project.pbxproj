@@ -80,6 +80,7 @@
 		9EC5C8B621B00FE100615D20 /* Dialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B521B00FE100615D20 /* Dialog.swift */; };
 		9EC5C8B821B0300D00615D20 /* Dialog+ICloudConflict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */; };
 		9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB5D032174AF740048D7C5 /* Item+Text.swift */; };
+		9EDC9A7E22CAA3C700331D2C /* RecordChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDC9A7D22CAA3C700331D2C /* RecordChanges.swift */; };
 		9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */; };
 		9EE56EE722C651D50023C0E3 /* CloudDatabaseDeletionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE56EE622C651D50023C0E3 /* CloudDatabaseDeletionResult.swift */; };
 		9EE56EE922C6520F0023C0E3 /* CloudDatabaseSaveResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE56EE822C6520F0023C0E3 /* CloudDatabaseSaveResult.swift */; };
@@ -190,6 +191,7 @@
 		9ED6964122BBF13A006D275E /* FlowlistTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowlistTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ED6964522BBF13A006D275E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EDB5D032174AF740048D7C5 /* Item+Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Text.swift"; sourceTree = "<group>"; };
+		9EDC9A7D22CAA3C700331D2C /* RecordChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordChanges.swift; sourceTree = "<group>"; };
 		9EE2EE5020B4AE34007CDC2F /* Float+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Float+Style.swift"; sourceTree = "<group>"; };
 		9EE56EE622C651D50023C0E3 /* CloudDatabaseDeletionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDatabaseDeletionResult.swift; sourceTree = "<group>"; };
 		9EE56EE822C6520F0023C0E3 /* CloudDatabaseSaveResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDatabaseSaveResult.swift; sourceTree = "<group>"; };
@@ -253,8 +255,10 @@
 			isa = PBXGroup;
 			children = (
 				9E12091322C93EEA003DE68E /* RecordStore.swift */,
-				9EA5A892218ECB37004902F7 /* Cloud DB */,
 				9EA5A895218ECC5A004902F7 /* Local DB */,
+				9EA5A892218ECB37004902F7 /* Cloud DB */,
+				9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */,
+				9EDC9A7D22CAA3C700331D2C /* RecordChanges.swift */,
 			);
 			path = "Record Store";
 			sourceTree = "<group>";
@@ -420,7 +424,6 @@
 			children = (
 				9E654E0F21A4859C0052607F /* CloudKit */,
 				9E576E342186F85100C9F876 /* Storage.swift */,
-				9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */,
 				9EA5A897218ECC98004902F7 /* Item Store */,
 				9E12091222C93EB9003DE68E /* Record Store */,
 				9EC5C8B421B00F9500615D20 /* Object Relational Mapping */,
@@ -889,6 +892,7 @@
 				9E2CCE8D20C1DE030037D755 /* List+Clipboard.swift in Sources */,
 				9EE60C0021ACE1AF0075109D /* CloudDatabase.swift in Sources */,
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,
+				9EDC9A7E22CAA3C700331D2C /* RecordChanges.swift in Sources */,
 				9E053B4921887133001B7103 /* FlowlistView.swift in Sources */,
 				9E22D8AF218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift in Sources */,
 				9E5768BC20C14B9300749C0C /* Direction.swift in Sources */,
