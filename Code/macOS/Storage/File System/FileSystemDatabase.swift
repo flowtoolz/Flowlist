@@ -74,38 +74,6 @@ class FileSystemDatabase: CustomObservable
         send(.didDeleteRecordsWithIDs(idsOfDeletions))
     }
     
-//    func clear() -> Bool
-//    {
-//        let files = FileManager.default.items(in: recordFileDirectory)
-//
-//        var errorOccured = false
-//
-//        let idsOfRemovedRecords = files.compactMap
-//        {
-//            file -> String? in
-//
-//            guard let record = Record(fileURL: file) else
-//            {
-//                errorOccured = true
-//                return nil
-//            }
-//
-//            if FileManager.default.remove(file)
-//            {
-//                return record.id
-//            }
-//            else
-//            {
-//                errorOccured = true
-//                return nil
-//            }
-//        }
-//
-//        send(.didDeleteRecordsWithIDs(idsOfRemovedRecords))
-//
-//        return !errorOccured
-//    }
-    
     // MARK: - Basics
     
     let recordFileDirectory: URL? =
