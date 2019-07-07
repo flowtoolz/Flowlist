@@ -68,7 +68,7 @@
 		9E6E70AD21936CD300BDB0BA /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AC21936CD300BDB0BA /* Record.swift */; };
 		9E7651961EEF4DA200DE2B07 /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* ItemStore.swift */; };
 		9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* List+Editing.swift */; };
-		9E86C48722C8B30700DF4FEC /* JSONFileMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E86C48622C8B30700DF4FEC /* JSONFileMigrator.swift */; };
+		9E86C48722C8B30700DF4FEC /* LegacyJSONFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E86C48622C8B30700DF4FEC /* LegacyJSONFile.swift */; };
 		9E91651520551E5600A438FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E91651320551E5500A438FB /* Assets.xcassets */; };
 		9E9A2FDD22D0858E00629103 /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9A2FDC22D0858E00629103 /* FileController.swift */; };
 		9E9A2FE022D0A59600629103 /* RecordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9A2FDF22D0A59600629103 /* RecordStore.swift */; };
@@ -77,6 +77,7 @@
 		9EA63839216F8BB100D1503C /* List+Selection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA63838216F8BB100D1503C /* List+Selection.swift */; };
 		9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7F99B20C19B210059166B /* Item+Clipboard.swift */; };
 		9EBC70292056FD02007A1EA8 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBC70282056FD02007A1EA8 /* Browser.swift */; };
+		9EBD515E22D267670047B9F1 /* JSONFileMigrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EBD515D22D267670047B9F1 /* JSONFileMigrationController.swift */; };
 		9EC498A621147FE1003636FE /* Item+Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC498A521147FE1003636FE /* Item+Pasteboard.swift */; };
 		9EC5C8B221B00ED800615D20 /* AlertDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B121B00ED800615D20 /* AlertDialog.swift */; };
 		9EC5C8B621B00FE100615D20 /* Dialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5C8B521B00FE100615D20 /* Dialog.swift */; };
@@ -172,7 +173,7 @@
 		9E6E70AC21936CD300BDB0BA /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* ItemStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
 		9E82A7A81EF2A558006AEF02 /* List+Editing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "List+Editing.swift"; sourceTree = "<group>"; };
-		9E86C48622C8B30700DF4FEC /* JSONFileMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFileMigrator.swift; sourceTree = "<group>"; };
+		9E86C48622C8B30700DF4FEC /* LegacyJSONFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyJSONFile.swift; sourceTree = "<group>"; };
 		9E91651320551E5500A438FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		9E916518205520B800A438FB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		9E9A2FDC22D0858E00629103 /* FileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
@@ -182,6 +183,7 @@
 		9EA63838216F8BB100D1503C /* List+Selection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+Selection.swift"; sourceTree = "<group>"; };
 		9EA7F99B20C19B210059166B /* Item+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Clipboard.swift"; sourceTree = "<group>"; };
 		9EBC70282056FD02007A1EA8 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Browser.swift; sourceTree = "<group>"; };
+		9EBD515D22D267670047B9F1 /* JSONFileMigrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFileMigrationController.swift; sourceTree = "<group>"; };
 		9EC498A521147FE1003636FE /* Item+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Pasteboard.swift"; sourceTree = "<group>"; };
 		9EC5C8B121B00ED800615D20 /* AlertDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDialog.swift; sourceTree = "<group>"; };
 		9EC5C8B521B00FE100615D20 /* Dialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialog.swift; sourceTree = "<group>"; };
@@ -440,9 +442,9 @@
 		9EA5A89B218ED21B004902F7 /* File System */ = {
 			isa = PBXGroup;
 			children = (
+				9EBD515F22D26AB80047B9F1 /* JSON Migration */,
 				9E9A2FDC22D0858E00629103 /* FileController.swift */,
 				9E053B22218867E4001B7103 /* FileSystemDatabase.swift */,
-				9E86C48622C8B30700DF4FEC /* JSONFileMigrator.swift */,
 			);
 			path = "File System";
 			sourceTree = "<group>";
@@ -580,6 +582,15 @@
 				9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */,
 			);
 			path = Foundation;
+			sourceTree = "<group>";
+		};
+		9EBD515F22D26AB80047B9F1 /* JSON Migration */ = {
+			isa = PBXGroup;
+			children = (
+				9EBD515D22D267670047B9F1 /* JSONFileMigrationController.swift */,
+				9E86C48622C8B30700DF4FEC /* LegacyJSONFile.swift */,
+			);
+			path = "JSON Migration";
 			sourceTree = "<group>";
 		};
 		9EC5C8B321B00F5300615D20 /* AppKit */ = {
@@ -816,7 +827,7 @@
 				9EF37C4E21A08EED00A43AA9 /* DataMenu.swift in Sources */,
 				9E053B452188711A001B7103 /* Menu.swift in Sources */,
 				9E053B23218867E4001B7103 /* FileSystemDatabase.swift in Sources */,
-				9E86C48722C8B30700DF4FEC /* JSONFileMigrator.swift in Sources */,
+				9E86C48722C8B30700DF4FEC /* LegacyJSONFile.swift in Sources */,
 				9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */,
 				9E18C3DC21D6604A00363F48 /* ReadableError.swift in Sources */,
 				9E22D8AD218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift in Sources */,
@@ -845,6 +856,7 @@
 				9E132D2521D3C38200B61D2D /* TextFormat+Foundation.swift in Sources */,
 				9E2CCE8D20C1DE030037D755 /* List+Clipboard.swift in Sources */,
 				9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */,
+				9EBD515E22D267670047B9F1 /* JSONFileMigrationController.swift in Sources */,
 				9E053B4921887133001B7103 /* FlowlistView.swift in Sources */,
 				9E22D8AF218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift in Sources */,
 				9E5768BC20C14B9300749C0C /* Direction.swift in Sources */,

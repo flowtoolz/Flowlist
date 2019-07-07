@@ -1,5 +1,6 @@
 import Foundation
 import FoundationToolz
+import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
@@ -10,43 +11,21 @@ class FileSystemDatabase: CustomObservable
     
     // MARK: - Load
     
-    
-    // how do we initially "load"? not at all (only when demanding records?) should migration be extracted as a setup step? 
     func loadRecords() -> [Record]
     {
-        guard let recordFileDirectory = recordFileDirectory else { return [] }
-        
-        let recordFiles = FileManager.default.items(in: recordFileDirectory)
-        
-        if !recordFiles.isEmpty { return recordFiles.compactMap(Record.init) }
-        
-        // no records -> migrate json file?
-        
-        let jsonMigrator = JSONFileMigrator()
-        
-        guard jsonMigrator.jsonFileExists,
-            let jsonFileRecords = jsonMigrator.loadRecordsFromJSONFile(),
-            !jsonFileRecords.isEmpty
-        else
-        {
-            save([newRootRecord])
-            return [newRootRecord]
-        }
-        
-        // we have records from a json file -> save records, delete json, reload records
-        
-        save(jsonFileRecords)
-        
-        jsonMigrator.removeJSONFile()
-
-        return FileManager.default.items(in: recordFileDirectory).compactMap(Record.init)
+        return FileManager.default
+            .items(in: recordFileDirectory)
+            .compactMap(Record.init)
     }
     
     // MARK: - Edit
     
-    func save(_ records: [Record])
+    @discardableResult
+    func save(_ records: [Record]) -> Bool
     {
-        guard let recordFileDirectory = recordFileDirectory else { return }
+        guard !records.isEmpty else { return true }
+        
+        guard let recordFileDirectory = recordFileDirectory else { return false }
         
         let savedRecords = records.compactMap
         {
@@ -56,7 +35,9 @@ class FileSystemDatabase: CustomObservable
             return record.save(to: file) != nil ? record : nil
         }
         
-        send(.didSaveRecords(savedRecords))
+        if !savedRecords.isEmpty { send(.didSaveRecords(savedRecords)) }
+        
+        return records.count == savedRecords.count
     }
     
     func deleteRecords(with ids: [Record.ID])

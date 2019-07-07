@@ -18,7 +18,7 @@ class StorageController
         recordController = RecordController()
     }
     
-    // MARK: - CloudKit Record Controller
+    // MARK: - Respond to Events
     
     func toggleIntentionToSyncWithDatabase()
     {
@@ -29,12 +29,17 @@ class StorageController
     {
         firstly
         {
-            self.ckRecordController.loadFiles()
+            JSONFileMigrationController().migrateJSONFile()
         }
-        .done
+        .then
         {
+            () -> Promise<Void> in
+            
+            // TODO: we need file system db and record store to provide sender with message to avoid message ping pong, in particular during setup!
             self.fileController.saveRecordsFromFilesToRecordStore()
+            return self.ckRecordController.syncCKRecordsWithFiles()
         }
+        
         .catch
         {
             log(error: $0.readable.message)
@@ -56,11 +61,9 @@ class StorageController
         return ckRecordController.isIntendingToSync
     }
     
+    // MARK: - Storage Controllers
+    
     private let ckRecordController: CKRecordController
-    
-    // MARK: - Local Storage Controllers
-    
     private let fileController: FileController
-    
-    let recordController: RecordController
+    private let recordController: RecordController
 }

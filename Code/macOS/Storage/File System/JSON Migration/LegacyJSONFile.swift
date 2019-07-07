@@ -2,15 +2,15 @@ import Foundation
 import FoundationToolz
 import SwiftyToolz
 
-class JSONFileMigrator
+class LegacyJSONFile
 {
-    func loadRecordsFromJSONFile() -> [Record]?
+    func loadRecords() -> [Record]?
     {
-        guard jsonFileExists else { return [] }
+        guard exists else { return [] }
         
         do
         {
-            let data = try Data(contentsOf: jsonFile)
+            let data = try Data(contentsOf: url)
             
             if let json = try JSONSerialization.jsonObject(with: data) as? JSON
             {
@@ -28,9 +28,9 @@ class JSONFileMigrator
         }
     }
     
-    var jsonFileExists: Bool
+    var exists: Bool
     {
-        return FileManager.default.itemExists(jsonFile)
+        return FileManager.default.itemExists(url)
     }
     
     private func records(from json: JSON,
@@ -70,18 +70,18 @@ class JSONFileMigrator
         return loadedRecords
     }
     
-    func removeJSONFile()
+    func remove()
     {
-        FileManager.default.remove(jsonFile)
+        FileManager.default.remove(url)
     }
     
-    private lazy var jsonFile: URL =
+    private lazy var url: URL =
     {
         let jsonFileDirectory = directory ?? Bundle.main.bundleURL
-        return jsonFileDirectory.appendingPathComponent(jsonFileName)
+        return jsonFileDirectory.appendingPathComponent(name)
     }()
     
-    private let jsonFileName: String =
+    private let name: String =
     {
         #if DEBUG
         return "flowlist_debug.json"

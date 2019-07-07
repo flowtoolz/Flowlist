@@ -21,7 +21,7 @@ class CKRecordController: Observer
     
     // MARK: - Setup: Update Files with Cloud Data
     
-    func loadFiles() -> Promise<Void>
+    func syncCKRecordsWithFiles() -> Promise<Void>
     {
         guard isIntendingToSync else { return Promise() }
 
