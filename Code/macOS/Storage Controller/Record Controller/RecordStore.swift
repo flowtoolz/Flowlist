@@ -7,30 +7,23 @@ class RecordStore: CustomObservable
     static let shared = RecordStore()
     private init() {}
     
-    // MARK: - Manage Records
-
-    func record(for id: Record.ID) -> Record?
-    {
-        return records[id]
-    }
+    // MARK: - Change Records
     
-    func save(_ recordsToSave: [Record])
+    func save(_ records: [Record])
     {
-        recordsToSave.forEach { records[$0.id] = $0 }
-        
-        // TODO: POSIIBLY only send those that actually changed, if any changed at all
-        send(.didSaveRecords(recordsToSave))
+        let differingRecords = records.compactMap { recordsByID[$0.id] != $0 ? $0 : nil }
+        differingRecords.forEach { recordsByID[$0.id] = $0 }
+        send(.didMofifyRecords(differingRecords))
     }
     
     func deleteRecords(with ids: [Record.ID])
     {
-        ids.forEach { records[$0] = nil }
-        
-        // TODO: POSIIBLY only send those that actually existed, if any existed at all
-        send(.didDeleteRecordsWithIDs(ids))
+        let idsOfExistingRecords = ids.compactMap { recordsByID[$0] != nil ? $0 : nil }
+        idsOfExistingRecords.forEach { recordsByID[$0] = nil }
+        send(.didDeleteRecordsWithIDs(idsOfExistingRecords))
     }
     
-    private var records = [Record.ID : Record]()
+    private var recordsByID = [Record.ID : Record]()
     
     // MARK: - Observability
     
@@ -40,6 +33,6 @@ class RecordStore: CustomObservable
     enum Event
     {
         case didDeleteRecordsWithIDs([Record.ID])
-        case didSaveRecords([Record])
+        case didMofifyRecords([Record])
     }
 }

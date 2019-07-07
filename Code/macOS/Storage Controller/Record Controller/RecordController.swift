@@ -34,7 +34,7 @@ class RecordController: Observer
         case .didDeleteRecordsWithIDs(let ids):
             ItemStore.shared.apply(.removeItems(withIDs: ids))
             
-        case .didSaveRecords(let records):
+        case .didMofifyRecords(let records):
             ItemStore.shared.apply(.updateItems(withRecords: records))
         }
     }

@@ -37,7 +37,7 @@ class FileController: Observer
         case .didDeleteRecordsWithIDs(let ids):
             FileSystemDatabase.shared.deleteRecords(with: ids)
         
-        case .didSaveRecords(let records):
+        case .didMofifyRecords(let records):
             FileSystemDatabase.shared.save(records)
         }
     }
