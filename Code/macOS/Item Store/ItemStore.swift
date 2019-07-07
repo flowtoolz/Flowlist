@@ -133,12 +133,11 @@ class ItemStore: Observer, CustomObservable
     
     // MARK: - Observability
     
-    typealias Message = Event
-    
-    let messenger = Messenger(Event.didNothing)
+    let messenger = Messenger<Message>()
+    typealias Message = Event?
     
     enum Event
     {
-        case didNothing, didSwitchRoot, didUpdate(Item.Event.TreeUpdate)
+        case didSwitchRoot, didUpdate(Item.Event.TreeUpdate)
     }
 }

@@ -21,11 +21,25 @@ extension ItemStore
     
     private func updateItems(with updatedRecords: [Record])
     {
+        guard root != nil else
+        {
+            if let newRoot = makeTree(from: updatedRecords)
+            {
+                update(root: newRoot)
+            }
+            else
+            {
+                // TODO: how do we avoid having no root if there's nop data coming from icloud?
+            }
+            
+            return
+        }
+        
         let differingRecs = differingRecords(in: updatedRecords)
         
         guard !differingRecs.isEmpty else { return }
         
-        var arrayOfItemRootIDPosition = [(Item, String?, Int)]()
+        var arrayOfItemRootIDPosition = [(Item, Record.ID?, Int)]()
         
         // ensure items are in hash map and have updated data
         
@@ -57,7 +71,7 @@ extension ItemStore
         updateItemsWithNewRootAndPosition(arrayOfItemRootIDPosition)
     }
     
-    private func updateItemsWithNewRootAndPosition(_ array: [(Item, String?, Int)])
+    private func updateItemsWithNewRootAndPosition(_ array: [(Item, Record.ID?, Int)])
     {
         let sortedByPosition = array.sorted { $0.2 < $1.2 }
         
@@ -72,7 +86,7 @@ extension ItemStore
         }
     }
     
-    private func move(_ item: Item, toNewRootID newRootID: String?)
+    private func move(_ item: Item, toNewRootID newRootID: Record.ID?)
     {
         guard item.root?.data.id != newRootID else { return }
         
@@ -113,11 +127,6 @@ extension ItemStore
         }
     }
     
-    func existingIDs(in ids: [String]) -> [String]
-    {
-        return ids.compactMap { itemHash[$0]?.data.id }
-    }
-    
     private func item(_ item: Item?, isEquivalentTo record: Record) -> Bool
     {
         guard let item = item else { return false }
@@ -134,12 +143,12 @@ extension ItemStore
     
     // MARK: - Remove Items
     
-    private func removeItems(with ids: [String])
+    private func removeItems(with ids: [Record.ID])
     {
         ids.forEach(removeItem)
     }
     
-    private func removeItem(with id: String)
+    private func removeItem(with id: Record.ID)
     {
         guard let item = itemHash[id] else { return }
         
@@ -152,5 +161,29 @@ extension ItemStore
         itemHash.remove(item.array)
 
         superItem.removeNodes(from: [index])
+    }
+    
+    // MARK: - Make Initial Tree
+    
+    private func makeTree(from records: [Record]) -> Item?
+    {
+        let treeResult = records.makeTrees()
+        
+        guard treeResult.trees.count > 1 else
+        {
+            return treeResult.trees.first
+        }
+        
+        log(warning: "There are multiple trees in iCloud.")
+        
+        if let storeRootID = ItemStore.shared.root?.data.id,
+            let matchingRoot = treeResult.trees.first(where: { $0.data.id == storeRootID })
+        {
+            log("... We found a tree in iCloud whos root ID matches the local tree's root ID, so we're gonna use that tree.")
+            return matchingRoot
+        }
+        
+        log("... We found no matching root ID in iCloud, so we're gonna use the largest tree from iCloud.")
+        return treeResult.largestTree
     }
 }

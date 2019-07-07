@@ -4,53 +4,21 @@ import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
-class CloudKitDatabase: CloudDatabase, Observer, CustomObservable
+class CloudKitDatabase: Observer, CustomObservable
 {
+    static let shared = CloudKitDatabase()
+    
     // MARK: - Life Cycle
     
-    init() { observeCKDatabaseController() }
+    private init() { observeCKDatabaseController() }
     
     deinit { stopObserving() }
     
-    // MARK: - Reset All Records
+    // MARK: - Save CKRecords
     
-    func reset(with records: [Record]) -> Promise<CloudDatabaseSaveResult>
+    func save(_ ckRecords: [CKRecord]) -> Promise<CKDatabase.SaveResult>
     {
-        return Promise<CloudDatabaseSaveResult>
-        {
-            resolver in
-            
-            firstly
-            {
-                ensureAccess()
-            }
-            .then(on: queue)
-            {
-                self.ckDatabaseController.deleteCKRecords(ofType: .item,
-                                                          inZone: .item).map { _ in }
-            }
-            .then(on: queue)
-            {
-                // TODO: conflicts should not occur after deleting all records, so throw/log an error in that case
-                self.save(records)
-            }
-            .done(on: queue)
-            {
-                resolver.fulfill($0)
-            }
-            .catch
-            {
-                self.didEnsureAccess = false
-                resolver.reject($0)
-            }
-        }
-    }
-    
-    // MARK: - Save Records
-    
-    func save(_ records: [Record]) -> Promise<CloudDatabaseSaveResult>
-    {
-        return Promise<CloudDatabaseSaveResult>
+        return Promise<CKDatabase.SaveResult>
         {
             resolver in
             
@@ -60,11 +28,7 @@ class CloudKitDatabase: CloudDatabase, Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.ckDatabaseController.save(records.map(self.makeCKRecord))
-            }
-            .map(on: queue)
-            {
-                $0.makeCloudDatabaseSaveResult()
+                self.ckDatabaseController.save(ckRecords)
             }
             .done(on: queue)
             {
@@ -78,27 +42,18 @@ class CloudKitDatabase: CloudDatabase, Observer, CustomObservable
         }
     }
     
-    private func makeCKRecord(for record: Record) -> CKRecord
+    func getCKRecordWithCachedSystemFields(for id: String) -> CKRecord
     {
-        let ckRecord = ckDatabaseController.getCKRecordWithCachedSystemFields(id: record.id,
-                                                                              type: .item,
-                                                                              zoneID: .item)
-        
-        ckRecord.text = record.text
-        ckRecord.state = record.state
-        ckRecord.tag = record.tag
-        
-        ckRecord.superItem = record.rootID
-        ckRecord.position = record.position
-        
-        return ckRecord
+        return ckDatabaseController.getCKRecordWithCachedSystemFields(id: id,
+                                                                      type: .item,
+                                                                      zoneID: .item)
     }
     
     // MARK: - Delete Records
     
-    func deleteRecords(withIDs ids: [String]) -> Promise<CloudDatabaseDeletionResult>
+    func deleteCKRecords(with ids: [String]) -> Promise<CKDatabase.DeletionResult>
     {
-        return Promise<CloudDatabaseDeletionResult>
+        return Promise<CKDatabase.DeletionResult>
         {
             resolver in
             
@@ -108,11 +63,7 @@ class CloudKitDatabase: CloudDatabase, Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.ckDatabaseController.deleteCKRecords(withIDs: ids.itemCKRecordIDs)
-            }
-            .map(on: queue)
-            {
-                $0.makeCloudDatabaseDeletionResult()
+                self.ckDatabaseController.deleteCKRecords(with: ids.ckRecordIDs)
             }
             .done(on: queue)
             {
@@ -128,9 +79,9 @@ class CloudKitDatabase: CloudDatabase, Observer, CustomObservable
     
     // MARK: - Fetch Stuff
     
-    func fetchRecords() -> Promise<[Record]>
+    func fetchCKRecords() -> Promise<[CKRecord]>
     {
-        return Promise<[Record]>
+        return Promise<[CKRecord]>
         {
             resolver in
             
@@ -141,10 +92,6 @@ class CloudKitDatabase: CloudDatabase, Observer, CustomObservable
             .then(on: queue)
             {
                 self.ckDatabaseController.queryCKRecords(ofType: .item, inZone: .item)
-            }
-            .map(on: queue)
-            {
-                $0.map { $0.makeRecord() }
             }
             .done(on: queue)
             {
@@ -158,9 +105,9 @@ class CloudKitDatabase: CloudDatabase, Observer, CustomObservable
         }
     }
     
-    func fetchChanges() -> Promise<RecordChanges>
+    func fetchChanges() -> Promise<CKDatabase.Changes>
     {
-        return Promise<RecordChanges>
+        return Promise<CKDatabase.Changes>
         {
             resolver in
             
@@ -171,10 +118,6 @@ class CloudKitDatabase: CloudDatabase, Observer, CustomObservable
             .then(on: queue)
             {
                 self.ckDatabaseController.fetchChanges(fromZone: .item)
-            }
-            .map(on: queue)
-            {
-                $0.makeCloudDatabaseChanges()
             }
             .done(on: queue)
             {
@@ -215,7 +158,7 @@ class CloudKitDatabase: CloudDatabase, Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.ensureItemRecordZoneExists()
+                self.ensureRecordZoneExists()
             }
             .then(on: queue)
             {
@@ -267,12 +210,13 @@ class CloudKitDatabase: CloudDatabase, Observer, CustomObservable
         }
     }
     
-    let messenger = Messenger<CloudDatabaseUpdate?>()
-    typealias Message = CloudDatabaseUpdate?
+    let messenger = Messenger<Event?>()
+    typealias Message = Event?
+    enum Event { case mayHaveChanged }
     
     // MARK: - Create Zone
     
-    private func ensureItemRecordZoneExists() -> Promise<Void>
+    private func ensureRecordZoneExists() -> Promise<Void>
     {
         return ckDatabaseController.createZone(with: .item).map { _ in }
     }
@@ -287,7 +231,7 @@ class CloudKitDatabase: CloudDatabase, Observer, CustomObservable
 
 private extension Array where Element == String
 {
-    var itemCKRecordIDs: [CKRecord.ID]
+    var ckRecordIDs: [CKRecord.ID]
     {
         return map(CKRecord.ID.init(itemID:))
     }

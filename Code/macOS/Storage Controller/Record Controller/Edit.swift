@@ -48,5 +48,5 @@ enum Edit
     }
     
     case updateItems(withRecords: [Record])
-    case removeItems(withIDs: [String])
+    case removeItems(withIDs: [Record.ID])
 }

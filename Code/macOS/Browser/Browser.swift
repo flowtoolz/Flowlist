@@ -25,7 +25,9 @@ class Browser: Observer, CustomObservable
         
         observe(ItemStore.shared)
         {
-            [weak self] in if case .didSwitchRoot = $0 { self?.storeGotNewRoot() }
+            [weak self] in
+            
+            if let event = $0, case .didSwitchRoot = event { self?.storeGotNewRoot() }
         }
     }
     

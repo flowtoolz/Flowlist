@@ -31,7 +31,7 @@ class DataMenu: NSMenu, NSMenuItemValidation
         switch menuItem.id
         {
         case exportItem.id: return mainWindowIsKey
-        case finderItem.id: return StorageController.shared.fileSystemDatabase.recordFileDirectory != nil
+        case finderItem.id: return FileSystemDatabase.shared.recordFileDirectory != nil
         default: return true
         }
     }
@@ -50,7 +50,7 @@ class DataMenu: NSMenu, NSMenuItemValidation
     private lazy var finderItem = makeItem("Show Item File Folder in Finder",
                                            id: "show folder")
     {
-        if let folder = StorageController.shared.fileSystemDatabase.recordFileDirectory
+        if let folder = FileSystemDatabase.shared.recordFileDirectory
         {
             NSWorkspace.shared.activateFileViewerSelecting([folder])
         }
@@ -60,12 +60,12 @@ class DataMenu: NSMenu, NSMenuItemValidation
     
     private lazy var cloudItem = makeItem(cloudItemTitle)
     {
-        StorageController.shared.storage.toggleIntentionToSyncWithDatabase()
+        StorageController.shared.toggleIntentionToSyncWithDatabase()
     }
     
     private var cloudItemTitle: String
     {
-        let isUsingICloud = StorageController.shared.storage.isIntendingToSync
+        let isUsingICloud = StorageController.shared.isIntendingToSyncWithCloudKitDatabase
         return "\(isUsingICloud ? "Stop" : "Start") Using iCloud"
     }
 }

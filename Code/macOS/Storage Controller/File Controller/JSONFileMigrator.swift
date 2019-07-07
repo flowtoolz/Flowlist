@@ -34,7 +34,7 @@ class JSONFileMigrator
     }
     
     private func records(from json: JSON,
-                         withRootID rootID: String?,
+                         withRootID rootID: Record.ID?,
                          position: Int) -> [Record]
     {
         guard let id = json["id"] as? String else { return [] }
@@ -72,7 +72,7 @@ class JSONFileMigrator
     
     func removeJSONFile()
     {
-        FileManager.default.remove(item: jsonFile)
+        FileManager.default.remove(jsonFile)
     }
     
     private lazy var jsonFile: URL =

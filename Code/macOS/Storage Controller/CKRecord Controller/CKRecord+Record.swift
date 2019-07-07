@@ -176,26 +176,3 @@ extension CKRecord
         case text, state, tag, superItem, position
     }
 }
-
-extension CKRecord.RecordType
-{
-    static var item: CKRecord.RecordType { return "Item" }
-}
-
-extension CKRecord.ID
-{
-    convenience init(itemID: String)
-    {
-        self.init(recordName: itemID, zoneID: .item)
-    }
-}
-
-extension CKRecord.Reference
-{
-    // TODO: start using CKRecord.parent reference property in addition so we can migrate to that property at some point
-    convenience init(itemOwnerName: String)
-    {
-        self.init(recordID: CKRecord.ID(itemID: itemOwnerName),
-                  action: .deleteSelf)
-    }
-}

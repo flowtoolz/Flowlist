@@ -2,11 +2,11 @@ import SwiftyToolz
 
 struct Record: Codable, Equatable
 {
-    init(id: String,
+    init(id: ID,
          text: String? = nil,
          state: ItemData.State? = nil,
          tag: ItemData.Tag? = nil,
-         rootID: String?,
+         rootID: ID?,
          position: Int)
     {
         self.id = id
@@ -17,17 +17,19 @@ struct Record: Codable, Equatable
         self.position = position
     }
     
-    let id: String
+    let id: ID
     
     let text: String?
     let state: ItemData.State?
     let tag: ItemData.Tag?
     
-    let rootID: String?
+    let rootID: ID?
     let position: Int
     
     enum Field: String, CaseIterable
     {
         case text, state, tag, root, position
     }
+    
+    typealias ID = String
 }

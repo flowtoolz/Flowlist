@@ -45,7 +45,7 @@ class FlowlistController: AppController
         registerForPushNotifications()
         registerForICloudAccountChangeNotifications()
         
-        storage.appDidLaunch()
+        StorageController.shared.appDidLaunch()
     }
     
     override func applicationWillBecomeActive(_ notification: Notification)
@@ -57,7 +57,6 @@ class FlowlistController: AppController
     
     func applicationWillTerminate(_ notification: Notification)
     {
-        storage.appWillTerminate()
         fileLogger.saveLogsToFile()
     }
     
@@ -82,7 +81,6 @@ class FlowlistController: AppController
     
     func windowDidResignKey(_ notification: Notification)
     {
-        storage.windowLostFocus()
         fileLogger.saveLogsToFile()
     }
     
@@ -106,7 +104,7 @@ class FlowlistController: AppController
     func application(_ application: NSApplication,
                      didReceiveRemoteNotification userInfo: [String : Any])
     {
-        StorageController.shared.cloudKitDatabase.handleDatabaseNotification(with: userInfo)
+        CloudKitDatabase.shared.handleDatabaseNotification(with: userInfo)
     }
     
     private func registerForICloudAccountChangeNotifications()
@@ -124,7 +122,7 @@ class FlowlistController: AppController
     
     @objc private func iCloudAccountDidChange()
     {
-        storage.databaseAccountDidChange()
+        StorageController.shared.databaseAccountDidChange()
     }
     
     private func networkReachabilityDid(update: NetworkReachability.Update)
@@ -132,13 +130,11 @@ class FlowlistController: AppController
         switch update
         {
         case .noInternet:
-            storage.networkReachabilityDidUpdate(isReachable: false)
+            StorageController.shared.networkReachabilityDidUpdate(isReachable: false)
         case .expensiveInternet, .fullInternet:
-            storage.networkReachabilityDidUpdate(isReachable: true)
+            StorageController.shared.networkReachabilityDidUpdate(isReachable: true)
         }
     }
-    
-    var storage: Storage { return StorageController.shared.storage }
     
     // MARK: - Basics
     
