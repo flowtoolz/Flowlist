@@ -7,7 +7,6 @@ class RecordController: Observer
     // MARK: - Life cycle
     
     init() { observeStores() }
-    
     deinit { stopObserving() }
     
     // MARK: - Observe Record- and Item Store

@@ -5,7 +5,6 @@ class FileController: Observer
     // MARK: - Life Cycle
     
     init() { observeRecordStorages() }
-    
     deinit { stopObserving() }
     
     // MARK: - Setup: Load Records from Files

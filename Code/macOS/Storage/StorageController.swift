@@ -9,21 +9,9 @@ class StorageController
     
     static let shared = StorageController()
     
-    private init()
-    {
-        Persistent.setupUsingUserDefaults()
-        
-        ckRecordController = CKRecordController()
-        fileController = FileController()
-        recordController = RecordController()
-    }
+    private init() { Persistent.setupUsingUserDefaults() }
     
-    // MARK: - Respond to Events
-    
-    func toggleIntentionToSyncWithDatabase()
-    {
-        ckRecordController.toggleIntentionToSync()
-    }
+    // MARK: - Setup
     
     func appDidLaunch()
     {
@@ -38,11 +26,17 @@ class StorageController
             self.fileController.saveRecordsFromFilesToRecordStore()
             return self.ckRecordController.syncCKRecordsWithFiles()
         }
-        
         .catch
         {
             log(error: $0.readable.message)
         }
+    }
+    
+    // MARK: - CKRecord Controller
+    
+    func toggleIntentionToSyncWithDatabase()
+    {
+        ckRecordController.toggleIntentionToSync()
     }
     
     func networkReachabilityDidUpdate(isReachable: Bool)
@@ -60,9 +54,10 @@ class StorageController
         return ckRecordController.isIntendingToSync
     }
     
-    // MARK: - Storage Controllers
+    private let ckRecordController = CKRecordController()
     
-    private let ckRecordController: CKRecordController
-    private let fileController: FileController
-    private let recordController: RecordController
+    // MARK: - Local Storage Controllers
+    
+    private let fileController = FileController()
+    private let recordController = RecordController()
 }
