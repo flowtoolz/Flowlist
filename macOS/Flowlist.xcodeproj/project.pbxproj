@@ -272,7 +272,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9E654E0F21A4859C0052607F /* CKRecord Controller */ = {
+		9E654E0F21A4859C0052607F /* CloudKit */ = {
 			isa = PBXGroup;
 			children = (
 				9E12091322C93EEA003DE68E /* CKRecordController.swift */,
@@ -281,7 +281,7 @@
 				9E053B2D21886963001B7103 /* CloudKitDatabase.swift */,
 				9EF96E7321A9F516005619C7 /* CloudKit+Flowlist.swift */,
 			);
-			path = "CKRecord Controller";
+			path = CloudKit;
 			sourceTree = "<group>";
 		};
 		9E7B876422B44EC20012FF48 /* macOS */ = {
@@ -293,7 +293,7 @@
 				9EA5A88E218ECA2C004902F7 /* Export */,
 				9EA5A887218EC703004902F7 /* Browser */,
 				9EA5A88A218EC885004902F7 /* List */,
-				9EA5A891218ECB1C004902F7 /* Storage Controller */,
+				9EA5A891218ECB1C004902F7 /* Storage */,
 				9EA5A897218ECC98004902F7 /* Item Store */,
 				9EA5A8A1218ED38B004902F7 /* Item */,
 				9EA5A8A8218ED8DE004902F7 /* Style */,
@@ -312,7 +312,7 @@
 			name = Resources;
 			sourceTree = SOURCE_ROOT;
 		};
-		9E9A2FDE22D0A54600629103 /* Record Controller */ = {
+		9E9A2FDE22D0A54600629103 /* Records */ = {
 			isa = PBXGroup;
 			children = (
 				9E576E342186F85100C9F876 /* RecordController.swift */,
@@ -322,7 +322,7 @@
 				9E9A2FDF22D0A59600629103 /* RecordStore.swift */,
 				9E6E70AC21936CD300BDB0BA /* Record.swift */,
 			);
-			path = "Record Controller";
+			path = Records;
 			sourceTree = "<group>";
 		};
 		9EA5A884218EC546004902F7 /* Code */ = {
@@ -417,15 +417,15 @@
 			path = AppKit;
 			sourceTree = "<group>";
 		};
-		9EA5A891218ECB1C004902F7 /* Storage Controller */ = {
+		9EA5A891218ECB1C004902F7 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
 				9E654E1021A485B30052607F /* StorageController.swift */,
-				9E654E0F21A4859C0052607F /* CKRecord Controller */,
-				9EA5A89B218ED21B004902F7 /* File Controller */,
-				9E9A2FDE22D0A54600629103 /* Record Controller */,
+				9E654E0F21A4859C0052607F /* CloudKit */,
+				9EA5A89B218ED21B004902F7 /* File System */,
+				9E9A2FDE22D0A54600629103 /* Records */,
 			);
-			path = "Storage Controller";
+			path = Storage;
 			sourceTree = "<group>";
 		};
 		9EA5A897218ECC98004902F7 /* Item Store */ = {
@@ -437,14 +437,14 @@
 			path = "Item Store";
 			sourceTree = "<group>";
 		};
-		9EA5A89B218ED21B004902F7 /* File Controller */ = {
+		9EA5A89B218ED21B004902F7 /* File System */ = {
 			isa = PBXGroup;
 			children = (
 				9E9A2FDC22D0858E00629103 /* FileController.swift */,
 				9E053B22218867E4001B7103 /* FileSystemDatabase.swift */,
 				9E86C48622C8B30700DF4FEC /* JSONFileMigrator.swift */,
 			);
-			path = "File Controller";
+			path = "File System";
 			sourceTree = "<group>";
 		};
 		9EA5A89F218ED324004902F7 /* AppKit */ = {

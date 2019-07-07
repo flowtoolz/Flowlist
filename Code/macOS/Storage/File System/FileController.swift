@@ -10,7 +10,7 @@ class FileController: Observer
     
     // MARK: - Setup: Load Records from Files
     
-    func loadRecords()
+    func saveRecordsFromFilesToRecordStore()
     {
         RecordStore.shared.save(FileSystemDatabase.shared.loadRecords())
     }
@@ -34,11 +34,11 @@ class FileController: Observer
     {
         switch event
         {
-        case .didDeleteRecordsWithIDs(let ids):
-            FileSystemDatabase.shared.deleteRecords(with: ids)
-        
         case .didMofifyRecords(let records):
             FileSystemDatabase.shared.save(records)
+            
+        case .didDeleteRecordsWithIDs(let ids):
+            FileSystemDatabase.shared.deleteRecords(with: ids)
         }
     }
     

@@ -33,7 +33,7 @@ class StorageController
         }
         .done
         {
-            self.fileController.loadRecords()
+            self.fileController.saveRecordsFromFilesToRecordStore()
         }
         .catch
         {

@@ -32,7 +32,7 @@ class RecordStore: CustomObservable
     
     enum Event
     {
-        case didDeleteRecordsWithIDs([Record.ID])
         case didMofifyRecords([Record])
+        case didDeleteRecordsWithIDs([Record.ID])
     }
 }
