@@ -35,7 +35,6 @@ class StorageController
         {
             () -> Promise<Void> in
             
-            // TODO: we need file system db and record store to provide sender with message to avoid message ping pong, in particular during setup!
             self.fileController.saveRecordsFromFilesToRecordStore()
             return self.ckRecordController.syncCKRecordsWithFiles()
         }

@@ -21,7 +21,9 @@ class FileSystemDatabase: CustomObservable
     // MARK: - Edit
     
     @discardableResult
-    func save(_ records: [Record]) -> Bool
+    func save(_ records: [Record],
+              identifyAs object: AnyObject,
+              sendEvent: Bool = true) -> Bool
     {
         guard !records.isEmpty else { return true }
         
@@ -35,12 +37,15 @@ class FileSystemDatabase: CustomObservable
             return record.save(to: file) != nil ? record : nil
         }
         
-        if !savedRecords.isEmpty { send(.didSaveRecords(savedRecords)) }
+        if !savedRecords.isEmpty && sendEvent
+        {
+            send(.objectDidSaveRecords(object, savedRecords))
+        }
         
         return records.count == savedRecords.count
     }
     
-    func deleteRecords(with ids: [Record.ID])
+    func deleteRecords(with ids: [Record.ID], identifyAs object: AnyObject)
     {
         guard let recordFileDirectory = recordFileDirectory else { return }
         
@@ -52,7 +57,7 @@ class FileSystemDatabase: CustomObservable
             return FileManager.default.remove(file) ? id : nil
         }
         
-        send(.didDeleteRecordsWithIDs(idsOfDeletions))
+        send(.objectDidDeleteRecordsWithIDs(object, idsOfDeletions))
     }
     
     // MARK: - Basics
@@ -82,7 +87,7 @@ class FileSystemDatabase: CustomObservable
     
     enum Event
     {
-        case didSaveRecords([Record])
-        case didDeleteRecordsWithIDs([Record.ID])
+        case objectDidSaveRecords(AnyObject, [Record])
+        case objectDidDeleteRecordsWithIDs(AnyObject, [Record.ID])
     }
 }

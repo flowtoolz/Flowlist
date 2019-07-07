@@ -23,7 +23,10 @@ class JSONFileMigrationController
         
         // TODO: check if there are already files in the new file based database. if so, ask user (async via class Dialog) which records to use. possibly even offer to be sure and use both. hint that json file will be deleted to avoid confusion in the future.
         
-        guard FileSystemDatabase.shared.save(jsonFileRecords) else
+        guard FileSystemDatabase.shared.save(jsonFileRecords,
+                                             identifyAs: self,
+                                             sendEvent: false)
+        else
         {
             return Promise(error: ReadableError.message("Found JSON File but can't migrate its content. Saving the items as files failed."))
         }

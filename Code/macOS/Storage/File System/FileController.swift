@@ -12,7 +12,8 @@ class FileController: Observer
     
     func saveRecordsFromFilesToRecordStore()
     {
-        RecordStore.shared.save(FileSystemDatabase.shared.loadRecords())
+        RecordStore.shared.save(FileSystemDatabase.shared.loadRecords(),
+                                identifyAs: self)
     }
     
     // MARK: - Observe Record Storages
@@ -34,11 +35,13 @@ class FileController: Observer
     {
         switch event
         {
-        case .didMofifyRecords(let records):
-            FileSystemDatabase.shared.save(records)
+        case .objectDidMofifyRecords(let object, let records):
+            guard object !== self else { break }
+            FileSystemDatabase.shared.save(records, identifyAs: self)
             
-        case .didDeleteRecordsWithIDs(let ids):
-            FileSystemDatabase.shared.deleteRecords(with: ids)
+        case .objectDidDeleteRecordsWithIDs(let object, let ids):
+            guard object !== self else { break }
+            FileSystemDatabase.shared.deleteRecords(with: ids, identifyAs: self)
         }
     }
     
@@ -46,11 +49,13 @@ class FileController: Observer
     {
         switch event
         {
-        case .didSaveRecords(let records):
-            RecordStore.shared.save(records)
+        case .objectDidSaveRecords(let object, let records):
+            guard object !== self else { break }
+            RecordStore.shared.save(records, identifyAs: self)
             
-        case .didDeleteRecordsWithIDs(let ids):
-            RecordStore.shared.deleteRecords(with: ids)
+        case .objectDidDeleteRecordsWithIDs(let object, let ids):
+            guard object !== self else { break }
+            RecordStore.shared.deleteRecords(with: ids, identifyAs: self)
         }
     }
 }

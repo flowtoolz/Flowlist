@@ -9,18 +9,18 @@ class RecordStore: CustomObservable
     
     // MARK: - Change Records
     
-    func save(_ records: [Record])
+    func save(_ records: [Record], identifyAs object: AnyObject)
     {
         let differingRecords = records.compactMap { recordsByID[$0.id] != $0 ? $0 : nil }
         differingRecords.forEach { recordsByID[$0.id] = $0 }
-        send(.didMofifyRecords(differingRecords))
+        send(.objectDidMofifyRecords(object, differingRecords))
     }
     
-    func deleteRecords(with ids: [Record.ID])
+    func deleteRecords(with ids: [Record.ID], identifyAs object: AnyObject)
     {
         let idsOfExistingRecords = ids.compactMap { recordsByID[$0] != nil ? $0 : nil }
         idsOfExistingRecords.forEach { recordsByID[$0] = nil }
-        send(.didDeleteRecordsWithIDs(idsOfExistingRecords))
+        send(.objectDidDeleteRecordsWithIDs(object, idsOfExistingRecords))
     }
     
     private var recordsByID = [Record.ID : Record]()
@@ -32,7 +32,7 @@ class RecordStore: CustomObservable
     
     enum Event
     {
-        case didMofifyRecords([Record])
-        case didDeleteRecordsWithIDs([Record.ID])
+        case objectDidMofifyRecords(AnyObject, [Record])
+        case objectDidDeleteRecordsWithIDs(AnyObject, [Record.ID])
     }
 }

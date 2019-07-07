@@ -31,10 +31,12 @@ class RecordController: Observer
     {
         switch event
         {
-        case .didDeleteRecordsWithIDs(let ids):
+        case .objectDidDeleteRecordsWithIDs(let object, let ids):
+            guard object !== self else { break }
             ItemStore.shared.apply(.removeItems(withIDs: ids))
             
-        case .didMofifyRecords(let records):
+        case .objectDidMofifyRecords(let object, let records):
+            guard object !== self else { break }
             ItemStore.shared.apply(.updateItems(withRecords: records))
         }
     }
@@ -53,10 +55,10 @@ class RecordController: Observer
                 switch edit
                 {
                 case .updateItems(let records):
-                    RecordStore.shared.save(records)
+                    RecordStore.shared.save(records, identifyAs: self)
                     
                 case .removeItems(let ids):
-                    RecordStore.shared.deleteRecords(with: ids)
+                    RecordStore.shared.deleteRecords(with: ids, identifyAs: self)
                 }
             }
             

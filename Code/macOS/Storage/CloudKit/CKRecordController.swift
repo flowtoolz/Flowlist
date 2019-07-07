@@ -134,7 +134,7 @@ class CKRecordController: Observer
             cloudRecords in
             
             // FIXME: check conflicts with file database, possibly ask user
-            FileSystemDatabase.shared.save(cloudRecords)
+            FileSystemDatabase.shared.save(cloudRecords, identifyAs: self)
         }
     }
     
@@ -170,7 +170,7 @@ class CKRecordController: Observer
             
             if preferDatabase
             {
-                FileSystemDatabase.shared.save(cloudRecords)
+                FileSystemDatabase.shared.save(cloudRecords, identifyAs: self)
                 return Promise()
             }
             else
@@ -211,10 +211,10 @@ class CKRecordController: Observer
         // TODO: check for conflicts, possibly ask user
         
         let ids = ckDatabaseChanges.idsOfDeletedCKRecords.map { $0.recordName }
-        FileSystemDatabase.shared.deleteRecords(with: ids)
+        FileSystemDatabase.shared.deleteRecords(with: ids, identifyAs: self)
         
         let records = ckDatabaseChanges.changedCKRecords.map { $0.makeRecord() }
-        FileSystemDatabase.shared.save(records)
+        FileSystemDatabase.shared.save(records, identifyAs: self)
     }
     
     // MARK: - Transmit File System Changes to CloudKit Database
@@ -241,11 +241,15 @@ class CKRecordController: Observer
             
             switch event
             {
-            case .didSaveRecords(let records):
+            case .objectDidSaveRecords(let object, let records):
+                guard object !== self else { return Promise() }
+                
                 // TODO: handle conflicts, failure and partial failure
                 return ckDatabase.save(records.map(makeCKRecord)).map { _ in }
                 
-            case .didDeleteRecordsWithIDs(let ids):
+            case .objectDidDeleteRecordsWithIDs(let object, let ids):
+                guard object !== self else { return Promise() }
+                
                 return ckDatabase.deleteCKRecords(with: ids).map { _ in }
             }
         }
