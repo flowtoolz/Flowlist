@@ -46,7 +46,7 @@ class FileController: Observer
     {
         switch event
         {
-        case .didModifyRecords(let records):
+        case .didSaveRecords(let records):
             RecordStore.shared.save(records)
             
         case .didDeleteRecordsWithIDs(let ids):

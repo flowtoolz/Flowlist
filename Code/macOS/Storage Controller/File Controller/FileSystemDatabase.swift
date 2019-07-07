@@ -26,14 +26,16 @@ class FileSystemDatabase: CustomObservable
         
         guard jsonMigrator.jsonFileExists,
             let jsonFileRecords = jsonMigrator.loadRecordsFromJSONFile(),
-            !jsonFileRecords.isEmpty,
-            save(jsonFileRecords)
+            !jsonFileRecords.isEmpty
         else
         {
-            return save([newRootRecord]) ? [newRootRecord] : []
+            save([newRootRecord])
+            return [newRootRecord]
         }
         
-        // successful migration -> delete json and reload records
+        // we have records from a json file -> save records, delete json, reload records
+        
+        save(jsonFileRecords)
         
         jsonMigrator.removeJSONFile()
 
@@ -42,9 +44,9 @@ class FileSystemDatabase: CustomObservable
     
     // MARK: - Edit
     
-    func save(_ records: [Record]) -> Bool
+    func save(_ records: [Record])
     {
-        guard let recordFileDirectory = recordFileDirectory else { return false }
+        guard let recordFileDirectory = recordFileDirectory else { return }
         
         let savedRecords = records.compactMap
         {
@@ -54,14 +56,12 @@ class FileSystemDatabase: CustomObservable
             return record.save(to: file) != nil ? record : nil
         }
         
-        send(.didModifyRecords(savedRecords))
-        
-        return records.count == savedRecords.count
+        send(.didSaveRecords(savedRecords))
     }
     
-    func deleteRecords(with ids: [Record.ID]) -> Bool
+    func deleteRecords(with ids: [Record.ID])
     {
-        guard let recordFileDirectory = recordFileDirectory else { return false }
+        guard let recordFileDirectory = recordFileDirectory else { return }
         
         let idsOfDeletions = ids.compactMap
         {
@@ -72,8 +72,6 @@ class FileSystemDatabase: CustomObservable
         }
         
         send(.didDeleteRecordsWithIDs(idsOfDeletions))
-        
-        return ids.count == idsOfDeletions.count
     }
     
 //    func clear() -> Bool
@@ -135,7 +133,7 @@ class FileSystemDatabase: CustomObservable
     
     enum Event
     {
-        case didModifyRecords([Record])
+        case didSaveRecords([Record])
         case didDeleteRecordsWithIDs([Record.ID])
     }
 }

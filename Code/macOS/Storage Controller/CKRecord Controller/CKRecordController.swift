@@ -241,7 +241,7 @@ class CKRecordController: Observer
             
             switch event
             {
-            case .didModifyRecords(let records):
+            case .didSaveRecords(let records):
                 // TODO: handle conflicts, failure and partial failure
                 return ckDatabase.save(records.map(makeCKRecord)).map { _ in }
                 
