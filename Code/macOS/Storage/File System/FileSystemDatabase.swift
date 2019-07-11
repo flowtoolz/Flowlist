@@ -57,7 +57,10 @@ class FileSystemDatabase: CustomObservable
             return FileManager.default.remove(file) ? id : nil
         }
         
-        send((object, did: .deleteRecordsWithIDs(idsOfDeletions)))
+        if !idsOfDeletions.isEmpty
+        {
+            send((object, did: .deleteRecordsWithIDs(idsOfDeletions)))
+        }
     }
     
     // MARK: - Basics
