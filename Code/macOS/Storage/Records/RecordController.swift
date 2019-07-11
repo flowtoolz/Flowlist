@@ -6,12 +6,7 @@ class RecordController: Observer
 {
     // MARK: - Life cycle
     
-    init() { observeStores() }
-    deinit { stopObserving() }
-    
-    // MARK: - Observe Record- and Item Store
-    
-    private func observeStores()
+    init()
     {
         observeRecordStore()
         
@@ -20,6 +15,8 @@ class RecordController: Observer
             [weak self] in if let event = $0 { self?.itemStoreDidSend(event) }
         }
     }
+    
+    deinit { stopObserving() }
     
     // MARK: - Transmit Record Store Changes to Item Store
     
