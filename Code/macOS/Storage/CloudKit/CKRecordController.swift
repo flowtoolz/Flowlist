@@ -221,13 +221,21 @@ class CKRecordController: Observer
     
     private func observeFileSystemDatabase()
     {
-        observe(FileSystemDatabase.shared)
+        observe(FileSystemDatabase.shared).filter
         {
-            [weak self] in if let event = $0 { self?.fileSystemDatabaseDidSend(event) }
+            [weak self] event in event != nil && event?.object !== self
+        }
+        .map
+        {
+            event in event?.did
+        }
+        .unwrap(.saveRecords([]))
+        {
+            [weak self] edit in self?.fileSystemDatabase(did: edit)
         }
     }
     
-    private func fileSystemDatabaseDidSend(_ event: FileSystemDatabase.Event)
+    private func fileSystemDatabase(did edit: FileSystemDatabase.Edit)
     {
         guard isIntendingToSync, isReachable != false else
         {
@@ -239,17 +247,13 @@ class CKRecordController: Observer
         {
             () -> Promise<Void> in
             
-            switch event
+            switch edit
             {
-            case .objectDidSaveRecords(let object, let records):
-                guard object !== self else { return Promise() }
-                
+            case .saveRecords(let records):
                 // TODO: handle conflicts, failure and partial failure
                 return ckDatabase.save(records.map(makeCKRecord)).map { _ in }
                 
-            case .objectDidDeleteRecordsWithIDs(let object, let ids):
-                guard object !== self else { return Promise() }
-                
+            case .deleteRecordsWithIDs(let ids):
                 return ckDatabase.deleteCKRecords(with: ids).map { _ in }
             }
         }

@@ -4,7 +4,12 @@ class FileController: Observer
 {
     // MARK: - Life Cycle
     
-    init() { observeRecordStorages() }
+    init()
+    {
+        observeFileSystemDatabase()
+        observeRecordStore()
+    }
+    
     deinit { stopObserving() }
     
     // MARK: - Setup: Load Records from Files
@@ -15,45 +20,62 @@ class FileController: Observer
                                 identifyAs: self)
     }
     
-    // MARK: - Observe Record Storages
+    // MARK: - Observe Record Store
     
-    private func observeRecordStorages()
+    private func observeRecordStore()
     {
-        observe(FileSystemDatabase.shared)
+        observe(RecordStore.shared).filter
         {
-            [weak self] in if let event = $0 { self?.fileSystemDatabaseDidSend(event) }
+            [weak self] event in event != nil && event?.object !== self
         }
-        
-        observe(RecordStore.shared)
+        .map
         {
-            [weak self] in if let event = $0 { self?.recordStoreDidSend(event) }
+            event in event?.did
+        }
+        .unwrap(.modifyRecords([]))
+        {
+            [weak self] edit in self?.recordStore(did: edit)
         }
     }
     
-    private func recordStoreDidSend(_ event: RecordStore.Event)
+    private func recordStore(did edit: RecordStore.Edit)
     {
-        switch event
+        switch edit
         {
-        case .objectDidMofifyRecords(let object, let records):
-            guard object !== self else { break }
+        case .modifyRecords(let records):
             FileSystemDatabase.shared.save(records, identifyAs: self)
             
-        case .objectDidDeleteRecordsWithIDs(let object, let ids):
-            guard object !== self else { break }
+        case .deleteRecordsWithIDs(let ids):
             FileSystemDatabase.shared.deleteRecords(with: ids, identifyAs: self)
         }
     }
     
-    private func fileSystemDatabaseDidSend(_ event: FileSystemDatabase.Event)
+    // MARK: - Observe File System Database
+    
+    private func observeFileSystemDatabase()
     {
-        switch event
+        observe(FileSystemDatabase.shared).filter
         {
-        case .objectDidSaveRecords(let object, let records):
-            guard object !== self else { break }
+            [weak self] event in event != nil && event?.object !== self
+        }
+        .map
+        {
+            event in event?.did
+        }
+        .unwrap(.saveRecords([]))
+        {
+            [weak self] edit in self?.fileSystemDatabase(did: edit)
+        }
+    }
+    
+    private func fileSystemDatabase(did edit: FileSystemDatabase.Edit)
+    {
+        switch edit
+        {
+        case .saveRecords(let records):
             RecordStore.shared.save(records, identifyAs: self)
             
-        case .objectDidDeleteRecordsWithIDs(let object, let ids):
-            guard object !== self else { break }
+        case .deleteRecordsWithIDs(let ids):
             RecordStore.shared.deleteRecords(with: ids, identifyAs: self)
         }
     }

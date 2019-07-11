@@ -39,7 +39,7 @@ class FileSystemDatabase: CustomObservable
         
         if !savedRecords.isEmpty && sendEvent
         {
-            send(.objectDidSaveRecords(object, savedRecords))
+            send((object, did: .saveRecords(savedRecords)))
         }
         
         return records.count == savedRecords.count
@@ -57,7 +57,7 @@ class FileSystemDatabase: CustomObservable
             return FileManager.default.remove(file) ? id : nil
         }
         
-        send(.objectDidDeleteRecordsWithIDs(object, idsOfDeletions))
+        send((object, did: .deleteRecordsWithIDs(idsOfDeletions)))
     }
     
     // MARK: - Basics
@@ -85,9 +85,11 @@ class FileSystemDatabase: CustomObservable
     let messenger = Messenger<Message>()
     typealias Message = Event?
     
-    enum Event
+    typealias Event = (object: AnyObject, did: Edit)
+    
+    enum Edit
     {
-        case objectDidSaveRecords(AnyObject, [Record])
-        case objectDidDeleteRecordsWithIDs(AnyObject, [Record.ID])
+        case saveRecords([Record])
+        case deleteRecordsWithIDs([Record.ID])
     }
 }

@@ -13,10 +13,7 @@ class RecordController: Observer
     
     private func observeStores()
     {
-        observe(RecordStore.shared)
-        {
-            [weak self] in if let event = $0 { self?.recordStoreDidSend(event) }
-        }
+        observeRecordStore()
         
         observe(ItemStore.shared)
         {
@@ -26,16 +23,30 @@ class RecordController: Observer
     
     // MARK: - Transmit Record Store Changes to Item Store
     
-    private func recordStoreDidSend(_ event: RecordStore.Event)
+    private func observeRecordStore()
     {
-        switch event
+        observe(RecordStore.shared).filter
         {
-        case .objectDidDeleteRecordsWithIDs(let object, let ids):
-            guard object !== self else { break }
+            [weak self] event in event != nil && event?.object !== self
+        }
+        .map
+        {
+            event in event?.did
+        }
+        .unwrap(.modifyRecords([]))
+        {
+            [weak self] edit in self?.recordStore(did: edit)
+        }
+    }
+    
+    private func recordStore(did edit: RecordStore.Edit)
+    {
+        switch edit
+        {
+        case .deleteRecordsWithIDs(let ids):
             ItemStore.shared.apply(.removeItems(withIDs: ids))
             
-        case .objectDidMofifyRecords(let object, let records):
-            guard object !== self else { break }
+        case .modifyRecords(let records):
             ItemStore.shared.apply(.updateItems(withRecords: records))
         }
     }
