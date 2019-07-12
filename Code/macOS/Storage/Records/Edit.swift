@@ -8,7 +8,7 @@ enum Edit
         {
         case .insertedNodes(let nodes, _, _):
             let records = nodes.flatMap { Record.makeRecordsRecursively(for: $0) }
-            self = .updateItems(withRecords: records)
+            self = .updateItemsWithRecords(records)
             
         case .receivedMessage(let dataUpdate, let node):
             switch dataUpdate
@@ -16,12 +16,12 @@ enum Edit
             case .didNothing, .wantTextInput:
                 return nil
             case .wasModified:
-                self = .updateItems(withRecords: [Record(item: node)])
+                self = .updateItemsWithRecords([Record(item: node)])
             }
             
         case .removedNodes(let nodes, _):
             let ids = nodes.compactMap { $0.data.id }
-            self = .removeItems(withIDs: ids)
+            self = .removeItemsWithIDs(ids)
             
         case .movedNode(let node, let from, let to):
             guard let parent = node.root else
@@ -43,10 +43,10 @@ enum Edit
             let movedItems = parent.branches[firstMovedIndex ... lastMovedIndex]
             let movedRecords = movedItems.map(Record.init)
             
-            self = .updateItems(withRecords: movedRecords)
+            self = .updateItemsWithRecords(movedRecords)
         }
     }
     
-    case updateItems(withRecords: [Record])
-    case removeItems(withIDs: [Record.ID])
+    case updateItemsWithRecords([Record])
+    case removeItemsWithIDs([Record.ID])
 }

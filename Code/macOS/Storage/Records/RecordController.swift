@@ -41,10 +41,10 @@ class RecordController: Observer
         switch edit
         {
         case .deleteRecordsWithIDs(let ids):
-            ItemStore.shared.apply(.removeItems(withIDs: ids))
+            ItemStore.shared.removeItems(with: ids)
             
         case .modifyRecords(let records):
-            ItemStore.shared.apply(.updateItems(withRecords: records))
+            ItemStore.shared.updateItems(with: records)
         }
     }
     
@@ -61,10 +61,10 @@ class RecordController: Observer
             {
                 switch edit
                 {
-                case .updateItems(let records):
+                case .updateItemsWithRecords(let records):
                     RecordStore.shared.save(records, identifyAs: self)
                     
-                case .removeItems(let ids):
+                case .removeItemsWithIDs(let ids):
                     RecordStore.shared.deleteRecords(with: ids, identifyAs: self)
                 }
             }

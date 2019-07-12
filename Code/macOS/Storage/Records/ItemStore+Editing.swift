@@ -3,23 +3,17 @@ import SwiftyToolz
 
 extension ItemStore
 {
-    // MARK: - Apply Edits (essentially, edits received from (iCloud-) database)
+    // MARK: - Update Items
     
-    func apply(_ edit: Edit)
+    func updateItems(with records: [Record])
     {
         DispatchQueue.main.async
         {
-            switch edit
-            {
-            case .updateItems(let records): self.updateItems(with: records)
-            case .removeItems(let ids): self.removeItems(with: ids)
-            }
+            self.updateItemsAssumingMainThread(with: records)
         }
     }
     
-    // MARK: - Update Items
-    
-    private func updateItems(with updatedRecords: [Record])
+    private func updateItemsAssumingMainThread(with updatedRecords: [Record])
     {
         guard root != nil else
         {
@@ -143,9 +137,12 @@ extension ItemStore
     
     // MARK: - Remove Items
     
-    private func removeItems(with ids: [Record.ID])
+    func removeItems(with ids: [Record.ID])
     {
-        ids.forEach(removeItem)
+        DispatchQueue.main.async
+        {
+            ids.forEach(self.removeItem)
+        }
     }
     
     private func removeItem(with id: Record.ID)
