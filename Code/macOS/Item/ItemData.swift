@@ -5,7 +5,7 @@ final class ItemData: Observer, CustomObservable
 {
     // MARK: - Initialization
     
-    init(id: String? = nil, wantsTextInput: Bool = false)
+    init(id: ID? = nil, wantsTextInput: Bool = false)
     {
         self.id = id ?? String.makeUUID()
         self.wantsTextInput = wantsTextInput
@@ -111,5 +111,7 @@ final class ItemData: Observer, CustomObservable
     
     // MARK: - ID
     
-    let id: String
+    let id: ID
+    
+    typealias ID = String
 }

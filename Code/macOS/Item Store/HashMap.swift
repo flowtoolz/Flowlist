@@ -15,12 +15,12 @@ class HashMap
     
     func add(_ items: [Item])
     {
-        items.forEach { storedItems[$0.data.id] = $0 }
+        items.forEach { storedItems[$0.id] = $0 }
     }
     
     func remove(_ items: [Item])
     {
-        items.forEach { storedItems[$0.data.id] = nil }
+        items.forEach { storedItems[$0.id] = nil }
     }
     
     private var storedItems = [String : Item]()

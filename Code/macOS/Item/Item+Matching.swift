@@ -28,15 +28,6 @@ extension ItemData
 {
     func isIdentical(to data: ItemData) -> Bool
     {
-        guard id == data.id,
-            tag.value == data.tag.value,
-            text.value == data.text.value,
-            state.value == data.state.value
-        else
-        {
-            return false
-        }
-        
-        return true
+        return id == data.id && self == data
     }
 }

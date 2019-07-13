@@ -27,12 +27,6 @@ extension Tree where Data == ItemData
         branches.forEach { $0.isSelected = false }
     }
     
-    // text
-    
-    func edit() { data.requestTextInput() }
-    
-    var text: String? { return data.text.value }
-    
     // focus
     
     var isFocused: Bool
@@ -40,6 +34,17 @@ extension Tree where Data == ItemData
         get { return data.isFocused.value }
         set { data.isFocused <- newValue }
     }
+    
+    // property access
+    
+    var parentID: ItemData.ID? { return root?.id }
+    var position: Int { return indexInRoot ?? 0 }
+    var id: ItemData.ID { return data.id }
+    
+    // text
+    
+    func edit() { data.requestTextInput() }
+    var text: String? { return data.text.value }
 }
 
 typealias Item = Tree<ItemData>
