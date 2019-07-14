@@ -7,7 +7,7 @@ class ItemStore: Observer, CustomObservable
     // MARK: - Initialization
     
     static let shared = ItemStore()
-    private init() {}
+    private init() { observeRootStore() }
     
     // MARK: - Update Items
     
@@ -15,7 +15,7 @@ class ItemStore: Observer, CustomObservable
     {
         DispatchQueue.main.async
         {
-            self.sortedByPosition(updates).forEach(self.apply)
+            updates.sortedByPosition.forEach(self.apply)
             
             // TODO: send batch message, not individual messages for each update
         }
@@ -50,7 +50,7 @@ class ItemStore: Observer, CustomObservable
     {
         if item.parentID == nil && update.parentID == nil
         {
-            if orphanage.removeOrphan(with: item.id) { roots.add([item]) }
+            if orphanage.removeOrphan(with: item.id) { rootStore.add(item) }
             return
         }
         
@@ -64,11 +64,11 @@ class ItemStore: Observer, CustomObservable
         
         guard let newParentID = update.parentID else
         {
-            roots.add([item])
+            rootStore.add(item)
             return
         }
 
-        roots.remove([item])
+        rootStore.remove(item)
         
         if let newParent = itemHash[newParentID]
         {
@@ -91,7 +91,7 @@ class ItemStore: Observer, CustomObservable
         
         if let lostChildren = orphanage.orphans(forParentID: item.id)
         {
-            sortedByPosition(lostChildren).forEach
+            lostChildren.sortedByPosition.forEach
             {
                 guard let child = itemHash[$0.data.id] else { return }
                 item.insert(child, at: $0.position)
@@ -113,7 +113,7 @@ class ItemStore: Observer, CustomObservable
         }
         else
         {
-            roots.add([item])
+            rootStore.add(item)
         }
     }
     
@@ -137,9 +137,9 @@ class ItemStore: Observer, CustomObservable
         {
             parent.removeNodes(from: [item.position])
         }
-        else if roots[item.id] != nil
+        else if rootStore[item.id] != nil
         {
-            roots.remove([item])
+            rootStore.remove(item)
         }
         else
         {
@@ -147,7 +147,7 @@ class ItemStore: Observer, CustomObservable
         }
     }
 
-    // MARK: - Manage Root
+    // MARK: - LEGACY: Manage Root
     
     func update(root newRoot: Item)
     {
@@ -236,15 +236,14 @@ class ItemStore: Observer, CustomObservable
         }
     }
     
-    // MARK: - Observability
+    // MARK: - Track Number of User Created Leafs
     
-    let messenger = Messenger<Message>()
-    typealias Message = Event?
-    
-    enum Event
+    private func updateUserCreatedLeafs(with root: Item)
     {
-        case didSwitchRoot, didUpdate(Item.Event.TreeUpdate)
+        numberOfUserCreatedLeafs <- root.isLeaf ? 0 : root.numberOfLeafs
     }
+    
+    let numberOfUserCreatedLeafs = Var(0)
     
     // MARK: - Welcome Tour
     
@@ -262,30 +261,39 @@ class ItemStore: Observer, CustomObservable
         }
     }
     
-    // MARK: - Track Number of User Created Leafs
-    
-    private func updateUserCreatedLeafs(with root: Item)
-    {
-        numberOfUserCreatedLeafs <- root.isLeaf ? 0 : root.numberOfLeafs
-    }
-    
-    let numberOfUserCreatedLeafs = Var(0)
-    
     // MARK: - Orphans
     
     // TODO: observe ALL technical roots, including orphans
     let orphanage = Orphanage()
     
-    // MARK: - Updates
+    // MARK: - Roots
     
-    private func sortedByPosition(_ updates: [Update]) -> [Update]
+    private func observeRootStore()
     {
-        return updates.sorted { $0.position < $1.position }
+        observe(rootStore)
+        {
+            [weak self] in
+            
+            guard let treeUpdate = $0 else { return }
+            
+            self?.send(.didUpdate(treeUpdate))
+        }
+    }
+    
+    private(set) var root: Item?
+    private let rootStore = RootStore()
+    
+    // MARK: - Observability
+    
+    let messenger = Messenger<Message>()
+    typealias Message = Event?
+    
+    enum Event
+    {
+        case didSwitchRoot, didUpdate(Item.Event.TreeUpdate)
     }
     
     // MARK: - Item Storage
-    
-    private(set) var root: Item?
-    private let roots = HashMap()
+
     private let itemHash = HashMap()
 }

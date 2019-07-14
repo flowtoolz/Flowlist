@@ -1,3 +1,11 @@
+extension Array where Element == Update
+{
+    var sortedByPosition: [Update]
+    {
+        return sorted { $0.position < $1.position }
+    }
+}
+
 struct Update
 {
     func wouldChange(_ item: Item) -> Bool

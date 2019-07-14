@@ -4,8 +4,6 @@ class HashMap
 {
     var items: [Item] { return Array(storedItems.values) }
     
-    subscript(_ id: ItemData.ID) -> Item? { return storedItems[id] }
-    
     func reset(with items: [Item])
     {
         storedItems.removeAll()
@@ -21,6 +19,13 @@ class HashMap
     func remove(_ items: [Item])
     {
         items.forEach { storedItems[$0.id] = nil }
+    }
+    
+    subscript(_ id: ItemData.ID) -> Item?
+    {
+        get { return storedItems[id] }
+        
+        set { storedItems[id] = newValue }
     }
     
     private var storedItems = [ItemData.ID : Item]()

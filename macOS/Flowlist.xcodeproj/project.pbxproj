@@ -70,6 +70,7 @@
 		9E6E70AD21936CD300BDB0BA /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AC21936CD300BDB0BA /* Record.swift */; };
 		9E74961122DB6DF30015678F /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E74961022DB6DF30015678F /* Update.swift */; };
 		9E74961322DB72F60015678F /* Orphanage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E74961222DB72F60015678F /* Orphanage.swift */; };
+		9E74961522DB7C510015678F /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E74961422DB7C510015678F /* RootStore.swift */; };
 		9E7651961EEF4DA200DE2B07 /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7651951EEF4DA200DE2B07 /* ItemStore.swift */; };
 		9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* List+Editing.swift */; };
 		9E86C48722C8B30700DF4FEC /* LegacyJSONFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E86C48622C8B30700DF4FEC /* LegacyJSONFile.swift */; };
@@ -177,6 +178,7 @@
 		9E6E70AC21936CD300BDB0BA /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		9E74961022DB6DF30015678F /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		9E74961222DB72F60015678F /* Orphanage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orphanage.swift; sourceTree = "<group>"; };
+		9E74961422DB7C510015678F /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
 		9E7651951EEF4DA200DE2B07 /* ItemStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
 		9E82A7A81EF2A558006AEF02 /* List+Editing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "List+Editing.swift"; sourceTree = "<group>"; };
 		9E86C48622C8B30700DF4FEC /* LegacyJSONFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyJSONFile.swift; sourceTree = "<group>"; };
@@ -445,6 +447,7 @@
 			isa = PBXGroup;
 			children = (
 				9E7651951EEF4DA200DE2B07 /* ItemStore.swift */,
+				9E74961422DB7C510015678F /* RootStore.swift */,
 				9E74961222DB72F60015678F /* Orphanage.swift */,
 				9E74961022DB6DF30015678F /* Update.swift */,
 				9EF0AABD21883E6E00B707F4 /* HashMap.swift */,
@@ -830,6 +833,7 @@
 				9E053B422188711A001B7103 /* ApplicationMenu.swift in Sources */,
 				9E6E70AD21936CD300BDB0BA /* Record.swift in Sources */,
 				9E74961122DB6DF30015678F /* Update.swift in Sources */,
+				9E74961522DB7C510015678F /* RootStore.swift in Sources */,
 				9E20468822D9CE5C0020DD37 /* Record+MakeItemUpdate.swift in Sources */,
 				9EF231AD218B785A006E783C /* Item+Creating.swift in Sources */,
 				9EEBA1A72168EE860053B628 /* ItemData+Copyable.swift in Sources */,
