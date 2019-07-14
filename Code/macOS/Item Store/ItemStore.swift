@@ -33,6 +33,8 @@ class ItemStore: Observer, CustomObservable
         }
     }
     
+    // MARK: Update Existing Item
+    
     private func apply(_ update: Update, to item: Item)
     {
         guard update.wouldChange(item) else { return }
@@ -44,44 +46,11 @@ class ItemStore: Observer, CustomObservable
         move(item, toNewTreePositionWith: update)
     }
     
-    private func createItem(from update: Update)
-    {
-        let item = Item(data: update.data)
-        itemHash.add([item])
-        
-        if let lostChildren = orphansByParentID[item.id]
-        {
-            sortedByPosition(Array(lostChildren.values)).forEach
-            {
-                guard let child = itemHash[$0.data.id] else { return }
-                item.insert(child, at: $0.position)
-            }
-            
-            orphansByParentID[item.id] = nil
-        }
-        
-        if let parentID = update.parentID
-        {
-            if let parent = itemHash[parentID]
-            {
-                parent.insert(item, at: update.position)
-            }
-            else
-            {
-                updateOrphan(update)
-            }
-        }
-        else
-        {
-            roots.add([item])
-        }
-    }
-    
     private func move(_ item: Item, toNewTreePositionWith update: Update)
     {
         if item.parentID == nil && update.parentID == nil
         {
-            if removeOrphan(withID: item.id) { roots.add([item]) }
+            if orphanage.removeOrphan(with: item.id) { roots.add([item]) }
             return
         }
         
@@ -105,11 +74,46 @@ class ItemStore: Observer, CustomObservable
         {
             newParent.insert(item, at: update.position)
             
-            orphansByParentID[newParentID]?[item.id] = nil
+            orphanage.removeOrphan(with: item.id, parentID: newParentID)
         }
         else
         {
-            updateOrphan(update)
+            orphanage.update(update, withParentID: newParentID)
+        }
+    }
+    
+    // MARK: Create New Item
+    
+    private func createItem(from update: Update)
+    {
+        let item = Item(data: update.data)
+        itemHash.add([item])
+        
+        if let lostChildren = orphanage.orphans(forParentID: item.id)
+        {
+            sortedByPosition(lostChildren).forEach
+            {
+                guard let child = itemHash[$0.data.id] else { return }
+                item.insert(child, at: $0.position)
+            }
+            
+            orphanage.removeOrphans(forParentID: item.id)
+        }
+        
+        if let parentID = update.parentID
+        {
+            if let parent = itemHash[parentID]
+            {
+                parent.insert(item, at: update.position)
+            }
+            else
+            {
+                orphanage.update(update, withParentID: parentID)
+            }
+        }
+        else
+        {
+            roots.add([item])
         }
     }
     
@@ -139,7 +143,7 @@ class ItemStore: Observer, CustomObservable
         }
         else
         {
-            removeOrphan(withID: item.id)
+            orphanage.removeOrphan(with: item.id)
         }
     }
 
@@ -269,62 +273,14 @@ class ItemStore: Observer, CustomObservable
     
     // MARK: - Orphans
     
-    @discardableResult
-    private func removeOrphan(withID id: ItemData.ID) -> Bool
-    {
-        for parentID in orphansByParentID.keys
-        {
-            if orphansByParentID[parentID]?[id] != nil
-            {
-                orphansByParentID[parentID]?[id] = nil
-                return true
-            }
-        }
-        
-        return false
-    }
-    
-    private func updateOrphan(_ orphan: Update)
-    {
-        guard let parentID = orphan.parentID, itemHash[parentID] == nil else
-        {
-            log(error: "Tried to save ItemUpdate as orphan, but it isn't an orphan")
-            return
-        }
-        
-        if orphansByParentID[parentID] == nil
-        {
-            orphansByParentID[parentID] = [orphan.data.id : orphan]
-        }
-        else
-        {
-            orphansByParentID[parentID]?[orphan.data.id] = orphan
-        }
-    }
-    
-    private var orphansByParentID = [ItemData.ID : [ItemData.ID : Update]]()
+    // TODO: observe ALL technical roots, including orphans
+    let orphanage = Orphanage()
     
     // MARK: - Updates
     
     private func sortedByPosition(_ updates: [Update]) -> [Update]
     {
         return updates.sorted { $0.position < $1.position }
-    }
-    
-    struct Update
-    {
-        func wouldChange(_ item: Item) -> Bool
-        {
-            if item.id != data.id { return false }
-            if item.data != data { return false }
-            if item.position != position { return false }
-            if item.parentID != parentID { return false }
-            return true
-        }
-        
-        let data: ItemData
-        let parentID: ItemData.ID?
-        let position: Int
     }
     
     // MARK: - Item Storage
