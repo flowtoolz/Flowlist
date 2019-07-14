@@ -11,129 +11,106 @@ class ItemStore: Observer, CustomObservable
     
     // MARK: - Update Items
     
-    func apply(updates: [ItemUpdate])
+    func apply(updates: [Update])
     {
         DispatchQueue.main.async
         {
-            self.updateItemsAssumingMainThread(with: updates)
+            self.sortedByPosition(updates).forEach(self.apply)
+            
+            // TODO: send batch message, not individual messages for each update
         }
     }
     
-    private func updateItemsAssumingMainThread(with updates: [ItemUpdate])
+    private func apply(_ update: Update)
     {
-        guard root != nil else
+        if let item = itemHash[update.data.id]
         {
-            if let newRoot = TreeBuilder().buildTree(from: updates)
+            apply(update, to: item)
+        }
+        else
+        {
+            createItem(from: update)
+        }
+    }
+    
+    private func apply(_ update: Update, to item: Item)
+    {
+        guard update.wouldChange(item) else { return }
+        
+        item.data.text <- update.data.text.value
+        item.data.state <- update.data.state.value
+        item.data.tag <- update.data.tag.value
+        
+        move(item, toNewTreePositionWith: update)
+    }
+    
+    private func createItem(from update: Update)
+    {
+        let item = Item(data: update.data)
+        itemHash.add([item])
+        
+        if let lostChildren = orphansByParentID[item.id]
+        {
+            sortedByPosition(Array(lostChildren.values)).forEach
             {
-                update(root: newRoot)
+                guard let child = itemHash[$0.data.id] else { return }
+                item.insert(child, at: $0.position)
+            }
+            
+            orphansByParentID[item.id] = nil
+        }
+        
+        if let parentID = update.parentID
+        {
+            if let parent = itemHash[parentID]
+            {
+                parent.insert(item, at: update.position)
             }
             else
             {
-                // TODO: how do we avoid having no root if there's no data coming from icloud?
+                updateOrphan(update)
             }
-            
+        }
+        else
+        {
+            roots.add([item])
+        }
+    }
+    
+    private func move(_ item: Item, toNewTreePositionWith update: Update)
+    {
+        if item.parentID == nil && update.parentID == nil
+        {
+            if removeOrphan(withID: item.id) { roots.add([item]) }
             return
         }
         
-        let differences = differingUpdates(in: updates)
-        
-        guard !differences.isEmpty else { return }
-        
-        var arrayOfItemRootIDPosition = [(Item, ItemData.ID?, Int)]()
-        
-        // ensure items are in hash map and have updated data
-        
-        for difference in differences
+        if item.parentID == update.parentID
         {
-            if let existingItem = itemHash[difference.data.id]
-            {
-                existingItem.data.text <- difference.data.text.value
-                existingItem.data.state <- difference.data.state.value
-                existingItem.data.tag <- difference.data.tag.value
-                
-                arrayOfItemRootIDPosition.append((existingItem,
-                                                  difference.parentID,
-                                                  difference.position))
-            }
-            else
-            {
-                let newItem = Item(data: difference.data)
-                itemHash.add([newItem])
-                
-                arrayOfItemRootIDPosition.append((newItem,
-                                                  difference.parentID,
-                                                  difference.position))
-            }
+            item.root?.moveNode(from: item.position, to: update.position)
+            return
         }
         
-        // connect items
+        item.root?.removeNodes(from: [item.position])
         
-        updateItemsWithNewRootAndPosition(arrayOfItemRootIDPosition)
-    }
-    
-    private func updateItemsWithNewRootAndPosition(_ array: [(Item, ItemData.ID?, Int)])
-    {
-        let sortedByPosition = array.sorted { $0.2 < $1.2 }
-        
-        for (item, rootID, _) in sortedByPosition
+        guard let newParentID = update.parentID else
         {
-            move(item, toNewRootID: rootID)
+            roots.add([item])
+            return
         }
+
+        roots.remove([item])
         
-        for (item, _, position) in sortedByPosition
+        if let newParent = itemHash[newParentID]
         {
-            move(item, toNewPosition: position)
-        }
-    }
-    
-    private func move(_ item: Item, toNewRootID newRootID: ItemData.ID?)
-    {
-        guard item.parentID != newRootID else { return }
-        
-        if let oldRoot = item.root, let oldIndex = item.indexInRoot
-        {
-            oldRoot.removeNodes(from: [oldIndex])
-        }
-        
-        if let newRootID = newRootID
-        {
-            guard let newRoot = itemHash[newRootID] else
-            {
-                log(error: "Tried to move item with id \(item.id) to non-existing root with id \(newRootID)")
-                return
-            }
+            newParent.insert(item, at: update.position)
             
-            newRoot.add(item)
+            orphansByParentID[newParentID]?[item.id] = nil
         }
-    }
-    
-    private func move(_ item: Item, toNewPosition newPosition: Int)
-    {
-        guard let root = item.root,
-            let oldPosition = item.indexInRoot,
-            oldPosition != newPosition else { return }
-        
-        root.moveNode(from: oldPosition,
-                      to: min(root.branches.count, newPosition))
-    }
-    
-    func differingUpdates(in updates: [ItemUpdate]) -> [ItemUpdate]
-    {
-        return updates.compactMap
+        else
         {
-            item(itemHash[$0.data.id], isEquivalentTo: $0) ? nil : $0
+            updateOrphan(update)
         }
-    }
-    
-    private func item(_ item: Item?, isEquivalentTo update: ItemUpdate) -> Bool
-    {
-        guard let item = item else { return false }
-        if item.data != update.data { return false }
-        if item.id != update.data.id { return false }
-        if item.position != update.position { return false }
-        if item.parentID != update.parentID { return false }
-        
-        return true
     }
     
     // MARK: - Delete Items
@@ -146,19 +123,24 @@ class ItemStore: Observer, CustomObservable
         }
     }
     
-    func deleteItem(withID id: String)
+    private func deleteItem(withID id: String)
     {
         guard let item = itemHash[id] else { return }
         
-        guard let superItem = item.root, let index = item.indexInRoot else
-        {
-            log(error: "Tried to remove root (id \(id)). Text: \(item.text ?? "nil")")
-            return
-        }
-        
         itemHash.remove(item.array)
         
-        superItem.removeNodes(from: [index])
+        if let parent = item.root
+        {
+            parent.removeNodes(from: [item.position])
+        }
+        else if roots[item.id] != nil
+        {
+            roots.remove([item])
+        }
+        else
+        {
+            removeOrphan(withID: item.id)
+        }
     }
 
     // MARK: - Manage Root
@@ -285,8 +267,69 @@ class ItemStore: Observer, CustomObservable
     
     let numberOfUserCreatedLeafs = Var(0)
     
+    // MARK: - Orphans
+    
+    @discardableResult
+    private func removeOrphan(withID id: ItemData.ID) -> Bool
+    {
+        for parentID in orphansByParentID.keys
+        {
+            if orphansByParentID[parentID]?[id] != nil
+            {
+                orphansByParentID[parentID]?[id] = nil
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    private func updateOrphan(_ orphan: Update)
+    {
+        guard let parentID = orphan.parentID, itemHash[parentID] == nil else
+        {
+            log(error: "Tried to save ItemUpdate as orphan, but it isn't an orphan")
+            return
+        }
+        
+        if orphansByParentID[parentID] == nil
+        {
+            orphansByParentID[parentID] = [orphan.data.id : orphan]
+        }
+        else
+        {
+            orphansByParentID[parentID]?[orphan.data.id] = orphan
+        }
+    }
+    
+    private var orphansByParentID = [ItemData.ID : [ItemData.ID : Update]]()
+    
+    // MARK: - Updates
+    
+    private func sortedByPosition(_ updates: [Update]) -> [Update]
+    {
+        return updates.sorted { $0.position < $1.position }
+    }
+    
+    struct Update
+    {
+        func wouldChange(_ item: Item) -> Bool
+        {
+            if item.id != data.id { return false }
+            if item.data != data { return false }
+            if item.position != position { return false }
+            if item.parentID != parentID { return false }
+            return true
+        }
+        
+        let data: ItemData
+        let parentID: ItemData.ID?
+        let position: Int
+    }
+    
     // MARK: - Item Storage
     
     private(set) var root: Item?
+    private let roots = HashMap()
     private let itemHash = HashMap()
 }

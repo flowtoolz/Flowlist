@@ -4,7 +4,7 @@ class HashMap
 {
     var items: [Item] { return Array(storedItems.values) }
     
-    subscript(_ id: String) -> Item? { return storedItems[id] }
+    subscript(_ id: ItemData.ID) -> Item? { return storedItems[id] }
     
     func reset(with items: [Item])
     {
@@ -23,5 +23,5 @@ class HashMap
         items.forEach { storedItems[$0.id] = nil }
     }
     
-    private var storedItems = [String : Item]()
+    private var storedItems = [ItemData.ID : Item]()
 }

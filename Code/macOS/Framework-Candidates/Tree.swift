@@ -141,19 +141,21 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     {
         guard nodes.count > 0 else { return false }
         
-        guard index >= 0, index <= count else
+        let insertionIndex = Swift.min(index, count)
+        
+        guard insertionIndex >= 0 else
         {
             log(error: "Tried to insert nodes at invalid index \(index).")
             return false
         }
         
-        branches.insert(contentsOf: nodes, at: index)
+        branches.insert(contentsOf: nodes, at: insertionIndex)
         
         nodes.forEach { $0.root = self }
         
         updateNumberOfLeafs()
         
-        let indexes = Array(index ..< index + nodes.count)
+        let indexes = Array(insertionIndex ..< insertionIndex + nodes.count)
         
         send(.didUpdateNode(.insertedNodes(at: indexes)))
         sendToRoot(.insertedNodes(nodes, in: self, at: indexes))
