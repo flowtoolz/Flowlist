@@ -49,27 +49,9 @@ class RecordController: Observer
     
     private func observeItemStore()
     {
-        observe(ItemStore.shared).filter
+        observe(ItemStore.shared)
         {
-            event in event != nil
-        }
-        .unwrap(.didSwitchRoot)
-        {
-            [weak self] event in self?.itemStoreDidSend(event)
-        }
-    }
-    
-    private func itemStoreDidSend(_ event: ItemStore.Event)
-    {
-        switch event
-        {
-        case .didUpdate(let update):
-            itemStoreDid(update)
-            
-        case .didSwitchRoot:
-            // TODO: should we do anything? can this happen after setup?
-            log(warning: "Item Store did switch root. We might nbeed to respond if this happens not just on app launch.")
-            break
+            [weak self] in if let treeUpdate = $0 { self?.itemStoreDid(treeUpdate) }
         }
     }
     

@@ -232,6 +232,8 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     // MARK: - Root
     
+    var isRoot: Bool { return root == nil }
+    
     var indexInRoot: Int? { return root?.index(of: self) }
     
     weak var root: Node?
@@ -274,8 +276,8 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         {
             case removedNodes([Node], from: Node)
             case insertedNodes([Node], in: Node, at: [Int])
-            case receivedMessage(Data.Message, fromDataIn: Node)
             case movedNode(Node, from: Int, to: Int)
+            case receivedMessage(Data.Message, fromDataIn: Node) // messages from node data
         }
         
         enum NodeUpdate // for observers of each respective node

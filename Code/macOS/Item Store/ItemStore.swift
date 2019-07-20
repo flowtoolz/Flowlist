@@ -7,29 +7,42 @@ class ItemStore: Observer, CustomObservable
     // MARK: - Initialization
     
     static let shared = ItemStore()
-    private init() { observeRootStore() }
+    private init() {}
     
-    // MARK: - Update Items
+    // MARK: - Update (Save) Items
     
     func apply(updates: [Update])
     {
         DispatchQueue.main.async
         {
             updates.sortedByPosition.forEach(self.apply)
-            
-            // TODO: send batch message, not individual messages for each update
         }
     }
     
     private func apply(_ update: Update)
     {
-        if let item = itemHash[update.data.id]
+        if let item = allItems[update.data.id]
         {
+            let wasRootBeforeUpdate = item.isRoot
             apply(update, to: item)
+            let isRootAfterUpdate = item.isRoot
+            
+            if wasRootBeforeUpdate != isRootAfterUpdate
+            {
+                if isRootAfterUpdate
+                {
+                    observe(technicalRoot: item)
+                }
+                else
+                {
+                    stopObserving(item.treeMessenger)
+                }
+            }
         }
         else
         {
-            createItem(from: update)
+            let item = createItem(from: update)
+            if item.isRoot { observe(technicalRoot: item) }
         }
     }
     
@@ -50,7 +63,7 @@ class ItemStore: Observer, CustomObservable
     {
         if item.parentID == nil && update.parentID == nil
         {
-            if orphanage.removeOrphan(with: item.id) { rootStore.add(item) }
+            if orphans.removeOrphan(with: item.id) { roots.add(item) }
             return
         }
         
@@ -64,57 +77,59 @@ class ItemStore: Observer, CustomObservable
         
         guard let newParentID = update.parentID else
         {
-            rootStore.add(item)
+            roots.add(item)
             return
         }
 
-        rootStore.remove(item)
+        roots.remove(item)
         
-        if let newParent = itemHash[newParentID]
+        if let newParent = allItems[newParentID]
         {
             newParent.insert(item, at: update.position)
             
-            orphanage.removeOrphan(with: item.id, parentID: newParentID)
+            orphans.removeOrphan(with: item.id, parentID: newParentID)
         }
         else
         {
-            orphanage.update(update, withParentID: newParentID)
+            orphans.update(update, withParentID: newParentID)
         }
     }
     
     // MARK: Create New Item
     
-    private func createItem(from update: Update)
+    private func createItem(from update: Update) -> Item
     {
         let item = Item(data: update.data)
-        itemHash.add([item])
+        allItems.add([item])
         
-        if let lostChildren = orphanage.orphans(forParentID: item.id)
+        if let lostChildren = orphans.orphans(forParentID: item.id)
         {
             lostChildren.sortedByPosition.forEach
             {
-                guard let child = itemHash[$0.data.id] else { return }
+                guard let child = allItems[$0.data.id] else { return }
                 item.insert(child, at: $0.position)
             }
             
-            orphanage.removeOrphans(forParentID: item.id)
+            orphans.removeOrphans(forParentID: item.id)
         }
         
         if let parentID = update.parentID
         {
-            if let parent = itemHash[parentID]
+            if let parent = allItems[parentID]
             {
                 parent.insert(item, at: update.position)
             }
             else
             {
-                orphanage.update(update, withParentID: parentID)
+                orphans.update(update, withParentID: parentID)
             }
         }
         else
         {
-            rootStore.add(item)
+            roots.add(item)
         }
+        
+        return item
     }
     
     // MARK: - Delete Items
@@ -129,171 +144,95 @@ class ItemStore: Observer, CustomObservable
     
     private func deleteItem(withID id: String)
     {
-        guard let item = itemHash[id] else { return }
+        guard let item = allItems[id] else { return }
         
-        itemHash.remove(item.array)
+        if item.isRoot { stopObserving(item.treeMessenger) }
+        
+        allItems.remove(item.array)
         
         if let parent = item.root
         {
             parent.removeNodes(from: [item.position])
         }
-        else if rootStore[item.id] != nil
+        else if roots[item.id] != nil
         {
-            rootStore.remove(item)
+            roots.remove(item)
         }
         else
         {
-            orphanage.removeOrphan(with: item.id)
+            orphans.removeOrphan(with: item.id)
         }
     }
 
-    // MARK: - LEGACY: Manage Root
+    // MARK: - Observe ALL Technical Roots
     
-    func update(root newRoot: Item)
+    private func observe(technicalRoot root: Item)
     {
-        stopObserving(root?.treeMessenger)
-        observeTreeMessenger(of: newRoot)
-        itemHash.reset(with: newRoot.array)
-        updateUserCreatedLeafs(with: newRoot)
+        guard root.isRoot else { return }
         
-        root = newRoot
-    
-        DispatchQueue.main.async
+        observe(root.treeMessenger)
         {
-            self.send(.didSwitchRoot)
-            self.pasteWelcomeTourIfRootIsEmpty()
+            [weak self, weak root] event in
+            
+            guard case .didUpdateTree(let treeUpdate) = event, let root = root else { return }
+            
+            self?.didReceive(treeUpdate, from: root)
         }
     }
     
-    private func observeTreeMessenger(of newRoot: Item)
+    private func didReceive(_ treeUpdate: Item.Event.TreeUpdate, from root: Item)
     {
-        observe(newRoot.treeMessenger)
+        // TODO: keep orphanage and root hashmap in sync with edits from user
+        switch treeUpdate
         {
-            [weak self, weak newRoot] event in
+        case .insertedNodes(let items, _, _):
+            var hadAlreadyAddedThemWhenApplyingUpdates = true // were by record controller
             
-            guard let newRoot = newRoot else { return }
-            
-            self?.didReceive(event, from: newRoot)
-        }
-    }
-    
-    private func didReceive(_ event: Item.Event, from root: Item)
-    {
-        switch event
-        {
-        case .didNothing: break
-            
-        case .didUpdateNode(let edit):
-            if edit.modifiesGraphStructure
+            for item in items
             {
-                updateUserCreatedLeafs(with: root)
+                if allItems[item.id] == nil
+                {
+                    hadAlreadyAddedThemWhenApplyingUpdates = false
+                    allItems.add(item.array)
+                }
             }
             
-        case .didChangeLeafNumber(_):
-            updateUserCreatedLeafs(with: root)
-            
-        case .didUpdateTree(let treeUpdate):
-            switch treeUpdate
+            if !hadAlreadyAddedThemWhenApplyingUpdates
             {
-            case .insertedNodes(let items, _, _):
-                var hadAlreadyAddedAll = true
-                
-                for item in items
+                send(treeUpdate)
+            }
+            
+        case .receivedMessage, .movedNode:
+            // TODO: avoid sending updates back that were triggered from outside (from database)
+            send(treeUpdate)
+            
+        case .removedNodes(let items, _):
+            var hadAlreadyRemovedAll = true  // were removed by record controller -> not in hashmap anymore
+            
+            for item in items
+            {
+                if allItems[item.id] != nil
                 {
-                    if itemHash[item.id] == nil
-                    {
-                        hadAlreadyAddedAll = false
-                        itemHash.add(item.array)
-                    }
+                    hadAlreadyRemovedAll = false
+                    allItems.remove(item.array)
                 }
-                
-                if !hadAlreadyAddedAll
-                {
-                    send(.didUpdate(treeUpdate))
-                }
-                
-            case .receivedMessage, .movedNode:
-                // TODO: avoid sending updates back that were triggered from outside (from database)
-                send(.didUpdate(treeUpdate))
-                
-            case .removedNodes(let items, _):
-                var hadAlreadyRemovedAll = true
-                
-                for item in items
-                {
-                    if itemHash[item.id] != nil
-                    {
-                        hadAlreadyRemovedAll = false
-                        itemHash.remove(item.array)
-                    }
-                }
-                
-                if !hadAlreadyRemovedAll
-                {
-                    send(.didUpdate(treeUpdate))
-                }
+            }
+            
+            if !hadAlreadyRemovedAll
+            {
+                send(treeUpdate)
             }
         }
     }
     
-    // MARK: - Track Number of User Created Leafs
+    // MARK: - Storage
     
-    private func updateUserCreatedLeafs(with root: Item)
-    {
-        numberOfUserCreatedLeafs <- root.isLeaf ? 0 : root.numberOfLeafs
-    }
-    
-    let numberOfUserCreatedLeafs = Var(0)
-    
-    // MARK: - Welcome Tour
-    
-    func pasteWelcomeTourIfRootIsEmpty()
-    {
-        guard let root = self.root else
-        {
-            log(warning: "Root is nil.")
-            return
-        }
-        
-        if root.isLeaf
-        {
-            root.insert(Item.welcomeTour, at: 0)
-        }
-    }
-    
-    // MARK: - Orphans
-    
-    // TODO: observe ALL technical roots, including orphans
-    let orphanage = Orphanage()
-    
-    // MARK: - Roots
-    
-    private func observeRootStore()
-    {
-        observe(rootStore)
-        {
-            [weak self] in
-            
-            guard let treeUpdate = $0 else { return }
-            
-            self?.send(.didUpdate(treeUpdate))
-        }
-    }
-    
-    private(set) var root: Item?
-    private let rootStore = RootStore()
+    private let allItems = HashMap()
+    private let roots = HashMap()
+    private let orphans = Orphanage()
     
     // MARK: - Observability
     
     let messenger = Messenger<Message>()
-    typealias Message = Event?
-    
-    enum Event
-    {
-        case didSwitchRoot, didUpdate(Item.Event.TreeUpdate)
-    }
-    
-    // MARK: - Item Storage
-
-    private let itemHash = HashMap()
+    typealias Message = Item.Event.TreeUpdate?
 }

@@ -32,6 +32,25 @@ class StorageController
         }
     }
     
+    // MARK: - Welcome Tour
+    
+    // TODO: paste welcome tour on app launch if there's no data
+    /*
+    func pasteWelcomeTourIfRootIsEmpty()
+    {
+        guard let root = self.root else
+        {
+            log(warning: "Root is nil.")
+            return
+        }
+        
+        if root.isLeaf
+        {
+            root.insert(Item.welcomeTour, at: 0)
+        }
+    }
+ */
+    
     // MARK: - CKRecord Controller
     
     func toggleIntentionToSyncWithDatabase()
