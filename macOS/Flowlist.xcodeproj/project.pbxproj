@@ -311,7 +311,6 @@
 				9EA5A88E218ECA2C004902F7 /* Export */,
 				9EA5A887218EC703004902F7 /* Browser */,
 				9EA5A88A218EC885004902F7 /* List */,
-				9EA7837522E308890054F1F7 /* RootSelector.swift */,
 				9EA5A891218ECB1C004902F7 /* Storage */,
 				9EA5A897218ECC98004902F7 /* Item Store */,
 				9EA5A8A1218ED38B004902F7 /* Item */,
@@ -365,6 +364,7 @@
 				9E5768BF20C15B6300749C0C /* Browser+Debugging.swift */,
 				9EBC70282056FD02007A1EA8 /* Browser.swift */,
 				9E5768BB20C14B9300749C0C /* Direction.swift */,
+				9EA7837522E308890054F1F7 /* RootSelector.swift */,
 			);
 			path = Browser;
 			sourceTree = "<group>";
