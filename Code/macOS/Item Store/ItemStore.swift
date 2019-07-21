@@ -106,8 +106,14 @@ class ItemStore: Observer, CustomObservable
         {
             lostChildren.sortedByPosition.forEach
             {
-                guard let child = allItems[$0.data.id] else { return }
+                guard let child = allItems[$0.data.id] else
+                {
+                    log(warning: "ItemStore has a registered orphan for which it has no corresponding item. The orphan is gonna be removed.")
+                    return
+                }
+                
                 item.insert(child, at: $0.position)
+                stopObserving(child.treeMessenger)
             }
             
             orphans.removeOrphans(forParentID: item.id)
@@ -146,21 +152,24 @@ class ItemStore: Observer, CustomObservable
     {
         guard let item = allItems[id] else { return }
         
-        if item.isRoot { stopObserving(item.treeMessenger) }
-        
-        allItems.remove(item.array)
+        allItems.remove(item.allNodesRecursively)
         
         if let parent = item.root
         {
             parent.removeNodes(from: [item.position])
         }
-        else if roots[item.id] != nil
-        {
-            roots.remove(item)
-        }
         else
         {
-            orphans.removeOrphan(with: item.id)
+            if roots.contains(item)
+            {
+                roots.remove(item)
+            }
+            else
+            {
+                orphans.removeOrphan(with: item.id)
+            }
+            
+            stopObserving(item.treeMessenger)
         }
     }
 
@@ -172,57 +181,57 @@ class ItemStore: Observer, CustomObservable
         
         observe(root.treeMessenger)
         {
-            [weak self, weak root] event in
+            [weak self] event in
             
-            guard case .didUpdateTree(let treeUpdate) = event, let root = root else { return }
+            guard case .didUpdateTree(let treeUpdate) = event else { return }
             
-            self?.didReceive(treeUpdate, from: root)
+            self?.technicalRootDidSend(treeUpdate)
         }
     }
     
-    private func didReceive(_ treeUpdate: Item.Event.TreeUpdate, from root: Item)
+    private func technicalRootDidSend(_ treeUpdate: Item.Event.TreeUpdate)
     {
-        // TODO: keep orphanage and root hashmap in sync with edits from user
         switch treeUpdate
         {
-        case .insertedNodes(let items, _, _):
-            var hadAlreadyAddedThemWhenApplyingUpdates = true // were by record controller
-            
-            for item in items
-            {
-                if allItems[item.id] == nil
-                {
-                    hadAlreadyAddedThemWhenApplyingUpdates = false
-                    allItems.add(item.array)
-                }
-            }
-            
-            if !hadAlreadyAddedThemWhenApplyingUpdates
-            {
-                send(treeUpdate)
-            }
-            
         case .receivedMessage, .movedNode:
-            // TODO: avoid sending updates back that were triggered from outside (from database)
-            send(treeUpdate)
+            break
             
-        case .removedNodes(let items, _):
-            var hadAlreadyRemovedAll = true  // were removed by record controller -> not in hashmap anymore
-            
-            for item in items
+        case .insertedNodes(let items, let parent, _):
+            if !allItems.contains(parent)
             {
-                if allItems[item.id] != nil
+                log(warning: "Inserted items into a parent which is not registered in ItemStore.")
+                allItems.add(parent)
+                if parent.isRoot
                 {
-                    hadAlreadyRemovedAll = false
-                    allItems.remove(item.array)
+                    roots.add(parent)
+                    observe(technicalRoot: parent)
                 }
             }
             
-            if !hadAlreadyRemovedAll
+            items.forEach { allItems.add($0.allNodesRecursively) }
+            
+            roots.remove(items)
+            items.forEach { stopObserving($0.treeMessenger) }
+            
+        case .removedNodes(let items, let parent):
+            if !allItems.contains(parent)
             {
-                send(treeUpdate)
+                log(warning: "Removed items from a parent which is not registered in ItemStore.")
+                allItems.add(parent)
+                if parent.isRoot
+                {
+                    roots.add(parent)
+                    observe(technicalRoot: parent)
+                }
             }
+            
+            items.forEach { allItems.remove($0.allNodesRecursively) }
+            
+            roots.remove(items)
+            items.forEach { stopObserving($0.treeMessenger) }
         }
+        
+        send(treeUpdate)
     }
     
     // MARK: - Storage

@@ -6,7 +6,7 @@ extension Array where Element == Item
     {
         var result = [Item]()
         
-        forEach { result.append(contentsOf: $0.array) }
+        forEach { result.append(contentsOf: $0.allNodesRecursively) }
         
         return result
     }

@@ -3,11 +3,11 @@ import SwiftyToolz
 
 extension Tree
 {
-    var array: [Node]
+    var allNodesRecursively: [Node]
     {
         var result = [self]
         
-        branches.forEach { result.append(contentsOf: $0.array) }
+        branches.forEach { result.append(contentsOf: $0.allNodesRecursively) }
         
         return result
     }
