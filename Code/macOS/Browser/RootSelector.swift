@@ -10,40 +10,43 @@ class RootSelector: Observer, CustomObservable
     {
         observe(ItemStore.shared)
         {
-            [weak self] in if let treeUpdate = $0 { self?.itemStoreDidSend(treeUpdate) }
+            [weak self] in if let event = $0 { self?.itemStoreDidSend(event) }
         }
     }
     
     // MARK: - Select Root from ItemStore
     
-    private func itemStoreDidSend(_ treeUpdate: Item.Event.TreeUpdate)
+    private func itemStoreDidSend(_ event: ItemStore.Event)
     {
-        // TODO: select new root if necessary
-        
-        switch treeUpdate
+        // TODO: Test this root selection strategy which uses the first root it gets ...
+        switch event
         {
-        case .removedNodes(_, _):
+        case .someTreeDidChange:
             break
             
-        case .insertedNodes(_, _, _):
-            break
+        case .didAddRoot(let root):
+            if selectedRoot == nil { select(root: root) }
             
-        case .movedNode(_, _, _):
-            break
-            
-        case .receivedMessage(_, _):
-            break
+        case .didRemoveRoot(let root):
+            if selectedRoot === root { select(root: nil) }
         }
     }
     
-    private func select(root newRoot: Item)
+    private func select(root newRoot: Item?)
     {
         stopObserving(selectedRoot?.treeMessenger)
-        observeTreeMessenger(of: newRoot)
-        updateUserCreatedLeafs(with: newRoot)
+
+        if let newRoot = newRoot
+        {
+            observeTreeMessenger(of: newRoot)
+            updateUserCreatedLeafs(with: newRoot)
+        }
+        else
+        {
+            numberOfUserCreatedLeafs <- 0
+        }
         
         selectedRoot = newRoot
-        
         DispatchQueue.main.async { self.send(newRoot) }
     }
     

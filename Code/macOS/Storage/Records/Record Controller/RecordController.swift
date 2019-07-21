@@ -51,7 +51,11 @@ class RecordController: Observer
     {
         observe(ItemStore.shared)
         {
-            [weak self] in if let treeUpdate = $0 { self?.itemStoreDid(treeUpdate) }
+            [weak self] in
+            
+            guard let event = $0, case .someTreeDidChange(let treeUpdate) = event else { return }
+            
+            self?.itemStoreDid(treeUpdate)
         }
     }
     

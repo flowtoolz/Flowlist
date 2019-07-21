@@ -63,7 +63,7 @@ class ItemStore: Observer, CustomObservable
     {
         if item.parentID == nil && update.parentID == nil
         {
-            if orphans.removeOrphan(with: item.id) { roots.add(item) }
+            if orphans.removeOrphan(with: item.id) { add(root: item) }
             return
         }
         
@@ -77,11 +77,11 @@ class ItemStore: Observer, CustomObservable
         
         guard let newParentID = update.parentID else
         {
-            roots.add(item)
+            add(root: item)
             return
         }
 
-        roots.remove(item)
+        remove(root: item)
         
         if let newParent = allItems[newParentID]
         {
@@ -132,7 +132,7 @@ class ItemStore: Observer, CustomObservable
         }
         else
         {
-            roots.add(item)
+            add(root: item)
         }
         
         return item
@@ -162,7 +162,7 @@ class ItemStore: Observer, CustomObservable
         {
             if roots.contains(item)
             {
-                roots.remove(item)
+                remove(root: item)
             }
             else
             {
@@ -203,15 +203,17 @@ class ItemStore: Observer, CustomObservable
                 allItems.add(parent)
                 if parent.isRoot
                 {
-                    roots.add(parent)
+                    add(root: parent)
                     observe(technicalRoot: parent)
                 }
             }
             
-            items.forEach { allItems.add($0.allNodesRecursively) }
-            
-            roots.remove(items)
-            items.forEach { stopObserving($0.treeMessenger) }
+            items.forEach
+            {
+                allItems.add($0.allNodesRecursively)
+                remove(root: $0)
+                stopObserving($0.treeMessenger)
+            }
             
         case .removedNodes(let items, let parent):
             if !allItems.contains(parent)
@@ -220,28 +222,48 @@ class ItemStore: Observer, CustomObservable
                 allItems.add(parent)
                 if parent.isRoot
                 {
-                    roots.add(parent)
+                    add(root: parent)
                     observe(technicalRoot: parent)
                 }
             }
             
-            items.forEach { allItems.remove($0.allNodesRecursively) }
-            
-            roots.remove(items)
-            items.forEach { stopObserving($0.treeMessenger) }
+            items.forEach
+            {
+                allItems.remove($0.allNodesRecursively)
+                remove(root: $0)
+                stopObserving($0.treeMessenger)
+            }
         }
         
-        send(treeUpdate)
+        send(.someTreeDidChange(treeUpdate))
     }
     
-    // MARK: - Storage
+    // MARK: - Manage Roots
+    
+    private func add(root: Item)
+    {
+        guard root.isRoot, !roots.contains(root) else { return }
+        roots.add(root)
+        send(.didAddRoot(root))
+    }
+    
+    private func remove(root: Item)
+    {
+        guard roots.contains(root) else { return }
+        roots.remove(root)
+        send(.didRemoveRoot(root))
+    }
+    
+    private let roots = HashMap()
+    
+    // MARK: - Other Storage
     
     private let allItems = HashMap()
-    private let roots = HashMap()
     private let orphans = Orphanage()
     
     // MARK: - Observability
     
     let messenger = Messenger<Message>()
-    typealias Message = Item.Event.TreeUpdate?
+    typealias Message = Event?
+    enum Event { case someTreeDidChange(Item.Event.TreeUpdate), didAddRoot(Item), didRemoveRoot(Item) }
 }
