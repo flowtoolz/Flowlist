@@ -8,10 +8,9 @@ class StorageController
     // MARK: - Initialization
     
     static let shared = StorageController()
-    
     private init() { Persistent.setupUsingUserDefaults() }
     
-    // MARK: - Setup
+    // MARK: - Setup On Launch
     
     func appDidLaunch()
     {
@@ -38,7 +37,7 @@ class StorageController
     
     private func ensureThereIsInitialData() throws
     {
-        if TreeStore.shared.treeCount == 0
+        if TreeStore.shared.count == 0
         {
             TreeStore.shared.add(Item(text: NSFullUserName()))
         }

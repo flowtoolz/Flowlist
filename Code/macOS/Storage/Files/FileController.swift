@@ -16,8 +16,7 @@ class FileController: Observer
     
     func saveRecordsFromFilesToRecordStore()
     {
-        RecordStore.shared.save(FileSystemDatabase.shared.loadRecords(),
-                                identifyAs: self)
+        RecordStore.shared.save(FileSystemDatabase.shared.loadRecords(), identifyAs: self)
     }
     
     // MARK: - Observe Record Store

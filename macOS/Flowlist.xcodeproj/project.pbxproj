@@ -290,7 +290,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9E654E0F21A4859C0052607F /* CloudKit */ = {
+		9E654E0F21A4859C0052607F /* CloudKit Records */ = {
 			isa = PBXGroup;
 			children = (
 				9E12091322C93EEA003DE68E /* CKRecordController.swift */,
@@ -299,7 +299,7 @@
 				9E053B2D21886963001B7103 /* CloudKitDatabase.swift */,
 				9EF96E7321A9F516005619C7 /* CloudKit+Flowlist.swift */,
 			);
-			path = CloudKit;
+			path = "CloudKit Records";
 			sourceTree = "<group>";
 		};
 		9E7B876422B44EC20012FF48 /* macOS */ = {
@@ -312,7 +312,6 @@
 				9EA5A887218EC703004902F7 /* Browser */,
 				9EA5A88A218EC885004902F7 /* List */,
 				9EA5A891218ECB1C004902F7 /* Storage */,
-				9EA5A897218ECC98004902F7 /* Tree Store */,
 				9EA5A8A1218ED38B004902F7 /* Item */,
 				9EA5A8A8218ED8DE004902F7 /* Style */,
 				9EA5A8AA218ED9A9004902F7 /* Framework-Candidates */,
@@ -437,14 +436,15 @@
 			isa = PBXGroup;
 			children = (
 				9E654E1021A485B30052607F /* StorageController.swift */,
-				9E654E0F21A4859C0052607F /* CloudKit */,
-				9EA5A89B218ED21B004902F7 /* File System */,
+				9E654E0F21A4859C0052607F /* CloudKit Records */,
+				9EA5A89B218ED21B004902F7 /* Files */,
 				9E9A2FDE22D0A54600629103 /* Records */,
+				9EA5A897218ECC98004902F7 /* Trees */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
 		};
-		9EA5A897218ECC98004902F7 /* Tree Store */ = {
+		9EA5A897218ECC98004902F7 /* Trees */ = {
 			isa = PBXGroup;
 			children = (
 				9E7651951EEF4DA200DE2B07 /* TreeStore.swift */,
@@ -452,17 +452,17 @@
 				9E74961022DB6DF30015678F /* Update.swift */,
 				9EF0AABD21883E6E00B707F4 /* HashMap.swift */,
 			);
-			path = "Tree Store";
+			path = Trees;
 			sourceTree = "<group>";
 		};
-		9EA5A89B218ED21B004902F7 /* File System */ = {
+		9EA5A89B218ED21B004902F7 /* Files */ = {
 			isa = PBXGroup;
 			children = (
 				9EBD515F22D26AB80047B9F1 /* JSON Migration */,
 				9E9A2FDC22D0858E00629103 /* FileController.swift */,
 				9E053B22218867E4001B7103 /* FileSystemDatabase.swift */,
 			);
-			path = "File System";
+			path = Files;
 			sourceTree = "<group>";
 		};
 		9EA5A89F218ED324004902F7 /* AppKit */ = {

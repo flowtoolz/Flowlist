@@ -11,7 +11,7 @@ class TreeStore: Observer, CustomObservable
     
     // MARK: - Add Items
     
-    var treeCount: Int { return trees.count }
+    var count: Int { return trees.count }
     
     func add(_ item: Item)
     {
