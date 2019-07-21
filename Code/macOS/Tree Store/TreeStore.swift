@@ -23,26 +23,11 @@ class TreeStore: Observer, CustomObservable
     {
         if let item = allItems[update.data.id]
         {
-            let wasRootBeforeUpdate = item.isRoot
             apply(update, to: item)
-            let isRootAfterUpdate = item.isRoot
-            
-            if wasRootBeforeUpdate != isRootAfterUpdate
-            {
-                if isRootAfterUpdate
-                {
-                    observe(tree: item)
-                }
-                else
-                {
-                    stopObserving(item.treeMessenger)
-                }
-            }
         }
         else
         {
-            let item = createItem(from: update)
-            if item.isRoot { observe(tree: item) }
+            createItem(from: update)
         }
     }
     
@@ -97,7 +82,7 @@ class TreeStore: Observer, CustomObservable
     
     // MARK: Create New Item
     
-    private func createItem(from update: Update) -> Item
+    private func createItem(from update: Update)
     {
         let item = Item(data: update.data)
         allItems.add([item])
@@ -113,7 +98,6 @@ class TreeStore: Observer, CustomObservable
                 }
                 
                 item.insert(child, at: $0.position)
-                stopObserving(child.treeMessenger)
             }
             
             orphans.removeOrphans(forParentID: item.id)
@@ -134,8 +118,6 @@ class TreeStore: Observer, CustomObservable
         {
             add(tree: item)
         }
-        
-        return item
     }
     
     // MARK: - Delete Items
@@ -168,12 +150,18 @@ class TreeStore: Observer, CustomObservable
             {
                 orphans.removeOrphan(with: item.id)
             }
-            
-            stopObserving(item.treeMessenger)
         }
     }
-
-    // MARK: - Observe Trees
+    
+    // MARK: - Manage Trees
+    
+    private func add(tree: Item)
+    {
+        guard tree.isRoot, !trees.contains(tree) else { return }
+        trees.add(tree)
+        observe(tree: tree)
+        send(.didAddTree(tree))
+    }
     
     private func observe(tree: Item)
     {
@@ -201,18 +189,13 @@ class TreeStore: Observer, CustomObservable
             {
                 log(warning: "Inserted items into a parent which is not registered in ItemStore.")
                 allItems.add(parent)
-                if parent.isRoot
-                {
-                    add(tree: parent)
-                    observe(tree: parent)
-                }
+                if parent.isRoot { add(tree: parent) }
             }
             
             items.forEach
             {
                 allItems.add($0.allNodesRecursively)
                 remove(tree: $0)
-                stopObserving($0.treeMessenger)
             }
             
         case .removedNodes(let items, let parent):
@@ -220,37 +203,24 @@ class TreeStore: Observer, CustomObservable
             {
                 log(warning: "Removed items from a parent which is not registered in ItemStore.")
                 allItems.add(parent)
-                if parent.isRoot
-                {
-                    add(tree: parent)
-                    observe(tree: parent)
-                }
+                if parent.isRoot { add(tree: parent) }
             }
             
             items.forEach
             {
                 allItems.remove($0.allNodesRecursively)
                 remove(tree: $0)
-                stopObserving($0.treeMessenger)
             }
         }
         
         send(.someTreeDidChange(treeUpdate))
     }
     
-    // MARK: - Manage Trees
-    
-    private func add(tree: Item)
-    {
-        guard tree.isRoot, !trees.contains(tree) else { return }
-        trees.add(tree)
-        send(.didAddTree(tree))
-    }
-    
     private func remove(tree: Item)
     {
         guard trees.contains(tree) else { return }
         trees.remove(tree)
+        stopObserving(tree.treeMessenger)
         send(.didRemoveTree(tree))
     }
     
