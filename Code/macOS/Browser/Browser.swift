@@ -18,12 +18,12 @@ class Browser: Observer, CustomObservable
             fatalError()
         }
         
-        if RootSelector.shared.selectedRoot != nil
+        if TreeSelector.shared.selectedTree != nil
         {
-            rootSelectorDidSelect(RootSelector.shared.selectedRoot)
+            rootSelectorDidSelect(TreeSelector.shared.selectedTree)
         }
         
-        observe(RootSelector.shared)
+        observe(TreeSelector.shared)
         {
             [weak self] in self?.rootSelectorDidSelect($0)
         }

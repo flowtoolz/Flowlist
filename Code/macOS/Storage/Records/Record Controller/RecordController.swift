@@ -37,11 +37,11 @@ class RecordController: Observer
         switch edit
         {
         case .deleteRecordsWithIDs(let ids):
-            ItemStore.shared.deleteItems(withIDs: ids)
+            TreeStore.shared.deleteItems(withIDs: ids)
             
         case .modifyRecords(let records):
             let updates = records.map { $0.makeUpdate() }
-            ItemStore.shared.apply(updates: updates)
+            TreeStore.shared.apply(updates: updates)
         }
     }
     
@@ -49,7 +49,7 @@ class RecordController: Observer
     
     private func observeItemStore()
     {
-        observe(ItemStore.shared)
+        observe(TreeStore.shared)
         {
             [weak self] in
             

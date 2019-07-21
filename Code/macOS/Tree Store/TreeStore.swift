@@ -2,11 +2,11 @@ import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
-class ItemStore: Observer, CustomObservable
+class TreeStore: Observer, CustomObservable
 {
     // MARK: - Initialization
     
-    static let shared = ItemStore()
+    static let shared = TreeStore()
     private init() {}
     
     // MARK: - Update (Save) Items
@@ -31,7 +31,7 @@ class ItemStore: Observer, CustomObservable
             {
                 if isRootAfterUpdate
                 {
-                    observe(technicalRoot: item)
+                    observe(tree: item)
                 }
                 else
                 {
@@ -42,7 +42,7 @@ class ItemStore: Observer, CustomObservable
         else
         {
             let item = createItem(from: update)
-            if item.isRoot { observe(technicalRoot: item) }
+            if item.isRoot { observe(tree: item) }
         }
     }
     
@@ -63,7 +63,7 @@ class ItemStore: Observer, CustomObservable
     {
         if item.parentID == nil && update.parentID == nil
         {
-            if orphans.removeOrphan(with: item.id) { add(root: item) }
+            if orphans.removeOrphan(with: item.id) { add(tree: item) }
             return
         }
         
@@ -77,11 +77,11 @@ class ItemStore: Observer, CustomObservable
         
         guard let newParentID = update.parentID else
         {
-            add(root: item)
+            add(tree: item)
             return
         }
 
-        remove(root: item)
+        remove(tree: item)
         
         if let newParent = allItems[newParentID]
         {
@@ -108,7 +108,7 @@ class ItemStore: Observer, CustomObservable
             {
                 guard let child = allItems[$0.data.id] else
                 {
-                    log(warning: "ItemStore has a registered orphan for which it has no corresponding item. The orphan is gonna be removed.")
+                    log(warning: "ItemStore has orphan without corresponding item.")
                     return
                 }
                 
@@ -132,7 +132,7 @@ class ItemStore: Observer, CustomObservable
         }
         else
         {
-            add(root: item)
+            add(tree: item)
         }
         
         return item
@@ -160,9 +160,9 @@ class ItemStore: Observer, CustomObservable
         }
         else
         {
-            if roots.contains(item)
+            if trees.contains(item)
             {
-                remove(root: item)
+                remove(tree: item)
             }
             else
             {
@@ -173,23 +173,23 @@ class ItemStore: Observer, CustomObservable
         }
     }
 
-    // MARK: - Observe ALL Technical Roots
+    // MARK: - Observe Trees
     
-    private func observe(technicalRoot root: Item)
+    private func observe(tree: Item)
     {
-        guard root.isRoot else { return }
+        guard tree.isRoot else { return }
         
-        observe(root.treeMessenger)
+        observe(tree.treeMessenger)
         {
             [weak self] event in
             
             guard case .didUpdateTree(let treeUpdate) = event else { return }
             
-            self?.technicalRootDidSend(treeUpdate)
+            self?.treeDidSend(treeUpdate)
         }
     }
     
-    private func technicalRootDidSend(_ treeUpdate: Item.Event.TreeUpdate)
+    private func treeDidSend(_ treeUpdate: Item.Event.TreeUpdate)
     {
         switch treeUpdate
         {
@@ -203,15 +203,15 @@ class ItemStore: Observer, CustomObservable
                 allItems.add(parent)
                 if parent.isRoot
                 {
-                    add(root: parent)
-                    observe(technicalRoot: parent)
+                    add(tree: parent)
+                    observe(tree: parent)
                 }
             }
             
             items.forEach
             {
                 allItems.add($0.allNodesRecursively)
-                remove(root: $0)
+                remove(tree: $0)
                 stopObserving($0.treeMessenger)
             }
             
@@ -222,15 +222,15 @@ class ItemStore: Observer, CustomObservable
                 allItems.add(parent)
                 if parent.isRoot
                 {
-                    add(root: parent)
-                    observe(technicalRoot: parent)
+                    add(tree: parent)
+                    observe(tree: parent)
                 }
             }
             
             items.forEach
             {
                 allItems.remove($0.allNodesRecursively)
-                remove(root: $0)
+                remove(tree: $0)
                 stopObserving($0.treeMessenger)
             }
         }
@@ -238,23 +238,23 @@ class ItemStore: Observer, CustomObservable
         send(.someTreeDidChange(treeUpdate))
     }
     
-    // MARK: - Manage Roots
+    // MARK: - Manage Trees
     
-    private func add(root: Item)
+    private func add(tree: Item)
     {
-        guard root.isRoot, !roots.contains(root) else { return }
-        roots.add(root)
-        send(.didAddRoot(root))
+        guard tree.isRoot, !trees.contains(tree) else { return }
+        trees.add(tree)
+        send(.didAddTree(tree))
     }
     
-    private func remove(root: Item)
+    private func remove(tree: Item)
     {
-        guard roots.contains(root) else { return }
-        roots.remove(root)
-        send(.didRemoveRoot(root))
+        guard trees.contains(tree) else { return }
+        trees.remove(tree)
+        send(.didRemoveTree(tree))
     }
     
-    private let roots = HashMap()
+    private let trees = HashMap()
     
     // MARK: - Other Storage
     
@@ -265,5 +265,5 @@ class ItemStore: Observer, CustomObservable
     
     let messenger = Messenger<Message>()
     typealias Message = Event?
-    enum Event { case someTreeDidChange(Item.Event.TreeUpdate), didAddRoot(Item), didRemoveRoot(Item) }
+    enum Event { case someTreeDidChange(Item.Event.TreeUpdate), didAddTree(Item), didRemoveTree(Item) }
 }
