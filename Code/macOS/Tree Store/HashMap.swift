@@ -2,6 +2,7 @@ import SwiftObserver
 
 class HashMap
 {
+    var count: Int { return storedItems.count }
     func contains(_ item: Item) -> Bool { return storedItems[item.id] != nil }
     func add(_ items: [Item]) { items.forEach { add($0) } }
     func add(_ item: Item) { storedItems[item.id] = item }

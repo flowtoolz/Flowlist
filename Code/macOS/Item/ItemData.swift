@@ -7,7 +7,7 @@ final class ItemData: Observer, CustomObservable
     
     init(id: ID? = nil, wantsTextInput: Bool = false)
     {
-        self.id = id ?? String.makeUUID()
+        self.id = id ?? .makeUUID()
         self.wantsTextInput = wantsTextInput
         
         observe(text, state, tag)

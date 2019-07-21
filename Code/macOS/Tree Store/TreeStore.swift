@@ -9,6 +9,17 @@ class TreeStore: Observer, CustomObservable
     static let shared = TreeStore()
     private init() {}
     
+    // MARK: - Add Items
+    
+    var treeCount: Int { return trees.count }
+    
+    func add(_ item: Item)
+    {
+        allItems.add(item)
+        insertOrphansInto(potentialParent: item)
+        if item.isRoot { add(tree: item) }
+    }
+    
     // MARK: - Update (Save) Items
     
     func apply(updates: [Update])
@@ -87,21 +98,7 @@ class TreeStore: Observer, CustomObservable
         let item = Item(data: update.data)
         allItems.add([item])
         
-        if let lostChildren = orphans.orphans(forParentID: item.id)
-        {
-            lostChildren.sortedByPosition.forEach
-            {
-                guard let child = allItems[$0.data.id] else
-                {
-                    log(warning: "ItemStore has orphan without corresponding item.")
-                    return
-                }
-                
-                item.insert(child, at: $0.position)
-            }
-            
-            orphans.removeOrphans(forParentID: item.id)
-        }
+        insertOrphansInto(potentialParent: item)
         
         if let parentID = update.parentID
         {
@@ -118,6 +115,24 @@ class TreeStore: Observer, CustomObservable
         {
             add(tree: item)
         }
+    }
+    
+    private func insertOrphansInto(potentialParent item: Item)
+    {
+        guard let lostChildren = orphans.orphans(forParentID: item.id) else { return }
+        
+        lostChildren.sortedByPosition.forEach
+        {
+            guard let child = allItems[$0.data.id] else
+            {
+                log(warning: "ItemStore has orphan without corresponding item.")
+                return
+            }
+            
+            item.insert(child, at: $0.position)
+        }
+        
+        orphans.removeOrphans(forParentID: item.id)
     }
     
     // MARK: - Delete Items

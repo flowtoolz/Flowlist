@@ -26,30 +26,35 @@ class StorageController
             self.fileController.saveRecordsFromFilesToRecordStore()
             return self.ckRecordController.syncCKRecordsWithFiles()
         }
+        .done
+        {
+            try self.ensureThereIsInitialData()
+        }
         .catch
         {
             log(error: $0.readable.message)
         }
     }
     
-    // MARK: - Welcome Tour
-    
-    // TODO: paste welcome tour on app launch if there's no data
-    /*
-    func pasteWelcomeTourIfRootIsEmpty()
+    private func ensureThereIsInitialData() throws
     {
-        guard let root = self.root else
+        if TreeStore.shared.treeCount == 0
         {
-            log(warning: "Root is nil.")
-            return
+            TreeStore.shared.add(Item(text: NSFullUserName()))
         }
         
-        if root.isLeaf
+        guard let tree = TreeSelector.shared.selectedTree else
         {
-            root.insert(Item.welcomeTour, at: 0)
+            let errorMessage = "Did ensure TreeStore has at least one tree, but TreeSelector still has none selected."
+            log(error: errorMessage)
+            throw ReadableError.message(errorMessage)
+        }
+        
+        if TreeSelector.shared.numberOfUserCreatedLeafs.value == 0
+        {
+            tree.insert(Item.welcomeTour, at: 0)
         }
     }
- */
     
     // MARK: - CKRecord Controller
     
