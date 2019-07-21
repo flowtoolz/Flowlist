@@ -78,12 +78,6 @@ class FileSystemDatabase: CustomObservable
         return FileManager.default.ensureDirectoryExists(directory)
     }()
     
-    // TODO: the file system shouldn't be responsible for creating the initial root item ...
-    private var newRootRecord: Record
-    {
-        return Record(id: .makeUUID(), text: NSFullUserName(), rootID: nil, position: 0)
-    }
-    
     // MARK: - Observability
     
     let messenger = Messenger<Message>()
