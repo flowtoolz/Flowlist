@@ -59,9 +59,12 @@ class CKRecordController: Observer
     {
         guard !isIntendingToSync else
         {
-            syncIntentionPersistentFlag.value = false
+            isIntendingToSync = false
             return
         }
+        
+        // when user restarts intention to sync, we force a total resync so we don't need to persist changes that happen while there is no sync intention
+        ckDatabase.deleteChangeToken()
 
         firstly
         {
@@ -69,7 +72,7 @@ class CKRecordController: Observer
         }
         .done(on: queue)
         {
-            self.syncIntentionPersistentFlag.value = true
+            self.isIntendingToSync = true
         }
         .catch(abortIntendingToSync)
     }
@@ -134,6 +137,7 @@ class CKRecordController: Observer
             cloudRecords in
             
             // FIXME: check conflicts with file database, possibly ask user
+            // FIXME: also update cloud with local data
             FileSystemDatabase.shared.save(cloudRecords, identifyAs: self)
         }
     }
@@ -192,6 +196,8 @@ class CKRecordController: Observer
     
     private func ckDatabaseDidChange()
     {
+        // TODO: what if we have offline changes (in case we weren't reliably notified of coming back online)
+        
         firstly
         {
             ckDatabase.fetchChanges()
@@ -289,7 +295,7 @@ class CKRecordController: Observer
     private func abortIntendingToSync(withErrorMessage message: String,
                                       callToAction: String? = nil)
     {
-        syncIntentionPersistentFlag.value = false
+        isIntendingToSync = false
         
         log(error: message)
         
@@ -307,6 +313,11 @@ class CKRecordController: Observer
         Dialog.default.pose(question, imageName: "icloud_conflict").catch { _ in }
     }
     
-    var isIntendingToSync: Bool { return syncIntentionPersistentFlag.value }
+    private(set) var isIntendingToSync: Bool
+    {
+        get { return syncIntentionPersistentFlag.value }
+        set { syncIntentionPersistentFlag.value = newValue }
+    }
+    
     private var syncIntentionPersistentFlag = PersistentFlag("UserDefaultsKeyWantsToUseICloud")
 }

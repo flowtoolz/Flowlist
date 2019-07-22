@@ -138,6 +138,11 @@ class CloudKitDatabase: Observer, CustomObservable
         return ckDatabaseController.hasChangeToken(forZone: .item)
     }
     
+    func deleteChangeToken()
+    {
+        ckDatabaseController.deleteChangeToken(forZone: .item)
+    }
+    
     // MARK: - Ensure Access
     
     private func ensureAccess() -> Promise<Void>

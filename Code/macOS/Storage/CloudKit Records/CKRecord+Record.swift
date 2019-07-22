@@ -10,7 +10,7 @@ extension CKRecord
     {
         if recordType != .item
         {
-            log(error: "Attempting to make item record from a CKRecord of type \(recordType). Excpected type \(CKRecord.RecordType.item)")
+            log(warning: "Attempting to make item record from a CKRecord of type \(recordType). Excpected type \(CKRecord.RecordType.item)")
         }
         
         return Record(id: recordID.recordName,
