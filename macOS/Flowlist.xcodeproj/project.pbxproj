@@ -48,7 +48,7 @@
 		9E1ECC2421CFE79100D2E439 /* FileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1ECC2321CFE79100D2E439 /* FileLogger.swift */; };
 		9E1F2CF42184476B00DFFD73 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1F2CF32184476B00DFFD73 /* CloudKit.framework */; };
 		9E20468422D9C4120020DD37 /* ItemData+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E20468322D9C4120020DD37 /* ItemData+Equatable.swift */; };
-		9E20468822D9CE5C0020DD37 /* Record+MakeItemUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E20468722D9CE5C0020DD37 /* Record+MakeItemUpdate.swift */; };
+		9E20468822D9CE5C0020DD37 /* Record+MakeUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E20468722D9CE5C0020DD37 /* Record+MakeUpdate.swift */; };
 		9E22D8AD218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */; };
 		9E22D8AF218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22D8AE218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift */; };
 		9E2CCE8D20C1DE030037D755 /* List+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CCE8C20C1DE030037D755 /* List+Clipboard.swift */; };
@@ -66,7 +66,7 @@
 		9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720A20B19C88001C3D2C /* Item+State.swift */; };
 		9E6C720D20B1DDE2001C3D2C /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720C20B1DDE2001C3D2C /* List.swift */; };
 		9E6C721020B1E66D001C3D2C /* Item+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6C720F20B1E66D001C3D2C /* Item+Debugging.swift */; };
-		9E6E70AB21936A8B00BDB0BA /* Record+CreateFromItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AA21936A8B00BDB0BA /* Record+CreateFromItems.swift */; };
+		9E6E70AB21936A8B00BDB0BA /* Record+MakeFromItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AA21936A8B00BDB0BA /* Record+MakeFromItem.swift */; };
 		9E6E70AD21936CD300BDB0BA /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E70AC21936CD300BDB0BA /* Record.swift */; };
 		9E74961122DB6DF30015678F /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E74961022DB6DF30015678F /* Update.swift */; };
 		9E74961322DB72F60015678F /* Orphanage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E74961222DB72F60015678F /* Orphanage.swift */; };
@@ -155,7 +155,7 @@
 		9E1ECC2321CFE79100D2E439 /* FileLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogger.swift; sourceTree = "<group>"; };
 		9E1F2CF32184476B00DFFD73 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		9E20468322D9C4120020DD37 /* ItemData+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemData+Equatable.swift"; sourceTree = "<group>"; };
-		9E20468722D9CE5C0020DD37 /* Record+MakeItemUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+MakeItemUpdate.swift"; sourceTree = "<group>"; };
+		9E20468722D9CE5C0020DD37 /* Record+MakeUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+MakeUpdate.swift"; sourceTree = "<group>"; };
 		9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyedEncodingContainer+SwiftyToolz.swift"; sourceTree = "<group>"; };
 		9E22D8AE218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer+SwiftyToolz.swift"; sourceTree = "<group>"; };
 		9E2CCE8C20C1DE030037D755 /* List+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+Clipboard.swift"; sourceTree = "<group>"; };
@@ -174,7 +174,7 @@
 		9E6C720A20B19C88001C3D2C /* Item+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+State.swift"; sourceTree = "<group>"; };
 		9E6C720C20B1DDE2001C3D2C /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		9E6C720F20B1E66D001C3D2C /* Item+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Debugging.swift"; sourceTree = "<group>"; };
-		9E6E70AA21936A8B00BDB0BA /* Record+CreateFromItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+CreateFromItems.swift"; sourceTree = "<group>"; };
+		9E6E70AA21936A8B00BDB0BA /* Record+MakeFromItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Record+MakeFromItem.swift"; sourceTree = "<group>"; };
 		9E6E70AC21936CD300BDB0BA /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		9E74961022DB6DF30015678F /* Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		9E74961222DB72F60015678F /* Orphanage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orphanage.swift; sourceTree = "<group>"; };
@@ -263,8 +263,8 @@
 			isa = PBXGroup;
 			children = (
 				9E576E342186F85100C9F876 /* RecordController.swift */,
-				9E20468722D9CE5C0020DD37 /* Record+MakeItemUpdate.swift */,
-				9E6E70AA21936A8B00BDB0BA /* Record+CreateFromItems.swift */,
+				9E20468722D9CE5C0020DD37 /* Record+MakeUpdate.swift */,
+				9E6E70AA21936A8B00BDB0BA /* Record+MakeFromItem.swift */,
 			);
 			path = "Record Controller";
 			sourceTree = "<group>";
@@ -820,7 +820,7 @@
 				9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */,
 				9E51C14A22B5182700510EC8 /* AppInstallationID.swift in Sources */,
 				9E053B65218871F5001B7103 /* Item+Export.swift in Sources */,
-				9E6E70AB21936A8B00BDB0BA /* Record+CreateFromItems.swift in Sources */,
+				9E6E70AB21936A8B00BDB0BA /* Record+MakeFromItem.swift in Sources */,
 				9E053B442188711A001B7103 /* HelpMenu.swift in Sources */,
 				9E9A2FDD22D0858E00629103 /* FileController.swift in Sources */,
 				9EF0AABE21883E6E00B707F4 /* HashMap.swift in Sources */,
@@ -833,7 +833,7 @@
 				9E053B422188711A001B7103 /* ApplicationMenu.swift in Sources */,
 				9E6E70AD21936CD300BDB0BA /* Record.swift in Sources */,
 				9E74961122DB6DF30015678F /* Update.swift in Sources */,
-				9E20468822D9CE5C0020DD37 /* Record+MakeItemUpdate.swift in Sources */,
+				9E20468822D9CE5C0020DD37 /* Record+MakeUpdate.swift in Sources */,
 				9EA7837622E308890054F1F7 /* TreeSelector.swift in Sources */,
 				9EF231AD218B785A006E783C /* Item+Creating.swift in Sources */,
 				9EEBA1A72168EE860053B628 /* ItemData+Copyable.swift in Sources */,

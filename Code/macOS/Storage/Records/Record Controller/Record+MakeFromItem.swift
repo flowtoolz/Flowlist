@@ -12,6 +12,5 @@ extension Record
                   tag: data.tag.value,
                   rootID: item.parentID,
                   position: item.position)
-    }    
+    }
 }
-

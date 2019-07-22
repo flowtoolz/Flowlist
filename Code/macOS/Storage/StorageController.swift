@@ -42,7 +42,6 @@ class StorageController
             TreeStore.shared.add(Item(text: NSFullUserName()))
         }
         
-        /*
         guard let tree = TreeSelector.shared.selectedTree else
         {
             let errorMessage = "Did ensure TreeStore has at least one tree, but TreeSelector still has none selected."
@@ -54,7 +53,6 @@ class StorageController
         {
             tree.insert(Item.welcomeTour, at: 0)
         }
-        */
     }
     
     // MARK: - CKRecord Controller
