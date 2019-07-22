@@ -63,8 +63,8 @@ class RecordController: Observer
     {
         switch update
         {
-        case .insertedNodes(let nodes, _, _):
-            let records = nodes.flatMap { Record.makeRecordsRecursively(for: $0) }
+        case .insertedNodes(let items, _, _):
+            let records = items.flatMap { Record.makeRecordsRecursively(for: $0) }
             RecordStore.shared.save(records, identifyAs: self)
             
         case .receivedMessage(let message, let node):
@@ -73,8 +73,9 @@ class RecordController: Observer
                 RecordStore.shared.save([Record(item: node)], identifyAs: self)
             }
             
-        case .removedNodes(let nodes, _):
-            let ids = nodes.compactMap { $0.id }
+        case .removedNodes(let items, _):
+            let allRemovedItems = items.flatMap { $0.allNodesRecursively }
+            let ids = allRemovedItems.map { $0.id }
             RecordStore.shared.deleteRecords(with: ids, identifyAs: self)
             
         case .movedNode(let node, let from, let to):
