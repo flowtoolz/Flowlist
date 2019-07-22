@@ -21,7 +21,7 @@ class TreeSelector: Observer, CustomObservable
         // TODO: Test this root selection strategy which uses the first root it gets ...
         switch event
         {
-        case .someTreeDidChange:
+        case .treeDidUpdate:
             break
             
         case .didAddTree(let tree):

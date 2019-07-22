@@ -222,7 +222,7 @@ class TreeStore: Observer, CustomObservable
             }
         }
         
-        send(.someTreeDidChange(treeUpdate))
+        send(.treeDidUpdate(treeUpdate))
     }
     
     private func remove(tree: Item)
@@ -244,5 +244,5 @@ class TreeStore: Observer, CustomObservable
     
     let messenger = Messenger<Message>()
     typealias Message = Event?
-    enum Event { case someTreeDidChange(Item.Event.TreeUpdate), didAddTree(Item), didRemoveTree(Item) }
+    enum Event { case treeDidUpdate(Item.Event.TreeUpdate), didAddTree(Item), didRemoveTree(Item) }
 }

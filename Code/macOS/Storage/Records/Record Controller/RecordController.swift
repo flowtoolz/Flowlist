@@ -62,7 +62,7 @@ class RecordController: Observer
     private func itemStoreDidSend(_ event: TreeStore.Event)
     {
         switch event {
-        case .someTreeDidChange(let update):
+        case .treeDidUpdate(let update):
             tree(did: update)
             
         case .didAddTree(let tree):
