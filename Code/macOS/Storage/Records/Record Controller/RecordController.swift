@@ -45,7 +45,7 @@ class RecordController: Observer
         }
     }
     
-    // MARK: - Transmit Item Store Changes to Record Store
+    // MARK: - Transmit Tree Store Changes to Record Store
     
     private func observeItemStore()
     {
@@ -53,18 +53,35 @@ class RecordController: Observer
         {
             [weak self] in
             
-            guard let event = $0, case .someTreeDidChange(let treeUpdate) = event else { return }
+            guard let event = $0 else { return }
             
-            self?.itemStoreDid(treeUpdate)
+            self?.itemStoreDidSend(event)
         }
     }
     
-    private func itemStoreDid(_ update: Item.Event.TreeUpdate)
+    private func itemStoreDidSend(_ event: TreeStore.Event)
+    {
+        switch event {
+        case .someTreeDidChange(let update):
+            tree(did: update)
+            
+        case .didAddTree(let tree):
+            let records = tree.allNodesRecursively.map(Record.init)
+            RecordStore.shared.save(records, identifyAs: self)
+            
+        case .didRemoveTree(let tree):
+            let ids = tree.allNodesRecursively.map { $0.id }
+            RecordStore.shared.deleteRecords(with: ids, identifyAs: self)
+        }
+    }
+    
+    private func tree(did update: Item.Event.TreeUpdate)
     {
         switch update
         {
         case .insertedNodes(let items, _, _):
-            let records = items.flatMap { Record.makeRecordsRecursively(for: $0) }
+            let allInsertedItems = items.flatMap { $0.allNodesRecursively }
+            let records = allInsertedItems.map(Record.init)
             RecordStore.shared.save(records, identifyAs: self)
             
         case .receivedMessage(let message, let node):
