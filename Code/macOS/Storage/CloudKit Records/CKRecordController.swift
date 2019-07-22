@@ -23,7 +23,7 @@ class CKRecordController: Observer
     
     func syncCKRecordsWithFiles() -> Promise<Void>
     {
-        guard isIntendingToSync else { return Promise() }
+        guard sync.isActive else { return Promise() }
 
         return Promise
         {
@@ -39,7 +39,7 @@ class CKRecordController: Observer
             }
             .catch
             {
-                self.abortIntendingToSync(with: $0)
+                self.sync.abort(with: $0)
                 resolver.reject($0)
             }
         }
@@ -49,17 +49,17 @@ class CKRecordController: Observer
     
     func accountDidChange()
     {
-        if isIntendingToSync
+        if sync.isActive
         {
-            resync().catch(abortIntendingToSync)
+            resync().catch(sync.abort)
         }
     }
     
     func toggleIntentionToSync()
     {
-        guard !isIntendingToSync else
+        guard !sync.isActive else
         {
-            isIntendingToSync = false
+            sync.isActive = false
             return
         }
         
@@ -72,9 +72,9 @@ class CKRecordController: Observer
         }
         .done(on: queue)
         {
-            self.isIntendingToSync = true
+            self.sync.isActive = true
         }
-        .catch(abortIntendingToSync)
+        .catch(sync.abort)
     }
     
     // MARK: - Network Reachability
@@ -91,7 +91,7 @@ class CKRecordController: Observer
     
     private func syncStoreAndDatabaseAfterDeviceWentOnline()
     {
-        guard isIntendingToSync else { return }
+        guard sync.isActive else { return }
 
         firstly
         {
@@ -101,8 +101,7 @@ class CKRecordController: Observer
         {
             let c2a = "Your device just went online but iCloud sync failed. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
 
-            self.abortIntendingToSync(withErrorMessage: $0.readable.message,
-                                      callToAction: c2a)
+            self.sync.abort(withErrorMessage: $0.readable.message, callToAction: c2a)
         }
     }
     
@@ -243,7 +242,7 @@ class CKRecordController: Observer
     
     private func fileSystemDatabase(did edit: FileSystemDatabase.Edit)
     {
-        guard isIntendingToSync else { return }
+        guard sync.isActive else { return }
 
         switch edit
         {
@@ -254,7 +253,7 @@ class CKRecordController: Observer
             }
             
             // TODO: handle conflicts, failure and partial failure
-            ckDatabase.save(records.map(makeCKRecord)).catch(abortIntendingToSync)
+            ckDatabase.save(records.map(makeCKRecord)).catch(sync.abort)
             
         case .deleteRecordsWithIDs(let ids):
             guard isReachable != false else
@@ -262,7 +261,7 @@ class CKRecordController: Observer
                 return OfflineChanges.shared.deleteRecords(with: ids)
             }
             
-            ckDatabase.deleteCKRecords(with: ids).catch(abortIntendingToSync)
+            ckDatabase.deleteCKRecords(with: ids).catch(sync.abort)
         }
     }
     
@@ -280,44 +279,11 @@ class CKRecordController: Observer
         return ckRecord
     }
     
-    // MARK: - CloudKit Database
+    // MARK: - CloudKit Database & Intention to Sync With It
+    
+    var isIntendingToSync: Bool { return sync.isActive }
+    private let sync = CKSyncIntention()
     
     private var queue: DispatchQueue { return ckDatabase.queue }
     private var ckDatabase: CloudKitDatabase { return CloudKitDatabase.shared }
-    
-    // MARK: - Manage the User's Intention to Sync
-    
-    private func abortIntendingToSync(with error: Error)
-    {
-        abortIntendingToSync(withErrorMessage: error.readable.message)
-    }
-    
-    private func abortIntendingToSync(withErrorMessage message: String,
-                                      callToAction: String? = nil)
-    {
-        isIntendingToSync = false
-        
-        log(error: message)
-        
-        let c2a = callToAction ?? "Make sure that 1) Your Mac is online, 2) It is connected to your iCloud account and 3) iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
-        
-        informUserAboutSyncProblem(error: message, callToAction: c2a)
-    }
-    
-    private func informUserAboutSyncProblem(error: String, callToAction: String)
-    {
-        let question = Dialog.Question(title: "Whoops, Had to Pause iCloud Sync",
-                                       text: "\(error)\n\n\(callToAction)",
-            options: ["Got it"])
-        
-        Dialog.default.pose(question, imageName: "icloud_conflict").catch { _ in }
-    }
-    
-    private(set) var isIntendingToSync: Bool
-    {
-        get { return syncIntentionPersistentFlag.value }
-        set { syncIntentionPersistentFlag.value = newValue }
-    }
-    
-    private var syncIntentionPersistentFlag = PersistentFlag("UserDefaultsKeyWantsToUseICloud")
 }
