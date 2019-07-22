@@ -143,8 +143,8 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
 
         collectionView.animator().performBatchUpdates(
         {
-            // TODO: this actually slows down the animation and is also perfect to reproduce crashes ... also: see logged errors: > FLOWLIST ERROR: list index -2 is invalid. We have 3 list views. (BrowserView.swift, collectionView(_:itemForRepresentedObjectAt:), line 198)
-            self.collectionView.layer?.speed = 0.75
+            // TODO: self.collectionView.layer?.speed actually slows down the animation and is also perfect to reproduce crashes ... also: see logged errors: > FLOWLIST ERROR: list index -2 is invalid. We have 3 list views. (BrowserView.swift, collectionView(_:itemForRepresentedObjectAt:), line 198)
+            //self.collectionView.layer?.speed = 0.3
             self.collectionView.deleteItems(at: Set([IndexPath(item: deleteIndex, section: 0)]))
             self.collectionView.insertItems(at: Set([IndexPath(item: insertIndex, section: 0)]))
         })
