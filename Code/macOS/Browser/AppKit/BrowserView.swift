@@ -60,7 +60,7 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
         return true
     }
     
-    /////////////// ->
+    /////////////// TODO: Refactor/Review from here ->
     
     private func observeBrowser()
     {
@@ -150,7 +150,7 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
         })
     }
     
-    ////////////////////////// <-
+    ////////////////////////// Refactor/Review down to here <-
     
     private var listViews = [ListView]()
   

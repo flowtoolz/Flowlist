@@ -237,30 +237,26 @@ class CKRecordController: Observer
     
     private func fileSystemDatabase(did edit: FileSystemDatabase.Edit)
     {
-        guard isIntendingToSync, isReachable != false else
-        {
-            hasUnsyncedLocalChanges.value = true
-            return
-        }
+        guard isIntendingToSync else { return }
 
-        firstly
+        switch edit
         {
-            () -> Promise<Void> in
-            
-            switch edit
+        case .saveRecords(let records):
+            guard isReachable != false else
             {
-            case .saveRecords(let records):
-                // TODO: handle conflicts, failure and partial failure
-                return ckDatabase.save(records.map(makeCKRecord)).map { _ in }
-                
-            case .deleteRecordsWithIDs(let ids):
-                return ckDatabase.deleteCKRecords(with: ids).map { _ in }
+                return OfflineChanges.shared.save(records)
             }
-        }
-        .catch
-        {
-            self.hasUnsyncedLocalChanges.value = true
-            self.abortIntendingToSync(with: $0)
+            
+            // TODO: handle conflicts, failure and partial failure
+            ckDatabase.save(records.map(makeCKRecord)).catch(abortIntendingToSync)
+            
+        case .deleteRecordsWithIDs(let ids):
+            guard isReachable != false else
+            {
+                return OfflineChanges.shared.deleteRecords(with: ids)
+            }
+            
+            ckDatabase.deleteCKRecords(with: ids).catch(abortIntendingToSync)
         }
     }
     
@@ -278,15 +274,12 @@ class CKRecordController: Observer
         return ckRecord
     }
     
-    private var hasUnsyncedLocalChanges = PersistentFlag("UserDefaultsKeyUnsyncedLocalChanges",
-                                                         default: true)
-    
     // MARK: - CloudKit Database
     
     private var queue: DispatchQueue { return ckDatabase.queue }
     private var ckDatabase: CloudKitDatabase { return CloudKitDatabase.shared }
     
-    // MARK: - Abort Intending to Sync When Errors Occur
+    // MARK: - Manage the User's Intention to Sync
     
     private func abortIntendingToSync(with error: Error)
     {
@@ -313,8 +306,6 @@ class CKRecordController: Observer
         
         Dialog.default.pose(question, imageName: "icloud_conflict").catch { _ in }
     }
-    
-    // MARK: - Persist the User's Intention to Sync
     
     var isIntendingToSync: Bool { return syncIntentionPersistentFlag.value }
     private var syncIntentionPersistentFlag = PersistentFlag("UserDefaultsKeyWantsToUseICloud")

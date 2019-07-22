@@ -74,6 +74,7 @@
 		9E82A7A91EF2A558006AEF02 /* List+Editing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A81EF2A558006AEF02 /* List+Editing.swift */; };
 		9E86C48722C8B30700DF4FEC /* LegacyJSONFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E86C48622C8B30700DF4FEC /* LegacyJSONFile.swift */; };
 		9E91651520551E5600A438FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E91651320551E5500A438FB /* Assets.xcassets */; };
+		9E9450C722E6284300667BB2 /* OfflineChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9450C622E6284300667BB2 /* OfflineChanges.swift */; };
 		9E9A2FDD22D0858E00629103 /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9A2FDC22D0858E00629103 /* FileController.swift */; };
 		9E9A2FE022D0A59600629103 /* RecordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9A2FDF22D0A59600629103 /* RecordStore.swift */; };
 		9EA1D3B0219EBFD000B5943C /* UserDefaultsPersisters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3AF219EBFD000B5943C /* UserDefaultsPersisters.swift */; };
@@ -183,6 +184,7 @@
 		9E86C48622C8B30700DF4FEC /* LegacyJSONFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyJSONFile.swift; sourceTree = "<group>"; };
 		9E91651320551E5500A438FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		9E916518205520B800A438FB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
+		9E9450C622E6284300667BB2 /* OfflineChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineChanges.swift; sourceTree = "<group>"; };
 		9E9A2FDC22D0858E00629103 /* FileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
 		9E9A2FDF22D0A59600629103 /* RecordStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordStore.swift; sourceTree = "<group>"; };
 		9EA1D3AF219EBFD000B5943C /* UserDefaultsPersisters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsPersisters.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				9E12091322C93EEA003DE68E /* CKRecordController.swift */,
+				9E9450C622E6284300667BB2 /* OfflineChanges.swift */,
 				9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */,
 				9E053B2B21886963001B7103 /* CKRecord+Record.swift */,
 				9E053B2D21886963001B7103 /* CloudKitDatabase.swift */,
@@ -873,6 +876,7 @@
 				9E7651961EEF4DA200DE2B07 /* TreeStore.swift in Sources */,
 				9E053B462188711A001B7103 /* WindowMenu.swift in Sources */,
 				9E5768C020C15B6300749C0C /* Browser+Debugging.swift in Sources */,
+				9E9450C722E6284300667BB2 /* OfflineChanges.swift in Sources */,
 				9E053B3121886963001B7103 /* CKRecord+Record.swift in Sources */,
 				9E132D2521D3C38200B61D2D /* TextFormat+Foundation.swift in Sources */,
 				9E2CCE8D20C1DE030037D755 /* List+Clipboard.swift in Sources */,

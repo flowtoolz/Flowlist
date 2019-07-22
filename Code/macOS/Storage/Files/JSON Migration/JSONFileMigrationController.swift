@@ -11,7 +11,7 @@ class JSONFileMigrationController
         guard jsonFile.exists,
             let jsonFileRecords = jsonFile.loadRecords(),
             !jsonFileRecords.isEmpty
-            else
+        else
         {
             return Promise()
         }

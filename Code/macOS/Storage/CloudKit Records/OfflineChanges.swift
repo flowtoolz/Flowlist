@@ -1,0 +1,29 @@
+class OfflineChanges
+{
+    static let shared = OfflineChanges()
+    private init() {}
+    
+    func save(_ records: [Record])
+    {
+        let ids = records.map { $0.id }
+        
+        ids.forEach
+        {
+            idsOfDeletedRecords.remove($0)
+            idsOfSavedRecords.insert($0)
+        }
+    }
+    
+    func deleteRecords(with ids: [Record.ID])
+    {
+        ids.forEach
+        {
+            idsOfSavedRecords.remove($0)
+            idsOfDeletedRecords.insert($0)
+        }
+    }
+    
+    // TODO: persist changes in files
+    private var idsOfSavedRecords = Set<Record.ID>()
+    private var idsOfDeletedRecords = Set<Record.ID>()
+}
