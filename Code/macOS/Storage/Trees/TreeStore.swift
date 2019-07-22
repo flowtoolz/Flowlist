@@ -24,10 +24,7 @@ class TreeStore: Observer, CustomObservable
     
     func apply(updates: [Update])
     {
-        DispatchQueue.main.async
-        {
-            updates.sortedByPosition.forEach(self.apply)
-        }
+        updates.sortedByPosition.forEach(self.apply)
     }
     
     private func apply(_ update: Update)
@@ -139,10 +136,7 @@ class TreeStore: Observer, CustomObservable
     
     func deleteItems(withIDs ids: [ItemData.ID])
     {
-        DispatchQueue.main.async
-        {
-            ids.forEach(self.deleteItem)
-        }
+        ids.forEach(self.deleteItem)
     }
     
     private func deleteItem(withID id: String)

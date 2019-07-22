@@ -25,7 +25,7 @@ class Browser: Observer, CustomObservable
         
         observe(TreeSelector.shared)
         {
-            [weak self] in self?.rootSelectorDidSelect($0)
+            [weak self] tree in DispatchQueue.main.async { self?.rootSelectorDidSelect(tree) }
         }
     }
     
@@ -107,7 +107,7 @@ class Browser: Observer, CustomObservable
             
             if case .didChangeSelection = event
             {
-                self?.listChangedSelection(list)
+                DispatchQueue.main.async { self?.listChangedSelection(list) }
             }
         }
     }
