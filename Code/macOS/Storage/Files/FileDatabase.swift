@@ -4,9 +4,9 @@ import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
-class FileSystemDatabase: CustomObservable
+class FileDatabase: CustomObservable
 {
-    static let shared = FileSystemDatabase()
+    static let shared = FileDatabase()
     private init() {}
     
     // MARK: - Load

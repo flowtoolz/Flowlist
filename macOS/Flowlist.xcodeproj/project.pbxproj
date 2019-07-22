@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9E053B23218867E4001B7103 /* FileSystemDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B22218867E4001B7103 /* FileSystemDatabase.swift */; };
+		9E053B23218867E4001B7103 /* FileDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B22218867E4001B7103 /* FileDatabase.swift */; };
 		9E053B2521886867001B7103 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2421886867001B7103 /* FullVersion.swift */; };
 		9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */; };
 		9E053B3121886963001B7103 /* CKRecord+Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2B21886963001B7103 /* CKRecord+Record.swift */; };
@@ -116,7 +116,7 @@
 		31D7BF377971DCFFFFB9F309 /* Pods-Flowlist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flowlist.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist.release.xcconfig"; sourceTree = "<group>"; };
 		78B3E83C8B5F1E96FF074B6D /* Pods-Flowlist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flowlist.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flowlist/Pods-Flowlist.debug.xcconfig"; sourceTree = "<group>"; };
 		9E0410F820CE60B300C7C3E3 /* Flowlist.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Flowlist.entitlements; path = Resources/Flowlist.entitlements; sourceTree = "<group>"; };
-		9E053B22218867E4001B7103 /* FileSystemDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystemDatabase.swift; sourceTree = "<group>"; };
+		9E053B22218867E4001B7103 /* FileDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDatabase.swift; sourceTree = "<group>"; };
 		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullVersion.swift; sourceTree = "<group>"; };
 		9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Price.swift"; sourceTree = "<group>"; };
 		9E053B2B21886963001B7103 /* CKRecord+Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CKRecord+Record.swift"; sourceTree = "<group>"; };
@@ -466,7 +466,7 @@
 			children = (
 				9EBD515F22D26AB80047B9F1 /* JSON Migration */,
 				9E9A2FDC22D0858E00629103 /* FileController.swift */,
-				9E053B22218867E4001B7103 /* FileSystemDatabase.swift */,
+				9E053B22218867E4001B7103 /* FileDatabase.swift */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -855,7 +855,7 @@
 				9EF37C4E21A08EED00A43AA9 /* DataMenu.swift in Sources */,
 				9E053B452188711A001B7103 /* Menu.swift in Sources */,
 				9E74961322DB72F60015678F /* Orphanage.swift in Sources */,
-				9E053B23218867E4001B7103 /* FileSystemDatabase.swift in Sources */,
+				9E053B23218867E4001B7103 /* FileDatabase.swift in Sources */,
 				9E86C48722C8B30700DF4FEC /* LegacyJSONFile.swift in Sources */,
 				9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */,
 				9E18C3DC21D6604A00363F48 /* ReadableError.swift in Sources */,

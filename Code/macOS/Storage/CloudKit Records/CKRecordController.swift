@@ -14,7 +14,7 @@ class CKRecordController: Observer
     init()
     {
         observeCloudKitDatabase()
-        observeFileSystemDatabase()
+        observeFileDatabase()
     }
     
     deinit { stopObserving() }
@@ -57,11 +57,7 @@ class CKRecordController: Observer
     
     func toggleIntentionToSync()
     {
-        guard !sync.isActive else
-        {
-            sync.isActive = false
-            return
-        }
+        guard !sync.isActive else { return sync.isActive.toggle() }
         
         // when user restarts intention to sync, we force a total resync so we don't need to persist changes that happen while there is no sync intention
         ckDatabase.deleteChangeToken()
@@ -81,10 +77,10 @@ class CKRecordController: Observer
     
     func networkReachabilityDidUpdate(isReachable: Bool)
     {
-        let reachabilityDidChange = self.isReachable != nil && self.isReachable != isReachable
+        let reachabilityDidChange = isOnline != nil && isOnline != isReachable
         let deviceWentOnline = reachabilityDidChange && isReachable
         
-        self.isReachable = isReachable
+        isOnline = isReachable
         
         if deviceWentOnline { syncStoreAndDatabaseAfterDeviceWentOnline() }
     }
@@ -104,8 +100,6 @@ class CKRecordController: Observer
             self.sync.abort(withErrorMessage: $0.readable.message, callToAction: c2a)
         }
     }
-    
-    private var isReachable: Bool?
     
     // MARK: - Resync
     
@@ -137,7 +131,7 @@ class CKRecordController: Observer
             
             // FIXME: check conflicts with file database, possibly ask user
             // FIXME: also update cloud with local data
-            FileSystemDatabase.shared.save(cloudRecords, identifyAs: self)
+            FileDatabase.shared.save(cloudRecords, identifyAs: self)
         }
     }
     
@@ -156,7 +150,7 @@ class CKRecordController: Observer
         }
         .done(on: queue)
         {
-            self.applyToFileSystemDatabase($0)
+            self.applyToFileDatabase($0)
         }
     }
     
@@ -173,7 +167,7 @@ class CKRecordController: Observer
             
             if preferDatabase
             {
-                FileSystemDatabase.shared.save(cloudRecords, identifyAs: self)
+                FileDatabase.shared.save(cloudRecords, identifyAs: self)
                 return Promise()
             }
             else
@@ -183,11 +177,11 @@ class CKRecordController: Observer
         }
     }
     
-    // MARK: - Transmit CloudKit database Changes to File System
+    // MARK: - Transmit CloudKit Database Changes to File Database
     
     private func observeCloudKitDatabase()
     {
-        observe(CloudKitDatabase.shared).select(.mayHaveChanged)
+        observe(ckDatabase).select(.mayHaveChanged)
         {
             [weak self] in self?.ckDatabaseDidChange()
         }
@@ -203,7 +197,7 @@ class CKRecordController: Observer
         }
         .done
         {
-            self.applyToFileSystemDatabase($0)
+            self.applyToFileDatabase($0)
         }
         .catch
         {
@@ -211,22 +205,22 @@ class CKRecordController: Observer
         }
     }
     
-    private func applyToFileSystemDatabase(_ ckDatabaseChanges: CKDatabase.Changes)
+    private func applyToFileDatabase(_ ckDatabaseChanges: CKDatabase.Changes)
     {
-        // TODO: check for conflicts, possibly ask user
+        // TODO: do need to check for conflicts and possibly ask user or only on resync?
         
         let ids = ckDatabaseChanges.idsOfDeletedCKRecords.map { $0.recordName }
-        FileSystemDatabase.shared.deleteRecords(with: ids, identifyAs: self)
+        fileDatabase.deleteRecords(with: ids, identifyAs: self)
         
         let records = ckDatabaseChanges.changedCKRecords.map { $0.makeRecord() }
-        FileSystemDatabase.shared.save(records, identifyAs: self)
+        fileDatabase.save(records, identifyAs: self)
     }
     
-    // MARK: - Transmit File System Changes to CloudKit Database
+    // MARK: - Transmit File Database Changes to CloudKit Database
     
-    private func observeFileSystemDatabase()
+    private func observeFileDatabase()
     {
-        observe(FileSystemDatabase.shared).filter
+        observe(fileDatabase).filter
         {
             [weak self] event in event != nil && event?.object !== self
         }
@@ -236,34 +230,30 @@ class CKRecordController: Observer
         }
         .unwrap(.saveRecords([]))
         {
-            [weak self] edit in self?.fileSystemDatabase(did: edit)
+            [weak self] edit in self?.fileDatabase(did: edit)
         }
     }
     
-    private func fileSystemDatabase(did edit: FileSystemDatabase.Edit)
+    private func fileDatabase(did edit: FileDatabase.Edit)
     {
         guard sync.isActive else { return }
 
         switch edit
         {
         case .saveRecords(let records):
-            guard isReachable != false else
-            {
-                return OfflineChanges.shared.save(records)
-            }
-            
+            guard isOnline != false else { return offline.save(records) }
             // TODO: handle conflicts, failure and partial failure
             ckDatabase.save(records.map(makeCKRecord)).catch(sync.abort)
             
         case .deleteRecordsWithIDs(let ids):
-            guard isReachable != false else
-            {
-                return OfflineChanges.shared.deleteRecords(with: ids)
-            }
-            
+            guard isOnline != false else { return offline.deleteRecords(with: ids) }
             ckDatabase.deleteCKRecords(with: ids).catch(sync.abort)
         }
     }
+    
+    private var isOnline: Bool?
+    private var offline: OfflineChanges { return .shared }
+    private var fileDatabase: FileDatabase { return .shared }
     
     private func makeCKRecord(for record: Record) -> CKRecord
     {
@@ -285,5 +275,5 @@ class CKRecordController: Observer
     private let sync = CKSyncIntention()
     
     private var queue: DispatchQueue { return ckDatabase.queue }
-    private var ckDatabase: CloudKitDatabase { return CloudKitDatabase.shared }
+    private var ckDatabase: CloudKitDatabase { return .shared }
 }
