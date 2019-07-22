@@ -143,36 +143,8 @@ extension CKRecord
     
     // MARK: - Fields
     
-    static var itemFieldNames: [String]
+    private enum ItemFieldName: String
     {
-        return ItemFieldName.allCases.map { $0.rawValue }
-    }
-    
-    static func recordField(forFieldName name: String) -> Record.Field?
-    {
-        guard let itemFieldName = ItemFieldName(rawValue: name) else
-        {
-            log(error: "Unknown item record field name: \(name)")
-            return nil
-        }
-        
-        return itemFieldName.recordField
-    }
-    
-    enum ItemFieldName: String, CaseIterable
-    {
-        var recordField: Record.Field
-        {
-            switch self
-            {
-            case .text: return .text
-            case .state: return .state
-            case .tag: return .tag
-            case .position: return .position
-            case .superItem: return .root
-            }
-        }
-        
         case text, state, tag, superItem, position
     }
 }

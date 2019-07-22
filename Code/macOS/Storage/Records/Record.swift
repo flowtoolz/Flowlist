@@ -25,11 +25,6 @@ struct Record: Codable, Equatable
     
     let rootID: ID?
     let position: Int
-    
-    enum Field: String, CaseIterable
-    {
-        case text, state, tag, root, position
-    }
-    
+        
     typealias ID = String
 }
