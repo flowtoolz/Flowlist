@@ -13,6 +13,11 @@ class FileDatabase: CustomObservable
     
     // MARK: - Load
     
+    func record(for id: Record.ID) -> Record?
+    {
+        return Record(fileURL: directory?.file(for: id))
+    }
+    
     var count: Int { return files.count }
     
     func loadRecords() -> [Record]
@@ -34,7 +39,7 @@ class FileDatabase: CustomObservable
         
         let savedRecords = records.compactMap
         {
-            $0.save(to: directory.appendingPathComponent($0.id)) != nil ? $0 : nil
+            $0.save(to: directory.file(for: $0.id)) != nil ? $0 : nil
         }
         
         if !savedRecords.isEmpty && sendEvent
@@ -51,7 +56,7 @@ class FileDatabase: CustomObservable
         
         let idsOfDeletions = ids.compactMap
         {
-            fileManager.remove(directory.appendingPathComponent($0)) ? $0 : nil
+            fileManager.remove(directory.file(for: $0)) ? $0 : nil
         }
         
         if !idsOfDeletions.isEmpty
@@ -88,5 +93,13 @@ class FileDatabase: CustomObservable
     {
         case saveRecords([Record])
         case deleteRecordsWithIDs([Record.ID])
+    }
+}
+
+private extension URL
+{
+    func file(for id: Record.ID) -> URL
+    {
+        return appendingPathComponent(id)
     }
 }

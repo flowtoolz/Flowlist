@@ -3,6 +3,11 @@ class OfflineChanges
     static let shared = OfflineChanges()
     private init() {}
     
+    var hasChanges: Bool
+    {
+        return !idsOfSavedRecords.isEmpty || !idsOfDeletedRecords.isEmpty
+    }
+    
     func save(_ records: [Record])
     {
         let ids = records.map { $0.id }
@@ -24,6 +29,6 @@ class OfflineChanges
     }
     
     // TODO: persist changes in files
-    private var idsOfSavedRecords = Set<Record.ID>()
-    private var idsOfDeletedRecords = Set<Record.ID>()
+    private(set) var idsOfSavedRecords = Set<Record.ID>()
+    private(set) var idsOfDeletedRecords = Set<Record.ID>()
 }

@@ -20,6 +20,8 @@ class CloudKitDatabase: Observer, CustomObservable
     
     func save(_ records: [CKRecord]) -> Promise<CKDatabase.SaveResult>
     {
+        guard !records.isEmpty else { return .value(.empty) }
+        
         return Promise<CKDatabase.SaveResult>
         {
             resolver in
@@ -77,33 +79,7 @@ class CloudKitDatabase: Observer, CustomObservable
         }
     }
     
-    // MARK: - Fetch Stuff
-    
-    func fetchCKRecords() -> Promise<[CKRecord]>
-    {
-        return Promise<[CKRecord]>
-        {
-            resolver in
-            
-            firstly
-            {
-                ensureAccess()
-            }
-            .then(on: queue)
-            {
-                self.ckDatabaseController.queryCKRecords(of: .itemType, in: .itemZone)
-            }
-            .done(on: queue)
-            {
-                resolver.fulfill($0)
-            }
-            .catch
-            {
-                self.didEnsureAccess = false
-                resolver.reject($0)
-            }
-        }
-    }
+    // MARK: - Fetch Changes
     
     func fetchChanges() -> Promise<CKDatabase.Changes>
     {

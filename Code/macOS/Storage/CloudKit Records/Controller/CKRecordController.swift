@@ -58,21 +58,36 @@ class CKRecordController: Observer
     
     private func resyncWithoutChangeToken() -> Promise<Void>
     {
+        guard !ckDatabase.hasChangeToken else
+        {
+            return .fail("Tried to sync with iCloud without change token but there is one.")
+        }
+        
         return firstly
         {
             ckDatabase.fetchChanges()
         }
-        .map
+        .map(on: queue)
         {
             $0.changedCKRecords.map { $0.makeRecord() }
         }
-        .done
+        .then(on: queue)
         {
             cloudRecords in
-            
-            // FIXME: check conflicts with file database, possibly ask user
-            // FIXME: also update cloud with local data
-            FileDatabase.shared.save(cloudRecords, identifyAs: self)
+
+            return firstly
+            {
+                () -> Promise<Void> in
+                
+                // TODO: handle conflicts
+                let fileRecords = self.fileDatabase.loadRecords()
+                return self.ckDatabase.save(fileRecords.map(self.makeCKRecord)).map { _ in }
+            }
+            .done(on: self.queue)
+            {
+                // TODO: handle conflicts
+                self.fileDatabase.save(cloudRecords, identifyAs: self)
+            }
         }
     }
     
@@ -80,18 +95,52 @@ class CKRecordController: Observer
     {
         guard ckDatabase.hasChangeToken else
         {
-            return .fail("Tried to sync with database based on change token while database has no change token.")
+            return .fail("Tried to sync with iCloud based on change token but there is none.")
         }
-        
-        // TODO: if there are unsynced local changes, apply them first to database and resolve conflicts
         
         return firstly
         {
             ckDatabase.fetchChanges()
         }
-        .done(on: queue)
+        .then(on: queue)
         {
-            self.applyToFileDatabase($0)
+            ckChanges in
+            
+            return firstly
+            {
+                self.applyOfflineChangesToCKDatabase()
+            }
+            .done(on: self.queue)
+            {
+                // TODO: handle conflicts
+                self.applyCKChangesToFileDatabase(ckChanges)
+            }
+        }
+    }
+    
+    private func applyOfflineChangesToCKDatabase() -> Promise<Void>
+    {
+        guard offline.hasChanges else { return Promise() }
+        
+        return firstly
+        {
+            () -> Promise<Void> in
+            
+            let deletionIDs = Array(offline.idsOfDeletedRecords)
+            
+            // TODO: handle conflicts
+            return ckDatabase.deleteCKRecords(with: .ckRecordIDs(deletionIDs)).map { _ in }
+        }
+        .then(on: queue)
+        {
+            () -> Promise<Void> in
+            
+            let ckRecords = Array(self.offline.idsOfSavedRecords)
+                .compactMap(self.fileDatabase.record)
+                .map(self.makeCKRecord)
+            
+            // TODO: handle conflicts
+            return self.ckDatabase.save(ckRecords).map { _ in }
         }
     }
     
@@ -119,7 +168,7 @@ class CKRecordController: Observer
         }
         .done
         {
-            self.applyToFileDatabase($0)
+            self.applyCKChangesToFileDatabase($0)
         }
         .catch
         {
@@ -127,14 +176,16 @@ class CKRecordController: Observer
         }
     }
     
-    private func applyToFileDatabase(_ ckDatabaseChanges: CKDatabase.Changes)
+    private func applyCKChangesToFileDatabase(_ changes: CKDatabase.Changes)
     {
+        guard changes.hasChanges else { return }
+        
         // TODO: do need to check for conflicts and possibly ask user or only on resync?
         
-        let ids = ckDatabaseChanges.idsOfDeletedCKRecords.map { $0.recordName }
+        let ids = changes.idsOfDeletedCKRecords.map { $0.recordName }
         fileDatabase.deleteRecords(with: ids, identifyAs: self)
         
-        let records = ckDatabaseChanges.changedCKRecords.map { $0.makeRecord() }
+        let records = changes.changedCKRecords.map { $0.makeRecord() }
         fileDatabase.save(records, identifyAs: self)
     }
     
