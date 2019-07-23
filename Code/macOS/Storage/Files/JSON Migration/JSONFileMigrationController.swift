@@ -16,7 +16,7 @@ class JSONFileMigrationController
             return Promise()
         }
         
-        guard FileDatabase.shared.recordFileDirectory != nil else
+        guard FileDatabase.shared.directory != nil else
         {
             return .fail("Found JSON File but can't migrate its content. Can't access the targeted folder.")
         }

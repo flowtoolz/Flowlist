@@ -6,17 +6,21 @@ import SwiftyToolz
 
 class FileDatabase: CustomObservable
 {
+    // MARK: - Initialization
+    
     static let shared = FileDatabase()
     private init() {}
     
     // MARK: - Load
     
+    var count: Int { return files.count }
+    
     func loadRecords() -> [Record]
     {
-        return FileManager.default
-            .items(in: recordFileDirectory)
-            .compactMap(Record.init)
+        return files.compactMap(Record.init)
     }
+    
+    private var files: [URL] { return fileManager.items(in: directory) }
     
     // MARK: - Edit
     
@@ -26,15 +30,11 @@ class FileDatabase: CustomObservable
               sendEvent: Bool = true) -> Bool
     {
         guard !records.isEmpty else { return true }
-        
-        guard let recordFileDirectory = recordFileDirectory else { return false }
+        guard let directory = directory else { return false }
         
         let savedRecords = records.compactMap
         {
-            record -> Record? in
-            
-            let file = recordFileDirectory.appendingPathComponent(record.id)
-            return record.save(to: file) != nil ? record : nil
+            $0.save(to: directory.appendingPathComponent($0.id)) != nil ? $0 : nil
         }
         
         if !savedRecords.isEmpty && sendEvent
@@ -47,14 +47,11 @@ class FileDatabase: CustomObservable
     
     func deleteRecords(with ids: [Record.ID], identifyAs object: AnyObject)
     {
-        guard let recordFileDirectory = recordFileDirectory else { return }
+        guard let directory = directory else { return }
         
         let idsOfDeletions = ids.compactMap
         {
-            id -> String? in
-            
-            let file = recordFileDirectory.appendingPathComponent(id)
-            return FileManager.default.remove(file) ? id : nil
+            fileManager.remove(directory.appendingPathComponent($0)) ? $0 : nil
         }
         
         if !idsOfDeletions.isEmpty
@@ -65,18 +62,20 @@ class FileDatabase: CustomObservable
     
     // MARK: - Basics
     
-    let recordFileDirectory: URL? =
+    private(set) lazy var directory: URL? =
     {
-        let directoryName = "Flowlist Item Record Files"
+        let name = "Flowlist Item Record Files"
         
-        guard let directory = URL.documentDirectory?.appendingPathComponent(directoryName) else
+        guard let directory = URL.documentDirectory?.appendingPathComponent(name) else
         {
             log(error: "Couldn't get URL of document directory")
             return nil
         }
         
-        return FileManager.default.ensureDirectoryExists(directory)
+        return fileManager.ensureDirectoryExists(directory)
     }()
+    
+    private var fileManager: FileManager { return .default }
     
     // MARK: - Observability
     
