@@ -1,4 +1,6 @@
 import SwiftObserver
+import PromiseKit
+import SwiftyToolz
 
 class TreeSelector: Observer, CustomObservable
 {
@@ -18,18 +20,43 @@ class TreeSelector: Observer, CustomObservable
     
     private func treeStoreDidSend(_ event: TreeStore.Event)
     {
-        // TODO: Test this root selection strategy which uses the first root it gets ...
         switch event
         {
-        case .treeDidUpdate:
-            break
-            
-        case .didAddTree(let tree):
-            if selectedTree == nil { select(tree) }
-            
-        case .didRemoveTree(let tree):
-            if selectedTree === tree { select(nil) }
+        case .treeDidUpdate: break
+        case .didAddTree(let newTree): didFind(newTree)
+        case .didRemoveTree(let tree): if selectedTree === tree { select(nil) }
         }
+    }
+    
+    private func didFind(_ newTree: Item)
+    {
+        guard let selectedTree = selectedTree else { return select(newTree) }
+        
+        let keepSelectedTree = "Aktueller Baum (\(selectedTree.treeDescription))"
+        let useNewTree = "Neuer Baum (\(newTree.treeDescription))"
+    
+        let question = Dialog.Question(title: "Neuer Item-Baum Gefunden",
+                                       text: "Mehrere Bäume existieren zum Bsp. wenn ein anderes Gerät schon Items in iCloud gespeichert hat. Wähle einen Baum, der andere wird dann gelöscht.",
+                                       options: [keepSelectedTree, useNewTree])
+    
+        firstly
+        {
+            Dialog.default.pose(question, imageName: "icloud_conflict")
+        }
+        .done
+        {
+            if $0.options.first == useNewTree
+            {
+                self.select(nil)
+                TreeStore.shared.deleteItems(with: [selectedTree.id])
+                self.select(newTree)
+            }
+            else
+            {
+                TreeStore.shared.deleteItems(with: [newTree.id])
+            }
+        }
+        .catch(log)
     }
     
     private func select(_ tree: Item?)
@@ -95,4 +122,12 @@ class TreeSelector: Observer, CustomObservable
     
     let messenger = Messenger<Message>()
     typealias Message = Item?
+}
+
+private extension Item
+{
+    var treeDescription: String
+    {
+        return "\(text ?? "Unbenannt"), \(numberOfLeafs) Blätter"
+    }
 }
