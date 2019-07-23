@@ -1,34 +1,88 @@
+import FoundationToolz
+import SwiftyToolz
+
 class OfflineChanges
 {
-    static let shared = OfflineChanges()
-    private init() {}
+    // MARK: - Initialization
     
-    var hasChanges: Bool
-    {
-        return !idsOfSavedRecords.isEmpty || !idsOfDeletedRecords.isEmpty
-    }
+    static let shared = OfflineChanges()
+    private init() { load() }
+    
+    // MARK: - Manage Changes
+    
+    var hasChanges: Bool { return !edits.isEmpty || !deletions.isEmpty }
     
     func save(_ records: [Record])
     {
-        let ids = records.map { $0.id }
-        
-        ids.forEach
+        records.forEach
         {
-            idsOfDeletedRecords.remove($0)
-            idsOfSavedRecords.insert($0)
+            deletions.remove($0.id)
+            edits.insert($0.id)
         }
+        
+        save()
     }
     
     func deleteRecords(with ids: [Record.ID])
     {
         ids.forEach
         {
-            idsOfSavedRecords.remove($0)
-            idsOfDeletedRecords.insert($0)
+            edits.remove($0)
+            deletions.insert($0)
         }
+        
+        save()
     }
     
-    // TODO: persist changes in files
-    private(set) var idsOfSavedRecords = Set<Record.ID>()
-    private(set) var idsOfDeletedRecords = Set<Record.ID>()
+    func clear()
+    {
+        edits.removeAll()
+        FileManager.default.remove(editsFile)
+        
+        deletions.removeAll()
+        FileManager.default.remove(deletionsFile)
+    }
+    
+    // MARK: - Persist Changes
+    
+    private func load()
+    {
+        edits = RecordIDs(from: editsFile) ?? []
+        deletions = RecordIDs(from: deletionsFile) ?? []
+    }
+    
+    private func save()
+    {
+        deletions.save(to: deletionsFile)
+        edits.save(to: editsFile)
+    }
+    
+    private var deletionsFile: URL?
+    {
+        return directory?.appendingPathComponent("deletions")
+    }
+    
+    private var editsFile: URL?
+    {
+        return directory?.appendingPathComponent("edits")
+    }
+    
+    private let directory: URL? = {
+        guard let dir = URL.documentDirectory?.appendingPathComponent("Flowlist Offline Changes") else
+        {
+            log(error: "Couldn't get documents directory")
+            return nil
+        }
+        
+        FileManager.default.ensureDirectoryExists(dir)
+        
+        return dir
+    }()
+    
+    // MARK: - Changes
+    
+    private(set) var edits = RecordIDs()
+    private(set) var deletions = RecordIDs()
+    
+    typealias RecordIDs = Set<Record.ID>
 }

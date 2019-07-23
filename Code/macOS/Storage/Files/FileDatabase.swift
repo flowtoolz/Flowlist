@@ -15,7 +15,7 @@ class FileDatabase: CustomObservable
     
     func record(for id: Record.ID) -> Record?
     {
-        return Record(fileURL: directory?.file(for: id))
+        return Record(from: directory?.file(for: id))
     }
     
     func loadRecords() -> [Record]

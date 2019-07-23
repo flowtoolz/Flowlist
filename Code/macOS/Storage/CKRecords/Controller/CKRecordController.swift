@@ -126,7 +126,7 @@ class CKRecordController: Observer
         {
             () -> Promise<Void> in
             
-            let deletionIDs = Array(offline.idsOfDeletedRecords)
+            let deletionIDs = Array(offline.deletions)
             
             // TODO: handle conflicts
             return ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(deletionIDs)).map { _ in }
@@ -135,7 +135,7 @@ class CKRecordController: Observer
         {
             () -> Promise<Void> in
             
-            let ckRecords = Array(self.offline.idsOfSavedRecords)
+            let ckRecords = Array(self.offline.edits)
                 .compactMap(self.fileDatabase.record)
                 .map(self.makeCKRecord)
             
