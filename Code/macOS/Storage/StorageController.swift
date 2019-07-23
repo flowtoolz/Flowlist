@@ -23,13 +23,13 @@ class StorageController
             () -> Promise<Void> in
             
             self.fileController.saveRecordsFromFilesToRecordStore()
-            return self.ckRecordController.syncCKRecordsWithFiles()
+            return self.ckRecordController.resync()
         }
         .done
         {
             try self.ensureThereIsInitialData()
         }
-        .catch(log)
+        .catch(ckRecordController.abortSync)
     }
     
     private func ensureThereIsInitialData() throws

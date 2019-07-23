@@ -49,40 +49,11 @@ class CKRecordController: Observer
     
     // MARK: - Resync
     
-    func syncCKRecordsWithFiles() -> Promise<Void>
-    {
-        return Promise
-        {
-            resolver in
-            
-            firstly
-            {
-                resync()
-            }
-            .done(on: queue)
-            {
-                resolver.fulfill_()
-            }
-            .catch
-            {
-                self.sync.abort(with: $0)
-                resolver.reject($0)
-            }
-        }
-    }
-    
-    private func resync() -> Promise<Void>
+    func resync() -> Promise<Void>
     {
         guard sync.isActive else { return Promise() }
         
-        if ckDatabase.hasChangeToken
-        {
-            return resyncWithChangeToken()
-        }
-        else
-        {
-            return resyncWithoutChangeToken()
-        }
+        return ckDatabase.hasChangeToken ? resyncWithChangeToken() : resyncWithoutChangeToken()
     }
     
     private func resyncWithoutChangeToken() -> Promise<Void>
@@ -220,6 +191,7 @@ class CKRecordController: Observer
     
     // MARK: - CloudKit Database & Intention to Sync With It
     
+    func abortSync(with error: Error) { sync.abort(with: error) }
     var isIntendingToSync: Bool { return sync.isActive }
     private let sync = CKSyncIntention()
     
