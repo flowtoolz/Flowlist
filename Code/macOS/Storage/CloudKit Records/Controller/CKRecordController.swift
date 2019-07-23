@@ -39,24 +39,11 @@ class CKRecordController: Observer
     func networkReachabilityDidUpdate(isReachable: Bool)
     {
         let reachabilityDidChange = isOnline != nil && isOnline != isReachable
-        let deviceWentOnline = reachabilityDidChange && isReachable
-        
         isOnline = isReachable
-        
-        if deviceWentOnline { syncStoreAndDatabaseAfterDeviceWentOnline() }
-    }
-    
-    private func syncStoreAndDatabaseAfterDeviceWentOnline()
-    {
-        firstly
-        {
-            resync()
-        }
-        .catch
-        {
-            let c2a = "Your device just went online but iCloud sync failed. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
 
-            self.sync.abort(withErrorMessage: $0.readable.message, callToAction: c2a)
+        if reachabilityDidChange && isReachable
+        {
+            resync().catch(sync.abort)
         }
     }
     

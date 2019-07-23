@@ -29,10 +29,7 @@ class StorageController
         {
             try self.ensureThereIsInitialData()
         }
-        .catch
-        {
-            log(error: $0.readable.message)
-        }
+        .catch(log)
     }
     
     private func ensureThereIsInitialData() throws
