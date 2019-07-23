@@ -104,7 +104,7 @@ class FlowlistController: AppController
     func application(_ application: NSApplication,
                      didReceiveRemoteNotification userInfo: JSON)
     {
-        CloudKitDatabase.shared.handleDatabaseNotification(with: userInfo)
+        CKRecordDatabase.shared.handleDatabaseNotification(with: userInfo)
     }
     
     private func registerForICloudAccountChangeNotifications()

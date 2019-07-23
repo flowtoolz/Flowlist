@@ -31,7 +31,7 @@ class CKRecordController: Observer
         sync.isActive.toggle()
         
         // when user toggles intention to sync, we ensure that next resync will be total resync so we don't need to persist changes that happen while there is no sync intention
-        ckDatabase.deleteChangeToken()
+        ckRecordDatabase.deleteChangeToken()
 
         resync().catch(sync.abort)
     }
@@ -53,19 +53,19 @@ class CKRecordController: Observer
     {
         guard sync.isActive else { return Promise() }
         
-        return ckDatabase.hasChangeToken ? resyncWithChangeToken() : resyncWithoutChangeToken()
+        return ckRecordDatabase.hasChangeToken ? resyncWithChangeToken() : resyncWithoutChangeToken()
     }
     
     private func resyncWithoutChangeToken() -> Promise<Void>
     {
-        guard !ckDatabase.hasChangeToken else
+        guard !ckRecordDatabase.hasChangeToken else
         {
             return .fail("Tried to sync with iCloud without change token but there is one.")
         }
         
         return firstly
         {
-            ckDatabase.fetchChanges()
+            ckRecordDatabase.fetchChanges()
         }
         .map(on: queue)
         {
@@ -81,7 +81,7 @@ class CKRecordController: Observer
                 
                 // TODO: handle conflicts
                 let fileRecords = self.fileDatabase.loadRecords()
-                return self.ckDatabase.save(fileRecords.map(self.makeCKRecord)).map { _ in }
+                return self.ckRecordDatabase.save(fileRecords.map(self.makeCKRecord)).map { _ in }
             }
             .done(on: self.queue)
             {
@@ -93,14 +93,14 @@ class CKRecordController: Observer
     
     private func resyncWithChangeToken() -> Promise<Void>
     {
-        guard ckDatabase.hasChangeToken else
+        guard ckRecordDatabase.hasChangeToken else
         {
             return .fail("Tried to sync with iCloud based on change token but there is none.")
         }
         
         return firstly
         {
-            ckDatabase.fetchChanges()
+            ckRecordDatabase.fetchChanges()
         }
         .then(on: queue)
         {
@@ -129,7 +129,7 @@ class CKRecordController: Observer
             let deletionIDs = Array(offline.idsOfDeletedRecords)
             
             // TODO: handle conflicts
-            return ckDatabase.deleteCKRecords(with: .ckRecordIDs(deletionIDs)).map { _ in }
+            return ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(deletionIDs)).map { _ in }
         }
         .then(on: queue)
         {
@@ -140,7 +140,7 @@ class CKRecordController: Observer
                 .map(self.makeCKRecord)
             
             // TODO: handle conflicts
-            return self.ckDatabase.save(ckRecords).map { _ in }
+            return self.ckRecordDatabase.save(ckRecords).map { _ in }
         }
     }
     
@@ -148,23 +148,23 @@ class CKRecordController: Observer
     
     private func observeCloudKitDatabase()
     {
-        observe(ckDatabase).filter
+        observe(ckRecordDatabase).filter
         {
             [weak self] _ in self?.sync.isActive ?? false
         }
         .select(.mayHaveChanged)
         {
-            [weak self] in self?.ckDatabaseMayHaveChanged()
+            [weak self] in self?.ckRecordDatabaseMayHaveChanged()
         }
     }
     
-    private func ckDatabaseMayHaveChanged()
+    private func ckRecordDatabaseMayHaveChanged()
     {
         // TODO: what if we have offline changes (in case we weren't reliably notified of coming back online)
         
         firstly
         {
-            ckDatabase.fetchChanges()
+            ckRecordDatabase.fetchChanges()
         }
         .done
         {
@@ -214,11 +214,11 @@ class CKRecordController: Observer
         case .saveRecords(let records):
             guard isOnline != false else { return offline.save(records) }
             // TODO: handle conflicts, failure and partial failure
-            ckDatabase.save(records.map(makeCKRecord)).catch(sync.abort)
+            ckRecordDatabase.save(records.map(makeCKRecord)).catch(sync.abort)
             
         case .deleteRecordsWithIDs(let ids):
             guard isOnline != false else { return offline.deleteRecords(with: ids) }
-            ckDatabase.deleteCKRecords(with: .ckRecordIDs(ids)).catch(sync.abort)
+            ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(ids)).catch(sync.abort)
         }
     }
     
@@ -228,7 +228,7 @@ class CKRecordController: Observer
     
     private func makeCKRecord(for record: Record) -> CKRecord
     {
-        let ckRecord = ckDatabase.getCKRecordWithCachedSystemFields(for: .init(record.id))
+        let ckRecord = ckRecordDatabase.getCKRecordWithCachedSystemFields(for: .init(record.id))
         
         ckRecord.text = record.text
         ckRecord.state = record.state
@@ -246,6 +246,6 @@ class CKRecordController: Observer
     var isIntendingToSync: Bool { return sync.isActive }
     private let sync = CKSyncIntention()
     
-    private var queue: DispatchQueue { return ckDatabase.queue }
-    private var ckDatabase: CloudKitDatabase { return .shared }
+    private var queue: DispatchQueue { return ckRecordDatabase.queue }
+    private var ckRecordDatabase: CKRecordDatabase { return .shared }
 }

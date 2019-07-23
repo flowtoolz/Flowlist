@@ -11,7 +11,7 @@
 		9E053B2521886867001B7103 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2421886867001B7103 /* FullVersion.swift */; };
 		9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */; };
 		9E053B3121886963001B7103 /* CKRecord+Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2B21886963001B7103 /* CKRecord+Record.swift */; };
-		9E053B3321886963001B7103 /* CloudKitDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2D21886963001B7103 /* CloudKitDatabase.swift */; };
+		9E053B3321886963001B7103 /* CKRecordDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2D21886963001B7103 /* CKRecordDatabase.swift */; };
 		9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3421886AC4001B7103 /* PurchaseController.swift */; };
 		9E053B3721886BD4001B7103 /* SKProduct+FormattedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */; };
 		9E053B3A218870D0001B7103 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B38218870D0001B7103 /* main.swift */; };
@@ -120,7 +120,7 @@
 		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullVersion.swift; sourceTree = "<group>"; };
 		9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Price.swift"; sourceTree = "<group>"; };
 		9E053B2B21886963001B7103 /* CKRecord+Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CKRecord+Record.swift"; sourceTree = "<group>"; };
-		9E053B2D21886963001B7103 /* CloudKitDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitDatabase.swift; sourceTree = "<group>"; };
+		9E053B2D21886963001B7103 /* CKRecordDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKRecordDatabase.swift; sourceTree = "<group>"; };
 		9E053B3421886AC4001B7103 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKProduct+FormattedPrice.swift"; sourceTree = "<group>"; };
 		9E053B38218870D0001B7103 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -330,14 +330,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9E654E0F21A4859C0052607F /* CloudKit Records */ = {
+		9E654E0F21A4859C0052607F /* CKRecords */ = {
 			isa = PBXGroup;
 			children = (
 				9E00F8EC22E674A30031C996 /* Controller */,
-				9E053B2D21886963001B7103 /* CloudKitDatabase.swift */,
+				9E053B2D21886963001B7103 /* CKRecordDatabase.swift */,
 				9EF96E7321A9F516005619C7 /* CloudKit+Flowlist.swift */,
 			);
-			path = "CloudKit Records";
+			path = CKRecords;
 			sourceTree = "<group>";
 		};
 		9E7B876422B44EC20012FF48 /* macOS */ = {
@@ -474,7 +474,7 @@
 			isa = PBXGroup;
 			children = (
 				9E654E1021A485B30052607F /* StorageController.swift */,
-				9E654E0F21A4859C0052607F /* CloudKit Records */,
+				9E654E0F21A4859C0052607F /* CKRecords */,
 				9EA5A89B218ED21B004902F7 /* Files */,
 				9E9A2FDE22D0A54600629103 /* Records */,
 				9EA5A897218ECC98004902F7 /* Trees */,
@@ -830,7 +830,7 @@
 			files = (
 				9EC5C8B821B0300D00615D20 /* Dialog+ICloudConflict.swift in Sources */,
 				9EA1D3B0219EBFD000B5943C /* UserDefaultsPersisters.swift in Sources */,
-				9E053B3321886963001B7103 /* CloudKitDatabase.swift in Sources */,
+				9E053B3321886963001B7103 /* CKRecordDatabase.swift in Sources */,
 				9E47E32422AAC0A20068088A /* ListViewCell.swift in Sources */,
 				9E053B3A218870D0001B7103 /* main.swift in Sources */,
 				9E053B502188715D001B7103 /* PurchaseView.swift in Sources */,
