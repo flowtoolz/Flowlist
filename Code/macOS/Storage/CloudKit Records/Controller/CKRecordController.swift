@@ -141,7 +141,11 @@ class CKRecordController: Observer
     
     private func observeCloudKitDatabase()
     {
-        observe(ckDatabase).select(.mayHaveChanged)
+        observe(ckDatabase).filter
+        {
+            [weak self] _ in self?.sync.isActive ?? false
+        }
+        .select(.mayHaveChanged)
         {
             [weak self] in self?.ckDatabaseDidChange()
         }
@@ -182,7 +186,7 @@ class CKRecordController: Observer
     {
         observe(fileDatabase).filter
         {
-            [weak self] event in event != nil && event?.object !== self
+            [weak self] in $0 != nil && $0?.object !== self && self?.sync.isActive ?? false
         }
         .map
         {
@@ -196,8 +200,6 @@ class CKRecordController: Observer
     
     private func fileDatabase(did edit: FileDatabase.Edit)
     {
-        guard sync.isActive else { return }
-
         switch edit
         {
         case .saveRecords(let records):
