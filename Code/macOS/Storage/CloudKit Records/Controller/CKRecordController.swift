@@ -33,15 +33,7 @@ class CKRecordController: Observer
         // when user toggles intention to sync, we ensure that next resync will be total resync so we don't need to persist changes that happen while there is no sync intention
         ckDatabase.deleteChangeToken()
 
-        firstly
-        {
-            resync()
-        }
-        .done(on: queue)
-        {
-            self.sync.isActive = true
-        }
-        .catch(sync.abort)
+        resync().catch(sync.abort)
     }
     
     func networkReachabilityDidUpdate(isReachable: Bool)
