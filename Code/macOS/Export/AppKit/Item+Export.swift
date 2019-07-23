@@ -41,7 +41,7 @@ class Exporter
                                atomically: false,
                                encoding: .utf8)
             }
-            catch let error
+            catch
             {
                 log(error: error.readable.message)
                 
