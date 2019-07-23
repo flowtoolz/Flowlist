@@ -10,7 +10,7 @@ import SwiftyToolz
 class CKRecordController: Observer
 {
     // MARK: - Life Cycle
-    
+
     init()
     {
         observeCloudKitDatabase()
@@ -19,12 +19,59 @@ class CKRecordController: Observer
     
     deinit { stopObserving() }
     
-    // MARK: - Setup: Update Files with Cloud Data
+    // MARK: - React to Events
+    
+    func accountDidChange()
+    {
+        resync().catch(sync.abort)
+    }
+    
+    func userDidToggleSync()
+    {
+        sync.isActive.toggle()
+        
+        // when user toggles intention to sync, we ensure that next resync will be total resync so we don't need to persist changes that happen while there is no sync intention
+        ckDatabase.deleteChangeToken()
+
+        firstly
+        {
+            resync()
+        }
+        .done(on: queue)
+        {
+            self.sync.isActive = true
+        }
+        .catch(sync.abort)
+    }
+    
+    func networkReachabilityDidUpdate(isReachable: Bool)
+    {
+        let reachabilityDidChange = isOnline != nil && isOnline != isReachable
+        let deviceWentOnline = reachabilityDidChange && isReachable
+        
+        isOnline = isReachable
+        
+        if deviceWentOnline { syncStoreAndDatabaseAfterDeviceWentOnline() }
+    }
+    
+    private func syncStoreAndDatabaseAfterDeviceWentOnline()
+    {
+        firstly
+        {
+            resync()
+        }
+        .catch
+        {
+            let c2a = "Your device just went online but iCloud sync failed. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
+
+            self.sync.abort(withErrorMessage: $0.readable.message, callToAction: c2a)
+        }
+    }
+    
+    // MARK: - Resync
     
     func syncCKRecordsWithFiles() -> Promise<Void>
     {
-        guard sync.isActive else { return Promise() }
-
         return Promise
         {
             resolver in
@@ -45,66 +92,10 @@ class CKRecordController: Observer
         }
     }
     
-    // MARK: - React to Events
-    
-    func accountDidChange()
-    {
-        if sync.isActive
-        {
-            resync().catch(sync.abort)
-        }
-    }
-    
-    func toggleIntentionToSync()
-    {
-        guard !sync.isActive else { return sync.isActive.toggle() }
-        
-        // when user restarts intention to sync, we force a total resync so we don't need to persist changes that happen while there is no sync intention
-        ckDatabase.deleteChangeToken()
-
-        firstly
-        {
-            resync()
-        }
-        .done(on: queue)
-        {
-            self.sync.isActive = true
-        }
-        .catch(sync.abort)
-    }
-    
-    // MARK: - Network Reachability
-    
-    func networkReachabilityDidUpdate(isReachable: Bool)
-    {
-        let reachabilityDidChange = isOnline != nil && isOnline != isReachable
-        let deviceWentOnline = reachabilityDidChange && isReachable
-        
-        isOnline = isReachable
-        
-        if deviceWentOnline { syncStoreAndDatabaseAfterDeviceWentOnline() }
-    }
-    
-    private func syncStoreAndDatabaseAfterDeviceWentOnline()
-    {
-        guard sync.isActive else { return }
-
-        firstly
-        {
-            resync()
-        }
-        .catch
-        {
-            let c2a = "Your device just went online but iCloud sync failed. Make sure your Mac is connected to your iCloud account and iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via the menu: Data → Start Using iCloud"
-
-            self.sync.abort(withErrorMessage: $0.readable.message, callToAction: c2a)
-        }
-    }
-    
-    // MARK: - Resync
-    
     private func resync() -> Promise<Void>
     {
+        guard sync.isActive else { return Promise() }
+        
         if ckDatabase.hasChangeToken
         {
             return resyncWithChangeToken()
@@ -151,29 +142,6 @@ class CKRecordController: Observer
         .done(on: queue)
         {
             self.applyToFileDatabase($0)
-        }
-    }
-    
-    private func askUserWhetherToUse(cloudRecords: [Record],
-                                     orLocalRecords localRecords: [Record]) -> Promise<Void>
-    {
-        return firstly
-        {
-            Dialog.default.askWhetherToPreferICloud()
-        }
-        .then(on: queue)
-        {
-            preferDatabase -> Promise<Void> in
-            
-            if preferDatabase
-            {
-                FileDatabase.shared.save(cloudRecords, identifyAs: self)
-                return Promise()
-            }
-            else
-            {
-                return self.ckDatabase.save(localRecords.map(self.makeCKRecord)).map { _ in }
-            }
         }
     }
     

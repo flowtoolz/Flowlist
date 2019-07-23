@@ -59,7 +59,7 @@ class StorageController
     
     func toggleIntentionToSyncWithDatabase()
     {
-        ckRecordController.toggleIntentionToSync()
+        ckRecordController.userDidToggleSync()
     }
     
     func networkReachabilityDidUpdate(isReachable: Bool)
