@@ -18,14 +18,15 @@ class FileDatabase: CustomObservable
         return Record(fileURL: directory?.file(for: id))
     }
     
-    var count: Int { return files.count }
-    
     func loadRecords() -> [Record]
     {
-        return files.compactMap(Record.init)
+        return loadFiles().compactMap(Record.init)
     }
     
-    private var files: [URL] { return fileManager.items(in: directory) }
+    private func loadFiles() -> [URL]
+    {
+        return fileManager.items(in: directory)
+    }
     
     // MARK: - Edit
     
