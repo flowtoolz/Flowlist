@@ -6,14 +6,14 @@ struct Record: Codable, Equatable
          text: String? = nil,
          state: ItemData.State? = nil,
          tag: ItemData.Tag? = nil,
-         rootID: ID?,
+         parent: ID?,
          position: Int)
     {
         self.id = id
         self.text = text
         self.state = state
         self.tag = tag
-        self.rootID = rootID
+        self.parent = parent
         self.position = position
     }
     
@@ -23,7 +23,7 @@ struct Record: Codable, Equatable
     let state: ItemData.State?
     let tag: ItemData.Tag?
     
-    let rootID: ID?
+    let parent: ID?
     let position: Int
         
     typealias ID = String

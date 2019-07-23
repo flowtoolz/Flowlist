@@ -37,7 +37,7 @@ class RecordController: Observer
         switch edit
         {
         case .deleteRecordsWithIDs(let ids):
-            TreeStore.shared.deleteItems(withIDs: ids)
+            TreeStore.shared.deleteItems(with: ids)
             
         case .modifyRecords(let records):
             let updates = records.map { $0.makeUpdate() }

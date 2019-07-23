@@ -102,7 +102,7 @@ class FlowlistController: AppController
     }
     
     func application(_ application: NSApplication,
-                     didReceiveRemoteNotification userInfo: [String : Any])
+                     didReceiveRemoteNotification userInfo: JSON)
     {
         CloudKitDatabase.shared.handleDatabaseNotification(with: userInfo)
     }

@@ -37,7 +37,7 @@ extension Tree where Data == ItemData
     
     // property access
     
-    var parentID: ItemData.ID? { return root?.id }
+    var parent: ItemData.ID? { return root?.id }
     var position: Int { return indexInRoot ?? 0 }
     var id: ItemData.ID { return data.id }
     

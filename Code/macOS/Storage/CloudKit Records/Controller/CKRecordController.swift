@@ -247,7 +247,7 @@ class CKRecordController: Observer
             
         case .deleteRecordsWithIDs(let ids):
             guard isOnline != false else { return offline.deleteRecords(with: ids) }
-            ckDatabase.deleteCKRecords(with: ids).catch(sync.abort)
+            ckDatabase.deleteCKRecords(with: .ckRecordIDs(ids)).catch(sync.abort)
         }
     }
     
@@ -257,13 +257,13 @@ class CKRecordController: Observer
     
     private func makeCKRecord(for record: Record) -> CKRecord
     {
-        let ckRecord = ckDatabase.getCKRecordWithCachedSystemFields(for: record.id)
+        let ckRecord = ckDatabase.getCKRecordWithCachedSystemFields(for: .init(record.id))
         
         ckRecord.text = record.text
         ckRecord.state = record.state
         ckRecord.tag = record.tag
         
-        ckRecord.superItem = record.rootID
+        ckRecord.superItem = record.parent
         ckRecord.position = record.position
         
         return ckRecord

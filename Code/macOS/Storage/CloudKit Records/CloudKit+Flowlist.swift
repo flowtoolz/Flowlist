@@ -2,32 +2,44 @@ import CloudKit
 
 extension CKRecord.RecordType
 {
-    static var item: CKRecord.RecordType { return "Item" }
+    static var itemType: CKRecord.RecordType { return "Item" }
+}
+
+extension CKRecord.Reference
+{
+    // TODO: start using CKRecord.parent reference property in addition so we can migrate to that property at some point
+    convenience init(parent: Record.ID)
+    {
+        self.init(recordID: .init(parent), action: .deleteSelf)
+    }
+}
+
+extension Array where Element == CKRecord.ID
+{
+    static func ckRecordIDs(_ ids: [Record.ID]) -> [CKRecord.ID]
+    {
+        return ids.map(CKRecord.ID.init(_:))
+    }
 }
 
 extension CKRecord.ID
 {
-    convenience init(itemID: String)
+    convenience init(_ recordID: Record.ID)
     {
-        self.init(recordName: itemID, zoneID: .item)
+        self.init(recordName: recordID, zoneID: .itemZone)
     }
 }
 
 extension CKRecordZone.ID
 {
-    static var item: CKRecordZone.ID
+    static var itemZone: CKRecordZone.ID
     {
         return CKRecordZone.ID(zoneName: "ItemZone",
                                ownerName: CKCurrentUserDefaultName)
     }
 }
 
-extension CKRecord.Reference
+extension CKSubscription.ID
 {
-    // TODO: start using CKRecord.parent reference property in addition so we can migrate to that property at some point
-    convenience init(itemOwnerName: String)
-    {
-        self.init(recordID: CKRecord.ID(itemID: itemOwnerName),
-                  action: .deleteSelf)
-    }
+    static var itemSub: CKSubscription.ID { return CKSubscription.ID("ItemDataBaseSubscription") }
 }

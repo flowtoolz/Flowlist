@@ -18,7 +18,7 @@ class CloudKitDatabase: Observer, CustomObservable
     
     // MARK: - Save CKRecords
     
-    func save(_ ckRecords: [CKRecord]) -> Promise<CKDatabase.SaveResult>
+    func save(_ records: [CKRecord]) -> Promise<CKDatabase.SaveResult>
     {
         return Promise<CKDatabase.SaveResult>
         {
@@ -30,7 +30,7 @@ class CloudKitDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.ckDatabaseController.save(ckRecords)
+                self.ckDatabaseController.save(records)
             }
             .done(on: queue)
             {
@@ -44,16 +44,14 @@ class CloudKitDatabase: Observer, CustomObservable
         }
     }
     
-    func getCKRecordWithCachedSystemFields(for id: String) -> CKRecord
+    func getCKRecordWithCachedSystemFields(for id: CKRecord.ID) -> CKRecord
     {
-        return ckDatabaseController.getCKRecordWithCachedSystemFields(id: id,
-                                                                      type: .item,
-                                                                      zoneID: .item)
+        return ckDatabaseController.getCKRecordWithCachedSystemFields(for: id, of: .itemType)
     }
     
     // MARK: - Delete Records
     
-    func deleteCKRecords(with ids: [String]) -> Promise<CKDatabase.DeletionResult>
+    func deleteCKRecords(with ids: [CKRecord.ID]) -> Promise<CKDatabase.DeletionResult>
     {
         return Promise<CKDatabase.DeletionResult>
         {
@@ -65,7 +63,7 @@ class CloudKitDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.ckDatabaseController.deleteCKRecords(with: ids.ckRecordIDs)
+                self.ckDatabaseController.deleteCKRecords(with: ids)
             }
             .done(on: queue)
             {
@@ -93,7 +91,7 @@ class CloudKitDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.ckDatabaseController.queryCKRecords(ofType: .item, inZone: .item)
+                self.ckDatabaseController.queryCKRecords(of: .itemType, in: .itemZone)
             }
             .done(on: queue)
             {
@@ -119,7 +117,7 @@ class CloudKitDatabase: Observer, CustomObservable
             }
             .then(on: queue)
             {
-                self.ckDatabaseController.fetchChanges(fromZone: .item)
+                self.ckDatabaseController.fetchChanges(from: .itemZone)
             }
             .done(on: queue)
             {
@@ -135,12 +133,12 @@ class CloudKitDatabase: Observer, CustomObservable
     
     var hasChangeToken: Bool
     {
-        return ckDatabaseController.hasChangeToken(forZone: .item)
+        return ckDatabaseController.hasChangeToken(for: .itemZone)
     }
     
     func deleteChangeToken()
     {
-        ckDatabaseController.deleteChangeToken(forZone: .item)
+        ckDatabaseController.deleteChangeToken(for: .itemZone)
     }
     
     // MARK: - Ensure Access
@@ -199,12 +197,10 @@ class CloudKitDatabase: Observer, CustomObservable
     
     private func ensureDatabaseSubscriptionExists() -> Promise<Void>
     {
-        let dbSubID = "ItemDataBaseSubscription"
-        
-        return ckDatabaseController.createDatabaseSubscription(withID: dbSubID).map { _ in }
+        return ckDatabaseController.createDatabaseSubscription(with: .itemSub).map { _ in }
     }
     
-    func handleDatabaseNotification(with userInfo: [String : Any])
+    func handleDatabaseNotification(with userInfo: JSON)
     {
         ckDatabaseController.handleDatabaseNotification(with: userInfo)
     }
@@ -225,21 +221,13 @@ class CloudKitDatabase: Observer, CustomObservable
     
     private func ensureRecordZoneExists() -> Promise<Void>
     {
-        return ckDatabaseController.createZone(with: .item).map { _ in }
+        return ckDatabaseController.create(.itemZone).map { _ in }
     }
     
     // MARK: - CloudKit Database Controller
     
     var queue: DispatchQueue { return ckDatabaseController.queue }
     
-    private let ckDatabaseController = CKDatabaseController(databaseScope: .private,
+    private let ckDatabaseController = CKDatabaseController(scope: .private,
                                                             cacheName: "Flowlist iCloud Cache")
-}
-
-private extension Array where Element == String
-{
-    var ckRecordIDs: [CKRecord.ID]
-    {
-        return map(CKRecord.ID.init(itemID:))
-    }
 }

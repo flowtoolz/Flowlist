@@ -2,46 +2,46 @@ class Orphanage
 {
     // MARK: - Read
     
-    func orphans(forParentID parentID: ItemData.ID) -> [Update]?
+    func orphans(forParent parent: ItemData.ID) -> [Update]?
     {
-        guard let hashMap = orphansByParentID[parentID] else { return nil }
+        guard let hashMap = orphansByParent[parent] else { return nil }
         return Array(hashMap.values)
     }
     
     // MARK: - Update
     
-    func update(_ orphan: Update, withParentID parentID: ItemData.ID)
+    func update(_ orphan: Update, withParent parent: ItemData.ID)
     {
-        if orphansByParentID[parentID] == nil
+        if orphansByParent[parent] == nil
         {
-            orphansByParentID[parentID] = [orphan.data.id : orphan]
+            orphansByParent[parent] = [orphan.data.id : orphan]
         }
         else
         {
-            orphansByParentID[parentID]?[orphan.data.id] = orphan
+            orphansByParent[parent]?[orphan.data.id] = orphan
         }
     }
     
     // MARK: - Remove
     
-    func removeOrphan(with id: ItemData.ID, parentID: ItemData.ID)
+    func removeOrphan(with id: ItemData.ID, parent: ItemData.ID)
     {
-        orphansByParentID[parentID]?[id] = nil
+        orphansByParent[parent]?[id] = nil
     }
     
-    func removeOrphans(forParentID parentID: ItemData.ID)
+    func removeOrphans(forParent parent: ItemData.ID)
     {
-        orphansByParentID[parentID] = nil
+        orphansByParent[parent] = nil
     }
     
     @discardableResult
     func removeOrphan(with id: ItemData.ID) -> Bool
     {
-        for parentID in orphansByParentID.keys
+        for parent in orphansByParent.keys
         {
-            if orphansByParentID[parentID]?[id] != nil
+            if orphansByParent[parent]?[id] != nil
             {
-                orphansByParentID[parentID]?[id] = nil
+                orphansByParent[parent]?[id] = nil
                 return true
             }
         }
@@ -51,5 +51,5 @@ class Orphanage
     
     // MARK: - Storage
     
-    private var orphansByParentID = [ItemData.ID : [ItemData.ID : Update]]()
+    private var orphansByParent = [ItemData.ID : [ItemData.ID : Update]]()
 }

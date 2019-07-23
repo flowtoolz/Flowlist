@@ -8,16 +8,16 @@ extension CKRecord
     
     func makeRecord() -> Record
     {
-        if recordType != .item
+        if recordType != .itemType
         {
-            log(warning: "Attempting to make item record from a CKRecord of type \(recordType). Excpected type \(CKRecord.RecordType.item)")
+            log(warning: "Attempting to make item record from a CKRecord of type \(recordType). Excpected type \(CKRecord.RecordType.itemType)")
         }
         
         return Record(id: recordID.recordName,
                       text: text,
                       state: state,
                       tag: tag,
-                      rootID: superItem,
+                      parent: superItem,
                       position: position ?? 0)
     }
     
@@ -80,7 +80,7 @@ extension CKRecord
         }
     }
     
-    var superItem: String?
+    var superItem: Record.ID?
     {
         get
         {
@@ -108,7 +108,7 @@ extension CKRecord
                 return
             }
             
-            self[fieldName] = Reference(itemOwnerName: newValue)
+            self[fieldName] = Reference(parent: newValue)
         }
     }
     
@@ -131,11 +131,11 @@ extension CKRecord
     
     var isItem: Bool
     {
-        let result = recordType == .item
+        let result = recordType == .itemType
         
         if !result
         {
-            log(warning: "Type is \"\(recordType)\" but expected \"\(CKRecord.RecordType.item)\".")
+            log(warning: "Type is \"\(recordType)\" but expected \"\(CKRecord.RecordType.itemType)\".")
         }
         
         return result

@@ -14,7 +14,7 @@ class LegacyJSONFile
             
             if let json = try JSONSerialization.jsonObject(with: data) as? JSON
             {
-                return records(from: json, withRootID: nil, position: 0)
+                return records(from: json, parent: nil, position: 0)
             }
             else
             {
@@ -34,7 +34,7 @@ class LegacyJSONFile
     }
     
     private func records(from json: JSON,
-                         withRootID rootID: Record.ID?,
+                         parent: Record.ID?,
                          position: Int) -> [Record]
     {
         guard let id = json["id"] as? String else { return [] }
@@ -52,7 +52,7 @@ class LegacyJSONFile
                                   text: text,
                                   state: ItemData.State(integer: stateInt),
                                   tag: ItemData.Tag(integer: tagInt),
-                                  rootID: rootID,
+                                  parent: parent,
                                   position: position)
         
         var loadedRecords = [loadedRecord]
@@ -62,7 +62,7 @@ class LegacyJSONFile
             for position in 0 ..< subJSONs.count
             {
                 loadedRecords += records(from: subJSONs[position],
-                                         withRootID: id,
+                                         parent: id,
                                          position: position)
             }
         }

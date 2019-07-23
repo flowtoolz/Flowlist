@@ -6,6 +6,6 @@ extension Record
         data.text.value = text
         data.state.value = state
         data.tag.value = tag
-        return Update(data: data, parentID: rootID, position: position)
+        return Update(data: data, parent: parent, position: position)
     }
 }
