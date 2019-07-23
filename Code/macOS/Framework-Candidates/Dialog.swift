@@ -9,7 +9,7 @@ class Dialog
     {
         let message = "Dialog is an abstract class that needs to be subclassed. Don't use Dialog directly as it has no implementation of \(#function)"
         log(error: message)
-        return Promise(error: ReadableError.message(message))
+        return .fail(message)
     }
     
     struct Question

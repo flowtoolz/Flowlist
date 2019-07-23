@@ -122,7 +122,7 @@ class CKRecordController: Observer
     {
         guard ckDatabase.hasChangeToken else
         {
-            return Promise(error: ReadableError.message("Tried to sync with database based on change token while database has no change token."))
+            return .fail("Tried to sync with database based on change token while database has no change token.")
         }
         
         // TODO: if there are unsynced local changes, apply them first to database and resolve conflicts
@@ -147,11 +147,11 @@ class CKRecordController: Observer
         }
         .select(.mayHaveChanged)
         {
-            [weak self] in self?.ckDatabaseDidChange()
+            [weak self] in self?.ckDatabaseMayHaveChanged()
         }
     }
     
-    private func ckDatabaseDidChange()
+    private func ckDatabaseMayHaveChanged()
     {
         // TODO: what if we have offline changes (in case we weren't reliably notified of coming back online)
         
