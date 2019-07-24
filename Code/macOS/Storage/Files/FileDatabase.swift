@@ -101,6 +101,6 @@ private extension URL
 {
     func file(for id: Record.ID) -> URL
     {
-        return appendingPathComponent(id)
+        return appendingPathComponent(id + ".json")
     }
 }
