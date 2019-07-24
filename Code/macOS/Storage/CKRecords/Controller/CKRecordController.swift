@@ -230,6 +230,10 @@ class CKRecordController: Observer
             // TODO: handle conflicts
             return self.ckRecordDatabase.save(ckRecords).map { _ in }
         }
+        .done
+        {
+            self.offline.clear()
+        }
     }
     
     // MARK: - Basics
