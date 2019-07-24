@@ -13,11 +13,99 @@ class CKRecordController: Observer
 
     init()
     {
-        observeCloudKitDatabase()
+        observeCKRecordDatabase()
         observeFileDatabase()
     }
     
     deinit { stopObserving() }
+    
+    // MARK: - Transmit CKRecord Database Changes to File Database
+    
+    private func observeCKRecordDatabase()
+    {
+        observe(ckRecordDatabase).filter
+        {
+            [weak self] _ in self?.sync.isActive ?? false
+        }
+        .select(.mayHaveChanged)
+        {
+            [weak self] in self?.ckRecordDatabaseMayHaveChanged()
+        }
+    }
+    
+    private func ckRecordDatabaseMayHaveChanged()
+    {
+        guard !offline.hasChanges else
+        {
+            log(error: "Offline changes haven't been synced properly")
+            resync().catch(sync.abort)
+            return
+        }
+        
+        firstly
+        {
+            ckRecordDatabase.fetchChanges()
+        }
+        .done(on: queue)
+        {
+            // TODO: handle conflicts
+            self.applyCKChangesToFileDatabase($0)
+        }
+        .catch(sync.abort)
+    }
+    
+    private func applyCKChangesToFileDatabase(_ changes: CKDatabase.Changes)
+    {
+        guard changes.hasChanges else { return }
+        
+        // TODO: do need to check for conflicts and possibly ask user or only on resync?
+        
+        let ids = changes.idsOfDeletedCKRecords.map { $0.recordName }
+        fileDatabase.deleteRecords(with: ids, identifyAs: self)
+        
+        let records = changes.changedCKRecords.map { $0.makeRecord() }
+        fileDatabase.save(records, identifyAs: self)
+    }
+    
+    // MARK: - Transmit File Database Changes to CKRecord Database
+    
+    private func observeFileDatabase()
+    {
+        observe(fileDatabase).filter
+        {
+            [weak self] in $0 != nil && $0?.object !== self && self?.sync.isActive ?? false
+        }
+        .map
+        {
+            event in event?.did
+        }
+        .unwrap(.saveRecords([]))
+        {
+            [weak self] edit in self?.fileDatabase(did: edit)
+        }
+    }
+    
+    private func fileDatabase(did edit: FileDatabase.Edit)
+    {
+        guard !offline.hasChanges else
+        {
+            log(error: "Offline changes haven't been synced properly")
+            resync().catch(sync.abort)
+            return
+        }
+        
+        switch edit
+        {
+        case .saveRecords(let records):
+            guard isOnline != false else { return offline.save(records) }
+            // TODO: handle conflicts, failure and partial failure
+            ckRecordDatabase.save(records.map(makeCKRecord)).catch(sync.abort)
+            
+        case .deleteRecordsWithIDs(let ids):
+            guard isOnline != false else { return offline.deleteRecords(with: ids) }
+            ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(ids)).catch(sync.abort)
+        }
+    }
     
     // MARK: - React to Events
     
@@ -144,83 +232,7 @@ class CKRecordController: Observer
         }
     }
     
-    // MARK: - Transmit CloudKit Database Changes to File Database
-    
-    private func observeCloudKitDatabase()
-    {
-        observe(ckRecordDatabase).filter
-        {
-            [weak self] _ in self?.sync.isActive ?? false
-        }
-        .select(.mayHaveChanged)
-        {
-            [weak self] in self?.ckRecordDatabaseMayHaveChanged()
-        }
-    }
-    
-    private func ckRecordDatabaseMayHaveChanged()
-    {
-        // TODO: what if we have offline changes (in case we weren't reliably notified of coming back online)
-        
-        firstly
-        {
-            ckRecordDatabase.fetchChanges()
-        }
-        .done
-        {
-            self.applyCKChangesToFileDatabase($0)
-        }
-        .catch
-        {
-            log(error: $0.readable.message)
-        }
-    }
-    
-    private func applyCKChangesToFileDatabase(_ changes: CKDatabase.Changes)
-    {
-        guard changes.hasChanges else { return }
-        
-        // TODO: do need to check for conflicts and possibly ask user or only on resync?
-        
-        let ids = changes.idsOfDeletedCKRecords.map { $0.recordName }
-        fileDatabase.deleteRecords(with: ids, identifyAs: self)
-        
-        let records = changes.changedCKRecords.map { $0.makeRecord() }
-        fileDatabase.save(records, identifyAs: self)
-    }
-    
-    // MARK: - Transmit File Database Changes to CloudKit Database
-    
-    private func observeFileDatabase()
-    {
-        observe(fileDatabase).filter
-        {
-            [weak self] in $0 != nil && $0?.object !== self && self?.sync.isActive ?? false
-        }
-        .map
-        {
-            event in event?.did
-        }
-        .unwrap(.saveRecords([]))
-        {
-            [weak self] edit in self?.fileDatabase(did: edit)
-        }
-    }
-    
-    private func fileDatabase(did edit: FileDatabase.Edit)
-    {
-        switch edit
-        {
-        case .saveRecords(let records):
-            guard isOnline != false else { return offline.save(records) }
-            // TODO: handle conflicts, failure and partial failure
-            ckRecordDatabase.save(records.map(makeCKRecord)).catch(sync.abort)
-            
-        case .deleteRecordsWithIDs(let ids):
-            guard isOnline != false else { return offline.deleteRecords(with: ids) }
-            ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(ids)).catch(sync.abort)
-        }
-    }
+    // MARK: - Basics
     
     private var isOnline: Bool?
     private var offline: OfflineChanges { return .shared }
