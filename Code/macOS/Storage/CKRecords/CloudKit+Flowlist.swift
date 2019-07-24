@@ -7,7 +7,6 @@ extension CKRecord.RecordType
 
 extension CKRecord.Reference
 {
-    // TODO: start using CKRecord.parent reference property in addition so we can migrate to that property at some point
     convenience init(parent: Record.ID)
     {
         self.init(recordID: .init(parent), action: .deleteSelf)
