@@ -32,6 +32,8 @@ class TreeSelector: Observer, CustomObservable
     {
         guard let selectedTree = selectedTree else { return select(newTree) }
         
+        guard newTree !== selectedTree else { return }
+        
         let keepSelectedTree = "Aktueller Baum (\(selectedTree.treeDescription))"
         let useNewTree = "Neuer Baum (\(newTree.treeDescription))"
     
