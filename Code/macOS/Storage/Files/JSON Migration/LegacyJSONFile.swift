@@ -75,7 +75,7 @@ class LegacyJSONFile
         FileManager.default.remove(url)
     }
     
-    private lazy var url: URL =
+    private(set) lazy var url: URL =
     {
         let jsonFileDirectory = directory ?? Bundle.main.bundleURL
         return jsonFileDirectory.appendingPathComponent(name)

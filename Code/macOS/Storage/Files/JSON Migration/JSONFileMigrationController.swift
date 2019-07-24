@@ -16,12 +16,11 @@ class JSONFileMigrationController
             return Promise()
         }
         
-        guard FileDatabase.shared.directory != nil else
+        guard FileDatabase.shared.loadFiles().isEmpty else
         {
-            return .fail("Found JSON File but can't migrate its content. Can't access the targeted folder.")
+            informUserThatLegacyJSONFileReappeared(filePath: jsonFile.url.path)
+            return Promise()
         }
-        
-        // TODO: check if there are already files in the new file based database. if so, ask user (async via class Dialog) which records to use. possibly even offer to be sure and use both. hint that json file will be deleted to avoid confusion in the future.
         
         guard FileDatabase.shared.save(jsonFileRecords, identifyAs: self, sendEvent: false) else
         {
@@ -31,5 +30,27 @@ class JSONFileMigrationController
         jsonFile.remove()
         
         return Promise()
+    }
+
+    func informUserThatLegacyJSONFileReappeared(filePath: String)
+    {
+        guard let fileDirectory = FileDatabase.shared.directory else { return }
+        
+        let text =
+        """
+        This file reappeared, maybe you put it back there:
+        \(filePath)
+        
+        Flowlist up to version 1.7.1 saved your items there. If you wanna migrate those items again to the new format, make sure the new item folder is empty on app start:
+        \(fileDirectory.path)
+        
+        Flowlist deletes the old JSON file after migration.
+        """
+        
+        let question = Dialog.Question(title: "Legacy JSON File Reappeared",
+                                       text: text,
+                                       options: ["Got It"])
+        
+        Dialog.default.pose(question).catch(log)
     }
 }

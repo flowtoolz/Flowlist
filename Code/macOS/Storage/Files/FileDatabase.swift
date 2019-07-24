@@ -23,7 +23,7 @@ class FileDatabase: CustomObservable
         return loadFiles().compactMap(Record.init)
     }
     
-    private func loadFiles() -> [URL]
+    func loadFiles() -> [URL]
     {
         return fileManager.items(in: directory)
     }
