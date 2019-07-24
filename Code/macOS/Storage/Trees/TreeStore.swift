@@ -193,7 +193,7 @@ class TreeStore: Observer, CustomObservable
         case .receivedMessage, .movedNode:
             break
             
-        case .insertedNodes(let items, let parent, _):
+        case .insertedNodes(let items, let parent, _, _):
             if !allItems.contains(parent)
             {
                 log(warning: "Inserted items into a parent which is not registered in ItemStore.")

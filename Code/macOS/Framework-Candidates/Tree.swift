@@ -155,10 +155,10 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         
         updateNumberOfLeafs()
         
-        let indexes = Array(insertionIndex ..< insertionIndex + nodes.count)
+        let lastPosition = insertionIndex + nodes.count - 1
         
-        send(.didUpdateNode(.insertedNodes(at: indexes)))
-        sendToRoot(.insertedNodes(nodes, in: self, at: indexes))
+        send(.didUpdateNode(.insertedNodes(first: insertionIndex, last: lastPosition)))
+        sendToRoot(.insertedNodes(nodes, in: self, first: insertionIndex, last: lastPosition))
         
         return true
     }
@@ -275,7 +275,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         enum TreeUpdate // gets propagated to root (for observers of the whole tree)
         {
             case removedNodes([Node], from: Node)
-            case insertedNodes([Node], in: Node, at: [Int])
+            case insertedNodes([Node], in: Node, first: Int, last: Int)
             case movedNode(Node, from: Int, to: Int)
             case receivedMessage(Data.Message, fromDataIn: Node) // messages from node data
         }
@@ -283,7 +283,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         enum NodeUpdate // for observers of each respective node
         {
             case switchedRoot(from: Node?, to: Node?)
-            case insertedNodes(at: [Int])
+            case insertedNodes(first: Int, last: Int)
             case movedNode(from: Int, to: Int)
             case removedNodes([Node], from: [Int])
             

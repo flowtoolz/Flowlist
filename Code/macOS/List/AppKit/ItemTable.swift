@@ -78,7 +78,7 @@ class ItemTable: AnimatedTableView, Observer, CustomObservable, TableContentDele
     {
         switch edit
         {
-        case .insertedNodes(let indexes): didInsert(at: indexes)
+        case .insertedNodes(let first, let last): didInsertAtPositions(from: first, to: last)
         case .removedNodes(_, let indexes): didRemove(from: indexes)
         case .movedNode(let from, let to): didMove(from: from, to: to)
         case .switchedRoot(let old, let new): didChangeRoot(from: old, to: new)
@@ -104,7 +104,7 @@ class ItemTable: AnimatedTableView, Observer, CustomObservable, TableContentDele
             
             if let newNumber = list?.count, newNumber > 0
             {
-                didInsert(at: Array(0 ..< newNumber))
+                didInsertAtPositions(from: 0, to: newNumber - 1)
             }
         }
     }
@@ -141,17 +141,13 @@ class ItemTable: AnimatedTableView, Observer, CustomObservable, TableContentDele
         removeRows(at: IndexSet(indexes), withAnimation: .slideUp)
     }
     
-    private func didInsert(at indexes: [Int])
+    private func didInsertAtPositions(from firstIndex: Int, to lastIndex: Int)
     {
-        guard let firstIndex = indexes.first else { return }
-        
         // with this possibly not yet existing index it only works because we have a pseudo row at the end (rounded corners)
         
-        insertRows(at: indexes, firstIndex: firstIndex)
+        insertRows(at: Array(firstIndex ... lastIndex), firstIndex: firstIndex)
         
-        guard indexes.count == 1,
-            numberOfRows > 1,
-            !rowIsVisible(firstIndex) else { return }
+        guard numberOfRows > 1, !rowIsVisible(firstIndex) else { return }
 
         OperationQueue.main.addOperation
         {

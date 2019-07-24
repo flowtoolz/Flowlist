@@ -79,10 +79,12 @@ class RecordController: Observer
     {
         switch update
         {
-        case .insertedNodes(let items, _, _):
-            let allInsertedItems = items.flatMap { $0.allNodesRecursively }
-            let records = allInsertedItems.map(Record.init)
-            RecordStore.shared.save(records, identifyAs: self)
+        case .insertedNodes(let insertedChildren, let parent, _, let lastPosition):
+            var allEffectedItems = insertedChildren.flatMap { $0.allNodesRecursively }
+            let indicesOfRepositionedItems = Array(lastPosition + 1 ..< parent.count)
+            allEffectedItems += parent[indicesOfRepositionedItems]
+            let effectedRecords = allEffectedItems.map(Record.init)
+            RecordStore.shared.save(effectedRecords, identifyAs: self)
             
         case .receivedMessage(let message, let node):
             if case .wasModified = message
@@ -90,10 +92,12 @@ class RecordController: Observer
                 RecordStore.shared.save([Record(item: node)], identifyAs: self)
             }
             
-        case .removedNodes(let items, _):
-            let allRemovedItems = items.flatMap { $0.allNodesRecursively }
-            let ids = allRemovedItems.map { $0.id }
-            RecordStore.shared.deleteRecords(with: ids, identifyAs: self)
+        case .removedNodes(let removedChildren, let parent):
+            let allRemovedItems = removedChildren.flatMap { $0.allNodesRecursively }
+            let idsOfAllRemovedItems = allRemovedItems.map { $0.id }
+            RecordStore.shared.deleteRecords(with: idsOfAllRemovedItems, identifyAs: self)
+            let possiblyRepositionedRecords = parent.branches.map(Record.init)
+            RecordStore.shared.save(possiblyRepositionedRecords, identifyAs: self)
             
         case .movedNode(let node, let from, let to):
             guard let parent = node.root else
@@ -103,19 +107,19 @@ class RecordController: Observer
             }
             
             let fromIsSmaller = from < to
-            let firstMovedIndex = fromIsSmaller ? from : to
-            let lastMovedIndex = fromIsSmaller ? to : from
+            let firstRepositionedIndex = fromIsSmaller ? from : to
+            let lastRepositionedIndex = fromIsSmaller ? to : from
             
-            guard parent.branches.count > lastMovedIndex else
+            guard parent.branches.count > lastRepositionedIndex else
             {
                 log(error: "Tree says a node moved to- or from out of bounds index.")
                 break
             }
             
-            let movedItems = parent.branches[firstMovedIndex ... lastMovedIndex]
-            let movedRecords = movedItems.map(Record.init)
+            let repositionedItems = parent.branches[firstRepositionedIndex ... lastRepositionedIndex]
+            let repositionedRecords = repositionedItems.map(Record.init)
             
-            RecordStore.shared.save(movedRecords, identifyAs: self)
+            RecordStore.shared.save(repositionedRecords, identifyAs: self)
         }
     }
 }

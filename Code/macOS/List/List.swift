@@ -70,8 +70,8 @@ class List: CustomObservable, Observer
     {
         switch edit
         {
-        case .insertedNodes(let indexes):
-            observeItemsListed(in: root, at: indexes)
+        case .insertedNodes(let firstPosition, let lastPosition):
+            observeItemsListed(in: root, from: firstPosition, to: lastPosition)
             
         case .removedNodes(let items, let indexes):
             var selectionDidChange = false
@@ -97,19 +97,21 @@ class List: CustomObservable, Observer
     
     // MARK: - Observe Listed Items
     
-    private func observeItemsListed(in root: Item,
-                                    start: Bool = true)
+    private func observeItemsListed(in root: Item, start: Bool = true)
     {
-        let indexes = Array(0 ..< root.count)
+        guard root.count > 0 else { return }
         
-        observeItemsListed(in: root, at: indexes, start: start)
+        observeItemsListed(in: root, from: 0, to: root.count - 1, start: start)
     }
     
     private func observeItemsListed(in root: Item,
-                                    at indexes: [Int],
+                                    from firstPosition: Int,
+                                    to lastPosition: Int,
                                     start: Bool = true)
     {
-        for index in indexes
+        guard lastPosition < root.count else { return }
+        
+        for index in firstPosition ... lastPosition
         {
             guard let item = root[index] else { continue }
             
