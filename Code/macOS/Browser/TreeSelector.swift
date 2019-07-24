@@ -34,11 +34,11 @@ class TreeSelector: Observer, CustomObservable
         
         guard newTree !== selectedTree else { return }
         
-        let keepSelectedTree = "Aktueller Baum (\(selectedTree.treeDescription))"
-        let useNewTree = "Neuer Baum (\(newTree.treeDescription))"
+        let keepSelectedTree = "Current tree (\(selectedTree.treeDescription))"
+        let useNewTree = "New tree (\(newTree.treeDescription))"
     
-        let question = Dialog.Question(title: "Neuer Item-Baum Gefunden",
-                                       text: "Mehrere Bäume existieren zum Bsp. wenn ein anderes Gerät schon Items in iCloud gespeichert hat. Wähle einen Baum, der andere wird dann gelöscht.",
+        let question = Dialog.Question(title: "Found Another Item Tree (Hierarchy)",
+                                       text: "Multiple trees can exist for instance when another device has already saved items to iCloud. Choose one tree to work with, Flowlist will then delete the other.",
                                        options: [keepSelectedTree, useNewTree])
     
         firstly
@@ -130,6 +130,6 @@ private extension Item
 {
     var treeDescription: String
     {
-        return "\(text ?? "Unbenannt"), \(numberOfLeafs) Blätter"
+        return "\(text ?? "<Untitled>"), \(numberOfLeafs) leafs (paragraphs)"
     }
 }
