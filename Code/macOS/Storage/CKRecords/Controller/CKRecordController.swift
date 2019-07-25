@@ -40,28 +40,7 @@ class CKRecordController: Observer
             return
         }
         
-        firstly
-        {
-            ckRecordDatabase.fetchChanges()
-        }
-        .done(on: queue)
-        {
-            self.applyCKChangesToFileDatabase($0)
-        }
-        .catch(sync.abort)
-    }
-    
-    private func applyCKChangesToFileDatabase(_ changes: CKDatabase.Changes)
-    {
-        guard changes.hasChanges else { return }
-        
-        let ids = changes.idsOfDeletedCKRecords.map { $0.recordName }
-        // TODO: handle conflicts
-        fileDatabase.deleteRecords(with: ids, identifyAs: self)
-        
-        let records = changes.changedCKRecords.map { $0.makeRecord() }
-        // TODO: handle conflicts
-        fileDatabase.save(records, identifyAs: self)
+        fetchCKChangesAndApplyThemToFileDatabase().catch(sync.abort)
     }
     
     // MARK: - Transmit File Database Changes to CKRecord Database
@@ -99,7 +78,7 @@ class CKRecordController: Observer
             
         case .deleteRecordsWithIDs(let ids):
             guard isOnline != false else { return offline.deleteRecords(with: ids) }
-            // TODO: handle conflicts
+            // TODO: Handle Deletion Result
             ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(ids)).catch(sync.abort)
         }
     }
@@ -148,30 +127,23 @@ class CKRecordController: Observer
             return .fail("Tried to sync with iCloud without change token but there is one.")
         }
         
+        if offline.hasChanges { offline.clear() }
+        
         return firstly
         {
-            ckRecordDatabase.fetchChanges()
+            saveToCKRecordDatabaseHandlingConflicts(fileDatabase.loadRecords())
+        }
+        .then(on: queue)
+        {
+            self.ckRecordDatabase.fetchChanges()
         }
         .map(on: queue)
         {
             $0.changedCKRecords.map { $0.makeRecord() }
         }
-        .then(on: queue)
+        .done(on: queue)
         {
-            cloudRecords in
-
-            return firstly
-            {
-                () -> Promise<Void> in
-                
-                let fileRecords = self.fileDatabase.loadRecords()
-                return self.saveToCKRecordDatabaseHandlingConflicts(fileRecords)
-            }
-            .done(on: self.queue)
-            {
-                // TODO: handle conflicts
-                self.fileDatabase.save(cloudRecords, identifyAs: self)
-            }
+            self.fileDatabase.save($0, identifyAs: self)
         }
     }
     
@@ -184,24 +156,38 @@ class CKRecordController: Observer
         
         return firstly
         {
-            ckRecordDatabase.fetchChanges()
+            applyOfflineChangesToCKRecordDatabase()
         }
         .then(on: queue)
         {
-            ckChanges in
-            
-            return firstly
-            {
-                self.applyOfflineChangesToCKDatabase()
-            }
-            .done(on: self.queue)
-            {
-                self.applyCKChangesToFileDatabase(ckChanges)
-            }
+            self.fetchCKChangesAndApplyThemToFileDatabase()
         }
     }
     
-    private func applyOfflineChangesToCKDatabase() -> Promise<Void>
+    private func fetchCKChangesAndApplyThemToFileDatabase() -> Promise<Void>
+    {
+        return firstly
+        {
+            ckRecordDatabase.fetchChanges()
+        }
+        .done(on: queue)
+        {
+            self.applyCKChangesToFileDatabase($0)
+        }
+    }
+    
+    private func applyCKChangesToFileDatabase(_ changes: CKDatabase.Changes)
+    {
+        guard changes.hasChanges else { return }
+        
+        let ids = changes.idsOfDeletedCKRecords.map { $0.recordName }
+        fileDatabase.deleteRecords(with: ids, identifyAs: self)
+        
+        let records = changes.changedCKRecords.map { $0.makeRecord() }
+        fileDatabase.save(records, identifyAs: self)
+    }
+    
+    private func applyOfflineChangesToCKRecordDatabase() -> Promise<Void>
     {
         guard offline.hasChanges else { return Promise() }
         
@@ -210,8 +196,7 @@ class CKRecordController: Observer
             () -> Promise<Void> in
             
             let deletionIDs = Array(offline.deletions)
-            
-            // TODO: handle conflicts
+            // TODO: Handle Deletion Result
             return ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(deletionIDs)).map { _ in }
         }
         .then(on: queue)
@@ -246,8 +231,6 @@ class CKRecordController: Observer
             }
             
             if saveResult.conflicts.isEmpty { return Promise() }
-            
-            // TODO: handle conflicts
             
             return firstly
             {
