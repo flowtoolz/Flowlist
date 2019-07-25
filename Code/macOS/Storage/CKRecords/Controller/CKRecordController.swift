@@ -5,8 +5,6 @@ import SwiftyToolz
 
 // TODO: note about syncing deletions: deletions cannot cause CloudKit conflicts! when server or client has deleted a record while the other side has changed it, the client would probably win when applying his change or deletion to the server. whether change or deletion survives would depend on which client resyncs last. however if the change should always win (so that no records accidentally get deleted), then do this on resync: first save modified records to server and resolve conflicts reported by CloudKit, then fetch changes from server and apply them locally, THEN check the client's own deletions and ONLY apply those that do NOT correspond to fetched record changes.
 
-// TODO: when resolving conflict using type SaveConflict, the resolved version should be written to the server record and that record should be written back to the server
-
 class CKRecordController: Observer
 {
     // MARK: - Life Cycle
@@ -258,8 +256,6 @@ class CKRecordController: Observer
             .then
             {
                 preferICloud -> Promise<Void> in
-                
-                // TODO: how do the resolved ckrecords get into our ckrecord cache?
                 
                 guard !preferICloud else
                 {
