@@ -136,7 +136,7 @@ class ItemView: LayerBackedView, Observer, CustomObservable
         case .didUpdateNode(let edit):
             switch edit
             {
-            case .switchedRoot:
+            case .switchedParent:
                 stopObserving(item: self.item)
 
             default: break

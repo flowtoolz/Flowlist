@@ -54,7 +54,7 @@ class ListView: LayerBackedView, Observer, CustomObservable
     private func didReceive(_ event: List.Event)
     {
         guard case .did(let edit) = event,
-            case .switchedRoot(_, let new) = edit else { return }
+            case .switchedParent(_, let new) = edit else { return }
         
         isHidden = new == nil
     }

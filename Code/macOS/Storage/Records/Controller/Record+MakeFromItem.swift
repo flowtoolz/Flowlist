@@ -10,7 +10,7 @@ extension Record
                   text: data.text.value,
                   state: data.state.value,
                   tag: data.tag.value,
-                  parent: item.parent,
+                  parent: item.parentID,
                   position: item.position)
     }
 }

@@ -7,7 +7,7 @@ extension Tree
     {
         var result = [self]
         
-        branches.forEach { result.append(contentsOf: $0.allNodesRecursively) }
+        children.forEach { result.append(contentsOf: $0.allNodesRecursively) }
         
         return result
     }
@@ -21,29 +21,29 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     public required convenience init(with original: Node)
     {
-        self.init(with: original, root: nil)
+        self.init(with: original, parent: nil)
     }
     
-    private convenience init(with original: Node, root: Node? = nil)
+    private convenience init(with original: Node, parent: Node? = nil)
     {
         self.init(data: original.data.copy,
-                  root: root,
+                  parent: parent,
                   numberOfLeafs: original.numberOfLeafs)
         
-        for subitem in original.branches
+        for subitem in original.children
         {
-            let subCopy = Node(with: subitem, root: self)
+            let subCopy = Node(with: subitem, parent: self)
             
-            branches.append(subCopy)
+            children.append(subCopy)
         }
     }
     
     // MARK: - Initialization
     
-    init(data: Data, root: Node? = nil, numberOfLeafs: Int = 1)
+    init(data: Data, parent: Node? = nil, numberOfLeafs: Int = 1)
     {
         self.data = data
-        self.root = root
+        self.parent = parent
         self.numberOfLeafs = numberOfLeafs
         
         observe(data)
@@ -69,8 +69,8 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         let sortedIndexes = indexes.sorted()
         
         guard let groupIndex = sortedIndexes.first,
-            branches.isValid(index: groupIndex),
-            branches.isValid(index: sortedIndexes.last)
+            children.isValid(index: groupIndex),
+            children.isValid(index: sortedIndexes.last)
         else
         {
             log(error: "Tried to merge branches at invalid indexes \(indexes).")
@@ -93,8 +93,8 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     {
         var sortedIndexes = indexes.sorted()
         
-        guard branches.isValid(index: sortedIndexes.first),
-            branches.isValid(index: sortedIndexes.last)
+        guard children.isValid(index: sortedIndexes.first),
+            children.isValid(index: sortedIndexes.last)
         else
         {
             log(error: "Tried to remove nodes from invalid indexes \(indexes).")
@@ -105,9 +105,9 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         
         while let indexToRemove = sortedIndexes.popLast()
         {
-            let removedNode = branches.remove(at: indexToRemove)
+            let removedNode = children.remove(at: indexToRemove)
             
-            removedNode.root = nil
+            removedNode.parent = nil
             
             removedNodes.insert(removedNode, at: 0)
         }
@@ -149,9 +149,9 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
             return false
         }
         
-        branches.insert(contentsOf: nodes, at: insertionIndex)
+        children.insert(contentsOf: nodes, at: insertionIndex)
         
-        nodes.forEach { $0.root = self }
+        nodes.forEach { $0.parent = self }
         
         updateNumberOfLeafs()
         
@@ -168,10 +168,10 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     @discardableResult
     func moveNode(from: Int, to: Int) -> Bool
     {
-        guard branches.moveElement(from: from, to: to) else { return false }
+        guard children.moveElement(from: from, to: to) else { return false }
         
         send(.didUpdateNode(.movedNode(from: from, to: to)))
-        sendToRoot(.movedNode(branches[to], from: from, to: to))
+        sendToRoot(.movedNode(children[to], from: from, to: to))
         
         return true
     }
@@ -194,7 +194,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         guard newNumber != numberOfLeafs else { return }
         
         numberOfLeafs = newNumber
-        root?.updateNumberOfLeafs()
+        parent?.updateNumberOfLeafs()
         
         send(.didChangeLeafNumber(numberOfLeafs))
     }
@@ -205,7 +205,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         
         var subitemLeafs = 0
         
-        branches.forEach { subitemLeafs += $0.numberOfLeafs }
+        children.forEach { subitemLeafs += $0.numberOfLeafs }
         
         return subitemLeafs
     }
@@ -220,7 +220,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         {
             var subitemLeafs = 0
             
-            branches.forEach { subitemLeafs += $0.calculateNumberOfLeafs() }
+            children.forEach { subitemLeafs += $0.calculateNumberOfLeafs() }
             
             numberOfLeafs = 1 + subitemLeafs
         }
@@ -232,17 +232,17 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     // MARK: - Root
     
-    var isRoot: Bool { return root == nil }
+    var isRoot: Bool { return parent == nil }
     
-    var indexInRoot: Int? { return root?.index(of: self) }
+    var indexInParent: Int? { return parent?.index(of: self) }
     
-    weak var root: Node?
+    weak var parent: Node?
     {
         didSet
         {
-            guard oldValue !== root else { return }
+            guard oldValue !== parent else { return }
 
-            send(.didUpdateNode(.switchedRoot(from: oldValue, to: root)))
+            send(.didUpdateNode(.switchedParent(from: oldValue, to: parent)))
         }
     }
     
@@ -250,13 +250,13 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     private func sendToRoot(_ event: Event.TreeUpdate)
     {
-        guard let root = root else
+        guard let parent = parent else
         {
             send(.didUpdateTree(event))
             return
         }
         
-        root.sendToRoot(event)
+        parent.sendToRoot(event)
     }
     
     // MARK: - Observability
@@ -282,19 +282,19 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         
         enum NodeUpdate // for observers of each respective node
         {
-            case switchedRoot(from: Node?, to: Node?)
-            case insertedNodes(first: Int, last: Int)
-            case movedNode(from: Int, to: Int)
-            case removedNodes([Node], from: [Int])
-            
             var modifiesGraphStructure: Bool
             {
                 switch self
                 {
-                case .removedNodes, .insertedNodes, .switchedRoot: return true
+                case .removedNodes, .insertedNodes, .switchedParent: return true
                 default: return false
                 }
             }
+            
+            case switchedParent(from: Node?, to: Node?)
+            case insertedNodes(first: Int, last: Int)
+            case movedNode(from: Int, to: Int)
+            case removedNodes([Node], from: [Int])
         }
     }
     
@@ -302,7 +302,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     subscript(_ indexes: [Int]) -> [Node]
     {
-        let result = branches[indexes]
+        let result = children[indexes]
         
         if result.count != indexes.count
         {
@@ -314,20 +314,20 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     subscript(_ index: Int?) -> Node?
     {
-        guard branches.isValid(index: index), let validIndex = index else
+        guard children.isValid(index: index), let validIndex = index else
         {
             log(warning: "Tried to access branch at invalid index \(String(describing: index)).")
             return nil
         }
         
-        return branches[validIndex]
+        return children[validIndex]
     }
     
     func sortWithoutSendingUpdate(comparator: (Node, Node) -> Bool)
     {
-        branches.sort(by: comparator)
+        children.sort(by: comparator)
         
-        branches.forEach
+        children.forEach
         {
             $0.sortWithoutSendingUpdate(comparator: comparator)
         }
@@ -335,13 +335,13 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     func index(of branch: Node) -> Int?
     {
-        return branches.firstIndex { $0 === branch }
+        return children.firstIndex { $0 === branch }
     }
     
     var isLeaf: Bool { return count == 0 }
-    var count: Int { return branches.count }
+    var count: Int { return children.count }
     
-    private(set) var branches = [Node]()
+    private(set) var children = [Node]()
     
     // MARK: - Node
     

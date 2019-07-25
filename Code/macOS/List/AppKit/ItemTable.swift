@@ -81,7 +81,7 @@ class ItemTable: AnimatedTableView, Observer, CustomObservable, TableContentDele
         case .insertedNodes(let first, let last): didInsertAtPositions(from: first, to: last)
         case .removedNodes(_, let indexes): didRemove(from: indexes)
         case .movedNode(let from, let to): didMove(from: from, to: to)
-        case .switchedRoot(let old, let new): didChangeRoot(from: old, to: new)
+        case .switchedParent(let old, let new): didChangeRoot(from: old, to: new)
         }
     }
     
@@ -169,7 +169,7 @@ class ItemTable: AnimatedTableView, Observer, CustomObservable, TableContentDele
         guard let list = self.list else { return }
         
         if indexes.count == 1,
-            list.root?.branches.isValid(index: firstIndex) ?? false,
+            list.root?.children.isValid(index: firstIndex) ?? false,
             list[firstIndex]?.data.wantsTextInput ?? false
         {
             rowBeingEdited = firstIndex

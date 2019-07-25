@@ -96,13 +96,13 @@ class RecordController: Observer
             let allRemovedItems = removedChildren.flatMap { $0.allNodesRecursively }
             let idsOfAllRemovedItems = allRemovedItems.map { $0.id }
             RecordStore.shared.deleteRecords(with: idsOfAllRemovedItems, identifyAs: self)
-            let possiblyRepositionedRecords = parent.branches.map(Record.init)
+            let possiblyRepositionedRecords = parent.children.map(Record.init)
             RecordStore.shared.save(possiblyRepositionedRecords, identifyAs: self)
             
         case .movedNode(let node, let from, let to):
-            guard let parent = node.root else
+            guard let parent = node.parent else
             {
-                log(error: "Tree says a node moved position, but the node has no root node.")
+                log(error: "Tree says a node moved position, but the node has no parent.")
                 break
             }
             
@@ -110,13 +110,13 @@ class RecordController: Observer
             let firstRepositionedIndex = fromIsSmaller ? from : to
             let lastRepositionedIndex = fromIsSmaller ? to : from
             
-            guard parent.branches.count > lastRepositionedIndex else
+            guard parent.children.count > lastRepositionedIndex else
             {
-                log(error: "Tree says a node moved to- or from out of bounds index.")
+                log(error: "Tree says a node moved to- or from an out of bounds index.")
                 break
             }
             
-            let repositionedItems = parent.branches[firstRepositionedIndex ... lastRepositionedIndex]
+            let repositionedItems = parent.children[firstRepositionedIndex ... lastRepositionedIndex]
             let repositionedRecords = repositionedItems.map(Record.init)
             
             RecordStore.shared.save(repositionedRecords, identifyAs: self)

@@ -90,7 +90,7 @@ extension List
     
     func extendSelection(to index: Int)
     {
-        guard root?.branches.isValid(index: index) ?? false else { return }
+        guard root?.children.isValid(index: index) ?? false else { return }
         
         let selected = selectedIndexes
         

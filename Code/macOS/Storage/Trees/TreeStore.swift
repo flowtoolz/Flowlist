@@ -60,13 +60,13 @@ class TreeStore: Observer, CustomObservable
             return
         }
         
-        if item.parent == update.parent
+        if item.parentID == update.parent
         {
-            item.root?.moveNode(from: item.position, to: update.position)
+            item.parent?.moveNode(from: item.position, to: update.position)
             return
         }
         
-        item.root?.removeNodes(from: [item.position])
+        item.parent?.removeNodes(from: [item.position])
         
         guard let newParentID = update.parent else
         {
@@ -145,7 +145,7 @@ class TreeStore: Observer, CustomObservable
         
         allItems.remove(item.allNodesRecursively)
         
-        if let parent = item.root
+        if let parent = item.parent
         {
             parent.removeNodes(from: [item.position])
         }

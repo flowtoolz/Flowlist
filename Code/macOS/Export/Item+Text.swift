@@ -24,7 +24,7 @@ extension Tree where Data == ItemData
         
         var sectionNumber = 1
         
-        for item in branches
+        for item in children
         {
             guard !item.isDone else { continue }
             
@@ -59,7 +59,7 @@ extension Tree where Data == ItemData
         {
             result += "\n"
             
-            branches.forEach
+            children.forEach
             {
                 guard !$0.isDone, let text = $0.text else { return }
                 
@@ -68,7 +68,7 @@ extension Tree where Data == ItemData
         }
         else
         {
-            branches.forEach
+            children.forEach
             {
                 guard !$0.isDone else { return }
                 
@@ -82,7 +82,7 @@ extension Tree where Data == ItemData
     {
         var bulletPoints = 0
         
-        for subitem in branches
+        for subitem in children
         {
             guard !subitem.isDone else { continue }
             

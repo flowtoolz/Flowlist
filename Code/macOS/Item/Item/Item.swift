@@ -24,7 +24,7 @@ extension Tree where Data == ItemData
     
     func deselectAll()
     {
-        branches.forEach { $0.isSelected = false }
+        children.forEach { $0.isSelected = false }
     }
     
     // focus
@@ -37,8 +37,8 @@ extension Tree where Data == ItemData
     
     // property access
     
-    var parent: ItemData.ID? { return root?.id }
-    var position: Int { return indexInRoot ?? 0 }
+    var parentID: ItemData.ID? { return parent?.id }
+    var position: Int { return indexInParent ?? 0 }
     var id: ItemData.ID { return data.id }
     
     // text

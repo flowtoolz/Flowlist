@@ -89,7 +89,7 @@ class List: CustomObservable, Observer
             
         case .movedNode: break
             
-        case .switchedRoot: return
+        case .switchedParent: return
         }
         
         send(.did(edit))
@@ -136,7 +136,7 @@ class List: CustomObservable, Observer
     
     private func itemDidChangeState(_ item: Item?)
     {
-        guard let item = item, let index = item.indexInRoot else { return }
+        guard let item = item, let index = item.indexInParent else { return }
         
         if item.isDone
         {
@@ -219,7 +219,7 @@ class List: CustomObservable, Observer
         tag.source = new?.data.tag ?? Var<ItemData.Tag?>()
         state.source = new?.data.state ?? Var<ItemData.State?>()
         
-        send(.did(.switchedRoot(from: old, to: new)))
+        send(.did(.switchedParent(from: old, to: new)))
     }
     
     // MARK: - Mappings
