@@ -34,12 +34,13 @@ class TreeSelector: Observer, CustomObservable
         
         guard newTree !== selectedTree else { return }
         
-        let keepSelectedTree = "Current tree (\(selectedTree.treeDescription))"
-        let useNewTree = "New tree (\(newTree.treeDescription))"
+        // FIXME: the number of leafs isn't necessarily correct since trees are being built incrementally from updates...when a root is found it hasn't necessarily all its recursive children
+        let keepSelectedTree = selectedTree.treeDescription
+        let useNewTree = newTree.treeDescription
     
         let question = Dialog.Question(title: "Found Another Item Tree (Hierarchy)",
-                                       text: "Multiple trees can exist for instance when another device has already saved items to iCloud. Choose one tree to work with, Flowlist will then delete the other.",
-                                       options: [keepSelectedTree, useNewTree])
+                                       text: "Multiple trees can exist for instance when another device has already saved items to iCloud.\n\nChoose one tree to work with, Flowlist will delete the other:",
+                                       options: [useNewTree, keepSelectedTree])
     
         firstly
         {
@@ -130,6 +131,6 @@ private extension Item
 {
     var treeDescription: String
     {
-        return "\(text ?? "<Untitled>"), \(numberOfLeafs) leafs (paragraphs)"
+        return "\(text ?? "Untitled") (\(numberOfLeafs) leaf\(numberOfLeafs != 1 ? "s" : ""))"
     }
 }
