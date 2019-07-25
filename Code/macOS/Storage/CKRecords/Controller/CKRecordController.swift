@@ -3,8 +3,6 @@ import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
-// TODO: note about syncing deletions: deletions cannot cause CloudKit conflicts! when server or client has deleted a record while the other side has changed it, the client would probably win when applying his change or deletion to the server. whether change or deletion survives would depend on which client resyncs last. however if the change should always win (so that no records accidentally get deleted), then do this on resync: first save modified records to server and resolve conflicts reported by CloudKit, then fetch changes from server and apply them locally, THEN check the client's own deletions and ONLY apply those that do NOT correspond to fetched record changes.
-
 class CKRecordController: Observer
 {
     // MARK: - Life Cycle
@@ -111,6 +109,8 @@ class CKRecordController: Observer
         }
     }
     
+    private var isOnline: Bool?
+    
     // MARK: - Resync
     
     func resync() -> Promise<Void>
@@ -187,6 +187,8 @@ class CKRecordController: Observer
         fileDatabase.save(records, identifyAs: self)
     }
     
+    // MARK: - Offline Changes
+    
     private func applyOfflineChangesToCKRecordDatabase() -> Promise<Void>
     {
         guard offline.hasChanges else { return Promise() }
@@ -213,7 +215,9 @@ class CKRecordController: Observer
         }
     }
     
-    // MARK: - Handle Conflicts
+    private var offline: OfflineChanges { return .shared }
+    
+    // MARK: - Save Records
     
     private func saveToCKRecordDatabaseHandlingConflicts(_ records: [Record]) -> Promise<Void>
     {
@@ -289,13 +293,7 @@ class CKRecordController: Observer
             }
         }
     }
-    
-    // MARK: - Basics
-    
-    private var isOnline: Bool?
-    private var offline: OfflineChanges { return .shared }
-    private var fileDatabase: FileDatabase { return .shared }
-    
+
     private func makeCKRecord(for record: Record) -> CKRecord
     {
         let ckRecord = ckRecordDatabase.getCKRecordWithCachedSystemFields(for: .init(record.id))
@@ -310,11 +308,15 @@ class CKRecordController: Observer
         return ckRecord
     }
     
-    // MARK: - CloudKit Database & Intention to Sync With It
+    // MARK: - Intention to Sync With iCloud
     
     func abortSync(with error: Error) { sync.abort(with: error) }
     var isIntendingToSync: Bool { return sync.isActive }
     private let sync = CKSyncIntention()
+    
+    // MARK: - Databases
+    
+    private var fileDatabase: FileDatabase { return .shared }
     
     private var queue: DispatchQueue { return ckRecordDatabase.queue }
     private var ckRecordDatabase: CKRecordDatabase { return .shared }
