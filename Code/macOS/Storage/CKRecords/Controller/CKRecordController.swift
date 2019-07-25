@@ -48,7 +48,6 @@ class CKRecordController: Observer
         }
         .done(on: queue)
         {
-            // TODO: handle conflicts
             self.applyCKChangesToFileDatabase($0)
         }
         .catch(sync.abort)
@@ -59,9 +58,11 @@ class CKRecordController: Observer
         guard changes.hasChanges else { return }
         
         let ids = changes.idsOfDeletedCKRecords.map { $0.recordName }
+        // TODO: handle conflicts
         fileDatabase.deleteRecords(with: ids, identifyAs: self)
         
         let records = changes.changedCKRecords.map { $0.makeRecord() }
+        // TODO: handle conflicts
         fileDatabase.save(records, identifyAs: self)
     }
     
@@ -96,8 +97,7 @@ class CKRecordController: Observer
         {
         case .saveRecords(let records):
             guard isOnline != false else { return offline.save(records) }
-            // TODO: handle conflicts
-            ckRecordDatabase.save(records.map(makeCKRecord)).catch(sync.abort)
+            saveToCKRecordDatabaseHandlingConflicts(records).catch(sync.abort)
             
         case .deleteRecordsWithIDs(let ids):
             guard isOnline != false else { return offline.deleteRecords(with: ids) }
@@ -166,9 +166,8 @@ class CKRecordController: Observer
             {
                 () -> Promise<Void> in
                 
-                // TODO: handle conflicts
                 let fileRecords = self.fileDatabase.loadRecords()
-                return self.ckRecordDatabase.save(fileRecords.map(self.makeCKRecord)).map { _ in }
+                return self.saveToCKRecordDatabaseHandlingConflicts(fileRecords)
             }
             .done(on: self.queue)
             {
@@ -199,7 +198,6 @@ class CKRecordController: Observer
             }
             .done(on: self.queue)
             {
-                // TODO: handle conflicts
                 self.applyCKChangesToFileDatabase(ckChanges)
             }
         }
@@ -222,16 +220,94 @@ class CKRecordController: Observer
         {
             () -> Promise<Void> in
             
-            let ckRecords = Array(self.offline.edits)
-                .compactMap(self.fileDatabase.record)
-                .map(self.makeCKRecord)
+            let records = Array(self.offline.edits).compactMap(self.fileDatabase.record)
             
-            // TODO: handle conflicts
-            return self.ckRecordDatabase.save(ckRecords).map { _ in }
+            return self.saveToCKRecordDatabaseHandlingConflicts(records)
         }
         .done
         {
             self.offline.clear()
+        }
+    }
+    
+    // MARK: - Handle Conflicts
+    
+    private func saveToCKRecordDatabaseHandlingConflicts(_ records: [Record]) -> Promise<Void>
+    {
+        return firstly
+        {
+            ckRecordDatabase.save(records.map(self.makeCKRecord))
+        }
+        .then
+        {
+            saveResult -> Promise<Void> in
+            
+            guard saveResult.failures.isEmpty else
+            {
+                return .fail("Couldn't save \(saveResult.failures.count) of \(records.count) items to iCloud.")
+            }
+            
+            if saveResult.conflicts.isEmpty { return Promise() }
+            
+            // TODO: handle conflicts
+            
+            return firstly
+            {
+                Dialog.default.askWhetherToPreferICloud()
+            }
+            .then
+            {
+                preferICloud -> Promise<Void> in
+                
+                // TODO: how do the resolved ckrecords get into our ckrecord cache?
+                
+                guard !preferICloud else
+                {
+                    let serverRecords = saveResult.conflicts.map { $0.serverRecord.makeRecord() }
+                    self.fileDatabase.save(serverRecords, identifyAs: self)
+                    return Promise()
+                }
+                
+                let resolvedServerRecords = saveResult.conflicts.map
+                {
+                    conflict -> CKRecord in
+                    
+                    let clientRecord = conflict.clientRecord
+                    let serverRecord = conflict.serverRecord
+                    
+                    serverRecord.text = clientRecord.text
+                    serverRecord.state = clientRecord.state
+                    serverRecord.tag = clientRecord.tag
+                    serverRecord.superItem = clientRecord.superItem
+                    serverRecord.position = clientRecord.position
+                
+                    return serverRecord
+                }
+                
+                return self.saveToCKRecordDatabaseIgnoringConflicts(resolvedServerRecords)
+            }
+        }
+    }
+    
+    private func saveToCKRecordDatabaseIgnoringConflicts(_ records: [CKRecord]) -> Promise<Void>
+    {
+        return firstly
+        {
+            ckRecordDatabase.save(records)
+        }
+        .done
+        {
+            saveResult -> Void in
+            
+            guard saveResult.failures.isEmpty else
+            {
+                throw ReadableError.message("Couldn't save \(saveResult.failures.count) of \(records.count) items to iCloud.")
+            }
+            
+            guard saveResult.conflicts.isEmpty else
+            {
+                throw ReadableError.message("Couldn't save \(saveResult.conflicts.count) of \(records.count) items to iCloud due to conflicts.")
+            }
         }
     }
     

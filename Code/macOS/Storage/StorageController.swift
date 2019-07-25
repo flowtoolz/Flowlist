@@ -41,9 +41,9 @@ class StorageController
         
         guard let tree = TreeSelector.shared.selectedTree else
         {
-            let errorMessage = "Did ensure TreeStore has at least one tree, but TreeSelector still has none selected."
-            log(error: errorMessage)
-            throw ReadableError.message(errorMessage)
+            let message = "Did ensure TreeStore has at least one tree, but TreeSelector still has none selected."
+            log(error: message)
+            throw ReadableError.message(message)
         }
         
         if TreeSelector.shared.numberOfUserCreatedLeafs.value == 0
