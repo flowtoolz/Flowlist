@@ -47,8 +47,15 @@ class OfflineChanges
     
     private func load()
     {
-        edits = RecordIDs(from: editsFile) ?? []
-        deletions = RecordIDs(from: deletionsFile) ?? []
+        if FileManager.default.itemExists(editsFile)
+        {
+            edits = RecordIDs(from: editsFile) ?? []
+        }
+        
+        if FileManager.default.itemExists(deletionsFile)
+        {
+            deletions = RecordIDs(from: deletionsFile) ?? []
+        }
     }
     
     private func save()
