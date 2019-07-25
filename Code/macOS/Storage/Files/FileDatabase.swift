@@ -70,7 +70,7 @@ class FileDatabase: CustomObservable
     
     private(set) lazy var directory: URL? =
     {
-        let name = "Flowlist Item Record Files"
+        let name = "Flowlist Item Files"
         
         guard let directory = URL.documentDirectory?.appendingPathComponent(name) else
         {
