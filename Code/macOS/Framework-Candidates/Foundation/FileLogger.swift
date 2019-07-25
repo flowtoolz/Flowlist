@@ -2,13 +2,16 @@ import FoundationToolz
 import Foundation
 import SwiftyToolz
 
-// TODO: generalize and move to FoundationToolz
-
 class FileLogger: LogObserver
 {
     // MARK: - Life Cycle
     
-    init() { Log.shared.add(observer: self) }
+    init(_ file: URL)
+    {
+        self.file = file
+        Log.shared.add(observer: self)
+    }
+    
     deinit { Log.shared.remove(observer: self) }
     
     // MARK: - Save Log Entries to File
@@ -27,7 +30,7 @@ class FileLogger: LogObserver
     
     private var logString: String
     {
-        return logs.reduce(into: "Flowlist Debug Log")
+        return logs.reduce(into: "\(appName ?? "App") Debug Log")
         {
             $0.append("\n\n\($1.description))")
         }
@@ -35,7 +38,7 @@ class FileLogger: LogObserver
     
     // MARK: - File URL
     
-    private let file = URL.flowlistDirectory.appendingPathComponent("flowlist-log.txt")
+    private let file: URL
     
     // MARK: - Observe Log
     

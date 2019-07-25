@@ -314,7 +314,6 @@
 		9E50B2F222EA0E3D00AD0F47 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				9E1ECC2321CFE79100D2E439 /* FileLogger.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -652,6 +651,7 @@
 		9EA5A8AD218ED9FB004902F7 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				9E1ECC2321CFE79100D2E439 /* FileLogger.swift */,
 				9EA1D3AF219EBFD000B5943C /* UserDefaultsPersisters.swift */,
 				9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */,
 			);

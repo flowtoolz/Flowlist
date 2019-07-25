@@ -140,5 +140,5 @@ class FlowlistController: AppController
     
     private let menu = Menu()
     private let viewController = ViewController<FlowlistView>()
-    private let fileLogger = FileLogger()
+    private let fileLogger = FileLogger(URL.flowlistDirectory.appendingPathComponent("flowlist-log.txt"))
 }
