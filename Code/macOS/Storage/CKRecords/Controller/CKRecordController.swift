@@ -76,8 +76,7 @@ class CKRecordController: Observer
             
         case .deleteRecordsWithIDs(let ids):
             guard isOnline != false else { return offline.deleteRecords(with: ids) }
-            // TODO: Handle Deletion Result
-            ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(ids)).catch(sync.abort)
+            deleteCKRecordsFromCKRecordDatabase(with: ids).catch(sync.abort)
         }
     }
     
@@ -195,11 +194,7 @@ class CKRecordController: Observer
         
         return firstly
         {
-            () -> Promise<Void> in
-            
-            let deletionIDs = Array(offline.deletions)
-            // TODO: Handle Deletion Result
-            return ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(deletionIDs)).map { _ in }
+            deleteCKRecordsFromCKRecordDatabase(with: Array(offline.deletions))
         }
         .then(on: queue)
         {
@@ -217,7 +212,24 @@ class CKRecordController: Observer
     
     private var offline: OfflineChanges { return .shared }
     
-    // MARK: - Save Records
+    // MARK: - Delete Records from iCloud
+    
+    private func deleteCKRecordsFromCKRecordDatabase(with ids: [Record.ID]) -> Promise<Void>
+    {
+        return firstly
+        {
+            ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(ids))
+        }
+        .done
+        {
+            if let firstFailure = $0.failures.first
+            {
+                throw ReadableError.message("Couldn't delete \($0.failures.count) of \(ids.count) items from iCloud. First encountered error: \(firstFailure.error.readable.message)")
+            }
+        }
+    }
+    
+    // MARK: - Save Records to iCloud
     
     private func saveToCKRecordDatabaseHandlingConflicts(_ records: [Record]) -> Promise<Void>
     {
@@ -229,10 +241,7 @@ class CKRecordController: Observer
         {
             saveResult -> Promise<Void> in
             
-            guard saveResult.failures.isEmpty else
-            {
-                return .fail("Couldn't save \(saveResult.failures.count) of \(records.count) items to iCloud.")
-            }
+            try self.ensureNoFailures(in: saveResult)
             
             if saveResult.conflicts.isEmpty { return Promise() }
             
@@ -282,15 +291,20 @@ class CKRecordController: Observer
         {
             saveResult -> Void in
             
-            guard saveResult.failures.isEmpty else
-            {
-                throw ReadableError.message("Couldn't save \(saveResult.failures.count) of \(records.count) items to iCloud.")
-            }
+            try self.ensureNoFailures(in: saveResult)
             
             guard saveResult.conflicts.isEmpty else
             {
                 throw ReadableError.message("Couldn't save \(saveResult.conflicts.count) of \(records.count) items to iCloud due to conflicts.")
             }
+        }
+    }
+    
+    private func ensureNoFailures(in saveResult: CKDatabase.SaveResult) throws
+    {
+        if let firstFailure = saveResult.failures.first
+        {
+            throw ReadableError.message("Couldn't save \(saveResult.failures.count) items to iCloud. First encountered error: \(firstFailure.error.readable.message)")
         }
     }
 
