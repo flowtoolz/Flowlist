@@ -13,9 +13,9 @@ class CKSyncIntention
     {
         let text =
         """
-            \(error.readable.message)
+        \(error.readable.message)
 
-            Make sure 1) Your Mac is online, 2) It is connected to your iCloud account and 3) iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via menu option: Data → Start Using iCloud
+        Make sure 1) Your Mac is online, 2) It is connected to your iCloud account and 3) iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via menu option: Data → Start Using iCloud
         """
         
         let question = Dialog.Question(title: "Whoops, Had to Pause iCloud Sync",
