@@ -311,13 +311,6 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		9E50B2F222EA0E3D00AD0F47 /* Foundation */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Foundation;
-			sourceTree = "<group>";
-		};
 		9E50B2F522EA198400AD0F47 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
@@ -370,7 +363,6 @@
 			isa = PBXGroup;
 			children = (
 				9EA5A89F218ED324004902F7 /* AppKit */,
-				9E50B2F222EA0E3D00AD0F47 /* Foundation */,
 				9EA5A886218EC5E3004902F7 /* Menu */,
 				9EA5A8A4218ED837004902F7 /* Purchase */,
 				9EA5A88E218ECA2C004902F7 /* Export */,
