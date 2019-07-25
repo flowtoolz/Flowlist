@@ -66,12 +66,12 @@ class OfflineChanges
     
     private var deletionsFile: URL?
     {
-        return directory?.appendingPathComponent("deletions")
+        return directory?.appendingPathComponent("deletions.json")
     }
     
     private var editsFile: URL?
     {
-        return directory?.appendingPathComponent("edits")
+        return directory?.appendingPathComponent("edits.json")
     }
     
     private let directory: URL? = {
