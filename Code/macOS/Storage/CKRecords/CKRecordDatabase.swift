@@ -205,5 +205,12 @@ class CKRecordDatabase: Observer, CustomObservable
     var queue: DispatchQueue { return ckDatabaseController.queue }
     
     private let ckDatabaseController = CKDatabaseController(scope: .private,
-                                                            cacheName: "Flowlist iCloud Cache")
+                                                            cacheDirectory: CKRecordDatabase.cacheDirectory)
+    
+    private static var cacheDirectory: URL
+    {
+        let dir = URL.flowlistDirectory.appendingPathComponent("iCloud Cache")
+        FileManager.default.ensureDirectoryExists(dir)
+        return dir
+    }
 }

@@ -34,15 +34,13 @@ class JSONFileMigrationController
 
     func informUserThatLegacyJSONFileReappeared(filePath: String)
     {
-        guard let fileDirectory = FileDatabase.shared.directory else { return }
-        
         let text =
         """
         This file reappeared, maybe you put it back there:
         \(filePath)
         
         Flowlist up to version 1.7.1 saved your items there. If you wanna migrate those items again to the new format, make sure the new item folder is empty on app start:
-        \(fileDirectory.path)
+        \(FileDatabase.shared.directory)
         
         Flowlist deletes the old JSON file after migration.
         """

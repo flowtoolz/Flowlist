@@ -64,27 +64,15 @@ class OfflineChanges
         edits.save(to: editsFile)
     }
     
-    private var deletionsFile: URL?
-    {
-        return directory?.appendingPathComponent("deletions.json")
-    }
+    private let deletionsFile = OfflineChanges.directory.appendingPathComponent("deletions.json")
+    private let editsFile = OfflineChanges.directory.appendingPathComponent("edits.json")
     
-    private var editsFile: URL?
+    private static var directory: URL
     {
-        return directory?.appendingPathComponent("edits.json")
-    }
-    
-    private let directory: URL? = {
-        guard let dir = URL.documentDirectory?.appendingPathComponent("Flowlist Offline Changes") else
-        {
-            log(error: "Couldn't get documents directory")
-            return nil
-        }
-        
+        let dir = URL.flowlistDirectory.appendingPathComponent("Offline Changes")
         FileManager.default.ensureDirectoryExists(dir)
-        
         return dir
-    }()
+    }
     
     // MARK: - Changes
     

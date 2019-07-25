@@ -15,7 +15,7 @@ class FileDatabase: CustomObservable
     
     func record(for id: Record.ID) -> Record?
     {
-        return Record(from: directory?.file(for: id))
+        return Record(from: file(for: id))
     }
     
     func loadRecords() -> [Record]
@@ -36,11 +36,10 @@ class FileDatabase: CustomObservable
               sendEvent: Bool = true) -> Bool
     {
         guard !records.isEmpty else { return true }
-        guard let directory = directory else { return false }
         
         let savedRecords = records.compactMap
         {
-            $0.save(to: directory.file(for: $0.id)) != nil ? $0 : nil
+            $0.save(to: file(for: $0.id)) != nil ? $0 : nil
         }
         
         if !savedRecords.isEmpty && sendEvent
@@ -53,11 +52,10 @@ class FileDatabase: CustomObservable
     
     func deleteRecords(with ids: [Record.ID], identifyAs object: AnyObject)
     {
-        guard let directory = directory else { return }
         
         let idsOfDeletions = ids.compactMap
         {
-            fileManager.remove(directory.file(for: $0)) ? $0 : nil
+            fileManager.remove(file(for: $0)) ? $0 : nil
         }
         
         if !idsOfDeletions.isEmpty
@@ -68,17 +66,16 @@ class FileDatabase: CustomObservable
     
     // MARK: - Basics
     
-    private(set) lazy var directory: URL? =
+    func file(for id: Record.ID) -> URL
     {
-        let name = "Flowlist Item Files"
-        
-        guard let directory = URL.documentDirectory?.appendingPathComponent(name) else
-        {
-            log(error: "Couldn't get URL of document directory")
-            return nil
-        }
-        
-        return fileManager.ensureDirectoryExists(directory)
+        return directory.appendingPathComponent(id + ".json")
+    }
+    
+    let directory: URL =
+    {
+        let dir = URL.flowlistDirectory.appendingPathComponent("Items")
+        FileManager.default.ensureDirectoryExists(dir)
+        return dir
     }()
     
     private var fileManager: FileManager { return .default }
@@ -94,13 +91,5 @@ class FileDatabase: CustomObservable
     {
         case saveRecords([Record])
         case deleteRecordsWithIDs([Record.ID])
-    }
-}
-
-private extension URL
-{
-    func file(for id: Record.ID) -> URL
-    {
-        return appendingPathComponent(id + ".json")
     }
 }
