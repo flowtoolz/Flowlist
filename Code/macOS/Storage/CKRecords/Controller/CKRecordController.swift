@@ -72,7 +72,7 @@ class CKRecordController: Observer
         {
         case .saveRecords(let records):
             guard isOnline != false else { return offline.save(records) }
-            saveToCKRecordDatabaseHandlingConflicts(records).catch(sync.abort)
+            saveToCKRecordDatabase(records).catch(sync.abort)
             
         case .deleteRecordsWithIDs(let ids):
             guard isOnline != false else { return offline.deleteRecords(with: ids) }
@@ -130,7 +130,7 @@ class CKRecordController: Observer
         
         return firstly
         {
-            saveToCKRecordDatabaseHandlingConflicts(fileDatabase.loadRecords())
+            saveToCKRecordDatabase(fileDatabase.loadRecords())
         }
         .then(on: queue)
         {
@@ -202,7 +202,7 @@ class CKRecordController: Observer
             
             let records = Array(self.offline.edits).compactMap(self.fileDatabase.record)
             
-            return self.saveToCKRecordDatabaseHandlingConflicts(records)
+            return self.saveToCKRecordDatabase(records)
         }
         .done
         {
@@ -212,26 +212,9 @@ class CKRecordController: Observer
     
     private var offline: OfflineChanges { return .shared }
     
-    // MARK: - Delete Records from iCloud
+    // MARK: - Save & Delete Records in iCloud
     
-    private func deleteCKRecordsFromCKRecordDatabase(with ids: [Record.ID]) -> Promise<Void>
-    {
-        return firstly
-        {
-            ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(ids))
-        }
-        .done
-        {
-            if let firstFailure = $0.failures.first
-            {
-                throw ReadableError.message("Couldn't delete \($0.failures.count) of \(ids.count) items from iCloud. First encountered error: \(firstFailure.error.readable.message)")
-            }
-        }
-    }
-    
-    // MARK: - Save Records to iCloud
-    
-    private func saveToCKRecordDatabaseHandlingConflicts(_ records: [Record]) -> Promise<Void>
+    private func saveToCKRecordDatabase(_ records: [Record]) -> Promise<Void>
     {
         return firstly
         {
@@ -276,12 +259,12 @@ class CKRecordController: Observer
                     return serverRecord
                 }
                 
-                return self.saveToCKRecordDatabaseIgnoringConflicts(resolvedServerRecords)
+                return self.saveToCKRecordDatabaseExpectingNoConflicts(resolvedServerRecords)
             }
         }
     }
     
-    private func saveToCKRecordDatabaseIgnoringConflicts(_ records: [CKRecord]) -> Promise<Void>
+    private func saveToCKRecordDatabaseExpectingNoConflicts(_ records: [CKRecord]) -> Promise<Void>
     {
         return firstly
         {
@@ -320,6 +303,21 @@ class CKRecordController: Observer
         ckRecord.position = record.position
         
         return ckRecord
+    }
+    
+    private func deleteCKRecordsFromCKRecordDatabase(with ids: [Record.ID]) -> Promise<Void>
+    {
+        return firstly
+        {
+            ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(ids))
+        }
+        .done
+        {
+            if let firstFailure = $0.failures.first
+            {
+                throw ReadableError.message("Couldn't delete \($0.failures.count) of \(ids.count) items from iCloud. First encountered error: \(firstFailure.error.readable.message)")
+            }
+        }
     }
     
     // MARK: - Intention to Sync With iCloud
