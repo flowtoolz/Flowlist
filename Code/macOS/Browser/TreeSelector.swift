@@ -34,7 +34,7 @@ class TreeSelector: Observer, CustomObservable
         
         guard newTree !== selectedTree else { return }
         
-        // FIXME: the number of leafs isn't necessarily correct since trees are being built incrementally from updates...when a root is found it hasn't necessarily all its recursive children
+        // TODO: the number of leafs isn't necessarily correct since trees are being built incrementally from updates...when a root is found it hasn't necessarily all its recursive children yet
         let keepSelectedTree = selectedTree.treeDescription
         let useNewTree = newTree.treeDescription
     

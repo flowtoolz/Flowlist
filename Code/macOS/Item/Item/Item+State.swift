@@ -6,7 +6,7 @@ extension Tree where Data == ItemData
         
         let belowUnchecked = unchecked + (unchecked < index ? 1 : 0)
         
-        moveNode(from: index, to: belowUnchecked)
+        moveChild(from: index, to: belowUnchecked)
     }
     
     var indexOfLastOpenSubitem: Int?
@@ -28,7 +28,7 @@ extension Tree where Data == ItemData
         
         let belowInProgress = lastInProgress + (lastInProgress < index ? 1 : 0)
         
-        moveNode(from: index, to: belowInProgress)
+        moveChild(from: index, to: belowInProgress)
     }
     
     var indexOfLastSubitemInProgress: Int

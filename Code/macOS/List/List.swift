@@ -144,7 +144,7 @@ class List: CustomObservable, Observer
         }
         else if item.isInProgress
         {
-            root?.moveNode(from: index, to: 0)
+            root?.moveChild(from: index, to: 0)
         }
         else if item.isUndone
         {

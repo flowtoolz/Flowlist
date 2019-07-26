@@ -60,7 +60,7 @@ extension List
         let item = Item(data: data)
         
         if let groupIndex = indexes.first,
-            let _ = root?.groupNodes(at: indexes, as: item)
+            let _ = root?.groupChildren(at: indexes, as: item)
         {
             setSelectionWithItemsListed(at: [groupIndex])
         }
@@ -104,7 +104,7 @@ extension List
         
         guard let root = root,
             let firstSelectedIndex = indexes.first,
-            let removedItems = root.removeNodes(from: indexes),
+            let removedItems = root.removeChildren(from: indexes),
             removedItems.count > 0
         else
         {
@@ -231,7 +231,7 @@ extension List
         
         let selectedIndex = indexes[0]
         
-        return root.moveNode(from: selectedIndex,
+        return root.moveChild(from: selectedIndex,
                                 to: selectedIndex + positions)
     }
     

@@ -54,24 +54,23 @@ class TreeStore: Observer, CustomObservable
     
     private func move(_ item: Item, toNewTreePositionWith update: Update)
     {
-        if item.parent == nil && update.parent == nil
+        if item.isRoot && update.parentID == nil
         {
             if orphans.removeOrphan(with: item.id) { add(tree: item) }
             return
         }
         
-        if item.parentID == update.parent
+        if item.parentID == update.parentID
         {
-            item.parent?.moveNode(from: item.position, to: update.position)
+            item.parent?.moveChild(from: item.position, to: update.position)
             return
         }
         
-        item.parent?.removeNodes(from: [item.position])
+        item.parent?.removeChildren(from: [item.position])
         
-        guard let newParentID = update.parent else
+        guard let newParentID = update.parentID else
         {
-            add(tree: item)
-            return
+            return add(tree: item)
         }
 
         remove(tree: item)
@@ -80,11 +79,11 @@ class TreeStore: Observer, CustomObservable
         {
             newParent.insert(item, at: update.position)
             
-            orphans.removeOrphan(with: item.id, parent: newParentID)
+            orphans.removeOrphan(with: item.id, parentID: newParentID)
         }
         else
         {
-            orphans.update(update, withParent: newParentID)
+            orphans.update(update, withParentID: newParentID)
         }
     }
     
@@ -97,7 +96,7 @@ class TreeStore: Observer, CustomObservable
         
         insertOrphansInto(potentialParent: item)
         
-        if let parent = update.parent
+        if let parent = update.parentID
         {
             if let parent = allItems[parent]
             {
@@ -105,7 +104,7 @@ class TreeStore: Observer, CustomObservable
             }
             else
             {
-                orphans.update(update, withParent: parent)
+                orphans.update(update, withParentID: parent)
             }
         }
         else
@@ -116,7 +115,7 @@ class TreeStore: Observer, CustomObservable
     
     private func insertOrphansInto(potentialParent item: Item)
     {
-        guard let lostChildren = orphans.orphans(forParent: item.id) else { return }
+        guard let lostChildren = orphans.orphans(forParentID: item.id) else { return }
         
         lostChildren.sortedByPosition.forEach
         {
@@ -147,7 +146,7 @@ class TreeStore: Observer, CustomObservable
         
         if let parent = item.parent
         {
-            parent.removeNodes(from: [item.position])
+            parent.removeChildren(from: [item.position])
         }
         else
         {

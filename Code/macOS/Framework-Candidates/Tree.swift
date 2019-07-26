@@ -64,7 +64,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     // MARK: - Group
     
     @discardableResult
-    func groupNodes<N>(at indexes: [Int], as group: N) -> N? where N: Node
+    func groupChildren<N>(at indexes: [Int], as group: N) -> N? where N: Node
     {
         let sortedIndexes = indexes.sorted()
         
@@ -77,7 +77,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
             return nil
         }
         
-        guard let mergedNodes = removeNodes(from: indexes) else { return nil }
+        guard let mergedNodes = removeChildren(from: indexes) else { return nil }
         
         guard insert(group, at: groupIndex) else { return nil }
         
@@ -89,7 +89,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     // MARK: - Remove
     
     @discardableResult
-    func removeNodes(from indexes: [Int]) -> [Node]?
+    func removeChildren(from indexes: [Int]) -> [Node]?
     {
         var sortedIndexes = indexes.sorted()
         
@@ -125,21 +125,21 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     // MARK: - Insert
     
     @discardableResult
-    func add(_ node: Node) -> Bool
+    func add(_ child: Node) -> Bool
     {
-        return insert(node, at: count)
+        return insert(child, at: count)
     }
     
     @discardableResult
-    func insert(_ node: Node, at index: Int) -> Bool
+    func insert(_ child: Node, at index: Int) -> Bool
     {
-        return insert([node], at: index)
+        return insert([child], at: index)
     }
     
     @discardableResult
-    func insert(_ nodes: [Node], at index: Int) -> Bool
+    func insert(_ childrenToInsert: [Node], at index: Int) -> Bool
     {
-        guard nodes.count > 0 else { return false }
+        guard childrenToInsert.count > 0 else { return false }
         
         let insertionIndex = Swift.min(index, count)
         
@@ -149,16 +149,16 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
             return false
         }
         
-        children.insert(contentsOf: nodes, at: insertionIndex)
+        children.insert(contentsOf: childrenToInsert, at: insertionIndex)
         
-        nodes.forEach { $0.parent = self }
+        childrenToInsert.forEach { $0.parent = self }
         
         updateNumberOfLeafs()
         
-        let lastPosition = insertionIndex + nodes.count - 1
+        let lastPosition = insertionIndex + childrenToInsert.count - 1
         
         send(.didUpdateNode(.insertedNodes(first: insertionIndex, last: lastPosition)))
-        sendToRoot(.insertedNodes(nodes, in: self, first: insertionIndex, last: lastPosition))
+        sendToRoot(.insertedNodes(childrenToInsert, in: self, first: insertionIndex, last: lastPosition))
         
         return true
     }
@@ -166,7 +166,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     // MARK: - Move
     
     @discardableResult
-    func moveNode(from: Int, to: Int) -> Bool
+    func moveChild(from: Int, to: Int) -> Bool
     {
         guard children.moveElement(from: from, to: to) else { return false }
         
@@ -333,9 +333,9 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         }
     }
     
-    func index(of branch: Node) -> Int?
+    func index(of child: Node) -> Int?
     {
-        return children.firstIndex { $0 === branch }
+        return children.firstIndex { $0 === child }
     }
     
     var isLeaf: Bool { return count == 0 }

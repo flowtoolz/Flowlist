@@ -10,7 +10,7 @@ extension Tree where Data == ItemData
         
         clipboard.storeCopiesAndOriginals(of: nodes)
         
-        removeNodes(from: indexes)
+        removeChildren(from: indexes)
         
         return true
     }

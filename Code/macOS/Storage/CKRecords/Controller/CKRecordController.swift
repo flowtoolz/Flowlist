@@ -121,12 +121,13 @@ class CKRecordController: Observer
     
     private func resyncWithoutChangeToken() -> Promise<Void>
     {
-        guard !ckRecordDatabase.hasChangeToken else
+        if ckRecordDatabase.hasChangeToken
         {
-            return .fail("Tried to sync with iCloud without change token but there is one.")
+            log(warning: "Attempted to sync with iCloud without change token but there is one.")
+            ckRecordDatabase.deleteChangeToken()
         }
         
-        if offline.hasChanges { offline.clear() }
+        offline.clear() // on total resync, lingering changes (delta cache) are irrelevant
         
         return firstly
         {
