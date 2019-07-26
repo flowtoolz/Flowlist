@@ -4,10 +4,11 @@ import SwiftyToolz
 
 class TreeStore: Observer, CustomObservable
 {
-    // MARK: - Initialization
+    // MARK: - Life Cycle
     
     static let shared = TreeStore()
     private init() {}
+    deinit { stopObserving() }
     
     // MARK: - Add Items
     

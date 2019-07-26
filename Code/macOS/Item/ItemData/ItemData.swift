@@ -3,7 +3,7 @@ import SwiftyToolz
 
 final class ItemData: Observer, CustomObservable
 {
-    // MARK: - Initialization
+    // MARK: - Life Cycle
     
     init(id: ID? = nil, wantsTextInput: Bool = false)
     {
@@ -22,6 +22,8 @@ final class ItemData: Observer, CustomObservable
             self?.send(.wasModified)
         }
     }
+    
+    deinit { stopObserving() }
     
     // MARK: - View Model
     

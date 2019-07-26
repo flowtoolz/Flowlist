@@ -8,12 +8,10 @@ import SwiftyToolz
 
 class CKRecordDatabase: Observer, CustomObservable
 {
-    static let shared = CKRecordDatabase()
-    
     // MARK: - Life Cycle
     
+    static let shared = CKRecordDatabase()
     private init() { observeCKDatabaseController() }
-    
     deinit { stopObserving() }
     
     // MARK: - Save CKRecords

@@ -38,7 +38,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         }
     }
     
-    // MARK: - Initialization
+    // MARK: - Life Cycle
     
     init(data: Data, parent: Node? = nil, numberOfLeafs: Int = 1)
     {
@@ -56,10 +56,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
         }
     }
     
-    deinit
-    {
-        stopObserving(data)
-    }
+    deinit { stopObserving(data) }
     
     // MARK: - Group
     
