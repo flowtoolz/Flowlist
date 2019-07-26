@@ -62,6 +62,9 @@ class RecordController: Observer
     private func itemStoreDidSend(_ event: TreeStore.Event)
     {
         switch event {
+        case .willApplyMultipleUpdates, .didApplyMultipleUpdates:
+            break
+            
         case .treeDidUpdate(let update):
             tree(did: update)
             

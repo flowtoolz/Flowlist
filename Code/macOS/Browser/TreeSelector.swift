@@ -4,11 +4,15 @@ import SwiftyToolz
 
 class TreeSelector: Observer, CustomObservable
 {
-    // MARK: - Initialization
+    // MARK: - Life Cycle
     
     static let shared = TreeSelector()
+    private init() { observeTreeStore() }
+    deinit { stopObserving() }
     
-    private init()
+    // MARK: - Observe Tree Store
+    
+    private func observeTreeStore()
     {
         observe(TreeStore.shared)
         {
@@ -16,16 +20,71 @@ class TreeSelector: Observer, CustomObservable
         }
     }
     
-    // MARK: - Select Tree
-    
     private func treeStoreDidSend(_ event: TreeStore.Event)
     {
         switch event
         {
-        case .treeDidUpdate: break
-        case .didAddTree(let newTree): didFind(newTree)
-        case .didRemoveTree(let tree): if selectedTree === tree { select(nil) }
+        case .treeDidUpdate:
+            break
+            
+        case .willApplyMultipleUpdates:
+            treeStoreWillApplyMultipleUpdates()
+            
+        case .didApplyMultipleUpdates:
+            treeStoreDidApplyMultipleUpdates()
+            
+        case .didAddTree(let newTree):
+            if treeStoreIsDoingBatchUpdate
+            {
+                treesFoundDuringBatchUpdate.append(newTree)
+            }
+            else
+            {
+                didFind(newTree)
+            }
+            
+        case .didRemoveTree(let removedTree):
+            if treeStoreIsDoingBatchUpdate
+            {
+                treesRemovedDuringBatchUpdate.append(removedTree)
+            }
+            else
+            {
+                didRemove(removedTree)
+            }
         }
+    }
+    
+    // MARK: - Multiple Tree Changes During Batch Updates
+    
+    private func treeStoreWillApplyMultipleUpdates()
+    {
+        treeStoreIsDoingBatchUpdate = true
+        
+        treesFoundDuringBatchUpdate.removeAll()
+        treesRemovedDuringBatchUpdate.removeAll()
+    }
+    
+    private func treeStoreDidApplyMultipleUpdates()
+    {
+        treeStoreIsDoingBatchUpdate = false
+        
+        treesRemovedDuringBatchUpdate.forEach { didRemove($0) }
+        treesRemovedDuringBatchUpdate.removeAll()
+        
+        treesFoundDuringBatchUpdate.forEach { didFind($0) }
+        treesFoundDuringBatchUpdate.removeAll()
+    }
+    
+    private var treeStoreIsDoingBatchUpdate = false
+    private var treesFoundDuringBatchUpdate = [Item]()
+    private var treesRemovedDuringBatchUpdate = [Item]()
+    
+    // MARK: - Single Tree Changes
+    
+    private func didRemove(_ removedTree: Item)
+    {
+        if selectedTree === removedTree { select(nil) }
     }
     
     private func didFind(_ newTree: Item)
@@ -34,7 +93,6 @@ class TreeSelector: Observer, CustomObservable
         
         guard newTree !== selectedTree else { return }
         
-        // TODO: the number of leafs isn't necessarily correct since trees are being built incrementally from updates...when a root is found it hasn't necessarily all its recursive children yet
         let keepSelectedTree = selectedTree.treeDescription
         let useNewTree = newTree.treeDescription
     
@@ -61,6 +119,8 @@ class TreeSelector: Observer, CustomObservable
         }
         .catch(log)
     }
+    
+    // MARK: - Select Tree
     
     private func select(_ tree: Item?)
     {

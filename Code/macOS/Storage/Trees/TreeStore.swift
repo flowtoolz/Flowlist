@@ -24,7 +24,10 @@ class TreeStore: Observer, CustomObservable
     
     func apply(updates: [Update])
     {
+        let multipleUpdates = updates.count > 1
+        if multipleUpdates { send(.willApplyMultipleUpdates) }
         updates.sortedByPosition.forEach(self.apply)
+        if multipleUpdates { send(.didApplyMultipleUpdates) }
     }
     
     private func apply(_ update: Update)
@@ -243,5 +246,13 @@ class TreeStore: Observer, CustomObservable
     
     let messenger = Messenger<Message>()
     typealias Message = Event?
-    enum Event { case treeDidUpdate(Item.Event.TreeUpdate), didAddTree(Item), didRemoveTree(Item) }
+    
+    enum Event
+    {
+        case treeDidUpdate(Item.Event.TreeUpdate)
+        case willApplyMultipleUpdates
+        case didAddTree(Item)
+        case didRemoveTree(Item)
+        case didApplyMultipleUpdates
+    }
 }
