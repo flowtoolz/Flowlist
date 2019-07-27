@@ -23,7 +23,7 @@ class LegacyJSONFile
         }
         catch
         {
-            log(error: error.readable.message)
+            log(error: error.localizedDescription)
             return nil
         }
     }

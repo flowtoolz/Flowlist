@@ -24,7 +24,7 @@ class FileLogger: LogObserver
         }
         catch
         {
-            log(error: error.readable.message)
+            log(error: error.localizedDescription)
         }
     }
     

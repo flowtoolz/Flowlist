@@ -37,16 +37,14 @@ class Exporter
             
             do
             {
-                try text.write(to: fileUrl,
-                               atomically: false,
-                               encoding: .utf8)
+                try text.write(to: fileUrl, atomically: false, encoding: .utf8)
             }
             catch
             {
-                log(error: error.readable.message)
+                log(error: error.localizedDescription)
                 
                 let title = "Couldn't write \"\(fileUrl.lastPathComponent)\""
-                show(alert: error.readable.message, title: title)
+                show(alert: error.localizedDescription, title: title)
             }
         }
     }

@@ -8,7 +8,7 @@ class CKSyncIntention
     func abort(with error: Error)
     {
         isActive = false
-        log(error)
+        log(error: error.ckReadable.message)
         informUser(aboutSyncError: error)
     }
     
@@ -16,7 +16,7 @@ class CKSyncIntention
     {
         let text =
         """
-        \(error.readable.message)
+        \(error.ckReadable.message)
 
         Make sure 1) Your Mac is online, 2) It is connected to your iCloud account and 3) iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via menu option: Data → Start Using iCloud
         """
@@ -25,7 +25,10 @@ class CKSyncIntention
                                        text: text,
                                        options: ["Got it"])
         
-        Dialog.default.pose(question, imageName: "icloud_conflict").catch(log)
+        Dialog.default.pose(question, imageName: "icloud_conflict").catch
+        {
+            log(error: $0.readable.message)
+        }
     }
     
     var isActive: Bool

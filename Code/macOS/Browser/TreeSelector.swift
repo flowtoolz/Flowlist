@@ -117,7 +117,7 @@ class TreeSelector: Observer, CustomObservable
                 TreeStore.shared.deleteItems(with: [newTree.id])
             }
         }
-        .catch(log)
+        .catch { log(error: $0.readable.message) }
     }
     
     // MARK: - Select Tree
