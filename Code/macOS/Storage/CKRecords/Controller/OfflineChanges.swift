@@ -37,10 +37,18 @@ class OfflineChanges
     func clear()
     {
         edits.removeAll()
-        FileManager.default.remove(editsFile)
+        
+        if FileManager.default.itemExists(editsFile)
+        {
+            FileManager.default.remove(editsFile)
+        }
         
         deletions.removeAll()
-        FileManager.default.remove(deletionsFile)
+        
+        if FileManager.default.itemExists(deletionsFile)
+        {
+            FileManager.default.remove(deletionsFile)
+        }
     }
     
     // MARK: - Persist Changes
