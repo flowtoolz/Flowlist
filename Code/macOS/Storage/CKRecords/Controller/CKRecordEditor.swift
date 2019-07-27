@@ -1,4 +1,5 @@
 import CloudKit
+import FoundationToolz
 import PromiseKit
 import SwiftyToolz
 
@@ -8,7 +9,7 @@ class CKRecordEditor
     {
         return firstly
         {
-            ckRecordDatabase.save(records.map(self.makeCKRecord))
+            ckRecordDatabase.save(records.map(makeCKRecord))
         }
         .then
         {
@@ -20,7 +21,7 @@ class CKRecordEditor
             
             return firstly
             {
-                Dialog.default.askWhetherToPreferICloud()
+                self.askWhetherToPreferICloud(with: saveResult.conflicts)
             }
             .then
             {
@@ -51,6 +52,42 @@ class CKRecordEditor
                 
                 return self.saveExpectingNoConflicts(resolvedServerRecords)
             }
+        }
+    }
+    
+    private func askWhetherToPreferICloud(with conflicts: [CKDatabase.SaveConflict]) -> Promise<Bool>
+    {
+        let text =
+        """
+        Seems like you changed items on this device without syncing with iCloud while another device changed the iCloud items. Now it's unclear how to combine both changes.
+
+        Do you want to use the local- or the iCloud version? Note that Flowlist will overwrite the other location.
+        """
+        
+        let serverContext = conflicts.compactMap({ $0.serverRecord.modificationDate }).optionContext
+        let serverOption = "iCloud Items\(serverContext)"
+        
+        let clientContext = conflicts.compactMap({ $0.clientRecord.modificationDate }).optionContext
+        let clientOption = "Local Items\(clientContext)"
+        
+        let question = Dialog.Question(title: "Conflicting Changes",
+                                       text: text,
+                                       options: [clientOption, serverOption])
+        
+        return firstly
+        {
+            Dialog.default.pose(question, imageName: "icloud_conflict")
+        }
+        .map(on: DispatchQueue.global(qos: .userInitiated))
+        {
+            guard $0.options.count == 1, let option = $0.options.first else
+            {
+                let errorMessage = "Unexpected # of answer options"
+                log(error: errorMessage)
+                throw errorMessage
+            }
+            
+            return option == serverOption
         }
     }
     
@@ -112,4 +149,15 @@ class CKRecordEditor
     
     private var queue: DispatchQueue { return ckRecordDatabase.queue }
     private var ckRecordDatabase: CKRecordDatabase { return .shared }
+}
+
+private extension Array where Element == Date
+{
+    var optionContext: String
+    {
+        guard let latest = latest,
+            let passedDays = Date().days(since: latest) else { return "" }
+        
+        return " (Last conflict: \(passedDays) day\(passedDays != 1 ? "s" : "") ago)"
+    }
 }

@@ -84,6 +84,7 @@ class CKRecordSynchronizer
         
         return firstly
         {
+            // if we have the latest changetags from the server (system fields cache) then differing fields cause no conflicts but play out as regular edits. here in the beginning, we possibly have no or outdated changetags, so any differing fields might come back as conflicts, which is also fine but super unlikely. in most cases, the local items would, at most, form a separate new tree, causing no conflicts but triggering the tree selection dialog.
             editor.saveCKRecords(for: fileDatabase.loadRecords())
         }
         .then(on: queue)
