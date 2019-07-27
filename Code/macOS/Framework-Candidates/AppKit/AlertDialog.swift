@@ -45,8 +45,7 @@ class AlertDialog: Dialog
                 {
                     let message = "Unknown modal response"
                     log(error: message)
-                    resolver.reject(ReadableError.message(message))
-                    return
+                    return resolver.reject(ReadableError(message))
                 }
                 
                 let clickedOption = reversedOptions[reversedOptionIndex]

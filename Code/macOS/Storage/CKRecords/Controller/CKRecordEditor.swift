@@ -68,7 +68,7 @@ class CKRecordEditor
             
             guard saveResult.conflicts.isEmpty else
             {
-                throw ReadableError.message("Couldn't save items in iCloud due to \(saveResult.conflicts.count) unexpected conflicts.")
+                throw ReadableError("Couldn't save items in iCloud due to \(saveResult.conflicts.count) unexpected conflicts.")
             }
         }
     }
@@ -77,7 +77,7 @@ class CKRecordEditor
     {
         if let firstFailure = saveResult.failures.first
         {
-            throw ReadableError.message("Couldn't update items in iCloud. At least \(saveResult.failures.count) updates failed. First encountered error: \(firstFailure.error.readable.message)")
+            throw ReadableError("Couldn't update items in iCloud. At least \(saveResult.failures.count) updates failed. First encountered error: \(firstFailure.error.readable.message)")
         }
     }
 
@@ -105,7 +105,7 @@ class CKRecordEditor
         {
             if let firstFailure = $0.failures.first
             {
-                throw ReadableError.message("Couldn't delete items from iCloud. At least \($0.failures.count) deletions failed. First encountered error: \(firstFailure.error.readable.message)")
+                throw ReadableError("Couldn't delete items from iCloud. At least \($0.failures.count) deletions failed. First encountered error: \(firstFailure.error.readable.message)")
             }
         }
     }
