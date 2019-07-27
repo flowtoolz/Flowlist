@@ -71,7 +71,7 @@ class StorageController
     
     var isIntendingToSyncWithCloudKitDatabase: Bool
     {
-        return ckRecordController.isIntendingToSync
+        return ckRecordController.syncIsActive
     }
     
     private let ckRecordController = CKRecordController()
