@@ -39,19 +39,13 @@ class CKRecordController: Observer
     {
         observe(FileDatabase.shared).unwrap().filter
         {
-            [weak self] event in
-            guard let self = self else { return false }
-            return event.object !== self.synchronizer
-                && event.object !== self.synchronizer.editor
-        }
-        .map
-        {
-            event in event.did
+            [weak self] event in self != nil
+                && event.object !== self?.synchronizer
+                && event.object !== self?.synchronizer.editor
         }
         .receive
         {
-            // TODO: make network reachability a shared singleton instead of holding the value here and passing it around
-            [weak self] edit in self?.synchronizer.fileDatabase(did: edit)
+            [weak self] event in self?.synchronizer.fileDatabase(did: event.did)
         }
     }
     

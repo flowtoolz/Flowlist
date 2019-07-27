@@ -22,13 +22,9 @@ class RecordController: Observer
         {
             [weak self] event in self != nil && event.object !== self
         }
-        .map
-        {
-            event in event.did
-        }
         .receive
         {
-            [weak self] edit in self?.recordStore(did: edit)
+            [weak self] event in self?.recordStore(did: event.did)
         }
     }
     

@@ -52,7 +52,6 @@ class FileDatabase: CustomObservable
     
     func deleteRecords(with ids: [Record.ID], identifyAs object: AnyObject)
     {
-        
         let idsOfDeletions = ids.compactMap
         {
             fileManager.remove(file(for: $0)) ? $0 : nil
