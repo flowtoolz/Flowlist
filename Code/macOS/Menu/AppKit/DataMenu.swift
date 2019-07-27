@@ -61,7 +61,7 @@ class DataMenu: NSMenu, NSMenuItemValidation
     
     private var cloudItemTitle: String
     {
-        let isUsingICloud = StorageController.shared.isIntendingToSyncWithCloudKitDatabase
+        let isUsingICloud = CKSyncIntention.shared.isActive
         return "\(isUsingICloud ? "Stop" : "Start") Using iCloud"
     }
 }

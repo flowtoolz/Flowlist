@@ -168,9 +168,7 @@ class CKRecordSynchronizer
     
     // MARK: - Basics
     
-    func abortSync(with error: Error) { sync.abort(with: error) }
-    var syncIsActive: Bool { return sync.isActive }
-    private let sync = CKSyncIntention()
+    private var sync: CKSyncIntention { return .shared }
     
     private var fileDatabase: FileDatabase { return .shared }
     

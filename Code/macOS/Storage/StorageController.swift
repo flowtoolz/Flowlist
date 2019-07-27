@@ -29,7 +29,7 @@ class StorageController
         {
             try self.ensureThereIsInitialData()
         }
-        .catch(ckRecordController.abortSync)
+        .catch(CKSyncIntention.shared.abort)
     }
     
     private func ensureThereIsInitialData() throws
@@ -62,11 +62,6 @@ class StorageController
     func databaseAccountDidChange()
     {
         ckRecordController.accountDidChange()
-    }
-    
-    var isIntendingToSyncWithCloudKitDatabase: Bool
-    {
-        return ckRecordController.syncIsActive
     }
     
     private let ckRecordController = CKRecordController()

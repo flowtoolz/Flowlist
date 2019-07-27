@@ -2,6 +2,9 @@ import SwiftyToolz
 
 class CKSyncIntention
 {
+    static let shared = CKSyncIntention()
+    private init() {}
+    
     func abort(with error: Error)
     {
         isActive = false
@@ -18,7 +21,7 @@ class CKSyncIntention
         Make sure 1) Your Mac is online, 2) It is connected to your iCloud account and 3) iCloud Drive is enabled for Flowlist. Then try resuming iCloud sync via menu option: Data → Start Using iCloud
         """
         
-        let question = Dialog.Question(title: "Whoops, Had to Pause iCloud Sync",
+        let question = Dialog.Question(title: "Whoops, Had to Stop iCloud Sync",
                                        text: text,
                                        options: ["Got it"])
         
