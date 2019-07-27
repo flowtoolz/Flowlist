@@ -1,4 +1,5 @@
 import CloudKit
+import FoundationToolz
 import PromiseKit
 import SwiftObserver
 import SwiftyToolz
@@ -11,9 +12,18 @@ class CKRecordController: Observer
     {
         observeCKRecordDatabase()
         observeFileDatabase()
+        
+        NetworkReachability.shared.notifyOfChanges(self)
+        {
+            [weak self] in self?.networkReachability(did: $0)
+        }
     }
     
-    deinit { stopObserving() }
+    deinit
+    {
+        stopObserving()
+        NetworkReachability.shared.stopNotifying(self)
+    }
     
     // MARK: - Forward Database Messages to Synchronizer
     
@@ -44,6 +54,15 @@ class CKRecordController: Observer
     
     // MARK: - React to Events
     
+    private func networkReachability(did update: NetworkReachability.Update)
+    {
+        switch update
+        {
+        case .noInternet: synchronizer.isOnline = false
+        case .expensiveInternet, .fullInternet: synchronizer.isOnline = true
+        }
+    }
+    
     func accountDidChange()
     {
         synchronizer.resync()
@@ -60,6 +79,4 @@ class CKRecordController: Observer
     func abortSync(with error: Error) { synchronizer.abortSync(with: error) }
     var syncIsActive: Bool { return synchronizer.syncIsActive }
     private let synchronizer = CKRecordSynchronizer()
-    
-    private let editor = CKRecordEditor()
 }
