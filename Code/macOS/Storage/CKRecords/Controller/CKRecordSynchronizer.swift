@@ -51,7 +51,7 @@ class CKRecordSynchronizer
         sync.isActive.toggle()
         
         // when user toggles intention to sync, we ensure that next resync will be total resync so we don't need to persist changes that happen while there is no sync intention
-        CKRecordDatabase.shared.deleteChangeToken()
+        ckRecordDatabase.deleteChangeToken()
         
         resync()
     }
@@ -67,17 +67,17 @@ class CKRecordSynchronizer
     {
         guard sync.isActive else { return Promise() }
         
-        return CKRecordDatabase.shared.hasChangeToken
+        return ckRecordDatabase.hasChangeToken
             ? resyncWithChangeToken()
             : resyncWithoutChangeToken()
     }
     
     private func resyncWithoutChangeToken() -> Promise<Void>
     {
-        if CKRecordDatabase.shared.hasChangeToken
+        if ckRecordDatabase.hasChangeToken
         {
             log(warning: "Attempted to sync with iCloud without change token but there is one.")
-            CKRecordDatabase.shared.deleteChangeToken()
+            ckRecordDatabase.deleteChangeToken()
         }
         
         offline.clear() // on total resync, lingering changes (delta cache) are irrelevant
@@ -102,7 +102,7 @@ class CKRecordSynchronizer
     
     private func resyncWithChangeToken() -> Promise<Void>
     {
-        guard CKRecordDatabase.shared.hasChangeToken else
+        guard ckRecordDatabase.hasChangeToken else
         {
             return .fail("Tried to sync with iCloud based on change token but there is none.")
         }
@@ -121,7 +121,7 @@ class CKRecordSynchronizer
     {
         return firstly
         {
-            CKRecordDatabase.shared.fetchChanges()
+            ckRecordDatabase.fetchChanges()
         }
         .done(on: queue)
         {
@@ -172,7 +172,9 @@ class CKRecordSynchronizer
     var syncIsActive: Bool { return sync.isActive }
     private let sync = CKSyncIntention()
     
-    private var queue: DispatchQueue { return CKRecordDatabase.shared.queue }
     private var fileDatabase: FileDatabase { return .shared }
+    
     private let editor = CKRecordEditor()
+    private var queue: DispatchQueue { return ckRecordDatabase.queue }
+    private var ckRecordDatabase: CKRecordDatabase { return .shared }
 }
