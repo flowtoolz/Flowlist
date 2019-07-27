@@ -52,6 +52,7 @@
 		9E22D8AD218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */; };
 		9E22D8AF218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E22D8AE218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift */; };
 		9E2CCE8D20C1DE030037D755 /* List+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CCE8C20C1DE030037D755 /* List+Clipboard.swift */; };
+		9E3DCE6722EC3595003E4E99 /* CKRecordEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3DCE6622EC3595003E4E99 /* CKRecordEditor.swift */; };
 		9E3EB55E2181E89200681953 /* TextFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3EB55D2181E89200681953 /* TextFormat.swift */; };
 		9E3F69332115ADE2002D595D /* Item+WelcomeTour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F69322115ADE2002D595D /* Item+WelcomeTour.swift */; };
 		9E47E32222AAAC530068088A /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E47E32122AAAC530068088A /* BrowserView.swift */; };
@@ -162,6 +163,7 @@
 		9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyedEncodingContainer+SwiftyToolz.swift"; sourceTree = "<group>"; };
 		9E22D8AE218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer+SwiftyToolz.swift"; sourceTree = "<group>"; };
 		9E2CCE8C20C1DE030037D755 /* List+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+Clipboard.swift"; sourceTree = "<group>"; };
+		9E3DCE6622EC3595003E4E99 /* CKRecordEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKRecordEditor.swift; sourceTree = "<group>"; };
 		9E3EB55D2181E89200681953 /* TextFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormat.swift; sourceTree = "<group>"; };
 		9E3F69322115ADE2002D595D /* Item+WelcomeTour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+WelcomeTour.swift"; sourceTree = "<group>"; };
 		9E47E32122AAAC530068088A /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				9E12091322C93EEA003DE68E /* CKRecordController.swift */,
+				9E3DCE6622EC3595003E4E99 /* CKRecordEditor.swift */,
 				9E9450C822E63A6400667BB2 /* CKSyncIntention.swift */,
 				9E9450C622E6284300667BB2 /* OfflineChanges.swift */,
 				9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */,
@@ -894,6 +897,7 @@
 				9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */,
 				9E053B3B218870D0001B7103 /* FlowlistController.swift in Sources */,
 				9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */,
+				9E3DCE6722EC3595003E4E99 /* CKRecordEditor.swift in Sources */,
 				9E576E352186F85100C9F876 /* RecordController.swift in Sources */,
 				9E053B63218871C4001B7103 /* Row.swift in Sources */,
 				9EF37C4E21A08EED00A43AA9 /* DataMenu.swift in Sources */,

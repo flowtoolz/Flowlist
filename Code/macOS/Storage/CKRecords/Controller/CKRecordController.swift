@@ -19,7 +19,7 @@ class CKRecordController: Observer
     
     private func observeCKRecordDatabase()
     {
-        observe(ckRecordDatabase).filter
+        observe(CKRecordDatabase.shared).filter
         {
             [weak self] _ in self?.sync.isActive ?? false
         }
@@ -72,11 +72,11 @@ class CKRecordController: Observer
         {
         case .saveRecords(let records):
             guard isOnline != false else { return offline.save(records) }
-            saveToCKRecordDatabase(records).catch(sync.abort)
+            editor.saveCKRecords(for: records).catch(sync.abort)
             
         case .deleteRecordsWithIDs(let ids):
             guard isOnline != false else { return offline.deleteRecords(with: ids) }
-            deleteCKRecordsFromCKRecordDatabase(with: ids).catch(sync.abort)
+            editor.deleteCKRecords(with: ids).catch(sync.abort)
         }
     }
     
@@ -92,7 +92,7 @@ class CKRecordController: Observer
         sync.isActive.toggle()
         
         // when user toggles intention to sync, we ensure that next resync will be total resync so we don't need to persist changes that happen while there is no sync intention
-        ckRecordDatabase.deleteChangeToken()
+        CKRecordDatabase.shared.deleteChangeToken()
 
         resync().catch(sync.abort)
     }
@@ -116,26 +116,26 @@ class CKRecordController: Observer
     {
         guard sync.isActive else { return Promise() }
         
-        return ckRecordDatabase.hasChangeToken ? resyncWithChangeToken() : resyncWithoutChangeToken()
+        return CKRecordDatabase.shared.hasChangeToken ? resyncWithChangeToken() : resyncWithoutChangeToken()
     }
     
     private func resyncWithoutChangeToken() -> Promise<Void>
     {
-        if ckRecordDatabase.hasChangeToken
+        if CKRecordDatabase.shared.hasChangeToken
         {
             log(warning: "Attempted to sync with iCloud without change token but there is one.")
-            ckRecordDatabase.deleteChangeToken()
+            CKRecordDatabase.shared.deleteChangeToken()
         }
         
         offline.clear() // on total resync, lingering changes (delta cache) are irrelevant
         
         return firstly
         {
-            saveToCKRecordDatabase(fileDatabase.loadRecords())
+            editor.saveCKRecords(for: fileDatabase.loadRecords())
         }
         .then(on: queue)
         {
-            self.ckRecordDatabase.fetchChanges()
+            CKRecordDatabase.shared.fetchChanges()
         }
         .map(on: queue)
         {
@@ -149,7 +149,7 @@ class CKRecordController: Observer
     
     private func resyncWithChangeToken() -> Promise<Void>
     {
-        guard ckRecordDatabase.hasChangeToken else
+        guard CKRecordDatabase.shared.hasChangeToken else
         {
             return .fail("Tried to sync with iCloud based on change token but there is none.")
         }
@@ -168,7 +168,7 @@ class CKRecordController: Observer
     {
         return firstly
         {
-            ckRecordDatabase.fetchChanges()
+            CKRecordDatabase.shared.fetchChanges()
         }
         .done(on: queue)
         {
@@ -195,7 +195,7 @@ class CKRecordController: Observer
         
         return firstly
         {
-            deleteCKRecordsFromCKRecordDatabase(with: Array(offline.deletions))
+            editor.deleteCKRecords(with: Array(offline.deletions))
         }
         .then(on: queue)
         {
@@ -203,7 +203,7 @@ class CKRecordController: Observer
             
             let records = Array(self.offline.edits).compactMap(self.fileDatabase.record)
             
-            return self.saveToCKRecordDatabase(records)
+            return self.editor.saveCKRecords(for: records)
         }
         .done
         {
@@ -213,124 +213,15 @@ class CKRecordController: Observer
     
     private var offline: OfflineChanges { return .shared }
     
-    // MARK: - Save & Delete Records in iCloud
-    
-    private func saveToCKRecordDatabase(_ records: [Record]) -> Promise<Void>
-    {
-        return firstly
-        {
-            ckRecordDatabase.save(records.map(self.makeCKRecord))
-        }
-        .then
-        {
-            saveResult -> Promise<Void> in
-            
-            try self.ensureNoFailures(in: saveResult)
-            
-            if saveResult.conflicts.isEmpty { return Promise() }
-            
-            return firstly
-            {
-                Dialog.default.askWhetherToPreferICloud()
-            }
-            .then
-            {
-                preferICloud -> Promise<Void> in
-                
-                guard !preferICloud else
-                {
-                    let serverRecords = saveResult.conflicts.map { $0.serverRecord.makeRecord() }
-                    self.fileDatabase.save(serverRecords, identifyAs: self)
-                    return Promise()
-                }
-                
-                let resolvedServerRecords = saveResult.conflicts.map
-                {
-                    conflict -> CKRecord in
-                    
-                    let clientRecord = conflict.clientRecord
-                    let serverRecord = conflict.serverRecord
-                    
-                    serverRecord.text = clientRecord.text
-                    serverRecord.state = clientRecord.state
-                    serverRecord.tag = clientRecord.tag
-                    serverRecord.superItem = clientRecord.superItem
-                    serverRecord.position = clientRecord.position
-                
-                    return serverRecord
-                }
-                
-                return self.saveToCKRecordDatabaseExpectingNoConflicts(resolvedServerRecords)
-            }
-        }
-    }
-    
-    private func saveToCKRecordDatabaseExpectingNoConflicts(_ records: [CKRecord]) -> Promise<Void>
-    {
-        return firstly
-        {
-            ckRecordDatabase.save(records)
-        }
-        .done
-        {
-            saveResult -> Void in
-            
-            try self.ensureNoFailures(in: saveResult)
-            
-            guard saveResult.conflicts.isEmpty else
-            {
-                throw ReadableError.message("Couldn't save items in iCloud due to \(saveResult.conflicts.count) unexpected conflicts.")
-            }
-        }
-    }
-    
-    private func ensureNoFailures(in saveResult: CKDatabase.SaveResult) throws
-    {
-        if let firstFailure = saveResult.failures.first
-        {
-            throw ReadableError.message("Couldn't update items in iCloud. At least \(saveResult.failures.count) updates failed. First encountered error: \(firstFailure.error.readable.message)")
-        }
-    }
-
-    private func makeCKRecord(for record: Record) -> CKRecord
-    {
-        let ckRecord = ckRecordDatabase.getCKRecordWithCachedSystemFields(for: .init(record.id))
-        
-        ckRecord.text = record.text
-        ckRecord.state = record.state
-        ckRecord.tag = record.tag
-        
-        ckRecord.superItem = record.parent
-        ckRecord.position = record.position
-        
-        return ckRecord
-    }
-    
-    private func deleteCKRecordsFromCKRecordDatabase(with ids: [Record.ID]) -> Promise<Void>
-    {
-        return firstly
-        {
-            ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(ids))
-        }
-        .done
-        {
-            if let firstFailure = $0.failures.first
-            {
-                throw ReadableError.message("Couldn't delete items from iCloud. At least \($0.failures.count) deletions failed. First encountered error: \(firstFailure.error.readable.message)")
-            }
-        }
-    }
-    
     // MARK: - Intention to Sync With iCloud
     
     func abortSync(with error: Error) { sync.abort(with: error) }
     var isIntendingToSync: Bool { return sync.isActive }
     private let sync = CKSyncIntention()
     
-    // MARK: - Databases
+    // MARK: - Editing Databases
     
     private var fileDatabase: FileDatabase { return .shared }
-    
-    private var queue: DispatchQueue { return ckRecordDatabase.queue }
-    private var ckRecordDatabase: CKRecordDatabase { return .shared }
+    private var queue: DispatchQueue { return CKRecordDatabase.shared.queue }
+    private let editor = CKRecordEditor()
 }
