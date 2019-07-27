@@ -13,7 +13,7 @@ class CKRecordSynchronizer
         guard !offline.hasChanges else
         {
             log(error: "Offline changes haven't been synced properly")
-            return resyncCatchingErrors()
+            return resync()
         }
         
         fetchCKChangesAndApplyThemToFileDatabase().catch(sync.abort)
@@ -26,7 +26,7 @@ class CKRecordSynchronizer
         guard !offline.hasChanges else
         {
             log(error: "Offline changes haven't been synced properly")
-            return resyncCatchingErrors()
+            return resync()
         }
         
         switch edit
@@ -48,17 +48,17 @@ class CKRecordSynchronizer
         // when user toggles intention to sync, we ensure that next resync will be total resync so we don't need to persist changes that happen while there is no sync intention
         CKRecordDatabase.shared.deleteChangeToken()
         
-        resyncCatchingErrors()
+        resync()
     }
     
     // MARK: - Resync
     
-    func resyncCatchingErrors()
+    func resync()
     {
-        resync().catch(sync.abort)
+        resyncAsynchronously().catch(sync.abort)
     }
     
-    func resync() -> Promise<Void>
+    func resyncAsynchronously() -> Promise<Void>
     {
         guard sync.isActive else { return Promise() }
         
@@ -167,7 +167,7 @@ class CKRecordSynchronizer
     var syncIsActive: Bool { return sync.isActive }
     let sync = CKSyncIntention()
     
-    private var queue: DispatchQueue { return CKRecordDatabase.shared.queue }    
+    private var queue: DispatchQueue { return CKRecordDatabase.shared.queue }
     private var fileDatabase: FileDatabase { return .shared }
     private let editor = CKRecordEditor()
 }

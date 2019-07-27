@@ -47,7 +47,7 @@ class CKRecordController: Observer
     
     func accountDidChange()
     {
-        synchronizer.resyncCatchingErrors()
+        synchronizer.resync()
     }
     
     func userDidToggleSync()
@@ -62,7 +62,7 @@ class CKRecordController: Observer
 
         if reachabilityDidChange && isReachable // went online
         {
-            synchronizer.resyncCatchingErrors()
+            synchronizer.resync()
         }
     }
     
@@ -70,7 +70,7 @@ class CKRecordController: Observer
 
     // MARK: - Basics: Synchronizer & Editor
     
-    func resync() -> Promise<Void> { return synchronizer.resync() }
+    func resync() -> Promise<Void> { return synchronizer.resyncAsynchronously() }
     func abortSync(with error: Error) { synchronizer.abortSync(with: error) }
     var syncIsActive: Bool { return synchronizer.syncIsActive }
     private let synchronizer = CKRecordSynchronizer()
