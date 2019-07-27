@@ -82,7 +82,6 @@ class TreeStore: Observer, CustomObservable
         if let newParent = allItems[newParentID]
         {
             newParent.insert(item, at: update.position)
-            
             orphans.removeOrphan(with: item.id, parentID: newParentID)
         }
         else
@@ -182,9 +181,7 @@ class TreeStore: Observer, CustomObservable
         observe(tree.treeMessenger)
         {
             [weak self] event in
-            
             guard case .didUpdateTree(let treeUpdate) = event else { return }
-            
             self?.treeDidSend(treeUpdate)
         }
     }

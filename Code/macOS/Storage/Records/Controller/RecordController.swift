@@ -18,15 +18,15 @@ class RecordController: Observer
     
     private func observeRecordStore()
     {
-        observe(RecordStore.shared).filter
+        observe(RecordStore.shared).unwrap().filter
         {
-            [weak self] event in event != nil && event?.object !== self
+            [weak self] event in self != nil && event.object !== self
         }
         .map
         {
-            event in event?.did
+            event in event.did
         }
-        .unwrap(.modifyRecords([]))
+        .receive
         {
             [weak self] edit in self?.recordStore(did: edit)
         }

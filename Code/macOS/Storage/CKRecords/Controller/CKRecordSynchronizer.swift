@@ -172,7 +172,7 @@ class CKRecordSynchronizer
     
     private var fileDatabase: FileDatabase { return .shared }
     
-    private let editor = CKRecordEditor()
+    let editor = CKRecordEditor()
     private var queue: DispatchQueue { return ckRecordDatabase.queue }
     private var ckRecordDatabase: CKRecordDatabase { return .shared }
 }

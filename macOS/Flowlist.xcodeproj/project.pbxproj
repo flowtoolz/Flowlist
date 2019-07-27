@@ -267,8 +267,8 @@
 				9E12091322C93EEA003DE68E /* CKRecordController.swift */,
 				9E3DCE6822EC4A48003E4E99 /* CKRecordSynchronizer.swift */,
 				9E3DCE6622EC3595003E4E99 /* CKRecordEditor.swift */,
-				9E9450C822E63A6400667BB2 /* CKSyncIntention.swift */,
 				9E9450C622E6284300667BB2 /* OfflineChanges.swift */,
+				9E9450C822E63A6400667BB2 /* CKSyncIntention.swift */,
 				9EC5C8B721B0300D00615D20 /* Dialog+ICloudConflict.swift */,
 				9E053B2B21886963001B7103 /* CKRecord+Record.swift */,
 			);

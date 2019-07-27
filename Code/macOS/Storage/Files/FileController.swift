@@ -23,15 +23,15 @@ class FileController: Observer
     
     private func observeRecordStore()
     {
-        observe(RecordStore.shared).filter
+        observe(RecordStore.shared).unwrap().filter
         {
-            [weak self] event in event != nil && event?.object !== self
+            [weak self] event in self != nil && event.object !== self
         }
         .map
         {
-            event in event?.did
+            event in event.did
         }
-        .unwrap(.modifyRecords([]))
+        .receive
         {
             [weak self] edit in self?.recordStore(did: edit)
         }
@@ -53,15 +53,15 @@ class FileController: Observer
     
     private func observeFileSystemDatabase()
     {
-        observe(FileDatabase.shared).filter
+        observe(FileDatabase.shared).unwrap().filter
         {
-            [weak self] event in event != nil && event?.object !== self
+            [weak self] event in self != nil && event.object !== self
         }
         .map
         {
-            event in event?.did
+            event in event.did
         }
-        .unwrap(.saveRecords([]))
+        .receive
         {
             [weak self] edit in self?.fileSystemDatabase(did: edit)
         }
