@@ -8,7 +8,7 @@ class StorageController
     // MARK: - Initialization
     
     static let shared = StorageController()
-    private init() { Persistent.setupUsingUserDefaults() }
+    private init() {}
     
     // MARK: - Setup On Launch
     

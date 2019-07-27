@@ -81,8 +81,7 @@
 		9E9450C922E63A6400667BB2 /* CKSyncIntention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9450C822E63A6400667BB2 /* CKSyncIntention.swift */; };
 		9E9A2FDD22D0858E00629103 /* FileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9A2FDC22D0858E00629103 /* FileController.swift */; };
 		9E9A2FE022D0A59600629103 /* RecordStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9A2FDF22D0A59600629103 /* RecordStore.swift */; };
-		9EA1D3B0219EBFD000B5943C /* UserDefaultsPersisters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3AF219EBFD000B5943C /* UserDefaultsPersisters.swift */; };
-		9EA1D3B2219EC26F00B5943C /* Persistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3B1219EC26F00B5943C /* Persistent.swift */; };
+		9EA1D3B0219EBFD000B5943C /* Persistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA1D3AF219EBFD000B5943C /* Persistent.swift */; };
 		9EA63839216F8BB100D1503C /* List+Selection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA63838216F8BB100D1503C /* List+Selection.swift */; };
 		9EA7837622E308890054F1F7 /* TreeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7837522E308890054F1F7 /* TreeSelector.swift */; };
 		9EA7F99C20C19B210059166B /* Item+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7F99B20C19B210059166B /* Item+Clipboard.swift */; };
@@ -194,8 +193,7 @@
 		9E9450C822E63A6400667BB2 /* CKSyncIntention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKSyncIntention.swift; sourceTree = "<group>"; };
 		9E9A2FDC22D0858E00629103 /* FileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileController.swift; sourceTree = "<group>"; };
 		9E9A2FDF22D0A59600629103 /* RecordStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordStore.swift; sourceTree = "<group>"; };
-		9EA1D3AF219EBFD000B5943C /* UserDefaultsPersisters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsPersisters.swift; sourceTree = "<group>"; };
-		9EA1D3B1219EC26F00B5943C /* Persistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistent.swift; sourceTree = "<group>"; };
+		9EA1D3AF219EBFD000B5943C /* Persistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistent.swift; sourceTree = "<group>"; };
 		9EA63838216F8BB100D1503C /* List+Selection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+Selection.swift"; sourceTree = "<group>"; };
 		9EA7837522E308890054F1F7 /* TreeSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeSelector.swift; sourceTree = "<group>"; };
 		9EA7F99B20C19B210059166B /* Item+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+Clipboard.swift"; sourceTree = "<group>"; };
@@ -628,7 +626,6 @@
 				9EC5C8B521B00FE100615D20 /* Dialog.swift */,
 				9E1AB8F222E724DE00AAFE2E /* Promise+ReadableError.swift */,
 				9E51C14922B5182700510EC8 /* AppInstallationID.swift */,
-				9EA1D3B1219EC26F00B5943C /* Persistent.swift */,
 				9E22D8AC218A4A2200C7DE7F /* KeyedEncodingContainer+SwiftyToolz.swift */,
 				9E22D8AE218A4A9E00C7DE7F /* KeyedDecodingContainer+SwiftyToolz.swift */,
 			);
@@ -647,7 +644,7 @@
 			isa = PBXGroup;
 			children = (
 				9E1ECC2321CFE79100D2E439 /* FileLogger.swift */,
-				9EA1D3AF219EBFD000B5943C /* UserDefaultsPersisters.swift */,
+				9EA1D3AF219EBFD000B5943C /* Persistent.swift */,
 				9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */,
 			);
 			path = Foundation;
@@ -850,7 +847,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EA1D3B0219EBFD000B5943C /* UserDefaultsPersisters.swift in Sources */,
+				9EA1D3B0219EBFD000B5943C /* Persistent.swift in Sources */,
 				9E053B3321886963001B7103 /* CKRecordDatabase.swift in Sources */,
 				9E47E32422AAC0A20068088A /* ListViewCell.swift in Sources */,
 				9E053B3A218870D0001B7103 /* main.swift in Sources */,
@@ -863,7 +860,6 @@
 				9E053B6F2188722D001B7103 /* Font+Style.swift in Sources */,
 				9E9450C922E63A6400667BB2 /* CKSyncIntention.swift in Sources */,
 				9E053B5E218871C4001B7103 /* ListView.swift in Sources */,
-				9EA1D3B2219EC26F00B5943C /* Persistent.swift in Sources */,
 				9E12091422C93EEA003DE68E /* CKRecordController.swift in Sources */,
 				9E20468422D9C4120020DD37 /* ItemData+Equatable.swift in Sources */,
 				9EC5C8B221B00ED800615D20 /* AlertDialog.swift in Sources */,
