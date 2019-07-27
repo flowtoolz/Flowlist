@@ -225,7 +225,7 @@ class List: CustomObservable, Observer
     // MARK: - Mappings
     
     let tag = Var<ItemData.Tag?>().new()
-    let title = Var<String?>().new().unwrap()
+    let title = Var<String?>().new().unwrap("")
     
     let state = Var<ItemData.State?>().new()
     
