@@ -1,9 +1,22 @@
 import CloudKit
+import FoundationToolz
 import SwiftyToolz
 import PromiseKit
 
 class CKRecordSynchronizer
 {
+    // MARK: - Life Cycle
+    
+    init()
+    {
+        NetworkReachability.shared.notifyOfChanges(self)
+        {
+            [weak self] in self?.networkReachability(did: $0)
+        }
+    }
+    
+    deinit { NetworkReachability.shared.stopNotifying(self) }
+    
     // MARK: - React to Events
     
     func ckRecordDatabaseMayHaveChanged()
@@ -19,7 +32,7 @@ class CKRecordSynchronizer
         fetchCKChangesAndApplyThemToFileDatabase().catch(sync.abort)
     }
     
-    func fileDatabase(did edit: FileDatabase.Edit, isOnline: Bool)
+    func fileDatabase(did edit: FileDatabase.Edit)
     {
         guard sync.isActive else { return }
         
@@ -39,6 +52,20 @@ class CKRecordSynchronizer
             guard isOnline else { return offline.deleteRecords(with: ids) }
             editor.deleteCKRecords(with: ids).catch(sync.abort)
         }
+    }
+    
+    private func networkReachability(did update: NetworkReachability.Update)
+    {
+        switch update
+        {
+        case .noInternet: isOnline = false
+        case .expensiveInternet, .fullInternet: isOnline = true
+        }
+    }
+    
+    private var isOnline = true
+    {
+        didSet { if !oldValue && isOnline { resync() } }
     }
     
     func toggleSync()

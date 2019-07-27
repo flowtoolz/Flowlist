@@ -13,18 +13,11 @@ class FlowlistController: AppController
     // super.init starts the app run loop, so nothing after super.init will execute
     init() { super.init(withMainMenu: menu) }
     
-    deinit { NetworkReachability.shared.stopNotifying(self) }
-    
     // MARK: - App Delegate
     
     override func applicationDidFinishLaunching(_ aNotification: Notification)
     {
         super.applicationDidFinishLaunching(aNotification)
-        
-        NetworkReachability.shared.notifyOfChanges(self)
-        {
-            [weak self] in self?.networkReachabilityDid(update: $0)
-        }
         
         Color.isInDarkMode = systemIsInDarkMode
         
@@ -123,17 +116,6 @@ class FlowlistController: AppController
     @objc private func iCloudAccountDidChange()
     {
         StorageController.shared.databaseAccountDidChange()
-    }
-    
-    private func networkReachabilityDid(update: NetworkReachability.Update)
-    {
-        switch update
-        {
-        case .noInternet:
-            StorageController.shared.networkReachabilityDidUpdate(isReachable: false)
-        case .expensiveInternet, .fullInternet:
-            StorageController.shared.networkReachabilityDidUpdate(isReachable: true)
-        }
     }
     
     // MARK: - Basics

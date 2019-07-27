@@ -38,8 +38,7 @@ class CKRecordController: Observer
         .unwrap(.saveRecords([]))
         {
             // TODO: make network reachability a shared singleton instead of holding the value here and passing it around
-            [weak self] edit in self?.synchronizer.fileDatabase(did: edit,
-                                                                isOnline: self?.isOnline ?? true)
+            [weak self] edit in self?.synchronizer.fileDatabase(did: edit)
         }
     }
     
@@ -54,19 +53,6 @@ class CKRecordController: Observer
     {
         synchronizer.toggleSync()
     }
-    
-    func networkReachabilityDidUpdate(isReachable: Bool)
-    {
-        let reachabilityDidChange = isOnline != nil && isOnline != isReachable
-        isOnline = isReachable
-
-        if reachabilityDidChange && isReachable // went online
-        {
-            synchronizer.resync()
-        }
-    }
-    
-    var isOnline: Bool?
 
     // MARK: - Basics: Synchronizer & Editor
     

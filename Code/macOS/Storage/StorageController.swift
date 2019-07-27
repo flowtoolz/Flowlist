@@ -59,11 +59,6 @@ class StorageController
         ckRecordController.userDidToggleSync()
     }
     
-    func networkReachabilityDidUpdate(isReachable: Bool)
-    {
-        ckRecordController.networkReachabilityDidUpdate(isReachable: isReachable)
-    }
-    
     func databaseAccountDidChange()
     {
         ckRecordController.accountDidChange()
