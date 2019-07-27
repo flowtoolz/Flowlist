@@ -13,7 +13,7 @@ class CKRecordController: Observer
         observeCKRecordDatabase()
         observeFileDatabase()
         
-        NetworkReachability.shared.notifyOfChanges(self)
+        NetworkReachability.shared.add(observer: self)
         {
             [weak self] in self?.networkReachability(did: $0)
         }
@@ -22,7 +22,7 @@ class CKRecordController: Observer
     deinit
     {
         stopObserving()
-        NetworkReachability.shared.stopNotifying(self)
+        NetworkReachability.shared.remove(observer: self)
     }
     
     // MARK: - Forward Database Messages to Synchronizer
