@@ -260,9 +260,8 @@ class PurchaseView: LayerBackedView, CustomObservable, Observer
     
     // MARK: - Observability
     
-    typealias Message = Event
+    let messenger = Messenger<Message>()
+    typealias Message = Event?
     
-    let messenger = Messenger(Event.didNothing)
-    
-    enum Event { case didNothing, expandButtonWasClicked }
+    enum Event { case expandButtonWasClicked }
 }

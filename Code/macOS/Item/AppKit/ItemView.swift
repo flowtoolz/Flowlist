@@ -116,12 +116,10 @@ class ItemView: LayerBackedView, Observer, CustomObservable
     
     private func observe(item: Item)
     {
-        observe(item.treeMessenger)
+        observe(item.treeMessenger).unwrap()
         {
             [weak self, weak item] event in
-            
             guard let item = item else { return }
-            
             self?.received(event, from: item)
         }
         
@@ -132,7 +130,7 @@ class ItemView: LayerBackedView, Observer, CustomObservable
     {
         switch event
         {
-        case .didNothing, .didUpdateTree: break
+        case .didUpdateTree: break
         case .didUpdateNode(let edit):
             switch edit
             {
@@ -460,7 +458,11 @@ class ItemView: LayerBackedView, Observer, CustomObservable
         let view = addForAutoLayout(TextView())
         
         view.insertionPointColor = Color.text.nsColor
-        self.observe(view.messenger) { [weak self] in self?.didReceive($0) }
+        
+        observe(view.messenger).unwrap()
+        {
+            [weak self] in self?.didReceive($0)
+        }
         
         return view
     }()
@@ -469,8 +471,6 @@ class ItemView: LayerBackedView, Observer, CustomObservable
     {
         switch event
         {
-        case .didNothing: break
-            
         case .willEdit:
             set(editing: true)
             send(.willEditText)
@@ -654,13 +654,11 @@ class ItemView: LayerBackedView, Observer, CustomObservable
     
     // MARK: - Observability
     
-    typealias Message = Event
-    
-    let messenger = Messenger(Event.didNothing)
+    let messenger = Messenger<Message>()
+    typealias Message = Event?
     
     enum Event: Equatable
     {
-        case didNothing
         case willEditText
         case didChangeText
         case wantToEndEditingText

@@ -51,7 +51,7 @@ class List: CustomObservable, Observer
             return
         }
         
-        observe(root.treeMessenger)
+        observe(root.treeMessenger).unwrap()
         {
             [weak self, weak root] event in
             
@@ -59,7 +59,7 @@ class List: CustomObservable, Observer
             
             switch event
             {
-            case .didNothing, .didUpdateTree: break
+            case .didUpdateTree: break
             case .didUpdateNode(let edit): self?.received(edit, from: root)
             case .didChangeLeafNumber(numberOfLeafs: _): break
             }
@@ -340,13 +340,11 @@ class List: CustomObservable, Observer
     
     // MARK: - Observability
     
-    typealias Message = Event
-    
-    let messenger = Messenger(Event.didNothing)
+    let messenger = Messenger<Message>()
+    typealias Message = Event?
     
     enum Event
     {
-        case didNothing
         case did(Item.Event.NodeUpdate)
         case didChangeSelection(added: [Int], removed: [Int])
     }

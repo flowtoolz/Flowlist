@@ -106,14 +106,9 @@ class ItemTableContent: NSObject, CustomObservable, NSTableViewDataSource, NSTab
     
     // MARK: - Observability
     
-    typealias Message = Event
-    
-    let messenger = Messenger(Event.didNothing)
-    
-    enum Event
-    {
-        case didNothing, didCreate(itemView: ItemView)
-    }
+    let messenger = Messenger<Message>()
+    typealias Message = Event?
+    enum Event { case didCreate(itemView: ItemView) }
 }
 
 protocol TableContentDelegate

@@ -114,13 +114,12 @@ class WindowMenu: NSMenu, NSMenuItemValidation, Observer
     {
         stopObserving(self.window)
         
-        observe(window)
+        observe(window).unwrap()
         {
             [weak self] event in
             
             switch event
             {
-            case .didNothing: break
             case .didChangeVisibility(let visible):
                 self?.updateWindowItemTitle(isOpen: visible)
             }

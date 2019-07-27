@@ -99,7 +99,7 @@ class Browser: Observer, CustomObservable
     
     private func observe(list: List)
     {   
-        observe(list)
+        observe(list).unwrap()
         {
             [weak self, weak list] event in
             
@@ -172,13 +172,11 @@ class Browser: Observer, CustomObservable
     
     // MARK: - Observability
     
-    typealias Message = Event
-    
-    let messenger = Messenger(Event.didNothing)
+    let messenger = Messenger<Message>()
+    typealias Message = Event?
     
     enum Event
     {
-        case didNothing
         case didPush(list: List)
         case selectionChanged(in: List)
     }

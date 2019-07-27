@@ -178,7 +178,7 @@ class TreeStore: Observer, CustomObservable
     {
         guard tree.isRoot else { return }
         
-        observe(tree.treeMessenger)
+        observe(tree.treeMessenger).unwrap()
         {
             [weak self] event in
             guard case .didUpdateTree(let treeUpdate) = event else { return }

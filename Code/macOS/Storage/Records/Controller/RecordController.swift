@@ -90,6 +90,7 @@ class RecordController: Observer
             RecordStore.shared.save(effectedRecords, identifyAs: self)
             
         case .receivedMessage(let message, let node):
+            guard let message = message else { break }
             if case .wasModified = message
             {
                 RecordStore.shared.save([Record(item: node)], identifyAs: self)

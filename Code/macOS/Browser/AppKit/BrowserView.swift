@@ -64,7 +64,7 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
     
     private func observeBrowser()
     {
-        observe(browser)
+        observe(browser).unwrap()
         {
             [unowned self] event in self.did(receive: event)
         }
@@ -115,9 +115,7 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
         observe(listView).select(.didReceiveUserInput)
         {
             [weak listView, weak self] in
-            
             guard let listView = listView else { return }
-            
             self?.listViewReceivedUserInput(listView)
         }
     }

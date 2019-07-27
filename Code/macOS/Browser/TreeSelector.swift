@@ -146,7 +146,7 @@ class TreeSelector: Observer, CustomObservable
     
     private func observeTreeMessenger(of tree: Item)
     {
-        observe(tree.treeMessenger)
+        observe(tree.treeMessenger).unwrap()
         {
             [weak self, weak tree] event in
             
@@ -160,7 +160,7 @@ class TreeSelector: Observer, CustomObservable
     {
         switch event
         {
-        case .didNothing, .didUpdateTree:
+        case .didUpdateTree:
             break
             
         case .didUpdateNode(let edit):

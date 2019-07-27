@@ -57,13 +57,12 @@ class ItemTable: AnimatedTableView, Observer, CustomObservable, TableContentDele
             return
         }
         
-        observe(list)
+        observe(list).unwrap()
         {
             [weak self] event in
             
             switch event
             {
-            case .didNothing: break
             case .did(let edit): self?.did(edit)
             case .didChangeSelection(let added, _):
                 if let firstSelectedIndex = added.first
@@ -192,11 +191,8 @@ class ItemTable: AnimatedTableView, Observer, CustomObservable, TableContentDele
     private lazy var content: ItemTableContent =
     {
         let tableContent = ItemTableContent()
-        
         tableContent.delegate = self
-        
-        observe(tableContent) { [unowned self] in self.didReceive($0) }
-        
+        observe(tableContent).unwrap() { [unowned self] in self.didReceive($0) }
         return tableContent
     }()
     
@@ -205,7 +201,6 @@ class ItemTable: AnimatedTableView, Observer, CustomObservable, TableContentDele
         switch event
         {
         case .didCreate(let itemView): observe(itemView: itemView)
-        case .didNothing: break
         }
     }
     
@@ -281,7 +276,7 @@ class ItemTable: AnimatedTableView, Observer, CustomObservable, TableContentDele
     
     private func observe(itemView: ItemView)
     {
-        observe(itemView)
+        observe(itemView).unwrap()
         {
             [weak self, weak itemView] event in
             
@@ -299,8 +294,6 @@ class ItemTable: AnimatedTableView, Observer, CustomObservable, TableContentDele
         
         switch event
         {
-        case .didNothing: break
-            
         case .willEditText:
             if index != rowBeingEdited
             {
@@ -378,7 +371,6 @@ class ItemTable: AnimatedTableView, Observer, CustomObservable, TableContentDele
     
     // MARK: - Observability
     
-    typealias Message = ItemView.Event
-    
-    let messenger = Messenger(ItemView.Event.didNothing)
+    let messenger = Messenger<Message>()
+    typealias Message = ItemView.Event?
 }

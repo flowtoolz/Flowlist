@@ -26,7 +26,7 @@ class PurchaseContentView: NSView, Observer
 
         constrainBulletpointList()
         
-        observe(purchaseController)
+        observe(purchaseController).unwrap()
         {
             [weak self] event in self?.didReceive(event)
         }
@@ -60,8 +60,6 @@ class PurchaseContentView: NSView, Observer
     {
         switch event
         {
-        case .didNothing: break
-        
         case .didCancelLoadingFullversionProductBecauseOffline:
             show(error: productLoadingCanceledOfflineMessage)
             

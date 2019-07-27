@@ -260,11 +260,10 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     private func send(_ update: Event) { treeMessenger.send(update) }
     
-    let treeMessenger = Messenger(Event.didNothing)
+    let treeMessenger = Messenger<Event?>()
     
     enum Event
     {
-        case didNothing
         case didUpdateTree(TreeUpdate)
         case didUpdateNode(NodeUpdate)
         case didChangeLeafNumber(Int)

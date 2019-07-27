@@ -100,13 +100,11 @@ final class ItemData: Observer, CustomObservable
     
     // MARK: - Observability
     
-    let messenger = Messenger(Event.didNothing)
-    
-    typealias Message = Event
+    let messenger = Messenger<Message>()
+    typealias Message = Event?
     
     enum Event: Equatable
     {
-        case didNothing
         case wasModified
         case wantTextInput
     }
