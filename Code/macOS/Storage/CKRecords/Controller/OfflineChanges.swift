@@ -37,33 +37,18 @@ class OfflineChanges
     func clear()
     {
         edits.removeAll()
-        
-        if FileManager.default.itemExists(editsFile)
-        {
-            FileManager.default.remove(editsFile)
-        }
+        FileManager.default.remove(editsFile)
         
         deletions.removeAll()
-        
-        if FileManager.default.itemExists(deletionsFile)
-        {
-            FileManager.default.remove(deletionsFile)
-        }
+        FileManager.default.remove(deletionsFile)
     }
     
     // MARK: - Persist Changes
     
     private func load()
     {
-        if FileManager.default.itemExists(editsFile)
-        {
-            edits = RecordIDs(from: editsFile) ?? []
-        }
-        
-        if FileManager.default.itemExists(deletionsFile)
-        {
-            deletions = RecordIDs(from: deletionsFile) ?? []
-        }
+        edits = RecordIDs(from: editsFile) ?? []
+        deletions = RecordIDs(from: deletionsFile) ?? []
     }
     
     private func save()
