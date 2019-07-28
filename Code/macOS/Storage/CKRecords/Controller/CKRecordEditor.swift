@@ -7,6 +7,8 @@ class CKRecordEditor
 {
     func saveCKRecords(for records: [Record]) -> Promise<Void>
     {
+        guard !records.isEmpty else { return Promise() }
+        
         return firstly
         {
             ckRecordDatabase.save(records.map(makeCKRecord))
@@ -134,6 +136,8 @@ class CKRecordEditor
     
     func deleteCKRecords(with ids: [Record.ID]) -> Promise<Void>
     {
+        guard !ids.isEmpty else { return Promise() }
+        
         return firstly
         {
             ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(ids))

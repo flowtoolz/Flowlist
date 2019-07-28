@@ -25,6 +25,7 @@ class TreeStore: Observer, CustomObservable
     
     func apply(updates: [Update])
     {
+        guard !updates.isEmpty else { return }
         let multipleUpdates = updates.count > 1
         if multipleUpdates { send(.willApplyMultipleUpdates) }
         updates.sortedByPosition.forEach(self.apply)

@@ -11,6 +11,7 @@ class RecordStore: CustomObservable
     
     func save(_ records: [Record], identifyAs object: AnyObject)
     {
+        guard !records.isEmpty else { return }
         let differingRecords = records.compactMap { recordsByID[$0.id] != $0 ? $0 : nil }
         guard !differingRecords.isEmpty else { return }
         differingRecords.forEach { recordsByID[$0.id] = $0 }
@@ -19,6 +20,7 @@ class RecordStore: CustomObservable
     
     func deleteRecords(with ids: [Record.ID], identifyAs object: AnyObject)
     {
+        guard !ids.isEmpty else { return }
         let idsOfExistingRecords = ids.compactMap { recordsByID[$0] != nil ? $0 : nil }
         guard !idsOfExistingRecords.isEmpty else { return }
         idsOfExistingRecords.forEach { recordsByID[$0] = nil }
