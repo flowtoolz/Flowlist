@@ -11,12 +11,11 @@ class FlowlistView: LayerBackedView, Observer
     {
         super.init(frame: frameRect)
         
-        constrainBrowserView()
+        constrainBrowserView(bottomInset: isFullVersion ? 0 : purchaseViewHeight)
+        addPurchaseView()
         
         if !isFullVersion
         {
-            constrainPurchaseView()
-            
             observe(purchaseView).select(.expandButtonWasClicked)
             {
                 [weak self] in self?.togglePurchaseView()
@@ -64,21 +63,16 @@ class FlowlistView: LayerBackedView, Observer
     {
         guard isFullVersion else { return }
         
-        set(purchaseViewHeight: 0) { self.removePurchaseView() }
-    }
-    
-    private func removePurchaseView()
-    {
-        removeConstraints(constraints)
-        purchaseView.removeFromSuperview()
-        
-        constrainBrowserView()
+        set(purchaseViewHeight: 0)
+        {
+            self.purchaseView.isHidden = true
+            self.browserViewBottomConstraint?.constant = 0
+        }
     }
     
     private func togglePurchaseView()
     {
         purchaseView.isExpanded = !purchaseView.isExpanded
-        
         set(purchaseViewHeight: purchaseViewHeight)
     }
     
@@ -98,10 +92,11 @@ class FlowlistView: LayerBackedView, Observer
         NSAnimationContext.endGrouping()
     }
     
-    private func constrainPurchaseView()
+    private func addPurchaseView()
     {
-        purchaseView.constrainToParentExcludingTop()
-        purchaseView.constrain(below: browserView)
+        guard !isFullVersion else { return }
+        
+        addForAutoLayout(purchaseView).constrainToParentExcludingTop()
         purchaseViewHeightConstraint = purchaseView.constrainHeight(to: purchaseViewHeight)
     }
     
@@ -112,24 +107,22 @@ class FlowlistView: LayerBackedView, Observer
     
     private var purchaseViewHeightConstraint: NSLayoutConstraint?
     
-    private lazy var purchaseView = addForAutoLayout(PurchaseView())
+    private lazy var purchaseView = PurchaseView()
     
     // MARK: - Browser View
+    
+    private func constrainBrowserView(bottomInset: CGFloat)
+    {
+        browserView.constrainToParentExcludingBottom()
+        browserViewBottomConstraint = browserView.constrainBottomToParent(inset: bottomInset)
+    }
     
     func didResize()
     {
         browserView.didResize()
     }
     
-    private func constrainBrowserView()
-    {
-        browserView.constrainToParentExcludingBottom()
-        
-        if isFullVersion
-        {
-            browserView.constrainBottomToParent()
-        }
-    }
-    
     private lazy var browserView = addForAutoLayout(BrowserView())
+    
+    private var browserViewBottomConstraint: NSLayoutConstraint?
 }
