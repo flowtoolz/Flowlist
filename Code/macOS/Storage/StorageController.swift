@@ -23,13 +23,23 @@ class StorageController
             () -> Promise<Void> in
             
             self.fileController.saveRecordsFromFilesToRecordStore()
-            return self.ckRecordController.resync()
+            return isCKSyncFeatureAvailable ? self.ckRecordController.resync() : Promise()
         }
         .done
         {
             try self.ensureThereIsInitialData()
         }
-        .catch(CKSyncIntention.shared.abort)
+        .catch
+        {
+            if isCKSyncFeatureAvailable && CKSyncIntention.shared.isActive
+            {
+                CKSyncIntention.shared.abort(with: $0)
+            }
+            else
+            {
+                log(error: $0.readable.message)
+            }
+        }
     }
     
     private func ensureThereIsInitialData() throws

@@ -13,9 +13,11 @@ class DataMenu: NSMenu, NSMenuItemValidation
         addItem(exportItem)
         addItem(finderItem)
         
-        addItem(NSMenuItem.separator())
-        
-        addItem(cloudItem)
+        if isCKSyncFeatureAvailable
+        {
+            addItem(NSMenuItem.separator())
+            addItem(cloudItem)
+        }
     }
     
     required init(coder decoder: NSCoder) { fatalError() }

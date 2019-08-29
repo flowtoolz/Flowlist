@@ -42,3 +42,5 @@ extension CKSubscription.ID
 {
     static var itemSub: CKSubscription.ID { return CKSubscription.ID("ItemDataBaseSubscription") }
 }
+
+var isCKSyncFeatureAvailable: Bool { return false }
