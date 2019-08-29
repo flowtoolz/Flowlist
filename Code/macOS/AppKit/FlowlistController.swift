@@ -115,7 +115,7 @@ class FlowlistController: AppController
     
     @objc private func iCloudAccountDidChange()
     {
-        StorageController.shared.databaseAccountDidChange()
+        StorageController.shared.cloudKitAccountDidChange()
     }
     
     // MARK: - Basics

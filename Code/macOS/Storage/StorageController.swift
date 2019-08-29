@@ -59,7 +59,7 @@ class StorageController
         ckRecordController.userDidToggleSync()
     }
     
-    func databaseAccountDidChange()
+    func cloudKitAccountDidChange()
     {
         ckRecordController.accountDidChange()
     }
