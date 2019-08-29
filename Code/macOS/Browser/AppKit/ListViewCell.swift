@@ -12,15 +12,14 @@ class ListViewCell: NSCollectionViewItem
     
     override func loadView()
     {
-        if let listView = listView
-        {
-            listView.translatesAutoresizingMaskIntoConstraints = true
-            view = listView
-        }
-        else
+        guard let listView = listView else
         {
             view = NSView()
+            return
         }
+        
+        listView.translatesAutoresizingMaskIntoConstraints = true
+        view = listView
     }
     
     private weak var listView: ListView?

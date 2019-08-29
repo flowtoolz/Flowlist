@@ -11,21 +11,8 @@ class ListView: LayerBackedView, Observer, CustomObservable
     {
         super.init(frame: frameRect)
         
-        shadow = NSShadow()
-        layer?.shadowColor = Color.gray(brightness: 0.5).cgColor
-        layer?.shadowOffset = CGSize(width: Color.isInDarkMode ? -1 : 1,
-                                     height: -1)
-        layer?.shadowRadius = 0
-        layer?.shadowOpacity = Color.isInDarkMode ? 0.28 : 0.2
-        
-        observe(darkMode)
-        {
-            [weak self] isDark in
-            
-            self?.layer?.shadowOffset = CGSize(width: isDark ? -1 : 1,
-                                               height: -1)
-            self?.layer?.shadowOpacity = Color.isInDarkMode ? 0.28 : 0.2
-        }
+        setupShadow()
+        observe(darkMode) { [weak self] _ in self?.adjustShadowToColorMode() }
         
         constrainHeader()
         constrainScrollTable()
@@ -34,6 +21,23 @@ class ListView: LayerBackedView, Observer, CustomObservable
     required init?(coder decoder: NSCoder) { fatalError() }
     
     deinit { stopObserving() }
+    
+    // MARK: - Shadow
+    
+    private func setupShadow()
+    {
+        shadow = NSShadow()
+        layer?.shadowColor = Color.gray(brightness: 0.5).cgColor
+        layer?.shadowRadius = 0
+        adjustShadowToColorMode()
+    }
+    
+    private func adjustShadowToColorMode()
+    {
+        let isDark = Color.isInDarkMode
+        layer?.shadowOffset = CGSize(width: isDark ? -1 : 1, height: -1)
+        layer?.shadowOpacity = isDark ? 0.28 : 0.2
+    }
     
     // MARK: - Configuration
     
