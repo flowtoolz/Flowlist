@@ -189,6 +189,8 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
     func collectionView(_ collectionView: NSCollectionView,
                         itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem
     {
+        // TODO: is there no way the collection view recycles item views?
+        
         let listIndex = (indexPath.item - 2) + browser.focusedIndex
         
         guard listViews.isValid(index: listIndex) else
