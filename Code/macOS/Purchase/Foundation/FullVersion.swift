@@ -28,11 +28,11 @@ var isFullVersion: Bool
     {
         #if BETA
         
-        return true
+        return false
         
         #elseif DEBUG
 
-        return true
+        return false
         
         #else
         
