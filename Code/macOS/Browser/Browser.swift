@@ -9,14 +9,9 @@ class Browser: Observer, CustomObservable
     
     fileprivate init()
     {
-        pushList()
-        pushList()
-        pushList()
+        3.times { pushList() }
         
-        guard lists.isValid(index: focusedIndex) else
-        {
-            fatalError()
-        }
+        guard lists.isValid(index: focusedIndex) else { fatalError() }
         
         if TreeSelector.shared.selectedTree != nil
         {

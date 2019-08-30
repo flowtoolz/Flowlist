@@ -110,16 +110,8 @@ extension List
     
     var selectedIndexes: [Int]
     {
-        var selected = [Int]()
+        guard let items = root?.children else { return [] }
         
-        for index in 0 ..< count
-        {
-            if self[index]?.isSelected ?? false
-            {
-                selected.append(index)
-            }
-        }
-        
-        return selected
+        return items.indices.compactMap { items[$0].isSelected ? $0 : nil }
     }
 }

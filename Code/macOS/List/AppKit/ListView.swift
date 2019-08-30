@@ -139,7 +139,6 @@ class ListView: LayerBackedView, Observer, CustomObservable
     }
 
     private let relativeHeaderHeight: CGFloat = 1.5
-    
     private var headerHeightConstraint: NSLayoutConstraint?
     
     // MARK: - List
