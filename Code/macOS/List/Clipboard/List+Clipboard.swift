@@ -4,6 +4,8 @@ extension List
     {
         let selected = selectedIndexes
         
+        deselectItems(at: selected)
+        
         guard let firstSelectedIndex = selected.first,
             root?.cut(at: selected) ?? false else { return }
         
