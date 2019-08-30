@@ -10,9 +10,7 @@ extension Tree where Data == ItemData
         
         clipboard.storeCopiesAndOriginals(of: nodes)
         
-        removeChildren(from: indexes)
-        
-        return true
+        return removeChildren(from: indexes) != nil
     }
     
     @discardableResult
