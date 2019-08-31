@@ -1,4 +1,5 @@
 import AppKit
+import GetLaid
 
 class ListViewCell: NSCollectionViewItem
 {
@@ -12,14 +13,12 @@ class ListViewCell: NSCollectionViewItem
     
     override func loadView()
     {
-        guard let listView = listView else
-        {
-            view = NSView()
-            return
-        }
+        view = NSView()
         
-        listView.translatesAutoresizingMaskIntoConstraints = true
-        view = listView
+        if let listView = listView
+        {
+            view.addForAutoLayout(listView).constrainToParent()
+        }
     }
     
     private weak var listView: ListView?
