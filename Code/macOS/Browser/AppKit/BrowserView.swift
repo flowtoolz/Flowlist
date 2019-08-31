@@ -73,7 +73,7 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
         {
             [unowned self] indexChange in
             
-            self.moveToFocusedList(from: indexChange.old, to: indexChange.new)
+            self.browserDidMoveFocus(from: indexChange.old, to: indexChange.new)
         }
     }
     
@@ -131,20 +131,25 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
         browser.move(to: listIndex)
     }
     
-    private func moveToFocusedList(from: Int, to: Int)
+    private func browserDidMoveFocus(from: Int, to: Int)
     {
         guard listViews.isValid(index: to) else { return }
         
-        let moveListsRight = from > to
-        let deleteIndex = moveListsRight ? 4 : 0
-        let insertIndex = moveListsRight ? 0 : 4
-
-        collectionView.animator().performBatchUpdates(
+        move(from > to ? .left : .right)
+    }
+    
+    private func move(_ direction: Direction)
+    {
+        let deleteIndex = direction == .left ? 4 : 0
+        let insertIndex = direction == .left ? 0 : 4
+        
+        let animatedCollectionView = collectionView.animator()
+        
+        animatedCollectionView.performBatchUpdates(
         {
-            // TODO: self.collectionView.layer?.speed actually slows down the animation and is also perfect to reproduce crashes ... also: see logged errors: > FLOWLIST ERROR: list index -2 is invalid. We have 3 list views. (BrowserView.swift, collectionView(_:itemForRepresentedObjectAt:), line 198)
-            //self.collectionView.layer?.speed = 0.3
-            self.collectionView.deleteItems(at: Set([IndexPath(item: deleteIndex, section: 0)]))
-            self.collectionView.insertItems(at: Set([IndexPath(item: insertIndex, section: 0)]))
+            NSAnimationContext.current.duration = 0.25
+            animatedCollectionView.deleteItems(at: Set([IndexPath(item: deleteIndex, section: 0)]))
+            animatedCollectionView.insertItems(at: Set([IndexPath(item: insertIndex, section: 0)]))
         })
     }
     
@@ -191,7 +196,7 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
     {
         // TODO: is there no way the collection view recycles item views?
         
-        let listIndex = (indexPath.item - 2) + browser.focusedIndex
+        let listIndex = targetListIndex(atCellIndex: indexPath.item)
         
         guard listViews.isValid(index: listIndex) else
         {
@@ -203,6 +208,11 @@ class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSColl
         }
         
         return ListViewCell(listView: listViews[listIndex])
+    }
+    
+    private func targetListIndex(atCellIndex cellIndex: Int) -> Int
+    {
+        return (cellIndex - 2) + browser.focusedIndex
     }
     
     func collectionView(_ collectionView: NSCollectionView,
