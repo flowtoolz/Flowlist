@@ -5,11 +5,19 @@ class Row: NSTableRowView
 {
     // MARK: - Initialization
     
-    init() { super.init(frame: .zero) }
+    init()
+    {
+        super.init(frame: .zero)
+        isTargetForDropOperation = false
+        draggingDestinationFeedbackStyle = .none
+        selectionHighlightStyle = .none
+    }
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
-    // MARK: - Draw Background
+    // MARK: - Ensure Nothing Unnecessary is Drawn
     
-    override func drawBackground(in dirtyRect: NSRect) {}
+    override func drawBackground(in dirtyRect: NSRect) {} // this avoids a visual bug
+    override func drawSelection(in dirtyRect: NSRect) {}
+    override func drawSeparator(in dirtyRect: NSRect) {}
 }
