@@ -26,7 +26,7 @@ class TextView: NSTextView, NSTextViewDelegate
         focusRingType = .none
         drawsBackground = false
         textContainerInset = .zero
-        textContainer?.lineFragmentPadding = 0
+        textContainer?.lineFragmentPadding = TextView.lineFragmentPadding
         isAutomaticLinkDetectionEnabled = true
         isAutomaticDataDetectionEnabled = true
         isRichText = false
@@ -165,10 +165,12 @@ class TextView: NSTextView, NSTextViewDelegate
         
         let container = NSTextContainer(containerSize: size)
         
-        container.lineFragmentPadding = 0
+        container.lineFragmentPadding = TextView.lineFragmentPadding
         
         return container
     }()
+    
+    private static let lineFragmentPadding: CGFloat = 1
     
     // MARK: - Update
 
