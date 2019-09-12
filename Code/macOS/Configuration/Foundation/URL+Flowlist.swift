@@ -5,10 +5,21 @@ extension URL
 {
     static let flowlistDirectory: URL =
     {
-        let dir = mainDirectory.appendingPathComponent("Flowlist")
+        let dir = mainDirectory.appendingPathComponent(flowlistDirectoryName)
         FileManager.default.ensureDirectoryExists(dir)
         return dir
     }()
+    
+    private static var flowlistDirectoryName: String
+    {
+        #if BETA
+        return "Flowlist-Beta"
+        #elseif DEBUG
+        return "Flowlist-Debug"
+        #else
+        return "Flowlist"
+        #endif
+    }
     
     private static var mainDirectory: URL
     {
