@@ -11,11 +11,7 @@ class PurchaseView: LayerBackedView, CustomObservable, Observer
     {
         super.init(frame: frameRect)
         
-        shadow = NSShadow()
-        layer?.shadowColor = Color.black.cgColor
-        layer?.shadowOffset = CGSize(width: 0, height: 5)
-        layer?.shadowRadius = 5
-        layer?.shadowOpacity = Color.isInDarkMode ? 0.5 : 0.05
+        resetShadow()
         
         backgroundColor = .purchasePanelBackground
         
@@ -53,9 +49,9 @@ class PurchaseView: LayerBackedView, CustomObservable, Observer
     
     private func adjustToColorMode()
     {
-        backgroundColor = .purchasePanelBackground
+        resetShadow()
         
-        layer?.shadowOpacity = Color.isInDarkMode ? 0.5 : 0.05
+        backgroundColor = .purchasePanelBackground
         
         progressBar.backgroundColor = .progressBackground
         progressBar.progressColor = .progressBar
@@ -67,6 +63,26 @@ class PurchaseView: LayerBackedView, CustomObservable, Observer
         expandIcon.image = isExpanded ? closeImage : expandImage
         
         content.adjustToColorMode()
+    }
+    
+    // MARK: - Shadow
+    
+    private func resetShadow()
+    {
+        let color = Color.black
+        let offset = CGSize(width: 0, height: 5)
+        let opacity: Float = Color.isInDarkMode ? 0.5 : 0.05
+        let radius: CGFloat = 5
+        
+        shadow = NSShadow()
+        shadow?.shadowOffset = offset
+        shadow?.shadowColor = color.with(alpha: opacity).nsColor
+        shadow?.shadowBlurRadius = radius
+        
+        layer?.shadowColor = color.cgColor
+        layer?.shadowOffset = offset
+        layer?.shadowRadius = radius
+        layer?.shadowOpacity = opacity
     }
     
     // MARK: - Expand / Collapse
