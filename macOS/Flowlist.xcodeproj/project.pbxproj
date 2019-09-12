@@ -430,7 +430,6 @@
 			isa = PBXGroup;
 			children = (
 				9E47E32122AAAC530068088A /* BrowserView.swift */,
-				9E47E32322AAC0A20068088A /* ListViewCell.swift */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -450,6 +449,7 @@
 		9EA5A88B218EC8CE004902F7 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
+				9E47E32322AAC0A20068088A /* ListViewCell.swift */,
 				9E053B56218871C4001B7103 /* ListView.swift */,
 				9E053B57218871C4001B7103 /* Header.swift */,
 				9E053B58218871C4001B7103 /* ItemTable.swift */,
