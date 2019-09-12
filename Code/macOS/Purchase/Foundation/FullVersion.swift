@@ -28,7 +28,7 @@ var isFullVersion: Bool
     {
         #if BETA
         
-        return false
+        return true
         
         #elseif DEBUG
 
