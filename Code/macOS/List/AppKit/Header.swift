@@ -206,9 +206,7 @@ class Header: LayerBackedView, Observer
     private lazy var colorView: LayerBackedView =
     {
         let view = topSpacer.addForAutoLayout(LayerBackedView())
-        
         view.alphaValue = 0.5
-        
         return view
     }()
     

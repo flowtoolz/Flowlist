@@ -48,7 +48,6 @@ class ListView: LayerBackedView, Observer, CustomObservable
     override func mouseDown(with event: NSEvent)
     {
         super.mouseDown(with: event)
-        
         send(.didReceiveUserInput)
     }
     
@@ -68,14 +67,12 @@ class ListView: LayerBackedView, Observer, CustomObservable
     func fontSizeDidChange()
     {
         updateLayoutConstants()
-        
         scrollTable.table.fontSizeDidChange()
     }
     
     private func constrainScrollTable()
     {
         scrollTable.constrainToParentExcludingTop()
-        
         scrollTable.constrain(below: header)
     }
     
