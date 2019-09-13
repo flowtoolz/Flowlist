@@ -8,6 +8,16 @@ All other languages get the secondary keyword list
 
 # Flowlist AppStore Update Text
 
+## 1.7.2
+
+This update improves the main animation, removes iCloud synchronization for now, and migrates local items to a new storage format.
+
+• The navigation animation has been (re)built for the 3rd time. Now, it's finally as smooth as it always was supposed to be, even with lots of items.
+• iCloud sync has been removed for now. Its implementation was simply not robust enough. It has been rebuilt and will be re-released when it's fully reliable.
+• The storage architecture has been rebuilt as well. Locally on your mac, each item is now stored in its own JSON file, and those files are being updated in real time. All this accommodates iCloud sync and ultimately prepares Flowlist for the iOS companion app.
+• As always: Many technical improvements under the hood to maintain development speed.
+
+
 ## 1.7.0
 
 This update improves various aspects and introduces iCloud synchronisation.
