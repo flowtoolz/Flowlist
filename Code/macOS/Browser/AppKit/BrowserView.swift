@@ -4,7 +4,7 @@ import UIObserver
 import SwiftObserver
 import SwiftyToolz
 
-class BrowserView: LayerBackedView, Observer, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout
+class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout
 {
     // MARK: - Life Cycle
     

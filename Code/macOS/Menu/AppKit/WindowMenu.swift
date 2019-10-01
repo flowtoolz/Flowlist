@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class WindowMenu: NSMenu, NSMenuItemValidation, Observer
+class WindowMenu: NSMenu, NSMenuItemValidation
 {
     // MARK: - Initialization
     

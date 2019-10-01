@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class PriceTag: NSView, Observer
+class PriceTag: NSView
 {
     // MARK: - Initialization
     

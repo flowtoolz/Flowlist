@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class ListView: LayerBackedView, Observer, CustomObservable
+class ListView: LayerBackedView, CustomObservable
 {
     // MARK: - Life Cycle
     

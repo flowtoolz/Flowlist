@@ -4,7 +4,7 @@ import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
-class PurchaseContentView: NSView, Observer
+class PurchaseContentView: NSView
 {
     // MARK: - Life Cycle
     

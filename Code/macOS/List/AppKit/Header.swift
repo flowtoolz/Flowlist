@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class Header: LayerBackedView, Observer
+class Header: LayerBackedView
 {
     // MARK: - Life Cycle
     

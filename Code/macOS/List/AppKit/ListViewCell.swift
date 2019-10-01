@@ -3,7 +3,7 @@ import GetLaid
 import SwiftObserver
 import SwiftyToolz
 
-class ListViewCell: NSCollectionViewItem, Observer
+class ListViewCell: NSCollectionViewItem
 {
     // MARK: - Initialize
     

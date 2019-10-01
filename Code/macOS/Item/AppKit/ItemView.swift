@@ -4,7 +4,7 @@ import SwiftObserver
 import SwiftyToolz
 import GetLaid
 
-class ItemView: LayerBackedView, Observer, CustomObservable
+class ItemView: LayerBackedView, CustomObservable
 {
     // MARK: - Life Cycle
     

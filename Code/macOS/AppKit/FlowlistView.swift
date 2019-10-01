@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class FlowlistView: LayerBackedView, Observer
+class FlowlistView: LayerBackedView
 {
     // MARK: - Life Cycle
     

@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class PurchaseView: LayerBackedView, CustomObservable, Observer
+class PurchaseView: LayerBackedView, CustomObservable
 {
     // MARK: - Life Cycle
     

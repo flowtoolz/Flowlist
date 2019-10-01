@@ -2,7 +2,7 @@ import AppKit
 import UIToolz
 import SwiftObserver
 
-class Spacer: LayerBackedView, Observer
+class Spacer: LayerBackedView
 {
     override init(frame frameRect: NSRect)
     {

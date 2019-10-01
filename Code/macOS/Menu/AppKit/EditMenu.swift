@@ -4,7 +4,7 @@ import UIToolz
 import SwiftyToolz
 import SwiftObserver
 
-class EditMenu: NSMenu, NSMenuItemValidation, Observer
+class EditMenu: NSMenu, NSMenuItemValidation
 {
     // MARK: - Initialization
     
