@@ -76,7 +76,7 @@ class BulletpointList: NSView
     
     private var checkImage: NSImage
     {
-        return Color.isInDarkMode ? checkImageWhite : checkImageBlack
+        Color.isInDarkMode ? checkImageWhite : checkImageBlack
     }
     
     private let checkImageBlack = #imageLiteral(resourceName: "checkbox_checked_pdf")

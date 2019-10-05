@@ -28,6 +28,6 @@ extension ItemData
 {
     func isIdentical(to data: ItemData) -> Bool
     {
-        return id == data.id && self == data
+        id == data.id && self == data
     }
 }

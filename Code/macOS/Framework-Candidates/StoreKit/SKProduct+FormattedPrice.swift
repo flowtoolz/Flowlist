@@ -4,6 +4,6 @@ extension SKProduct
 {
     var formattedPrice: String?
     {
-        return price.formattedPrice(in: priceLocale)
+        price.formattedPrice(in: priceLocale)
     }
 }

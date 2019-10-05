@@ -33,7 +33,7 @@ class CKSyncIntention
     
     var isActive: Bool
     {
-        get { return isCKSyncFeatureAvailable ? persistentFlag.value : false }
+        get { isCKSyncFeatureAvailable ? persistentFlag.value : false }
         set { persistentFlag.value = newValue }
     }
     

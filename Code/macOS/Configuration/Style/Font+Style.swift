@@ -5,23 +5,23 @@ extension Font
 {
     static var text: Font
     {
-        return Font.system(size: baseSize.latestMessage, weight: .system)
+        .system(size: baseSize.latestMessage, weight: .system)
     }
     
     static var listTitle: Font
     {
-        return Font.system(size: Int(1.6 * Float(baseSize.latestMessage)),
-                           weight: .semibold)
+        .system(size: Int(1.6 * Float(baseSize.latestMessage)),
+                weight: .semibold)
     }
     
     static var title: Font
     {
-        return Font.system(size: 28, weight: .semibold)
+        .system(size: 28, weight: .semibold)
     }
     
     static var purchasePanel: Font
     {
-        return Font.system(size: 14, weight: .system)
+        .system(size: 14, weight: .system)
     }
     
     static let baseSize = Var(defaultSize).new()

@@ -151,8 +151,8 @@ class CKRecordEditor
         }
     }
     
-    private var queue: DispatchQueue { return ckRecordDatabase.queue }
-    private var ckRecordDatabase: CKRecordDatabase { return .shared }
+    private var queue: DispatchQueue { ckRecordDatabase.queue }
+    private var ckRecordDatabase: CKRecordDatabase { .shared }
 }
 
 private extension Array where Element == Date

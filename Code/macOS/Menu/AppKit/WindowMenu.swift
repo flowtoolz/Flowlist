@@ -177,6 +177,6 @@ class WindowMenu: NSMenu, NSMenuItemValidation
     
     private var darkModeOptionTitle: String
     {
-        return "\(Color.isInDarkMode ? "Daylight" : "Dark") Mode"
+        "\(Color.isInDarkMode ? "Daylight" : "Dark") Mode"
     }
 }

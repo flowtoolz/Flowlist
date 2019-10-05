@@ -151,14 +151,14 @@ class PurchaseView: LayerBackedView, CustomObservable
     
     private func labelColor(for itemNumber: Int) -> Color
     {
-        return .itemText(isDone: itemNumber < 90,
-                         isSelected: false,
-                         isFocused: true)
+        .itemText(isDone: itemNumber < 90,
+                  isSelected: false,
+                  isFocused: true)
     }
     
     private func labelText(for itemNumber: Int) -> String
     {
-        return "You have \(itemNumber) items. This trial version can hold up to \(maxNumberOfLeafsInTrial) items. Click here to learn about the unlimited full version."
+        "You have \(itemNumber) items. This trial version can hold up to \(maxNumberOfLeafsInTrial) items. Click here to learn about the unlimited full version."
     }
     
     // MARK: - Expand Icon
@@ -176,7 +176,7 @@ class PurchaseView: LayerBackedView, CustomObservable
     
     private var closeImage: NSImage
     {
-        return Color.isInDarkMode ? closeImageWhite : closeImageBlack
+        Color.isInDarkMode ? closeImageWhite : closeImageBlack
     }
     
     private let closeImageBlack = #imageLiteral(resourceName: "close_indicator_pdf")
@@ -184,7 +184,7 @@ class PurchaseView: LayerBackedView, CustomObservable
     
     private var expandImage: NSImage
     {
-        return Color.isInDarkMode ? expandImageWhite : expandImageBlack
+        Color.isInDarkMode ? expandImageWhite : expandImageBlack
     }
     
     private let expandImageBlack = #imageLiteral(resourceName: "expand_indicator_pdf")

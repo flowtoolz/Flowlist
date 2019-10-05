@@ -51,8 +51,7 @@ class ItemView: LayerBackedView, CustomObservable
     {
         guard let item = item else
         {
-            log(error: "Tried to configure ItemView which has no item")
-            return
+            return log(error: "Tried to configure ItemView which has no item")
         }
         
         isSelected = item.isSelected
@@ -633,17 +632,17 @@ class ItemView: LayerBackedView, CustomObservable
     
     static var heightWithSingleLine: CGFloat
     {
-        return 2 * padding + TextView.lineHeight
+        2 * padding + TextView.lineHeight
     }
     
     static var padding: CGFloat
     {
-        return Float.itemPadding(for: Float(TextView.lineHeight)).cgFloat
+        Float.itemPadding(for: Float(TextView.lineHeight)).cgFloat
     }
     
     static var spacing: CGFloat
     {
-        return TextView.lineSpacing
+        TextView.lineSpacing
     }
     
     // MARK: - Data

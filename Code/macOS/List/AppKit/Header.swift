@@ -126,7 +126,7 @@ class Header: LayerBackedView
     
     private static var iconImage: NSImage
     {
-        return Color.isInDarkMode ? iconImageWhite : iconImageBlack
+        Color.isInDarkMode ? iconImageWhite : iconImageBlack
     }
     
     private static let iconImageBlack = #imageLiteral(resourceName: "home_pdf")
@@ -257,7 +257,7 @@ class Header: LayerBackedView
     
     private var layouGuideSize: CGFloat
     {
-        return ItemView.heightWithSingleLine
+        ItemView.heightWithSingleLine
     }
     
     private var layoutGuideSizeConstraints = [NSLayoutConstraint]()

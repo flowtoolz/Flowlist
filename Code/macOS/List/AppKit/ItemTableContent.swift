@@ -9,13 +9,13 @@ class ItemTableContent: NSObject, CustomObservable, NSTableViewDataSource, NSTab
     
     func numberOfRows(in tableView: NSTableView) -> Int
     {
-        return (list?.count ?? 0) + 1
+        (list?.count ?? 0) + 1
     }
     
     func tableView(_ tableView: NSTableView,
                    rowViewForRow row: Int) -> NSTableRowView?
     {
-        return Row()
+        Row()
     }
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat
@@ -71,8 +71,7 @@ class ItemTableContent: NSObject, CustomObservable, NSTableViewDataSource, NSTab
     
     private func dequeueView(from tableView: NSTableView) -> NSView?
     {
-        return tableView.makeView(withIdentifier: ItemView.uiIdentifier,
-                                  owner: nil)
+        tableView.makeView(withIdentifier: ItemView.uiIdentifier, owner: nil)
     }
     
     private func createItemView() -> ItemView
@@ -86,10 +85,7 @@ class ItemTableContent: NSObject, CustomObservable, NSTableViewDataSource, NSTab
     
     // MARK: - Disable NSTableView Selection
     
-    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool
-    {
-        return false
-    }
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool { false }
     
     // MARK: - List
     

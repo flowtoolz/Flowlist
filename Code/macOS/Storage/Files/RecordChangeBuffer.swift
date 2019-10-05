@@ -10,7 +10,7 @@ class RecordChangeBuffer
     
     // MARK: - Manage Changes
     
-    var hasChanges: Bool { return !edits.isEmpty || !deletions.isEmpty }
+    var hasChanges: Bool { !edits.isEmpty || !deletions.isEmpty }
     
     func save(_ records: [Record])
     {

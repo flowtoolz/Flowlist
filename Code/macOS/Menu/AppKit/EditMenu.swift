@@ -103,7 +103,7 @@ class EditMenu: NSMenu, NSMenuItemValidation
     
     private var numberOfSelectedItems: Int
     {
-        return browser.focusedList.selectedIndexes.count
+        browser.focusedList.selectedIndexes.count
     }
     
     // MARK: - Items

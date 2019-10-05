@@ -124,13 +124,13 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     @discardableResult
     func add(_ child: Node) -> Bool
     {
-        return insert(child, at: count)
+        insert(child, at: count)
     }
     
     @discardableResult
     func insert(_ child: Node, at index: Int) -> Bool
     {
-        return insert([child], at: index)
+        insert([child], at: index)
     }
     
     @discardableResult
@@ -229,9 +229,9 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     // MARK: - Root
     
-    var isRoot: Bool { return parent == nil }
+    var isRoot: Bool { parent == nil }
     
-    var indexInParent: Int? { return parent?.index(of: self) }
+    var indexInParent: Int? { parent?.index(of: self) }
     
     weak var parent: Node?
     {
@@ -331,11 +331,11 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     func index(of child: Node) -> Int?
     {
-        return children.firstIndex { $0 === child }
+        children.firstIndex { $0 === child }
     }
     
-    var isLeaf: Bool { return count == 0 }
-    var count: Int { return children.count }
+    var isLeaf: Bool { count == 0 }
+    var count: Int { children.count }
     
     private(set) var children = [Node]()
     

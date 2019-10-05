@@ -10,7 +10,7 @@ struct PersistentString
     
     public var value: String
     {
-        get { return Persistent.string[key] ?? `default` }
+        get { Persistent.string[key] ?? `default` }
         set { Persistent.string[key] = newValue }
     }
     
@@ -33,7 +33,7 @@ struct PersistentFlag
     
     public var value: Bool
     {
-        get { return Persistent.bool[key] ?? `default` }
+        get { Persistent.bool[key] ?? `default` }
         set { Persistent.bool[key] = newValue }
     }
     
@@ -58,7 +58,7 @@ struct UserDefaultsBool
     {
         get
         {
-            return UserDefaults.standard.object(forKey: key) as? Bool
+            UserDefaults.standard.object(forKey: key) as? Bool
         }
         
         set
@@ -81,7 +81,7 @@ struct UserDefaultsString
     {
         get
         {
-            return UserDefaults.standard.string(forKey: key)
+            UserDefaults.standard.string(forKey: key)
         }
         
         set

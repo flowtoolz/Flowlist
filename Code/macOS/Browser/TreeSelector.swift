@@ -191,6 +191,6 @@ private extension Item
 {
     var treeDescription: String
     {
-        return "\(text ?? "Untitled") (\(numberOfLeafs) leaf\(numberOfLeafs != 1 ? "s" : ""))"
+        "\(text ?? "Untitled") (\(numberOfLeafs) leaf\(numberOfLeafs != 1 ? "s" : ""))"
     }
 }

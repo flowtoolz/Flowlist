@@ -15,17 +15,17 @@ class FileDatabase: CustomObservable
     
     func record(for id: Record.ID) -> Record?
     {
-        return Record(from: file(for: id))
+        Record(from: file(for: id))
     }
     
     func loadRecords() -> [Record]
     {
-        return loadFiles().compactMap(Record.init)
+        loadFiles().compactMap(Record.init)
     }
     
     func loadFiles() -> [URL]
     {
-        return fileManager.items(in: directory)
+        fileManager.items(in: directory)
     }
     
     // MARK: - Edit
@@ -69,7 +69,7 @@ class FileDatabase: CustomObservable
     
     func file(for id: Record.ID) -> URL
     {
-        return directory.appendingPathComponent(id + ".json")
+        directory.appendingPathComponent(id + ".json")
     }
     
     let directory: URL =
@@ -79,7 +79,7 @@ class FileDatabase: CustomObservable
         return dir
     }()
     
-    private var fileManager: FileManager { return .default }
+    private var fileManager: FileManager { .default }
     
     // MARK: - Observability
     

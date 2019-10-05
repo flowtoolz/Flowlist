@@ -2,7 +2,7 @@ import CloudKit
 
 extension CKRecord.RecordType
 {
-    static var itemType: CKRecord.RecordType { return "Item" }
+    static var itemType: CKRecord.RecordType { "Item" }
 }
 
 extension CKRecord.Reference
@@ -17,7 +17,7 @@ extension Array where Element == CKRecord.ID
 {
     static func ckRecordIDs(_ ids: [Record.ID]) -> [CKRecord.ID]
     {
-        return ids.map(CKRecord.ID.init(_:))
+        ids.map(CKRecord.ID.init(_:))
     }
 }
 
@@ -33,14 +33,14 @@ extension CKRecordZone.ID
 {
     static var itemZone: CKRecordZone.ID
     {
-        return CKRecordZone.ID(zoneName: "ItemZone",
+        CKRecordZone.ID(zoneName: "ItemZone",
                                ownerName: CKCurrentUserDefaultName)
     }
 }
 
 extension CKSubscription.ID
 {
-    static var itemSub: CKSubscription.ID { return CKSubscription.ID("ItemDataBaseSubscription") }
+    static var itemSub: CKSubscription.ID { CKSubscription.ID("ItemDataBaseSubscription") }
 }
 
-var isCKSyncFeatureAvailable: Bool { return true }
+var isCKSyncFeatureAvailable: Bool { true }

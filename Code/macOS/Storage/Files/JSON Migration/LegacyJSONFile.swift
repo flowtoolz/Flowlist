@@ -30,7 +30,7 @@ class LegacyJSONFile
     
     var exists: Bool
     {
-        return FileManager.default.itemExists(url)
+        FileManager.default.itemExists(url)
     }
     
     private func records(from json: JSON,

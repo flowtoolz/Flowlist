@@ -175,15 +175,15 @@ class CKRecordSynchronizer
     }
     
     private var isSyncingBufferedChanges = false
-    private var bufferedChanges: RecordChangeBuffer { return .shared }
+    private var bufferedChanges: RecordChangeBuffer { .shared }
     
     // MARK: - Basics
     
-    private var sync: CKSyncIntention { return .shared }
+    private var sync: CKSyncIntention { .shared }
     
-    private var fileDatabase: FileDatabase { return .shared }
+    private var fileDatabase: FileDatabase { .shared }
     
     let editor = CKRecordEditor()
-    private var queue: DispatchQueue { return ckRecordDatabase.queue }
-    private var ckRecordDatabase: CKRecordDatabase { return .shared }
+    private var queue: DispatchQueue { ckRecordDatabase.queue }
+    private var ckRecordDatabase: CKRecordDatabase { .shared }
 }

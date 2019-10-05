@@ -2,5 +2,5 @@ enum Direction
 {
     case left, right
     
-    var reverse: Direction { return self == .left ? .right : .left }
+    var reverse: Direction { self == .left ? .right : .left }
 }

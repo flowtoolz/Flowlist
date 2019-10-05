@@ -10,7 +10,7 @@ class GroupIcon: Icon
     
     private static func iconImage(light: Bool) -> NSImage
     {
-        return light ? imageWhite : imageBlack
+        light ? imageWhite : imageBlack
     }
     
     private static let imageBlack = #imageLiteral(resourceName: "container_indicator_pdf")

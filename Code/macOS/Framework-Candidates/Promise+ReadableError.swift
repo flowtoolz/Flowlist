@@ -5,6 +5,6 @@ extension Promise
 {
     static func fail<T>(_ errorMessage: String) -> Promise<T>
     {
-        return Promise<T>(error: ReadableError(errorMessage))
+        Promise<T>(error: ReadableError(errorMessage))
     }
 }

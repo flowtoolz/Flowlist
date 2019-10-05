@@ -107,7 +107,7 @@ class CKRecordDatabase: Observer, CustomObservable
     
     var hasChangeToken: Bool
     {
-        return ckDatabaseController.hasChangeToken(for: .itemZone)
+        ckDatabaseController.hasChangeToken(for: .itemZone)
     }
     
     func deleteChangeToken()
@@ -171,7 +171,7 @@ class CKRecordDatabase: Observer, CustomObservable
     
     private func ensureDatabaseSubscriptionExists() -> Promise<Void>
     {
-        return ckDatabaseController.createDatabaseSubscription(with: .itemSub).map { _ in }
+        ckDatabaseController.createDatabaseSubscription(with: .itemSub).map { _ in }
     }
     
     func handleDatabaseNotification(with userInfo: JSON)
@@ -195,12 +195,12 @@ class CKRecordDatabase: Observer, CustomObservable
     
     private func ensureRecordZoneExists() -> Promise<Void>
     {
-        return ckDatabaseController.create(.itemZone).map { _ in }
+        ckDatabaseController.create(.itemZone).map { _ in }
     }
     
     // MARK: - CloudKit Database Controller
     
-    var queue: DispatchQueue { return ckDatabaseController.queue }
+    var queue: DispatchQueue { ckDatabaseController.queue }
     
     private let ckDatabaseController = CKDatabaseController(scope: .private,
                                                             cacheDirectory: CKRecordDatabase.cacheDirectory)

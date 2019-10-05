@@ -8,7 +8,7 @@ class AlertDialog: Dialog
     override func pose(_ question: Question,
                        imageName: String? = nil) -> Promise<Answer>
     {
-        return Promise
+        Promise
         {
             resolver in
         

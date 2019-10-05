@@ -194,7 +194,7 @@ class List: CustomObservable, Observer
         return root[index]
     }
     
-    var count: Int { return root?.count ?? 0 }
+    var count: Int { root?.count ?? 0 }
     
     // MARK: - Root
     

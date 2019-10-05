@@ -15,7 +15,7 @@ extension List
     
     var canShiftSelectionUp: Bool
     {
-        return count > 0 && selectedIndexes != [0]
+        count > 0 && selectedIndexes != [0]
     }
     
     func shiftSelectionUp()
@@ -32,7 +32,7 @@ extension List
     
     var canShiftSelectionDown: Bool
     {
-        return count > 0 && selectedIndexes != [count - 1]
+        count > 0 && selectedIndexes != [count - 1]
     }
     
     func shiftSelectionDown()

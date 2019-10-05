@@ -132,7 +132,7 @@ extension List
     
     var newIndexBelowSelection: Int
     {
-        return (selectedIndexes.last ?? -1) + 1
+        (selectedIndexes.last ?? -1) + 1
     }
     
     // MARK: - Toggle States

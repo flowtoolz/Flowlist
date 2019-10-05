@@ -72,13 +72,15 @@ class TextView: NSTextView, NSTextViewDelegate
     
     private static var typingSyle: [NSAttributedString.Key : Any]
     {
-        return [.font : Font.text.nsFont,
-                .paragraphStyle : TextView.paragraphStyle]
+        [
+            .font : Font.text.nsFont,
+            .paragraphStyle : TextView.paragraphStyle
+        ]
     }
     
     static var selectionSyle: [NSAttributedString.Key : Any]
     {
-        return [.backgroundColor : Color.textSelectedBackground.nsColor]
+        [.backgroundColor : Color.textSelectedBackground.nsColor]
     }
     
     private static let linkStyle: [NSAttributedString.Key : Any] =
@@ -88,7 +90,7 @@ class TextView: NSTextView, NSTextViewDelegate
     
     private static var textFont: NSFont
     {
-        return Font.text.nsFont
+        Font.text.nsFont
     }
     
     private static var paragraphStyle: NSParagraphStyle
@@ -102,7 +104,7 @@ class TextView: NSTextView, NSTextViewDelegate
     
     static var lineSpacing: CGFloat
     {
-        return Float.lineSpacing(for: Float(TextView.lineHeight)).cgFloat
+        Float.lineSpacing(for: Float(TextView.lineHeight)).cgFloat
     }
     
     // MARK: - Measure Height
@@ -204,10 +206,7 @@ class TextView: NSTextView, NSTextViewDelegate
         return true
     }
     
-    override var acceptsFirstResponder: Bool
-    {
-        return true
-    }
+    override var acceptsFirstResponder: Bool { true }
 
     override func becomeFirstResponder() -> Bool
     {

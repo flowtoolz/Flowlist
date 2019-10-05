@@ -4,7 +4,7 @@ extension TextFormat
 {
     static var preferred: TextFormat
     {
-        get { return TextFormat(rawValue: persistentTextFormat.value) ?? .plain }
+        get { TextFormat(rawValue: persistentTextFormat.value) ?? .plain }
         
         set { persistentTextFormat.value = newValue.rawValue }
     }

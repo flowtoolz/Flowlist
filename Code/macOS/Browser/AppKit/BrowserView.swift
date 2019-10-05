@@ -124,8 +124,7 @@ class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionView
     {
         guard let listIndex = listViews.firstIndex(where: { $0 === listView }) else
         {
-            log(error: "Couldn't get index of list view that received user input")
-            return
+            return log(error: "Couldn't get index of list view that received user input")
         }
         
         browser.move(to: listIndex)
@@ -186,10 +185,7 @@ class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionView
     // MARK: - Collection View Data Source and Delegate
     
     func collectionView(_ collectionView: NSCollectionView,
-                        numberOfItemsInSection section: Int) -> Int
-    {
-        return 5
-    }
+                        numberOfItemsInSection section: Int) -> Int { 5 }
     
     func collectionView(_ collectionView: NSCollectionView,
                         itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem
@@ -212,35 +208,26 @@ class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionView
     
     private func targetListIndex(atCellIndex cellIndex: Int) -> Int
     {
-        return (cellIndex - 2) + browser.focusedIndex
+        (cellIndex - 2) + browser.focusedIndex
     }
     
     func collectionView(_ collectionView: NSCollectionView,
                         layout collectionViewLayout: NSCollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> NSSize
     {
-        return NSSize(width: ((collectionView.bounds.size.width - 40) / 5.0),
-                      height: collectionView.bounds.size.height)
+        NSSize(width: ((collectionView.bounds.size.width - 40) / 5.0),
+               height: collectionView.bounds.size.height)
     }
     
     func collectionView(_ collectionView: NSCollectionView,
                         layout collectionViewLayout: NSCollectionViewLayout,
-                        insetForSectionAt section: Int) -> NSEdgeInsets
-    {
-        return NSEdgeInsetsZero
-    }
+                        insetForSectionAt section: Int) -> NSEdgeInsets { NSEdgeInsetsZero }
     
     func collectionView(_ collectionView: NSCollectionView,
                         layout collectionViewLayout: NSCollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat
-    {
-        return 0
-    }
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat { 0 }
     
     func collectionView(_ collectionView: NSCollectionView,
                         layout collectionViewLayout: NSCollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
-    {
-        return 10
-    }
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat { 10 }
 }

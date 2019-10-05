@@ -363,7 +363,7 @@ class ItemTable: AnimatedTableView, CustomObservable, TableContentDelegate
         send(.wasClicked(withEvent: event))
     }
     
-    override var acceptsFirstResponder: Bool { return true }
+    override var acceptsFirstResponder: Bool { true }
     
     // MARK: - Edit Texts
     

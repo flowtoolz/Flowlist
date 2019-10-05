@@ -65,8 +65,8 @@ extension Tree where Data == ItemData
         return highestPriorityState
     }
     
-    var isDone: Bool { return data.state.value == .done }
-    var isOpen: Bool { return isInProgress || isUndone }
-    var isInProgress: Bool { return data.state.value == .inProgress }
-    var isUndone: Bool { return data.state.value == nil }
+    var isDone: Bool { data.state.value == .done }
+    var isOpen: Bool { isInProgress || isUndone }
+    var isInProgress: Bool { data.state.value == .inProgress }
+    var isUndone: Bool { data.state.value == nil }
 }

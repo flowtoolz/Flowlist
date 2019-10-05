@@ -40,7 +40,7 @@ class ExportAcessoryView: NSView
     
     var selectedFormat: TextFormat
     {
-        return TextFormat.allCases[formatMenu.indexOfSelectedItem]
+        TextFormat.allCases[formatMenu.indexOfSelectedItem]
     }
     
     lazy var formatMenu: NSPopUpButton =

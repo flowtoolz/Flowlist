@@ -63,7 +63,6 @@ class DataMenu: NSMenu, NSMenuItemValidation
     
     private var cloudItemTitle: String
     {
-        let isUsingICloud = CKSyncIntention.shared.isActive
-        return "\(isUsingICloud ? "Stop" : "Start") Using iCloud"
+        "\(CKSyncIntention.shared.isActive ? "Stop" : "Start") Using iCloud"
     }
 }

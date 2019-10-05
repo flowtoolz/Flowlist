@@ -9,6 +9,6 @@ extension Tree: Hashable
     
     static func == (lhs: Tree, rhs: Tree) -> Bool
     {
-        return lhs === rhs
+        lhs === rhs
     }
 }

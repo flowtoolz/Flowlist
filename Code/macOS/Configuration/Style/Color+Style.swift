@@ -52,12 +52,12 @@ extension Color
     
     static var text: Color
     {
-        return isInDarkMode ? .white : .black
+        isInDarkMode ? .white : .black
     }
     
     static var textSelectedBackground: Color
     {
-        return .gray(brightness: isInDarkMode ? 0.4 : 0.85)
+        .gray(brightness: isInDarkMode ? 0.4 : 0.85)
     }
     
     static var textDiscount: Color
@@ -98,12 +98,12 @@ extension Color
     static func itemContentIsLight(isSelected selected: Bool,
                                    isFocused focused: Bool) -> Bool
     {
-        return isInDarkMode ? true : selected && focused
+        isInDarkMode ? true : selected && focused
     }
     
     static var editingBackground: Color
     {
-        return isInDarkMode ? .black : .white
+        isInDarkMode ? .black : .white
     }
     
     // MARK: - Purchase Panel Views
@@ -117,33 +117,33 @@ extension Color
     
     static var progressBar: Color
     {
-        return itemBackground(isDone: false,
-                              isSelected: true,
-                              isTagged: false,
-                              isFocusedList: true)
+        itemBackground(isDone: false,
+                       isSelected: true,
+                       isTagged: false,
+                       isFocusedList: true)
     }
     
     static var progressBackground: Color
     {
-        return .listBackground
+        .listBackground
     }
     
     static var purchasePanelBackground: Color
     {
-        return itemBackground(isDone: false,
-                              isSelected: false,
-                              isTagged: false,
-                              isFocusedList: true)
+        itemBackground(isDone: false,
+                       isSelected: false,
+                       isTagged: false,
+                       isFocusedList: true)
     }
     
     // MARK: - Browser Backgrounds
     
     static var listBackground: Color
     {
-        return .itemBackground(isDone: false,
-                               isSelected: false,
-                               isTagged: false,
-                               isFocusedList: false)
+        .itemBackground(isDone: false,
+                        isSelected: false,
+                        isTagged: false,
+                        isFocusedList: false)
     }
     
     static func itemBackground(isDone done: Bool,
@@ -163,14 +163,14 @@ extension Color
     
     static var windowBackground: Color
     {
-        return isInDarkMode ? .black : .gray(brightness: 0.91)
+        isInDarkMode ? .black : .gray(brightness: 0.91)
     }
     
     // MARK: - Basics
     
     static var isInDarkMode: Bool
     {
-        get { return darkMode.latestMessage }
+        get { darkMode.latestMessage }
         set { darkModeVar <- newValue }
     }
 }

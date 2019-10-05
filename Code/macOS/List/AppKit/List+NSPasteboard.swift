@@ -18,5 +18,5 @@ extension List
 
 var systemPasteboardHasText: Bool
 {
-    return NSPasteboard.general.string(forType: .string) != nil
+    NSPasteboard.general.string(forType: .string) != nil
 }

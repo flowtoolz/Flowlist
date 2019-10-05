@@ -102,7 +102,7 @@ class FlowlistView: LayerBackedView
     
     private var purchaseViewHeight: CGFloat
     {
-        return purchaseView.isExpanded ? 360 : purchaseView.collapsedHeight
+        purchaseView.isExpanded ? 360 : purchaseView.collapsedHeight
     }
     
     private var purchaseViewHeightConstraint: NSLayoutConstraint?

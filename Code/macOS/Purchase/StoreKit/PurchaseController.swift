@@ -51,7 +51,7 @@ class PurchaseController: NSObject, CustomObservable, SKProductsRequestDelegate,
         SKPaymentQueue.default().add(payment)
     }
     
-    private var userCanPay: Bool { return SKPaymentQueue.canMakePayments() }
+    private var userCanPay: Bool { SKPaymentQueue.canMakePayments() }
     
     // MARK: - Observe Payment Queue
     
