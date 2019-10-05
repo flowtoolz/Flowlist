@@ -62,7 +62,7 @@ class RecordChangeBuffer
     
     private static var directory: URL
     {
-        let dir = URL.flowlistDirectory.appendingPathComponent("Offline Changes")
+        let dir = URL.flowlistDirectory.appendingPathComponent("Record Change Buffer")
         FileManager.default.ensureDirectoryExists(dir)
         return dir
     }

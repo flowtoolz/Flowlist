@@ -34,7 +34,7 @@ extension CKRecordZone.ID
     static var itemZone: CKRecordZone.ID
     {
         CKRecordZone.ID(zoneName: "ItemZone",
-                               ownerName: CKCurrentUserDefaultName)
+                        ownerName: CKCurrentUserDefaultName)
     }
 }
 
