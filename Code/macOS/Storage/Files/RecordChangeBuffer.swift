@@ -1,11 +1,11 @@
 import FoundationToolz
 import SwiftyToolz
 
-class OfflineChanges
+class RecordChangeBuffer
 {
     // MARK: - Initialization
     
-    static let shared = OfflineChanges()
+    static let shared = RecordChangeBuffer()
     private init() { load() }
     
     // MARK: - Manage Changes
@@ -57,8 +57,8 @@ class OfflineChanges
         edits.save(to: editsFile)
     }
     
-    private let deletionsFile = OfflineChanges.directory.appendingPathComponent("deletions.json")
-    private let editsFile = OfflineChanges.directory.appendingPathComponent("edits.json")
+    private let deletionsFile = RecordChangeBuffer.directory.appendingPathComponent("deletions.json")
+    private let editsFile = RecordChangeBuffer.directory.appendingPathComponent("edits.json")
     
     private static var directory: URL
     {

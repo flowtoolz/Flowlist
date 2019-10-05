@@ -1,20 +1,21 @@
 import CloudKit
+import Foundation
 import SwiftyToolz
 import PromiseKit
 
 class CKRecordSynchronizer
 {
+    // MARK: - Life Cycle
+    
+    init() { startTimer() }
+    
+    deinit { timer?.invalidate() }
+    
     // MARK: - React to Events
     
     func ckRecordDatabaseMayHaveChanged()
     {
         guard sync.isActive else { return }
-        
-        guard !offline.hasChanges else
-        {
-            log(error: "Offline changes haven't been synced properly")
-            return resync()
-        }
         
         fetchCKChangesAndApplyThemToFileDatabase().catch(sync.abort)
     }
@@ -23,21 +24,10 @@ class CKRecordSynchronizer
     {
         guard sync.isActive else { return }
         
-        guard !offline.hasChanges else
-        {
-            log(error: "Offline changes haven't been synced properly")
-            return resync()
-        }
-        
         switch edit
         {
-        case .saveRecords(let records):
-            guard isOnline else { return offline.save(records) }
-            editor.saveCKRecords(for: records).catch(sync.abort)
-            
-        case .deleteRecordsWithIDs(let ids):
-            guard isOnline else { return offline.deleteRecords(with: ids) }
-            editor.deleteCKRecords(with: ids).catch(sync.abort)
+        case .saveRecords(let records): return bufferedChanges.save(records)
+        case .deleteRecordsWithIDs(let ids): return bufferedChanges.deleteRecords(with: ids)
         }
     }
     
@@ -80,7 +70,7 @@ class CKRecordSynchronizer
             ckRecordDatabase.deleteChangeToken()
         }
         
-        offline.clear() // on total resync, lingering changes (delta cache) are irrelevant
+        bufferedChanges.clear() // on total resync, lingering changes (delta cache) are irrelevant
         
         return firstly
         {
@@ -110,7 +100,7 @@ class CKRecordSynchronizer
         
         return firstly
         {
-            applyOfflineChangesToCKRecordDatabase()
+            applyBufferedChangesToCKRecordDatabase()
         }
         .then(on: queue)
         {
@@ -141,31 +131,51 @@ class CKRecordSynchronizer
         fileDatabase.save(records, identifyAs: self)
     }
     
-    // MARK: - Offline Changes
+    // MARK: - Delayed Sync of Buffered Changes
     
-    private func applyOfflineChangesToCKRecordDatabase() -> Promise<Void>
+    private func startTimer()
     {
-        guard offline.hasChanges else { return Promise() }
+        let syncDelay: TimeInterval = 3.0
+        timer = Timer.scheduledTimer(withTimeInterval: syncDelay,
+                                     repeats: true,
+                                     block: timerDidFire)
+    }
+    
+    private func timerDidFire(_ timer: Timer)
+    {
+        guard sync.isActive, !isSyncingBufferedChanges, isOnline else { return }
+        applyBufferedChangesToCKRecordDatabase().catch(sync.abort)
+    }
+    
+    private var timer: Timer?
+    
+    private func applyBufferedChangesToCKRecordDatabase() -> Promise<Void>
+    {
+        guard !isSyncingBufferedChanges, bufferedChanges.hasChanges else { return Promise() }
+        
+        isSyncingBufferedChanges = true
         
         return firstly
         {
-            editor.deleteCKRecords(with: Array(offline.deletions))
+            editor.deleteCKRecords(with: Array(bufferedChanges.deletions))
         }
         .then(on: queue)
         {
             () -> Promise<Void> in
             
-            let records = Array(self.offline.edits).compactMap(self.fileDatabase.record)
+            let records = Array(self.bufferedChanges.edits).compactMap(self.fileDatabase.record)
             
             return self.editor.saveCKRecords(for: records)
         }
         .done
         {
-            self.offline.clear()
+            self.bufferedChanges.clear()
+            self.isSyncingBufferedChanges = false
         }
     }
     
-    private var offline: OfflineChanges { return .shared }
+    private var isSyncingBufferedChanges = false
+    private var bufferedChanges: RecordChangeBuffer { return .shared }
     
     // MARK: - Basics
     
