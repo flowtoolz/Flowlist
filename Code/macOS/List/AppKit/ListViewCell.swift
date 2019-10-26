@@ -24,12 +24,7 @@ class ListViewCell: NSCollectionViewItem
     override func loadView()
     {
         view = NSView()
-
-        if let listView = listView
-        {
-            view.addForAutoLayout(listView).constrainToParent()
-        }
-        
+        listView.forSome { view.addForAutoLayout($0).constrainToParent() }
         resetShadow()
     }
     

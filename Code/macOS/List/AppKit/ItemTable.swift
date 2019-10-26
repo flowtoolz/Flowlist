@@ -64,11 +64,8 @@ class ItemTable: AnimatedTableView, CustomObservable, TableContentDelegate
             switch event
             {
             case .did(let edit): self?.did(edit)
-            case .didChangeSelection(let added, _):
-                if let firstSelectedIndex = added.first
-                {
-                    self?.scrollAnimatedTo(row: firstSelectedIndex)
-                }
+            case .didChangeSelection(let addedSelections, _):
+                addedSelections.first.forSome { self?.scrollAnimatedTo(row: $0) }
             }
         }
     }

@@ -16,7 +16,7 @@ class TreeSelector: Observer, CustomObservable
     {
         observe(TreeStore.shared)
         {
-            [weak self] in if let event = $0 { self?.treeStoreDidSend(event) }
+            [weak self] event in event.forSome(self?.treeStoreDidSend)
         }
     }
     
