@@ -151,12 +151,7 @@ class Browser: Observer, CustomObservable
         if newRoot !== list.root { list.set(root: newRoot) }
     }
     
-    subscript(_ index: Int) -> List?
-    {
-        guard lists.isValid(index: index) else { return nil }
-        
-        return lists[index]
-    }
+    subscript(_ index: Int) -> List? { lists.at(index) }
     
     var focusedList: List { lists[focusedIndex] }
     var focusedIndex: Int { focusedIndexVariable.value }

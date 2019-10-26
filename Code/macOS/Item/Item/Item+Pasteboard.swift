@@ -21,7 +21,7 @@ extension Tree where Data == ItemData
             return text
         }
         
-        texts.remove { $0.count < 2 }
+        texts.removeAll { $0.count < 2 }
         
         let result = texts.map(Item.init(text:))
         

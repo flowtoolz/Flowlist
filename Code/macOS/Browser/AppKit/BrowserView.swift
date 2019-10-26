@@ -191,19 +191,7 @@ class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionView
                         itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem
     {
         // TODO: is there no way the collection view recycles item views?
-        
-        let listIndex = targetListIndex(atCellIndex: indexPath.item)
-        
-        guard listViews.isValid(index: listIndex) else
-        {
-            if listIndex > 0
-            {
-                log(error: "list index \(listIndex) is invalid. We have \(listViews.count) list views.")
-            }
-            return ListViewCell(listView: nil)
-        }
-        
-        return ListViewCell(listView: listViews[listIndex])
+        ListViewCell(listView: listViews.at(targetListIndex(atCellIndex: indexPath.item)))
     }
     
     private func targetListIndex(atCellIndex cellIndex: Int) -> Int

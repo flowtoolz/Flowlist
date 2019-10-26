@@ -310,13 +310,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     subscript(_ index: Int?) -> Node?
     {
-        guard children.isValid(index: index), let validIndex = index else
-        {
-            log(warning: "Tried to access branch at invalid index \(String(describing: index)).")
-            return nil
-        }
-        
-        return children[validIndex]
+        children.at(index)
     }
     
     func sortWithoutSendingUpdate(comparator: (Node, Node) -> Bool)
