@@ -10,8 +10,10 @@ class FlowlistController: AppController
 {
     // MARK: - Life Cycle
     
-    // super.init starts the app run loop, so nothing after super.init will execute
-    init() { super.init(withMainMenu: menu) }
+    override init() {
+        super.init()
+        NSApplication.shared.mainMenu = menu // must be set before delegate
+    }
     
     // MARK: - App Delegate
     
