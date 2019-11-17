@@ -8,6 +8,6 @@
 
 import AppKit
 
-let appController = AppController(ViewController<MyView>())
+let appController = AppController(MyRootView())
 NSApplication.shared.delegate = appController
 NSApplication.shared.run()

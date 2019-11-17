@@ -8,17 +8,18 @@
 
 import AppKit
 
-// MARK: - App Specific Content
+// MARK: - App Specific
 
-class MyView: View {
+class MyRootView: NSView {
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
-        layer?.backgroundColor = .black
         
-        let subview = View()
+        let subview = NSView()
+        subview.wantsLayer = true
         subview.layer?.backgroundColor = .white
        
+        subview.translatesAutoresizingMaskIntoConstraints = false
         addSubview(subview)
         subview.heightAnchor.constraint(equalTo: heightAnchor,
                                         multiplier: 0.5).isActive = true
@@ -31,12 +32,13 @@ class MyView: View {
     required init?(coder: NSCoder) { super.init(coder: coder) }
 }
 
-// MARK: - App Agnostic Types
+// MARK: - App Agnostic
 
 class AppController: NSObject, NSApplicationDelegate {
     
-    init(_ content: NSViewController) {
-        window = NSWindow(contentViewController: content)
+    init(_ root: NSView) {
+        window = Window()
+        window.contentView = root
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -46,34 +48,18 @@ class AppController: NSObject, NSApplicationDelegate {
     private let window: NSWindow
 }
 
-class View: NSView {
+class Window: NSWindow {
     
-    override init(frame frameRect: NSRect) {
-        super.init(frame: frameRect)
-        wantsLayer = true
-        translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-}
-
-class ViewController<ContentView: NSView>: NSViewController {
-
-    override func loadView() { view = contentView }
-    
-    private let contentView = ContentView(frame: .init(origin: .zero, size: initialSize))
-    
-    static var initialSize: CGSize {
-        .init(width: NSScreen.size.width * 0.8, height: NSScreen.size.height * 0.8)
+    init() {
+        let screenSize = NSScreen.main?.frame.size ?? CGSize(width: 1920, height: 1080)
+        let contentRect = CGRect(x: screenSize.width * 0.1,
+                                 y: screenSize.height * 0.1,
+                                 width: screenSize.width * 0.8,
+                                 height: screenSize.height * 0.8)
+        super.init(contentRect: contentRect,
+                   styleMask: [.closable, .titled, .miniaturizable, .resizable],
+                   backing: .buffered,
+                   defer: false)
+        titlebarAppearsTransparent = true
     }
 }
-
-extension NSScreen {
-    
-    static var size: CGSize {
-        main?.frame.size ?? CGSize(width: 1920, height: 1080)
-    }
-}
-
