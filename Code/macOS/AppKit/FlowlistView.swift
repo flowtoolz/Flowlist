@@ -27,11 +27,6 @@ class FlowlistView: LayerBackedView
             }
         }
         
-        observe(Window.intendedMainWindowSize)
-        {
-            [weak self] _ in self?.browserView.didEndResizing()
-        }
-        
         // For making screen shots and screen recordings
         //        #if DEBUG
         //        isFullVersion = true
@@ -117,9 +112,14 @@ class FlowlistView: LayerBackedView
         browserViewBottomConstraint = browserView.constrainBottomToParent(inset: bottomInset)
     }
     
-    func didResize()
+    func windowDidResize()
     {
-        browserView.didResize()
+        browserView.windowDidResize()
+    }
+    
+    func windowDidEndResizing()
+    {
+        browserView.windowDidEndResizing()
     }
     
     private lazy var browserView = addForAutoLayout(BrowserView())

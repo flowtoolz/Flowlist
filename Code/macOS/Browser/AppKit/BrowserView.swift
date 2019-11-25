@@ -85,14 +85,14 @@ class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionView
         }
     }
     
-    // MARK: - Resizing
+    // MARK: - React to Window Size Changes
     
-    func didResize()
+    func windowDidResize()
     {
         collectionView.collectionViewLayout?.invalidateLayout()
     }
     
-    func didEndResizing()
+    func windowDidEndResizing()
     {
         listViews.forEach { $0.didEndResizing() }
     }

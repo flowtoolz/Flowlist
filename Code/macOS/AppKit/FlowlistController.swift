@@ -57,9 +57,14 @@ class FlowlistController: AppController
     
     // MARK: - Window Delegate
     
+    func windowDidEndLiveResize(_ notification: Notification)
+    {
+        flowlistView.windowDidEndResizing()
+    }
+    
     func windowDidResize(_ notification: Notification)
     {
-        viewController.contentView.didResize()
+        flowlistView.windowDidResize()
     }
     
     func windowWillEnterFullScreen(_ notification: Notification)
@@ -67,11 +72,15 @@ class FlowlistController: AppController
         menu.windowChangesFullscreen(to: true)
     }
     
-    override func windowDidExitFullScreen(_ notification: Notification)
+    func windowDidEnterFullScreen(_ notification: Notification)
     {
-        super.windowDidExitFullScreen(notification)
-        
+        flowlistView.windowDidEndResizing()
+    }
+    
+    func windowDidExitFullScreen(_ notification: Notification)
+    {
         menu.windowChangesFullscreen(to: false)
+        flowlistView.windowDidEndResizing()
     }
     
     func windowDidResignKey(_ notification: Notification)
