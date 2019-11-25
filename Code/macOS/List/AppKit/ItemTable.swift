@@ -29,7 +29,6 @@ class ItemTable: AnimatedTableView, CustomObservable, TableContentDelegate
     func fontSizeDidChange()
     {
         itemHeightCash.removeAll()
-        cashedWidth = nil
         reloadData()
     }
     
@@ -235,38 +234,13 @@ class ItemTable: AnimatedTableView, CustomObservable, TableContentDelegate
         
         let text = item.text ?? "Untitled"
         
-        let height = ItemView.preferredHeight(for: text, width: width)
+        let height = ItemView.preferredHeight(for: text, width: frame.size.width)
         
         itemHeightCash[item] = height
         
         return height
     }
     
-    private var width: CGFloat
-    {
-        if let cashedWidth = cashedWidth { return cashedWidth }
-        
-        let windowWidth = Window.intendedMainWindowSize.value?.width ?? 1024
-        
-        let widthForLists = windowWidth - 4 * Float.listGap.cgFloat
-        
-        let pixelsPerPoint = NSApp.mainWindow?.backingScaleFactor ?? 2
-        
-        let calculatedWidth = CGFloat(Int((pixelsPerPoint * widthForLists) / 3 + 0.5)) / pixelsPerPoint
-        
-        cashedWidth = calculatedWidth
-        
-        return calculatedWidth
-    }
-    
-    override func layout()
-    {
-        super.layout()
-        
-        cashedWidth = frame.size.width
-    }
-    
-    private var cashedWidth: CGFloat?
     private var itemHeightCash = [Item : CGFloat]()
     
     // MARK: - Observe Item Views
