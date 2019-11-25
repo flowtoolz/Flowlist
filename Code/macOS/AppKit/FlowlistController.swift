@@ -13,6 +13,7 @@ class FlowlistController: AppController
     override init() {
         super.init()
         NSApplication.shared.mainMenu = menu // must be set before delegate
+        window.contentView = flowlistView
     }
     
     // MARK: - App Delegate
@@ -25,7 +26,6 @@ class FlowlistController: AppController
         
         purchaseController.setup()
         
-        window.contentViewController = viewController
         window.backgroundColor = Color.windowBackground.nsColor
         
         Dialog.default = AlertDialog()
@@ -123,6 +123,6 @@ class FlowlistController: AppController
     // MARK: - Basics
     
     private let menu = Menu()
-    private let viewController = ViewController<FlowlistView>()
+    private let flowlistView = FlowlistView()
     private let fileLogger = FileLogger(URL.flowlistDirectory.appendingPathComponent("flowlist-log.txt"))
 }
