@@ -2,7 +2,7 @@ import SwiftObserver
 import PromiseKit
 import SwiftyToolz
 
-class TreeSelector: Observer, CustomObservable
+class TreeSelector: Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -183,8 +183,7 @@ class TreeSelector: Observer, CustomObservable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Message>()
-    typealias Message = Item?
+    let messenger = Messenger<Item?>()
 }
 
 private extension Item

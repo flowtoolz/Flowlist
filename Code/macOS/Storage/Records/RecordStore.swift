@@ -1,6 +1,6 @@
 import SwiftObserver
 
-class RecordStore: CustomObservable
+class RecordStore: Observable
 {
     // MARK: - Life Cycle
     
@@ -31,8 +31,7 @@ class RecordStore: CustomObservable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Message>()
-    typealias Message = Event?
+    let messenger = Messenger<Event?>()
     
     typealias Event = (object: AnyObject, did: Edit)
     

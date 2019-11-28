@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class PurchaseView: LayerBackedView, CustomObservable
+class PurchaseView: LayerBackedView, Observable
 {
     // MARK: - Life Cycle
     
@@ -276,8 +276,6 @@ class PurchaseView: LayerBackedView, CustomObservable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Message>()
-    typealias Message = Event?
-    
+    let messenger = Messenger<Event?>()
     enum Event { case expandButtonWasClicked }
 }

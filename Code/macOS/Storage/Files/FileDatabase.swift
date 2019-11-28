@@ -4,7 +4,7 @@ import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
-class FileDatabase: CustomObservable
+class FileDatabase: Observable
 {
     // MARK: - Initialization
     
@@ -83,8 +83,7 @@ class FileDatabase: CustomObservable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Message>()
-    typealias Message = Event?
+    let messenger = Messenger<Event?>()
     
     typealias Event = (object: AnyObject, did: Edit)
     

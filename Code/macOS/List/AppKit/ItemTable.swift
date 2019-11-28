@@ -3,7 +3,7 @@ import SwiftObserver
 import SwiftyToolz
 import UIToolz
 
-class ItemTable: AnimatedTableView, CustomObservable, TableContentDelegate
+class ItemTable: AnimatedTableView, Observable, TableContentDelegate
 {
     // MARK: - Life Cycle
     
@@ -342,6 +342,5 @@ class ItemTable: AnimatedTableView, CustomObservable, TableContentDelegate
     
     // MARK: - Observability
     
-    let messenger = Messenger<Message>()
-    typealias Message = ItemView.Event?
+    let messenger = Messenger<ItemView.Event?>()
 }

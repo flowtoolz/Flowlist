@@ -4,7 +4,7 @@ import SwiftObserver
 import SwiftyToolz
 import GetLaid
 
-class ItemView: LayerBackedView, CustomObservable
+class ItemView: LayerBackedView, Observable
 {
     // MARK: - Life Cycle
     
@@ -458,7 +458,7 @@ class ItemView: LayerBackedView, CustomObservable
         
         view.insertionPointColor = Color.text.nsColor
         
-        observe(view.messenger).unwrap()
+        observe(view).unwrap()
         {
             [weak self] in self?.didReceive($0)
         }
@@ -653,8 +653,7 @@ class ItemView: LayerBackedView, CustomObservable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Message>()
-    typealias Message = Event?
+    let messenger = Messenger<Event?>()
     
     enum Event: Equatable
     {

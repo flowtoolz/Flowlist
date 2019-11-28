@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-final class ItemData: Observer, CustomObservable
+final class ItemData: Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -100,8 +100,7 @@ final class ItemData: Observer, CustomObservable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Message>()
-    typealias Message = Event?
+    let messenger = Messenger<Event?>()
     
     enum Event: Equatable
     {

@@ -2,7 +2,7 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class TextView: NSTextView, NSTextViewDelegate
+class TextView: NSTextView, NSTextViewDelegate, Observable
 {
     // MARK: - Life Cycle
 
@@ -233,7 +233,7 @@ class TextView: NSTextView, NSTextViewDelegate
         
         guard replacementString != "\n" else
         {
-            messenger.send(.wantToEndEditing)
+            send(.wantToEndEditing)
             return false
         }
         
@@ -243,12 +243,12 @@ class TextView: NSTextView, NSTextViewDelegate
     
     override func cancelOperation(_ sender: Any?)
     {
-        messenger.send(.wantToEndEditing)
+        send(.wantToEndEditing)
     }
     
     func textDidChange(_ notification: Notification)
     {
-        messenger.send(.didChangeText)
+        send(.didChangeText)
     }
 
     func textDidEndEditing(_ notification: Notification)
@@ -263,7 +263,7 @@ class TextView: NSTextView, NSTextViewDelegate
         TextView.isEditing <- false
         isEditable = false
 
-        messenger.send(.didEdit)
+        send(.didEdit)
     }
     
     private func willEdit()
@@ -272,7 +272,7 @@ class TextView: NSTextView, NSTextViewDelegate
         TextView.isEditing <- true
         isEditable = true
         
-        messenger.send(.willEdit)
+        send(.willEdit)
     }
     
     override func performKeyEquivalent(with event: NSEvent) -> Bool
@@ -304,7 +304,7 @@ class TextView: NSTextView, NSTextViewDelegate
     {
         super.mouseDown(with: event)
         
-        messenger.send(.wasClicked)
+        send(.wasClicked)
     }
     
     // MARK: - Observability

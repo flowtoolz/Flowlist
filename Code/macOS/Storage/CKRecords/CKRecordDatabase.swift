@@ -6,7 +6,7 @@ import SwiftyToolz
 
 /// Flowlist wrapper around CKDatabaseController. Cares for Flowlist specific setup, access and editing of iCloud Database.
 
-class CKRecordDatabase: Observer, CustomObservable
+class CKRecordDatabase: Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -188,7 +188,6 @@ class CKRecordDatabase: Observer, CustomObservable
     }
     
     let messenger = Messenger<Event?>()
-    typealias Message = Event?
     enum Event { case mayHaveChanged }
     
     // MARK: - Create Zone

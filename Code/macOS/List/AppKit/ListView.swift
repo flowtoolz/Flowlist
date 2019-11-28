@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class ListView: LayerBackedView, CustomObservable
+class ListView: LayerBackedView, Observable
 {
     // MARK: - Life Cycle
     
@@ -124,7 +124,6 @@ class ListView: LayerBackedView, CustomObservable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Message>()
-    typealias Message = Event?
+    let messenger = Messenger<Event?>()
     enum Event { case didReceiveUserInput }
 }

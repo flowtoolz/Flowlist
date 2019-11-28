@@ -2,7 +2,7 @@ import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
-class TreeStore: Observer, CustomObservable
+class TreeStore: Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -243,8 +243,7 @@ class TreeStore: Observer, CustomObservable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Message>()
-    typealias Message = Event?
+    let messenger = Messenger<Event?>()
     
     enum Event
     {

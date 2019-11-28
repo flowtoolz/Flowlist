@@ -6,7 +6,7 @@ import SwiftyToolz
 
 let purchaseController = PurchaseController()
 
-class PurchaseController: NSObject, CustomObservable, SKProductsRequestDelegate, SKPaymentTransactionObserver
+class PurchaseController: NSObject, Observable, SKProductsRequestDelegate, SKPaymentTransactionObserver
 {
     // MARK: - Life Cycle
     
@@ -198,8 +198,7 @@ class PurchaseController: NSObject, CustomObservable, SKProductsRequestDelegate,
     
     // MARK: - Observability
     
-    let messenger = Messenger<Message>()
-    typealias Message = Event?
+    let messenger = Messenger<Event?>()
     
     enum Event: Equatable
     {

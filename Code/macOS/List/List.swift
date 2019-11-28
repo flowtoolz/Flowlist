@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-class List: CustomObservable, Observer
+class List: Observable, Observer
 {
     // MARK: - Life Cycle
     
@@ -340,8 +340,7 @@ class List: CustomObservable, Observer
     
     // MARK: - Observability
     
-    let messenger = Messenger<Message>()
-    typealias Message = Event?
+    let messenger = Messenger<Event?>()
     
     enum Event
     {

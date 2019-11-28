@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class ItemTableContent: NSObject, CustomObservable, NSTableViewDataSource, NSTableViewDelegate
+class ItemTableContent: NSObject, Observable, NSTableViewDataSource, NSTableViewDelegate
 {
     // MARK: - Rows
     
@@ -102,8 +102,7 @@ class ItemTableContent: NSObject, CustomObservable, NSTableViewDataSource, NSTab
     
     // MARK: - Observability
     
-    let messenger = Messenger<Message>()
-    typealias Message = Event?
+    let messenger = Messenger<Event?>()
     enum Event { case didCreate(itemView: ItemView) }
 }
 

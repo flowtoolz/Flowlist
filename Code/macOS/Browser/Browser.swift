@@ -3,7 +3,7 @@ import SwiftyToolz
 
 let browser = Browser()
 
-class Browser: Observer, CustomObservable
+class Browser: Observer, Observable
 {
     // MARK: - Life Cycle
     
@@ -162,8 +162,7 @@ class Browser: Observer, CustomObservable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Message>()
-    typealias Message = Event?
+    let messenger = Messenger<Event?>()
     
     enum Event
     {
