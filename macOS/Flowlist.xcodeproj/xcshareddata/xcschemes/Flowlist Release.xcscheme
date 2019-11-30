@@ -20,6 +20,20 @@
                ReferencedContainer = "container:Flowlist.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9ED6964022BBF13A006D275E"
+               BuildableName = "FlowlistTests.xctest"
+               BlueprintName = "FlowlistTests"
+               ReferencedContainer = "container:Flowlist.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -37,16 +51,6 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9ED6964022BBF13A006D275E"
-               BuildableName = "FlowlistTests.xctest"
-               BlueprintName = "FlowlistTests"
-               ReferencedContainer = "container:Flowlist.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -10,7 +10,8 @@ class FlowlistController: AppController
 {
     // MARK: - Life Cycle
     
-    override init() {
+    override init()
+    {
         super.init()
         NSApplication.shared.mainMenu = menu // must be set before delegate
         window.contentView = flowlistView
