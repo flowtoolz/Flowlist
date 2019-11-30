@@ -102,7 +102,7 @@ class ItemTableContent: NSObject, Observable, NSTableViewDataSource, NSTableView
     
     // MARK: - Observability
     
-    let messenger = Messenger<Event?>()
+    let messenger = Messenger<Event>()
     enum Event { case didCreate(itemView: ItemView) }
 }
 

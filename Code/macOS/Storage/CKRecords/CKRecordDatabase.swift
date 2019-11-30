@@ -187,7 +187,7 @@ class CKRecordDatabase: Observer, Observable
         }
     }
     
-    let messenger = Messenger<Event?>()
+    let messenger = Messenger<Event>()
     enum Event { case mayHaveChanged }
     
     // MARK: - Create Zone

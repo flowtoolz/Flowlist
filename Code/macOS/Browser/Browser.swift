@@ -94,7 +94,7 @@ class Browser: Observer, Observable
     
     private func observe(list: List)
     {   
-        observe(list).unwrap()
+        observe(list)
         {
             [weak self, weak list] event in
             
@@ -162,7 +162,7 @@ class Browser: Observer, Observable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Event?>()
+    let messenger = Messenger<Event>()
     
     enum Event
     {

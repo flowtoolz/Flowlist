@@ -38,7 +38,7 @@ class EditMenu: NSMenu, NSMenuItemValidation
         
         addItem(tagItem)
         
-        observe(browser).unwrap()
+        observe(browser)
         {
             [weak self] event in
             

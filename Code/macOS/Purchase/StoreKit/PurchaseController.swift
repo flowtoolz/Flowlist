@@ -198,7 +198,7 @@ class PurchaseController: NSObject, Observable, SKProductsRequestDelegate, SKPay
     
     // MARK: - Observability
     
-    let messenger = Messenger<Event?>()
+    let messenger = Messenger<Event>()
     
     enum Event: Equatable
     {

@@ -264,7 +264,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     class TreeMessenger: Observable
     {
-        let messenger = Messenger<Event?>()
+        let messenger = Messenger<Event>()
     }
     
     enum Event

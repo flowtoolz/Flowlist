@@ -276,6 +276,6 @@ class PurchaseView: LayerBackedView, Observable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Event?>()
+    let messenger = Messenger<Event>()
     enum Event { case expandButtonWasClicked }
 }

@@ -100,7 +100,7 @@ final class ItemData: Observer, Observable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Event?>()
+    let messenger = Messenger<Event>()
     
     enum Event: Equatable
     {

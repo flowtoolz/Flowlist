@@ -16,7 +16,7 @@ class TreeSelector: Observer, Observable
     {
         observe(TreeStore.shared)
         {
-            [weak self] event in event.forSome(self?.treeStoreDidSend)
+            [weak self] event in self?.treeStoreDidSend(event)
         }
     }
     
@@ -146,7 +146,7 @@ class TreeSelector: Observer, Observable
     
     private func observeTreeMessenger(of tree: Item)
     {
-        observe(tree.treeMessenger).unwrap()
+        observe(tree.treeMessenger)
         {
             [weak self, weak tree] event in
             

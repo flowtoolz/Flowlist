@@ -56,7 +56,7 @@ class ItemTable: AnimatedTableView, Observable, TableContentDelegate
             return
         }
         
-        observe(list).unwrap()
+        observe(list)
         {
             [weak self] event in
             
@@ -188,7 +188,7 @@ class ItemTable: AnimatedTableView, Observable, TableContentDelegate
     {
         let tableContent = ItemTableContent()
         tableContent.delegate = self
-        observe(tableContent).unwrap() { [unowned self] in self.didReceive($0) }
+        observe(tableContent) { [unowned self] in self.didReceive($0) }
         return tableContent
     }()
     
@@ -247,7 +247,7 @@ class ItemTable: AnimatedTableView, Observable, TableContentDelegate
     
     private func observe(itemView: ItemView)
     {
-        observe(itemView).unwrap()
+        observe(itemView)
         {
             [weak self, weak itemView] event in
             
@@ -342,5 +342,5 @@ class ItemTable: AnimatedTableView, Observable, TableContentDelegate
     
     // MARK: - Observability
     
-    let messenger = Messenger<ItemView.Event?>()
+    let messenger = Messenger<ItemView.Event>()
 }

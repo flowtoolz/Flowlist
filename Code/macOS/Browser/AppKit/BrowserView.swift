@@ -64,7 +64,7 @@ class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionView
     
     private func observeBrowser()
     {
-        observe(browser).unwrap()
+        observe(browser)
         {
             [unowned self] event in self.did(receive: event)
         }

@@ -115,7 +115,7 @@ class ItemView: LayerBackedView, Observable
     
     private func observe(item: Item)
     {
-        observe(item.treeMessenger).unwrap()
+        observe(item.treeMessenger)
         {
             [weak self, weak item] event in
             guard let item = item else { return }
@@ -458,7 +458,7 @@ class ItemView: LayerBackedView, Observable
         
         view.insertionPointColor = Color.text.nsColor
         
-        observe(view).unwrap()
+        observe(view)
         {
             [weak self] in self?.didReceive($0)
         }
@@ -653,7 +653,7 @@ class ItemView: LayerBackedView, Observable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Event?>()
+    let messenger = Messenger<Event>()
     
     enum Event: Equatable
     {

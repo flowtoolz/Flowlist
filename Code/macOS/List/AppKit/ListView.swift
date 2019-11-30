@@ -28,7 +28,7 @@ class ListView: LayerBackedView, Observable
         scrollTable.table.configure(with: list)
         
         stopObserving(self.list)
-        observe(list).unwrap() { [weak self] in self?.didReceive($0) }
+        observe(list) { [weak self] in self?.didReceive($0) }
         
         isHidden = list.root == nil
         
@@ -92,7 +92,7 @@ class ListView: LayerBackedView, Observable
                                                 bottom: 10,
                                                 right: 0)
         
-        observe(scrollView.table).unwrap()
+        observe(scrollView.table)
         {
             [weak self] event in
             
@@ -124,6 +124,6 @@ class ListView: LayerBackedView, Observable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Event?>()
+    let messenger = Messenger<Event>()
     enum Event { case didReceiveUserInput }
 }

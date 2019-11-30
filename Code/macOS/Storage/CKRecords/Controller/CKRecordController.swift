@@ -37,7 +37,7 @@ class CKRecordController: Observer
     
     private func observeFileDatabase()
     {
-        observe(FileDatabase.shared).unwrap().filter
+        observe(FileDatabase.shared).filter
         {
             [weak self] event in self != nil
                 && event.object !== self?.synchronizer

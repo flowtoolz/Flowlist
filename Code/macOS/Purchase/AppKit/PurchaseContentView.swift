@@ -26,7 +26,7 @@ class PurchaseContentView: NSView
 
         constrainBulletpointList()
         
-        observe(purchaseController).unwrap()
+        observe(purchaseController)
         {
             [weak self] event in self?.didReceive(event)
         }

@@ -309,7 +309,7 @@ class TextView: NSTextView, NSTextViewDelegate, Observable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Event?>()
+    let messenger = Messenger<Event>()
     
     enum Event
     {

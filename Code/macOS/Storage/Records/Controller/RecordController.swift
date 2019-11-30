@@ -18,7 +18,7 @@ class RecordController: Observer
     
     private func observeRecordStore()
     {
-        observe(RecordStore.shared).unwrap().filter
+        observe(RecordStore.shared).filter
         {
             [weak self] event in self != nil && event.object !== self
         }
@@ -47,11 +47,7 @@ class RecordController: Observer
     {
         observe(TreeStore.shared)
         {
-            [weak self] in
-            
-            guard let event = $0 else { return }
-            
-            self?.itemStoreDidSend(event)
+            [weak self] in self?.itemStoreDidSend($0)
         }
     }
     
@@ -86,7 +82,6 @@ class RecordController: Observer
             RecordStore.shared.save(effectedRecords, identifyAs: self)
             
         case .receivedMessage(let message, let node):
-            guard let message = message else { break }
             if case .wasModified = message
             {
                 RecordStore.shared.save([Record(item: node)], identifyAs: self)

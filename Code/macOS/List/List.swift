@@ -51,7 +51,7 @@ class List: Observable, Observer
             return
         }
         
-        observe(root.treeMessenger).unwrap()
+        observe(root.treeMessenger)
         {
             [weak self, weak root] event in
             
@@ -340,7 +340,7 @@ class List: Observable, Observer
     
     // MARK: - Observability
     
-    let messenger = Messenger<Event?>()
+    let messenger = Messenger<Event>()
     
     enum Event
     {

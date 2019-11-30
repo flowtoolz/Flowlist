@@ -83,7 +83,7 @@ class FileDatabase: Observable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Event?>()
+    let messenger = Messenger<Event>()
     
     typealias Event = (object: AnyObject, did: Edit)
     

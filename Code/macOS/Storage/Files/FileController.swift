@@ -23,7 +23,7 @@ class FileController: Observer
     
     private func observeRecordStore()
     {
-        observe(RecordStore.shared).unwrap().filter
+        observe(RecordStore.shared).filter
         {
             [weak self] event in self != nil && event.object !== self
         }
@@ -49,7 +49,7 @@ class FileController: Observer
     
     private func observeFileDatabase()
     {
-        observe(FileDatabase.shared).unwrap().filter
+        observe(FileDatabase.shared).filter
         {
             [weak self] event in self != nil && event.object !== self
         }

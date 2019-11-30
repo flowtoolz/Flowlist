@@ -179,7 +179,7 @@ class TreeStore: Observer, Observable
     {
         guard tree.isRoot else { return }
         
-        observe(tree.treeMessenger).unwrap()
+        observe(tree.treeMessenger)
         {
             [weak self] event in
             guard case .didUpdateTree(let treeUpdate) = event else { return }
@@ -243,7 +243,7 @@ class TreeStore: Observer, Observable
     
     // MARK: - Observability
     
-    let messenger = Messenger<Event?>()
+    let messenger = Messenger<Event>()
     
     enum Event
     {
