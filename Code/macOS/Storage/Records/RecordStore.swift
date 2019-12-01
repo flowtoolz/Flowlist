@@ -9,22 +9,22 @@ class RecordStore: Observable
     
     // MARK: - Change Records
     
-    func save(_ records: [Record], identifyAs object: AnyObject)
+    func save(_ records: [Record], as author: AnyAuthor)
     {
         guard !records.isEmpty else { return }
         let differingRecords = records.compactMap { recordsByID[$0.id] != $0 ? $0 : nil }
         guard !differingRecords.isEmpty else { return }
         differingRecords.forEach { recordsByID[$0.id] = $0 }
-        send((object, did: .modifyRecords(differingRecords)))
+        send(.didModifyRecords(differingRecords), author: author)
     }
     
-    func deleteRecords(with ids: [Record.ID], identifyAs object: AnyObject)
+    func deleteRecords(with ids: [Record.ID], as author: AnyAuthor)
     {
         guard !ids.isEmpty else { return }
         let idsOfExistingRecords = ids.compactMap { recordsByID[$0] != nil ? $0 : nil }
         guard !idsOfExistingRecords.isEmpty else { return }
         idsOfExistingRecords.forEach { recordsByID[$0] = nil }
-        send((object, did: .deleteRecordsWithIDs(idsOfExistingRecords)))
+        send(.didDeleteRecordsWithIDs(idsOfExistingRecords), author: author)
     }
     
     private var recordsByID = [Record.ID : Record]()
@@ -33,11 +33,9 @@ class RecordStore: Observable
     
     let messenger = Messenger<Event>()
     
-    typealias Event = (object: AnyObject, did: Edit)
-    
-    enum Edit
+    enum Event
     {
-        case modifyRecords([Record])
-        case deleteRecordsWithIDs([Record.ID])
+        case didModifyRecords([Record])
+        case didDeleteRecordsWithIDs([Record.ID])
     }
 }

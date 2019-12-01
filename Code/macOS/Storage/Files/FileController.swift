@@ -16,32 +16,32 @@ class FileController: Observer
     
     func saveRecordsFromFilesToRecordStore()
     {
-        RecordStore.shared.save(FileDatabase.shared.loadRecords(), identifyAs: self)
+        RecordStore.shared.save(FileDatabase.shared.loadRecords(), as: self)
     }
     
     // MARK: - Observe Record Store
     
     private func observeRecordStore()
     {
-        observe(RecordStore.shared).filter
+        observe(RecordStore.shared)
         {
-            [weak self] event in self != nil && event.object !== self
-        }
-        .receive
-        {
-            [weak self] event in self?.recordStore(did: event.did)
+            [weak self] event, author in
+            
+            guard let self = self, author !== self else { return }
+            
+            self.recordStoreDidSend(event)
         }
     }
     
-    private func recordStore(did edit: RecordStore.Edit)
+    private func recordStoreDidSend(_ event: RecordStore.Event)
     {
-        switch edit
+        switch event
         {
-        case .modifyRecords(let records):
-            FileDatabase.shared.save(records, identifyAs: self)
+        case .didModifyRecords(let records):
+            FileDatabase.shared.save(records, as: self)
             
-        case .deleteRecordsWithIDs(let ids):
-            FileDatabase.shared.deleteRecords(with: ids, identifyAs: self)
+        case .didDeleteRecordsWithIDs(let ids):
+            FileDatabase.shared.deleteRecords(with: ids, as: self)
         }
     }
     
@@ -49,25 +49,25 @@ class FileController: Observer
     
     private func observeFileDatabase()
     {
-        observe(FileDatabase.shared).filter
+        observe(FileDatabase.shared)
         {
-            [weak self] event in self != nil && event.object !== self
-        }
-        .receive
-        {
-            [weak self] event in self?.fileSystemDatabase(did: event.did)
+            [weak self] event, author in
+            
+            guard let self = self, author !== self else { return }
+        
+            self.fileSystemDatabaseDidSend(event)
         }
     }
     
-    private func fileSystemDatabase(did edit: FileDatabase.Edit)
+    private func fileSystemDatabaseDidSend(_ event: FileDatabase.Event)
     {
-        switch edit
+        switch event
         {
-        case .saveRecords(let records):
-            RecordStore.shared.save(records, identifyAs: self)
+        case .didSaveRecords(let records):
+            RecordStore.shared.save(records, as: self)
             
-        case .deleteRecordsWithIDs(let ids):
-            RecordStore.shared.deleteRecords(with: ids, identifyAs: self)
+        case .didDeleteRecordsWithIDs(let ids):
+            RecordStore.shared.deleteRecords(with: ids, as: self)
         }
     }
 }

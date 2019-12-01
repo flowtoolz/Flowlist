@@ -32,7 +32,7 @@ class CKRecordEditor
                 guard !preferICloud else
                 {
                     let serverRecords = saveResult.conflicts.map { $0.serverRecord.makeRecord() }
-                    FileDatabase.shared.save(serverRecords, identifyAs: self)
+                    FileDatabase.shared.save(serverRecords, as: self)
                     return Promise()
                 }
                 

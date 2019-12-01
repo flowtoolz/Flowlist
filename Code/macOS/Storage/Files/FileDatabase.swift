@@ -31,9 +31,7 @@ class FileDatabase: Observable
     // MARK: - Edit
     
     @discardableResult
-    func save(_ records: [Record],
-              identifyAs object: AnyObject,
-              sendEvent: Bool = true) -> Bool
+    func save(_ records: [Record], as author: AnyAuthor, sendEvent: Bool = true) -> Bool
     {
         guard !records.isEmpty else { return true }
         
@@ -44,13 +42,13 @@ class FileDatabase: Observable
         
         if !savedRecords.isEmpty && sendEvent
         {
-            send((object, did: .saveRecords(savedRecords)))
+            send(.didSaveRecords(savedRecords), author: author)
         }
         
         return records.count == savedRecords.count
     }
     
-    func deleteRecords(with ids: [Record.ID], identifyAs object: AnyObject)
+    func deleteRecords(with ids: [Record.ID], as author: AnyAuthor)
     {
         guard !ids.isEmpty else { return }
         
@@ -61,7 +59,7 @@ class FileDatabase: Observable
         
         if !idsOfDeletions.isEmpty
         {
-            send((object, did: .deleteRecordsWithIDs(idsOfDeletions)))
+            send(.didDeleteRecordsWithIDs(idsOfDeletions), author: author)
         }
     }
     
@@ -84,12 +82,10 @@ class FileDatabase: Observable
     // MARK: - Observability
     
     let messenger = Messenger<Event>()
-    
-    typealias Event = (object: AnyObject, did: Edit)
-    
-    enum Edit
+
+    enum Event
     {
-        case saveRecords([Record])
-        case deleteRecordsWithIDs([Record.ID])
+        case didSaveRecords([Record])
+        case didDeleteRecordsWithIDs([Record.ID])
     }
 }

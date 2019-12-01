@@ -22,7 +22,7 @@ class JSONFileMigrationController
             return Promise()
         }
         
-        guard FileDatabase.shared.save(jsonFileRecords, identifyAs: self, sendEvent: false) else
+        guard FileDatabase.shared.save(jsonFileRecords, as: self, sendEvent: false) else
         {
             return .fail("Found JSON File but can't migrate its content. Saving the items as files failed.")
         }

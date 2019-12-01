@@ -20,14 +20,14 @@ class CKRecordSynchronizer
         fetchCKChangesAndApplyThemToFileDatabase().catch(sync.abort)
     }
     
-    func fileDatabase(did edit: FileDatabase.Edit)
+    func fileDatabaseDidSend(_ event: FileDatabase.Event)
     {
         guard sync.isActive else { return }
         
-        switch edit
+        switch event
         {
-        case .saveRecords(let records): return bufferedChanges.save(records)
-        case .deleteRecordsWithIDs(let ids): return bufferedChanges.deleteRecords(with: ids)
+        case .didSaveRecords(let records): return bufferedChanges.save(records)
+        case .didDeleteRecordsWithIDs(let ids): return bufferedChanges.deleteRecords(with: ids)
         }
     }
     
@@ -87,7 +87,7 @@ class CKRecordSynchronizer
         }
         .done(on: queue)
         {
-            self.fileDatabase.save($0, identifyAs: self)
+            self.fileDatabase.save($0, as: self)
         }
     }
     
@@ -125,10 +125,10 @@ class CKRecordSynchronizer
         guard changes.hasChanges else { return }
         
         let ids = changes.idsOfDeletedCKRecords.map { $0.recordName }
-        fileDatabase.deleteRecords(with: ids, identifyAs: self)
+        fileDatabase.deleteRecords(with: ids, as: self)
         
         let records = changes.changedCKRecords.map { $0.makeRecord() }
-        fileDatabase.save(records, identifyAs: self)
+        fileDatabase.save(records, as: self)
     }
     
     // MARK: - Delayed Sync of Buffered Changes

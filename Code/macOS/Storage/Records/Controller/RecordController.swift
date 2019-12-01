@@ -18,24 +18,24 @@ class RecordController: Observer
     
     private func observeRecordStore()
     {
-        observe(RecordStore.shared).filter
+        observe(RecordStore.shared)
         {
-            [weak self] event in self != nil && event.object !== self
-        }
-        .receive
-        {
-            [weak self] event in self?.recordStore(did: event.did)
+            [weak self] event, author in
+            
+            guard let self = self, author !== self else { return }
+        
+            self.recordStoreDidSend(event)
         }
     }
     
-    private func recordStore(did edit: RecordStore.Edit)
+    private func recordStoreDidSend(_ event: RecordStore.Event)
     {
-        switch edit
+        switch event
         {
-        case .deleteRecordsWithIDs(let ids):
+        case .didDeleteRecordsWithIDs(let ids):
             TreeStore.shared.deleteItems(with: ids)
             
-        case .modifyRecords(let records):
+        case .didModifyRecords(let records):
             let updates = records.map { $0.makeUpdate() }
             TreeStore.shared.apply(updates: updates)
         }
@@ -62,11 +62,11 @@ class RecordController: Observer
             
         case .didAddTree(let tree):
             let records = tree.allNodesRecursively.map(Record.init)
-            RecordStore.shared.save(records, identifyAs: self)
+            RecordStore.shared.save(records, as: self)
             
         case .didRemoveTree(let tree):
             let ids = tree.allNodesRecursively.map { $0.id }
-            RecordStore.shared.deleteRecords(with: ids, identifyAs: self)
+            RecordStore.shared.deleteRecords(with: ids, as: self)
         }
     }
     
@@ -79,20 +79,20 @@ class RecordController: Observer
             let indicesOfRepositionedItems = Array(lastPosition + 1 ..< parent.count)
             allEffectedItems += parent[indicesOfRepositionedItems]
             let effectedRecords = allEffectedItems.map(Record.init)
-            RecordStore.shared.save(effectedRecords, identifyAs: self)
+            RecordStore.shared.save(effectedRecords, as: self)
             
         case .receivedMessage(let message, let node):
             if case .wasModified = message
             {
-                RecordStore.shared.save([Record(item: node)], identifyAs: self)
+                RecordStore.shared.save([Record(item: node)], as: self)
             }
             
         case .removedNodes(let removedChildren, let parent):
             let allRemovedItems = removedChildren.flatMap { $0.allNodesRecursively }
             let idsOfAllRemovedItems = allRemovedItems.map { $0.id }
-            RecordStore.shared.deleteRecords(with: idsOfAllRemovedItems, identifyAs: self)
+            RecordStore.shared.deleteRecords(with: idsOfAllRemovedItems, as: self)
             let possiblyRepositionedRecords = parent.children.map(Record.init)
-            RecordStore.shared.save(possiblyRepositionedRecords, identifyAs: self)
+            RecordStore.shared.save(possiblyRepositionedRecords, as: self)
             
         case .movedNode(let node, let from, let to):
             guard let parent = node.parent else
@@ -114,7 +114,7 @@ class RecordController: Observer
             let repositionedItems = parent.children[firstRepositionedIndex ... lastRepositionedIndex]
             let repositionedRecords = repositionedItems.map(Record.init)
             
-            RecordStore.shared.save(repositionedRecords, identifyAs: self)
+            RecordStore.shared.save(repositionedRecords, as: self)
         }
     }
 }
