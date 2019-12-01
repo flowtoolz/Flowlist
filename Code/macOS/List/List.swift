@@ -215,19 +215,18 @@ class List: Observable, Observer
         old?.deletionStack.removeAll()
         old?.deselectAll()
         
-        title <- nil
-        tag.source = new?.data.tag ?? Var<ItemData.Tag?>()
-        state.source = new?.data.state ?? Var<ItemData.State?>()
+        title <- new?.text
+        tag <- new?.data.tag.value
+        state <- new?.data.state.value
         
         send(.did(.switchedParent(from: old, to: new)))
     }
     
     // MARK: - Mappings
     
-    let tag = Var<ItemData.Tag?>().new()
+    let tag = Var<ItemData.Tag?>()
     let title = Var<String?>()
-    
-    let state = Var<ItemData.State?>().new()
+    let state = Var<ItemData.State?>()
     
     // MARK: - Atomic Selection Operations
     

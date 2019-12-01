@@ -29,7 +29,7 @@ class Header: LayerBackedView
         {
             [weak self] _ in
             
-            self?.titleLabel.textColor = Color.text.nsColor
+            self?.updateTitleColor()
             self?.icon.image = Header.iconImage
             
             let bgColor = Color.listBackground
@@ -81,7 +81,7 @@ class Header: LayerBackedView
         // tag
         
         stopObserving(self.list?.tag)
-        observe(list.tag)
+        observe(list.tag).new()
         {
             [weak self] newTag in
             
@@ -146,7 +146,7 @@ class Header: LayerBackedView
     
     private func updateTitleColor()
     {
-        let isDone = list?.state.source.value == .done
+        let isDone = list?.state.value == .done
         
         let textColor = Color.itemText(isDone: isDone || isUntitled,
                                        isSelected: false,
