@@ -215,7 +215,7 @@ class List: Observable, Observer
         old?.deletionStack.removeAll()
         old?.deselectAll()
         
-        title.source = new?.data.text ?? Var<String?>()
+        title <- nil
         tag.source = new?.data.tag ?? Var<ItemData.Tag?>()
         state.source = new?.data.state ?? Var<ItemData.State?>()
         
@@ -225,7 +225,7 @@ class List: Observable, Observer
     // MARK: - Mappings
     
     let tag = Var<ItemData.Tag?>().new()
-    let title = Var<String?>().new().unwrap("")
+    let title = Var<String?>()
     
     let state = Var<ItemData.State?>().new()
     

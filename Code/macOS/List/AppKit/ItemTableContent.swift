@@ -42,7 +42,7 @@ class ItemTableContent: NSObject, Observable, NSTableViewDataSource, NSTableView
         
         guard let item = list[row] else
         {
-            log(error: "Couldn't find item for row \(row) in list \(list.title.source.value ?? "nil").")
+            log(error: "Couldn't find item for row \(row) in list \(list.title.value ?? "nil").")
             return nil
         }
         

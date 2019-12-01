@@ -111,7 +111,7 @@ class TextView: NSTextView, NSTextViewDelegate, Observable
     
     static var lineHeight: CGFloat
     {
-        let fontSize = Font.baseSize.latestMessage
+        let fontSize = Font.baseSize.value
         
         if let height = lineHeightCash[fontSize]
         {

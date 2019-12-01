@@ -15,7 +15,7 @@ class PurchaseView: LayerBackedView, Observable
         
         backgroundColor = .purchasePanelBackground
         
-        observe(darkMode) { [weak self] _ in self?.adjustToColorMode() }
+        observe(Color.darkMode) { [weak self] _ in self?.adjustToColorMode() }
         
         constrainTopSeparator()
         constrainItemLabel()
@@ -24,7 +24,7 @@ class PurchaseView: LayerBackedView, Observable
         constrainContent()
         constrainButtonOverlay()
         
-        observe(numberOfUserCreatedLeafs)
+        observe(TreeSelector.shared.numberOfUserCreatedLeafs).new()
         {
             [weak self] itemNumber in
             
@@ -57,7 +57,7 @@ class PurchaseView: LayerBackedView, Observable
         progressBar.progressColor = .progressBar
         progressBarSeparator.backgroundColor = .progressBarSeparator
         
-        let itemNumber = numberOfUserCreatedLeafs.latestMessage
+        let itemNumber = TreeSelector.shared.numberOfUserCreatedLeafs.value
         itemLabel.textColor = labelColor(for: itemNumber).nsColor
         
         expandIcon.image = isExpanded ? closeImage : expandImage
@@ -137,13 +137,12 @@ class PurchaseView: LayerBackedView, Observable
     
     private lazy var itemLabel: Label =
     {
+        let itemNumber = TreeSelector.shared.numberOfUserCreatedLeafs.value
+        
         let field = addForAutoLayout(Label())
-        
         field.font = Font.purchasePanel.nsFont
-        let color = labelColor(for: numberOfUserCreatedLeafs.latestMessage)
+        let color = labelColor(for: itemNumber)
         field.textColor = color.nsColor
-        
-        let itemNumber = numberOfUserCreatedLeafs.latestMessage
         field.stringValue = labelText(for: itemNumber)
         
         return field
@@ -215,7 +214,7 @@ class PurchaseView: LayerBackedView, Observable
         bar.translatesAutoresizingMaskIntoConstraints = false
         addSubview(bar, positioned: .below, relativeTo: buttonOverlay)
         
-        let progress = CGFloat(numberOfUserCreatedLeafs.latestMessage) / CGFloat(maxNumberOfLeafsInTrial)
+        let progress = CGFloat(TreeSelector.shared.numberOfUserCreatedLeafs.value) / CGFloat(maxNumberOfLeafsInTrial)
         bar.progress = progress
         bar.backgroundColor = .progressBackground
         bar.progressColor = .progressBar

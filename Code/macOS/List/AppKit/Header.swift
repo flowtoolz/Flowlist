@@ -25,7 +25,7 @@ class Header: LayerBackedView
         
         icon.isHidden = true
         
-        observe(darkMode)
+        observe(Color.darkMode)
         {
             [weak self] _ in
             
@@ -58,7 +58,7 @@ class Header: LayerBackedView
         // title
         
         stopObserving(self.list?.title)
-        observe(list.title)
+        observe(list.title).new().unwrap("")
         {
             [weak self] newTitle in
             
@@ -66,7 +66,7 @@ class Header: LayerBackedView
             self?.updateTitleColor()
         }
         
-        set(title: list.title.latestMessage)
+        set(title: list.title.value ?? "")
         
         // focus
         
@@ -146,7 +146,7 @@ class Header: LayerBackedView
     
     private func updateTitleColor()
     {
-        let isDone = list?.state.latestMessage == .done
+        let isDone = list?.state.source.value == .done
         
         let textColor = Color.itemText(isDone: isDone || isUntitled,
                                        isSelected: false,

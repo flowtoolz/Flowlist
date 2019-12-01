@@ -12,7 +12,7 @@ class ListViewCell: NSCollectionViewItem
         self.listView = listView
         super.init(nibName: nil, bundle: nil)
         
-        observe(darkMode) { [weak self] _ in self?.resetShadow() }
+        observe(Color.darkMode) { [weak self] _ in self?.resetShadow() }
     }
     
     required init?(coder: NSCoder) { fatalError() }

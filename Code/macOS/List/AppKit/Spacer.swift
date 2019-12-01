@@ -1,6 +1,7 @@
 import AppKit
 import UIToolz
 import SwiftObserver
+import SwiftyToolz
 
 class Spacer: LayerBackedView
 {
@@ -18,7 +19,7 @@ class Spacer: LayerBackedView
         pointyCorners.constrainToParentExcludingBottom()
         pointyCorners.constrainHeightToParent(with: 0.5)
         
-        observe(darkMode)
+        observe(Color.darkMode)
         {
             [weak self] _ in
             

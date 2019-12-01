@@ -21,7 +21,7 @@ class ItemView: LayerBackedView, Observable
         contrainGroupIcon()
         constrainTextView()
         
-        observe(darkMode)
+        observe(Color.darkMode)
         {
             [weak self] _ in self?.colorModeDidChange()
         }

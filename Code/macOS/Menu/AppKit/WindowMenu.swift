@@ -49,7 +49,7 @@ class WindowMenu: NSMenu, NSMenuItemValidation
         case increaseFontSizeItem:
             return !TextView.isEditing.value
         case decreaseFontSizeItem:
-            return !TextView.isEditing.value && Font.baseSize.latestMessage > 12
+            return !TextView.isEditing.value && Font.baseSize.value > 12
         default: return true
         }
     }
@@ -147,18 +147,18 @@ class WindowMenu: NSMenu, NSMenuItemValidation
     private lazy var increaseFontSizeItem = MenuItem("Bigger Font",
                                                      key: "+",
                                                      validator: self)
-    { Font.baseSize.source.int += 1 }
+    { Font.baseSize.int += 1 }
     
     private lazy var decreaseFontSizeItem = MenuItem("Smaller Font",
                                                      key: "-",
                                                      validator: self)
-    { Font.baseSize.source.int -= 1 }
+    { Font.baseSize.int -= 1 }
     
     // MARK: - Dark Mode
     
     private func observeDarkMode()
     {
-        observe(darkMode)
+        observe(Color.darkMode)
         {
             [weak self] _ in
             

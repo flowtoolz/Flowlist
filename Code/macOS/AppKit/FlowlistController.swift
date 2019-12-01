@@ -31,7 +31,7 @@ class FlowlistController: AppController
         
         Dialog.default = AlertDialog()
         
-        observe(darkMode)
+        observe(Color.darkMode)
         {
             [weak self] _ in
             

@@ -6,12 +6,11 @@ import Foundation
 
 var reachedItemNumberLimit: Bool
 {
-    let userCreatedLeafs = numberOfUserCreatedLeafs.latestMessage
+    let userCreatedLeafs = TreeSelector.shared.numberOfUserCreatedLeafs.value
     
     return !isFullVersion && userCreatedLeafs >= maxNumberOfLeafsInTrial
 }
 
-let numberOfUserCreatedLeafs = TreeSelector.shared.numberOfUserCreatedLeafs.new()
 let maxNumberOfLeafsInTrial = 100
 
 // MARK: - Price

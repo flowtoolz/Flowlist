@@ -170,11 +170,9 @@ extension Color
     
     static var isInDarkMode: Bool
     {
-        get { darkMode.latestMessage }
-        set { darkModeVar <- newValue }
+        get { darkMode.value }
+        set { darkMode <- newValue }
     }
+    
+    static let darkMode = Var(false)
 }
-
-let darkMode = darkModeVar.new()
-
-fileprivate let darkModeVar = Var(false)

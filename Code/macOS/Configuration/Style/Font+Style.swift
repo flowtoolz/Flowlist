@@ -5,12 +5,12 @@ extension Font
 {
     static var text: Font
     {
-        .system(size: baseSize.latestMessage, weight: .system)
+        .system(size: baseSize.value, weight: .system)
     }
     
     static var listTitle: Font
     {
-        .system(size: Int(1.6 * Float(baseSize.latestMessage)),
+        .system(size: Int(1.6 * Float(baseSize.value)),
                 weight: .semibold)
     }
     
@@ -24,7 +24,7 @@ extension Font
         .system(size: 14, weight: .system)
     }
     
-    static let baseSize = Var(defaultSize).new()
+    static let baseSize = Var(defaultSize)
 
     static let defaultSize: Int =
     {
