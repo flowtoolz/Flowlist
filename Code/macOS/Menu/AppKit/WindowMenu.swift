@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class WindowMenu: NSMenu, NSMenuItemValidation
+class WindowMenu: NSMenu, NSMenuItemValidation, Observer
 {
     // MARK: - Initialization
     
@@ -31,8 +31,6 @@ class WindowMenu: NSMenu, NSMenuItemValidation
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
-    
-    deinit { stopObserving() }
     
     // MARK: - Validate Items
     
@@ -179,4 +177,8 @@ class WindowMenu: NSMenu, NSMenuItemValidation
     {
         "\(Color.isInDarkMode ? "Daylight" : "Dark") Mode"
     }
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

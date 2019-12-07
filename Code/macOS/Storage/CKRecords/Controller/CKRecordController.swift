@@ -21,7 +21,6 @@ class CKRecordController: Observer
     
     deinit
     {
-        stopObserving()
         NetworkReachability.shared.remove(observer: self)
     }
     
@@ -74,4 +73,8 @@ class CKRecordController: Observer
     
     func resync() -> Promise<Void> { synchronizer.resyncAsynchronously() }
     private let synchronizer = CKRecordSynchronizer()
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

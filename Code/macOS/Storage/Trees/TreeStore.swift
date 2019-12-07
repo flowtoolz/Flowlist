@@ -8,7 +8,6 @@ class TreeStore: Observer, Observable
     
     static let shared = TreeStore()
     private init() {}
-    deinit { stopObserving() }
     
     // MARK: - Add Items
     
@@ -241,7 +240,7 @@ class TreeStore: Observer, Observable
     private let allItems = HashMap()
     private let orphans = Orphanage()
     
-    // MARK: - Observability
+    // MARK: - Observable Observer
     
     let messenger = Messenger<Event>()
     
@@ -253,4 +252,6 @@ class TreeStore: Observer, Observable
         case didRemoveTree(Item)
         case didApplyMultipleUpdates
     }
+    
+    let receiver = Receiver()
 }

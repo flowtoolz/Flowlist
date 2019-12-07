@@ -15,8 +15,6 @@ class List: Observable, Observer
         }
     }
     
-    deinit { stopObserving() }
-    
     // MARK: - Configuration
     
     func set(root newRoot: Item?)
@@ -337,7 +335,7 @@ class List: Observable, Observer
         }
     }
     
-    // MARK: - Observability
+    // MARK: - Observable Observer
     
     let messenger = Messenger<Event>()
     
@@ -346,4 +344,6 @@ class List: Observable, Observer
         case did(Item.Event.NodeUpdate)
         case didChangeSelection(added: [Int], removed: [Int])
     }
+    
+    let receiver = Receiver()
 }

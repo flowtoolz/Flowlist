@@ -4,7 +4,7 @@ import UIObserver
 import SwiftObserver
 import SwiftyToolz
 
-class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout
+class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionViewDelegateFlowLayout, Observer
 {
     // MARK: - Life Cycle
     
@@ -19,8 +19,6 @@ class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionView
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
-    
-    deinit { stopObserving() }
     
     // MARK: - Adapt to Font Size Changes
     
@@ -218,4 +216,8 @@ class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionView
     func collectionView(_ collectionView: NSCollectionView,
                         layout collectionViewLayout: NSCollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat { 10 }
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

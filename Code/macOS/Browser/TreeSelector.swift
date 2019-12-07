@@ -8,7 +8,6 @@ class TreeSelector: Observer, Observable
     
     static let shared = TreeSelector()
     private init() { observeTreeStore() }
-    deinit { stopObserving() }
     
     // MARK: - Observe Tree Store
     
@@ -181,9 +180,10 @@ class TreeSelector: Observer, Observable
     
     let numberOfUserCreatedLeafs = Var(0)
     
-    // MARK: - Observability
+    // MARK: - Observable Observer
     
     let messenger = Messenger<Item?>()
+    let receiver = Receiver()
 }
 
 private extension Item

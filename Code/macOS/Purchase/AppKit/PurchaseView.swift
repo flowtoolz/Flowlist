@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class PurchaseView: LayerBackedView, Observable
+class PurchaseView: LayerBackedView, Observable, Observer
 {
     // MARK: - Life Cycle
     
@@ -42,8 +42,6 @@ class PurchaseView: LayerBackedView, Observable
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
-    
-    deinit { stopObserving() }
     
     // MARK: - Dark Mode
     
@@ -273,8 +271,10 @@ class PurchaseView: LayerBackedView, Observable
         send(.expandButtonWasClicked)
     }
     
-    // MARK: - Observability
+    // MARK: - Observable Observer
     
     let messenger = Messenger<Event>()
     enum Event { case expandButtonWasClicked }
+    
+    let receiver = Receiver()
 }

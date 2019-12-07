@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class PriceTag: NSView
+class PriceTag: NSView, Observer
 {
     // MARK: - Initialization
     
@@ -24,8 +24,6 @@ class PriceTag: NSView
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
-    
-    deinit { stopObserving() }
     
     // MARK: - Present Data
     
@@ -109,4 +107,8 @@ class PriceTag: NSView
         
         return label
     }
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

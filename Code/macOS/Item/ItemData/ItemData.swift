@@ -23,8 +23,6 @@ final class ItemData: Observer, Observable
         }
     }
     
-    deinit { stopObserving() }
-    
     // MARK: - View Model
     
     let isSelected = Var(false)
@@ -113,4 +111,8 @@ final class ItemData: Observer, Observable
     let id: ID
     
     typealias ID = String
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

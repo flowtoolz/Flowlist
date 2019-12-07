@@ -4,7 +4,7 @@ import UIToolz
 import SwiftyToolz
 import SwiftObserver
 
-class EditMenu: NSMenu, NSMenuItemValidation
+class EditMenu: NSMenu, NSMenuItemValidation, Observer
 {
     // MARK: - Initialization
     
@@ -56,8 +56,6 @@ class EditMenu: NSMenu, NSMenuItemValidation
     }
     
     required init(coder decoder: NSCoder) { fatalError() }
-    
-    deinit { stopObserving() }
     
     // MARK: - Action Availability
     
@@ -276,4 +274,8 @@ class EditMenu: NSMenu, NSMenuItemValidation
         
         return mainItem
     }()
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

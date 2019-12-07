@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class Header: LayerBackedView
+class Header: LayerBackedView, Observer
 {
     // MARK: - Life Cycle
     
@@ -48,8 +48,6 @@ class Header: LayerBackedView
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
-    
-    deinit { stopObserving() }
     
     // MARK: - Configuration
     
@@ -268,4 +266,8 @@ class Header: LayerBackedView
     // MARK: - List
     
     private weak var list: List?
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

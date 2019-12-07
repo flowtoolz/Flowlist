@@ -4,7 +4,7 @@ import SwiftObserver
 import SwiftyToolz
 import GetLaid
 
-class ItemView: LayerBackedView, Observable
+class ItemView: LayerBackedView, Observable, Observer
 {
     // MARK: - Life Cycle
     
@@ -33,8 +33,6 @@ class ItemView: LayerBackedView, Observable
     }
     
     required init?(coder: NSCoder) { fatalError() }
-    
-    deinit { stopObserving() }
     
     // MARK: - Configuration
     
@@ -651,7 +649,7 @@ class ItemView: LayerBackedView, Observable
     
     private(set) weak var item: Item?
     
-    // MARK: - Observability
+    // MARK: - Observable Observer
     
     let messenger = Messenger<Event>()
     
@@ -664,4 +662,6 @@ class ItemView: LayerBackedView, Observable
         case textViewWasClicked
         case wasClicked(withEvent: NSEvent)
     }
+    
+    let receiver = Receiver()
 }

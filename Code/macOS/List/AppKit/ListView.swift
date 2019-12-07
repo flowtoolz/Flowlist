@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class ListView: LayerBackedView, Observable
+class ListView: LayerBackedView, Observable, Observer
 {
     // MARK: - Life Cycle
     
@@ -16,8 +16,6 @@ class ListView: LayerBackedView, Observable
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
-    
-    deinit { stopObserving() }
     
     // MARK: - Configuration
     
@@ -122,8 +120,9 @@ class ListView: LayerBackedView, Observable
     
     private(set) weak var list: List?
     
-    // MARK: - Observability
+    // MARK: - Observable Observer
     
     let messenger = Messenger<Event>()
     enum Event { case didReceiveUserInput }
+    let receiver = Receiver()
 }

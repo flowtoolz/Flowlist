@@ -10,8 +10,6 @@ class FileController: Observer
         observeRecordStore()
     }
     
-    deinit { stopObserving() }
-    
     // MARK: - Setup: Load Records from Files
     
     func saveRecordsFromFilesToRecordStore()
@@ -70,4 +68,8 @@ class FileController: Observer
             RecordStore.shared.deleteRecords(with: ids, as: self)
         }
     }
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

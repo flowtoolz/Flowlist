@@ -4,7 +4,7 @@ extension Tree: Hashable
 {
     func hash(into hasher: inout Hasher)
     {
-        hasher.combine(SwiftyToolz.hashValue(self))
+        hasher.combine(ObjectIdentifier(self))
     }
     
     static func == (lhs: Tree, rhs: Tree) -> Bool

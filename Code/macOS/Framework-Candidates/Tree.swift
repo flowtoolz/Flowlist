@@ -341,4 +341,8 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     // MARK: - Node
     
     public typealias Node = Tree<Data>
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

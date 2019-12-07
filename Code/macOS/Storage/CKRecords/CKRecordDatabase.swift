@@ -12,7 +12,6 @@ class CKRecordDatabase: Observer, Observable
     
     static let shared = CKRecordDatabase()
     private init() { observeCKDatabaseController() }
-    deinit { stopObserving() }
     
     // MARK: - Save CKRecords
     
@@ -210,4 +209,8 @@ class CKRecordDatabase: Observer, Observable
         FileManager.default.ensureDirectoryExists(dir)
         return dir
     }
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

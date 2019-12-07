@@ -3,7 +3,7 @@ import GetLaid
 import SwiftObserver
 import SwiftyToolz
 
-class ListViewCell: NSCollectionViewItem
+class ListViewCell: NSCollectionViewItem, Observer
 {
     // MARK: - Initialize
     
@@ -16,8 +16,6 @@ class ListViewCell: NSCollectionViewItem
     }
     
     required init?(coder: NSCoder) { fatalError() }
-    
-    deinit { stopObserving() }
     
     // MARK: - Load View
     
@@ -50,4 +48,8 @@ class ListViewCell: NSCollectionViewItem
         view.layer?.shadowOpacity = opacity
         view.layer?.shadowRadius = 0
     }
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

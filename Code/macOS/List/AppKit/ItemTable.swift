@@ -3,7 +3,7 @@ import SwiftObserver
 import SwiftyToolz
 import UIToolz
 
-class ItemTable: AnimatedTableView, Observable, TableContentDelegate
+class ItemTable: AnimatedTableView, Observable, TableContentDelegate, Observer
 {
     // MARK: - Life Cycle
     
@@ -21,8 +21,6 @@ class ItemTable: AnimatedTableView, Observable, TableContentDelegate
     }
     
     required init?(coder: NSCoder) { fatalError() }
-    
-    deinit { stopObserving() }
     
     // MARK: - Adapt to Font Size Changes
     
@@ -340,7 +338,8 @@ class ItemTable: AnimatedTableView, Observable, TableContentDelegate
     
     private var rowBeingEdited: Int?
     
-    // MARK: - Observability
+    // MARK: - Observable Observer
     
     let messenger = Messenger<ItemView.Event>()
+    let receiver = Receiver()
 }

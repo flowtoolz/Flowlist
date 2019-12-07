@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class FlowlistView: LayerBackedView
+class FlowlistView: LayerBackedView, Observer
 {
     // MARK: - Life Cycle
     
@@ -39,8 +39,6 @@ class FlowlistView: LayerBackedView
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
-    
-    deinit { stopObserving() }
     
     // MARK: - Key Events
     
@@ -125,4 +123,8 @@ class FlowlistView: LayerBackedView
     private lazy var browserView = addForAutoLayout(BrowserView())
     
     private var browserViewBottomConstraint: NSLayoutConstraint?
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

@@ -24,8 +24,6 @@ class Browser: Observer, Observable
         }
     }
     
-    deinit { stopObserving() }
-    
     // MARK: - Store Root
     
     private func rootSelectorDidSelect(_ selectedRoot: Item?)
@@ -160,7 +158,7 @@ class Browser: Observer, Observable
     var numberOfLists: Int { lists.count }
     private(set) var lists = [List]()
     
-    // MARK: - Observability
+    // MARK: - Observable Observer
     
     let messenger = Messenger<Event>()
     
@@ -169,4 +167,6 @@ class Browser: Observer, Observable
         case didPush(list: List)
         case selectionChanged(in: List)
     }
+    
+    let receiver = Receiver()
 }

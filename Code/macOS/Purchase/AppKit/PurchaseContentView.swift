@@ -4,7 +4,7 @@ import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
-class PurchaseContentView: NSView
+class PurchaseContentView: NSView, Observer
 {
     // MARK: - Life Cycle
     
@@ -33,8 +33,6 @@ class PurchaseContentView: NSView
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
-    
-    deinit { stopObserving() }
     
     // MARK: - Dark Mode
     
@@ -378,4 +376,8 @@ class PurchaseContentView: NSView
     private lazy var columns = [addForAutoLayout(NSView()),
                                 addForAutoLayout(NSView()),
                                 addForAutoLayout(NSView())]
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

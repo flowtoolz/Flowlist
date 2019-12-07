@@ -3,7 +3,7 @@ import UIToolz
 import SwiftObserver
 import SwiftyToolz
 
-class Spacer: LayerBackedView
+class Spacer: LayerBackedView, Observer
 {
     override init(frame frameRect: NSRect)
     {
@@ -33,7 +33,9 @@ class Spacer: LayerBackedView
     
     required init?(coder decoder: NSCoder) { fatalError() }
     
-    deinit { stopObserving() }
-    
     static let uiIdentifier = UIItemID(rawValue: "SpacerID")
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }

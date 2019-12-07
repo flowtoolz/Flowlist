@@ -12,8 +12,6 @@ class RecordController: Observer
         observeItemStore()
     }
     
-    deinit { stopObserving() }
-    
     // MARK: - Transmit Record Store Changes to Item Store
     
     private func observeRecordStore()
@@ -117,4 +115,8 @@ class RecordController: Observer
             RecordStore.shared.save(repositionedRecords, as: self)
         }
     }
+    
+    // MARK: - Observer
+    
+    let receiver = Receiver()
 }
