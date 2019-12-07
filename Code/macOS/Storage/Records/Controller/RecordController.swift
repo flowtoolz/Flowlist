@@ -16,13 +16,9 @@ class RecordController: Observer
     
     private func observeRecordStore()
     {
-        observe(RecordStore.shared)
+        observe(RecordStore.shared).notFrom(self)
         {
-            [weak self] event, author in
-            
-            guard let self = self, author !== self else { return }
-        
-            self.recordStoreDidSend(event)
+            [weak self] in self?.recordStoreDidSend($0)
         }
     }
     

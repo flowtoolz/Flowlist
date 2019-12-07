@@ -21,13 +21,9 @@ class FileController: Observer
     
     private func observeRecordStore()
     {
-        observe(RecordStore.shared)
+        observe(RecordStore.shared).notFrom(self)
         {
-            [weak self] event, author in
-            
-            guard let self = self, author !== self else { return }
-            
-            self.recordStoreDidSend(event)
+            [weak self] in self?.recordStoreDidSend($0)
         }
     }
     
@@ -47,13 +43,9 @@ class FileController: Observer
     
     private func observeFileDatabase()
     {
-        observe(FileDatabase.shared)
+        observe(FileDatabase.shared).notFrom(self)
         {
-            [weak self] event, author in
-            
-            guard let self = self, author !== self else { return }
-        
-            self.fileSystemDatabaseDidSend(event)
+            [weak self] in self?.fileSystemDatabaseDidSend($0)
         }
     }
     

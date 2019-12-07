@@ -36,15 +36,9 @@ class CKRecordController: Observer
     
     private func observeFileDatabase()
     {
-        observe(FileDatabase.shared)
+        observe(FileDatabase.shared).notFrom(synchronizer).notFrom(synchronizer.editor)
         {
-            [weak self] event, author in
-            
-            guard let self = self,
-                author !== self.synchronizer,
-                author !== self.synchronizer.editor else { return }
-        
-            self.synchronizer.fileDatabaseDidSend(event)
+            [weak self] in self?.synchronizer.fileDatabaseDidSend($0)
         }
     }
     
