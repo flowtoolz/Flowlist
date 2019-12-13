@@ -42,7 +42,7 @@ class FileDatabase: Observable
         
         if !savedRecords.isEmpty && sendEvent
         {
-            send(.didSaveRecords(savedRecords), author: author)
+            send(.didSaveRecords(savedRecords), from: author)
         }
         
         return records.count == savedRecords.count
@@ -59,7 +59,7 @@ class FileDatabase: Observable
         
         if !idsOfDeletions.isEmpty
         {
-            send(.didDeleteRecordsWithIDs(idsOfDeletions), author: author)
+            send(.didDeleteRecordsWithIDs(idsOfDeletions), from: author)
         }
     }
     

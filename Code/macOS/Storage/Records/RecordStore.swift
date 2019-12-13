@@ -15,7 +15,7 @@ class RecordStore: Observable
         let differingRecords = records.compactMap { recordsByID[$0.id] != $0 ? $0 : nil }
         guard !differingRecords.isEmpty else { return }
         differingRecords.forEach { recordsByID[$0.id] = $0 }
-        send(.didModifyRecords(differingRecords), author: author)
+        send(.didModifyRecords(differingRecords), from: author)
     }
     
     func deleteRecords(with ids: [Record.ID], as author: AnyAuthor)
@@ -24,7 +24,7 @@ class RecordStore: Observable
         let idsOfExistingRecords = ids.compactMap { recordsByID[$0] != nil ? $0 : nil }
         guard !idsOfExistingRecords.isEmpty else { return }
         idsOfExistingRecords.forEach { recordsByID[$0] = nil }
-        send(.didDeleteRecordsWithIDs(idsOfExistingRecords), author: author)
+        send(.didDeleteRecordsWithIDs(idsOfExistingRecords), from: author)
     }
     
     private var recordsByID = [Record.ID : Record]()
