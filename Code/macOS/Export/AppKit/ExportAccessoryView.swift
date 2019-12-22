@@ -12,17 +12,17 @@ class ExportAcessoryView: NSView
         constrainWidth(toMinimum: 400)
         constrainHeight(toMinimum: 40)
         
-        formatContainer.constrainTopToParent()
-        formatContainer.constrainBottomToParent()
-        formatContainer.constrainCenterXToParent()
+        formatContainer.constrainToParentTop()
+        formatContainer.constrainToParentBottom()
+        formatContainer.constrainToParentCenterX()
         
-        formatLabel.constrainLeftToParent(inset: 10)
-        formatLabel.constrainCenterYToParent()
+        formatLabel.constrainToParentLeft(inset: 10)
+        formatLabel.constrainToParentCenterY()
         
         formatMenu.constrain(toTheRightOf: formatLabel, gap: 10)
-        formatMenu.constrainToParentExcludingLeft(insetTop: 10,
-                                                  insetBottom: 10,
-                                                  insetRight: 10)
+        formatMenu.constrain(to: formatMenu.parent?.allButLeft(topOffset: 10,
+                                                               bottomOffset: -10,
+                                                               rightOffset: -10))
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }

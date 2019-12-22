@@ -159,12 +159,12 @@ class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionView
     private func constrainCollectionView()
     {
         let guide = addLayoutGuide()
-        guide.constrainRight(to: self, offset: -40)
-        guide.constrainLeft(to: self)
+        guide.constrain(to: right(offset: -40))
+        guide.constrain(to: left)
         
-        collectionView.constrainTopToParent(inset: 10)
-        collectionView.constrainBottomToParent()
-        collectionView.constrainCenterXToParent()
+        collectionView.constrainToParentTop(inset: 10)
+        collectionView.constrainToParentBottom()
+        collectionView.constrainToParentCenterX()
         collectionView.widthAnchor.constraint(equalTo: guide.widthAnchor,
                                               multiplier: 1.66666,
                                               constant: 40).isActive = true

@@ -110,27 +110,24 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainTopSeparator()
     {
-        topSeparator.constrainToParentExcludingBottom()
+        topSeparator.constrain(to: allButBottom)
         topSeparator.constrainHeight(to: 1)
     }
     
     private lazy var topSeparator: LayerBackedView =
     {
-        let edge = addForAutoLayout(LayerBackedView())
-        
-        edge.backgroundColor = Color.gray(brightness: 0.25).with(alpha: 0.17)
-        
-        return edge
+        let separator = addForAutoLayout(LayerBackedView())
+        separator.backgroundColor = Color.gray(brightness: 0.25).with(alpha: 0.17)
+        return separator
     }()
     
     // MARK: - Item Label
     
     private func constrainItemLabel()
     {
-        itemLabel.constrainLeftToParent(inset: 10)
+        itemLabel.constrainToParentLeft(inset: 10)
         itemLabel.constrain(toTheLeftOf: expandIcon, gap: 10)
-        itemLabel.constrainCenterY(to: buttonOverlay,
-                                   offset: -CGFloat(Float.progressBarHeight / 2))
+        itemLabel.constrain(to: buttonOverlay.centerY(offset: -CGFloat(Float.progressBarHeight / 2)))
     }
     
     private lazy var itemLabel: Label =
@@ -162,8 +159,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainExpandIcon()
     {
-        expandIcon.constrainRightToParent(inset: 10)
-        expandIcon.constrainCenterY(to: itemLabel)
+        expandIcon.constrainToParentRight(inset: 10)
+        expandIcon.constrain(to: itemLabel.centerY)
         expandIcon.constrainSize(to: defaultIconSize, defaultIconSize)
     }
     
@@ -191,10 +188,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainProgressBar()
     {
-        progressBar.constrainToParentExcludingTop()
+        progressBar.constrain(to: allButTop)
         progressBar.constrainHeight(to: Float.progressBarHeight.cgFloat)
         
-        progressBarSeparator.constrainToParentExcludingBottom()
+        progressBarSeparator.constrain(to: progressBar.allButBottom)
         progressBarSeparator.constrainHeight(to: 1)
     }
     
@@ -246,7 +243,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     
     private func constrainButtonOverlay()
     {
-        buttonOverlay.constrainToParentExcludingBottom()
+        buttonOverlay.constrain(to: allButBottom)
         buttonOverlay.constrainHeight(to: collapsedHeight)
     }
     

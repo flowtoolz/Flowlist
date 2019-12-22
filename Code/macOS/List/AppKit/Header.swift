@@ -115,7 +115,7 @@ class Header: LayerBackedView, Observer
     
     private func constrainIcon()
     {
-        icon.constrainCenterXToParent()
+        icon.constrainToParentCenterX()
         icon.constrainSize(to: 0.64, 0.64, of: layoutGuideLeft)
         icon.constrainCenterYToParent(at: 0.58)
     }
@@ -156,7 +156,7 @@ class Header: LayerBackedView, Observer
     private func constrainTitleLabel()
     {
         titleLabel.constrain(toTheLeftOf: layoutGuideRight)
-        titleLabel.constrainLeft(to: relativeTitleInset, of: .right, of: layoutGuideLeft)
+        titleLabel.constrain(.left, to: layoutGuideLeft.right.at(relativeTitleInset))
         titleLabel.constrainCenterYToParent(at: 0.436)
     }
     
@@ -197,7 +197,7 @@ class Header: LayerBackedView, Observer
     
     private func constrainColorView()
     {
-        colorView.constrainToParentExcludingBottom()
+        colorView.constrain(to: colorView.parent?.allButBottom)
         colorView.constrainHeight(to: 0.25, of: layoutGuideLeft)
     }
     
@@ -221,8 +221,8 @@ class Header: LayerBackedView, Observer
     
     private func constrainTitleContainer()
     {
-        titleContainer.constrainToParentExcludingTop()
-        titleContainer.constrainTop(to: layoutGuideLeft)
+        titleContainer.constrain(to: allButTop)
+        titleContainer.constrain(to: layoutGuideLeft.top)
     }
     
     private lazy var titleContainer = addForAutoLayout(LayerBackedView())
@@ -241,14 +241,14 @@ class Header: LayerBackedView, Observer
         let size = layouGuideSize
         
         layoutGuideSizeConstraints = layoutGuideLeft.constrainSize(to: size, size)
-        layoutGuideLeft.constrainLeft(to: self)
-        layoutGuideLeft.constrainBottom(to: self)
+        layoutGuideLeft.constrain(to: left)
+        layoutGuideLeft.constrain(to: bottom)
         
         layoutGuideRight.constrainHeight(to: layoutGuideLeft)
         layoutGuideRight.constrainWidth(to: relativeTitleInset,
                                         of: layoutGuideLeft)
-        layoutGuideRight.constrainBottom(to: self)
-        layoutGuideRight.constrainRight(to: self)
+        layoutGuideRight.constrain(to: bottom)
+        layoutGuideRight.constrain(to: right)
     }
     
     private let relativeTitleInset = Float.relativeTextInset.cgFloat

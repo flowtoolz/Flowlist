@@ -66,12 +66,11 @@ class PriceTag: NSView, Observer
     
     private func constrainPriceLabel()
     {
-        priceLabel.constrainCenterYToParent(offset: -10)
-        priceLabel.constrainCenterXToParent()
+        priceLabel.constrainToParentCenter(yOffset: -10)
         
-        stroke.constrainCenterY(to: priceLabel, offset: 1)
-        stroke.constrainLeft(to: priceLabel, offset: -3)
-        stroke.constrainRight(to: priceLabel, offset: 3)
+        stroke.constrain(to: priceLabel.centerY(offset: 1))
+        stroke.constrain(to: priceLabel.left(offset: -3))
+        stroke.constrain(to: priceLabel.right(offset: 3))
     }
     
     private lazy var stroke: LayerBackedView =
@@ -90,8 +89,8 @@ class PriceTag: NSView, Observer
     
     private func constrainDiscountPriceLabel()
     {
-        discountPriceLabel.constrainLeftToParent()
-        discountPriceLabel.constrainRightToParent()
+        discountPriceLabel.constrainToParentLeft()
+        discountPriceLabel.constrainToParentRight()
         discountPriceLabel.constrain(below: priceLabel)
     }
     

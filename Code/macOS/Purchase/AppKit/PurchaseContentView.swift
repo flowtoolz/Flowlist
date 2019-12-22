@@ -115,11 +115,11 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainErrorView()
     {
-        errorView.constrainToParentExcludingTop()
+        errorView.constrain(to: errorView.parent?.allButTop)
         errorView.constrainHeightToParent(with: 0.4)
         
         errorLabel.constrainSizeToParent(with: 0.9, 0.9)
-        errorLabel.constrainCenterToParent()
+        errorLabel.constrainToParentCenter()
     }
     
     private lazy var errorLabel: Label =
@@ -151,16 +151,17 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainLoadingIndicator()
     {
-        loadingIndicator.constrainLeftToParent()
-        loadingIndicator.constrainRightToParent()
+        loadingIndicator.constrainToParentLeft()
+        loadingIndicator.constrainToParentRight()
         loadingIndicator.constrain(below: icon, gap: 10)
         loadingIndicator.constrainHeightToParent(with: 0.4)
 
-        loadingLabel.constrainToParentExcludingBottom(insetTop: 10,
-                                                      insetLeft: 10,
-                                                      insetRight: 10)
+        // ToParentExcludingBottom
+        loadingLabel.constrain(to: loadingLabel.parent?.allButBottom(topOffset: 10,
+                                                                     leftOffset: 10,
+                                                                     rightOffset: -10))
         
-        spinner.constrainCenterXToParent()
+        spinner.constrainToParentCenterX()
         spinner.constrain(below: loadingLabel, gap: 20)
     }
     
@@ -198,7 +199,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainTitleLabel()
     {
-        titleLabel.constrainToParentExcludingBottom()
+        titleLabel.constrain(to: allButBottom)
     }
     
     private lazy var titleLabel: Label =
@@ -216,7 +217,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainBulletpointList()
     {
-        bulletpointList.constrainToParentExcludingBottom(insetTop: 12)
+        bulletpointList.constrain(to: bulletpointList.parent?.allButBottom(topOffset: 12))
     }
     
     private lazy var bulletpointList = columns[2].addForAutoLayout(BulletpointList())
@@ -225,7 +226,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainIcon()
     {
-        icon.constrainToParentExcludingBottom()
+        icon.constrain(to: icon.parent?.allButBottom)
         icon.constrainHeightToParent(with: 0.35)
     }
     
@@ -245,8 +246,8 @@ class PurchaseContentView: NSView, Observer
     private func constrainPriceTag()
     {
         priceTag.constrain(below: icon)
-        priceTag.constrainLeftToParent()
-        priceTag.constrainRightToParent()
+        priceTag.constrainToParentLeft()
+        priceTag.constrainToParentRight()
     }
     
     private lazy var priceTag = columns[1].addForAutoLayout(PriceTag())
@@ -255,7 +256,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainC2aButton()
     {
-        c2aButton.constrainCenterXToParent()
+        c2aButton.constrainToParentCenterX()
         c2aButton.constrainSize(to: 200, 39)
         c2aButton.constrain(above: restoreButton, gap: 20)
     }
@@ -293,8 +294,8 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainRestoreButton()
     {
-        restoreButton.constrainCenterXToParent()
-        restoreButton.constrainBottomToParent()
+        restoreButton.constrainToParentCenterX()
+        restoreButton.constrainToParentBottom()
         restoreButton.constrainSize(to: 200, 39)
     }
     
@@ -328,8 +329,8 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainDescriptionLabel()
     {
-        descriptionLabel.constrainLeftToParent()
-        descriptionLabel.constrainRightToParent()
+        descriptionLabel.constrainToParentLeft()
+        descriptionLabel.constrainToParentRight()
         descriptionLabel.constrain(below: titleLabel, gap: 14)
     }
     
@@ -357,20 +358,20 @@ class PurchaseContentView: NSView, Observer
     {
         columns.forEach
         {
-            $0.constrainTopToParent()
-            $0.constrainBottomToParent()
+            $0.constrainToParentTop()
+            $0.constrainToParentBottom()
         }
         
         let gap: CGFloat = 39
         
-        columns[0].constrainLeftToParent()
+        columns[0].constrainToParentLeft()
         
         columns[1].constrain(toTheRightOf: columns[0], gap: gap)
         columns[1].constrainWidth(to: columns[0])
         
         columns[2].constrain(toTheRightOf: columns[1], gap: gap)
         columns[2].constrainWidth(to: columns[1])
-        columns[2].constrainRightToParent()
+        columns[2].constrainToParentRight()
     }
     
     private lazy var columns = [addForAutoLayout(NSView()),

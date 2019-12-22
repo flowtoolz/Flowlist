@@ -55,7 +55,7 @@ class ListView: LayerBackedView, Observable, Observer
     {
         let height = relativeHeaderHeight * ItemView.heightWithSingleLine
         headerHeightConstraint = header.constrainHeight(to: height)
-        header.constrainToParentExcludingBottom()
+        header.constrain(to: allButBottom)
     }
     
     private lazy var header = addForAutoLayout(Header())
@@ -70,7 +70,7 @@ class ListView: LayerBackedView, Observable, Observer
     
     private func constrainScrollTable()
     {
-        scrollTable.constrainToParentExcludingTop()
+        scrollTable.constrain(to: allButTop)
         scrollTable.constrain(below: header)
     }
     

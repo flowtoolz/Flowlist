@@ -89,7 +89,7 @@ class FlowlistView: LayerBackedView, Observer
     {
         guard !isFullVersion else { return }
         
-        addForAutoLayout(purchaseView).constrainToParentExcludingTop()
+        addForAutoLayout(purchaseView).constrain(to: allButTop)
         purchaseViewHeightConstraint = purchaseView.constrainHeight(to: purchaseViewHeight)
     }
     
@@ -106,8 +106,8 @@ class FlowlistView: LayerBackedView, Observer
     
     private func constrainBrowserView(bottomInset: CGFloat)
     {
-        browserView.constrainToParentExcludingBottom()
-        browserViewBottomConstraint = browserView.constrainBottomToParent(inset: bottomInset)
+        browserView.constrain(to: allButBottom)
+        browserViewBottomConstraint = browserView.constrainToParentBottom(inset: bottomInset)
     }
     
     func windowDidResize()
