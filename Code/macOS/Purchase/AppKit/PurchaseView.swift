@@ -111,7 +111,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     private func constrainTopSeparator()
     {
         topSeparator.constrain(to: allButBottom)
-        topSeparator.constrainHeight(to: 1)
+        topSeparator.height.constrain(to: 1)
     }
     
     private lazy var topSeparator: LayerBackedView =
@@ -189,10 +189,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
     private func constrainProgressBar()
     {
         progressBar.constrain(to: allButTop)
-        progressBar.constrainHeight(to: Float.progressBarHeight.cgFloat)
+        progressBar.height.constrain(to: Float.progressBarHeight.cgFloat)
         
         progressBarSeparator.constrain(to: progressBar.allButBottom)
-        progressBarSeparator.constrainHeight(to: 1)
+        progressBarSeparator.height.constrain(to: 1)
     }
     
     private lazy var progressBarSeparator: LayerBackedView =
@@ -244,7 +244,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     private func constrainButtonOverlay()
     {
         buttonOverlay.constrain(to: allButBottom)
-        buttonOverlay.constrainHeight(to: collapsedHeight)
+        buttonOverlay.height.constrain(to: collapsedHeight)
     }
     
     let collapsedHeight = (2 * Float.itemPadding(for: 17) + 17 + Float.progressBarHeight).cgFloat

@@ -54,7 +54,7 @@ class ListView: LayerBackedView, Observable, Observer
     private func constrainHeader()
     {
         let height = relativeHeaderHeight * ItemView.heightWithSingleLine
-        headerHeightConstraint = header.constrainHeight(to: height)
+        headerHeightConstraint = header.height.constrain(to: height)
         header.constrain(to: allButBottom)
     }
     

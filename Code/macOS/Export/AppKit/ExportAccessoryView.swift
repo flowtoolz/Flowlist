@@ -9,8 +9,8 @@ class ExportAcessoryView: NSView
         super.init(frame: frameRect)
         
         translatesAutoresizingMaskIntoConstraints = false
-        constrainWidth(toMinimum: 400)
-        constrainHeight(toMinimum: 40)
+        width.constrain(to: .min(400))
+        height.constrain(to: .min(40))
         
         formatContainer.constrainToParentTop()
         formatContainer.constrainToParentBottom()

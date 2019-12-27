@@ -367,10 +367,10 @@ class PurchaseContentView: NSView, Observer
         columns[0].constrainToParentLeft()
         
         columns[1].constrain(toTheRightOf: columns[0], gap: gap)
-        columns[1].constrainWidth(to: columns[0])
+        columns[1].constrain(to: columns[0].width)
         
         columns[2].constrain(toTheRightOf: columns[1], gap: gap)
-        columns[2].constrainWidth(to: columns[1])
+        columns[2].constrain(to: columns[1].width)
         columns[2].constrainToParentRight()
     }
     
