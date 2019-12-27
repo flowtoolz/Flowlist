@@ -156,7 +156,7 @@ class Header: LayerBackedView, Observer
     private func constrainTitleLabel()
     {
         titleLabel.constrain(toTheLeftOf: layoutGuideRight)
-        titleLabel.constrain(.left, to: layoutGuideLeft.right.at(relativeTitleInset))
+        titleLabel.left.constrain(to: layoutGuideLeft.right.at(relativeTitleInset))
         titleLabel.constrainCenterYToParent(at: 0.436)
     }
     
@@ -245,8 +245,7 @@ class Header: LayerBackedView, Observer
         layoutGuideLeft.constrain(to: bottom)
         
         layoutGuideRight.constrainHeight(to: layoutGuideLeft)
-        layoutGuideRight.constrainWidth(to: relativeTitleInset,
-                                        of: layoutGuideLeft)
+        layoutGuideRight.constrainWidth(to: relativeTitleInset, of: layoutGuideLeft)
         layoutGuideRight.constrain(to: bottom)
         layoutGuideRight.constrain(to: right)
     }

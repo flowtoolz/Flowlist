@@ -442,9 +442,9 @@ class ItemView: LayerBackedView, Observable, Observer
     
     private func constrainTextView()
     {
-        textView.constrain(.left, to: layoutGuide.right.at(ItemView.textLeftMultiplier))
+        textView.left.constrain(to: layoutGuide.right.at(ItemView.textLeftMultiplier))
         textView.constrain(toTheLeftOf: groupIcon)
-        textView.constrain(.top, to: layoutGuide.bottom.at(0.303))
+        textView.top.constrain(to: layoutGuide.bottom.at(0.303))
         textView.constrainToParentBottom()
     }
     
