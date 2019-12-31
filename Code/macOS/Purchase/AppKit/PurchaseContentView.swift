@@ -3,6 +3,7 @@ import UIToolz
 import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
+import GetLaid
 
 class PurchaseContentView: NSView, Observer
 {
@@ -118,7 +119,7 @@ class PurchaseContentView: NSView, Observer
         errorView.constrain(to: errorView.parent?.allButTop)
         errorView.constrainHeightToParent(with: 0.4)
         
-        errorLabel.constrainSizeToParent(with: 0.9, 0.9)
+        errorLabel.constrain(to: errorLabel.parent?.size.at(0.9))
         errorLabel.constrainToParentCenter()
     }
     
@@ -257,7 +258,7 @@ class PurchaseContentView: NSView, Observer
     private func constrainC2aButton()
     {
         c2aButton.constrainToParentCenterX()
-        c2aButton.constrainSize(to: 200, 39)
+        c2aButton.constrain(to: .size(200, 39))
         c2aButton.constrain(above: restoreButton, gap: 20)
     }
     
@@ -296,7 +297,7 @@ class PurchaseContentView: NSView, Observer
     {
         restoreButton.constrainToParentCenterX()
         restoreButton.constrainToParentBottom()
-        restoreButton.constrainSize(to: 200, 39)
+        restoreButton.constrain(to: .size(200, 39))
     }
     
     private lazy var restoreButton: Button =

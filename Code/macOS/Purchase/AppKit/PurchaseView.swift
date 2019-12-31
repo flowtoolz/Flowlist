@@ -2,6 +2,7 @@ import AppKit
 import UIToolz
 import SwiftObserver
 import SwiftyToolz
+import GetLaid
 
 class PurchaseView: LayerBackedView, Observable, Observer
 {
@@ -161,7 +162,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         expandIcon.constrainToParentRight(inset: 10)
         expandIcon.constrain(to: itemLabel.centerY)
-        expandIcon.constrainSize(to: defaultIconSize, defaultIconSize)
+        expandIcon.constrain(to: .size(defaultIconSize))
     }
     
     private let defaultIconSize: CGFloat = 17.0

@@ -556,7 +556,7 @@ class ItemView: LayerBackedView, Observable, Observer
     
     private func constrainCheckBox()
     {
-        checkBox.constrainSize(to: 0.43, 0.43, of: layoutGuide)
+        checkBox.constrain(to: layoutGuide.size.at(0.43))
         checkBox.constrain(to: layoutGuide.center)
     }
     
@@ -601,7 +601,7 @@ class ItemView: LayerBackedView, Observable, Observer
         
         let size = ItemView.heightWithSingleLine
         
-        layoutGuideSizeConstraints = layoutGuide.constrainSize(to: size, size)
+        layoutGuideSizeConstraints = layoutGuide.constrain(to: .size(size))
     }
     
     private var layoutGuideSizeConstraints = [NSLayoutConstraint]()
