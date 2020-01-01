@@ -119,7 +119,7 @@ class PurchaseContentView: NSView, Observer
         errorView.constrainToParentButTop()
         errorView.constrainTopToParent(at: 0.6)
         
-        errorLabel.constrain(to: errorLabel.parent?.size.at(0.9))
+        errorLabel.constrainToParentSize(at: 0.9)
         errorLabel.constrainToParentCenter()
     }
     
@@ -155,7 +155,7 @@ class PurchaseContentView: NSView, Observer
         loadingIndicator.constrainToParentLeft()
         loadingIndicator.constrainToParentRight()
         loadingIndicator.constrain(below: icon, gap: 10)
-        loadingIndicator.height.constrain(to: loadingIndicator.parent?.height.at(0.4))
+        loadingIndicator.constrainToParentHeight(at: 0.4)
 
         loadingLabel.constrainToParentButBottom(inset: 10)
         
