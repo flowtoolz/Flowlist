@@ -157,9 +157,7 @@ class PurchaseContentView: NSView, Observer
         loadingIndicator.constrain(below: icon, gap: 10)
         loadingIndicator.height.constrain(to: loadingIndicator.parent?.height.at(0.4))
 
-        loadingLabel.constrainToParentButBottom(topInset: 10,
-                                                leftInset: 10,
-                                                rightInset: 10)
+        loadingLabel.constrainToParentButBottom(inset: 10)
         
         spinner.constrainToParentCenterX()
         spinner.constrain(below: loadingLabel, gap: 20)
