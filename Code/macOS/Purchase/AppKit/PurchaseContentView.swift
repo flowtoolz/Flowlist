@@ -116,8 +116,8 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainErrorView()
     {
-        errorView.constrain(to: errorView.parent?.allButTop)
-        errorView.constrainHeightToParent(with: 0.4)
+        errorView.constrainToParentButTop()
+        errorView.constrainTopToParent(at: 0.6)
         
         errorLabel.constrain(to: errorLabel.parent?.size.at(0.9))
         errorLabel.constrainToParentCenter()
@@ -155,12 +155,11 @@ class PurchaseContentView: NSView, Observer
         loadingIndicator.constrainToParentLeft()
         loadingIndicator.constrainToParentRight()
         loadingIndicator.constrain(below: icon, gap: 10)
-        loadingIndicator.constrainHeightToParent(with: 0.4)
+        loadingIndicator.height.constrain(to: loadingIndicator.parent?.height.at(0.4))
 
-        // ToParentExcludingBottom
-        loadingLabel.constrain(to: loadingLabel.parent?.allButBottom(topOffset: 10,
-                                                                     leftOffset: 10,
-                                                                     rightOffset: -10))
+        loadingLabel.constrainToParentButBottom(topInset: 10,
+                                                leftInset: 10,
+                                                rightInset: 10)
         
         spinner.constrainToParentCenterX()
         spinner.constrain(below: loadingLabel, gap: 20)
@@ -218,7 +217,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainBulletpointList()
     {
-        bulletpointList.constrain(to: bulletpointList.parent?.allButBottom(topOffset: 12))
+        bulletpointList.constrainToParentButBottom(topInset: 12)
     }
     
     private lazy var bulletpointList = columns[2].addForAutoLayout(BulletpointList())
@@ -227,8 +226,8 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainIcon()
     {
-        icon.constrain(to: icon.parent?.allButBottom)
-        icon.constrainHeightToParent(with: 0.35)
+        icon.constrainToParentButBottom()
+        icon.constrainBottomToParent(at: 0.35)
     }
     
     private lazy var icon: NSImageView =
@@ -258,7 +257,7 @@ class PurchaseContentView: NSView, Observer
     private func constrainC2aButton()
     {
         c2aButton.constrainToParentCenterX()
-        c2aButton.constrain(to: .size(200, 39))
+        c2aButton.constrain(to: 200, 39)
         c2aButton.constrain(above: restoreButton, gap: 20)
     }
     
@@ -297,7 +296,7 @@ class PurchaseContentView: NSView, Observer
     {
         restoreButton.constrainToParentCenterX()
         restoreButton.constrainToParentBottom()
-        restoreButton.constrain(to: .size(200, 39))
+        restoreButton.constrain(to: 200, 39)
     }
     
     private lazy var restoreButton: Button =

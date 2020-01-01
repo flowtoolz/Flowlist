@@ -162,7 +162,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         expandIcon.constrainToParentRight(inset: 10)
         expandIcon.constrain(to: itemLabel.centerY)
-        expandIcon.constrain(to: .size(defaultIconSize))
+        expandIcon.constrain(to: defaultIconSize)
     }
     
     private let defaultIconSize: CGFloat = 17.0

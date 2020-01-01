@@ -601,7 +601,7 @@ class ItemView: LayerBackedView, Observable, Observer
         
         let size = ItemView.heightWithSingleLine
         
-        layoutGuideSizeConstraints = layoutGuide.constrain(to: .size(size))
+        layoutGuideSizeConstraints = layoutGuide.constrain(to: size)
     }
     
     private var layoutGuideSizeConstraints = [NSLayoutConstraint]()

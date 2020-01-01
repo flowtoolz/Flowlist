@@ -197,7 +197,7 @@ class Header: LayerBackedView, Observer
     
     private func constrainColorView()
     {
-        colorView.constrain(to: colorView.parent?.allButBottom)
+        colorView.constrainToParentButBottom()
         colorView.constrain(to: layoutGuideLeft.height.at(0.25))
     }
     
@@ -240,7 +240,7 @@ class Header: LayerBackedView, Observer
     {
         let size = layouGuideSize
         
-        layoutGuideSizeConstraints = layoutGuideLeft.constrain(to: .size(size))
+        layoutGuideSizeConstraints = layoutGuideLeft.constrain(to: size)
         layoutGuideLeft.constrain(to: left)
         layoutGuideLeft.constrain(to: bottom)
         

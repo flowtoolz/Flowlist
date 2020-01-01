@@ -16,8 +16,8 @@ class Spacer: LayerBackedView, Observer
         roundCorners.constrainToParent()
         
         pointyCorners.backgroundColor = .listBackground
-        pointyCorners.constrain(to: pointyCorners.parent?.allButBottom)
-        pointyCorners.constrainHeightToParent(with: 0.5)
+        pointyCorners.constrainToParentButBottom()
+        pointyCorners.constrainBottomToParent(at: 0.5)
         
         observe(Color.darkMode)
         {

@@ -19,9 +19,10 @@ class ExportAcessoryView: NSView
         formatLabel.constrainToParentCenterY()
         
         formatMenu.constrain(toTheRightOf: formatLabel, gap: 10)
-        formatMenu.constrain(to: formatMenu.parent?.allButLeft(topOffset: 10,
-                                                               bottomOffset: -10,
-                                                               rightOffset: -10))
+        
+        formatMenu.constrainToParentButLeft(topInset: 10,
+                                            bottomInset: 10,
+                                            rightInset: 10)
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }
