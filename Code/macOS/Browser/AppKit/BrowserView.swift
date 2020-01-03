@@ -1,6 +1,7 @@
 import AppKit
 import UIToolz
 import UIObserver
+import GetLaid
 import SwiftObserver
 import SwiftyToolz
 
@@ -159,8 +160,8 @@ class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionView
     private func constrainCollectionView()
     {
         let guide = addLayoutGuide()
-        guide.constrain(to: right.offset(-40))
-        guide.constrain(to: left)
+        guide >> right.offset(-40)
+        guide >> left
         
         collectionView.constrainToParentTop(inset: 10)
         collectionView.constrainToParentBottom()

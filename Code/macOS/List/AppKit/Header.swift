@@ -1,5 +1,6 @@
 import AppKit
 import UIToolz
+import GetLaid
 import SwiftObserver
 import SwiftyToolz
 
@@ -156,7 +157,7 @@ class Header: LayerBackedView, Observer
     private func constrainTitleLabel()
     {
         titleLabel.constrain(toTheLeftOf: layoutGuideRight)
-        titleLabel.left.constrain(to: layoutGuideLeft.right.at(relativeTitleInset))
+        titleLabel.left >> layoutGuideLeft.right.at(relativeTitleInset)
         titleLabel.constrainCenterYToParent(at: 0.436)
     }
     
@@ -241,13 +242,13 @@ class Header: LayerBackedView, Observer
         let size = layouGuideSize
         
         layoutGuideSizeConstraints = layoutGuideLeft.constrain(to: size)
-        layoutGuideLeft.constrain(to: left)
+        layoutGuideLeft >> left
         layoutGuideLeft.constrain(to: bottom)
         
         layoutGuideRight.constrain(to: layoutGuideLeft.height)
         layoutGuideRight.constrain(to: layoutGuideLeft.width.at(relativeTitleInset))
         layoutGuideRight.constrain(to: bottom)
-        layoutGuideRight.constrain(to: right)
+        layoutGuideRight >> right
     }
     
     private let relativeTitleInset = Float.relativeTextInset.cgFloat

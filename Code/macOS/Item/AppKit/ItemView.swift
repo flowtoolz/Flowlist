@@ -442,7 +442,7 @@ class ItemView: LayerBackedView, Observable, Observer
     
     private func constrainTextView()
     {
-        textView.left.constrain(to: layoutGuide.right.at(ItemView.textLeftMultiplier))
+        textView.left >> layoutGuide.right.at(ItemView.textLeftMultiplier)
         textView.constrain(toTheLeftOf: groupIcon)
         textView.top.constrain(to: layoutGuide.bottom.at(0.303))
         textView.constrainToParentBottom()
@@ -596,7 +596,7 @@ class ItemView: LayerBackedView, Observable, Observer
     
     private func constrainLayoutGuide()
     {
-        layoutGuide.constrain(to: left)
+        layoutGuide >> left
         layoutGuide.constrain(to: top)
         
         let size = ItemView.heightWithSingleLine
