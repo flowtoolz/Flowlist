@@ -223,7 +223,7 @@ class Header: LayerBackedView, Observer
     private func constrainTitleContainer()
     {
         titleContainer.constrain(to: allButTop)
-        titleContainer.constrain(to: layoutGuideLeft.top)
+        titleContainer >> layoutGuideLeft.top
     }
     
     private lazy var titleContainer = addForAutoLayout(LayerBackedView())
@@ -243,11 +243,11 @@ class Header: LayerBackedView, Observer
         
         layoutGuideSizeConstraints = layoutGuideLeft.constrain(to: size)
         layoutGuideLeft >> left
-        layoutGuideLeft.constrain(to: bottom)
+        layoutGuideLeft >> bottom
         
         layoutGuideRight.constrain(to: layoutGuideLeft.height)
         layoutGuideRight.constrain(to: layoutGuideLeft.width.at(relativeTitleInset))
-        layoutGuideRight.constrain(to: bottom)
+        layoutGuideRight >> bottom
         layoutGuideRight >> right
     }
     

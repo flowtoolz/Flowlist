@@ -1,4 +1,5 @@
 import AppKit.NSView
+import GetLaid
 import UIToolz
 import SwiftyToolz
 
@@ -56,7 +57,7 @@ class BulletpointList: NSView
                 label.constrain(below: bulletpointLabels[index - 1], gap: 20)
             }
             
-            icon.constrain(to: label.top)
+            icon >> label.top
         }
     }
     

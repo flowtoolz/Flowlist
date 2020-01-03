@@ -444,7 +444,7 @@ class ItemView: LayerBackedView, Observable, Observer
     {
         textView.left >> layoutGuide.right.at(ItemView.textLeftMultiplier)
         textView.constrain(toTheLeftOf: groupIcon)
-        textView.top.constrain(to: layoutGuide.bottom.at(0.303))
+        textView.top >> layoutGuide.bottom.at(0.303)
         textView.constrainToParentBottom()
     }
     
@@ -585,7 +585,7 @@ class ItemView: LayerBackedView, Observable, Observer
     private func contrainGroupIcon()
     {
         groupIcon.constrainToParentRight()
-        groupIcon.constrain(to: layoutGuide.centerY)
+        groupIcon >> layoutGuide.centerY
         groupIcon.constrain(to: checkBox.height)
         groupIcon.constrain(to: layoutGuide.width.at(Float.groupIconWidthFactor.cgFloat))
     }
@@ -597,7 +597,7 @@ class ItemView: LayerBackedView, Observable, Observer
     private func constrainLayoutGuide()
     {
         layoutGuide >> left
-        layoutGuide.constrain(to: top)
+        layoutGuide >> top
         
         let size = ItemView.heightWithSingleLine
         

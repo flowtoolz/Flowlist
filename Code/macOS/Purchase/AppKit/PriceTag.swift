@@ -69,7 +69,7 @@ class PriceTag: NSView, Observer
     {
         priceLabel.constrainToParentCenter(yOffset: -10)
         
-        stroke.constrain(to: priceLabel.centerY.offset(1))
+        stroke >> priceLabel.centerY.offset(1)
         stroke >> priceLabel.left.offset(-3)
         stroke >> priceLabel.right.offset(3)
     }
