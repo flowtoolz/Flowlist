@@ -197,7 +197,7 @@ class PurchaseContentView: NSView, Observer
     
     private func constrainTitleLabel()
     {
-        titleLabel.constrain(to: allButBottom)
+        titleLabel >> allButBottom
     }
     
     private lazy var titleLabel: Label =

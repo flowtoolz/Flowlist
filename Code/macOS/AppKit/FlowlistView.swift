@@ -1,5 +1,6 @@
 import AppKit
 import UIToolz
+import GetLaid
 import SwiftObserver
 import SwiftyToolz
 
@@ -89,7 +90,7 @@ class FlowlistView: LayerBackedView, Observer
     {
         guard !isFullVersion else { return }
         
-        addForAutoLayout(purchaseView).constrain(to: allButTop)
+        addForAutoLayout(purchaseView) >> allButTop
         purchaseViewHeightConstraint = purchaseView.height.constrain(to: purchaseViewHeight)
     }
     
@@ -106,7 +107,7 @@ class FlowlistView: LayerBackedView, Observer
     
     private func constrainBrowserView(bottomInset: CGFloat)
     {
-        browserView.constrain(to: allButBottom)
+        browserView >> allButBottom
         browserViewBottomConstraint = browserView.constrainToParentBottom(inset: bottomInset)
     }
     

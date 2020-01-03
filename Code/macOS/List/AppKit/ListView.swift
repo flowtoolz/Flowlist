@@ -1,5 +1,6 @@
 import AppKit
 import UIToolz
+import GetLaid
 import SwiftObserver
 import SwiftyToolz
 
@@ -55,7 +56,7 @@ class ListView: LayerBackedView, Observable, Observer
     {
         let height = relativeHeaderHeight * ItemView.heightWithSingleLine
         headerHeightConstraint = header.height.constrain(to: height)
-        header.constrain(to: allButBottom)
+        header >> allButBottom
     }
     
     private lazy var header = addForAutoLayout(Header())
@@ -70,7 +71,7 @@ class ListView: LayerBackedView, Observable, Observer
     
     private func constrainScrollTable()
     {
-        scrollTable.constrain(to: allButTop)
+        scrollTable >> allButTop
         scrollTable.constrain(below: header)
     }
     

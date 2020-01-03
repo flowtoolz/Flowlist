@@ -425,7 +425,7 @@ class ItemView: LayerBackedView, Observable, Observer
     
     private func constrainColorOverlay()
     {
-        colorOverlay.constrain(to: allButRight)
+        colorOverlay >> allButRight
         colorOverlay.constrain(to: layoutGuide.width.at(0.125))
     }
     
@@ -557,7 +557,7 @@ class ItemView: LayerBackedView, Observable, Observer
     private func constrainCheckBox()
     {
         checkBox.constrain(to: layoutGuide.size.at(0.43))
-        checkBox.constrain(to: layoutGuide.center)
+        checkBox >> layoutGuide.center
     }
     
     private lazy var checkBox: CheckBox =

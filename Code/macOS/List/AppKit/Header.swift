@@ -222,7 +222,7 @@ class Header: LayerBackedView, Observer
     
     private func constrainTitleContainer()
     {
-        titleContainer.constrain(to: allButTop)
+        titleContainer >> allButTop
         titleContainer >> layoutGuideLeft.top
     }
     
