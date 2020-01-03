@@ -14,7 +14,7 @@ class PriceTag: NSView, Observer
         
         constrainDiscountPriceLabel()
         constrainPriceLabel()
-        height.constrain(to: 90)
+        height >> 90
         
         update()
         
@@ -79,7 +79,7 @@ class PriceTag: NSView, Observer
         let view = addForAutoLayout(LayerBackedView())
         
         view.backgroundColor = .textDiscount
-        view.height.constrain(to: 1.5)
+        view.height >> 1.5
         
         return view
     }()

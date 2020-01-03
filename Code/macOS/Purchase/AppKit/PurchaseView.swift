@@ -112,7 +112,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     private func constrainTopSeparator()
     {
         topSeparator >> allButBottom
-        topSeparator.height.constrain(to: 1)
+        topSeparator.height >> 1
     }
     
     private lazy var topSeparator: LayerBackedView =
@@ -162,7 +162,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         expandIcon.constrainToParentRight(inset: 10)
         expandIcon >> itemLabel.centerY
-        expandIcon.constrain(to: defaultIconSize)
+        expandIcon >> defaultIconSize
     }
     
     private let defaultIconSize: CGFloat = 17.0
@@ -190,10 +190,10 @@ class PurchaseView: LayerBackedView, Observable, Observer
     private func constrainProgressBar()
     {
         progressBar >> allButTop
-        progressBar.height.constrain(to: Float.progressBarHeight.cgFloat)
+        progressBar.height >> Float.progressBarHeight.cgFloat
         
         progressBarSeparator >> progressBar.allButBottom
-        progressBarSeparator.height.constrain(to: 1)
+        progressBarSeparator.height >> 1
     }
     
     private lazy var progressBarSeparator: LayerBackedView =
@@ -245,7 +245,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     private func constrainButtonOverlay()
     {
         buttonOverlay >> allButBottom
-        buttonOverlay.height.constrain(to: collapsedHeight)
+        buttonOverlay.height >> collapsedHeight
     }
     
     let collapsedHeight = (2 * Float.itemPadding(for: 17) + 17 + Float.progressBarHeight).cgFloat

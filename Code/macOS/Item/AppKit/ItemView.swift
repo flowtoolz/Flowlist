@@ -426,7 +426,7 @@ class ItemView: LayerBackedView, Observable, Observer
     private func constrainColorOverlay()
     {
         colorOverlay >> allButRight
-        colorOverlay.constrain(to: layoutGuide.width.at(0.125))
+        colorOverlay >> layoutGuide.width.at(0.125)
     }
     
     private lazy var colorOverlay = addForAutoLayout(LayerBackedView())
@@ -586,8 +586,8 @@ class ItemView: LayerBackedView, Observable, Observer
     {
         groupIcon.constrainToParentRight()
         groupIcon >> layoutGuide.centerY
-        groupIcon.constrain(to: checkBox.height)
-        groupIcon.constrain(to: layoutGuide.width.at(Float.groupIconWidthFactor.cgFloat))
+        groupIcon >> checkBox.height
+        groupIcon >> layoutGuide.width.at(Float.groupIconWidthFactor.cgFloat)
     }
     
     private lazy var groupIcon = addForAutoLayout(GroupIcon())
@@ -601,7 +601,7 @@ class ItemView: LayerBackedView, Observable, Observer
         
         let size = ItemView.heightWithSingleLine
         
-        layoutGuideSizeConstraints = layoutGuide.constrain(to: size)
+        layoutGuideSizeConstraints = layoutGuide >> size
     }
     
     private var layoutGuideSizeConstraints = [NSLayoutConstraint]()

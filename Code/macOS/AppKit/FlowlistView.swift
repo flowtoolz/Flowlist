@@ -91,7 +91,7 @@ class FlowlistView: LayerBackedView, Observer
         guard !isFullVersion else { return }
         
         addForAutoLayout(purchaseView) >> allButTop
-        purchaseViewHeightConstraint = purchaseView.height.constrain(to: purchaseViewHeight)
+        purchaseViewHeightConstraint = purchaseView.height >> purchaseViewHeight
     }
     
     private var purchaseViewHeight: CGFloat

@@ -36,7 +36,7 @@ class BulletpointList: NSView
             icon, index in
             
             icon.constrainToParentLeft()
-            icon.constrain(to: defaultIconSize)
+            icon >> defaultIconSize
             
             let label = bulletpointLabels[index]
             label.constrainToParentRight()
