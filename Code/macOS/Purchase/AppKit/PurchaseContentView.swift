@@ -255,7 +255,7 @@ class PurchaseContentView: NSView, Observer
     private func constrainC2aButton()
     {
         c2aButton.constrainToParentCenterX()
-        c2aButton.constrain(to: 200, 39)
+        c2aButton >> (200, 39)
         c2aButton.constrain(above: restoreButton, gap: 20)
     }
     
@@ -294,7 +294,7 @@ class PurchaseContentView: NSView, Observer
     {
         restoreButton.constrainToParentCenterX()
         restoreButton.constrainToParentBottom()
-        restoreButton.constrain(to: 200, 39)
+        restoreButton >> (200, 39)
     }
     
     private lazy var restoreButton: Button =

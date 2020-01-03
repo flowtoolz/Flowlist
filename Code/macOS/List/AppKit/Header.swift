@@ -117,7 +117,7 @@ class Header: LayerBackedView, Observer
     private func constrainIcon()
     {
         icon.constrainToParentCenterX()
-        icon.constrain(to: layoutGuideLeft.size.at(0.64))
+        icon >> layoutGuideLeft.size.at(0.64)
         icon.constrainCenterYToParent(at: 0.58)
     }
     
