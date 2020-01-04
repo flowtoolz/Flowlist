@@ -163,12 +163,10 @@ class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionView
         guide >> right.offset(-40)
         guide >> left
         
-        collectionView.constrainToParentTop(inset: 10)
-        collectionView.constrainToParentBottom()
-        collectionView.constrainToParentCenterX()
-        collectionView.widthAnchor.constraint(equalTo: guide.widthAnchor,
-                                              multiplier: 1.66666,
-                                              constant: 40).isActive = true
+        collectionView >> top.offset(10)
+        collectionView >> bottom
+        collectionView >> centerX
+        collectionView >> guide.width.at(1.666666).offset(40)
     }
     
     private lazy var collectionView: NSCollectionView =

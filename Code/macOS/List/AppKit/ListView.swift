@@ -72,7 +72,7 @@ class ListView: LayerBackedView, Observable, Observer
     private func constrainScrollTable()
     {
         scrollTable >> allButTop
-        scrollTable.constrain(below: header)
+        scrollTable.top >> header.bottom
     }
     
     func didEndResizing()

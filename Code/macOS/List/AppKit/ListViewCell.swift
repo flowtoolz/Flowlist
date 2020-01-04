@@ -22,7 +22,7 @@ class ListViewCell: NSCollectionViewItem, Observer
     override func loadView()
     {
         view = NSView()
-        listView.forSome { view.addForAutoLayout($0).constrainToParent() }
+        listView.forSome { view.addForAutoLayout($0) >> view }
         resetShadow()
     }
     

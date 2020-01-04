@@ -1,5 +1,6 @@
 import AppKit
 import UIToolz
+import GetLaid
 import SwiftObserver
 import SwiftyToolz
 
@@ -13,11 +14,11 @@ class Spacer: LayerBackedView, Observer
         
         roundCorners.layer?.cornerRadius = Float.listCornerRadius.cgFloat
         roundCorners.backgroundColor = .listBackground
-        roundCorners.constrainToParent()
+        roundCorners >> self
         
         pointyCorners.backgroundColor = .listBackground
-        pointyCorners.constrainToParentButBottom()
-        pointyCorners.constrainBottomToParent(at: 0.5)
+        pointyCorners >> allButBottom
+        pointyCorners >> height.at(0.5)
         
         observe(Color.darkMode)
         {

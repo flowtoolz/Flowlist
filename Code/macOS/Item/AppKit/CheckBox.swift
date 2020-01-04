@@ -1,4 +1,5 @@
 import AppKit
+import GetLaid
 import UIToolz
 
 class CheckBox: Icon
@@ -9,7 +10,7 @@ class CheckBox: Icon
     {
         super.init(with: nil)
         
-        button.constrainToParent()
+        button >> self
     }
     
     required init?(coder: NSCoder) { fatalError() }

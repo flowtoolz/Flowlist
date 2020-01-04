@@ -11,15 +11,17 @@ class ExportAcessoryView: NSView
         translatesAutoresizingMaskIntoConstraints = false
         self >> .min(400, 40)
         
-        formatContainer.constrainToParentTop()
-        formatContainer.constrainToParentBottom()
-        formatContainer.constrainToParentCenterX()
+        formatContainer >> top
+        formatContainer >> bottom
+        formatContainer >> centerX
         
-        formatLabel.constrainToParentLeft(inset: 10)
-        formatLabel.constrainToParentCenterY()
+        formatLabel >> formatContainer.left.offset(10)
+        formatLabel >> formatContainer.centerY
         
-        formatMenu.constrain(toTheRightOf: formatLabel, gap: 10)
-        formatMenu.constrainToParentButLeft(inset: 10)
+        formatMenu.left >> formatLabel.right.offset(10)
+        formatMenu >> formatContainer.allButLeft(topOffset: 10,
+                                                 bottomOffset: -10,
+                                                 rightOffset: -10)
     }
     
     required init?(coder decoder: NSCoder) { fatalError() }

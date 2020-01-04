@@ -108,7 +108,7 @@ class FlowlistView: LayerBackedView, Observer
     private func constrainBrowserView(bottomInset: CGFloat)
     {
         browserView >> allButBottom
-        browserViewBottomConstraint = browserView.constrainToParentBottom(inset: bottomInset)
+        browserViewBottomConstraint = browserView >> bottom.offset(-bottomInset)
     }
     
     func windowDidResize()
