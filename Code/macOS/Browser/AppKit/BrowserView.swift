@@ -145,9 +145,11 @@ class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionView
         
         animatedCollectionView.performBatchUpdates(
         {
-            NSAnimationContext.current.duration = 0.25
-            animatedCollectionView.deleteItems(at: Set([IndexPath(item: deleteIndex, section: 0)]))
-            animatedCollectionView.insertItems(at: Set([IndexPath(item: insertIndex, section: 0)]))
+            NSAnimationContext.current.duration = 0.3
+            animatedCollectionView.deleteItems(at: Set([IndexPath(item: deleteIndex,
+                                                                  section: 0)]))
+            animatedCollectionView.insertItems(at: Set([IndexPath(item: insertIndex,
+                                                                  section: 0)]))
         })
     }
     
