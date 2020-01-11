@@ -213,9 +213,17 @@ class List: Observable, Observer
         old?.deletionStack.removeAll()
         old?.deselectAll()
         
+        stopObserving(old?.data.text)
         title <- new?.text
+        new.forSome { observe($0.data.text).new() { self.title <- $0 } }
+        
+        stopObserving(old?.data.tag)
         tag <- new?.data.tag.value
+        new.forSome { observe($0.data.tag).new() { self.tag <- $0 } }
+        
+        stopObserving(old?.data.state)
         state <- new?.data.state.value
+        new.forSome { observe($0.data.state).new() { self.state <- $0 } }
         
         send(.did(.switchedParent(from: old, to: new)))
     }
