@@ -136,9 +136,9 @@ class CKRecordSynchronizer
     private func startTimer()
     {
         let syncDelay: TimeInterval = 3.0
-        timer = Timer.scheduledTimer(withTimeInterval: syncDelay,
-                                     repeats: true,
-                                     block: timerDidFire)
+        timer = .scheduledTimer(withTimeInterval: syncDelay,
+                                repeats: true,
+                                block: timerDidFire)
     }
     
     private func timerDidFire(_ timer: Timer)
@@ -151,6 +151,7 @@ class CKRecordSynchronizer
     
     private func applyBufferedChangesToCKRecordDatabase() -> Promise<Void>
     {
+        // TODO: return the actual promise that is syncing the changes, and replace the isSyncingBufferedChanges property with that ...
         guard !isSyncingBufferedChanges, bufferedChanges.hasChanges else { return Promise() }
         
         isSyncingBufferedChanges = true

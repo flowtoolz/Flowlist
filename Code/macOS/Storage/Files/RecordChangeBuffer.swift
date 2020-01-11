@@ -57,8 +57,8 @@ class RecordChangeBuffer
         edits.save(to: editsFile)
     }
     
-    private let deletionsFile = RecordChangeBuffer.directory.appendingPathComponent("deletions.json")
-    private let editsFile = RecordChangeBuffer.directory.appendingPathComponent("edits.json")
+    private let deletionsFile = directory.appendingPathComponent("deletions.json")
+    private let editsFile = directory.appendingPathComponent("edits.json")
     
     private static var directory: URL
     {
