@@ -37,5 +37,13 @@ class CKSyncIntention
         set { persistentFlag.value = newValue }
     }
     
-    private var persistentFlag = PersistentFlag("UserDefaultsKeyWantsToUseICloud")
+    private var persistentFlag = PersistentFlag(defaultsKey)
+    
+    #if BETA
+    private static let defaultsKey = "UserDefaultsKeyWantsToUseICloud_beta"
+    #elseif DEBUG
+    private static let defaultsKey = "UserDefaultsKeyWantsToUseICloud_debug"
+    #else
+    private static let defaultsKey = "UserDefaultsKeyWantsToUseICloud"
+    #endif
 }
