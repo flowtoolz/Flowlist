@@ -70,6 +70,7 @@ class CKRecordSynchronizer
             ckRecordDatabase.deleteChangeToken()
         }
         
+        // TODO: why are they irrelevant? what if there are lots of offline changes buffered that would get lost???
         bufferedChanges.clear() // on total resync, lingering changes (delta cache) are irrelevant
         
         return firstly
