@@ -45,10 +45,10 @@ class JSONFileMigrationController
         Flowlist deletes the old JSON file after migration.
         """
         
-        let question = Dialog.Question(title: "Legacy JSON File Reappeared",
+        let question = Question(title: "Legacy JSON File Reappeared",
                                        text: text,
                                        options: ["Got It"])
         
-        Dialog.default.pose(question).catch { log(error: $0.readable.message) }
+        Dialog.default?.pose(question).catch { log(error: $0.readable.message) }
     }
 }

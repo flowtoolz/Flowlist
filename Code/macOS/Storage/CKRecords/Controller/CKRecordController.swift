@@ -58,7 +58,7 @@ class CKRecordController: Observer
         synchronizer.resync()
     }
     
-    func userDidToggleSync()
+    func toggleSync()
     {
         synchronizer.toggleSync()
     }

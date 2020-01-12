@@ -92,16 +92,18 @@ class TreeSelector: Observer, Observable
         
         guard newTree !== selectedTree else { return }
         
+        guard let dialog = Dialog.default else { return }
+        
         let keepSelectedTree = selectedTree.treeDescription
         let useNewTree = newTree.treeDescription
     
-        let question = Dialog.Question(title: "Found Another Item Tree (Hierarchy)",
-                                       text: "Multiple trees can exist for instance when another device has already saved items to iCloud.\n\nChoose one tree to work with, Flowlist will delete the other:",
-                                       options: [useNewTree, keepSelectedTree])
+        let question = Question(title: "Found Another Item Tree (Hierarchy)",
+                                text: "Multiple trees can exist for instance when another device has already saved items to iCloud.\n\nChoose one tree to work with, Flowlist will delete the other:",
+                                options: [useNewTree, keepSelectedTree])
     
         firstly
         {
-            Dialog.default.pose(question, imageName: "icloud_conflict")
+            dialog.pose(question, imageName: "icloud_conflict")
         }
         .done
         {

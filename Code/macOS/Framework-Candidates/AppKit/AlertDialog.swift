@@ -3,10 +3,14 @@ import PromiseKit
 import SwiftyToolz
 
 // TODO: when moving this to UIToolz: Let AppController set this as the default Dialog, and: Properly integrate Logging / Dialog / Alerts ... Make Logging independent of SwiftObserver ...
-class AlertDialog: Dialog
+class AlertDialog: DialogInterface
 {
-    override func pose(_ question: Question,
-                       imageName: String? = nil) -> Promise<Answer>
+    func pose(_ question: Question) -> Promise<Answer>
+    {
+        pose(question, imageName: nil)
+    }
+    
+    func pose(_ question: Question, imageName: String?) -> Promise<Answer>
     {
         Promise
         {

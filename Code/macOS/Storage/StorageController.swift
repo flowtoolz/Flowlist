@@ -66,7 +66,23 @@ class StorageController
     
     func toggleIntentionToSyncWithDatabase()
     {
-        ckRecordController.userDidToggleSync()
+        firstly
+        {
+            checkWhetherUserWantsToBackupFirst()
+        }
+        .done
+        {
+            userWantsToBackupFirst in
+            
+            if !userWantsToBackupFirst
+            {
+                self.ckRecordController.toggleSync()
+            }
+        }
+        .catch
+        {
+            log($0.localizedDescription)
+        }
     }
     
     func cloudKitAccountDidChange()
@@ -80,4 +96,43 @@ class StorageController
     
     private let fileController = FileController()
     private let recordController = RecordController()
+    
+    // MARK: - Show Backup Hint on First Sync
+    
+    private func checkWhetherUserWantsToBackupFirst() -> Promise<Bool>
+    {
+        guard !CKSyncIntention.shared.isActive, !didShowBackupHintToUser.value else
+        {
+            return .value(false)
+        }
+        
+        guard let dialog = Dialog.default else
+        {
+            return .fail("No default Dialog has been set.")
+        }
+        
+        let backupOption = "I'll Backup My Items First"
+        
+        let text = """
+            It is wise to backup your Flowlist items sometimes, in particular when syncing across different devices.
+
+            To backup your items, select "Data → Show Item Files in Finder".
+            Then copy the "Items" folder to a backup location like your DropBox.
+
+            To restore the backup, replace the original "Items" folder with your backup copy and restart Flowlist.
+
+            """
+        
+        return dialog.pose(Question(title: "How to Backup Your Items",
+                                    text: text,
+                                    options: ["Start iCloud Sync Now", backupOption]))
+        .map
+        {
+            answer -> Bool in
+            self.didShowBackupHintToUser.value = true
+            return answer.options.first == backupOption
+        }
+    }
+    
+    private var didShowBackupHintToUser = PersistentFlag("UserDefaultsKeyDidShowBackupHint")
 }

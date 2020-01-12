@@ -59,6 +59,11 @@ class CKRecordEditor
     
     private func askWhetherToPreferICloud(with conflicts: [CKDatabase.SaveConflict]) -> Promise<Bool>
     {
+        guard let dialog = Dialog.default else
+        {
+            return .fail("Default Dialog has not been set")
+        }
+        
         let text =
         """
         Seems like you changed items on this device without syncing with iCloud while another device changed the iCloud items. Now it's unclear how to combine both changes.
@@ -72,13 +77,13 @@ class CKRecordEditor
         let clientContext = conflicts.compactMap({ $0.clientRecord.modificationDate }).optionContext
         let clientOption = "Local Items\(clientContext)"
         
-        let question = Dialog.Question(title: "Conflicting Changes",
-                                       text: text,
-                                       options: [clientOption, serverOption])
+        let question = Question(title: "Conflicting Changes",
+                                text: text,
+                                options: [clientOption, serverOption])
         
         return firstly
         {
-            Dialog.default.pose(question, imageName: "icloud_conflict")
+            dialog.pose(question, imageName: "icloud_conflict")
         }
         .map(on: DispatchQueue.global(qos: .userInitiated))
         {
