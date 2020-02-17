@@ -35,26 +35,26 @@ class BulletpointList: NSView
         {
             icon, index in
             
-            icon.constrainToParentLeft()
+            icon >> left
             icon >> defaultIconSize
             
             let label = bulletpointLabels[index]
-            label.constrainToParentRight()
-            label.constrainToParentLeft(inset: 27)
+            label >> right
+            label >> left.offset(27)
             
             if index == 0
             {
-                label.constrainToParentTop()
+                label >> top
             }
             
             if index == bulletpoints.count - 1
             {
-                label.constrainToParentBottom(inset: 10)
+                label >> bottom.offset(-10)
             }
             
             if index > 0
             {
-                label.constrain(below: bulletpointLabels[index - 1], gap: 20)
+                label.top >> bulletpointLabels[index - 1].bottom.offset(20)
             }
             
             icon >> label.top

@@ -443,9 +443,9 @@ class ItemView: LayerBackedView, Observable, Observer
     private func constrainTextView()
     {
         textView.left >> layoutGuide.right.at(ItemView.textLeftMultiplier)
-        textView.constrain(toTheLeftOf: groupIcon)
+        textView.right >> groupIcon.left
         textView.top >> layoutGuide.bottom.at(0.303)
-        textView.constrainToParentBottom()
+        textView >> bottom
     }
     
     private static let textLeftMultiplier = Float.relativeTextInset.cgFloat
@@ -535,10 +535,10 @@ class ItemView: LayerBackedView, Observable, Observer
     
     private func constrainEditingBackground()
     {
-        editingBackground.constrainToParent(topInset: 5,
-                                            leftInset: 20,
-                                            bottomInset: 5,
-                                            rightInset: 20)
+        editingBackground >> all(topOffset: 5,
+                                 leadingOffset: 20,
+                                 bottomOffset: -5,
+                                 trailingOffset: -20)
     }
     
     private lazy var editingBackground: LayerBackedView =
@@ -584,7 +584,7 @@ class ItemView: LayerBackedView, Observable, Observer
     
     private func contrainGroupIcon()
     {
-        groupIcon.constrainToParentRight()
+        groupIcon >> right
         groupIcon >> layoutGuide.centerY
         groupIcon >> checkBox.height
         groupIcon >> layoutGuide.width.at(Float.groupIconWidthFactor.cgFloat)

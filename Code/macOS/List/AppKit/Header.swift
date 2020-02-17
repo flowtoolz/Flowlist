@@ -156,9 +156,9 @@ class Header: LayerBackedView, Observer
     
     private func constrainTitleLabel()
     {
-        titleLabel.constrain(toTheLeftOf: layoutGuideRight)
+        titleLabel.right >> layoutGuideRight.left
         titleLabel.left >> layoutGuideLeft.right.at(relativeTitleInset)
-        titleLabel.constrainCenterYToParent(at: 0.436)
+        titleLabel.centerY >> titleContainer.bottom.at(0.436)
     }
     
     private lazy var titleLabel: Label =
@@ -198,7 +198,7 @@ class Header: LayerBackedView, Observer
     
     private func constrainColorView()
     {
-        colorView.constrainToParentButBottom()
+        colorView >> topSpacer.allButBottom
         colorView >> layoutGuideLeft.height.at(0.25)
     }
     
@@ -213,7 +213,7 @@ class Header: LayerBackedView, Observer
     
     private func constrainTopSpacer()
     {
-        topSpacer.constrainToParent()
+        topSpacer >> self
     }
     
     private lazy var topSpacer = addForAutoLayout(LayerBackedView())
