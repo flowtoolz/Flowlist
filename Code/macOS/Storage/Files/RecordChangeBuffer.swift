@@ -6,11 +6,9 @@ class RecordChangeBuffer
     // MARK: - Initialization
     
     static let shared = RecordChangeBuffer()
-    private init() { load() }
+    private init() { loadFromFiles() }
     
     // MARK: - Manage Changes
-    
-    var hasChangesInMemory: Bool { !edits.isEmpty || !deletions.isEmpty }
     
     func save(_ records: [Record])
     {
@@ -20,7 +18,7 @@ class RecordChangeBuffer
             edits.insert($0.id)
         }
         
-        save()
+        saveToFiles()
     }
     
     func deleteRecords(with ids: [Record.ID])
@@ -31,7 +29,7 @@ class RecordChangeBuffer
             deletions.insert($0)
         }
         
-        save()
+        saveToFiles()
     }
     
     func clear()
@@ -43,15 +41,15 @@ class RecordChangeBuffer
         FileManager.default.remove(deletionsFile)
     }
     
-    // MARK: - Persist Changes
+    // MARK: - Persist Changes in Files
     
-    private func load()
+    private func loadFromFiles()
     {
         edits = RecordIDs(from: editsFile) ?? []
         deletions = RecordIDs(from: deletionsFile) ?? []
     }
     
-    private func save()
+    private func saveToFiles()
     {
         deletions.save(to: deletionsFile)
         edits.save(to: editsFile)
@@ -67,7 +65,9 @@ class RecordChangeBuffer
         return dir
     }
     
-    // MARK: - Changes
+    // MARK: - In Mempory Changes
+    
+    var hasChangesInMemory: Bool { !edits.isEmpty || !deletions.isEmpty }
     
     private(set) var edits = RecordIDs()
     private(set) var deletions = RecordIDs()
