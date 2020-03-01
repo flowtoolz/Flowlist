@@ -62,6 +62,7 @@ class CKRecordSynchronizer
             : resyncWithoutChangeToken()
     }
     
+    /// Total resync from scratch
     private func resyncWithoutChangeToken() -> Promise<Void>
     {
         if ckRecordDatabase.hasChangeToken
@@ -70,8 +71,13 @@ class CKRecordSynchronizer
             ckRecordDatabase.deleteChangeToken()
         }
         
-        // TODO: why are they irrelevant? what if there are lots of offline changes buffered that would get lost???
-        bufferedChanges.clear() // on total resync, lingering changes (delta cache) are irrelevant
+        
+        if bufferedChanges.hasChangesInMemory
+        {
+            // TODO: Can this happen at all? What if there are lots of offline changes buffered that would get lost???
+            log(warning: "Attempting a total iCloud resync while there are unsynced local changes that will be lost. Try everything to merge changes before resyncing from scratch.")
+        }
+        bufferedChanges.clear()
         
         return firstly
         {
@@ -80,6 +86,8 @@ class CKRecordSynchronizer
         }
         .then(on: queue)
         {
+            // TODO: is this the moment when we could clear the system fields cache? When can we do that to ensure that cache gets emptied once in a while??
+            // CKRecordDatabase.shared.clearCachedSystemFields()
             CKRecordDatabase.shared.fetchChanges()
         }
         .map(on: queue)
@@ -153,7 +161,7 @@ class CKRecordSynchronizer
     private func applyBufferedChangesToCKRecordDatabase() -> Promise<Void>
     {
         // TODO: return the actual promise that is syncing the changes, and replace the isSyncingBufferedChanges property with that ...
-        guard !isSyncingBufferedChanges, bufferedChanges.hasChanges else { return Promise() }
+        guard !isSyncingBufferedChanges, bufferedChanges.hasChangesInMemory else { return Promise() }
         
         isSyncingBufferedChanges = true
         

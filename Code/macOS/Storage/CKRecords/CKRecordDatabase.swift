@@ -48,6 +48,11 @@ class CKRecordDatabase: Observer, Observable
         return ckDatabaseController.getCKRecordWithCachedSystemFields(for: id, of: .itemType)
     }
     
+    func clearCachedSystemFields()
+    {
+        ckDatabaseController.clearCachedSystemFields()
+    }
+    
     // MARK: - Delete Records
     
     func deleteCKRecords(with ids: [CKRecord.ID]) -> Promise<CKDatabase.DeletionResult>
@@ -201,7 +206,7 @@ class CKRecordDatabase: Observer, Observable
     var queue: DispatchQueue { ckDatabaseController.queue }
     
     private let ckDatabaseController = CKDatabaseController(scope: .private,
-                                                            cacheDirectory: CKRecordDatabase.cacheDirectory)
+                                                            cacheDirectory: cacheDirectory)
     
     private static var cacheDirectory: URL
     {
