@@ -19,7 +19,7 @@ class BrowserView: LayerBackedView, NSCollectionViewDataSource, NSCollectionView
         constrainCollectionView()
     }
     
-    required init?(coder decoder: NSCoder) { fatalError() }
+    required init?(coder decoder: NSCoder) { nil }
     
     // MARK: - Adapt to Font Size Changes
     

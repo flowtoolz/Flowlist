@@ -24,7 +24,7 @@ class PriceTag: NSView, Observer
         }
     }
     
-    required init?(coder decoder: NSCoder) { fatalError() }
+    required init?(coder decoder: NSCoder) { nil }
     
     // MARK: - Present Data
     

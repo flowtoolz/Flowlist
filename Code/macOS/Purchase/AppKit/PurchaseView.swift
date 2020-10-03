@@ -42,7 +42,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         progressBar.progress = progress
     }
     
-    required init?(coder decoder: NSCoder) { fatalError() }
+    required init?(coder decoder: NSCoder) { nil }
     
     // MARK: - Dark Mode
     

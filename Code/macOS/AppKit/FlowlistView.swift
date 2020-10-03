@@ -39,7 +39,7 @@ class FlowlistView: LayerBackedView, Observer
         //        #endif
     }
     
-    required init?(coder decoder: NSCoder) { fatalError() }
+    required init?(coder decoder: NSCoder) { nil }
     
     // MARK: - Key Events
     

@@ -43,7 +43,7 @@ class TextView: NSTextView, NSTextViewDelegate, Observable
         linkTextAttributes = TextView.linkStyle
     }
     
-    required init?(coder: NSCoder) { fatalError() }
+    required init?(coder: NSCoder) { nil }
     
     // MARK: - Adapt to Font Size
     

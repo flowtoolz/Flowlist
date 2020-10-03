@@ -11,7 +11,10 @@ class Browser: Observer, Observable
     {
         3.times { pushList() }
         
-        guard lists.isValid(index: focusedIndex) else { fatalError() }
+        guard lists.isValid(index: focusedIndex) else {
+            log(error: "Initial index of focused list is invalid: \(focusedIndex)")
+            return
+        }
         
         if TreeSelector.shared.selectedTree != nil
         {

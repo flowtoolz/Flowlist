@@ -32,7 +32,7 @@ class Spacer: LayerBackedView, Observer
     private lazy var roundCorners = addForAutoLayout(LayerBackedView())
     private lazy var pointyCorners = addForAutoLayout(LayerBackedView())
     
-    required init?(coder decoder: NSCoder) { fatalError() }
+    required init?(coder decoder: NSCoder) { nil }
     
     static let uiIdentifier = UIItemID(rawValue: "SpacerID")
     

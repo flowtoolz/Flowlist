@@ -48,7 +48,7 @@ class Header: LayerBackedView, Observer
         }
     }
     
-    required init?(coder decoder: NSCoder) { fatalError() }
+    required init?(coder decoder: NSCoder) { nil }
     
     // MARK: - Configuration
     

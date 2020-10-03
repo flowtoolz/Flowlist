@@ -13,7 +13,7 @@ class Row: NSTableRowView
         selectionHighlightStyle = .none
     }
     
-    required init?(coder decoder: NSCoder) { fatalError() }
+    required init?(coder decoder: NSCoder) { nil }
     
     // MARK: - Ensure Nothing Unnecessary is Drawn
     

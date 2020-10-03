@@ -12,7 +12,7 @@ class BulletpointList: NSView
         constrainBulletpoints()
     }
     
-    required init?(coder decoder: NSCoder) { fatalError() }
+    required init?(coder decoder: NSCoder) { nil }
     
     // MARK: - Dark Mode
     

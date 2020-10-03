@@ -13,7 +13,7 @@ class CheckBox: Icon
         button >> self
     }
     
-    required init?(coder: NSCoder) { fatalError() }
+    required init?(coder: NSCoder) { nil }
     
     // MARK: - Configuration
     

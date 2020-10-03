@@ -15,7 +15,7 @@ class ListViewCell: NSCollectionViewItem, Observer
         observe(Color.darkMode) { [weak self] _ in self?.resetShadow() }
     }
     
-    required init?(coder: NSCoder) { fatalError() }
+    required init?(coder: NSCoder) { nil }
     
     // MARK: - Load View
     

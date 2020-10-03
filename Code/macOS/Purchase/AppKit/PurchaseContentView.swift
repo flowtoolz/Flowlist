@@ -33,7 +33,7 @@ class PurchaseContentView: NSView, Observer
         }
     }
     
-    required init?(coder decoder: NSCoder) { fatalError() }
+    required init?(coder decoder: NSCoder) { nil }
     
     // MARK: - Dark Mode
     

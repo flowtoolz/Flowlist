@@ -16,7 +16,7 @@ class ListView: LayerBackedView, Observable, Observer
         constrainScrollTable()
     }
     
-    required init?(coder decoder: NSCoder) { fatalError() }
+    required init?(coder decoder: NSCoder) { nil }
     
     // MARK: - Configuration
     

@@ -20,7 +20,7 @@ class ItemTable: AnimatedTableView, Observable, TableContentDelegate, Observer
         dataSource = content
     }
     
-    required init?(coder: NSCoder) { fatalError() }
+    required init?(coder: NSCoder) { nil }
     
     // MARK: - Adapt to Font Size Changes
     

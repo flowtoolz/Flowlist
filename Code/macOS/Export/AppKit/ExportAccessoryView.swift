@@ -24,7 +24,7 @@ class ExportAcessoryView: NSView
                                                  rightOffset: -10)
     }
     
-    required init?(coder decoder: NSCoder) { fatalError() }
+    required init?(coder decoder: NSCoder) { nil }
     
     private lazy var formatLabel: Label =
     {
