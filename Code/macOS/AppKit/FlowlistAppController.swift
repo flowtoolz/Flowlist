@@ -4,8 +4,6 @@ import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
-import UIObserver
-
 @main
 class FlowlistAppController: AppController
 {

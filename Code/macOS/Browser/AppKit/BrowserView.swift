@@ -1,6 +1,5 @@
 import AppKit
 import UIToolz
-import UIObserver
 import GetLaid
 import SwiftObserver
 import SwiftyToolz

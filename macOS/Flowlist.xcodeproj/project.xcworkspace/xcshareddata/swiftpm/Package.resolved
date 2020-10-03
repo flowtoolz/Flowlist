@@ -1,0 +1,79 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CloudKid",
+        "repositoryURL": "https://github.com/flowtoolz/CloudKid.git",
+        "state": {
+          "branch": "master",
+          "revision": "16fc2f4798103cc2515c771f4598961022346c7f",
+          "version": null
+        }
+      },
+      {
+        "package": "FoundationToolz",
+        "repositoryURL": "https://github.com/flowtoolz/FoundationToolz.git",
+        "state": {
+          "branch": "master",
+          "revision": "f2055afe1ed63483e7ea2f05dbc85c8054083535",
+          "version": null
+        }
+      },
+      {
+        "package": "GetLaid",
+        "repositoryURL": "https://github.com/flowtoolz/GetLaid.git",
+        "state": {
+          "branch": "master",
+          "revision": "0a68303fcead0d8db1bf404e8b8bd141751495fb",
+          "version": null
+        }
+      },
+      {
+        "package": "PromiseKit",
+        "repositoryURL": "https://github.com/mxcl/PromiseKit",
+        "state": {
+          "branch": null,
+          "revision": "f14f16cc2602afec1030e4f492100d6d43dca544",
+          "version": "6.13.1"
+        }
+      },
+      {
+        "package": "Reachability",
+        "repositoryURL": "https://github.com/ashleymills/Reachability.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "6c8652a8ea35a64cf36367d07b3d6e5e6a24b272",
+          "version": "4.3.1"
+        }
+      },
+      {
+        "package": "SwiftObserver",
+        "repositoryURL": "https://github.com/flowtoolz/SwiftObserver.git",
+        "state": {
+          "branch": "master",
+          "revision": "9ddfddd69b49315188d9d21f35b33cd997c0b992",
+          "version": null
+        }
+      },
+      {
+        "package": "SwiftyToolz",
+        "repositoryURL": "https://github.com/flowtoolz/SwiftyToolz.git",
+        "state": {
+          "branch": "master",
+          "revision": "d52664f70d7514a97ba99fa3e50ca060a5915768",
+          "version": null
+        }
+      },
+      {
+        "package": "UIToolz",
+        "repositoryURL": "https://github.com/flowtoolz/UIToolz.git",
+        "state": {
+          "branch": "master",
+          "revision": "8446a770ca56500a04da5a7b0f2f9f471768c71c",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
