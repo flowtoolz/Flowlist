@@ -23,7 +23,7 @@ class CKRecordDatabase: Observer, Observable
         {
             resolver in
             
-            return firstly
+            firstly
             {
                 ensureAccess()
             }
