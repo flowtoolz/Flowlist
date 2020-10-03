@@ -17,7 +17,7 @@ class FlowlistAppController: AppController
     
     init()
     {
-        super.init(appView: flowlistView, appMenu: menu)
+        super.init(appView: flowlistView, appMenu: flowlistMenu)
     }
     
     // MARK: - App Life Cycle
@@ -51,7 +51,7 @@ class FlowlistAppController: AppController
     {
         super.applicationWillBecomeActive(notification)
         
-        menu.set(window: window)
+        flowlistMenu.set(window: window)
     }
     
     func applicationWillTerminate(_ notification: Notification)
@@ -73,7 +73,7 @@ class FlowlistAppController: AppController
     
     func windowWillEnterFullScreen(_ notification: Notification)
     {
-        menu.windowChangesFullscreen(to: true)
+        flowlistMenu.windowChangesFullscreen(to: true)
     }
     
     func windowDidEnterFullScreen(_ notification: Notification)
@@ -83,7 +83,7 @@ class FlowlistAppController: AppController
     
     func windowDidExitFullScreen(_ notification: Notification)
     {
-        menu.windowChangesFullscreen(to: false)
+        flowlistMenu.windowChangesFullscreen(to: false)
         flowlistView.windowDidEndResizing()
     }
     
@@ -135,7 +135,7 @@ class FlowlistAppController: AppController
     
     // MARK: - Basics
     
-    private let menu = Menu()
+    private let flowlistMenu = FlowlistMenu()
     private let flowlistView = FlowlistView()
     private let fileLogger = FileLogger(URL.flowlistDirectory.appendingPathComponent("flowlist-log.txt"))
 }

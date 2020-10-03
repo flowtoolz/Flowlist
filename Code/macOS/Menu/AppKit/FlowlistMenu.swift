@@ -1,15 +1,14 @@
 import AppKit
 import UIToolz
 
-class Menu: NSMenu
+class FlowlistMenu: MainMenu
 {
     // MARK: - Life Cycle
     
-    init()
+    override init()
     {
-        super.init(title: "Flowlist Menu Bar")
+        super.init()
 
-        addItem(NSMenuItem(submenu: ApplicationMenu()))
         addItem(NSMenuItem(submenu: DataMenu()))
         addItem(NSMenuItem(submenu: SelectionMenu()))
         addItem(NSMenuItem(submenu: EditMenu()))

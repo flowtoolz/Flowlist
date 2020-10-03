@@ -15,10 +15,9 @@
 		9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3421886AC4001B7103 /* PurchaseController.swift */; };
 		9E053B3721886BD4001B7103 /* SKProduct+FormattedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */; };
 		9E053B3B218870D0001B7103 /* FlowlistAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B39218870D0001B7103 /* FlowlistAppController.swift */; };
-		9E053B422188711A001B7103 /* ApplicationMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3C21887119001B7103 /* ApplicationMenu.swift */; };
 		9E053B432188711A001B7103 /* SelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3D21887119001B7103 /* SelectionMenu.swift */; };
 		9E053B442188711A001B7103 /* HelpMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3E21887119001B7103 /* HelpMenu.swift */; };
-		9E053B452188711A001B7103 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3F2188711A001B7103 /* Menu.swift */; };
+		9E053B452188711A001B7103 /* FlowlistMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3F2188711A001B7103 /* FlowlistMenu.swift */; };
 		9E053B462188711A001B7103 /* WindowMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B402188711A001B7103 /* WindowMenu.swift */; };
 		9E053B472188711A001B7103 /* EditMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B412188711A001B7103 /* EditMenu.swift */; };
 		9E053B4921887133001B7103 /* FlowlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B4821887133001B7103 /* FlowlistView.swift */; };
@@ -124,10 +123,9 @@
 		9E053B3421886AC4001B7103 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKProduct+FormattedPrice.swift"; sourceTree = "<group>"; };
 		9E053B39218870D0001B7103 /* FlowlistAppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowlistAppController.swift; sourceTree = "<group>"; };
-		9E053B3C21887119001B7103 /* ApplicationMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationMenu.swift; sourceTree = "<group>"; };
 		9E053B3D21887119001B7103 /* SelectionMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionMenu.swift; sourceTree = "<group>"; };
 		9E053B3E21887119001B7103 /* HelpMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpMenu.swift; sourceTree = "<group>"; };
-		9E053B3F2188711A001B7103 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		9E053B3F2188711A001B7103 /* FlowlistMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowlistMenu.swift; sourceTree = "<group>"; };
 		9E053B402188711A001B7103 /* WindowMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowMenu.swift; sourceTree = "<group>"; };
 		9E053B412188711A001B7103 /* EditMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMenu.swift; sourceTree = "<group>"; };
 		9E053B4821887133001B7103 /* FlowlistView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowlistView.swift; sourceTree = "<group>"; };
@@ -533,8 +531,7 @@
 		9EA5A8A0218ED340004902F7 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
-				9E053B3F2188711A001B7103 /* Menu.swift */,
-				9E053B3C21887119001B7103 /* ApplicationMenu.swift */,
+				9E053B3F2188711A001B7103 /* FlowlistMenu.swift */,
 				9EF37C4D21A08EED00A43AA9 /* DataMenu.swift */,
 				9E053B412188711A001B7103 /* EditMenu.swift */,
 				9E053B3D21887119001B7103 /* SelectionMenu.swift */,
@@ -875,7 +872,6 @@
 				9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */,
 				9EFB86DC21662AD100985B14 /* Tree.swift in Sources */,
 				9E053B512188715D001B7103 /* PurchaseContentView.swift in Sources */,
-				9E053B422188711A001B7103 /* ApplicationMenu.swift in Sources */,
 				9E6E70AD21936CD300BDB0BA /* Record.swift in Sources */,
 				9E74961122DB6DF30015678F /* Update.swift in Sources */,
 				9E20468822D9CE5C0020DD37 /* Record+MakeUpdate.swift in Sources */,
@@ -892,7 +888,7 @@
 				9E576E352186F85100C9F876 /* RecordController.swift in Sources */,
 				9E053B63218871C4001B7103 /* Row.swift in Sources */,
 				9EF37C4E21A08EED00A43AA9 /* DataMenu.swift in Sources */,
-				9E053B452188711A001B7103 /* Menu.swift in Sources */,
+				9E053B452188711A001B7103 /* FlowlistMenu.swift in Sources */,
 				9E74961322DB72F60015678F /* Orphanage.swift in Sources */,
 				9E053B23218867E4001B7103 /* FileDatabase.swift in Sources */,
 				9E86C48722C8B30700DF4FEC /* LegacyJSONFile.swift in Sources */,
