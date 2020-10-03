@@ -120,6 +120,12 @@
 
 /* Begin PBXFileReference section */
 		964BDB2125291E4C0073101E /* Font+ScreenDependentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+ScreenDependentStyle.swift"; sourceTree = "<group>"; };
+		964EDC0325292474000A67E3 /* CloudKid */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CloudKid; path = ../../CloudKid; sourceTree = "<group>"; };
+		964EDC08252925F2000A67E3 /* SwiftyToolz */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SwiftyToolz; path = ../../SwiftyToolz; sourceTree = "<group>"; };
+		964EDC0B252925F9000A67E3 /* UIToolz */ = {isa = PBXFileReference; lastKnownFileType = folder; name = UIToolz; path = ../../UIToolz; sourceTree = "<group>"; };
+		964EDC0E252925FF000A67E3 /* SwiftObserver */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SwiftObserver; path = ../../SwiftObserver; sourceTree = "<group>"; };
+		964EDC1125292605000A67E3 /* GetLaid */ = {isa = PBXFileReference; lastKnownFileType = folder; name = GetLaid; path = ../../GetLaid; sourceTree = "<group>"; };
+		964EDC142529260D000A67E3 /* FoundationToolz */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FoundationToolz; path = ../../FoundationToolz; sourceTree = "<group>"; };
 		9E0410F820CE60B300C7C3E3 /* Flowlist.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Flowlist.entitlements; path = Resources/Flowlist.entitlements; sourceTree = "<group>"; };
 		9E053B22218867E4001B7103 /* FileDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDatabase.swift; sourceTree = "<group>"; };
 		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullVersion.swift; sourceTree = "<group>"; };
@@ -260,6 +266,19 @@
 			path = AppKit;
 			sourceTree = "<group>";
 		};
+		964EDBFC25292431000A67E3 /* Local Packages */ = {
+			isa = PBXGroup;
+			children = (
+				964EDC0B252925F9000A67E3 /* UIToolz */,
+				964EDC1125292605000A67E3 /* GetLaid */,
+				964EDC0325292474000A67E3 /* CloudKid */,
+				964EDC142529260D000A67E3 /* FoundationToolz */,
+				964EDC0E252925FF000A67E3 /* SwiftObserver */,
+				964EDC08252925F2000A67E3 /* SwiftyToolz */,
+			);
+			name = "Local Packages";
+			sourceTree = "<group>";
+		};
 		9E00F8EC22E674A30031C996 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -336,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				9EA5A884218EC546004902F7 /* Code */,
+				964EDBFC25292431000A67E3 /* Local Packages */,
 				9E91651620551E6F00A438FB /* Resources */,
 				9ED6964222BBF13A006D275E /* FlowlistTests */,
 				9E542E921EEEE41C00534981 /* Products */,
