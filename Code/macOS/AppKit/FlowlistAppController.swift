@@ -6,18 +6,21 @@ import SwiftyToolz
 
 import UIObserver
 
-class FlowlistController: AppController
+@main
+class FlowlistAppController: AppController
 {
     // MARK: - Life Cycle
     
-    override init()
+    static func main() { instance.startApp() }
+    
+    private static let instance = FlowlistAppController()
+    
+    init()
     {
-        super.init()
-        NSApplication.shared.mainMenu = menu // must be set before delegate
-        window.contentView = flowlistView
+        super.init(appView: flowlistView, appMenu: menu)
     }
     
-    // MARK: - App Delegate
+    // MARK: - App Life Cycle
     
     override func applicationDidFinishLaunching(_ aNotification: Notification)
     {

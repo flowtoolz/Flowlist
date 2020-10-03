@@ -14,8 +14,7 @@
 		9E053B3321886963001B7103 /* CKRecordDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2D21886963001B7103 /* CKRecordDatabase.swift */; };
 		9E053B3521886AC4001B7103 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3421886AC4001B7103 /* PurchaseController.swift */; };
 		9E053B3721886BD4001B7103 /* SKProduct+FormattedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */; };
-		9E053B3A218870D0001B7103 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B38218870D0001B7103 /* main.swift */; };
-		9E053B3B218870D0001B7103 /* FlowlistController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B39218870D0001B7103 /* FlowlistController.swift */; };
+		9E053B3B218870D0001B7103 /* FlowlistAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B39218870D0001B7103 /* FlowlistAppController.swift */; };
 		9E053B422188711A001B7103 /* ApplicationMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3C21887119001B7103 /* ApplicationMenu.swift */; };
 		9E053B432188711A001B7103 /* SelectionMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3D21887119001B7103 /* SelectionMenu.swift */; };
 		9E053B442188711A001B7103 /* HelpMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B3E21887119001B7103 /* HelpMenu.swift */; };
@@ -124,8 +123,7 @@
 		9E053B2D21886963001B7103 /* CKRecordDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CKRecordDatabase.swift; sourceTree = "<group>"; };
 		9E053B3421886AC4001B7103 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		9E053B3621886BD4001B7103 /* SKProduct+FormattedPrice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKProduct+FormattedPrice.swift"; sourceTree = "<group>"; };
-		9E053B38218870D0001B7103 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		9E053B39218870D0001B7103 /* FlowlistController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowlistController.swift; sourceTree = "<group>"; };
+		9E053B39218870D0001B7103 /* FlowlistAppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowlistAppController.swift; sourceTree = "<group>"; };
 		9E053B3C21887119001B7103 /* ApplicationMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationMenu.swift; sourceTree = "<group>"; };
 		9E053B3D21887119001B7103 /* SelectionMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionMenu.swift; sourceTree = "<group>"; };
 		9E053B3E21887119001B7103 /* HelpMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpMenu.swift; sourceTree = "<group>"; };
@@ -526,8 +524,7 @@
 		9EA5A89F218ED324004902F7 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
-				9E053B38218870D0001B7103 /* main.swift */,
-				9E053B39218870D0001B7103 /* FlowlistController.swift */,
+				9E053B39218870D0001B7103 /* FlowlistAppController.swift */,
 				9E053B4821887133001B7103 /* FlowlistView.swift */,
 			);
 			path = AppKit;
@@ -850,7 +847,6 @@
 				9EA1D3B0219EBFD000B5943C /* Persistent.swift in Sources */,
 				9E053B3321886963001B7103 /* CKRecordDatabase.swift in Sources */,
 				9E47E32422AAC0A20068088A /* ListViewCell.swift in Sources */,
-				9E053B3A218870D0001B7103 /* main.swift in Sources */,
 				9E053B502188715D001B7103 /* PurchaseView.swift in Sources */,
 				9EF231A7218B1349006E783C /* Item.swift in Sources */,
 				9E6C720B20B19C88001C3D2C /* Item+State.swift in Sources */,
@@ -890,7 +886,7 @@
 				9E053B61218871C4001B7103 /* List+NSPasteboard.swift in Sources */,
 				9E576E372186FAB400C9F876 /* Item+Matching.swift in Sources */,
 				9EDB5D042174AF740048D7C5 /* Item+Text.swift in Sources */,
-				9E053B3B218870D0001B7103 /* FlowlistController.swift in Sources */,
+				9E053B3B218870D0001B7103 /* FlowlistAppController.swift in Sources */,
 				9EE2EE5120B4AE35007CDC2F /* Float+Style.swift in Sources */,
 				9E3DCE6722EC3595003E4E99 /* CKRecordEditor.swift in Sources */,
 				9E576E352186F85100C9F876 /* RecordController.swift in Sources */,
