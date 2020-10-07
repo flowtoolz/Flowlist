@@ -13,7 +13,7 @@ class FlowlistAppController: AppController
     
     private static let instance = FlowlistAppController()
     
-    init()
+    private init()
     {
         super.init(appView: flowlistView, appMenu: flowlistMenu)
     }
