@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		96204DCE2529198C003BA7EC /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = 96204DCD2529198C003BA7EC /* PromiseKit */; };
 		96204DD3252919A5003BA7EC /* SwiftyToolz in Frameworks */ = {isa = PBXBuildFile; productRef = 96204DD2252919A5003BA7EC /* SwiftyToolz */; };
 		96204DD8252919CE003BA7EC /* SwiftObserver in Frameworks */ = {isa = PBXBuildFile; productRef = 96204DD7252919CE003BA7EC /* SwiftObserver */; };
 		96204DDD252919F5003BA7EC /* FoundationToolz in Frameworks */ = {isa = PBXBuildFile; productRef = 96204DDC252919F5003BA7EC /* FoundationToolz */; };
@@ -15,6 +14,7 @@
 		96204DE725291A2B003BA7EC /* UIToolz in Frameworks */ = {isa = PBXBuildFile; productRef = 96204DE625291A2B003BA7EC /* UIToolz */; };
 		96204DEC25291A61003BA7EC /* CloudKid in Frameworks */ = {isa = PBXBuildFile; productRef = 96204DEB25291A61003BA7EC /* CloudKid */; };
 		964BDB2225291E4C0073101E /* Font+ScreenDependentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964BDB2125291E4C0073101E /* Font+ScreenDependentStyle.swift */; };
+		9675CE5A25671DD100872FB0 /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9675CE5925671DD100872FB0 /* PromiseKit */; };
 		9E053B23218867E4001B7103 /* FileDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B22218867E4001B7103 /* FileDatabase.swift */; };
 		9E053B2521886867001B7103 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2421886867001B7103 /* FullVersion.swift */; };
 		9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */; };
@@ -120,7 +120,6 @@
 
 /* Begin PBXFileReference section */
 		964BDB2125291E4C0073101E /* Font+ScreenDependentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+ScreenDependentStyle.swift"; sourceTree = "<group>"; };
-		964EDC0325292474000A67E3 /* CloudKid */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CloudKid; path = ../../CloudKid; sourceTree = "<group>"; };
 		964EDC08252925F2000A67E3 /* SwiftyToolz */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SwiftyToolz; path = ../../SwiftyToolz; sourceTree = "<group>"; };
 		964EDC0B252925F9000A67E3 /* UIToolz */ = {isa = PBXFileReference; lastKnownFileType = folder; name = UIToolz; path = ../../UIToolz; sourceTree = "<group>"; };
 		964EDC0E252925FF000A67E3 /* SwiftObserver */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SwiftObserver; path = ../../SwiftObserver; sourceTree = "<group>"; };
@@ -230,12 +229,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				96204DDD252919F5003BA7EC /* FoundationToolz in Frameworks */,
+				9675CE5A25671DD100872FB0 /* PromiseKit in Frameworks */,
 				96204DE225291A11003BA7EC /* GetLaid in Frameworks */,
 				96204DD8252919CE003BA7EC /* SwiftObserver in Frameworks */,
 				96204DD3252919A5003BA7EC /* SwiftyToolz in Frameworks */,
 				96204DEC25291A61003BA7EC /* CloudKid in Frameworks */,
 				96204DE725291A2B003BA7EC /* UIToolz in Frameworks */,
-				96204DCE2529198C003BA7EC /* PromiseKit in Frameworks */,
 				9E1F2CF42184476B00DFFD73 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,7 +270,6 @@
 			children = (
 				964EDC0B252925F9000A67E3 /* UIToolz */,
 				964EDC1125292605000A67E3 /* GetLaid */,
-				964EDC0325292474000A67E3 /* CloudKid */,
 				964EDC142529260D000A67E3 /* FoundationToolz */,
 				964EDC0E252925FF000A67E3 /* SwiftObserver */,
 				964EDC08252925F2000A67E3 /* SwiftyToolz */,
@@ -713,13 +711,13 @@
 			);
 			name = Flowlist;
 			packageProductDependencies = (
-				96204DCD2529198C003BA7EC /* PromiseKit */,
 				96204DD2252919A5003BA7EC /* SwiftyToolz */,
 				96204DD7252919CE003BA7EC /* SwiftObserver */,
 				96204DDC252919F5003BA7EC /* FoundationToolz */,
 				96204DE125291A11003BA7EC /* GetLaid */,
 				96204DE625291A2B003BA7EC /* UIToolz */,
 				96204DEB25291A61003BA7EC /* CloudKid */,
+				9675CE5925671DD100872FB0 /* PromiseKit */,
 			);
 			productName = TodayList;
 			productReference = 9E542E911EEEE41C00534981 /* Flowlist.app */;
@@ -788,13 +786,13 @@
 			);
 			mainGroup = 9E542E881EEEE41C00534981;
 			packageReferences = (
-				96204DCC2529198C003BA7EC /* XCRemoteSwiftPackageReference "PromiseKit" */,
 				96204DD1252919A5003BA7EC /* XCRemoteSwiftPackageReference "SwiftyToolz" */,
 				96204DD6252919CE003BA7EC /* XCRemoteSwiftPackageReference "SwiftObserver" */,
 				96204DDB252919F5003BA7EC /* XCRemoteSwiftPackageReference "FoundationToolz" */,
 				96204DE025291A11003BA7EC /* XCRemoteSwiftPackageReference "GetLaid" */,
 				96204DE525291A2B003BA7EC /* XCRemoteSwiftPackageReference "UIToolz" */,
 				96204DEA25291A61003BA7EC /* XCRemoteSwiftPackageReference "CloudKid" */,
+				9675CE5825671DD100872FB0 /* XCRemoteSwiftPackageReference "PromiseKit" */,
 			);
 			productRefGroup = 9E542E921EEEE41C00534981 /* Products */;
 			projectDirPath = "";
@@ -1333,14 +1331,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		96204DCC2529198C003BA7EC /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mxcl/PromiseKit";
-			requirement = {
-				kind = exactVersion;
-				version = 6.13.1;
-			};
-		};
 		96204DD1252919A5003BA7EC /* XCRemoteSwiftPackageReference "SwiftyToolz" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/flowtoolz/SwiftyToolz.git";
@@ -1389,14 +1379,17 @@
 				kind = branch;
 			};
 		};
+		9675CE5825671DD100872FB0 /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxcl/PromiseKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.13.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		96204DCD2529198C003BA7EC /* PromiseKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 96204DCC2529198C003BA7EC /* XCRemoteSwiftPackageReference "PromiseKit" */;
-			productName = PromiseKit;
-		};
 		96204DD2252919A5003BA7EC /* SwiftyToolz */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 96204DD1252919A5003BA7EC /* XCRemoteSwiftPackageReference "SwiftyToolz" */;
@@ -1426,6 +1419,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 96204DEA25291A61003BA7EC /* XCRemoteSwiftPackageReference "CloudKid" */;
 			productName = CloudKid;
+		};
+		9675CE5925671DD100872FB0 /* PromiseKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9675CE5825671DD100872FB0 /* XCRemoteSwiftPackageReference "PromiseKit" */;
+			productName = PromiseKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

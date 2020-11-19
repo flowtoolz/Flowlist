@@ -108,7 +108,7 @@ class FlowlistAppController: AppController
     }
     
     func application(_ application: NSApplication,
-                     didReceiveRemoteNotification userInfo: JSON)
+                     didReceiveRemoteNotification userInfo: [String: Any])
     {
         CKRecordDatabase.shared.handleDatabaseNotification(with: userInfo)
     }

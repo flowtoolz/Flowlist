@@ -10,9 +10,9 @@ final class ItemData: Observer, Observable
         self.id = id ?? .makeUUID()
         self.wantsTextInput = wantsTextInput
         
-        observe(text, state, tag)
+        observe(text)
         {
-            [weak self] textChange, _, _ in
+            [weak self] textChange in
             
             if textChange.old != textChange.new
             {
@@ -20,6 +20,16 @@ final class ItemData: Observer, Observable
             }
             
             self?.send(.wasModified)
+        }
+        
+        observe(state)
+        {
+            [weak self] _ in self?.send(.wasModified)
+        }
+        
+        observe(tag)
+        {
+            [weak self] _ in self?.send(.wasModified)
         }
     }
     

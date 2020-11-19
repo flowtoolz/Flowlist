@@ -12,7 +12,7 @@ class LegacyJSONFile
         {
             let data = try Data(contentsOf: url)
             
-            if let json = try JSONSerialization.jsonObject(with: data) as? JSON
+            if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
             {
                 return records(from: json, parent: nil, position: 0)
             }
@@ -33,20 +33,20 @@ class LegacyJSONFile
         FileManager.default.itemExists(url)
     }
     
-    private func records(from json: JSON,
+    private func records(from json: [String: Any],
                          parent: Record.ID?,
                          position: Int) -> [Record]
     {
         guard let id = json["id"] as? String else { return [] }
         
         let textObject = json["title"]
-        let text = (textObject as? String) ?? ((textObject as? JSON)?["storedValue"] as? String)
+        let text = (textObject as? String) ?? ((textObject as? [String: Any])?["storedValue"] as? String)
         
         let stateObject = json["state"]
-        let stateInt = (stateObject as? Int) ?? ((stateObject as? JSON)?["storedValue"] as? Int)
+        let stateInt = (stateObject as? Int) ?? ((stateObject as? [String: Any])?["storedValue"] as? Int)
         
         let tagObject = json["tag"]
-        let tagInt = (tagObject as? Int) ?? ((tagObject as? JSON)?["storedValue"] as? Int)
+        let tagInt = (tagObject as? Int) ?? ((tagObject as? [String: Any])?["storedValue"] as? Int)
         
         let loadedRecord = Record(id: id,
                                   text: text,
@@ -57,7 +57,7 @@ class LegacyJSONFile
         
         var loadedRecords = [loadedRecord]
         
-        if let subJSONs = json["subtasks"] as? [JSON]
+        if let subJSONs = json["subtasks"] as? [[String: Any]]
         {
             for position in 0 ..< subJSONs.count
             {

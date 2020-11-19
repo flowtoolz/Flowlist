@@ -178,7 +178,7 @@ class CKRecordDatabase: Observer, Observable
         ckDatabaseController.createDatabaseSubscription(with: .itemSub).map { _ in }
     }
     
-    func handleDatabaseNotification(with userInfo: JSON)
+    func handleDatabaseNotification(with userInfo: [String: Any])
     {
         ckDatabaseController.handleDatabaseNotification(with: userInfo)
     }
