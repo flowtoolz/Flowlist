@@ -46,7 +46,7 @@ class PurchaseContentView: NSView, Observer
         priceTag.discountPriceLabel.textColor = Color.textDiscount.nsColor
         loadingLabel.textColor = textColor
         bulletpointList.adjustToColorMode()
-        icon.image = Color.isInDarkMode ? iconImageDark : iconImageLight
+        
         if #available(OSX 10.14, *)
         {
             spinner.appearance = NSAppearance(named: Color.isInDarkMode ? .darkAqua : .aqua)
@@ -232,14 +232,18 @@ class PurchaseContentView: NSView, Observer
     
     private lazy var icon: NSImageView =
     {
-        let image = Color.isInDarkMode ? iconImageDark : iconImageLight
-        let imageView = NSImageView(withAspectFillImage: image)
+        let imageView = NSImageView(withAspectFillImage: iconImage)
+        
+        let shadow = NSShadow()
+        shadow.shadowBlurRadius = 5
+        shadow.shadowColor = NSColor.init(white: 0, alpha: 0.3)
+        shadow.shadowOffset = .init(width: 0, height: -3)
+        imageView.shadow = shadow
         
         return columns[1].addForAutoLayout(imageView)
     }()
     
-    private let iconImageLight = #imageLiteral(resourceName: "icon_pdf_black_border")
-    private let iconImageDark = #imageLiteral(resourceName: "icon_pdf_white_border")
+    private let iconImage = NSImage(named: "AppIcon")
     
     // MARK: - Price Tag
     
