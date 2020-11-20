@@ -8,8 +8,8 @@ class Dialog
 
 protocol DialogInterface
 {
-    func pose(_ question: Question, imageName: String?) -> Promise<Answer>
-    func pose(_ question: Question) -> Promise<Answer>
+    func pose(_ question: Question, imageName: String?) -> PromiseKit.Promise<Answer>
+    func pose(_ question: Question) -> PromiseKit.Promise<Answer>
 }
 
 struct Question

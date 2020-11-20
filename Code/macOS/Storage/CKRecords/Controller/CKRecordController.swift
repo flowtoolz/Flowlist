@@ -65,7 +65,7 @@ class CKRecordController: Observer
 
     // MARK: - Synchronizer
     
-    func resync() -> Promise<Void> { synchronizer.resyncAsynchronously() }
+    func resync() -> PromiseKit.Promise<Void> { synchronizer.resyncAsynchronously() }
     private let synchronizer = CKRecordSynchronizer()
     
     // MARK: - Observer

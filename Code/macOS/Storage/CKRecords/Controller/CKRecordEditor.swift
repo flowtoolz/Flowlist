@@ -5,9 +5,9 @@ import SwiftyToolz
 
 class CKRecordEditor
 {
-    func saveCKRecords(for records: [Record]) -> Promise<Void>
+    func saveCKRecords(for records: [Record]) -> PromiseKit.Promise<Void>
     {
-        guard !records.isEmpty else { return Promise() }
+        guard !records.isEmpty else { return PromiseKit.Promise() }
         
         return firstly
         {
@@ -15,11 +15,11 @@ class CKRecordEditor
         }
         .then
         {
-            saveResult -> Promise<Void> in
+            saveResult -> PromiseKit.Promise<Void> in
             
             try self.ensureNoFailures(in: saveResult)
             
-            if saveResult.conflicts.isEmpty { return Promise() }
+            if saveResult.conflicts.isEmpty { return PromiseKit.Promise() }
             
             return firstly
             {
@@ -27,13 +27,13 @@ class CKRecordEditor
             }
             .then
             {
-                preferICloud -> Promise<Void> in
+                preferICloud -> PromiseKit.Promise<Void> in
                 
                 guard !preferICloud else
                 {
                     let serverRecords = saveResult.conflicts.map { $0.serverRecord.makeRecord() }
                     FileDatabase.shared.save(serverRecords, as: self)
-                    return Promise()
+                    return PromiseKit.Promise()
                 }
                 
                 let resolvedServerRecords = saveResult.conflicts.map
@@ -57,7 +57,7 @@ class CKRecordEditor
         }
     }
     
-    private func askWhetherToPreferICloud(with conflicts: [CKDatabase.SaveConflict]) -> Promise<Bool>
+    private func askWhetherToPreferICloud(with conflicts: [CKDatabase.SaveConflict]) -> PromiseKit.Promise<Bool>
     {
         guard let dialog = Dialog.default else
         {
@@ -98,7 +98,7 @@ class CKRecordEditor
         }
     }
     
-    private func saveExpectingNoConflicts(_ records: [CKRecord]) -> Promise<Void>
+    private func saveExpectingNoConflicts(_ records: [CKRecord]) -> PromiseKit.Promise<Void>
     {
         return firstly
         {
@@ -139,9 +139,9 @@ class CKRecordEditor
         return ckRecord
     }
     
-    func deleteCKRecords(with ids: [Record.ID]) -> Promise<Void>
+    func deleteCKRecords(with ids: [Record.ID]) -> PromiseKit.Promise<Void>
     {
-        guard !ids.isEmpty else { return Promise() }
+        guard !ids.isEmpty else { return PromiseKit.Promise() }
         
         return firstly
         {

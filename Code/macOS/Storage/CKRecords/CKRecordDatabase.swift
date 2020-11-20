@@ -15,11 +15,11 @@ class CKRecordDatabase: Observer, Observable
     
     // MARK: - Save CKRecords
     
-    func save(_ records: [CKRecord]) -> Promise<CKDatabase.SaveResult>
+    func save(_ records: [CKRecord]) -> PromiseKit.Promise<CKDatabase.SaveResult>
     {
         guard !records.isEmpty else { return .value(.empty) }
         
-        return Promise<CKDatabase.SaveResult>
+        return PromiseKit.Promise<CKDatabase.SaveResult>
         {
             resolver in
             
@@ -55,9 +55,9 @@ class CKRecordDatabase: Observer, Observable
     
     // MARK: - Delete Records
     
-    func deleteCKRecords(with ids: [CKRecord.ID]) -> Promise<CKDatabase.DeletionResult>
+    func deleteCKRecords(with ids: [CKRecord.ID]) -> PromiseKit.Promise<CKDatabase.DeletionResult>
     {
-        return Promise<CKDatabase.DeletionResult>
+        return PromiseKit.Promise<CKDatabase.DeletionResult>
         {
             resolver in
             
@@ -83,9 +83,9 @@ class CKRecordDatabase: Observer, Observable
     
     // MARK: - Fetch Changes
     
-    func fetchChanges() -> Promise<CKDatabase.Changes>
+    func fetchChanges() -> PromiseKit.Promise<CKDatabase.Changes>
     {
-        return Promise<CKDatabase.Changes>
+        return PromiseKit.Promise<CKDatabase.Changes>
         {
             resolver in
             
@@ -121,9 +121,9 @@ class CKRecordDatabase: Observer, Observable
     
     // MARK: - Ensure Access
     
-    private func ensureAccess() -> Promise<Void>
+    private func ensureAccess() -> PromiseKit.Promise<Void>
     {
-        if didEnsureAccess { return Promise() }
+        if didEnsureAccess { return PromiseKit.Promise() }
         
         if let currentlyRunningPromise = ensuringAccessPromise
         {
@@ -131,7 +131,7 @@ class CKRecordDatabase: Observer, Observable
             return currentlyRunningPromise
         }
         
-        let newPromise: Promise<Void> = Promise
+        let newPromise: PromiseKit.Promise<Void> = PromiseKit.Promise
         {
             resolver in
             
@@ -169,11 +169,11 @@ class CKRecordDatabase: Observer, Observable
     }
     
     private var didEnsureAccess = false
-    private var ensuringAccessPromise: Promise<Void>?
+    private var ensuringAccessPromise: PromiseKit.Promise<Void>?
     
     // MARK: - Observable Database Subscription 
     
-    private func ensureDatabaseSubscriptionExists() -> Promise<Void>
+    private func ensureDatabaseSubscriptionExists() -> PromiseKit.Promise<Void>
     {
         ckDatabaseController.createDatabaseSubscription(with: .itemSub).map { _ in }
     }
@@ -196,7 +196,7 @@ class CKRecordDatabase: Observer, Observable
     
     // MARK: - Create Zone
     
-    private func ensureRecordZoneExists() -> Promise<Void>
+    private func ensureRecordZoneExists() -> PromiseKit.Promise<Void>
     {
         ckDatabaseController.create(.itemZone).map { _ in }
     }

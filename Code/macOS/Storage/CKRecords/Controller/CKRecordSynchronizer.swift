@@ -53,9 +53,9 @@ class CKRecordSynchronizer
         resyncAsynchronously().catch(sync.abort)
     }
     
-    func resyncAsynchronously() -> Promise<Void>
+    func resyncAsynchronously() -> PromiseKit.Promise<Void>
     {
-        guard sync.isActive else { return Promise() }
+        guard sync.isActive else { return PromiseKit.Promise() }
         
         return ckRecordDatabase.hasChangeToken
             ? resyncWithChangeToken()
@@ -63,7 +63,7 @@ class CKRecordSynchronizer
     }
     
     /// Total resync from scratch
-    private func resyncWithoutChangeToken() -> Promise<Void>
+    private func resyncWithoutChangeToken() -> PromiseKit.Promise<Void>
     {
         if ckRecordDatabase.hasChangeToken
         {
@@ -100,7 +100,7 @@ class CKRecordSynchronizer
         }
     }
     
-    private func resyncWithChangeToken() -> Promise<Void>
+    private func resyncWithChangeToken() -> PromiseKit.Promise<Void>
     {
         guard ckRecordDatabase.hasChangeToken else
         {
@@ -117,7 +117,7 @@ class CKRecordSynchronizer
         }
     }
     
-    private func fetchCKChangesAndApplyThemToFileDatabase() -> Promise<Void>
+    private func fetchCKChangesAndApplyThemToFileDatabase() -> PromiseKit.Promise<Void>
     {
         return firstly
         {
@@ -158,10 +158,10 @@ class CKRecordSynchronizer
     
     private var timer: Timer?
     
-    private func applyBufferedChangesToCKRecordDatabase() -> Promise<Void>
+    private func applyBufferedChangesToCKRecordDatabase() -> PromiseKit.Promise<Void>
     {
         // TODO: return the actual promise that is syncing the changes, and replace the isSyncingBufferedChanges property with that ...
-        guard !isSyncingBufferedChanges, bufferedChanges.hasChangesInMemory else { return Promise() }
+        guard !isSyncingBufferedChanges, bufferedChanges.hasChangesInMemory else { return PromiseKit.Promise() }
         
         isSyncingBufferedChanges = true
         
@@ -171,7 +171,7 @@ class CKRecordSynchronizer
         }
         .then(on: queue)
         {
-            () -> Promise<Void> in
+            () -> PromiseKit.Promise<Void> in
             
             let records = Array(self.bufferedChanges.edits).compactMap(self.fileDatabase.record)
             

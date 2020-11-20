@@ -4,7 +4,7 @@ import SwiftyToolz
 
 class JSONFileMigrationController
 {
-    func migrateJSONFile() -> Promise<Void>
+    func migrateJSONFile() -> PromiseKit.Promise<Void>
     {
         let jsonFile = LegacyJSONFile()
         
@@ -13,13 +13,13 @@ class JSONFileMigrationController
             !jsonFileRecords.isEmpty
         else
         {
-            return Promise()
+            return PromiseKit.Promise()
         }
         
         guard FileDatabase.shared.loadFiles().isEmpty else
         {
             informUserThatLegacyJSONFileReappeared(filePath: jsonFile.url.path)
-            return Promise()
+            return PromiseKit.Promise()
         }
         
         guard FileDatabase.shared.save(jsonFileRecords, as: self, sendEvent: false) else
@@ -29,7 +29,7 @@ class JSONFileMigrationController
         
         jsonFile.remove()
         
-        return Promise()
+        return PromiseKit.Promise()
     }
 
     func informUserThatLegacyJSONFileReappeared(filePath: String)

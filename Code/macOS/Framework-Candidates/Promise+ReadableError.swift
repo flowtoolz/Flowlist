@@ -1,10 +1,10 @@
 import PromiseKit
 import SwiftyToolz
 
-extension Promise
+extension PromiseKit.Promise
 {
-    static func fail<T>(_ errorMessage: String) -> Promise<T>
+    static func fail<T>(_ errorMessage: String) -> PromiseKit.Promise<T>
     {
-        Promise<T>(error: ReadableError(errorMessage))
+        PromiseKit.Promise<T>(error: ReadableError(errorMessage))
     }
 }

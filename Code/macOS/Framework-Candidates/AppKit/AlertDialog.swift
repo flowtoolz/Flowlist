@@ -5,14 +5,14 @@ import SwiftyToolz
 // TODO: when moving this to UIToolz: Let AppController set this as the default Dialog, and: Properly integrate Logging / Dialog / Alerts ... Make Logging independent of SwiftObserver ...
 class AlertDialog: DialogInterface
 {
-    func pose(_ question: Question) -> Promise<Answer>
+    func pose(_ question: Question) -> PromiseKit.Promise<Answer>
     {
         pose(question, imageName: nil)
     }
     
-    func pose(_ question: Question, imageName: String?) -> Promise<Answer>
+    func pose(_ question: Question, imageName: String?) -> PromiseKit.Promise<Answer>
     {
-        Promise
+        PromiseKit.Promise
         {
             resolver in
         

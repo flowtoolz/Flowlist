@@ -20,10 +20,10 @@ class StorageController
         }
         .then
         {
-            () -> Promise<Void> in
+            () -> PromiseKit.Promise<Void> in
             
             self.fileController.saveRecordsFromFilesToRecordStore()
-            return isCKSyncFeatureAvailable ? self.ckRecordController.resync() : Promise()
+            return isCKSyncFeatureAvailable ? self.ckRecordController.resync() : PromiseKit.Promise()
         }
         .done
         {
@@ -99,7 +99,7 @@ class StorageController
     
     // MARK: - Show Backup Hint on First Sync
     
-    private func checkWhetherUserWantsToBackupFirst() -> Promise<Bool>
+    private func checkWhetherUserWantsToBackupFirst() -> PromiseKit.Promise<Bool>
     {
         guard !CKSyncIntention.shared.isActive, !didShowBackupHintToUser.value else
         {
