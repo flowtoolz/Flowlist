@@ -12,7 +12,7 @@ class AlertDialog: DialogInterface
     
     func pose(_ question: Question, imageName: String?) -> ResultPromise<Answer>
     {
-        SOPromise
+        Promise
         {
             promise in
         

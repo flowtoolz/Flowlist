@@ -118,7 +118,6 @@
 
 /* Begin PBXFileReference section */
 		964BDB2125291E4C0073101E /* Font+ScreenDependentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+ScreenDependentStyle.swift"; sourceTree = "<group>"; };
-		967EBE4B256AC6B000B7E89A /* SwiftObserver */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SwiftObserver; path = ../../SwiftObserver; sourceTree = "<group>"; };
 		9E0410F820CE60B300C7C3E3 /* Flowlist.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Flowlist.entitlements; path = Resources/Flowlist.entitlements; sourceTree = "<group>"; };
 		9E053B22218867E4001B7103 /* FileDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDatabase.swift; sourceTree = "<group>"; };
 		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullVersion.swift; sourceTree = "<group>"; };
@@ -260,7 +259,6 @@
 		964EDBFC25292431000A67E3 /* Local Packages */ = {
 			isa = PBXGroup;
 			children = (
-				967EBE4B256AC6B000B7E89A /* SwiftObserver */,
 			);
 			name = "Local Packages";
 			sourceTree = "<group>";

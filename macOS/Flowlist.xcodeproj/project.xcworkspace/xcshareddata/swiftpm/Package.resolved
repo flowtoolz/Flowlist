@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/flowtoolz/CloudKid.git",
         "state": {
           "branch": "master",
-          "revision": "52e4c409a713503b3fa4171921f34a0b18630672",
+          "revision": "c030f7a5eb6c9506c2af28877be28207861b95e6",
           "version": null
         }
       },
@@ -35,6 +35,15 @@
           "branch": null,
           "revision": "6c8652a8ea35a64cf36367d07b3d6e5e6a24b272",
           "version": "4.3.1"
+        }
+      },
+      {
+        "package": "SwiftObserver",
+        "repositoryURL": "https://github.com/flowtoolz/SwiftObserver.git",
+        "state": {
+          "branch": "master",
+          "revision": "969b4ad17da0f7f66af69bcc16359aed4ee9f27d",
+          "version": null
         }
       },
       {

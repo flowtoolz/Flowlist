@@ -80,7 +80,7 @@ class CKRecordDatabase: Observer, Observable
     
     private func ensureAccess() -> ResultPromise<Void>
     {
-        SOPromise { accessInitializationResult.whenCached($0.fulfill(_:)) }
+        Promise { accessInitializationResult.whenCached($0.fulfill(_:)) }
     }
     
     private lazy var accessInitializationResult = initializeAccess().cache()
