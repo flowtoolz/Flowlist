@@ -1,6 +1,5 @@
 import CloudKit
 import CloudKid
-import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
@@ -15,31 +14,17 @@ class CKRecordDatabase: Observer, Observable
     
     // MARK: - Save CKRecords
     
-    func save(_ records: [CKRecord]) -> PromiseKit.Promise<CKDatabase.SaveResult>
+    func save(_ records: [CKRecord]) -> ResultPromise<CKDatabase.SaveResult>
     {
-        guard !records.isEmpty else { return .value(.empty) }
+        guard !records.isEmpty else { return .fulfilled(.empty) }
         
-        return PromiseKit.Promise<CKDatabase.SaveResult>
+        return promise
         {
-            resolver in
-            
-            firstly
-            {
-                ensureAccess()
-            }
-            .then(on: queue)
-            {
-                self.ckDatabaseController.save(records)
-            }
-            .done(on: queue)
-            {
-                resolver.fulfill($0)
-            }
-            .catch
-            {
-                self.didEnsureAccess = false
-                resolver.reject($0)
-            }
+            ensureAccess()
+        }
+        .onSuccess
+        {
+            self.ckDatabaseController.save(records)
         }
     }
     
@@ -55,57 +40,29 @@ class CKRecordDatabase: Observer, Observable
     
     // MARK: - Delete Records
     
-    func deleteCKRecords(with ids: [CKRecord.ID]) -> PromiseKit.Promise<CKDatabase.DeletionResult>
+    func deleteCKRecords(with ids: [CKRecord.ID]) -> ResultPromise<CKDatabase.DeletionResult>
     {
-        return PromiseKit.Promise<CKDatabase.DeletionResult>
+        promise
         {
-            resolver in
-            
-            firstly
-            {
-                ensureAccess()
-            }
-            .then(on: queue)
-            {
-                self.ckDatabaseController.deleteCKRecords(with: ids)
-            }
-            .done(on: queue)
-            {
-                resolver.fulfill($0)
-            }
-            .catch
-            {
-                self.didEnsureAccess = false
-                resolver.reject($0)
-            }
+            ensureAccess()
+        }
+        .onSuccess
+        {
+            self.ckDatabaseController.deleteCKRecords(with: ids).map { .success($0) }
         }
     }
     
     // MARK: - Fetch Changes
     
-    func fetchChanges() -> PromiseKit.Promise<CKDatabase.Changes>
+    func fetchChanges() -> ResultPromise<CKDatabase.Changes>
     {
-        return PromiseKit.Promise<CKDatabase.Changes>
+        promise
         {
-            resolver in
-            
-            firstly
-            {
-                ensureAccess()
-            }
-            .then(on: queue)
-            {
-                self.ckDatabaseController.fetchChanges(from: .itemZone)
-            }
-            .done(on: queue)
-            {
-                resolver.fulfill($0)
-            }
-            .catch
-            {
-                self.didEnsureAccess = false
-                resolver.reject($0)
-            }
+            ensureAccess()
+        }
+        .onSuccess
+        {
+            self.ckDatabaseController.fetchChanges(from: .itemZone)
         }
     }
     
@@ -121,61 +78,41 @@ class CKRecordDatabase: Observer, Observable
     
     // MARK: - Ensure Access
     
-    private func ensureAccess() -> PromiseKit.Promise<Void>
+    private func ensureAccess() -> ResultPromise<Void>
     {
-        if didEnsureAccess { return PromiseKit.Promise() }
-        
-        if let currentlyRunningPromise = ensuringAccessPromise
-        {
-            log(warning: "Called \(#function) more than once in parallel. Gonna return the active promise.")
-            return currentlyRunningPromise
-        }
-        
-        let newPromise: PromiseKit.Promise<Void> = PromiseKit.Promise
-        {
-            resolver in
-            
-            firstly
-            {
-                self.ckDatabaseController.ensureAccountAccess()
-            }
-            .then(on: queue)
-            {
-                self.ensureRecordZoneExists()
-            }
-            .then(on: queue)
-            {
-                self.ensureDatabaseSubscriptionExists()
-            }
-            .done(on: queue)
-            {
-                self.didEnsureAccess = true
-                resolver.fulfill_()
-            }
-            .ensure(on: queue)
-            {
-                self.ensuringAccessPromise = nil
-            }
-            .catch
-            {
-                self.didEnsureAccess = false
-                resolver.reject($0)
-            }
-        }
-        
-        ensuringAccessPromise = newPromise.isPending ? newPromise : nil
-        
-        return newPromise
+        SOPromise { accessInitializationResult.whenCached($0.fulfill(_:)) }
     }
     
-    private var didEnsureAccess = false
-    private var ensuringAccessPromise: PromiseKit.Promise<Void>?
+    private lazy var accessInitializationResult = initializeAccess().cache()
+    
+    private func initializeAccess() -> ResultPromise<Void>
+    {
+        promise
+        {
+            ckDatabaseController.ensureAccountAccess()
+        }
+        .onSuccess
+        {
+            self.ensureRecordZoneExists()
+        }
+        .onSuccess
+        {
+            self.ensureDatabaseSubscriptionExists()
+        }
+    }
     
     // MARK: - Observable Database Subscription 
     
-    private func ensureDatabaseSubscriptionExists() -> PromiseKit.Promise<Void>
+    private func ensureDatabaseSubscriptionExists() -> ResultPromise<Void>
     {
-        ckDatabaseController.createDatabaseSubscription(with: .itemSub).map { _ in }
+        promise
+        {
+            ckDatabaseController.createDatabaseSubscription(with: .itemSub)
+        }
+        .mapSuccess
+        {
+            _ in
+        }
     }
     
     func handleDatabaseNotification(with userInfo: [String: Any])
@@ -196,14 +133,12 @@ class CKRecordDatabase: Observer, Observable
     
     // MARK: - Create Zone
     
-    private func ensureRecordZoneExists() -> PromiseKit.Promise<Void>
+    private func ensureRecordZoneExists() -> ResultPromise<Void>
     {
-        ckDatabaseController.create(.itemZone).map { _ in }
+        ckDatabaseController.create(.itemZone).mapSuccess { _ in }
     }
     
     // MARK: - CloudKit Database Controller
-    
-    var queue: DispatchQueue { ckDatabaseController.queue }
     
     private let ckDatabaseController = CKDatabaseController(scope: .private,
                                                             cacheDirectory: cacheDirectory)

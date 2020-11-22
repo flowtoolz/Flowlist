@@ -1,4 +1,3 @@
-import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 

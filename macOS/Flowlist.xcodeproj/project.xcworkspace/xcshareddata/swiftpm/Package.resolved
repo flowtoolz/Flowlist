@@ -6,17 +6,26 @@
         "repositoryURL": "https://github.com/flowtoolz/CloudKid.git",
         "state": {
           "branch": "master",
-          "revision": "57bb772c3b9b788f9c04f2bbd1cf35254a06bca2",
+          "revision": "52e4c409a713503b3fa4171921f34a0b18630672",
           "version": null
         }
       },
       {
-        "package": "PromiseKit",
-        "repositoryURL": "https://github.com/mxcl/PromiseKit",
+        "package": "FoundationToolz",
+        "repositoryURL": "https://github.com/flowtoolz/FoundationToolz.git",
         "state": {
-          "branch": null,
-          "revision": "aea48ea1855f5d82e2dffa6027afce3aab8f3dd7",
-          "version": "6.13.3"
+          "branch": "master",
+          "revision": "a66ee3d836f811a4ad54b6338f4971b08607e195",
+          "version": null
+        }
+      },
+      {
+        "package": "GetLaid",
+        "repositoryURL": "https://github.com/flowtoolz/GetLaid.git",
+        "state": {
+          "branch": "master",
+          "revision": "dc295db78f8397a94249f18f304100eae6ce95e9",
+          "version": null
         }
       },
       {
@@ -26,6 +35,24 @@
           "branch": null,
           "revision": "6c8652a8ea35a64cf36367d07b3d6e5e6a24b272",
           "version": "4.3.1"
+        }
+      },
+      {
+        "package": "SwiftyToolz",
+        "repositoryURL": "https://github.com/flowtoolz/SwiftyToolz.git",
+        "state": {
+          "branch": "master",
+          "revision": "87e8655f5ad7c520527f58b2548a37ad0bfc1cc7",
+          "version": null
+        }
+      },
+      {
+        "package": "UIToolz",
+        "repositoryURL": "https://github.com/flowtoolz/UIToolz.git",
+        "state": {
+          "branch": "master",
+          "revision": "710f2361628636a68fbe00b9d5248c04902787f1",
+          "version": null
         }
       }
     ]

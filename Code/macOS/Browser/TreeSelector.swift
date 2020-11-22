@@ -1,6 +1,5 @@
 import Foundation
 import SwiftObserver
-import PromiseKit
 import SwiftyToolz
 
 class TreeSelector: Observer, Observable
@@ -102,11 +101,11 @@ class TreeSelector: Observer, Observable
                                 text: "Multiple trees can exist for instance when another device has already saved items to iCloud.\n\nChoose one tree to work with, Flowlist will delete the other:",
                                 options: [useNewTree, keepSelectedTree])
     
-        firstly
+        promise
         {
             dialog.pose(question, imageName: "icloud_conflict")
         }
-        .done
+        .observedSuccess
         {
             if $0.options.first == useNewTree
             {
@@ -119,7 +118,7 @@ class TreeSelector: Observer, Observable
                 TreeStore.shared.deleteItems(with: [newTree.id])
             }
         }
-        .catch { log(error: $0.readable.message) }
+        failure: { log($0) }
     }
     
     // MARK: - Select Tree

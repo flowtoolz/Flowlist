@@ -1,6 +1,5 @@
 import CloudKit
 import FoundationToolz
-import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 
@@ -65,7 +64,7 @@ class CKRecordController: Observer
 
     // MARK: - Synchronizer
     
-    func resync() -> PromiseKit.Promise<Void> { synchronizer.resyncAsynchronously() }
+    func resync() -> ResultPromise<Void> { synchronizer.resyncAsynchronously() }
     private let synchronizer = CKRecordSynchronizer()
     
     // MARK: - Observer

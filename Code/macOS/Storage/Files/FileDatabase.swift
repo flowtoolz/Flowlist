@@ -1,6 +1,5 @@
 import Foundation
 import FoundationToolz
-import PromiseKit
 import SwiftObserver
 import SwiftyToolz
 

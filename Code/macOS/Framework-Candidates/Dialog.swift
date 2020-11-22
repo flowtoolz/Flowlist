@@ -1,4 +1,4 @@
-import PromiseKit
+import SwiftObserver
 import SwiftyToolz
 
 class Dialog
@@ -8,8 +8,8 @@ class Dialog
 
 protocol DialogInterface
 {
-    func pose(_ question: Question, imageName: String?) -> PromiseKit.Promise<Answer>
-    func pose(_ question: Question) -> PromiseKit.Promise<Answer>
+    func pose(_ question: Question, imageName: String?) -> ResultPromise<Answer>
+    func pose(_ question: Question) -> ResultPromise<Answer>
 }
 
 struct Question

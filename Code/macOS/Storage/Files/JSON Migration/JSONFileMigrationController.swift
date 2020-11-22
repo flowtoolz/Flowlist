@@ -1,10 +1,10 @@
 import Foundation
-import PromiseKit
+import SwiftObserver
 import SwiftyToolz
 
 class JSONFileMigrationController
 {
-    func migrateJSONFile() -> PromiseKit.Promise<Void>
+    func migrateJSONFile() -> ResultPromise<Void>
     {
         let jsonFile = LegacyJSONFile()
         
@@ -13,23 +13,23 @@ class JSONFileMigrationController
             !jsonFileRecords.isEmpty
         else
         {
-            return PromiseKit.Promise()
+            return .fulfilled(())
         }
         
         guard FileDatabase.shared.loadFiles().isEmpty else
         {
             informUserThatLegacyJSONFileReappeared(filePath: jsonFile.url.path)
-            return PromiseKit.Promise()
+            return .fulfilled(())
         }
         
         guard FileDatabase.shared.save(jsonFileRecords, as: self, sendEvent: false) else
         {
-            return .fail("Found JSON File but can't migrate its content. Saving the items as files failed.")
+            return .fulfilled("Found JSON File but can't migrate its content. Saving the items as files failed.")
         }
         
         jsonFile.remove()
         
-        return PromiseKit.Promise()
+        return .fulfilled(())
     }
 
     func informUserThatLegacyJSONFileReappeared(filePath: String)
@@ -49,6 +49,6 @@ class JSONFileMigrationController
                                        text: text,
                                        options: ["Got It"])
         
-        Dialog.default?.pose(question).catch { log(error: $0.readable.message) }
+        Dialog.default?.pose(question).observedFailure { log($0) }
     }
 }

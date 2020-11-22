@@ -1,6 +1,6 @@
 import CloudKit
 import Foundation
-import PromiseKit
+import SwiftObserver
 import SwiftyToolz
 
 class StorageController
@@ -14,22 +14,22 @@ class StorageController
     
     func appDidLaunch()
     {
-        firstly
+        promise
         {
             JSONFileMigrationController().migrateJSONFile()
         }
-        .then
+        .onSuccess
         {
-            () -> PromiseKit.Promise<Void> in
+            () -> ResultPromise<Void> in
             
             self.fileController.saveRecordsFromFilesToRecordStore()
-            return isCKSyncFeatureAvailable ? self.ckRecordController.resync() : PromiseKit.Promise()
+            return isCKSyncFeatureAvailable ? self.ckRecordController.resync() : .fulfilled(())
         }
-        .done
+        .observedSuccess
         {
             try self.ensureThereIsInitialData()
         }
-        .catch
+        failure:
         {
             if isCKSyncFeatureAvailable && CKSyncIntention.shared.isActive
             {
@@ -66,11 +66,11 @@ class StorageController
     
     func toggleIntentionToSyncWithDatabase()
     {
-        firstly
+        promise
         {
             checkWhetherUserWantsToBackupFirst()
         }
-        .done
+        .observedSuccess
         {
             userWantsToBackupFirst in
             
@@ -79,7 +79,7 @@ class StorageController
                 self.ckRecordController.toggleSync()
             }
         }
-        .catch
+        failure:
         {
             log($0.localizedDescription)
         }
@@ -99,16 +99,16 @@ class StorageController
     
     // MARK: - Show Backup Hint on First Sync
     
-    private func checkWhetherUserWantsToBackupFirst() -> PromiseKit.Promise<Bool>
+    private func checkWhetherUserWantsToBackupFirst() -> ResultPromise<Bool>
     {
         guard !CKSyncIntention.shared.isActive, !didShowBackupHintToUser.value else
         {
-            return .value(false)
+            return .fulfilled(false)
         }
         
         guard let dialog = Dialog.default else
         {
-            return .fail("No default Dialog has been set.")
+            return .fulfilled("No default Dialog has been set.")
         }
         
         let backupOption = "I'll Backup My Items First"
@@ -123,10 +123,13 @@ class StorageController
 
             """
         
-        return dialog.pose(Question(title: "How to Backup Your Items",
-                                    text: text,
-                                    options: ["Start iCloud Sync Now", backupOption]))
-        .map
+        return promise
+        {
+            dialog.pose(Question(title: "How to Backup Your Items",
+                                 text: text,
+                                 options: ["Start iCloud Sync Now", backupOption]))
+        }
+        .mapSuccess
         {
             answer -> Bool in
             self.didShowBackupHintToUser.value = true

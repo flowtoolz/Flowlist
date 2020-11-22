@@ -1,3 +1,4 @@
+import SwiftObserver
 import SwiftyToolz
 
 class CKSyncIntention
@@ -25,7 +26,8 @@ class CKSyncIntention
                                 text: text,
                                 options: ["Got it"])
         
-        Dialog.default?.pose(question, imageName: "icloud_conflict").catch
+        
+        Dialog.default?.pose(question, imageName: "icloud_conflict").observedFailure
         {
             log(error: $0.readable.message)
         }

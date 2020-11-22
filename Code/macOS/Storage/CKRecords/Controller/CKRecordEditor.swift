@@ -1,39 +1,39 @@
 import CloudKit
 import FoundationToolz
-import PromiseKit
+import SwiftObserver
 import SwiftyToolz
 
 class CKRecordEditor
 {
-    func saveCKRecords(for records: [Record]) -> PromiseKit.Promise<Void>
+    func saveCKRecords(for records: [Record]) -> ResultPromise<Void>
     {
-        guard !records.isEmpty else { return PromiseKit.Promise() }
+        guard !records.isEmpty else { return .fulfilled(()) }
         
-        return firstly
+        return promise
         {
             ckRecordDatabase.save(records.map(makeCKRecord))
         }
-        .then
+        .onSuccess
         {
-            saveResult -> PromiseKit.Promise<Void> in
+            saveResult -> ResultPromise<Void> in
             
             try self.ensureNoFailures(in: saveResult)
             
-            if saveResult.conflicts.isEmpty { return PromiseKit.Promise() }
+            if saveResult.conflicts.isEmpty { return .fulfilled(()) }
             
-            return firstly
+            return promise
             {
                 self.askWhetherToPreferICloud(with: saveResult.conflicts)
             }
-            .then
+            .onSuccess
             {
-                preferICloud -> PromiseKit.Promise<Void> in
+                preferICloud -> ResultPromise<Void> in
                 
                 guard !preferICloud else
                 {
                     let serverRecords = saveResult.conflicts.map { $0.serverRecord.makeRecord() }
                     FileDatabase.shared.save(serverRecords, as: self)
-                    return PromiseKit.Promise()
+                    return .fulfilled(())
                 }
                 
                 let resolvedServerRecords = saveResult.conflicts.map
@@ -57,11 +57,11 @@ class CKRecordEditor
         }
     }
     
-    private func askWhetherToPreferICloud(with conflicts: [CKDatabase.SaveConflict]) -> PromiseKit.Promise<Bool>
+    private func askWhetherToPreferICloud(with conflicts: [CKDatabase.SaveConflict]) -> ResultPromise<Bool>
     {
         guard let dialog = Dialog.default else
         {
-            return .fail("Default Dialog has not been set")
+            return .fulfilled("Default Dialog has not been set")
         }
         
         let text =
@@ -81,30 +81,30 @@ class CKRecordEditor
                                 text: text,
                                 options: [clientOption, serverOption])
         
-        return firstly
+        return promise
         {
             dialog.pose(question, imageName: "icloud_conflict")
         }
-        .map(on: DispatchQueue.global(qos: .userInitiated))
+        .mapSuccess
         {
             guard $0.options.count == 1, let option = $0.options.first else
             {
-                let errorMessage = "Unexpected # of answer options"
-                log(error: errorMessage)
-                throw errorMessage
+                let error: Error = "Unexpected # of answer options"
+                log(error)
+                throw error
             }
             
             return option == serverOption
         }
     }
     
-    private func saveExpectingNoConflicts(_ records: [CKRecord]) -> PromiseKit.Promise<Void>
+    private func saveExpectingNoConflicts(_ records: [CKRecord]) -> ResultPromise<Void>
     {
-        return firstly
+        promise
         {
             ckRecordDatabase.save(records)
         }
-        .done
+        .mapSuccess
         {
             saveResult -> Void in
             
@@ -119,9 +119,9 @@ class CKRecordEditor
     
     private func ensureNoFailures(in saveResult: CKDatabase.SaveResult) throws
     {
-        if let firstFailure = saveResult.failures.first
+        if let firstFailure = saveResult.partialFailures.first
         {
-            throw "Couldn't update items in iCloud. At least \(saveResult.failures.count) updates failed. First encountered error: \(firstFailure.error.ckReadable.message)"
+            throw "Couldn't update items in iCloud. At least \(saveResult.partialFailures.count) updates failed. First encountered error: \(firstFailure.error.ckReadable.message)"
         }
     }
 
@@ -139,24 +139,23 @@ class CKRecordEditor
         return ckRecord
     }
     
-    func deleteCKRecords(with ids: [Record.ID]) -> PromiseKit.Promise<Void>
+    func deleteCKRecords(with ids: [Record.ID]) -> ResultPromise<Void>
     {
-        guard !ids.isEmpty else { return PromiseKit.Promise() }
+        guard !ids.isEmpty else { return .fulfilled(()) }
         
-        return firstly
+        return promise
         {
             ckRecordDatabase.deleteCKRecords(with: .ckRecordIDs(ids))
         }
-        .done
+        .mapSuccess
         {
-            if let firstFailure = $0.failures.first
+            if let firstFailure = $0.partialFailures.first
             {
-                throw "Couldn't delete items from iCloud. At least \($0.failures.count) deletions failed. First encountered error: \(firstFailure.error.ckReadable.message)"
+                throw "Couldn't delete items from iCloud. At least \($0.partialFailures.count) deletions failed. First encountered error: \(firstFailure.error.ckReadable.message)"
             }
         }
     }
     
-    private var queue: DispatchQueue { ckRecordDatabase.queue }
     private var ckRecordDatabase: CKRecordDatabase { .shared }
 }
 

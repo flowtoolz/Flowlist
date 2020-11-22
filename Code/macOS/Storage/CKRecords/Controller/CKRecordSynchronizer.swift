@@ -1,7 +1,7 @@
 import CloudKit
 import Foundation
+import SwiftObserver
 import SwiftyToolz
-import PromiseKit
 
 class CKRecordSynchronizer
 {
@@ -17,7 +17,7 @@ class CKRecordSynchronizer
     {
         guard sync.isActive else { return }
         
-        fetchCKChangesAndApplyThemToFileDatabase().catch(sync.abort)
+        fetchCKChangesAndApplyThemToFileDatabase().observedFailure(sync.abort)
     }
     
     func fileDatabaseDidSend(_ event: FileDatabase.Event)
@@ -50,12 +50,12 @@ class CKRecordSynchronizer
     
     func resync()
     {
-        resyncAsynchronously().catch(sync.abort)
+        resyncAsynchronously().observedFailure(sync.abort)
     }
     
-    func resyncAsynchronously() -> PromiseKit.Promise<Void>
+    func resyncAsynchronously() -> ResultPromise<Void>
     {
-        guard sync.isActive else { return PromiseKit.Promise() }
+        guard sync.isActive else { return .fulfilled(()) }
         
         return ckRecordDatabase.hasChangeToken
             ? resyncWithChangeToken()
@@ -63,7 +63,7 @@ class CKRecordSynchronizer
     }
     
     /// Total resync from scratch
-    private func resyncWithoutChangeToken() -> PromiseKit.Promise<Void>
+    private func resyncWithoutChangeToken() -> ResultPromise<Void>
     {
         if ckRecordDatabase.hasChangeToken
         {
@@ -79,51 +79,48 @@ class CKRecordSynchronizer
         }
         bufferedChanges.clear()
         
-        return firstly
+        return promise
         {
             // if we have the latest changetags from the server (system fields cache) then differing fields cause no conflicts but play out as regular edits. here in the beginning, we possibly have no or outdated changetags, so any differing fields might come back as conflicts, which is also fine but super unlikely. in most cases, the local items would, at most, form a separate new tree, causing no conflicts but triggering the tree selection dialog.
             editor.saveCKRecords(for: fileDatabase.loadRecords())
         }
-        .then(on: queue)
+        .onSuccess
         {
             // TODO: is this the moment when we could clear the system fields cache? When can we do that to ensure that cache gets emptied once in a while??
             // CKRecordDatabase.shared.clearCachedSystemFields()
             CKRecordDatabase.shared.fetchChanges()
         }
-        .map(on: queue)
+        .mapSuccess
         {
-            $0.changedCKRecords.map { $0.makeRecord() }
-        }
-        .done(on: queue)
-        {
-            self.fileDatabase.save($0, as: self)
+            let changedRecords = $0.changedCKRecords.map { $0.makeRecord() }
+            self.fileDatabase.save(changedRecords, as: self)
         }
     }
     
-    private func resyncWithChangeToken() -> PromiseKit.Promise<Void>
+    private func resyncWithChangeToken() -> ResultPromise<Void>
     {
         guard ckRecordDatabase.hasChangeToken else
         {
-            return .fail("Tried to sync with iCloud based on change token but there is none.")
+            return .fulfilled("Tried to sync with iCloud based on change token but there is none.")
         }
         
-        return firstly
+        return promise
         {
             applyBufferedChangesToCKRecordDatabase()
         }
-        .then(on: queue)
+        .onSuccess
         {
             self.fetchCKChangesAndApplyThemToFileDatabase()
         }
     }
     
-    private func fetchCKChangesAndApplyThemToFileDatabase() -> PromiseKit.Promise<Void>
+    private func fetchCKChangesAndApplyThemToFileDatabase() -> ResultPromise<Void>
     {
-        return firstly
+        promise
         {
             ckRecordDatabase.fetchChanges()
         }
-        .done(on: queue)
+        .mapSuccess
         {
             self.applyCKChangesToFileDatabase($0)
         }
@@ -153,31 +150,34 @@ class CKRecordSynchronizer
     private func timerDidFire(_ timer: Timer)
     {
         guard sync.isActive, !isSyncingBufferedChanges, isOnline else { return }
-        applyBufferedChangesToCKRecordDatabase().catch(sync.abort)
+        applyBufferedChangesToCKRecordDatabase().observedFailure(sync.abort)
     }
     
     private var timer: Timer?
     
-    private func applyBufferedChangesToCKRecordDatabase() -> PromiseKit.Promise<Void>
+    private func applyBufferedChangesToCKRecordDatabase() -> ResultPromise<Void>
     {
         // TODO: return the actual promise that is syncing the changes, and replace the isSyncingBufferedChanges property with that ...
-        guard !isSyncingBufferedChanges, bufferedChanges.hasChangesInMemory else { return PromiseKit.Promise() }
+        guard !isSyncingBufferedChanges, bufferedChanges.hasChangesInMemory else
+        {
+            return .fulfilled(())
+        }
         
         isSyncingBufferedChanges = true
         
-        return firstly
+        return promise
         {
             editor.deleteCKRecords(with: Array(bufferedChanges.deletions))
         }
-        .then(on: queue)
+        .mapSuccess
         {
-            () -> PromiseKit.Promise<Void> in
-            
-            let records = Array(self.bufferedChanges.edits).compactMap(self.fileDatabase.record)
-            
-            return self.editor.saveCKRecords(for: records)
+            Array(self.bufferedChanges.edits).compactMap(self.fileDatabase.record)
         }
-        .done
+        .onSuccess
+        {
+            self.editor.saveCKRecords(for: $0)
+        }
+        .mapSuccess
         {
             self.bufferedChanges.clear()
             self.isSyncingBufferedChanges = false
@@ -194,6 +194,5 @@ class CKRecordSynchronizer
     private var fileDatabase: FileDatabase { .shared }
     
     let editor = CKRecordEditor()
-    private var queue: DispatchQueue { ckRecordDatabase.queue }
     private var ckRecordDatabase: CKRecordDatabase { .shared }
 }
