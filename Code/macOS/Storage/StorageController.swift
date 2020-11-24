@@ -25,11 +25,11 @@ class StorageController
             self.fileController.saveRecordsFromFilesToRecordStore()
             return isCKSyncFeatureAvailable ? self.ckRecordController.resync() : .fulfilled(())
         }
-        .observedSuccess
+        .whenSucceeded
         {
             try self.ensureThereIsInitialData()
         }
-        failure:
+        failed:
         {
             if isCKSyncFeatureAvailable && CKSyncIntention.shared.isActive
             {
@@ -37,7 +37,7 @@ class StorageController
             }
             else
             {
-                log(error: $0.readable.message)
+                log($0)
             }
         }
     }
@@ -70,7 +70,7 @@ class StorageController
         {
             checkWhetherUserWantsToBackupFirst()
         }
-        .observedSuccess
+        .whenSucceeded
         {
             userWantsToBackupFirst in
             
@@ -79,10 +79,7 @@ class StorageController
                 self.ckRecordController.toggleSync()
             }
         }
-        failure:
-        {
-            log($0.localizedDescription)
-        }
+        failed: { log($0) }
     }
     
     func cloudKitAccountDidChange()

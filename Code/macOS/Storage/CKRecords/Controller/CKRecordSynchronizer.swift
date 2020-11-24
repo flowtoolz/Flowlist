@@ -17,7 +17,7 @@ class CKRecordSynchronizer
     {
         guard sync.isActive else { return }
         
-        fetchCKChangesAndApplyThemToFileDatabase().observedFailure(sync.abort)
+        fetchCKChangesAndApplyThemToFileDatabase().whenFailed(sync.abort)
     }
     
     func fileDatabaseDidSend(_ event: FileDatabase.Event)
@@ -50,7 +50,7 @@ class CKRecordSynchronizer
     
     func resync()
     {
-        resyncAsynchronously().observedFailure(sync.abort)
+        resyncAsynchronously().whenFailed(sync.abort)
     }
     
     func resyncAsynchronously() -> ResultPromise<Void>
@@ -150,7 +150,7 @@ class CKRecordSynchronizer
     private func timerDidFire(_ timer: Timer)
     {
         guard sync.isActive, !isSyncingBufferedChanges, isOnline else { return }
-        applyBufferedChangesToCKRecordDatabase().observedFailure(sync.abort)
+        applyBufferedChangesToCKRecordDatabase().whenFailed(sync.abort)
     }
     
     private var timer: Timer?

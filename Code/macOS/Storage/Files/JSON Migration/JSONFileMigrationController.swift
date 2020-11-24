@@ -49,6 +49,6 @@ class JSONFileMigrationController
                                        text: text,
                                        options: ["Got It"])
         
-        Dialog.default?.pose(question).observedFailure { log($0) }
+        Dialog.default?.pose(question).whenFailed { log($0) }
     }
 }

@@ -105,7 +105,7 @@ class TreeSelector: Observer, Observable
         {
             dialog.pose(question, imageName: "icloud_conflict")
         }
-        .observedSuccess
+        .whenSucceeded
         {
             if $0.options.first == useNewTree
             {
@@ -118,7 +118,7 @@ class TreeSelector: Observer, Observable
                 TreeStore.shared.deleteItems(with: [newTree.id])
             }
         }
-        failure: { log($0) }
+        failed: { log($0) }
     }
     
     // MARK: - Select Tree

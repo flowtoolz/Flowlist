@@ -18,11 +18,7 @@ class CKRecordDatabase: Observer, Observable
     {
         guard !records.isEmpty else { return .fulfilled(.empty) }
         
-        return promise
-        {
-            ensureAccess()
-        }
-        .onSuccess
+        return promisedAccess.onSuccess
         {
             self.ckDatabaseController.save(records)
         }
@@ -42,11 +38,7 @@ class CKRecordDatabase: Observer, Observable
     
     func deleteCKRecords(with ids: [CKRecord.ID]) -> ResultPromise<CKDatabase.DeletionResult>
     {
-        promise
-        {
-            ensureAccess()
-        }
-        .onSuccess
+        promisedAccess.onSuccess
         {
             self.ckDatabaseController.deleteCKRecords(with: ids).map { .success($0) }
         }
@@ -56,11 +48,7 @@ class CKRecordDatabase: Observer, Observable
     
     func fetchChanges() -> ResultPromise<CKDatabase.Changes>
     {
-        promise
-        {
-            ensureAccess()
-        }
-        .onSuccess
+        promisedAccess.onSuccess
         {
             self.ckDatabaseController.fetchChanges(from: .itemZone)
         }
@@ -78,14 +66,9 @@ class CKRecordDatabase: Observer, Observable
     
     // MARK: - Ensure Access
     
-    private func ensureAccess() -> ResultPromise<Void>
-    {
-        Promise { accessInitializationResult.whenCached($0.fulfill(_:)) }
-    }
+    private lazy var promisedAccess = getAccess()
     
-    private lazy var accessInitializationResult = initializeAccess().cache()
-    
-    private func initializeAccess() -> ResultPromise<Void>
+    private func getAccess() -> ResultPromise<Void>
     {
         promise
         {

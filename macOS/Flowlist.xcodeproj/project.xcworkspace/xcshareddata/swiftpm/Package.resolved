@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/flowtoolz/CloudKid.git",
         "state": {
           "branch": "master",
-          "revision": "c030f7a5eb6c9506c2af28877be28207861b95e6",
+          "revision": "d8d9d5bd1d633b664f72e61260f692b2991e0716",
           "version": null
         }
       },
@@ -42,7 +42,7 @@
         "repositoryURL": "https://github.com/flowtoolz/SwiftObserver.git",
         "state": {
           "branch": "master",
-          "revision": "969b4ad17da0f7f66af69bcc16359aed4ee9f27d",
+          "revision": "067eaac4ed3c4749fd5282a667f56c5794a54a13",
           "version": null
         }
       },
