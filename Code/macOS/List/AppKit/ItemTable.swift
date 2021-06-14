@@ -18,6 +18,7 @@ class ItemTable: AnimatedTableView, Observable, TableContentDelegate, Observer
         intercellSpacing = NSZeroSize
         delegate = content
         dataSource = content
+        style = .plain
     }
     
     required init?(coder: NSCoder) { nil }
