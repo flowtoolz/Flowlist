@@ -117,6 +117,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		962FD87626AAA2D6002FCD77 /* FoundationToolz */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FoundationToolz; path = ../../FoundationToolz; sourceTree = "<group>"; };
 		964BDB2125291E4C0073101E /* Font+ScreenDependentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+ScreenDependentStyle.swift"; sourceTree = "<group>"; };
 		9E0410F820CE60B300C7C3E3 /* Flowlist.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Flowlist.entitlements; path = Resources/Flowlist.entitlements; sourceTree = "<group>"; };
 		9E053B22218867E4001B7103 /* FileDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDatabase.swift; sourceTree = "<group>"; };
@@ -338,6 +339,7 @@
 		9E542E881EEEE41C00534981 = {
 			isa = PBXGroup;
 			children = (
+				962FD87626AAA2D6002FCD77 /* FoundationToolz */,
 				9EA5A884218EC546004902F7 /* Code */,
 				964EDBFC25292431000A67E3 /* Local Packages */,
 				9E91651620551E6F00A438FB /* Resources */,

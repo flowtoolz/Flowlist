@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/flowtoolz/FoundationToolz.git",
         "state": {
           "branch": "master",
-          "revision": "a66ee3d836f811a4ad54b6338f4971b08607e195",
+          "revision": "bab1d7835b7cd3ecf6a39d9cb6a54f2d8cade691",
           "version": null
         }
       },
@@ -26,15 +26,6 @@
           "branch": "master",
           "revision": "dc295db78f8397a94249f18f304100eae6ce95e9",
           "version": null
-        }
-      },
-      {
-        "package": "Reachability",
-        "repositoryURL": "https://github.com/ashleymills/Reachability.swift.git",
-        "state": {
-          "branch": null,
-          "revision": "6c8652a8ea35a64cf36367d07b3d6e5e6a24b272",
-          "version": "4.3.1"
         }
       },
       {
