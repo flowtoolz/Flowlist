@@ -91,7 +91,7 @@ extension Tree where Data == ItemData
         
         // contact
         
-        let supportItem = Item(text: "support@flowlistapp.com")
+        let supportItem = Item(text: "hello@flowlistapp.com")
         
         supportItem.add(Item(text: "What features do you miss? What do or don't you like about Flowlist?"))
         supportItem.add(Item(text: "The \"Help\" menu offers some web links that may be interesting"))
