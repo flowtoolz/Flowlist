@@ -4,7 +4,7 @@ import GetLaid
 import SwiftObserver
 import SwiftyToolz
 
-class ListView: LayerBackedView, Observable, Observer
+class ListView: LayerBackedView, SwiftObserver.Observable, Observer
 {
     // MARK: - Life Cycle
     

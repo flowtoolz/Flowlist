@@ -30,7 +30,7 @@ class FileLogger: LogObserver
     
     private var logString: String
     {
-        logs.reduce(into: "\(appName ?? "App") Debug Log")
+        logs.reduce(into: "\(AppInformation.name ?? "App") Debug Log")
         {
             $0.append("\n\n\($1.description))")
         }

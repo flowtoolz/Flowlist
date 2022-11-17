@@ -1,61 +1,32 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "CloudKid",
-        "repositoryURL": "https://github.com/flowtoolz/CloudKid.git",
-        "state": {
-          "branch": "master",
-          "revision": "d8d9d5bd1d633b664f72e61260f692b2991e0716",
-          "version": null
-        }
-      },
-      {
-        "package": "FoundationToolz",
-        "repositoryURL": "https://github.com/flowtoolz/FoundationToolz.git",
-        "state": {
-          "branch": "master",
-          "revision": "bab1d7835b7cd3ecf6a39d9cb6a54f2d8cade691",
-          "version": null
-        }
-      },
-      {
-        "package": "GetLaid",
-        "repositoryURL": "https://github.com/flowtoolz/GetLaid.git",
-        "state": {
-          "branch": "master",
-          "revision": "dc295db78f8397a94249f18f304100eae6ce95e9",
-          "version": null
-        }
-      },
-      {
-        "package": "SwiftObserver",
-        "repositoryURL": "https://github.com/flowtoolz/SwiftObserver.git",
-        "state": {
-          "branch": "master",
-          "revision": "067eaac4ed3c4749fd5282a667f56c5794a54a13",
-          "version": null
-        }
-      },
-      {
-        "package": "SwiftyToolz",
-        "repositoryURL": "https://github.com/flowtoolz/SwiftyToolz.git",
-        "state": {
-          "branch": "master",
-          "revision": "87e8655f5ad7c520527f58b2548a37ad0bfc1cc7",
-          "version": null
-        }
-      },
-      {
-        "package": "UIToolz",
-        "repositoryURL": "https://github.com/flowtoolz/UIToolz.git",
-        "state": {
-          "branch": "master",
-          "revision": "710f2361628636a68fbe00b9d5248c04902787f1",
-          "version": null
-        }
+  "pins" : [
+    {
+      "identity" : "foundationtoolz",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/flowtoolz/FoundationToolz.git",
+      "state" : {
+        "revision" : "b4d56c6428ed2e47128d2180422c4f0734e68a2d",
+        "version" : "0.1.2"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "getlaid",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/flowtoolz/GetLaid.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "a4ee1ab503cb52122fe30694d6317a6717f8e23e"
+      }
+    },
+    {
+      "identity" : "swiftytoolz",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/flowtoolz/SwiftyToolz.git",
+      "state" : {
+        "revision" : "9d36d5834339ee17d013e1eb6b258bdc00459698",
+        "version" : "0.2.0"
+      }
+    }
+  ],
+  "version" : 2
 }

@@ -2,7 +2,7 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class TextView: NSTextView, NSTextViewDelegate, Observable
+class TextView: NSTextView, NSTextViewDelegate, SwiftObserver.Observable
 {
     // MARK: - Life Cycle
 
@@ -102,9 +102,9 @@ class TextView: NSTextView, NSTextViewDelegate, Observable
         return style
     }
     
-    static var lineSpacing: CGFloat
+    static var lineSpacing: Double
     {
-        Float.lineSpacing(for: Float(TextView.lineHeight)).cgFloat
+        .lineSpacing(for: TextView.lineHeight)
     }
     
     // MARK: - Measure Height

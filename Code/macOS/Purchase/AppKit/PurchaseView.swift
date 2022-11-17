@@ -4,7 +4,7 @@ import SwiftObserver
 import SwiftyToolz
 import GetLaid
 
-class PurchaseView: LayerBackedView, Observable, Observer
+class PurchaseView: LayerBackedView, SwiftObserver.Observable, Observer
 {
     // MARK: - Life Cycle
     
@@ -14,7 +14,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         
         resetShadow()
         
-        backgroundColor = .purchasePanelBackground
+        set(backgroundColor: .purchasePanelBackground)
         
         observe(Color.darkMode) { [weak self] _ in self?.adjustToColorMode() }
         
@@ -50,11 +50,11 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         resetShadow()
         
-        backgroundColor = .purchasePanelBackground
+        set(backgroundColor: .purchasePanelBackground)
         
-        progressBar.backgroundColor = .progressBackground
-        progressBar.progressColor = .progressBar
-        progressBarSeparator.backgroundColor = .progressBarSeparator
+        progressBar.set(backgroundColor: .progressBackground)
+        progressBar.set(progressColor: .progressBar)
+        progressBarSeparator.set(backgroundColor: .progressBarSeparator)
         
         let itemNumber = TreeSelector.shared.numberOfUserCreatedLeafs.value
         itemLabel.textColor = labelColor(for: itemNumber).nsColor
@@ -70,7 +70,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         let color = Color.black
         let offset = CGSize(width: 0, height: 5)
-        let opacity: Float = Color.isInDarkMode ? 0.5 : 0.05
+        let opacity: Double = Color.isInDarkMode ? 0.5 : 0.05
         let radius: CGFloat = 5
         
         shadow = NSShadow()
@@ -81,7 +81,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         layer?.shadowColor = color.cgColor
         layer?.shadowOffset = offset
         layer?.shadowRadius = radius
-        layer?.shadowOpacity = opacity
+        layer?.shadowOpacity = Float(opacity)
     }
     
     // MARK: - Expand / Collapse
@@ -118,7 +118,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     private lazy var topSeparator: LayerBackedView =
     {
         let separator = addForAutoLayout(LayerBackedView())
-        separator.backgroundColor = Color.gray(brightness: 0.25).with(alpha: 0.17)
+        separator.set(backgroundColor: .gray(brightness: 0.25).with(alpha: 0.17))
         return separator
     }()
     
@@ -128,7 +128,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     {
         itemLabel >> left.offset(10)
         itemLabel.right >> expandIcon.left.offset(10)
-        itemLabel >> buttonOverlay.centerY.offset(-CGFloat(Float.progressBarHeight / 2))
+        itemLabel >> buttonOverlay.centerY.offset(-CGFloat(Double.progressBarHeight / 2))
     }
     
     private lazy var itemLabel: Label =
@@ -190,7 +190,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     private func constrainProgressBar()
     {
         progressBar >> allButTop
-        progressBar.height >> Float.progressBarHeight.cgFloat
+        progressBar.height >> Double.progressBarHeight
         
         progressBarSeparator >> progressBar.allButBottom
         progressBarSeparator.height >> 1
@@ -199,7 +199,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
     private lazy var progressBarSeparator: LayerBackedView =
     {
         let view = progressBar.addForAutoLayout(LayerBackedView())
-        view.backgroundColor = .progressBarSeparator
+        view.set(backgroundColor: .progressBarSeparator)
         
         return view
     }()
@@ -212,8 +212,8 @@ class PurchaseView: LayerBackedView, Observable, Observer
         
         let progress = CGFloat(TreeSelector.shared.numberOfUserCreatedLeafs.value) / CGFloat(maxNumberOfLeafsInTrial)
         bar.progress = progress
-        bar.backgroundColor = .progressBackground
-        bar.progressColor = .progressBar
+        bar.set(backgroundColor: .progressBackground)
+        bar.set(progressColor: .progressBar)
         
         return bar
     }()
@@ -248,7 +248,7 @@ class PurchaseView: LayerBackedView, Observable, Observer
         buttonOverlay.height >> collapsedHeight
     }
     
-    let collapsedHeight = (2 * Float.itemPadding(for: 17) + 17 + Float.progressBarHeight).cgFloat
+    let collapsedHeight = 2 * Double.itemPadding(for: 17) + 17 + Double.progressBarHeight
     
     private lazy var buttonOverlay: NSButton =
     {

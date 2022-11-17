@@ -7,7 +7,7 @@ final class ItemData: Observer, Observable
     
     init(id: ID? = nil, wantsTextInput: Bool = false)
     {
-        self.id = id ?? .makeUUID()
+        self.id = id ?? .randomID()
         self.wantsTextInput = wantsTextInput
         
         observe(text)

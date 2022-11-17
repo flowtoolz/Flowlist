@@ -12,11 +12,11 @@ class Spacer: LayerBackedView, Observer
         
         identifier = Spacer.uiIdentifier
         
-        roundCorners.layer?.cornerRadius = Float.listCornerRadius.cgFloat
-        roundCorners.backgroundColor = .listBackground
+        roundCorners.layer?.cornerRadius = Double.listCornerRadius
+        roundCorners.set(backgroundColor: .listBackground)
         roundCorners >> self
         
-        pointyCorners.backgroundColor = .listBackground
+        pointyCorners.set(backgroundColor: .listBackground)
         pointyCorners >> allButBottom
         pointyCorners >> height.at(0.5)
         
@@ -24,8 +24,8 @@ class Spacer: LayerBackedView, Observer
         {
             [weak self] _ in
             
-            self?.roundCorners.backgroundColor = .listBackground
-            self?.pointyCorners.backgroundColor = .listBackground
+            self?.roundCorners.set(backgroundColor: .listBackground)
+            self?.pointyCorners.set(backgroundColor: .listBackground)
         }
     }
     

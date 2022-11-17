@@ -3,7 +3,7 @@ import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
-class FileDatabase: Observable
+class FileDatabase: SwiftObserver.Observable
 {
     // MARK: - Initialization
     
@@ -24,7 +24,7 @@ class FileDatabase: Observable
     
     func loadFiles() -> [URL]
     {
-        fileManager.items(in: directory)
+        fileManager.items(inDirectory: directory, recursive: false)
     }
     
     // MARK: - Edit

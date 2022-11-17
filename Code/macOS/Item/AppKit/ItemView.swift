@@ -4,7 +4,7 @@ import SwiftObserver
 import SwiftyToolz
 import GetLaid
 
-class ItemView: LayerBackedView, Observable, Observer
+class ItemView: LayerBackedView, SwiftObserver.Observable, Observer
 {
     // MARK: - Life Cycle
     
@@ -64,17 +64,17 @@ class ItemView: LayerBackedView, Observable, Observer
         
         if let tag = item.data.tag.value
         {
-            colorOverlay.backgroundColor = Color.tags[tag.rawValue]
+            colorOverlay.set(backgroundColor: Color.tags[tag.rawValue])
         }
         
         colorOverlay.alphaValue = isSelected ? 1 : 0.5
         
         // background color
         
-        backgroundColor = .itemBackground(isDone: isDone,
-                                          isSelected: isSelected,
-                                          isTagged: isTagged,
-                                          isFocusedList: isFocused)
+        set(backgroundColor: .itemBackground(isDone: isDone,
+                                             isSelected: isSelected,
+                                             isTagged: isTagged,
+                                             isFocusedList: isFocused))
         
         // text color
         
@@ -88,10 +88,10 @@ class ItemView: LayerBackedView, Observable, Observer
         
         checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
                                               isDone: isDone,
-                                              isSelected: isSelected).cgFloat
+                                              isSelected: isSelected)
         groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
                                                isDone: isDone,
-                                               isSelected: isSelected).cgFloat
+                                               isSelected: isSelected)
         
         // check box image
         
@@ -248,12 +248,12 @@ class ItemView: LayerBackedView, Observable, Observer
         let isDone = item?.isDone ?? false
         let isTagged = item?.data.tag.value != nil
         
-        backgroundColor = .itemBackground(isDone: isDone,
-                                          isSelected: isSelected,
-                                          isTagged: isTagged,
-                                          isFocusedList: isFocused)
+        set(backgroundColor: .itemBackground(isDone: isDone,
+                                             isSelected: isSelected,
+                                             isTagged: isTagged,
+                                             isFocusedList: isFocused))
         
-        editingBackground.backgroundColor = .editingBackground
+        editingBackground.set(backgroundColor: .editingBackground)
         
         let lightContent = Color.itemContentIsLight(isSelected: isSelected,
                                                     isFocused: isFocused)
@@ -273,10 +273,10 @@ class ItemView: LayerBackedView, Observable, Observer
             let isInProgress = item?.isInProgress ?? false
             checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
                                                   isDone: isDone,
-                                                  isSelected: isSelected).cgFloat
+                                                  isSelected: isSelected)
             groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
                                                    isDone: isDone,
-                                                   isSelected: isSelected).cgFloat
+                                                   isSelected: isSelected)
         }
     }
     
@@ -287,19 +287,19 @@ class ItemView: LayerBackedView, Observable, Observer
         let isDone = item.isDone
         let isTagged = item.data.tag.value != nil
         
-        backgroundColor = .itemBackground(isDone: isDone,
-                                          isSelected: isSelected,
-                                          isTagged: isTagged,
-                                          isFocusedList: isFocused)
+        set(backgroundColor: .itemBackground(isDone: isDone,
+                                             isSelected: isSelected,
+                                             isTagged: isTagged,
+                                             isFocusedList: isFocused))
         
         checkBox.set(state: item.data.state.value)
         
         checkBox.alphaValue = Color.iconAlpha(isInProgress: item.isInProgress,
                                               isDone: isDone,
-                                              isSelected: isSelected).cgFloat
+                                              isSelected: isSelected)
         groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
                                                isDone: isDone,
-                                               isSelected: isSelected).cgFloat
+                                               isSelected: isSelected)
         
         textView.set(color: .itemText(isDone: isDone,
                                       isSelected: isSelected,
@@ -321,7 +321,7 @@ class ItemView: LayerBackedView, Observable, Observer
         {
             let tagColor = Color.tags[tag.rawValue]
             
-            colorOverlay.backgroundColor = tagColor
+            colorOverlay.set(backgroundColor: tagColor)
         }
     }
     
@@ -339,10 +339,10 @@ class ItemView: LayerBackedView, Observable, Observer
         let isDone = item?.isDone ?? false
         let isTagged = item?.data.tag.value != nil
         
-        backgroundColor = .itemBackground(isDone: isDone,
-                                          isSelected: isSelected,
-                                          isTagged: isTagged,
-                                          isFocusedList: isFocused)
+        set(backgroundColor: .itemBackground(isDone: isDone,
+                                             isSelected: isSelected,
+                                             isTagged: isTagged,
+                                             isFocusedList: isFocused))
         
         if !textView.isEditing
         {
@@ -355,10 +355,10 @@ class ItemView: LayerBackedView, Observable, Observer
             let isInProgress = item?.isInProgress ?? false
             checkBox.alphaValue = Color.iconAlpha(isInProgress: isInProgress,
                                                   isDone: isDone,
-                                                  isSelected: isSelected).cgFloat
+                                                  isSelected: isSelected)
             groupIcon.alphaValue = Color.iconAlpha(isInProgress: false,
                                                    isDone: isDone,
-                                                   isSelected: isSelected).cgFloat
+                                                   isSelected: isSelected)
         }
         
         if !Color.isInDarkMode
@@ -384,10 +384,10 @@ class ItemView: LayerBackedView, Observable, Observer
         let isDone = item.isDone
         let isTagged = item.data.tag.value != nil
         
-        backgroundColor = .itemBackground(isDone: isDone,
-                                          isSelected: isSelected,
-                                          isTagged: isTagged,
-                                          isFocusedList: isFocused)
+        set(backgroundColor: .itemBackground(isDone: isDone,
+                                             isSelected: isSelected,
+                                             isTagged: isTagged,
+                                             isFocusedList: isFocused))
         
         if !Color.isInDarkMode
         {
@@ -448,7 +448,7 @@ class ItemView: LayerBackedView, Observable, Observer
         textView >> bottom
     }
     
-    private static let textLeftMultiplier = Float.relativeTextInset.cgFloat
+    private static let textLeftMultiplier = Double.relativeTextInset
     
     private lazy var textView: TextView =
     {
@@ -510,10 +510,10 @@ class ItemView: LayerBackedView, Observable, Observer
         let isInProgress = item?.isInProgress ?? false
         let checkBoxAlpha = Color.iconAlpha(isInProgress: isInProgress,
                                             isDone: isDone,
-                                            isSelected: isSelected).cgFloat
+                                            isSelected: isSelected)
         let groupIconAlpha = Color.iconAlpha(isInProgress: false,
                                              isDone: isDone,
-                                             isSelected: isSelected).cgFloat
+                                             isSelected: isSelected)
         
         NSAnimationContext.beginGrouping()
         NSAnimationContext.current.duration = 0.2
@@ -545,9 +545,9 @@ class ItemView: LayerBackedView, Observable, Observer
     {
         let view = addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = .editingBackground
+        view.set(backgroundColor: .editingBackground)
         view.alphaValue = 0
-        view.layer?.cornerRadius = Float.listCornerRadius.cgFloat
+        view.layer?.cornerRadius = Double.listCornerRadius
         
         return view
     }()
@@ -587,7 +587,7 @@ class ItemView: LayerBackedView, Observable, Observer
         groupIcon >> right
         groupIcon >> layoutGuide.centerY
         groupIcon >> checkBox.height
-        groupIcon >> layoutGuide.width.at(Float.groupIconWidthFactor.cgFloat)
+        groupIcon >> layoutGuide.width.at(Double.groupIconWidthFactor)
     }
     
     private lazy var groupIcon = addForAutoLayout(GroupIcon())
@@ -616,11 +616,11 @@ class ItemView: LayerBackedView, Observable, Observer
         
         let referenceHeight = heightWithSingleLine * pixelsPerPoint
         
-        let leftInset  = CGFloat(Int(referenceHeight * textLeftMultiplier + 0.5))
+        let leftInset  = Int(referenceHeight * textLeftMultiplier + 0.5)
         
-        let rightInset = CGFloat(Int(referenceHeight * Float.groupIconWidthFactor.cgFloat + 0.49999))
+        let rightInset = Int(referenceHeight * Double.groupIconWidthFactor + 0.49999)
         
-        let textWidth = ((pixelsPerPoint * width) - (leftInset + rightInset)) / pixelsPerPoint
+        let textWidth = (Double(pixelsPerPoint * width) - Double(leftInset + rightInset)) / pixelsPerPoint
         
         let textHeight = TextView.size(with: text, width: textWidth).height
         
@@ -634,7 +634,7 @@ class ItemView: LayerBackedView, Observable, Observer
     
     static var padding: CGFloat
     {
-        Float.itemPadding(for: Float(TextView.lineHeight)).cgFloat
+        Double.itemPadding(for: TextView.lineHeight)
     }
     
     static var spacing: CGFloat

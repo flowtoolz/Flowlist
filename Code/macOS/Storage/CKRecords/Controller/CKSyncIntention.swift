@@ -27,7 +27,7 @@ class CKSyncIntention
                                 options: ["Got it"])
         
         Dialog.default?.pose(question,
-                             imageName: "icloud_conflict").whenFailed { log($0) }
+                             imageName: "icloud_conflict").whenFailed { log($0.readable) }
     }
     
     var isActive: Bool

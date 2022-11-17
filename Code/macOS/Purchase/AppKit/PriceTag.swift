@@ -78,7 +78,7 @@ class PriceTag: NSView, Observer
     {
         let view = addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = .textDiscount
+        view.set(backgroundColor: .textDiscount)
         view.height >> 1.5
         
         return view

@@ -2,7 +2,7 @@ import Foundation
 import SwiftObserver
 import SwiftyToolz
 
-class TreeSelector: Observer, Observable
+class TreeSelector: Observer, SwiftObserver.Observable
 {
     // MARK: - Life Cycle
     
@@ -118,7 +118,7 @@ class TreeSelector: Observer, Observable
                 TreeStore.shared.deleteItems(with: [newTree.id])
             }
         }
-        failed: { log($0) }
+    failed: { log($0.readable) }
     }
     
     // MARK: - Select Tree

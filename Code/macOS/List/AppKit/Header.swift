@@ -19,10 +19,10 @@ class Header: LayerBackedView, Observer
         constrainTitleLabel()
         constrainIcon()
         
-        topSpacer.layer?.cornerRadius = Float.listCornerRadius.cgFloat
+        topSpacer.layer?.cornerRadius = Double.listCornerRadius
         
-        topSpacer.backgroundColor = .listBackground
-        titleContainer.backgroundColor = .listBackground
+        topSpacer.set(backgroundColor: .listBackground)
+        titleContainer.set(backgroundColor: .listBackground)
         
         icon.isHidden = true
         
@@ -35,8 +35,8 @@ class Header: LayerBackedView, Observer
             
             let bgColor = Color.listBackground
             
-            self?.topSpacer.backgroundColor = bgColor
-            self?.titleContainer.backgroundColor = bgColor
+            self?.topSpacer.set(backgroundColor: bgColor)
+            self?.titleContainer.set(backgroundColor: bgColor)
         }
         
         observe(Font.baseSize)
@@ -187,7 +187,7 @@ class Header: LayerBackedView, Observer
     {
         if let tagValue = tag?.rawValue
         {
-            colorView.backgroundColor = Color.tags[tagValue]
+            colorView.set(backgroundColor: Color.tags[tagValue])
             colorView.isHidden = false
         }
         else
@@ -251,7 +251,7 @@ class Header: LayerBackedView, Observer
         layoutGuideRight >> right
     }
     
-    private let relativeTitleInset = Float.relativeTextInset.cgFloat
+    private let relativeTitleInset = Double.relativeTextInset
     
     private var layouGuideSize: CGFloat
     {

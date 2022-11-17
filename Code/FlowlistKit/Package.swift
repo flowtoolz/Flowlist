@@ -13,7 +13,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/flowtoolz/SwiftObserver",
+        .package(url: "https://github.com/codeface-io/SwiftObserver",
                  from: "5.1.0"),
     ],
     targets: [

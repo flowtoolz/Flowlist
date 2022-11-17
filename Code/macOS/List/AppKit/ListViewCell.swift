@@ -33,7 +33,7 @@ class ListViewCell: NSCollectionViewItem, Observer
     private func resetShadow()
     {
         let isDark = Color.isInDarkMode
-        let opacity: Float = isDark ? 0.28 : 0.2
+        let opacity: Double = isDark ? 0.28 : 0.2
         let color = Color.gray(brightness: 0.5)
         let offset = CGSize(width: isDark ? -1 : 1, height: -1)
         
@@ -45,7 +45,7 @@ class ListViewCell: NSCollectionViewItem, Observer
         
         view.layer?.shadowColor = color.cgColor
         view.layer?.shadowOffset = offset
-        view.layer?.shadowOpacity = opacity
+        view.layer?.shadowOpacity = Float(opacity)
         view.layer?.shadowRadius = 0
     }
     

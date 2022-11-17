@@ -12,7 +12,7 @@ class AlertDialog: DialogInterface
     
     func pose(_ question: Question, imageName: String?) -> ResultPromise<Answer>
     {
-        Promise
+        .init
         {
             promise in
         
@@ -48,7 +48,7 @@ class AlertDialog: DialogInterface
                 guard reversedOptions.isValid(index: reversedOptionIndex) else
                 {
                     let error: Error = "Unknown modal response"
-                    log(error)
+                    log(error.readable)
                     return promise.fulfill(error)
                 }
                 

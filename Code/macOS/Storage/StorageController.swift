@@ -37,7 +37,7 @@ class StorageController
             }
             else
             {
-                log($0)
+                log($0.readable)
             }
         }
     }
@@ -79,7 +79,7 @@ class StorageController
                 self.ckRecordController.toggleSync()
             }
         }
-        failed: { log($0) }
+    failed: { log($0.readable) }
     }
     
     func cloudKitAccountDidChange()

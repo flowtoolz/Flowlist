@@ -90,7 +90,7 @@ class CKRecordEditor
             guard $0.options.count == 1, let option = $0.options.first else
             {
                 let error: Error = "Unexpected # of answer options"
-                log(error)
+                log(error.readable)
                 throw error
             }
             

@@ -3,7 +3,7 @@ import SwiftObserver
 import SwiftyToolz
 import UIToolz
 
-class ItemTable: AnimatedTableView, Observable, TableContentDelegate, Observer
+class ItemTable: AnimatedTableView, SwiftObserver.Observable, TableContentDelegate, Observer
 {
     // MARK: - Life Cycle
     
@@ -18,7 +18,7 @@ class ItemTable: AnimatedTableView, Observable, TableContentDelegate, Observer
         intercellSpacing = NSZeroSize
         delegate = content
         dataSource = content
-        style = .plain
+        if #available(macOS 11.0, *) { style = .plain }
     }
     
     required init?(coder: NSCoder) { nil }

@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		96204DD3252919A5003BA7EC /* SwiftyToolz in Frameworks */ = {isa = PBXBuildFile; productRef = 96204DD2252919A5003BA7EC /* SwiftyToolz */; };
-		96204DD8252919CE003BA7EC /* SwiftObserver in Frameworks */ = {isa = PBXBuildFile; productRef = 96204DD7252919CE003BA7EC /* SwiftObserver */; };
 		96204DDD252919F5003BA7EC /* FoundationToolz in Frameworks */ = {isa = PBXBuildFile; productRef = 96204DDC252919F5003BA7EC /* FoundationToolz */; };
 		96204DE225291A11003BA7EC /* GetLaid in Frameworks */ = {isa = PBXBuildFile; productRef = 96204DE125291A11003BA7EC /* GetLaid */; };
 		96204DE725291A2B003BA7EC /* UIToolz in Frameworks */ = {isa = PBXBuildFile; productRef = 96204DE625291A2B003BA7EC /* UIToolz */; };
 		96204DEC25291A61003BA7EC /* CloudKid in Frameworks */ = {isa = PBXBuildFile; productRef = 96204DEB25291A61003BA7EC /* CloudKid */; };
 		964BDB2225291E4C0073101E /* Font+ScreenDependentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 964BDB2125291E4C0073101E /* Font+ScreenDependentStyle.swift */; };
+		96F94EF62926AB9900D623CB /* SwiftUIToolz in Frameworks */ = {isa = PBXBuildFile; productRef = 96F94EF52926AB9900D623CB /* SwiftUIToolz */; };
 		9E053B23218867E4001B7103 /* FileDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B22218867E4001B7103 /* FileDatabase.swift */; };
 		9E053B2521886867001B7103 /* FullVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B2421886867001B7103 /* FullVersion.swift */; };
 		9E053B27218868D0001B7103 /* NSDecimalNumber+Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E053B26218868D0001B7103 /* NSDecimalNumber+Price.swift */; };
@@ -117,8 +117,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		962FD87626AAA2D6002FCD77 /* FoundationToolz */ = {isa = PBXFileReference; lastKnownFileType = folder; name = FoundationToolz; path = ../../FoundationToolz; sourceTree = "<group>"; };
 		964BDB2125291E4C0073101E /* Font+ScreenDependentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+ScreenDependentStyle.swift"; sourceTree = "<group>"; };
+		9659C7512926994F00197EAA /* UIToolz */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = UIToolz; path = ../../UIToolz; sourceTree = "<group>"; };
+		96EA972129269BDD0055288F /* CloudKid */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CloudKid; path = ../../CloudKid; sourceTree = "<group>"; };
+		96EA972229269D270055288F /* SwiftObserver */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftObserver; path = ../../SwiftObserver; sourceTree = "<group>"; };
+		96F94EF82926ABC600D623CB /* SwiftUIToolz */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftUIToolz; path = ../../SwiftUIToolz; sourceTree = "<group>"; };
 		9E0410F820CE60B300C7C3E3 /* Flowlist.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Flowlist.entitlements; path = Resources/Flowlist.entitlements; sourceTree = "<group>"; };
 		9E053B22218867E4001B7103 /* FileDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDatabase.swift; sourceTree = "<group>"; };
 		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullVersion.swift; sourceTree = "<group>"; };
@@ -223,9 +226,9 @@
 			files = (
 				96204DDD252919F5003BA7EC /* FoundationToolz in Frameworks */,
 				96204DE225291A11003BA7EC /* GetLaid in Frameworks */,
-				96204DD8252919CE003BA7EC /* SwiftObserver in Frameworks */,
 				96204DD3252919A5003BA7EC /* SwiftyToolz in Frameworks */,
 				96204DEC25291A61003BA7EC /* CloudKid in Frameworks */,
+				96F94EF62926AB9900D623CB /* SwiftUIToolz in Frameworks */,
 				96204DE725291A2B003BA7EC /* UIToolz in Frameworks */,
 				9E1F2CF42184476B00DFFD73 /* CloudKit.framework in Frameworks */,
 			);
@@ -339,7 +342,10 @@
 		9E542E881EEEE41C00534981 = {
 			isa = PBXGroup;
 			children = (
-				962FD87626AAA2D6002FCD77 /* FoundationToolz */,
+				96F94EF82926ABC600D623CB /* SwiftUIToolz */,
+				96EA972229269D270055288F /* SwiftObserver */,
+				96EA972129269BDD0055288F /* CloudKid */,
+				9659C7512926994F00197EAA /* UIToolz */,
 				9EA5A884218EC546004902F7 /* Code */,
 				964EDBFC25292431000A67E3 /* Local Packages */,
 				9E91651620551E6F00A438FB /* Resources */,
@@ -699,11 +705,11 @@
 			name = Flowlist;
 			packageProductDependencies = (
 				96204DD2252919A5003BA7EC /* SwiftyToolz */,
-				96204DD7252919CE003BA7EC /* SwiftObserver */,
 				96204DDC252919F5003BA7EC /* FoundationToolz */,
 				96204DE125291A11003BA7EC /* GetLaid */,
 				96204DE625291A2B003BA7EC /* UIToolz */,
 				96204DEB25291A61003BA7EC /* CloudKid */,
+				96F94EF52926AB9900D623CB /* SwiftUIToolz */,
 			);
 			productName = TodayList;
 			productReference = 9E542E911EEEE41C00534981 /* Flowlist.app */;
@@ -734,7 +740,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1410;
 				ORGANIZATIONNAME = Flowtoolz;
 				TargetAttributes = {
 					9E542E901EEEE41C00534981 = {
@@ -773,11 +779,11 @@
 			mainGroup = 9E542E881EEEE41C00534981;
 			packageReferences = (
 				96204DD1252919A5003BA7EC /* XCRemoteSwiftPackageReference "SwiftyToolz" */,
-				96204DD6252919CE003BA7EC /* XCRemoteSwiftPackageReference "SwiftObserver" */,
 				96204DDB252919F5003BA7EC /* XCRemoteSwiftPackageReference "FoundationToolz" */,
 				96204DE025291A11003BA7EC /* XCRemoteSwiftPackageReference "GetLaid" */,
 				96204DE525291A2B003BA7EC /* XCRemoteSwiftPackageReference "UIToolz" */,
 				96204DEA25291A61003BA7EC /* XCRemoteSwiftPackageReference "CloudKid" */,
+				96F94EF42926AB9900D623CB /* XCRemoteSwiftPackageReference "SwiftUIToolz" */,
 			);
 			productRefGroup = 9E542E921EEEE41C00534981 /* Products */;
 			projectDirPath = "";
@@ -956,6 +962,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development: Sebastian Fichtner (8J9665RC9C)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -975,7 +982,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -995,10 +1002,11 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEPLOYMENT_POSTPROCESSING = NO;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 8T3R57GCBV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1013,6 +1021,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.flowlist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Flowlist macOS Dev Profile";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Flowlist macOS Dev Profile";
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -1053,6 +1062,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development: Sebastian Fichtner (8J9665RC9C)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1072,7 +1082,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -1116,6 +1126,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: Sebastian Fichtner (8T3R57GCBV)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1130,7 +1141,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
@@ -1149,7 +1160,9 @@
 				CODE_SIGN_IDENTITY = "Apple Development: Sebastian Fichtner (8J9665RC9C)";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 8T3R57GCBV;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1159,6 +1172,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.flowtoolz.flowlist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Flowlist macOS Dev Profile";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "Flowlist macOS Dev Profile";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -1202,6 +1216,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = FlowlistTests/Info.plist;
@@ -1232,6 +1247,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = FlowlistTests/Info.plist;
@@ -1261,6 +1277,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 8T3R57GCBV;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = FlowlistTests/Info.plist;
@@ -1319,24 +1336,16 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/flowtoolz/SwiftyToolz.git";
 			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-		96204DD6252919CE003BA7EC /* XCRemoteSwiftPackageReference "SwiftObserver" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/flowtoolz/SwiftObserver.git";
-			requirement = {
-				branch = master;
-				kind = branch;
+				kind = exactVersion;
+				version = 0.2.0;
 			};
 		};
 		96204DDB252919F5003BA7EC /* XCRemoteSwiftPackageReference "FoundationToolz" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/flowtoolz/FoundationToolz.git";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = exactVersion;
+				version = 0.1.2;
 			};
 		};
 		96204DE025291A11003BA7EC /* XCRemoteSwiftPackageReference "GetLaid" */ = {
@@ -1363,6 +1372,14 @@
 				kind = branch;
 			};
 		};
+		96F94EF42926AB9900D623CB /* XCRemoteSwiftPackageReference "SwiftUIToolz" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/flowtoolz/SwiftUIToolz";
+			requirement = {
+				kind = exactVersion;
+				version = 0.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1370,11 +1387,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 96204DD1252919A5003BA7EC /* XCRemoteSwiftPackageReference "SwiftyToolz" */;
 			productName = SwiftyToolz;
-		};
-		96204DD7252919CE003BA7EC /* SwiftObserver */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 96204DD6252919CE003BA7EC /* XCRemoteSwiftPackageReference "SwiftObserver" */;
-			productName = SwiftObserver;
 		};
 		96204DDC252919F5003BA7EC /* FoundationToolz */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1395,6 +1407,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 96204DEA25291A61003BA7EC /* XCRemoteSwiftPackageReference "CloudKid" */;
 			productName = CloudKid;
+		};
+		96F94EF52926AB9900D623CB /* SwiftUIToolz */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 96F94EF42926AB9900D623CB /* XCRemoteSwiftPackageReference "SwiftUIToolz" */;
+			productName = SwiftUIToolz;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

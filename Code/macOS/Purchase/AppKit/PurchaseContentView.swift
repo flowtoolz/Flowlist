@@ -142,7 +142,7 @@ class PurchaseContentView: NSView, Observer
     {
         let view = columns[1].addForAutoLayout(LayerBackedView())
         
-        view.backgroundColor = Color.textDiscount
+        view.set(backgroundColor: .textDiscount)
         view.isHidden = true
         
         return view
@@ -270,10 +270,10 @@ class PurchaseContentView: NSView, Observer
     {
         let button = columns[1].addForAutoLayout(Button())
         
-        button.layer?.cornerRadius = Float.cornerRadius.cgFloat
-        button.backgroundColor = Color(Int(95 * 0.8),
-                                       Int(197 * 0.8),
-                                       Int(64 * 0.8))
+        button.layer?.cornerRadius = Double.cornerRadius
+        button.set(backgroundColor: .bytes(Byte(95 * 0.8),
+                                           Byte(197 * 0.8),
+                                           Byte(64 * 0.8)))
         button.isHidden = true
         
         button.titleLabel.textColor = .white
@@ -308,8 +308,8 @@ class PurchaseContentView: NSView, Observer
     {
         let button = columns[1].addForAutoLayout(Button())
         
-        button.layer?.cornerRadius = Float.cornerRadius.cgFloat
-        button.backgroundColor = Color.gray(brightness: 0.3).with(alpha: 0.5)
+        button.layer?.cornerRadius = Double.cornerRadius
+        button.set(backgroundColor: .gray(brightness: 0.3).with(alpha: 0.5))
         
         button.titleLabel.textColor = .white
         button.titleLabel.font = Font.purchasePanel.nsFont

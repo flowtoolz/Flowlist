@@ -7,12 +7,12 @@ extension Color
     
     static let tags: [Color] =
     [
-        Color(253, 74, 75),
-        Color(253, 154, 57),
-        Color(254, 207, 60),
-        Color(95, 197, 64),
-        Color(63, 169, 242),
-        Color(197, 112, 219)
+        .rgb(253, 74, 75),
+        .rgb(253, 154, 57),
+        .rgb(254, 207, 60),
+        .rgb(95, 197, 64),
+        .rgb(63, 169, 242),
+        .rgb(197, 112, 219)
     ]
     
     // MARK: - Item Text
@@ -76,7 +76,7 @@ extension Color
     
     static func iconAlpha(isInProgress inProgress: Bool,
                           isDone done: Bool,
-                          isSelected selected: Bool) -> Float
+                          isSelected selected: Bool) -> Double
     {
         if selected
         {
@@ -92,8 +92,8 @@ extension Color
         }
     }
     
-    private static let grayedOutAlphaLight: Float = 0.22
-    private static let grayedOutAlphaDark: Float = 0.2
+    private static let grayedOutAlphaLight: Double = 0.22
+    private static let grayedOutAlphaDark: Double = 0.2
     
     static func itemContentIsLight(isSelected selected: Bool,
                                    isFocused focused: Bool) -> Bool
@@ -156,7 +156,7 @@ extension Color
             return .gray(brightness: isInDarkMode ? 0.09 : 1)
         }
         
-        let brightness: Float = isInDarkMode ? (isFocusedList ? 0.333 : 0.16) : isFocusedList ? 0.5 : 0.83
+        let brightness: Double = isInDarkMode ? (isFocusedList ? 0.333 : 0.16) : isFocusedList ? 0.5 : 0.83
         
         return Color.gray(brightness: brightness)
     }
