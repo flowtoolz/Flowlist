@@ -483,7 +483,9 @@ class ItemView: LayerBackedView, SwiftObserver.Observable, Observer
             set(editing: false)
             item?.data.text <- String(withNonEmpty: textView.string)
             send(.didEditText)
-        case .wasClicked: send(.textViewWasClicked)
+            
+        case .wasClicked:
+            send(.textViewWasClicked)
         }
     }
     

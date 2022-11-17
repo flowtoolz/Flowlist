@@ -7,12 +7,12 @@ extension Color
     
     static let tags: [Color] =
     [
-        .rgb(253, 74, 75),
-        .rgb(253, 154, 57),
-        .rgb(254, 207, 60),
-        .rgb(95, 197, 64),
-        .rgb(63, 169, 242),
-        .rgb(197, 112, 219)
+        .bytes(253, 74, 75),
+        .bytes(253, 154, 57),
+        .bytes(254, 207, 60),
+        .bytes(95, 197, 64),
+        .bytes(63, 169, 242),
+        .bytes(197, 112, 219)
     ]
     
     // MARK: - Item Text
