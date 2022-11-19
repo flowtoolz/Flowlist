@@ -260,13 +260,6 @@
 			path = AppKit;
 			sourceTree = "<group>";
 		};
-		964EDBFC25292431000A67E3 /* Local Packages */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Local Packages";
-			sourceTree = "<group>";
-		};
 		9E00F8EC22E674A30031C996 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -347,7 +340,6 @@
 				96EA972129269BDD0055288F /* CloudKid */,
 				9659C7512926994F00197EAA /* UIToolz */,
 				9EA5A884218EC546004902F7 /* Code */,
-				964EDBFC25292431000A67E3 /* Local Packages */,
 				9E91651620551E6F00A438FB /* Resources */,
 				9ED6964222BBF13A006D275E /* FlowlistTests */,
 				9E542E921EEEE41C00534981 /* Products */,

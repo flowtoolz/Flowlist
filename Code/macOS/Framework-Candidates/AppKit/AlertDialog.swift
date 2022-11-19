@@ -1,20 +1,19 @@
 import AppKit
-import SwiftObserver
 import SwiftyToolz
 
 // TODO: when moving this to UIToolz: Let AppController set this as the default Dialog, and: Properly integrate Logging / Dialog / Alerts ... Make Logging independent of SwiftObserver ...
 class AlertDialog: DialogInterface
 {
-    func pose(_ question: Question) -> ResultPromise<Answer>
+    func pose(_ question: Question) async throws -> Answer
     {
-        pose(question, imageName: nil)
+        try await pose(question, imageName: nil)
     }
     
-    func pose(_ question: Question, imageName: String?) -> ResultPromise<Answer>
+    func pose(_ question: Question, imageName: String?) async throws -> Answer
     {
-        .init
+        try await withCheckedThrowingContinuation
         {
-            promise in
+            continuation in
         
             DispatchQueue.main.async
             {
@@ -38,8 +37,7 @@ class AlertDialog: DialogInterface
                 
                 if reversedOptions.isEmpty
                 {
-                    promise.fulfill(Answer(options: ["OK"]))
-                    return
+                    return continuation.resume(returning: Answer(options: ["OK"]))
                 }
                 
                 let lastButton = NSApplication.ModalResponse.alertFirstButtonReturn
@@ -47,14 +45,12 @@ class AlertDialog: DialogInterface
                 
                 guard reversedOptions.isValid(index: reversedOptionIndex) else
                 {
-                    let error: Error = "Unknown modal response"
-                    log(error.readable)
-                    return promise.fulfill(error)
+                    return continuation.resume(throwing: "Unknown modal response")
                 }
                 
                 let clickedOption = reversedOptions[reversedOptionIndex]
 
-                promise.fulfill(Answer(options: [clickedOption]))
+                continuation.resume(returning: Answer(options: [clickedOption]))
             }
         }
     }

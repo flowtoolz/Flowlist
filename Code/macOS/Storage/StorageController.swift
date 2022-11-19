@@ -1,6 +1,5 @@
 import CloudKit
 import Foundation
-import SwiftObserver
 import SwiftyToolz
 
 class StorageController
@@ -14,30 +13,31 @@ class StorageController
     
     func appDidLaunch()
     {
-        promise
+        Task
         {
-            JSONFileMigrationController().migrateJSONFile()
-        }
-        .onSuccess
-        {
-            () -> ResultPromise<Void> in
-            
-            self.fileController.saveRecordsFromFilesToRecordStore()
-            return isCKSyncFeatureAvailable ? self.ckRecordController.resync() : .fulfilled(())
-        }
-        .whenSucceeded
-        {
-            try self.ensureThereIsInitialData()
-        }
-        failed:
-        {
-            if isCKSyncFeatureAvailable && CKSyncIntention.shared.isActive
+            do
             {
-                CKSyncIntention.shared.abort(with: $0)
+                try await JSONFileMigrationController().migrateJSONFile()
+                
+                fileController.saveRecordsFromFilesToRecordStore()
+                
+                if isCKSyncFeatureAvailable
+                {
+                    try await ckRecordController.resync()
+                }
+                
+                try ensureThereIsInitialData()
             }
-            else
+            catch
             {
-                log($0.readable)
+                if isCKSyncFeatureAvailable && CKSyncIntention.shared.isActive
+                {
+                    CKSyncIntention.shared.abort(with: error)
+                }
+                else
+                {
+                    log(error.readable)
+                }
             }
         }
     }
@@ -66,20 +66,22 @@ class StorageController
     
     func toggleIntentionToSyncWithDatabase()
     {
-        promise
+        Task
         {
-            checkWhetherUserWantsToBackupFirst()
-        }
-        .whenSucceeded
-        {
-            userWantsToBackupFirst in
-            
-            if !userWantsToBackupFirst
+            do
             {
-                self.ckRecordController.toggleSync()
+                let userWantsToBackupFirst = try await checkWhetherUserWantsToBackupFirst()
+                
+                if !userWantsToBackupFirst
+                {
+                    ckRecordController.toggleSync()
+                }
+            }
+            catch
+            {
+                log(error.readable)
             }
         }
-    failed: { log($0.readable) }
     }
     
     func cloudKitAccountDidChange()
@@ -96,16 +98,16 @@ class StorageController
     
     // MARK: - Show Backup Hint on First Sync
     
-    private func checkWhetherUserWantsToBackupFirst() -> ResultPromise<Bool>
+    private func checkWhetherUserWantsToBackupFirst() async throws -> Bool
     {
         guard !CKSyncIntention.shared.isActive, !didShowBackupHintToUser.value else
         {
-            return .fulfilled(false)
+            return false
         }
         
         guard let dialog = Dialog.default else
         {
-            return .fulfilled("No default Dialog has been set.")
+            throw "No default Dialog has been set."
         }
         
         let backupOption = "I'll Backup My Items First"
@@ -120,18 +122,12 @@ class StorageController
 
             """
         
-        return promise
-        {
-            dialog.pose(Question(title: "How to Backup Your Items",
-                                 text: text,
-                                 options: ["Start iCloud Sync Now", backupOption]))
-        }
-        .mapSuccess
-        {
-            answer -> Bool in
-            self.didShowBackupHintToUser.value = true
-            return answer.options.first == backupOption
-        }
+        let answer = try await dialog.pose(Question(title: "How to Backup Your Items",
+                                                    text: text,
+                                                    options: ["Start iCloud Sync Now", backupOption]))
+        
+        didShowBackupHintToUser.value = true
+        return answer.options.first == backupOption
     }
     
     private var didShowBackupHintToUser = PersistentFlag("UserDefaultsKeyDidShowBackupHint")

@@ -4,35 +4,31 @@ import SwiftyToolz
 
 class JSONFileMigrationController
 {
-    func migrateJSONFile() -> ResultPromise<Void>
+    func migrateJSONFile() async throws
     {
         let jsonFile = LegacyJSONFile()
         
-        guard jsonFile.exists,
+        guard
+            jsonFile.exists,
             let jsonFileRecords = jsonFile.loadRecords(),
             !jsonFileRecords.isEmpty
-        else
-        {
-            return .fulfilled(())
-        }
+        else { return }
         
         guard FileDatabase.shared.loadFiles().isEmpty else
         {
-            informUserThatLegacyJSONFileReappeared(filePath: jsonFile.url.path)
-            return .fulfilled(())
+            try await informUserThatLegacyJSONFileReappeared(filePath: jsonFile.url.path)
+            return
         }
         
         guard FileDatabase.shared.save(jsonFileRecords, as: self, sendEvent: false) else
         {
-            return .fulfilled("Found JSON File but can't migrate its content. Saving the items as files failed.")
+            throw "Found JSON File but can't migrate its content. Saving the items as files failed."
         }
         
         jsonFile.remove()
-        
-        return .fulfilled(())
     }
 
-    func informUserThatLegacyJSONFileReappeared(filePath: String)
+    func informUserThatLegacyJSONFileReappeared(filePath: String) async throws
     {
         let text =
         """
@@ -49,6 +45,6 @@ class JSONFileMigrationController
                                        text: text,
                                        options: ["Got It"])
         
-        Dialog.default?.pose(question).whenFailed { log($0.readable) }
+        _ = try await Dialog.default?.pose(question)
     }
 }

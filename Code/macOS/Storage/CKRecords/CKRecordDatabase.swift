@@ -14,14 +14,11 @@ class CKRecordDatabase: Observer, SwiftObserver.Observable
     
     // MARK: - Save CKRecords
     
-    func save(_ records: [CKRecord]) -> ResultPromise<CKDatabase.SaveResult>
+    func save(_ records: [CKRecord]) async throws -> CKDatabase.SaveResult
     {
-        guard !records.isEmpty else { return .fulfilled(.empty) }
-        
-        return promisedAccess.onSuccess
-        {
-            self.ckDatabaseController.save(records)
-        }
+        guard !records.isEmpty else { return .empty }
+        try await getAccess()
+        return try await ckDatabaseController.save(records)
     }
     
     func getCKRecordWithCachedSystemFields(for id: CKRecord.ID) -> CKRecord
@@ -36,22 +33,18 @@ class CKRecordDatabase: Observer, SwiftObserver.Observable
     
     // MARK: - Delete Records
     
-    func deleteCKRecords(with ids: [CKRecord.ID]) -> ResultPromise<CKDatabase.DeletionResult>
+    func deleteCKRecords(with ids: [CKRecord.ID]) async throws -> CKDatabase.DeletionResult
     {
-        promisedAccess.onSuccess
-        {
-            self.ckDatabaseController.deleteCKRecords(with: ids).map { .success($0) }
-        }
+        try await getAccess()
+        return try await ckDatabaseController.deleteCKRecords(with: ids)
     }
     
     // MARK: - Fetch Changes
     
-    func fetchChanges() -> ResultPromise<CKDatabase.Changes>
+    func fetchChanges() async throws -> CKDatabase.Changes
     {
-        promisedAccess.onSuccess
-        {
-            self.ckDatabaseController.fetchChanges(from: .itemZone)
-        }
+        try await getAccess()
+        return try await ckDatabaseController.fetchChanges(from: .itemZone)
     }
     
     var hasChangeToken: Bool
@@ -66,36 +59,20 @@ class CKRecordDatabase: Observer, SwiftObserver.Observable
     
     // MARK: - Ensure Access
     
-    private lazy var promisedAccess = getAccess()
-    
-    private func getAccess() -> ResultPromise<Void>
+    private func getAccess() async throws
     {
-        promise
-        {
-            ckDatabaseController.ensureAccountAccess()
-        }
-        .onSuccess
-        {
-            self.ensureRecordZoneExists()
-        }
-        .onSuccess
-        {
-            self.ensureDatabaseSubscriptionExists()
-        }
+        try await ckDatabaseController.ensureAccountAccess()
+        try await ensureRecordZoneExists()
+        try await ensureDatabaseSubscriptionExists()
     }
     
     // MARK: - Observable Database Subscription 
     
-    private func ensureDatabaseSubscriptionExists() -> ResultPromise<Void>
+    private func ensureDatabaseSubscriptionExists() async throws
     {
-        promise
-        {
-            ckDatabaseController.createDatabaseSubscription(with: .itemSub)
-        }
-        .mapSuccess
-        {
-            _ in
-        }
+        
+        _ = try await ckDatabaseController.createDatabaseSubscription(with: .itemSub)
+        
     }
     
     func handleDatabaseNotification(with userInfo: [String: Any])
@@ -116,9 +93,9 @@ class CKRecordDatabase: Observer, SwiftObserver.Observable
     
     // MARK: - Create Zone
     
-    private func ensureRecordZoneExists() -> ResultPromise<Void>
+    private func ensureRecordZoneExists() async throws
     {
-        ckDatabaseController.create(.itemZone).mapSuccess { _ in }
+        _ = try await ckDatabaseController.createZone(withID: .itemZone)
     }
     
     // MARK: - CloudKit Database Controller

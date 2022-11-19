@@ -1,4 +1,3 @@
-import SwiftObserver
 import SwiftyToolz
 
 class CKSyncIntention
@@ -26,8 +25,10 @@ class CKSyncIntention
                                 text: text,
                                 options: ["Got it"])
         
-        Dialog.default?.pose(question,
-                             imageName: "icloud_conflict").whenFailed { log($0.readable) }
+        Task
+        {
+            try await Dialog.default?.pose(question, imageName: "icloud_conflict")
+        }
     }
     
     var isActive: Bool
