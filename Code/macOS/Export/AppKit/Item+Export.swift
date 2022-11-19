@@ -53,7 +53,7 @@ class Exporter
     {
         let newFormat = accessoryView.selectedFormat
         
-        panel.allowedFileTypes = [newFormat.fileExtension]
+        panel.allowedContentTypes = [newFormat.uti]
         TextFormat.preferred = newFormat
     }
     
@@ -87,7 +87,7 @@ extension NSSavePanel
         canCreateDirectories = true
         allowsOtherFileTypes = false
         isExtensionHidden = false
-        allowedFileTypes = [TextFormat.preferred.fileExtension]
+        allowedContentTypes = [TextFormat.preferred.uti]
         
         return self
     }

@@ -6,7 +6,7 @@ import SwiftyToolz
 
 let purchaseController = PurchaseController()
 
-class PurchaseController: NSObject, SwiftObserver.Observable, SKProductsRequestDelegate, SKPaymentTransactionObserver
+class PurchaseController: NSObject, SwiftObserver.ObservableObject, SKProductsRequestDelegate, SKPaymentTransactionObserver
 {
     // MARK: - Life Cycle
     

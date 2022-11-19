@@ -1,6 +1,6 @@
 import SwiftObserver
 
-class RecordStore: Observable
+class RecordStore: ObservableObject
 {
     // MARK: - Life Cycle
     

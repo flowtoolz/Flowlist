@@ -5,7 +5,7 @@ import SwiftyToolz
 
 /// Flowlist wrapper around CKDatabaseController. Cares for Flowlist specific setup, access and editing of iCloud Database.
 
-class CKRecordDatabase: Observer, SwiftObserver.Observable
+class CKRecordDatabase: Observer, SwiftObserver.ObservableObject
 {
     // MARK: - Life Cycle
     

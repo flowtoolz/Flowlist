@@ -3,7 +3,7 @@ import FoundationToolz
 import SwiftObserver
 import SwiftyToolz
 
-class FileDatabase: SwiftObserver.Observable
+class FileDatabase: SwiftObserver.ObservableObject
 {
     // MARK: - Initialization
     

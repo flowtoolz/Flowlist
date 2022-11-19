@@ -15,7 +15,7 @@ extension Tree
 
 // MARK: - Tree
 
-class Tree<Data: Copyable & Observable>: Copyable, Observer
+class Tree<Data: Copyable & ObservableObject>: Copyable, Observer
 {
     // MARK: - Copyable
     
@@ -262,7 +262,7 @@ class Tree<Data: Copyable & Observable>: Copyable, Observer
     
     let treeMessenger = TreeMessenger()
     
-    class TreeMessenger: Observable
+    class TreeMessenger: ObservableObject
     {
         let messenger = Messenger<Event>()
     }

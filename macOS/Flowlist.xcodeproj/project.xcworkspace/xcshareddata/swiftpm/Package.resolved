@@ -19,6 +19,24 @@
       }
     },
     {
+      "identity" : "swiftobserver",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/codeface-io/SwiftObserver",
+      "state" : {
+        "revision" : "de159bb4cfa09312e20c49ef23619cb28ddce8b6",
+        "version" : "7.0.4"
+      }
+    },
+    {
+      "identity" : "swiftuitoolz",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/flowtoolz/SwiftUIToolz",
+      "state" : {
+        "revision" : "722f6223478414af107d272a192982496c2e5526",
+        "version" : "0.1.1"
+      }
+    },
+    {
       "identity" : "swiftytoolz",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/flowtoolz/SwiftyToolz.git",

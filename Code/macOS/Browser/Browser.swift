@@ -4,7 +4,7 @@ import SwiftyToolz
 
 let browser = Browser()
 
-class Browser: Observer, SwiftObserver.Observable
+class Browser: Observer, SwiftObserver.ObservableObject
 {
     // MARK: - Life Cycle
     

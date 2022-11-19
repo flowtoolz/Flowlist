@@ -3,7 +3,7 @@ import SwiftObserver
 import SwiftyToolz
 import UIToolz
 
-class ItemTable: AnimatedTableView, SwiftObserver.Observable, TableContentDelegate, Observer
+class ItemTable: AnimatedTableView, SwiftObserver.ObservableObject, TableContentDelegate, Observer
 {
     // MARK: - Life Cycle
     

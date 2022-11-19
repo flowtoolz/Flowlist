@@ -2,7 +2,7 @@ import AppKit
 import SwiftObserver
 import SwiftyToolz
 
-class TextView: NSTextView, NSTextViewDelegate, SwiftObserver.Observable
+class TextView: NSTextView, NSTextViewDelegate, SwiftObserver.ObservableObject
 {
     // MARK: - Life Cycle
 

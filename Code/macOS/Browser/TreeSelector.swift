@@ -2,7 +2,7 @@ import Foundation
 import SwiftObserver
 import SwiftyToolz
 
-class TreeSelector: Observer, SwiftObserver.Observable
+class TreeSelector: Observer, SwiftObserver.ObservableObject
 {
     // MARK: - Life Cycle
     

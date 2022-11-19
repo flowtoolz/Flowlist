@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-class TreeStore: Observer, Observable
+class TreeStore: Observer, ObservableObject
 {
     // MARK: - Life Cycle
     

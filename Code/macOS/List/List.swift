@@ -1,7 +1,7 @@
 import SwiftObserver
 import SwiftyToolz
 
-class List: Observable, Observer
+class List: ObservableObject, Observer
 {
     // MARK: - Life Cycle
     
