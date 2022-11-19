@@ -28,7 +28,7 @@ class FlowlistAppController: AppController
         
         purchaseController.setup()
         
-        window.backgroundColor = Color.windowBackground.nsColor
+        window.backgroundColor = NSColor(Color.windowBackground)
         
         Dialog.default = AlertDialog()
         
@@ -36,7 +36,7 @@ class FlowlistAppController: AppController
         {
             [weak self] _ in
             
-            self?.window.backgroundColor = Color.windowBackground.nsColor
+            self?.window.backgroundColor = NSColor(Color.windowBackground)
         }
         
         registerForPushNotifications()

@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "cloudkid",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/flowtoolz/CloudKid.git",
+      "state" : {
+        "revision" : "9fbadc4a7fd69f5ff326da18edf4a6c31ab91575",
+        "version" : "0.1.0"
+      }
+    },
+    {
       "identity" : "foundationtoolz",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/flowtoolz/FoundationToolz.git",
@@ -32,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/flowtoolz/SwiftUIToolz",
       "state" : {
-        "revision" : "722f6223478414af107d272a192982496c2e5526",
-        "version" : "0.1.1"
+        "revision" : "e6599508a08d0fe5c52ad307825a3cc56ecfa992",
+        "version" : "0.1.2"
       }
     },
     {

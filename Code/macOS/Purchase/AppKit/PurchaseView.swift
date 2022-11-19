@@ -36,7 +36,7 @@ class PurchaseView: LayerBackedView, SwiftObserver.ObservableObject, Observer
     private func update(itemNumber: Int)
     {
         itemLabel.stringValue = labelText(for: itemNumber)
-        itemLabel.textColor = labelColor(for: itemNumber).nsColor
+        itemLabel.textColor = NSColor(labelColor(for: itemNumber))
         
         let progress = CGFloat(itemNumber) / CGFloat(maxNumberOfLeafsInTrial)
         progressBar.progress = progress
@@ -57,7 +57,7 @@ class PurchaseView: LayerBackedView, SwiftObserver.ObservableObject, Observer
         progressBarSeparator.set(backgroundColor: .progressBarSeparator)
         
         let itemNumber = TreeSelector.shared.numberOfUserCreatedLeafs.value
-        itemLabel.textColor = labelColor(for: itemNumber).nsColor
+        itemLabel.textColor = NSColor(labelColor(for: itemNumber))
         
         expandIcon.image = isExpanded ? closeImage : expandImage
         
@@ -75,10 +75,10 @@ class PurchaseView: LayerBackedView, SwiftObserver.ObservableObject, Observer
         
         shadow = NSShadow()
         shadow?.shadowOffset = offset
-        shadow?.shadowColor = color.with(alpha: opacity).nsColor
+        shadow?.shadowColor = NSColor(color.with(alpha: opacity))
         shadow?.shadowBlurRadius = radius
         
-        layer?.shadowColor = color.cgColor
+        layer?.shadowColor = NSColor(color).cgColor
         layer?.shadowOffset = offset
         layer?.shadowRadius = radius
         layer?.shadowOpacity = Float(opacity)
@@ -138,7 +138,7 @@ class PurchaseView: LayerBackedView, SwiftObserver.ObservableObject, Observer
         let field = addForAutoLayout(Label())
         field.font = Font.purchasePanel.nsFont
         let color = labelColor(for: itemNumber)
-        field.textColor = color.nsColor
+        field.textColor = NSColor(color)
         field.stringValue = labelText(for: itemNumber)
         
         return field

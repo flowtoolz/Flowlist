@@ -265,7 +265,7 @@ class ItemView: LayerBackedView, SwiftObserver.ObservableObject, Observer
                                       isFocused: isFocused,
                                       isEditing: isEditing))
         
-        textView.insertionPointColor = Color.text.nsColor
+        textView.insertionPointColor = NSColor(Color.text)
         textView.selectedTextAttributes = TextView.selectionSyle
         
         if !isEditing
@@ -454,7 +454,7 @@ class ItemView: LayerBackedView, SwiftObserver.ObservableObject, Observer
     {
         let view = addForAutoLayout(TextView())
         
-        view.insertionPointColor = Color.text.nsColor
+        view.insertionPointColor = NSColor(Color.text)
         
         observe(view)
         {

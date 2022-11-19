@@ -151,7 +151,7 @@ class Header: LayerBackedView, Observer
                                        isSelected: false,
                                        isFocused: true)
         
-        titleLabel.textColor = textColor.nsColor
+        titleLabel.textColor = NSColor(textColor)
     }
     
     private func constrainTitleLabel()
@@ -165,7 +165,7 @@ class Header: LayerBackedView, Observer
     {
         let label = titleContainer.addForAutoLayout(Label())
         
-        label.textColor = Color.text.nsColor
+        label.textColor = NSColor(Color.text)
         label.font = Font.listTitle.nsFont
         label.alignment = .left
         label.maximumNumberOfLines = 1

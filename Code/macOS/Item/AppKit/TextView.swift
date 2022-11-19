@@ -67,7 +67,7 @@ class TextView: NSTextView, NSTextViewDelegate, SwiftObserver.ObservableObject
     
     func set(color: Color)
     {
-        self.textColor = color.nsColor
+        self.textColor = NSColor(color)
     }
     
     private static var typingSyle: [NSAttributedString.Key : Any]
@@ -80,7 +80,7 @@ class TextView: NSTextView, NSTextViewDelegate, SwiftObserver.ObservableObject
     
     static var selectionSyle: [NSAttributedString.Key : Any]
     {
-        [.backgroundColor : Color.textSelectedBackground.nsColor]
+        [.backgroundColor : NSColor(Color.textSelectedBackground)]
     }
     
     private static let linkStyle: [NSAttributedString.Key : Any] =

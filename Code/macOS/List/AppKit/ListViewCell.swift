@@ -38,12 +38,12 @@ class ListViewCell: NSCollectionViewItem, Observer
         let offset = CGSize(width: isDark ? -1 : 1, height: -1)
         
         let shadow = NSShadow()
-        shadow.shadowColor = color.with(alpha: opacity).nsColor
+        shadow.shadowColor = NSColor(color.with(alpha: opacity))
         shadow.shadowBlurRadius = 0
         shadow.shadowOffset = offset
         view.shadow = shadow
         
-        view.layer?.shadowColor = color.cgColor
+        view.layer?.shadowColor = NSColor(color).cgColor
         view.layer?.shadowOffset = offset
         view.layer?.shadowOpacity = Float(opacity)
         view.layer?.shadowRadius = 0

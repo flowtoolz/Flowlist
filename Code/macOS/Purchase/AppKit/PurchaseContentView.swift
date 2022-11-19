@@ -39,11 +39,11 @@ class PurchaseContentView: NSView, Observer
     
     func adjustToColorMode()
     {
-        let textColor = Color.text.nsColor
+        let textColor = NSColor(Color.text)
         titleLabel.textColor = textColor
         descriptionLabel.textColor = textColor
         priceTag.priceLabel.textColor = textColor
-        priceTag.discountPriceLabel.textColor = Color.textDiscount.nsColor
+        priceTag.discountPriceLabel.textColor = NSColor(Color.textDiscount)
         loadingLabel.textColor = textColor
         bulletpointList.adjustToColorMode()
         
@@ -169,7 +169,7 @@ class PurchaseContentView: NSView, Observer
     {
         let label = loadingIndicator.addForAutoLayout(Label())
         
-        label.textColor = Color.text.nsColor
+        label.textColor = NSColor(Color.text)
         label.stringValue = "Loading infos from AppStore ..."
         label.font = Font.purchasePanel.nsFont
         label.alignment = .center
@@ -206,7 +206,7 @@ class PurchaseContentView: NSView, Observer
     {
         let label = columns[0].addForAutoLayout(Label())
 
-        label.textColor = Color.text.nsColor
+        label.textColor = NSColor(Color.text)
         label.font = Font.title.nsFont
         label.stringValue = "Flowlist Full Version"
         
@@ -343,7 +343,7 @@ class PurchaseContentView: NSView, Observer
     {
         let label = columns[0].addForAutoLayout(Label())
         
-        label.textColor = Color.text.nsColor
+        label.textColor = NSColor(Color.text)
         label.lineBreakMode = .byWordWrapping
         label.font = Font.purchasePanel.nsFont
         label.stringValue = productDescription

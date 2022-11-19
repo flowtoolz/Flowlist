@@ -22,7 +22,7 @@ class BulletpointList: NSView
         
         bulletpointIcons.forEach { $0.image = image }
         
-        let textColor = Color.text.nsColor
+        let textColor = NSColor(Color.text)
         
         bulletpointLabels.forEach { $0.textColor = textColor }
     }
@@ -91,7 +91,7 @@ class BulletpointList: NSView
         {
             let label = addForAutoLayout(Label())
             label.stringValue = $0
-            label.textColor = Color.text.nsColor
+            label.textColor = NSColor(Color.text)
             label.font = Font.purchasePanel.nsFont
             label.lineBreakMode = .byWordWrapping
             labels.append(label)

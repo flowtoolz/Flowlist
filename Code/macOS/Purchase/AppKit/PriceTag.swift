@@ -103,7 +103,7 @@ class PriceTag: NSView, Observer
         
         label.font = Font.purchasePanel.nsFont
         label.alignment = .center
-        label.textColor = color.nsColor
+        label.textColor = NSColor(color)
         
         return label
     }
