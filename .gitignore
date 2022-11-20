@@ -1,4 +1,4 @@
-.DS_Store
-*.pbxuser
+Package.resolved
+swiftpm/
 xcuserdata/
-xcuserdata/**
+build/

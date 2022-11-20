@@ -120,7 +120,6 @@
 
 /* Begin PBXFileReference section */
 		964BDB2125291E4C0073101E /* Font+ScreenDependentStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+ScreenDependentStyle.swift"; sourceTree = "<group>"; };
-		9659C7512926994F00197EAA /* UIToolz */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = UIToolz; path = ../../UIToolz; sourceTree = "<group>"; };
 		9E0410F820CE60B300C7C3E3 /* Flowlist.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Flowlist.entitlements; path = Resources/Flowlist.entitlements; sourceTree = "<group>"; };
 		9E053B22218867E4001B7103 /* FileDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDatabase.swift; sourceTree = "<group>"; };
 		9E053B2421886867001B7103 /* FullVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullVersion.swift; sourceTree = "<group>"; };
@@ -337,7 +336,6 @@
 			isa = PBXGroup;
 			children = (
 				9EA5A884218EC546004902F7 /* Code */,
-				9659C7512926994F00197EAA /* UIToolz */,
 				9E91651620551E6F00A438FB /* Resources */,
 				9ED6964222BBF13A006D275E /* FlowlistTests */,
 				9E542E921EEEE41C00534981 /* Products */,
@@ -1345,16 +1343,16 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/flowtoolz/GetLaid.git";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = exactVersion;
+				version = 4.0.0;
 			};
 		};
 		96204DE525291A2B003BA7EC /* XCRemoteSwiftPackageReference "UIToolz" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/flowtoolz/UIToolz.git";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = exactVersion;
+				version = 0.1.1;
 			};
 		};
 		96204DEA25291A61003BA7EC /* XCRemoteSwiftPackageReference "CloudKid" */ = {
