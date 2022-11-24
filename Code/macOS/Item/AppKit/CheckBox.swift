@@ -1,6 +1,6 @@
 import AppKit
 import GetLaid
-import UIToolz
+import SwiftUIToolz
 
 class CheckBox: Icon
 {

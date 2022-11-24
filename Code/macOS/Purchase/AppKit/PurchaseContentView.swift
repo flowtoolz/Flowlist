@@ -1,5 +1,5 @@
 import AppKit.NSView
-import UIToolz
+import SwiftUIToolz
 import FoundationToolz
 import SwiftObserver
 import SwiftyToolz

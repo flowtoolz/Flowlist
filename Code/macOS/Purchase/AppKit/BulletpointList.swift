@@ -1,6 +1,6 @@
 import AppKit.NSView
 import GetLaid
-import UIToolz
+import SwiftUIToolz
 import SwiftyToolz
 
 class BulletpointList: NSView

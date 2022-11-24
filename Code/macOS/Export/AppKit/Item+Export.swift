@@ -1,5 +1,5 @@
 import AppKit
-import UIToolz
+import SwiftUIToolz
 import SwiftyToolz
 
 extension Tree where Data == ItemData

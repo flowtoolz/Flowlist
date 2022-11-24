@@ -1,7 +1,7 @@
 import AppKit
 import SwiftObserver
 import SwiftyToolz
-import UIToolz
+import SwiftUIToolz
 
 class ItemTable: AnimatedTableView, SwiftObserver.ObservableObject, TableContentDelegate, Observer
 {
